@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|partition">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>partition activate</title>
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#lunash/commands/partition/partition_activate.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition.htm">partition</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">partition activate</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>partition activate</h2>
+        <p> Caches a Partition's PED key data. Clients can then connect, authenticate with their Partition password, and perform operations with Partition objects, without need for hands-on PED operations each time. Activation/caching endures until explicitly terminated with "partition deactivate" or appliance power off. If a Partition has not been activated, then each access attempt by a Client causes a login call which initiates a Luna PED operation (requiring the appropriate black PED Key). Unattended operation is possible while the Partition is activated.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you wish to activate a Partition, then Partition policy number 22 "Allow activation" must be set to "On" for the named partition. Use "partition showPolicies" to view the current settings and use "partition changePolicy" to change the setting.<br />The policy shows as "Off" or "On", but to change the policy you must give a numeric value of "0" or "1".</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you wish to automatically activate a Partition, then Partition policy number 23 "Allow auto-activation" can be set to "On" for the named partition. Use "partition showPolicies" to view the current settings and use "partition changePolicy" to change the setting.<br />The policy shows as "Off" or "On", but to change the policy you must give a numeric value of "0" or "1".<br />Autoactivation caches the activation authentication data in battery-backed memory so that activation can persist/recover following a shutdown/restart or a power outage up to 2 hours duration. If Partition Policy 23 is set, then partition activation includes autoactivation. If Partition Policy 23 is not set, then partition activation persists only while the appliance is powered on, and requires your intervention to reinstate activation following a shutdown or power outage.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>partition activate -partition</b> &lt;name&gt; [<b>-password</b> &lt;password&gt;] [<b>-cu</b>]</p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" style="width: 135px;">
+            </col>
+            <col class="Column-Column1">
+            </col>
+            <col class="Column-Column1">
+            </col>
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Parameter</th>
+                    <th class="HeadE-Column1-Header1">Shortcut</th>
+                    <th class="HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">-partition</td>
+                    <td class="BodyE-Column1-Body1">-par</td>
+                    <td class="BodyD-Column1-Body1">Specifies the name of the HSM partition to activate. Obtain the HSM partition name by using the <b>partition list</b> command.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">-password</td>
+                    <td class="BodyE-Column1-Body1">-pas</td>
+                    <td class="BodyD-Column1-Body1">Specifies the password needed to access the HSM partition. This is the partition string provided by the Luna PED when you created the partition - associated with the partition Owner black PED Key. For password-authenticated HSMs, it is the entire authentication for the named partition. If you omit the password in the command, you are prompted for it.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">-cu</td>
+                    <td class="BodyB-Column1-Body1">-c</td>
+                    <td class="BodyA-Column1-Body1">Perform the task as the Crypto-User. This option is required if you have invoked the Crypto Officer / Crypto User roles and are performing this action as the Crypto User.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">lunash:&gt; partition activate -partition b1</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Please enter the password for the partition:</pre><pre xml:space="preserve">&gt; *******</pre><pre xml:space="preserve">Luna PED operation required to activate partition on HSM - use User or Partition Owner (black) PED key.</pre><pre xml:space="preserve">'partition activate' successful</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../../index.html#lunash/commands/partition/partition_activate.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Assign a Client to a Luna HSM Partition</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/initial_setup/assign_a_client_to_a_luna_sa_hsm_partition.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">[Step 7] Assigning Clients to Partitions</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter" data-mc-autonum=" &#160;&#160;"><span class="autonumber"><span> &#160;&#160;</span></span>
+            <br />Assign a Client to an HSM Partition</h1>
+        <p>At this point, you should already have performed the following tasks to create a Network Trust Link (NTL) between Client and Luna SA.: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>initialized the HSM and 
+ created one-or-more HSM Partitions</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>exchanged certificates 
+ between the Luna SA and the Client</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>registered the certificates 
+ of Client and Luna SA with each other</p>
+        <p> 
+ The final Configuration step, before your Client can begin using the Luna SA, 
+ is to assign the Client to a specific Partition. You will perform the actions in this section whenever you have a new 
+ client that needs access to an HSM Partition.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You must be connected to the HSM Server and logged in as “admin”.</p>
+        <h2><a name="kanchor74"></a>Assign a Client to a Partition</h2>
+        <p>Assign the registered client to the HSM Partition. </p>
+        <p>The command is:</p>
+        <p class="code">lunash:&gt; client assignPartition -client &lt;clientname&gt; 
+ -partition &lt;partition name&gt;</p>
+        <h5>Example – lunash client - assignPartition Command</h5>
+        <p class="code">lunash:&gt; client assignPartition -client myClient1 -partition 
+ myPartition1 <br />'client assignpartition ' successful.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>
+            <br />The parameter &lt;partition name&gt; is the name of the HSM Partition that 
+ was created earlier, following configuration of the HSM.</p>
+        <p>&#160;</p>
+        <p>To verify, look at the HSM Partition assigned to the client.</p>
+        <p class="code">lunash:&gt; client show -client &lt;clientname&gt;</p>
+        <p>Refer to the Reference section of this Help for command syntax and descriptions.</p>
+        <h3>Verify Your Setup</h3>
+        <p>Before beginning to use a Client application with your newly configured 
+ Luna SA system, 
+ you can verify that the foregoing setup has been properly performed.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>On your Client 
+ computer, open a command-line console.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Go to the software 
+ directory (<span style="font-family: 'Courier New', monospace;">c:\Program 
+ Files\SafeNet\LunaClient</span> for Windows, or <span style="font-family: 'Courier New', monospace;">/usr/safenet/lunaclient</span> 
+ for Linux, Solaris or AIX, or <span style="font-family: 'Courier New', monospace;">/opt/safenet/lunaclient</span> 
+ for HP-UX), and type <span style="font-family: 'Courier New';">vtl verify</span>.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>The response 
+ should be similar to:<span style="font-family: 'Courier New', monospace;"><br />Slot &#160;&#160;&#160;Serial 
+ # &#160;&#160;&#160;&#160;Label<br />==== &#160;&#160;&#160;======== 
+ &#160;&#160;&#160;&#160;=====<br />1 &#160;&#160;&#160;&#160;&#160;&#160;2279315 
+ &#160;&#160;&#160;&#160;&#160;Partition1</span></p>
+        <p style="margin-left: 40px;">If you get an error message, then some part 
+ of the configuration has not been properly completed. Retrace the procedure. 
+ </p>
+        <p>At this point, the client and HSM are configured and registered with 
+ each other. You can now begin to use the  Luna SA with your application.</p>
+        <p>You can use the “<span style="font-family: 'Courier New', monospace;">partition 
+ list</span>” command for a list of HSM Partitions on the HSM, and the 
+ “<span style="font-family: 'Courier New', monospace;">client list</span>” 
+ command for a list of the clients assigned to an HSM Partition.</p>
+        <p>&#160;</p>
+        <p><b style="font-size: 16pt;">DONE!</b>
+        </p>
+        <p>&#160;</p>
+        <p>Yes. That was the complete setup. We suggest that you browse  the Administration &amp; Maintenance manuals to develop a deeper understanding of the options and capabilities of your Luna SA appliance, and of the housekeeping tasks and utilities that you might need. The SDK section is provided for programmers/developers.</p>
+        <h2>Client Connection Limits</h2>
+        <p>See <a href="../../sa_appliance_admin/client_connections/connections_to_the_appliance.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Connections to the Appliance - Limits "</span></a>, for a discussion of the limits for client connections to a Luna SA appliance and HSM. </p>
+        <h2>Applications and Integrations</h2>
+        <p>If you have any of dozens of third-party applications, we might already have performed system integration with it, and published an Integration Guide for the application or API that you wish to use. Contact SafeNet Customer Support for the latest list of current integrations, or to request that one be developed.</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/initial_setup/assign_a_client_to_a_luna_sa_hsm_partition.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>KSP for CNG</title>
+        <link href="../../Resources/TableStyles/List1.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/microsoft/ksp_cng.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>KSP for CNG</h2>
+        <p>CNG is Microsoft's cryptographic application programming environment (API) replacing the Windows cryptoAPI (CAPI). </p>
+        <p>CNG stands for Cryptography Next Generation and is applicable to Windows Server 2008 and Windows Server 2012. CNG adds new algorithms along with additional flexibility and functionality, compared with the old API.</p>
+        <p>Just as SafeNet provides our CSP for applications running in older Windows crypto environments (and JSP for Java), we offer KSP to allow your Windows Server 2008 CNG applications to make use of the SafeNet HSM. You can still use CSP with Windows Server 2008 and CAPI for your legacy applications, but future development will all take place using CNG, for which you will need to install KSP.</p>
+        <p>KSP&#160;must be installed on any Windows Server 2008 computer that is intended to act via CNG as a Client of the HSM, running crypto operations in hardware. You need KSP to integrate Luna cryptoki with CNG and to use the newer functions and algorithms in Microsoft IIS.</p>
+        <p>&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>
+            <img src="../../Resources/Images/notepad-icon.png" /><b>TRANSITION&#160;ISSUES</b> Be aware when working in a mixed environment or updating applications that previously used CAPI and the SafeNet CSP - the new algorithms supported by CNG (such as SHA512 and ECDSA) in Certificate Services are not recognized by systems that use CAPI. If Certificate Services is configured to use any of these new Algorithms then the signed certificates can be installed only on systems that are aware of these new algorithms. Any of the systems that use CAPI will not be able to use this feature. The installation of certificate will fail.</p>
+        <h2>Installing KSP</h2>
+        <p>KSP is installed using the Luna Client installer. Note that it is not installed by default and must be explicitly selected when you install the Luna Client. You can also install KSP after you install the Luna Client by re-running the installer.</p>
+        <p>The KSP&#160;installer installs the following utilities in the C:\Program Files\SafeNet\LunaClient\KSP folder:</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Basic.css');" class="TableStyle-Basic" cellspacing="0">
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Utility name</th>
+                    <th class="HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">KspConfig.exe</td>
+                    <td class="BodyD-Column1-Body1">A GUI utility used to configure KSP.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">kspcmd.exe</td>
+                    <td class="BodyD-Column1-Body1">A command-line utility used to configure KSP.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">ksputil.exe</td>
+                    <td class="BodyD-Column1-Body1">A command-line utility used to make keys available to other clients, such as in a clustering configuration.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">ms2Luna.exe</td>
+                    <td class="BodyA-Column1-Body1">A command-line utility used to migrate software-based keys to a Luna HSM.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <h2>Configuring KSP&#160;</h2>
+        <p>After installing KSP, use the KSP configuration wizard to 
+ register your HSM Partitions for use with CNG. The KSP configuration tool secures the Password 
+ for each HSM Partition such that only the user for which the Password 
+ was secured is able to un-secure it.</p>
+        <p>Briefly, the important points are:</p>
+        <p>- Register the cryptoki to be used. </p>
+        <p>- Register the slot-to-be-used to the local admin (which allows the admin to interact with the slot)</p>
+        <p>- Register the slot-to-be-used to the local system (which allows the operating system to interact with the slot).<br /></p>
+        <p>&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Only the Administrator or a member of the Administrators 
+ group can run "KspConfig.exe". <br />The Luna KSP can be used by any application that acquires the context of 
+ the Luna KSP. <br /><a name="kanchor653"></a>All users who login and use the applications that acquired the context 
+ have access to the Luna KSP.</p>
+        <p>&#160;</p>
+        <h3>To configure KSP</h3>
+        <ol>
+            <li value="1" data-mc-autonum="&lt;b /&gt;"><span class="autonumber"><span><b></b></span></span>Go to C:\Program Files\SafeNet\LunaClient\KSP and launch KspConfig.exe (the KSP configuration wizard).</li>
+            <li value="2" data-mc-autonum="&lt;b /&gt;"><span class="autonumber"><span><b></b></span></span>In the left-hand pane (tree view) double-click "Register Or View Security Library" <br /><img src="../../Resources/Images/ksp_config_05.png" /><br /><br /> </li>
+            <li value="3" data-mc-autonum="&lt;b /&gt;"><span class="autonumber"><span><b></b></span></span>In the right-hand pane,  browse to the library C:\Program Files\SafeNet\LunaClient\cryptoki.dll and click <b>Register</b>.</li>
+            <li value="4" data-mc-autonum="&lt;b /&gt;"><span class="autonumber"><span><b></b></span></span>When the success message appears, click <b>OK</b>. <br /><img src="../../Resources/Images/ksp_config_12_686x329.png" style="width: 686;height: 329;" /><br /></li>
+            <li value="5" data-mc-autonum="&lt;b /&gt;"><span class="autonumber"><span><b></b></span></span>Return to the left-hand pane and double-click "Register HSM Slots", and click [Next]. In general, we recommend that you register by slot label, rather than slot number, if you are using an HA configuration .<br /><img src="../../Resources/Images/ksp_config_09_715x519.png" style="width: 715;height: 519;" /><br /></li>
+            <li value="6" data-mc-autonum="&lt;b /&gt;"><span class="autonumber"><span><b></b></span></span>In the "Slot Password" field, type in the password for the indicated slot.<br />To the right of the window, click the [Register Slot] button to register the slot for Domain/User. A success message appears. <br />Note that the "Register for User" field should be Administrator (or the admin equivalent account that will be managing this setup) and "Domain" should match the domain or local computer with which you are logged in.<img src="../../Resources/Images/ksp_config_10_683x512.png" style="width: 683;height: 512;" /></li>
+            <li value="7" data-mc-autonum="&lt;b /&gt;"><span class="autonumber"><span><b></b></span></span>Return to the "Domain" pull-down list select "SYSTEM" under "Register for User"and select "NT AUTHORITY" under "Domain", supply the password for the slot being registered, and again click  Register Slot] to complete the KSP configuration. <br /><img src="../../Resources/Images/ksp_config_11_903x239.png" style="width: 903;height: 239;" /><br /><br /></li>
+        </ol>
+        <p>Once you have the slots registered, you can begin connecting with your client application to perform crypto operations in your HSM Partitions (or HA virtual slots). If a SafeNet-tested Integration procedure for your application is not available for download from the SafeNet website, contact SafeNet Customer Support.</p>
+        <h2>If It Doesn't Work?</h2>
+        <p>When you open the KspConfig program, if it fails to display a list of available slots, then it might be that you have not properly set up your Luna HSM. </p>
+        <p>Open a Windows Command Prompt window, change directory to the "C:\Program Files\SafeNet\LunaClient\" directory, and use the "lunacm" command-line utility to see and modify the status of the HSM and HSM Partitions.</p>
+        <p>&#160;</p>
+        <h2>Algorithms Supported</h2>
+        <p>Here, for comparison, are the algorithms supported by our CSP and KSP APIs.</p>
+        <p style="font-weight: bold;">These are currently supported by the SafeNet CSP:</p>
+        <p>CALG_RSA_SIGN</p>
+        <p>CALG_RSA_KEYX</p>
+        <p>CALG_RC2</p>
+        <p>CALG_RC4</p>
+        <p>CALG_RC5</p>
+        <p>CALG_DES</p>
+        <p>CALG_3DES_112</p>
+        <p>CALG_3DES</p>
+        <p>CALG_MD2</p>
+        <p>CALG_MD5</p>
+        <p>CALG_SHA</p>
+        <p>CALG_SHA_256</p>
+        <p>CALG_SHA_384</p>
+        <p>CALG_SHA_512</p>
+        <p>CALG_MAC</p>
+        <p>CALG_HMAC</p>
+        <p><b>These are currently supported by the SafeNet KSP:</b>
+        </p>
+        <p>NCRYPT_RSA_ALGORITHM</p>
+        <p>NCRYPT_DSA_ALGORITHM</p>
+        <p>NCRYPT_ECDSA_P256_ALGORITHM</p>
+        <p>NCRYPT_ECDSA_P384_ALGORITHM</p>
+        <p>NCRYPT_ECDSA_P521_ALGORITHM</p>
+        <p>NCRYPT_ECDH_P256_ALGORITHM</p>
+        <p>NCRYPT_ECDH_P384_ALGORITHM</p>
+        <p>NCRYPT_ECDH_P521_ALGORITHM</p>
+        <p>NCRYPT_DH_ALGORITHM</p>
+        <p>NCRYPT_RSA_ALGORITHM</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <h4>&#160;</h4>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#sdk/microsoft/ksp_cng.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

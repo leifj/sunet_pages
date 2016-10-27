@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Software Updates and Maintenance">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Advanced Configuration Upgrades</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/sw_maint/advanced_configuration_upgrades.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="sw_maint.htm">Software Updates and Maintenance</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Advanced Configuration Upgrades</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Advanced Configuration Upgrades</h2>
+        <p>SafeNet offers advanced configuration upgrades for its HSM products.  Some examples – but not a complete list, please check with your sales representative for the full list – include the following:</p>
+        <h5>Luna SA</h5>
+        <p>•	Maximum memory, part #908-000086-001</p>
+        <p>•	Korean algorithms, part #908-000139-002</p>
+        <p>•	ECIES acceleration, part #908-000175-001 &#160;&#160;</p>
+        <p>•	 5 partitions, part #908-000201-001 &#160;&#160;</p>
+        <p>•	10 partitions, part #908-000202-001 &#160;</p>
+        <p>•	15 partitions, part #908-000203-001 &#160;</p>
+        <p>•	20 partitions, part #908-000204-001 &#160;</p>
+        <h5>Luna PCI-E</h5>
+        <p>•	Korean algorithms, part #908-000138-002</p>
+        <p>•	ECIES acceleration, part #908-000177-001</p>
+        <h5>Luna G5</h5>
+        <p>•	Korean algorithms, part #908-000156-002</p>
+        <p>•	ECIES acceleration, part #908-000179-001</p>
+        <p>SafeNet delivers advanced configuration upgrades for Luna SA as a secure package update.  Follow the steps of <a href="luna_hsm_capability_updates.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Luna HSM Capability Updates"</span></a> to apply the update.  For Luna PCI-E and Luna G5, you receive a firmware update file (FUF).  Follow the steps of  to apply the update.</p>
+        <h3>ECIES Acceleration</h3>
+        <p>SafeNet offers ECIES support via a client-library shim.  With the shim, ECIES 386-bit performance is approximately 40 operations per second.  The ECIES acceleration configuration upgrade improves performance.  This upgrade provides an approximately 5x performance increase.  If you choose to apply and use the configuration upgrade, you must remove the shim from your system configuration for the upgrade to have effect:  shim use overrides acceleration.</p>
+        <p>Applying the ECIES advanced configuration upgrade is a destructive operation:  objects already created on the HSM are destroyed.  Therefore, you should apply this update when you first configure your HSM, before putting it into production (alternatively, you can back up any important objects and restore them onto the HSM after the upgrade).  </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The full ECIES suite of mechanisms is not approved by NIST (that is, not all are FIPS 140-2 algorithms).  Applying EITHER the ECIES shim OR this configuration upgrade option means that you can use all the available ECIES mechanisms when the HSM is <strong>not</strong> in the  FIPS 140-2 mode of operation, however if FIPS 140-2 mode <strong>is</strong> asserted then some ECIES mechanisms are blocked. &#160;&#160;</p>
+        <h3>Partition Licenses</h3>
+        <p>Up to about the middle of 2013, SafeNet’s business model was that appliances shipped from the factory supported 20 partitions, licensed for two with the purchase of paper licenses for upgrades.   Thereafter, SafeNet made changes to make  licensing of partitions software-enforced.  New part numbers for software licenses permit factory-installed and field-applied upgrades to replace the part numbers for paper licenses.</p>
+        <p>To determine whether a Luna SA appliance supports software-enforced licenses, log into Lunash and execute the <code>hsm displayLicenses</code> command.</p>
+        <p>If you see the following highlighted line, your appliance requires paper license upgrades:</p><pre xml:space="preserve">   HSM CAPABILITY LICENSES
+   License ID          Description 
+   ================    ====================================== 
+      621000002-000    K6 base configuration                   
+      621000021-001    Performance level 15                    
+         620127-000    Elliptic curve cryptography             
+         620114-001    Key backup via cloning protocol         
+         <span style="background-color: #ffff00;">620124-000    Maximum 20 partitions</span>                   
+         620109-000    PIN entry device (PED) enabled          
+      621010089-001    Enable remote PED capability            
+      621010358-001    Enable a split of the master tamper key to be stored externally
+</pre>
+        <p>&#160;</p>
+        <p>Ignore the remainder of this section.
+</p>
+        <p>The highlighted line in the output indicates software-enforced licenses:
+</p><pre xml:space="preserve">   HSM CAPABILITY LICENSES
+   License ID          Description 
+   ================    ====================================== 
+      621000002-000    K6 base configuration                   
+      621000021-001    Performance level 15                    
+         620127-000    Elliptic curve cryptography             
+         620114-001    Key backup via cloning protocol         
+         <span style="background-color: #ffff00;">620121-000    Maximum 2 partitions</span>                    
+         620109-000    PIN entry device (PED) enabled          
+      621010089-001    Enable remote PED capability            
+      621010358-001    Enable a split of the master tamper key to be stored externally
+</pre>
+        <p>&#160;</p>
+        <p>You can purchase license upgrades for 5, 10, 15 and 20 partitions.  When you make your purchase, receive the secure package update and apply it, you will see the partition license at the bottom of the set displayed, as the following example illustrates:</p><pre xml:space="preserve">   HSM CAPABILITY LICENSES
+   License ID          Description 
+   ================    ====================================== 
+      621000002-000    K6 base configuration                   
+      621000021-001    Performance level 15                    
+         620127-000    Elliptic curve cryptography             
+         620114-001    Key backup via cloning protocol         
+         620121-000    Maximum 2 partitions                    
+         620109-000    PIN entry device (PED) enabled          
+      621010089-001    Enable remote PED capability            
+      621010358-001    Enable a split of the master tamper key to be stored externally
+      <span style="background-color: #ffff00;">908000201-001    Maximum 5 partitions</span> <![CDATA[ ]]></pre>
+        <p>&#160;</p>
+        <p>This last license supersedes the two-partition license applied at the factory.
+Licenses are for absolute numbers of partitions - they are not additive/cumulative; you cannot add a 5 to a 10 to get 15.</p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>IMPORTANT:  Do NOT apply a lower partition license upgrade atop a higher one.  For example, if you purchase a 5 partition license upgrade but do not apply it, later purchase a 20 partition license upgrade and apply it, then apply the 5 partition license upgrade, the software will enforce a maximum of 5 partitions.  You cannot apply the same license upgrades twice.  In this scenario, you will need to obtain an RMA to have the appliance returned to the factory for re-manufacture to enable application of the 20 partition license again.
+</p>
+        <p>The following example shows the application of increasing license upgrades for each of the four tiers available with the last one being in effect (20 partitions).
+</p><pre xml:space="preserve">   HSM CAPABILITY LICENSES
+   License ID          Description 
+   ================    ====================================== 
+      621000002-000    K6 base configuration                   
+      621000021-001    Performance level 15                    
+         620127-000    Elliptic curve cryptography             
+         620114-001    Key backup via cloning protocol         
+         620121-000    Maximum 2 partitions                    
+         620109-000    PIN entry device (PED) enabled          
+      621010089-001    Enable remote PED capability            
+      621010358-001    Enable a split of the master tamper key to be stored externally
+      908000201-001    Maximum 5 partitions                    
+      908000202-001    Maximum 10 partitions                   
+      908000203-001    Maximum 15 partitions                   
+      908000204-001    Maximum 20 partitions                   
+</pre>
+        <p>&#160;</p>
+        <h3><a name="kanchor202"></a>Rollback Behavior</h3>
+        <p>When it became possible to roll HSM firmware <span class="MCTextPopup MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm  MCTextPopupHotSpot_">updates<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>A secure package that installs a newer version of HSM firmware, to fix defects, or to modify/improve existing features, or to add enhancements.</span></span> back to earlier versions, some additional concerns became evident.</p>
+        <p>Consider an HSM that was formerly at version W, is currently at version X, and might someday be updated to version Y.</p>
+        <p>If an HSM is at version X and a configuration <span class="MCTextPopup MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm  MCTextPopupHotSpot_">upgrade<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>A secure package that can be applied to the HSM to grant new capability or to enhance existing function.</span></span> (for example, KOREAN algorithms) is applied, and then a firmware rollback is performed at some later time, the configuration upgrade is lost and is no longer part of the pre-X rollback condition.</p>
+        <p>When an update is performed, the system preserves a record of its version and feature state just before the update takes place. This makes roll-back possible.The pre-update record of &lt;firmware version+configuration&gt; is fixed. When you rollback, you <span class="MCTextPopup MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm  MCTextPopupHotSpot_">rollback<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>To return the HSM to its previous firmware version. This gives up any enhancements or fixes that were gained by the newer firmware version, as well as any upgrades that were installed after the firmware update (that is to be rolled back).</span></span> to exactly the state that was recorded, pre-update.</p>
+        <p>Thus, if a configuration upgrade is applied to version X, and then a firmware update is performed to version Y, and then a firmware rollback is performed, the configuration upgrade remains present because it was present in version X when the most recent pre-update state was preserved.</p>
+        <p>We advise you to retain a copy of any in-field configuration upgrades. </p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/sw_maint/advanced_configuration_upgrades.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

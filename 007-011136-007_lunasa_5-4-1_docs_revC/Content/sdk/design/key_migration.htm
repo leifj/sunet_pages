@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Design Considerations">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Migrating Keys From Software to a Luna HSM</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/design/key_migration.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">SDK Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="design.htm">Design Considerations</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Migrating Keys From Software to a Luna HSM</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Migrating Keys From Software to a Luna HSM</h2>
+        <p>Luna HSMs expect key material to be in PKCS#8 format. &#160;PKCS#8 
+ format follows BER (Basic encoding rules)/DER (distinguished encoding 
+ rules) encoding. &#160;An 
+ example of this format can be found in the document "Some examples 
+ of PKCS standards" produced by RSA, and available on their web site 
+ (http://www.rsasecurity.com/rsalabs/pkcs/index.html at the bottom of the 
+ page, under “Related Documents”). </p>
+        <p>Here is an example of a formatted key:</p><pre xml:space="preserve">&#160;0x30, 
+ 0x82, 0x04, 0xbc, 0x02, 0x01, 0x00, 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 
+ 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, 0x01, 0x05, 0x00, 0x04, 0x82, 0x04, 
+ 0xa6, 0x30, 0x82, 0x04, 0xa2, 0x02, 0x01, 0x00, 0x02, 0x82, 0x01, 0x01, 
+ 0x00, 0xb8, 0xb5, 0x0f, 0x49, 0x46, 0xb5, 0x5d, 0x58, 0x04, 0x8e, 0x52, 
+ 0x59, 0x39, 0xdf, 0xd6, 0x29, 0x45, 0x6b, 0x6c, 0x96, 0xbb, 0xab, 0xa5, 
+ 0x6f, 0x72, 0x1b, 0x16, 0x96, 0x74, 0xd5, 0xf9, 0xb4, 0x41, 0xa3, 0x7c, 
+ 0xe1, 0x94, 0x73, 0x4b, 0xa7, 0x23, 0xff, 0x61, 0xeb, 0xce, 0x5a, 0xe7, 
+ 0x7f, 0xe3, 0x74, 0xe8, 0x52, 0x5b, 0xd6, 0x5d, 0x5c, 0xdc, 0x98, 0x49, 
+ 0xfe, 0x51, 0xc2, 0x7e, 0x8f, 0x3b, 0x37, 0x5c, 0xb3, 0x11, 0xed, 0x85, 
+ 0x91, 0x15, 0x92, 0x24, 0xd8, 0xf1, 0x7b, 0x3d, 0x2f, 0x8b, 0xcd, 0x1b, 
+ 0x30, 0x14, 0xa3, 0x6b, 0x1b, 0x4d, 0x27, 0xff, 0x6a, 0x58, 0x84, 0x9e, 
+ 0x79, 0x94, 0xca, 0x78, 0x64, 0x01, 0x33, 0xc3, 0x58, 0xfc, 0xd3, 0x83, 
+ 0xeb, 0x2f, 0xab, 0x6f, 0x85, 0x5a, 0x38, 0x41, 0x3d, 0x73, 0x20, 0x1b, 
+ 0x82, 0xbc, 0x7e, 0x76, 0xde, 0x5c, 0xfe, 0x42, 0xd6, 0x7b, 0x86, 0x4f, 
+ 0x79, 0x78, 0x29, 0x82, 0x87, 0xa6, 0x24, 0x43, 0x39, 0x74, 0xfe, 0xf2, 
+ 0x0c, 0x08, 0xbe, 0xfa, 0x1e, 0x0a, 0x48, 0x6f, 0x14, 0x86, 0xc5, 0xcd, 
+ 0x9a, 0x98, 0x09, 0x2d, 0xf3, 0xf3, 0x5a, 0x7a, 0xa4, 0xe6, 0x8a, 0x2e, 
+ 0x49, 0x8a, &#160;0xde, 
+ 0x73, 0xe9, 0x37, 0xa0, 0x5b, 0xef, 0xd0, 0xe0, 0x13, 0xac, 0x88, 0x5f, 
+ 0x59, 0x47, 0x96, 0x7f, 0x78, 0x18, 0x0e, 0x44, 0x6a, 0x5d, &#160;0xec, 
+ 0x6e, 0xed, 0x4f, 0xf6, 0x6a, 0x7a, 0x58, 0x6b, 0xfe, 0x6c, 0x5a, 0xb9, 
+ 0xd2, 0x22, 0x3a, 0x1f, 0xdf, 0xc3, 0x09, 0x3f, 0x6b, 0x2e, 0xf1, 0x6d, 
+ 0xc3, 0xfb, 0x4e, 0xd4, 0xf2, 0xa3, 0x94, 0x13, 0xb0, 0xbf, 0x1e, 0x06, 
+ 0x2e, 0x29, 0x55, 0x00, 0xaa, 0x98, 0xd9, 0xe8, 0x77, 0x84, 0x8b, 0x3f, 
+ 0x5f, 0x5e, 0xf7, 0xf8, 0xa7, 0xe6, 0x02, 0xd2, 0x18, 0xb0, 0x52, 0xd0, 
+ 0x37, 0x2e, 0x53, 0x02, 0x03, 0x01, 0x00, 0x01, 0x02, 0x82, 0x01, 0x00, 
+ 0x0c, 0xdf, 0xd1, 0xe8, 0xf1, 0x9c, 0xc2, 0x9c, 0xd7, 0xf4, 0x73, 0x98, 
+ 0xf4, 0x87, 0xbd, 0x8d, 0xb2, 0xe1, 0x01, 0xf8, 0x9f, 0xac, 0x1f, 0x23, 
+ 0xdd, 0x78, 0x35, 0xe2, 0xd6, 0xd1, 0xf3, 0x4d, 0xb5, 0x25, 0x88, 0x16, 
+ 0xd1, 0x1a, 0x18, 0x33, 0xd6, 0x36, 0x7e, 0xc4, 0xc8, 0xe5, 0x5d, 0x2d, 
+ 0x74, 0xd5, 0x39, 0x3c, 0x44, 0x5a, 0x74, 0xb7, 0x7c, 0x48, 0xc1, 0x1f, 
+ 0x90, 0xe3, 0x55, 0x9e, 0xf6, 0x29, 0xad, 0xb4, 0x6d, 0x93, 0x78, 0xb3, 
+ 0xdc, 0x25, 0x0b, 0x9c, 0x73, 0x78, 0x7b, 0x93, 0x4c, 0xd3, 0x47, 0x09, 
+ 0xda, 0xe6, 0x69, 0x18, 0xc6, 0x0f, 0xfb, 0xa5, 0x95, 0xf5, 0xe8, 0x75, 
+ 0xe1, 0x01, 0x1b, 0xd3, 0x1c, 0xa2, 0x57, 0x03, 0x64, 0xdb, 0xf9, 0x5d, 
+ 0xf3, 0x3c, 0xa7, 0xd1, 0x4b, 0xb0, 0x90, 0x1b, 0x90, 0x62, 0xb4, 0x88, 
+ 0x30, 0x4b, 0x40, 0x4d, 0xcf, 0x7d, 0x89, 0x7a, 0xfb, 0x29, 0xc9, 0x64, 
+ 0x34, 0x0a, 0x52, 0xf6, 0x70, 0x7c, 0x76, 0x5a, 0x2e, 0x8f, 0x50, 0xd4, 
+ 0x92, 0x15, 0x97, 0xed, 0x4c, 0x2e, 0xf2, 0x3a, 0xd0, 0x58, 0x7e, 0xdb, 
+ 0xf1, 0xf4, 0xdd, 0x07, 0x76, 0x04, 0xf0, 0x55, 0x8b, 0x72, 0x2b, 0xa7, 
+ 0xa8, 0x78, 0x78, 0x67, 0xe6, 0xd8, 0xa5, 0xde, 0xe7, 0xc9, 0x1f, 0x5a, 
+ 0xa0, 0x89, 0xc7, 0x24, 0xa2, 0x71, 0xb6, 0x7b, 0x3b, 0xe6, 0x92, 0x69, 
+ 0x22, 0xaa, 0xe2, 0x47, 0x4b, 0x80, 0x3f, 0x6a, 0xab, 0xce, 0x4e, 0xcd, 
+ 0xe8, 0x94, 0x6c, 0xf7, 0x84, 0x73, 0x85, 0xfd, 0x85, 0x1d, 0xae, 0x81, 
+ 0xf7, 0xec, 0x12, 0x31, 0x7d, 0xc1, 0x99, 0xc0, 0x3c, 0x51, 0xb0, 0xdc, 
+ 0xb0, 0xba, 0x9c, 0x84, 0xb8, 0x70, 0xc2, 0x09, 0x7f, 0x96, 0x3d, 0xa1, 
+ 0xe2, 0x64, 0x27, 0x7a, 0x22, 0xb8, 0x75, 0xb9, 0xd1, 0x5f, 0xa5, 0x23, 
+ 0xf9, 0x62, 0xe0, 0x41, 0x02, 0x81, 0x81, 0x00, 0xf4, 0xf3, 0x08, 0xcf, 
+ 0x83, 0xb0, 0xab, 0xf2, 0x0f, 0x1a, 0x08, 0xaf, 0xc2, 0x42, 0x29, 0xa7, 
+ 0x9c, 0x5e, 0x52, 0x19, 0x69, 0x8d, 0x5b, 0x52, 0x29, 0x9c, 0x06, 0x6a, 
+ 0x5a, 0x32, 0x8f, 0x08, 0x45, 0x6c, 0x43, 0xb5, 0xac, 0xc3, 0xbb, 0x90, 
+ 0x7b, 0xec, 0xbb, 0x5d, 0x71, 0x25, 0x82, 0xf8, 0x40, 0xbf, 0x38, 0x00, 
+ 0x20, 0xf3, 0x8a, 0x38, 0x43, 0xde, 0x04, 0x41, 0x19, 0x5f, 0xeb, 0xb0, 
+ 0x50, 0x59, 0x10, 0xe1, 0x54, 0x62, 0x5c, 0x93, 0xd9, 0xdc, 0x63, 0x24, 
+ 0xd0, 0x17, 0x00, 0xc0, 0x44, 0x3e, 0xfc, 0xd1, 0xda, 0x4b, 0x24, 0xf7, 
+ 0xcb, 0x16, 0x35, 0xe6, 0x9f, 0x67, 0x96, 0x5f, 0xb0, 0x94, 0xde, 0xfa, 
+ 0xa1, 0xfd, 0x8c, 0x8a, 0xd1, 0x5c, 0x02, 0x8d, 0xe0, 0xa0, 0xa0, &#160;0x02, 
+ 0x1d, 0x56, 0xaf, 0x13, 0x3a, 0x65, 0x5e, 0x8e, 0xde, 0xd1, 0xa8, 0x28, 
+ 0x8b, 0x71, 0xc9, 0x65, 0x02, 0x81, 0x81, 0x00, 0xc1, 0x0a, &#160;0x47, 
+ 0x39, 0x91, 0x06, 0x1e, 0xb9, 0x43, 0x7c, 0x9e, 0x97, 0xc5, 0x09, 0x08, 
+ 0xbc, 0x22, 0x47, 0xe2, 0x96, 0x8e, 0x1c, 0x74, 0x80, 0x50, 0x6c, 0x9f, 
+ 0xef, 0x2f, 0xe5, 0x06, 0x3e, 0x73, 0x66, 0x76, 0x02, 0xbd, 0x9a, 0x1c, 
+ 0xfc, 0xf9, 0x6a, 0xb8, 0xf9, 0x36, 0x15, 0xb5, 0x20, 0x0b, 0x6b, 0x54, 
+ 0x83, 0x9c, 0x86, 0xba, 0x13, 0xb7, 0x99, 0x54, 0xa0, 0x93, 0x0d, 0xd6, 
+ 0x1e, 0xc1, 0x12, 0x72, 0x0d, 0xea, 0xb0, 0x14, 0x30, 0x70, 0x73, 0xef, 
+ 0x6b, 0x4c, 0xae, 0xb6, 0xff, 0xd4, 0xbb, 0x89, 0xa1, 0xec, 0xca, 0xa6, 
+ 0xe9, 0x95, 0x56, 0xac, 0xe2, 0x9b, 0x97, 0x2f, 0x2c, 0xdf, 0xa3, 0x6e, 
+ 0x59, 0xff, 0xcd, 0x3c, 0x6f, 0x57, 0xcc, 0x6e, 0x44, 0xc4, 0x27, 0xbf, 
+ 0xc3, 0xdd, 0x19, 0x9e, 0x81, 0x16, 0xe2, 0x8f, 0x65, 0x34, 0xa7, 0x0f, 
+ 0x22, 0xba, 0xbf, 0x79, 0x57, 0x02, 0x81, 0x80, 0x2e, 0x21, 0x0e, 0xc9, 
+ 0xb5, 0xad, 0x31, 0xd4, 0x76, 0x0f, 0x9b, 0x0f, 0x2e, 0x70, 0x33, 0x54, 
+ 0x03, 0x58, 0xa7, 0xf1, 0x6d, 0x35, 0x57, 0xbb, 0x53, 0x66, 0xb4, 0xb6, 
+ 0x96, 0xa1, 0xea, 0xd9, 0xcd, 0xe9, 0x23, 0x9f, 0x35, 0x17, 0xef, 0x5c, 
+ 0xb8, 0x59, 0xce, 0xb7, 0x3c, 0x35, 0xaa, 0x42, 0x82, 0x3f, 0x00, 0x96, 
+ 0xd5, 0x9d, 0xc7, 0xab, 0xec, 0xec, 0x04, 0xb5, 0x15, 0xc8, 0x40, 0xa4, 
+ 0x85, 0x9d, 0x20, 0x56, 0xaf, 0x03, 0x8f, 0x17, 0xb0, 0xf1, 0x96, 0x22, 
+ 0x3a, 0xa5, 0xfa, 0x58, 0x3b, 0x01, 0xf9, 0xae, 0xb3, 0x83, 0x6f, 0x44, 
+ 0xd3, 0x14, 0x2d, 0xb6, 0x6e, 0xd2, 0x9d, 0x39, 0x0c, 0x12, 0x1d, 0x23, 
+ 0xea, 0x19, 0xcb, 0xbb, 0xe0, 0xcd, 0x89, 0x15, 0x9a, 0xf5, 0xe4, 0xec, 
+ 0x41, 0x06, 0x30, 0x16, 0x58, 0xea, 0xfa, 0x31, 0xc1, 0xb8, 0x8e, 0x08, 
+ 0x84, 0xaa, 0x3b, 0x19, 0x02, 0x81, 0x80, 0x70, 0x4c, 0xf8, 0x6e, 0x86, 
+ 0xed, 0xd6, 0x85, 0xd4, 0xba, 0xf4, 0xd0, 0x3a, 0x32, 0x2d, 0x40, 0xb5, 
+ 0x78, 0xb8, 0x5a, 0xf9, 0xc5, 0x98, 0x08, 0xe5, 0xc0, 0xab, 0xb2, 0x4c, 
+ 0x5c, 0xa2, 0x2b, 0x46, 0x9b, 0x3e, 0xe0, 0x0d, 0x49, 0x50, 0xbf, 0xe2, 
+ 0xa1, 0xb1, 0x86, 0x59, 0x6e, 0x7b, 0x76, 0x6e, 0xee, 0x3b, 0xb6, 0x6d, 
+ 0x22, 0xfb, 0xb1, 0x68, 0xc7, 0xec, 0xb1, 0x95, 0x9b, 0x21, 0x0b, 0xb7, 
+ 0x2a, 0x71, 0xeb, 0xa2, 0xb2, 0x58, 0xac, 0x6d, 0x5f, 0x24, 0xd3, 0x79, 
+ 0x42, 0xd2, 0xf7, 0x35, 0xdc, 0xfc, 0x0e, 0x95, 0x60, 0xb7, 0x85, 0x7f, 
+ 0xf9, 0x72, 0x8e, 0x4a, 0x11, 0xc3, 0xc2, 0x09, 0x40, 0x5c, 0x7c, 0x43, 
+ 0x12, 0x34, 0xac, 0x59, 0x99, 0x76, 0x34, &#160;0xcf, 
+ 0x20, 0x88, 0xb0, 0xfb, 0x39, 0x62, 0x3a, 0x9b, 0x03, 0xa6, 0x84, 0x2c, 
+ 0x03, 0x5c, 0x0c, 0xca, 0x33, 0x85, 0xf5, 0x02, 0x81, 0x80, &#160;0x56, 
+ 0x99, 0xe9, 0x17, 0xdc, 0x33, 0xe1, 0x33, 0x8d, 0x5c, 0xba, 0x17, 0x32, 
+ 0xb7, 0x8c, 0xbd, 0x4b, 0x7f, 0x42, 0x3a, 0x79, 0x90, 0xe3, &#160;0x70, 
+ 0xe3, 0x27, 0xce, 0x22, 0x59, 0x02, 0xc0, 0xb1, 0x0e, 0x57, 0xf5, 0xdf, 
+ 0x07, 0xbf, 0xf8, 0x4e, 0x10, 0xef, 0x2a, 0x62, 0x30, 0x03, &#160;0xd4, 
+ 0x80, 0xcf, 0x20, 0x84, 0x25, 0x66, 0x3f, 0xc7, 0x4f, 0x56, 0x8c, 0x1e, 
+ 0xe1, 0x18, 0x91, 0xc1, 0xfd, 0x71, 0x5f, 0x65, 0x9b, 0xe4, &#160;0x4f, 
+ 0xe0, 0x1a, 0x3a, 0xf8, 0xc1, 0x69, 0xdb, 0xd3, 0xbb, 0x8d, 0x91, 0xd1, 
+ 0x11, 0x4f, 0x7e, 0x91, 0x1b, 0xb4, 0x27, 0xa5, 0xab, 0x7c, &#160;0x7b, 
+ 0x76, 0xd4, 0x78, 0xfe, 0x63, 0x44, 0x63, 0x7e, 0xe3, 0xa6, 0x60, 0x4f, 
+ 0xb9, 0x55, 0x28, 0xba, 0xba, 0x83, 0x1a, 0x2d, 0x43, 0xd5, &#160;0xf7, 
+ 0x2e, 0xe0, 0xfc, 0xa8, 0x14, 0x9b, 0x91, 0x2a, 0x36, 0xbf, 0xc7, 0x14</pre><pre xml:space="preserve">&#160;</pre>
+        <p>The example above contains the exponent, the modulus, and private key 
+ material.</p>
+        <h3>Other Formats of Key Material</h3>
+        <p>The format of key material depends on the application, and is therefore 
+ unpredictable. &#160;Key 
+ material commonly exists in any of the following formats; ASN1, PEM, P12, 
+ PFX, etc. &#160;Key 
+ material in those formats, or in another format, can likely be re-formatted 
+ to be acceptable for moving onto the Luna HSM. &#160;</p>
+        <h3>Sample Program</h3>
+        <p>The sample program below encrypts a known RSA private key, then unwraps 
+ the key pair onto the Luna HSM Partition.</p>
+        <p class="code">/****************************************************************************\</p>
+        <p class="code">*</p>
+        <p class="code">* File: UnwrapKey.cpp*</p>
+        <p class="code">* Encrypts a PrivateKeyInfo structure with a generated DES 
+ key and then</p>
+        <p class="code">* unwraps the RSA key onto a token. </p>
+        <p class="code">*</p>
+        <p class="code">* This file is provided as an example only.</p>
+        <p class="code">* </p>
+        <p class="code">*</p>
+        <p class="code">* Copyright (C) 2011, SafeNet, Inc.</p>
+        <p class="code">*</p>
+        <p class="code">* All rights reserved. This file contains information that 
+ is</p>
+        <p class="code">* proprietary to SafeNet, Inc. and may not be </p>
+        <p class="code">* distributed or copied without written consent from </p>
+        <p class="code">* SafeNet, Inc.</p>
+        <p class="code">*</p>
+        <p class="code">\**************************************************************/</p>
+        <p class="code">#ifdef UNIX</p>
+        <p class="code">#define _POSIX_SOURCE 1</p>
+        <p class="code">#endif</p>
+        <p class="code">#ifdef USING_STATIC_CHRYSTOKI</p>
+        <p class="code"># define STATIC &#160;ckdemo_cpp</p>
+        <p class="code">#endif</p>
+        <p class="code">#include &lt;assert.h&gt;</p>
+        <p class="code">#include &lt;iostream.h&gt;</p>
+        <p class="code">#include &lt;stdio.h&gt;</p>
+        <p class="code">#include &lt;stdlib.h&gt;</p>
+        <p class="code">#include &lt;string.h&gt;</p>
+        <p class="code">#include &lt;fcntl.h&gt;</p>
+        <p class="code">#include &lt;sys/stat.h&gt;</p>
+        <p class="code">#include &lt;time.h&gt;</p>
+        <p class="code">#ifdef _WINDOWS</p>
+        <p class="code">#include &lt;conio.h&gt;</p>
+        <p class="code">#include &lt;io.h&gt;</p>
+        <p class="code">#include &lt;windows.h&gt;</p>
+        <p class="code">#endif</p>
+        <p class="code">#ifdef UNIX</p>
+        <p class="code">#include &lt;unistd.h&gt;</p>
+        <p class="code">#endif</p>
+        <p class="code">#include "source/cryptoki.h"</p>
+        <p class="code">#include "source/Ckbridge.h"</p>
+        <p class="code">#define DIM(a) &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;(sizeof(a)/sizeof(a[0]))</p>
+        <p class="code">CK_BBOOL no = FALSE;</p>
+        <p class="code">CK_BBOOL yes = TRUE;</p>
+        <p class="code">const int MAX =100;</p>
+        <p class="code">// Function Prototypes</p>
+        <p class="code">CK_RV &#160;Pinlogin(CK_SESSION_HANDLE 
+ hSession);</p>
+        <p class="code">int getPinString(CK_CHAR_PTR pw);</p>
+        <p class="code">// Main</p>
+        <p class="code">int main( void )</p>
+        <p class="code">{</p>
+        <p class="code">&#160;&#160;&#160;int 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;error 
+ = 0;</p>
+        <p class="code">&#160;&#160;&#160;CK_RV 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;retCode 
+ = CKR_OK;</p>
+        <p class="code">&#160;&#160;&#160;CK_SESSION_HANDLE 
+ hSessionHandle;</p>
+        <p class="code">&#160;&#160;&#160;CK_CHAR_PTR 
+ &#160;&#160;&#160;&#160;&#160;&#160;userPIN 
+ = (CK_CHAR_PTR)"default";</p>
+        <p class="code">&#160;&#160;&#160;CK_USHORT 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;lenuserPIN 
+ &#160;= 7;</p>
+        <p class="code">&#160;&#160;&#160;CK_CHAR_PTR 
+ &#160;&#160;&#160;&#160;&#160;&#160;soPIN 
+ = (CK_CHAR_PTR)"default";</p>
+        <p class="code">&#160;&#160;&#160;CK_USHORT 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;lensoPIN 
+ = 7;</p>
+        <p class="code">&#160;&#160;&#160;CK_USHORT 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usNumberOfSlots;</p>
+        <p class="code">&#160;&#160;&#160;CK_SLOT_ID_PTR 
+ &#160;&#160;&#160;pSlotList;</p>
+        <p class="code">&#160;&#160;&#160;CK_OBJECT_HANDLE 
+ hKey;</p>
+        <p class="code">&#160;&#160;&#160;CK_MECHANISM 
+ mech;</p>
+        <p class="code">&#160;&#160;&#160;CK_VERSION 
+ version;</p>
+        <p class="code">&#160;&#160;&#160;struct</p>
+        <p class="code">&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_INFO 
+ info;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;char 
+ reserved[100]; // This is in case the library that we are</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ talking to requires a larger info structure</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ then the one defined.</p>
+        <p class="code">&#160;&#160;&#160;} 
+ protectedInfo;</p>
+        <p class="code">//Disclaimer</p>
+        <p class="code">&#160;&#160;&#160;cout 
+ &lt;&lt; "\n\n\n\n";</p>
+        <p class="code">cout &lt;&lt; "THE SOFTWARE IS PROVIDED BY SAFENET INCORPORATED 
+ (SAFENET) ON AN 'AS IS' BASIS, \n";</p>
+        <p class="code">cout &lt;&lt; "WITHOUT ANY OTHER WARRANTIES OR CONDITIONS, 
+ EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED \n";</p>
+        <p class="code">cout &lt;&lt; "TO, WARRANTIES OF MERCHANTABLE QUALITY, 
+ SATISFACTORY QUALITY, MERCHANTABILITY OR FITNESS FOR\n";</p>
+        <p class="code">cout &lt;&lt; "A PARTICULAR PURPOSE, OR THOSE ARISING 
+ BY LAW, STATUTE, USAGE OF TRADE, COURSE OF DEALING OR\n";</p>
+        <p class="code">cout &lt;&lt; "OTHERWISE. &#160;SAFENET 
+ DOES NOT WARRANT THAT THE SOFTWARE WILL MEET YOUR REQUIREMENTS OR \n";</p>
+        <p class="code">cout &lt;&lt; "THAT OPERATION OF THE SOFTWARE WILL BE 
+ UNINTERRUPTED OR THAT THE SOFTWARE WILL BE ERROR-FREE.\n";</p>
+        <p class="code">cout &lt;&lt; "YOU ASSUME THE ENTIRE RISK AS TO THE 
+ RESULTS AND PERFORMANCE OF THE SOFTWARE. &#160;NEITHER 
+ \n";</p>
+        <p class="code">cout &lt;&lt; "SAFENET NOR OUR LICENSORS, DEALERS OR 
+ SUPPLIERS SHALL HAVE ANY LIABILITY TO YOU OR ANY\n";</p>
+        <p class="code">cout &lt;&lt; "OTHER PERSON OR ENTITY FOR ANY INDIRECT, 
+ INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, \n";</p>
+        <p class="code">cout &lt;&lt; "EXEMPLARY OR AY OTHER DAMAGES WHATSOEVER, 
+ INCLUDING, BUT NOT LIMITED TO, LOSS OF REVENUE OR \n";</p>
+        <p class="code">cout &lt;&lt; "PROFIT, LOST OR DAMAGED DATA, LOSS OF 
+ USE OR OTHER COMMERCIAL OR ECONOMIC LOSS, EVEN IF \n";</p>
+        <p class="code">cout &lt;&lt; "SAFENET HAS BEEN ADVISED OF THE POSSIBILITY 
+ OF SUCH DAMAGES, OR THEY ARE FORESEEABLE. \n";</p>
+        <p class="code">cout &lt;&lt; "SAFENET IS ALSO NOT RESPONSIBLE FOR CLAIMS 
+ BY A THIRD PARTY. &#160;THE 
+ MAXIMUM AGGREGATE \n";</p>
+        <p class="code">cout &lt;&lt; "LIABILITY OF SAFENET TO YOU AND THAT 
+ OF SAFENET’S LICENSORS, DEALERS AND SUPPLIERS \n";</p>
+        <p class="code">cout &lt;&lt; "SHALL NOT EXCEED FORTY DOLLARS ($40.00CDN). 
+ &#160;THE LIMITATIONS 
+ IN THIS SECTION SHALL APPLY \n";</p>
+        <p class="code">cout &lt;&lt; "WHETHER OR NOT THE ALLEGED BREACH OR 
+ DEFAULT IS A BREACH OF A FUNDAMENTAL CONDITION OR TERM \n";</p>
+        <p class="code">cout &lt;&lt; "OR A FUNDAMENTAL BREACH. &#160;SOME 
+ STATES/COUNTRIES DO NOT ALLOW THE EXCLUSION OR LIMITATION OF\n";</p>
+        <p class="code">cout &lt;&lt; "LIABILITY FOR CONSEQUENTIAL OR INCIDENTAL 
+ DAMAGES, SO THE ABOVE LIMITATION MAY NOT APPLY TO \n";</p>
+        <p class="code">cout &lt;&lt; "YOU.\n";</p>
+        <p class="code">cout &lt;&lt; "THE LIMITED WARRANTY, EXCLUSIVE REMEDIES 
+ AND LIMITED LIABILITY SET OUT HEREIN ARE FUNDAMENTAL \n";</p>
+        <p class="code">cout &lt;&lt; "ELEMENTS OF THE BASIS OF THE BARGAIN 
+ BETWEEN YOU AND SAFENET. &#160;\n";</p>
+        <p class="code">cout &lt;&lt; "NO SUPPORT. &#160;YOU 
+ ACKNOWLEDGE AND AGREE THAT THERE ARE NO SUPPORT SERVICES PROVIDED BY SAFENET\n";</p>
+        <p class="code">cout &lt;&lt; "INCORPORATED FOR THIS SOFTWARE\n" 
+ &lt;&lt; endl;</p>
+        <p class="code">&#160;&#160;&#160;// 
+ Display Generic Warning</p>
+        <p class="code">&#160;&#160;&#160;cout 
+ &lt;&lt; "\nInsert a token for the test...";</p>
+        <p class="code">&#160;&#160;&#160;cout 
+ &lt;&lt; "\n\nWARNING!!! This test initializes the first ";</p>
+        <p class="code">&#160;&#160;&#160;cout 
+ &lt;&lt; " token detected in the card reader.";</p>
+        <p class="code">&#160;&#160;&#160;cout 
+ &lt;&lt; "\nDo not use a token that you don't want erased.";</p>
+        <p class="code">&#160;&#160;&#160;cout 
+ &lt;&lt; "\nYou can use CTRL-C to abort now...Otherwise...";</p>
+        <p class="code">&#160;&#160;&#160;cout 
+ &lt;&lt; "\n\n... press &lt;Enter&gt; key to continue ...\n";</p>
+        <p class="code">&#160;&#160;&#160;cout.flush();</p>
+        <p class="code">&#160;&#160;&#160;getchar(); 
+ // Wait for keyboard hit</p>
+        <p class="code">#ifndef STATIC &#160;&#160;</p>
+        <p class="code">&#160;&#160;&#160;// 
+ Connect to Chrystoki</p>
+        <p class="code">if(!CrystokiConnect())</p>
+        <p class="code">{</p>
+        <p class="code">cout &lt;&lt; "\n" "Unable to connect to Chrystoki. 
+ &#160;Error = 
+ " &lt;&lt; LibError() &lt;&lt; "\n";</p>
+        <p class="code">error = -1;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_1;</p>
+        <p class="code">}</p>
+        <p class="code">#endif</p>
+        <p class="code">&#160;&#160;&#160;// 
+ Verify this is the version of the library required</p>
+        <p class="code">&#160;&#160;&#160;retCode 
+ = C_GetInfo(&amp;protectedInfo.info);</p>
+        <p class="code">&#160;&#160;&#160;if( 
+ retCode != CKR_OK )</p>
+        <p class="code">&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; endl &lt;&lt; "Unable to call C_GetInfo() before C_Initialize()\n";</p>
+        <p class="code">error = -2;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_2;</p>
+        <p class="code">&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;else</p>
+        <p class="code">&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE 
+ majorVersion = protectedInfo.info.version.major;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE 
+ expectedVersion;</p>
+        <p class="code">#ifndef PKCS11_2_0</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;expectedVersion 
+ = 1;</p>
+        <p class="code">#else</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;expectedVersion 
+ = 2;</p>
+        <p class="code">#endif</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ expectedVersion != majorVersion )</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; endl &lt;&lt; "This version of the program was built for 
+ Cryptoki version "</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&lt;&lt; 
+ (int)expectedVersion &lt;&lt; ".\n"</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&lt;&lt; 
+ "The loaded Cryptoki library reports its version to be "</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&lt;&lt; 
+ (int)majorVersion &lt;&lt; ".\n"</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&lt;&lt; 
+ "Program will terminate.\n";</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Wait to exit until user read message and acknowledges</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; endl &lt;&lt; "Press &lt;Enter&gt; key to end.";</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;getchar(); 
+ // Wait for keyboard hit</p>
+        <p class="code">&#160;&#160;&#160;error 
+ = -3;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_2;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;// 
+ Initialize the Library</p>
+        <p class="code">retCode = C_Initialize(NULL);</p>
+        <p class="code">if(retCode != CKR_OK)</p>
+        <p class="code">{</p>
+        <p class="code">cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode &lt;&lt; " initializing cryptoki.\n";</p>
+        <p class="code">error = -4;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_3;</p>
+        <p class="code">}</p>
+        <p class="code">// Get the number of tokens possibly available</p>
+        <p class="code">retCode = C_GetSlotList(TRUE, NULL, &amp;usNumberOfSlots);</p>
+        <p class="code">if(retCode != CKR_OK)</p>
+        <p class="code">{</p>
+        <p class="code">cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode &lt;&lt; " getting slot list.\n";</p>
+        <p class="code">error = -5;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_3;</p>
+        <p class="code">}</p>
+        <p class="code">// Are any tokens present?</p>
+        <p class="code">if(usNumberOfSlots == 0)</p>
+        <p class="code">{</p>
+        <p class="code">cout &lt;&lt; "\n" "No tokens found\n";</p>
+        <p class="code">error = -6;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_3;</p>
+        <p class="code">&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;// 
+ Get a list of slots</p>
+        <p class="code">pSlotList = new CK_SLOT_ID[usNumberOfSlots];</p>
+        <p class="code">retCode = C_GetSlotList(TRUE, pSlotList, &amp;usNumberOfSlots);</p>
+        <p class="code">if(retCode != CKR_OK)</p>
+        <p class="code">{</p>
+        <p class="code">cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode &lt;&lt; " getting slot list.\n";</p>
+        <p class="code">error = -7;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_4;</p>
+        <p class="code">}</p>
+        <p class="code">&#160;&#160;&#160;// 
+ Open a session</p>
+        <p class="code">retCode = C_OpenSession(pSlotList[0], CKF_RW_SESSION | CKF_SERIAL_SESSION, 
+ </p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;NULL, 
+ NULL, &amp;hSessionHandle);</p>
+        <p class="code">if(retCode != CKR_OK)</p>
+        <p class="code">{</p>
+        <p class="code">cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode &lt;&lt; " opening session.\n";</p>
+        <p class="code">error = -9;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_4;</p>
+        <p class="code">}</p>
+        <p class="code">Pinlogin(hSessionHandle);</p>
+        <p class="code">if(retCode != CKR_OK)</p>
+        <p class="code">{</p>
+        <p class="code">cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode &lt;&lt; " Calling PinLogin fn";</p>
+        <p class="code">exit(hSessionHandle);</p>
+        <p class="code">}</p>
+        <p class="code">&#160;&#160;// 
+ Encrypt an RSA Key and then unwrap it onto the token</p>
+        <p class="code">&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;// 
+ The following is an RSA Key that is formatted as a PrivateKeyInfo structure</p>
+        <p class="code">&#160;&#160;&#160;//BER 
+ encoded format</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;const 
+ CK_BYTE pRsaKey[] = {</p>
+        <p class="code">&#160;0x30, 
+ 0x82, 0x04, 0xbc, 0x02, 0x01, 0x00, 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 
+ 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, </p>
+        <p class="code">0x01, 0x05, 0x00, 0x04,</p>
+        <p class="code">&#160;0x82, 
+ 0x04, 0xa6, 0x30, 0x82, 0x04, 0xa2, 0x02, 0x01, 0x00, 0x02, 0x82, 0x01, 
+ 0x01, 0x00, 0xb8, 0xb5, 0x0f, 0x49, </p>
+        <p class="code">0x46, 0xb5, 0x5d, 0x58,</p>
+        <p class="code">&#160;0x04, 
+ 0x8e, 0x52, 0x59, 0x39, 0xdf, 0xd6, 0x29, 0x45, 0x6b, 0x6c, 0x96, 0xbb, 
+ 0xab, 0xa5, 0x6f, 0x72, 0x1b, 0x16, </p>
+        <p class="code">0x96, 0x74, 0xd5, 0xf9,</p>
+        <p class="code">&#160;0xb4, 
+ 0x41, 0xa3, 0x7c, 0xe1, 0x94, 0x73, 0x4b, 0xa7, 0x23, 0xff, 0x61, 0xeb, 
+ 0xce, 0x5a, 0xe7, 0x7f, 0xe3, 0x74, </p>
+        <p class="code">0xe8, 0x52, 0x5b, 0xd6,</p>
+        <p class="code">&#160;0x5d, 
+ 0x5c, 0xdc, 0x98, 0x49, 0xfe, 0x51, 0xc2, 0x7e, 0x8f, 0x3b, 0x37, 0x5c, 
+ 0xb3, 0x11, 0xed, 0x85, 0x91, 0x15, </p>
+        <p class="code">0x92, 0x24, 0xd8, 0xf1,</p>
+        <p class="code">&#160;0x7b, 
+ 0x3d, 0x2f, 0x8b, 0xcd, 0x1b, 0x30, 0x14, 0xa3, 0x6b, 0x1b, 0x4d, 0x27, 
+ 0xff, 0x6a, 0x58, 0x84, 0x9e, 0x79, </p>
+        <p class="code">0x94, 0xca, 0x78, 0x64,</p>
+        <p class="code">&#160;0x01, 
+ 0x33, 0xc3, 0x58, 0xfc, 0xd3, 0x83, 0xeb, 0x2f, 0xab, 0x6f, 0x85, 0x5a, 
+ 0x38, 0x41, 0x3d, 0x73, 0x20, 0x1b, </p>
+        <p class="code">0x82, 0xbc, 0x7e, 0x76,</p>
+        <p class="code">&#160;0xde, 
+ 0x5c, 0xfe, 0x42, 0xd6, 0x7b, 0x86, 0x4f, 0x79, 0x78, 0x29, 0x82, 0x87, 
+ 0xa6, 0x24, 0x43, 0x39, 0x74, 0xfe, </p>
+        <p class="code">0xf2, 0x0c, 0x08, 0xbe,</p>
+        <p class="code">&#160;0xfa, 
+ 0x1e, 0x0a, 0x48, 0x6f, 0x14, 0x86, 0xc5, 0xcd, 0x9a, 0x98, 0x09, 0x2d, 
+ 0xf3, 0xf3, 0x5a, 0x7a, 0xa4, 0xe6, </p>
+        <p class="code">0x8a, 0x2e, 0x49, 0x8a, 0xde, 0x73, 0xe9, 0x37, 0xa0, 0x5b, 
+ 0xef,</p>
+        <p class="code">&#160;0xd0, 
+ 0xe0, 0x13, 0xac, 0x88, 0x5f, 0x59, 0x47, 0x96, 0x7f, 0x78, 0x18, 0x0e, 
+ 0x44, 0x6a, 0x5d, 0xec, 0x6e, 0xed, </p>
+        <p class="code">0x4f, 0xf6, 0x6a, 0x7a,</p>
+        <p class="code">&#160;0x58, 
+ 0x6b, 0xfe, 0x6c, 0x5a, 0xb9, 0xd2, 0x22, 0x3a, 0x1f, 0xdf, 0xc3, 0x09, 
+ 0x3f, 0x6b, 0x2e, 0xf1, 0x6d, 0xc3, </p>
+        <p class="code">0xfb, 0x4e, 0xd4, 0xf2,</p>
+        <p class="code">&#160;0xa3, 
+ 0x94, 0x13, 0xb0, 0xbf, 0x1e, 0x06, 0x2e, 0x29, 0x55, 0x00, 0xaa, 0x98, 
+ 0xd9, 0xe8, 0x77, 0x84, 0x8b, 0x3f, </p>
+        <p class="code">0x5f, 0x5e, 0xf7, 0xf8,</p>
+        <p class="code">&#160;0xa7, 
+ 0xe6, 0x02, 0xd2, 0x18, 0xb0, 0x52, 0xd0, 0x37, 0x2e, 0x53, 0x02, 0x03, 
+ 0x01, 0x00, 0x01, 0x02, 0x82, 0x01, </p>
+        <p class="code">0x00, 0x0c, 0xdf, 0xd1,</p>
+        <p class="code">&#160;0xe8, 
+ 0xf1, 0x9c, 0xc2, 0x9c, 0xd7, 0xf4, 0x73, 0x98, 0xf4, 0x87, 0xbd, 0x8d, 
+ 0xb2, 0xe1, 0x01, 0xf8, 0x9f, 0xac, </p>
+        <p class="code">0x1f, 0x23, 0xdd, 0x78,</p>
+        <p class="code">&#160;0x35, 
+ 0xe2, 0xd6, 0xd1, 0xf3, 0x4d, 0xb5, 0x25, 0x88, 0x16, 0xd1, 0x1a, 0x18, 
+ 0x33, 0xd6, 0x36, 0x7e, 0xc4, 0xc8, </p>
+        <p class="code">0xe5, 0x5d, 0x2d, 0x74,</p>
+        <p class="code">&#160;0xd5, 
+ 0x39, 0x3c, 0x44, 0x5a, 0x74, 0xb7, 0x7c, 0x48, 0xc1, 0x1f, 0x90, 0xe3, 
+ 0x55, 0x9e, 0xf6, 0x29, 0xad, 0xb4, </p>
+        <p class="code">0x6d, 0x93, 0x78, 0xb3,</p>
+        <p class="code">&#160;0xdc, 
+ 0x25, 0x0b, 0x9c, 0x73, 0x78, 0x7b, 0x93, 0x4c, 0xd3, 0x47, 0x09, 0xda, 
+ 0xe6, 0x69, 0x18, 0xc6, 0x0f, 0xfb, </p>
+        <p class="code">0xa5, 0x95, 0xf5, 0xe8,</p>
+        <p class="code">&#160;0x75, 
+ 0xe1, 0x01, 0x1b, 0xd3, 0x1c, 0xa2, 0x57, 0x03, 0x64, 0xdb, 0xf9, 0x5d, 
+ 0xf3, 0x3c, 0xa7, 0xd1, 0x4b, 0xb0, </p>
+        <p class="code">0x90, 0x1b, 0x90, 0x62,</p>
+        <p class="code">&#160;0xb4, 
+ 0x88, 0x30, 0x4b, 0x40, 0x4d, 0xcf, 0x7d, 0x89, 0x7a, 0xfb, 0x29, 0xc9, 
+ 0x64, 0x34, 0x0a, 0x52, 0xf6, 0x70, </p>
+        <p class="code">0x7c, 0x76, 0x5a, 0x2e,</p>
+        <p class="code">&#160;0x8f, 
+ 0x50, 0xd4, 0x92, 0x15, 0x97, 0xed, 0x4c, 0x2e, 0xf2, 0x3a, 0xd0, 0x58, 
+ 0x7e, 0xdb, 0xf1, 0xf4, 0xdd, 0x07, </p>
+        <p class="code">0x76, 0x04, 0xf0, 0x55,</p>
+        <p class="code">&#160;0x8b, 
+ 0x72, 0x2b, 0xa7, 0xa8, 0x78, 0x78, 0x67, 0xe6, 0xd8, 0xa5, 0xde, 0xe7, 
+ 0xc9, 0x1f, 0x5a, 0xa0, 0x89, 0xc7, </p>
+        <p class="code">0x24, 0xa2, 0x71, 0xb6,</p>
+        <p class="code">&#160;0x7b, 
+ 0x3b, 0xe6, 0x92, 0x69, 0x22, 0xaa, 0xe2, 0x47, 0x4b, 0x80, 0x3f, 0x6a, 
+ 0xab, 0xce, 0x4e, 0xcd, 0xe8, 0x94, </p>
+        <p class="code">0x6c, 0xf7, 0x84, 0x73,</p>
+        <p class="code">&#160;0x85, 
+ 0xfd, 0x85, 0x1d, 0xae, 0x81, 0xf7, 0xec, 0x12, 0x31, 0x7d, 0xc1, 0x99, 
+ 0xc0, 0x3c, 0x51, 0xb0, 0xdc, 0xb0, </p>
+        <p class="code">0xba, 0x9c, 0x84, 0xb8,</p>
+        <p class="code">&#160;0x70, 
+ 0xc2, 0x09, 0x7f, 0x96, 0x3d, 0xa1, 0xe2, 0x64, 0x27, 0x7a, 0x22, 0xb8, 
+ 0x75, 0xb9, 0xd1, 0x5f, 0xa5, 0x23, </p>
+        <p class="code">0xf9, 0x62, 0xe0, 0x41,</p>
+        <p class="code">&#160;0x02, 
+ 0x81, 0x81, 0x00, 0xf4, 0xf3, 0x08, 0xcf, 0x83, 0xb0, 0xab, 0xf2, 0x0f, 
+ 0x1a, 0x08, 0xaf, 0xc2, 0x42, 0x29, </p>
+        <p class="code">0xa7, 0x9c, 0x5e, 0x52,</p>
+        <p class="code">&#160;0x19, 
+ 0x69, 0x8d, 0x5b, 0x52, 0x29, 0x9c, 0x06, 0x6a, 0x5a, 0x32, 0x8f, 0x08, 
+ 0x45, 0x6c, 0x43, 0xb5, 0xac, 0xc3, </p>
+        <p class="code">0xbb, 0x90, 0x7b, 0xec,</p>
+        <p class="code">&#160;0xbb, 
+ 0x5d, 0x71, 0x25, 0x82, 0xf8, 0x40, 0xbf, 0x38, 0x00, 0x20, 0xf3, 0x8a, 
+ 0x38, 0x43, 0xde, 0x04, 0x41, 0x19, </p>
+        <p class="code">0x5f, 0xeb, 0xb0, 0x50,</p>
+        <p class="code">&#160;0x59, 
+ 0x10, 0xe1, 0x54, 0x62, 0x5c, 0x93, 0xd9, 0xdc, 0x63, 0x24, 0xd0, 0x17, 
+ 0x00, 0xc0, 0x44, 0x3e, 0xfc, 0xd1, </p>
+        <p class="code">0xda, 0x4b, 0x24, 0xf7,</p>
+        <p class="code">&#160;0xcb, 
+ 0x16, 0x35, 0xe6, 0x9f, 0x67, 0x96, 0x5f, 0xb0, 0x94, 0xde, 0xfa, 0xa1, 
+ 0xfd, 0x8c, 0x8a, 0xd1, 0x5c, 0x02, </p>
+        <p class="code">0x8d, 0xe0, 0xa0, 0xa0, </p>
+        <p class="code">&#160;0x02, 
+ 0x1d, 0x56, 0xaf, 0x13, 0x3a, 0x65, 0x5e, 0x8e, 0xde, 0xd1, 0xa8, 0x28, 
+ 0x8b, 0x71, 0xc9, 0x65, 0x02, 0x81, </p>
+        <p class="code">0x81, 0x00, 0xc1, 0x0a, </p>
+        <p class="code">&#160;0x47, 
+ 0x39, 0x91, 0x06, 0x1e, 0xb9, 0x43, 0x7c, 0x9e, 0x97, 0xc5, 0x09, 0x08, 
+ 0xbc, 0x22, 0x47, 0xe2, 0x96, 0x8e, </p>
+        <p class="code">0x1c, 0x74, 0x80, 0x50,</p>
+        <p class="code">&#160;0x6c, 
+ 0x9f, 0xef, 0x2f, 0xe5, 0x06, 0x3e, 0x73, 0x66, 0x76, 0x02, 0xbd, 0x9a, 
+ 0x1c, 0xfc, 0xf9, 0x6a, 0xb8, 0xf9, </p>
+        <p class="code">0x36, 0x15, 0xb5, 0x20,</p>
+        <p class="code">&#160;0x0b, 
+ 0x6b, 0x54, 0x83, 0x9c, 0x86, 0xba, 0x13, 0xb7, 0x99, 0x54, 0xa0, 0x93, 
+ 0x0d, 0xd6, 0x1e, 0xc1, 0x12, 0x72, </p>
+        <p class="code">0x0d, 0xea, 0xb0, 0x14,</p>
+        <p class="code">&#160;0x30, 
+ 0x70, 0x73, 0xef, 0x6b, 0x4c, 0xae, 0xb6, 0xff, 0xd4, 0xbb, 0x89, 0xa1, 
+ 0xec, 0xca, 0xa6, 0xe9, 0x95, 0x56, </p>
+        <p class="code">0xac, 0xe2, 0x9b, 0x97,</p>
+        <p class="code">&#160;0x2f, 
+ 0x2c, 0xdf, 0xa3, 0x6e, 0x59, 0xff, 0xcd, 0x3c, 0x6f, 0x57, 0xcc, 0x6e, 
+ 0x44, 0xc4, 0x27, 0xbf, 0xc3, 0xdd, </p>
+        <p class="code">0x19, 0x9e, 0x81, 0x16,</p>
+        <p class="code">&#160;0xe2, 
+ 0x8f, 0x65, 0x34, 0xa7, 0x0f, 0x22, 0xba, 0xbf, 0x79, 0x57, 0x02, 0x81, 
+ 0x80, 0x2e, 0x21, 0x0e, 0xc9, 0xb5, </p>
+        <p class="code">0xad, 0x31, 0xd4, 0x76,</p>
+        <p class="code">&#160;0x0f, 
+ 0x9b, 0x0f, 0x2e, 0x70, 0x33, 0x54, 0x03, 0x58, 0xa7, 0xf1, 0x6d, 0x35, 
+ 0x57, 0xbb, 0x53, 0x66, 0xb4, 0xb6, </p>
+        <p class="code">0x96, 0xa1, 0xea, 0xd9,</p>
+        <p class="code">&#160;0xcd, 
+ 0xe9, 0x23, 0x9f, 0x35, 0x17, 0xef, 0x5c, 0xb8, 0x59, 0xce, 0xb7, 0x3c, 
+ 0x35, 0xaa, 0x42, 0x82, 0x3f, 0x00, </p>
+        <p class="code">0x96, 0xd5, 0x9d, 0xc7,</p>
+        <p class="code">&#160;0xab, 
+ 0xec, 0xec, 0x04, 0xb5, 0x15, 0xc8, 0x40, 0xa4, 0x85, 0x9d, 0x20, 0x56, 
+ 0xaf, 0x03, 0x8f, 0x17, 0xb0, 0xf1, </p>
+        <p class="code">0x96, 0x22, 0x3a, 0xa5,</p>
+        <p class="code">&#160;0xfa, 
+ 0x58, 0x3b, 0x01, 0xf9, 0xae, 0xb3, 0x83, 0x6f, 0x44, 0xd3, 0x14, 0x2d, 
+ 0xb6, 0x6e, 0xd2, 0x9d, 0x39, 0x0c, </p>
+        <p class="code">0x12, 0x1d, 0x23, 0xea,</p>
+        <p class="code">&#160;0x19, 
+ 0xcb, 0xbb, 0xe0, 0xcd, 0x89, 0x15, 0x9a, 0xf5, 0xe4, 0xec, 0x41, 0x06, 
+ 0x30, 0x16, 0x58, 0xea, 0xfa, 0x31, </p>
+        <p class="code">0xc1, 0xb8, 0x8e, 0x08,</p>
+        <p class="code">&#160;0x84, 
+ 0xaa, 0x3b, 0x19, 0x02, 0x81, 0x80, 0x70, 0x4c, 0xf8, 0x6e, 0x86, 0xed, 
+ 0xd6, 0x85, 0xd4, 0xba, 0xf4, 0xd0, </p>
+        <p class="code">0x3a, 0x32, 0x2d, 0x40,</p>
+        <p class="code">&#160;0xb5, 
+ 0x78, 0xb8, 0x5a, 0xf9, 0xc5, 0x98, 0x08, 0xe5, 0xc0, 0xab, 0xb2, 0x4c, 
+ 0x5c, 0xa2, 0x2b, 0x46, 0x9b, 0x3e, </p>
+        <p class="code">0xe0, 0x0d, 0x49, 0x50,</p>
+        <p class="code">&#160;0xbf, 
+ 0xe2, 0xa1, 0xb1, 0x86, 0x59, 0x6e, 0x7b, 0x76, 0x6e, 0xee, 0x3b, 0xb6, 
+ 0x6d, 0x22, 0xfb, 0xb1, 0x68, 0xc7, </p>
+        <p class="code">0xec, 0xb1, 0x95, 0x9b,</p>
+        <p class="code">&#160;0x21, 
+ 0x0b, 0xb7, 0x2a, 0x71, 0xeb, 0xa2, 0xb2, 0x58, 0xac, 0x6d, 0x5f, 0x24, 
+ 0xd3, 0x79, 0x42, 0xd2, 0xf7, 0x35, </p>
+        <p class="code">0xdc, 0xfc, 0x0e, 0x95,</p>
+        <p class="code">&#160;0x60, 
+ 0xb7, 0x85, 0x7f, 0xf9, 0x72, 0x8e, 0x4a, 0x11, 0xc3, 0xc2, 0x09, 0x40, 
+ 0x5c, 0x7c, 0x43, 0x12, 0x34, 0xac, </p>
+        <p class="code">0x59, 0x99, 0x76, 0x34, </p>
+        <p class="code">&#160;0xcf, 
+ 0x20, 0x88, 0xb0, 0xfb, 0x39, 0x62, 0x3a, 0x9b, 0x03, 0xa6, 0x84, 0x2c, 
+ 0x03, 0x5c, 0x0c, 0xca, 0x33, 0x85, </p>
+        <p class="code">0xf5, 0x02, 0x81, 0x80, </p>
+        <p class="code">&#160;0x56, 
+ 0x99, 0xe9, 0x17, 0xdc, 0x33, 0xe1, 0x33, 0x8d, 0x5c, 0xba, 0x17, 0x32, 
+ 0xb7, 0x8c, 0xbd, 0x4b, 0x7f, 0x42, </p>
+        <p class="code">0x3a, 0x79, 0x90, 0xe3, </p>
+        <p class="code">&#160;0x70, 
+ 0xe3, 0x27, 0xce, 0x22, 0x59, 0x02, 0xc0, 0xb1, 0x0e, 0x57, 0xf5, 0xdf, 
+ 0x07, 0xbf, 0xf8, 0x4e, 0x10, 0xef, </p>
+        <p class="code">0x2a, 0x62, 0x30, 0x03, </p>
+        <p class="code">&#160;0xd4, 
+ 0x80, 0xcf, 0x20, 0x84, 0x25, 0x66, 0x3f, 0xc7, 0x4f, 0x56, 0x8c, 0x1e, 
+ 0xe1, 0x18, 0x91, 0xc1, 0xfd, 0x71, </p>
+        <p class="code">0x5f, 0x65, 0x9b, 0xe4, </p>
+        <p class="code">&#160;0x4f, 
+ 0xe0, 0x1a, 0x3a, 0xf8, 0xc1, 0x69, 0xdb, 0xd3, 0xbb, 0x8d, 0x91, 0xd1, 
+ 0x11, 0x4f, 0x7e, 0x91, 0x1b, 0xb4, </p>
+        <p class="code">0x27, 0xa5, 0xab, 0x7c, </p>
+        <p class="code">&#160;0x7b, 
+ 0x76, 0xd4, 0x78, 0xfe, 0x63, 0x44, 0x63, 0x7e, 0xe3, 0xa6, 0x60, 0x4f, 
+ 0xb9, 0x55, 0x28, 0xba, 0xba, 0x83, </p>
+        <p class="code">0x1a, 0x2d, 0x43, 0xd5, </p>
+        <p class="code">&#160;0xf7, 
+ 0x2e, 0xe0, 0xfc, 0xa8, 0x14, 0x9b, 0x91, 0x2a, 0x36, 0xbf, 0xc7, 0x14</p>
+        <p class="code">&#160;&#160;};</p>
+        <p class="code">CK_BYTE </p>
+        <p class="code">&#160;&#160;knownRSA1Modulus[] 
+ = {</p>
+        <p class="code">0xb8, 0xb5, 0x0f, 0x49, 0x46, 0xb5, 0x5d, 0x58, 0x04, 0x8e, 
+ 0x52, 0x59, 0x39, 0xdf, 0xd6, </p>
+        <p class="code">0x29, </p>
+        <p class="code">0x45, 0x6b, 0x6c, 0x96, 0xbb, 0xab, 0xa5, 0x6f, 0x72, 0x1b, 
+ 0x16, 0x96, 0x74, 0xd5, 0xf9, </p>
+        <p class="code">0xb4, </p>
+        <p class="code">0x41, 0xa3, 0x7c, 0xe1, 0x94, 0x73, 0x4b, 0xa7, 0x23, 0xff, 
+ 0x61, 0xeb, 0xce, 0x5a, 0xe7, </p>
+        <p class="code">0x7f, </p>
+        <p class="code">0xe3, 0x74, 0xe8, 0x52, 0x5b, 0xd6, 0x5d, 0x5c, 0xdc, 0x98, 
+ 0x49, 0xfe, 0x51, 0xc2, 0x7e, </p>
+        <p class="code">0x8f, </p>
+        <p class="code">0x3b, 0x37, 0x5c, 0xb3, 0x11, 0xed, 0x85, 0x91, 0x15, 0x92, 
+ 0x24, 0xd8, 0xf1, 0x7b, 0x3d, </p>
+        <p class="code">0x2f, </p>
+        <p class="code">0x8b, 0xcd, 0x1b, 0x30, 0x14, 0xa3, 0x6b, 0x1b, 0x4d, 0x27, 
+ 0xff, 0x6a, 0x58, 0x84, 0x9e, </p>
+        <p class="code">0x79, </p>
+        <p class="code">0x94, 0xca, 0x78, 0x64, 0x01, 0x33, 0xc3, 0x58, 0xfc, 0xd3, 
+ 0x83, 0xeb, 0x2f, 0xab, 0x6f, </p>
+        <p class="code">0x85, </p>
+        <p class="code">0x5a, 0x38, 0x41, 0x3d, 0x73, 0x20, 0x1b, 0x82, 0xbc, 0x7e, 
+ 0x76, 0xde, 0x5c, 0xfe, 0x42, </p>
+        <p class="code">0xd6, </p>
+        <p class="code">0x7b, 0x86, 0x4f, 0x79, 0x78, 0x29, 0x82, 0x87, 0xa6, 0x24, 
+ 0x43, 0x39, 0x74, 0xfe, 0xf2, </p>
+        <p class="code">0x0c, </p>
+        <p class="code">0x08, 0xbe, 0xfa, 0x1e, 0x0a, 0x48, 0x6f, 0x14, 0x86, 0xc5, 
+ 0xcd, 0x9a, 0x98, 0x09, 0x2d, </p>
+        <p class="code">0xf3, </p>
+        <p class="code">0xf3, 0x5a, 0x7a, 0xa4, 0xe6, 0x8a, 0x2e, 0x49, 0x8a, 0xde, 
+ 0x73, 0xe9, 0x37, 0xa0, 0x5b, </p>
+        <p class="code">0xef, </p>
+        <p class="code">0xd0, 0xe0, 0x13, 0xac, 0x88, 0x5f, 0x59, 0x47, 0x96, 0x7f, 
+ 0x78, 0x18, 0x0e, 0x44, 0x6a, </p>
+        <p class="code">0x5d, </p>
+        <p class="code">0xec, 0x6e, 0xed, 0x4f, 0xf6, 0x6a, 0x7a, 0x58, 0x6b, 0xfe, 
+ 0x6c, 0x5a, 0xb9, 0xd2, 0x22, </p>
+        <p class="code">0x3a, </p>
+        <p class="code">0x1f, 0xdf, 0xc3, 0x09, 0x3f, 0x6b, 0x2e, 0xf1, 0x6d, 0xc3, 
+ 0xfb, 0x4e, 0xd4, 0xf2, 0xa3, </p>
+        <p class="code">0x94, </p>
+        <p class="code">0x13, 0xb0, 0xbf, 0x1e, 0x06, 0x2e, 0x29, 0x55, 0x00, 0xaa, 
+ 0x98, 0xd9, 0xe8, 0x77, 0x84, </p>
+        <p class="code">0x8b, </p>
+        <p class="code">0x3f, 0x5f, 0x5e, 0xf7, 0xf8, 0xa7, 0xe6, 0x02, 0xd2, 0x18, 
+ 0xb0, 0x52, 0xd0, 0x37, 0x2e, </p>
+        <p class="code">0x53, </p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;knownRSA1PubExponent[] 
+ = { 0x01, 0x00, 0x01 };</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;char 
+ *pPlainData = 0;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;unsigned 
+ long ulPlainDataLength;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;char 
+ *pEncryptedData = 0;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;unsigned 
+ long ulEncryptedDataLength = 0;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_MECHANISM 
+ mech;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_USHORT 
+ &#160;&#160;usStatus=0,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usKeyLength;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_OBJECT_HANDLE 
+ hKey;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_OBJECT_CLASS 
+ &#160;&#160;&#160;SymKeyClass 
+ &#160;= CKO_SECRET_KEY;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_BBOOL 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bTrue 
+ = 1,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bFalse 
+ = 0,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bToken 
+ = bTrue,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bSensitive 
+ = bTrue,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bPrivate 
+ = bTrue,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bEncrypt 
+ = bTrue,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bDecrypt 
+ = bTrue,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bSign 
+ = bFalse, // "..."</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bVerify 
+ = bFalse, //Will not allow sign/verify operation.</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bWrap 
+ = bTrue,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bUnwrap 
+ = bTrue,</p>
+        <p class="code">#ifdef EXTRACTABLE</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bExtract 
+ = bTrue,</p>
+        <p class="code">#endif //EXTRACTABLE</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bDerive 
+ = bTrue;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_KEY_TYPE 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;keyType;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_USHORT 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usValueBits;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;char 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pbPublicKeyLabel[128];</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_ATTRIBUTE_PTR 
+ pPublicTemplate;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_USHORT 
+ usPublicTemplateSize = 0;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;char 
+ iv[8] = { '1', '2', '3', '4', '5', '6', '7', '8' };</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_ATTRIBUTE 
+ SymKeyTemplate[] = {</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_CLASS, 
+ 0, sizeof(SymKeyClass)},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_KEY_TYPE, 
+ 0, sizeof(keyType)},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_TOKEN, 
+ 0, sizeof(bToken)},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_SENSITIVE, 
+ 0, sizeof(bSensitive)},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_PRIVATE, 
+ 0, sizeof(bPrivate)},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_ENCRYPT, 
+ 0, sizeof(bEncrypt)},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_DECRYPT, 
+ 0, sizeof(bDecrypt)},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_SIGN, 
+ 0, sizeof(bSign)},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_VERIFY, 
+ 0, sizeof(bVerify)},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_WRAP, 
+ 0, sizeof(bWrap)},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_UNWRAP, 
+ 0, sizeof(bUnwrap)},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_DERIVE, 
+ 0, sizeof(bDerive)},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_VALUE_LEN,0, 
+ &#160;sizeof(usKeyLength) 
+ },</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_LABEL, 
+ 0, 0} &#160;// 
+ Always keep last!!!</p>
+        <p class="code">#ifdef EXTRACTABLE &#160;&#160;&#160;&#160;&#160;//Conditional 
+ stuff must be at the end!!!!!</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_EXTRACTABLE, 
+ 0, sizeof(bExtract)},</p>
+        <p class="code">#endif //EXTRACTABLE</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;};</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_OBJECT_HANDLE 
+ hUnWrappedKey, hPublicRSAKey;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;char 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;*pbWrappedKey;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;unsigned 
+ long &#160;&#160;&#160;ulWrappedKeySize;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_OBJECT_CLASS 
+ &#160;privateKey 
+ = CKO_PRIVATE_KEY,</p>
+        <p class="code">publicKey = CKO_PUBLIC_KEY;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_KEY_TYPE 
+ &#160;&#160;&#160;&#160;&#160;rsaType 
+ &#160;&#160;= 
+ CKK_RSA;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pLabel[] 
+ &#160;= "RSA 
+ private Key",</p>
+        <p class="code">pbPublicRSAKeyLabel[] = "RSA Public Key";</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_ATTRIBUTE 
+ *pTemplate;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_ULONG 
+ &#160;&#160;&#160;&#160;usTemplateSize,</p>
+        <p class="code">ulPublicRSAKeyTemplateSize;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_ATTRIBUTE 
+ pPublicRSAKeyTemplate[] = {</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_CLASS, 
+ &#160;&#160;&#160;0, 
+ sizeof(publicKey) },</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_KEY_TYPE, 
+ 0, &#160;&#160;&#160;sizeof(rsaType) 
+ &#160;&#160;&#160;},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_TOKEN, 
+ &#160;&#160;&#160;0, 
+ &#160;&#160;&#160;&#160;sizeof(bToken) 
+ &#160;&#160;&#160;&#160;},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_PRIVATE, 
+ &#160;0, &#160;&#160;sizeof(bPrivate) 
+ &#160;&#160;},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_ENCRYPT, 
+ &#160;0, &#160;&#160;sizeof(bEncrypt) 
+ &#160;&#160;},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_VERIFY, 
+ &#160;&#160;0, 
+ &#160;&#160;&#160;&#160;&#160;sizeof(bSign) 
+ &#160;&#160;&#160;&#160;&#160;},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_WRAP, 
+ &#160;&#160;&#160;&#160;0, 
+ &#160;&#160;&#160;&#160;&#160;sizeof(bWrap) 
+ &#160;&#160;&#160;&#160;&#160;},</p>
+        <p class="code">&#160;{CKA_MODULUS, 
+ 0, sizeof(knownRSA1Modulus) },</p>
+        <p class="code">&#160;{CKA_PUBLIC_EXPONENT, 
+ 0, sizeof(knownRSA1PubExponent) },</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_LABEL, 
+ &#160;&#160;&#160;0, 
+ &#160;&#160;&#160;&#160;&#160;sizeof(pbPublicRSAKeyLabel) 
+ &#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;};</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;CK_ATTRIBUTE 
+ pPrivateKeyTemplate[] = {</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_CLASS, 
+ &#160;&#160;&#160;&amp;privateKey, 
+ sizeof(privateKey) },</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_KEY_TYPE, 
+ &amp;rsaType, &#160;&#160;&#160;sizeof(rsaType) 
+ &#160;&#160;&#160;},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_TOKEN, 
+ &#160;&#160;&#160;&amp;bToken, 
+ &#160;&#160;&#160;&#160;sizeof(bToken) 
+ &#160;&#160;&#160;&#160;},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_SENSITIVE,&amp;bSensitive, 
+ sizeof(bSensitive) },</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_PRIVATE, 
+ &#160;&amp;bPrivate, 
+ &#160;&#160;sizeof(bPrivate) 
+ &#160;&#160;},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_DECRYPT, 
+ &#160;&amp;bEncrypt, 
+ &#160;&#160;sizeof(bEncrypt) 
+ &#160;&#160;},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_SIGN, 
+ &#160;&#160;&#160;&#160;&amp;bSign, 
+ &#160;&#160;&#160;&#160;&#160;sizeof(bSign) 
+ &#160;&#160;&#160;&#160;&#160;},</p>
+        <p class="code">&#160;//{CKA_SIGN_RECOVER, 
+ &amp;bTrue, sizeof(bTrue) &#160;&#160;&#160;&#160;},</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_UNWRAP, 
+ &#160;&#160;&amp;bWrap, 
+ &#160;&#160;&#160;&#160;&#160;sizeof(bWrap) 
+ &#160;&#160;&#160;&#160;&#160;},</p>
+        <p class="code">{CKA_EXTRACTABLE, &amp;bFalse, sizeof(bFalse) &#160;&#160;&#160;&#160;&#160;},</p>
+        <p class="code">{CKA_LABEL, &#160;&#160;&#160;&#160;&#160;&#160;pLabel, 
+ &#160;sizeof(pLabel) 
+ &#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;};</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Generate a DES3 Key</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[0].pValue 
+ = &amp;SymKeyClass;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[1].pValue 
+ = &amp;keyType;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[2].pValue 
+ = &amp;bToken;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[3].pValue 
+ = &amp;bSensitive;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[4].pValue 
+ = &amp;bPrivate;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[5].pValue 
+ = &amp;bEncrypt; &#160;&#160;&#160;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[6].pValue 
+ = &amp;bDecrypt;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[7].pValue 
+ = &amp;bSign;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[8].pValue 
+ = &amp;bVerify;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[9].pValue 
+ = &amp;bWrap;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[10].pValue 
+ = &amp;bUnwrap;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[11].pValue 
+ = &amp;bDerive;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[12].pValue 
+ = &#160;&amp;usKeyLength;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[13].pValue 
+ = pbPublicKeyLabel;</p>
+        <p class="code">#ifdef EXTRACTABLE &#160;&#160;&#160;&#160;&#160;&#160;&#160;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[14].pValue 
+ = &amp;bExtract;</p>
+        <p class="code">#endif //EXTRACTABLE</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;mech.mechanism 
+ = CKM_DES3_KEY_GEN;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;mech.pParameter 
+ = 0;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;mech.usParameterLen 
+ = 0;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;keyType 
+ = CKK_DES3;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;usKeyLength 
+ = 24;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;strcpy( 
+ pbPublicKeyLabel, "Generated DES3 Key" );</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;pPublicTemplate 
+ = SymKeyTemplate;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;usPublicTemplateSize 
+ = DIM(SymKeyTemplate);</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Adjust size of label (ALWAYS LAST ENTRY IN ARRAY)</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;pPublicTemplate[usPublicTemplateSize-1].usValueLen 
+ = strlen( </p>
+        <p class="code">pbPublicKeyLabel );</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;retCode 
+ = C_GenerateKey( &#160;&#160;hSessionHandle,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;(CK_MECHANISM_PTR)&amp;mech,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pPublicTemplate,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usPublicTemplateSize,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&amp;hKey);</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;if(retCode 
+ == CKR_OK)</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; pbPublicKeyLabel &lt;&lt; ": " &lt;&lt; hKey &lt;&lt; 
+ endl;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;else</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;cout 
+ &lt;&lt; "\n" "Error 0x" &lt;&lt; hex &lt;&lt; retCode;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; " generating the DES3 Key.\n";</p>
+        <p class="code">&#160;&#160;&#160;error 
+ = -11;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_6;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Encrypt the RSA Key</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;mech.mechanism 
+ = CKM_DES3_CBC;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;mech.pParameter 
+ = iv;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;mech.usParameterLen 
+ = sizeof(iv);</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;pPlainData 
+ = (char *)(pRsaKey);</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;ulPlainDataLength 
+ = sizeof(pRsaKey);</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Allocate memory for output buffer</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ retCode == CKR_OK )</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pEncryptedData 
+ = new char [ulPlainDataLength + 2048]; // Leave</p>
+        <p class="code">// extra room for </p>
+        <p class="code">// RSA Operations</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ !pEncryptedData )</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;retCode 
+ = CKR_DEVICE_ERROR;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Start encrypting</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ retCode == CKR_OK )</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;retCode 
+ = C_EncryptInit(hSessionHandle, &amp;mech, hKey);</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Continue encrypting</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ retCode == CKR_OK )</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_USHORT 
+ usInDataLen,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usOutDataLen 
+ = (CK_USHORT) (ulPlainDataLength + 2048);</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_ULONG 
+ &#160;ulBytesRemaining 
+ = ulPlainDataLength;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;char 
+ * &#160;&#160;&#160;pPlainTextPointer 
+ = pPlainData;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;char 
+ * &#160;&#160;&#160;pEncryptedDataPointer 
+ = pEncryptedData; </p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;while 
+ (ulBytesRemaining &gt; 0)</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if 
+ (ulBytesRemaining &gt; 0xfff0) // We are longer than a USHORT can handle</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usInDataLen 
+ = 0xfff0;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;ulBytesRemaining 
+ -= usInDataLen;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;else</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usInDataLen 
+ = (CK_USHORT) ulBytesRemaining;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;ulBytesRemaining 
+ -= usInDataLen;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;retCode 
+ = C_EncryptUpdate( hSessionHandle,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;(CK_BYTE_PTR)pPlainTextPointer,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usInDataLen,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;(CK_BYTE_PTR)pEncryptedDataPointer,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&amp;usOutDataLen 
+ );</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pPlainTextPointer 
+ += usInDataLen;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pEncryptedDataPointer 
+ += usOutDataLen;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;ulEncryptedDataLength 
+ += usOutDataLen;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;} 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</p>
+        <p class="code">&#160;&#160;&#160;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Finish encrypting</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ retCode == CKR_OK )</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_USHORT 
+ usOutDataLen;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE_PTR 
+ pOutData = (CK_BYTE_PTR)pEncryptedData;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pOutData 
+ += ulEncryptedDataLength;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;retCode 
+ = C_EncryptFinal(hSessionHandle, pOutData, &amp;usOutDataLen);</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;ulEncryptedDataLength 
+ += usOutDataLen;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;else</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;cout 
+ &lt;&lt; "\n" "Error 0x" &lt;&lt; hex &lt;&lt; retCode;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; " somewhere in the encrypting.\n";</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ pEncryptedData )</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;delete 
+ pEncryptedData;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;error 
+ = -12;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_6;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;mech.mechanism 
+ &#160;&#160;&#160;&#160;&#160;= 
+ CKM_DES3_CBC;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;mech.pParameter 
+ &#160;&#160;&#160;&#160;= 
+ (void*) "12345678"; // 8 byte IV</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;mech.usParameterLen 
+ = 8;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;pTemplate 
+ = pPrivateKeyTemplate;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;usTemplateSize 
+ = DIM(pPrivateKeyTemplate);</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;pbWrappedKey 
+ = pEncryptedData;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;ulWrappedKeySize 
+ = ulEncryptedDataLength;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ retCode == CKR_OK )</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;retCode 
+ = C_UnwrapKey( hSessionHandle,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&amp;mech,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;hKey,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;(CK_BYTE_PTR)pbWrappedKey,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;(CK_USHORT)ulWrappedKeySize,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pTemplate,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usTemplateSize,</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&amp;hUnWrappedKey);</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Report unwrapped key handle</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ retCode == CKR_OK )</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; "\n Private key Unwrapped key is:" &lt;&lt; hUnWrappedKey 
+ &lt;&lt;"\n\n";</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;else</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;cout 
+ &lt;&lt; "\n" "Error 0x" &lt;&lt; hex &lt;&lt; retCode;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; " unwrapping.\n";</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ pEncryptedData )</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;delete 
+ pEncryptedData;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;error 
+ = -13;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_6;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Release temporary memory</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ pEncryptedData )</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;delete 
+ pEncryptedData;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;// 
+ Create the Public Key that goes with the Private Key</p>
+        <p class="code">&#160;&#160;&#160;if( 
+ retCode == CKR_OK )</p>
+        <p class="code">&#160;&#160;&#160;{</p>
+        <p class="code">&#160;&#160;// 
+ Unwrap it onto the token</p>
+        <p class="code">&#160;&#160;pPublicRSAKeyTemplate[0].pValue 
+ = &amp;publicKey;</p>
+        <p class="code">&#160;&#160;pPublicRSAKeyTemplate[1].pValue 
+ = &amp;rsaType;</p>
+        <p class="code">&#160;&#160;pPublicRSAKeyTemplate[2].pValue 
+ = &amp;bToken;</p>
+        <p class="code">&#160;&#160;pPublicRSAKeyTemplate[3].pValue 
+ = &amp;bPrivate;</p>
+        <p class="code">&#160;&#160;pPublicRSAKeyTemplate[4].pValue 
+ = &amp;bEncrypt; &#160;&#160;&#160;</p>
+        <p class="code">&#160;&#160;pPublicRSAKeyTemplate[5].pValue 
+ = &amp;bSign;</p>
+        <p class="code">&#160;&#160;pPublicRSAKeyTemplate[6].pValue 
+ = &amp;bWrap;</p>
+        <p class="code">&#160;&#160;pPublicRSAKeyTemplate[7].pValue 
+ = knownRSA1Modulus;</p>
+        <p class="code">&#160;&#160;pPublicRSAKeyTemplate[8].pValue 
+ = knownRSA1PubExponent;</p>
+        <p class="code">&#160;&#160;pPublicRSAKeyTemplate[9].pValue 
+ = pbPublicRSAKeyLabel;</p>
+        <p class="code">&#160;&#160;pTemplate 
+ = pPublicRSAKeyTemplate;</p>
+        <p class="code">&#160;&#160;usTemplateSize 
+ = DIM(pPublicRSAKeyTemplate);</p>
+        <p class="code">&#160;&#160;retCode 
+ = C_CreateObject( &#160;hSessionHandle,</p>
+        <p class="code">pTemplate,</p>
+        <p class="code">&#160;usTemplateSize,</p>
+        <p class="code">&#160;&amp;hPublicRSAKey);</p>
+        <p class="code">&#160;&#160;if(retCode 
+ == CKR_OK)</p>
+        <p class="code">&#160;&#160;{</p>
+        <p class="code">&#160;cout 
+ &lt;&lt; pbPublicRSAKeyLabel &lt;&lt; ": " &lt;&lt; hPublicRSAKey 
+ &lt;&lt; endl;</p>
+        <p class="code">&#160;&#160;}</p>
+        <p class="code">&#160;&#160;else</p>
+        <p class="code">&#160;&#160;{</p>
+        <p class="code">&#160;cout 
+ &lt;&lt; "\n" "Error 0x" &lt;&lt; hex &lt;&lt; retCode;</p>
+        <p class="code">&#160;cout 
+ &lt;&lt; " creating the RSA Public Key.\n";</p>
+        <p class="code">&#160;error 
+ = -14;</p>
+        <p class="code">&#160;goto 
+ exit_routine_6;</p>
+        <p class="code">&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;}</p>
+        <p class="code">if( retCode == CKR_OK )</p>
+        <p class="code">&#160;&#160;&#160;{</p>
+        <p class="code">CK_CHAR label[] = "RSA Key";</p>
+        <p class="code">CK_ATTRIBUTE RSAFindPriTemplate[] = </p>
+        <p class="code">{</p>
+        <p class="code">CKA_LABEL, label, sizeof(label)</p>
+        <p class="code">};</p>
+        <p class="code">CK_ULONG numHandles;</p>
+        <p class="code">CK_OBJECT_HANDLE handles[1000];</p>
+        <p class="code">retCode = C_FindObjectsInit( hSessionHandle, RSAFindPriTemplate, 
+ 1 );</p>
+        <p class="code">if(retCode != CKR_OK)</p>
+        <p class="code">{</p>
+        <p class="code">cout &lt;&lt; "C_FindObjectsInit not returning OK (" 
+ &lt;&lt; hex &lt;&lt; retCode &lt;&lt; ")\n\n";</p>
+        <p class="code">goto exit_routine_6;</p>
+        <p class="code">}</p>
+        <p class="code">retCode =C_FindObjects( hSessionHandle , handles, 90, </p>
+        <p class="code">&amp;numHandles );</p>
+        <p class="code">if(retCode != CKR_OK)</p>
+        <p class="code">{</p>
+        <p class="code">cout &lt;&lt; "C_FindObjects not returning OK (" 
+ &lt;&lt; hex &lt;&lt; </p>
+        <p class="code">retCode &lt;&lt; ")\n\n";</p>
+        <p class="code">goto exit_routine_6;</p>
+        <p class="code">}</p>
+        <p class="code">cout &lt;&lt; "Everything's GOOD\n\n";</p>
+        <p class="code">for(int i=0; i &lt; numHandles; i++)</p>
+        <p class="code">{</p>
+        <p class="code">cout &lt;&lt; handles[i] &lt;&lt; "\n";</p>
+        <p class="code">}</p>
+        <p class="code">}</p>
+        <p class="code">}</p>
+        <p class="code">//CJM-&gt; END OF TEST CODE</p>
+        <p class="code">&#160;&#160;&#160;// 
+ Beginning of exit routines</p>
+        <p class="code">exit_routine_6:</p>
+        <p class="code">&#160;&#160;&#160;// 
+ Logout</p>
+        <p class="code">&#160;&#160;&#160;retCode 
+ = C_Logout(hSessionHandle);</p>
+        <p class="code">&#160;&#160;&#160;if(retCode 
+ != CKR_OK)</p>
+        <p class="code">{</p>
+        <p class="code">cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode &lt;&lt; " logging out.";</p>
+        <p class="code">}</p>
+        <p class="code">exit_routine_5:</p>
+        <p class="code">// Close the session</p>
+        <p class="code">&#160;&#160;&#160;retCode 
+ = C_CloseSession(hSessionHandle); </p>
+        <p class="code">if(retCode != CKR_OK)</p>
+        <p class="code">{</p>
+        <p class="code">cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode &lt;&lt; " closing session.";</p>
+        <p class="code">}</p>
+        <p class="code">exit_routine_4:</p>
+        <p class="code">&#160;&#160;&#160;delete 
+ pSlotList;</p>
+        <p class="code">exit_routine_3:</p>
+        <p class="code">#ifdef PKCS11_2_0</p>
+        <p class="code">&#160;&#160;&#160;C_Finalize(0);</p>
+        <p class="code">#else</p>
+        <p class="code">&#160;&#160;&#160;C_Terminate();</p>
+        <p class="code">#endif</p>
+        <p class="code">exit_routine_2:</p>
+        <p class="code">#ifndef STATIC</p>
+        <p class="code">&#160;&#160;&#160;// 
+ No longer need Chrystoki</p>
+        <p class="code">&#160;&#160;&#160;CrystokiDisconnect();</p>
+        <p class="code">#endif</p>
+        <p class="code">exit_routine_1:</p>
+        <p class="code">&#160;&#160;&#160;cout 
+ &lt;&lt; "\nDone. (" &lt;&lt; dec &lt;&lt; error &lt;&lt; ")\n";</p>
+        <p class="code">&#160;&#160;&#160;cout.flush();</p>
+        <p class="code">&#160;&#160;&#160;return 
+ error;</p>
+        <p class="code">}</p>
+        <p class="code">CK_RV &#160;Pinlogin(CK_SESSION_HANDLE 
+ hSession)</p>
+        <p class="code">{</p>
+        <p class="code">&#160;</p>
+        <p class="code">CK_RV retCode; </p>
+        <p class="code">unsigned char buffer[MAX];</p>
+        <p class="code">int count =0;</p>
+        <p class="code">cout &lt;&lt; "Please enter the USER password : " 
+ &lt;&lt; endl;</p>
+        <p class="code">//calling get PinString to mask input, variable "count" 
+ </p>
+        <p class="code">//holds length of "buffer"(password) </p>
+        <p class="code">//needed for Login call </p>
+        <p class="code">count = getPinString(buffer);</p>
+        <p class="code">//Login as user on &#160;token 
+ in slot</p>
+        <p class="code">retCode = C_Login(hSession, CKU_USER, buffer, count);</p>
+        <p class="code">if(retCode != CKR_OK)</p>
+        <p class="code">{</p>
+        <p class="code">cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; " logging in as user.";</p>
+        <p class="code">&#160;&#160;exit(hSession);</p>
+        <p class="code">&#160;&#160;return 
+ -3;</p>
+        <p class="code">} </p>
+        <p class="code">cout &lt;&lt; "logging into the token....";</p>
+        <p class="code">cout &lt;&lt; "\nlogged into token " &lt;&lt; endl;</p>
+        <p class="code">return retCode;</p>
+        <p class="code">}</p>
+        <p class="code">///////////////////////////////////////////////////////////////////////</p>
+        <p class="code">// getPinString()</p>
+        <p class="code">// ==============</p>
+        <p class="code">//</p>
+        <p class="code">// This function retrieves a pin string from the user. &#160;It 
+ modifies the</p>
+        <p class="code">// console mode before starting so that the characters the 
+ user types are</p>
+        <p class="code">// not echoed, and a '*' character is displayed for each 
+ typed character</p>
+        <p class="code">// instead.</p>
+        <p class="code">//</p>
+        <p class="code">// Backspace is supported, but we don't get any fancier than 
+ that.</p>
+        <p class="code">////////////////////////////////////////////////////////////////////////</p>
+        <p class="code">int getPinString(CK_CHAR_PTR pw) </p>
+        <p class="code">{</p>
+        <p class="code">&#160;&#160;&#160;&#160;int 
+ len=0;</p>
+        <p class="code">&#160;&#160;&#160;&#160;char 
+ c=0;</p>
+        <p class="code">&#160;&#160;&#160;&#160;// 
+ Unfortunately, the method of turning off character echo is </p>
+        <p class="code">// different for Windows and Unix platforms. &#160;So 
+ we have to </p>
+        <p class="code">// conditionally compile the appropriate section. &#160;Even 
+ the basic</p>
+        <p class="code">// password retrieval is slightly different, since</p>
+        <p class="code">&#160;&#160;&#160;&#160;// 
+ Windows and Unix use different character codes for the return key.</p>
+        <p class="code">#ifdef WIN32</p>
+        <p class="code">&#160;&#160;&#160;&#160;DWORD 
+ mode;</p>
+        <p class="code">&#160;&#160;&#160;&#160;// 
+ This console mode stuff only applies to windows. &#160;We'll 
+ have to </p>
+        <p class="code">// do something else when it comes to unix.</p>
+        <p class="code">&#160;&#160;&#160;&#160;if 
+ (GetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), &amp;mode)) {</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if 
+ (SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), mode &amp; (!ENABLE_ECHO_INPUT))) 
+ {</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;while 
+ (c &#160;!= '\r') 
+ {</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ wait for a character to be hit</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;while 
+ (!_kbhit()) {</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Sleep(100);</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ get it</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;c 
+ = _getch();</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ check for carriage return</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if 
+ (c != '\r') {</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ check for backspace</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if 
+ (c!='\b') {</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ neither CR nor BS -- add it to the password string</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;printf("*");</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;*pw++ 
+ = c;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;len++;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;} 
+ else {</p>
+        <p class="code">// handle backspace -- delete the last character &amp; </p>
+        <p class="code">// erase it from the screen</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if 
+ (len &gt; 0) {</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pw--;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;len--;</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;printf("\b 
+ \b");</p>
+        <p class="code">}</p>
+        <p class="code">}</p>
+        <p class="code">}</p>
+        <p class="code">}</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Add the zero-termination</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;*pw 
+ = '\0';</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), 
+ mode);</p>
+        <p class="code">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;printf("\n");</p>
+        <p class="code">}</p>
+        <p class="code">&#160;&#160;&#160;&#160;}</p>
+        <p class="code">#endif</p>
+        <p class="code">&#160;&#160;&#160;&#160;return 
+ len;</p>
+        <p class="code">}</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#sdk/design/key_migration.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

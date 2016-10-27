@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|High Availability (HA) Mode">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Client - Create HA Group</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/ha/client_create_ha_group.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha_intro.htm">High Availability (HA) Mode</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Client - Create HA Group</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Client - Create HA Group</h2>
+        <p>On your Client, use the VTL utility to configure HA.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Create a new 
+ HA group on the client, which consists of:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>a Label for the group (do NOT call the group just "HA").</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span> the Serial number of the primary partition.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>the password for the partition. </p>
+        <p class="listLevel1">The VTL utility also generates and assigns a Serial Number to the group 
+ itself:</p><pre class="listLevel1" xml:space="preserve">bash-2.05# ./vtl haadmin newgroup -serialnum 65003001 -label myHAgroup -password userpin<br />New group with label "myHAgroup" created at group number 742276409. 
+ <br />Group configuration is: <br />HA Group Number: &#160;742276409 
+ <br />HA Group Label: myHAgroup<br />Group Members: &#160;65003001 
+ <br />Needs sync: &#160;no
+ 
+</pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Your chrystoki.conf/crystoki.ini 
+ file should now have a new section:</p><pre class="listLevel1" xml:space="preserve">VirtualToken = {<br />VirtualToken00Members = 65003001;<br />VirtualToken00SN = 742276409;<br />VirtualToken00Label = myHAgroup;<br />} 
+&#160;&#160;</pre>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>Never insert TAB characters into the chrystoki.ini 
+ (Windows) or crystoki.conf (UNIX) file.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Now add another 
+ member to the HA group, that member being Partition2 on Luna2:</p><pre class="listLevel1" xml:space="preserve">bash-2.05# ./vtl haadmin addmember -group 742276409 -serialNum 65005001 -password userpin<br />Member 65005001 successfully added to group 742276409.<br />New group configuration is: <br />HA Group Number: &#160;742276409<br />HA Group Label: &#160;myHAgroup<br />Group Members: &#160;65003001, 65005001<br />Needs sync: &#160;no<br />Please use the command 'vtl haAdmin -synchronize' when you are ready 
+to replicate data between all members of the HA group. (If you have additional 
+members to add, you may wish to wait until you have added them before 
+synchronizing to save time by avoiding multiple synchronizations.)</pre>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Notice the paragraph about synchronization 
+ above. The 'synchronize' command replicates all objects on all partitions 
+ across all other partitions. As there are no objects on our newly created 
+ partitions yet, we do not need to run this command. Do not use this command when recovering a group member that has failed 
+ (or was taken down for maintenance). Use the command <code>vtl haadmin -recover 
+ -group &lt;GROUP NAME&gt;</code> &#160;</p>
+        <h3>Optional Checking Steps</h3>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Run vtl haAdmin -show or vtl haAdmin -show -syncStatus for an overview of the HA&#160;status and configuration settings. For example:</p><pre class="listLevel1" xml:space="preserve">[myworkstation]# ./vtl haAdmin -show  <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />================ HA Global Configuration Settings ===============               <br style="mc-tag-and-class: ;" />           HA Auto Recovery:  disabled    <br style="mc-tag-and-class: ;" />Maximum Auto Recovery Retry:  0     <br style="mc-tag-and-class: ;" />Auto Recovery Poll Interval:  60 seconds                      <br style="mc-tag-and-class: ;" />                 HA Logging:  disabled <br style="mc-tag-and-class: ;" />         Only Show HA Slots:  no   <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />================ HA Group and Member Information ================                  <br style="mc-tag-and-class: ;" />&#160;     &#160;&#160;&#160;    HA Group Label:  Com_HA                 <br style="mc-tag-and-class: ;" />&#160;&#160;&#160;         HA Group Number:  742276409 <br style="mc-tag-and-class: ;" />            HA Group Slot #:  3    <br style="mc-tag-and-class: ;" />&#160;&#160;&#160;         Synchronization:  enabled                   <br style="mc-tag-and-class: ;" />&#160;&#160;&#160;&#160;         &#160;Group Members:  65003001, 65005001                 <br style="mc-tag-and-class: ;" /> &#160;         &#160;Standby members:  &lt;none&gt;  <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />Slot # &#160;   Member S/N                      &#160;Member Label &#160;    Status  <br style="mc-tag-and-class: ;" />======    &#160;==========                      &#160;============    &#160;&#160;======       <br style="mc-tag-and-class: ;" />1     &#160;&#160;&#160;  150346008                            &#160;&#160;mypar1     &#160;alive       <br style="mc-tag-and-class: ;" />2     &#160;&#160;&#160;&#160;&#160;150470006                            &#160;&#160;mypar2 &#160;&#160;&#160;&#160;&#160;alive  <br /><br style="mc-tag-and-class: ;" />[myworkstation]#<br /><br /></pre><pre class="listLevel1" xml:space="preserve">[myworkstation]# ./vtl haAdmin -show  <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />================ HA Global Configuration Settings ===============               <br style="mc-tag-and-class: ;" />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;HA Auto Recovery:  disabled    <br style="mc-tag-and-class: code;" />&#160;&#160;Maximum Auto Recovery Retry:  0     <br style="mc-tag-and-class: code;" />&#160;&#160;Auto Recovery Poll Interval:  60 seconds                       <br style="mc-tag-and-class: code;" />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;HA Logging:  disabled <br style="mc-tag-and-class: code;" />           Only Show HA Slots:  no   <br style="mc-tag-and-class: code;" /><br style="mc-tag-and-class: code;" />================ HA Group and Member Information ================                  <br style="mc-tag-and-class: code;" />&#160;&#160;&#160;&#160;           HA Group Label:  Com_HA                 <br style="mc-tag-and-class: code;" />&#160;&#160;&#160;           HA Group Number:  742276409 <br style="mc-tag-and-class: ;" />             &#160;HA Group Slot #:  3    <br style="mc-tag-and-class: code;" />&#160;           &#160;&#160;Synchronization:  enabled                   <br style="mc-tag-and-class: code;" />&#160;&#160;           &#160;&#160;&#160;Group Members:  65003001, 65005001                 <br style="mc-tag-and-class: code;" />           &#160;&#160;Standby members:  &lt;none&gt;  <br style="mc-tag-and-class: code;" /><br style="mc-tag-and-class: code;" />Slot # &#160;   Member S/N                      &#160;Member Label &#160;   Status  <br style="mc-tag-and-class: code;" />======    &#160;==========                      &#160;============    &#160;======       <br style="mc-tag-and-class: code;" />1     &#160;&#160;&#160;&#160;&#160;150346008                        mypar1     &#160;&#160;&#160;&#160;&#160;&#160;alive       <br style="mc-tag-and-class: code;" />2     &#160;&#160;&#160;&#160;&#160;150470006                        mypar2 &#160;&#160;&#160;&#160;&#160;&#160;&#160;   alive  <br /><br style="mc-tag-and-class: ;" />[myworkstation]# <br /><br /></pre>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Check Chrystoki.conf/crystoki.ini 
+ again, the VirtualToken section should now look like this:</p><pre class="listLevel1" xml:space="preserve">VirtualToken = {<br />VirtualToken00Members = 65003001, 65005001;<br />VirtualToken00SN = 742276409;<br />VirtualToken00Label = myHAgroup;<br />}<br />VirtualToken = {<br />VirtualToken00Members = 65003001, 65005001;<br />VirtualToken00SN = 742276409;<br />VirtualToken00Label = myHAgroup;<br />}
+ &#160;</pre>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Run vtl listslots on 
+ your client, and get a slot list. You should now see:</p><pre class="listLevel1">Slots available:<br style="mc-tag-and-class: code;" />slot#1 - LunaNet Slot<br style="mc-tag-and-class: code;" />slot#2 - LunaNet Slot<br style="mc-tag-and-class: code;" />slot#3 - HA Virtual Card Slot &#160;&#160;&#160;</pre>
+        <h3>Verification Steps</h3>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>We have the two  physical slots on Luna1 and Luna2, and now a third virtual slot which  points at both physical slots at once, via load balancing. To test your HA setup, run multitoken against slot 3:<br />./multitoken2 -mode rsasigver -key 1024 -slots 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3<br />(Each of the “3”s in the above sample invokes one thread performing  the selected signing operation.)</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Verify that the  network lights on both Luna SA units are flashing. Verify that performance  on multitoken is approximately 2400 signatures/second. Fewer than ten threads might be insufficient to exercise the Luna&#160;SAs  fully. Therefore, experiment with additional threads until you see the  expected performance.</p>
+        <p>If you are satisfied that your HA setup is working, then you can begin 
+ using your application against the HA "slot" label (which, in 
+ the example above, was "myHAgroup"). &#160;If 
+ you have included more Luna SA appliances and Partitions in your HA group, 
+ then the virtual slot assignment will differ accordingly, but that doesn't 
+ matter to your application, because the application should be invoking 
+ the label, not a particular slot-number. </p>
+        <h3>HA Standby Mode [optional]</h3>
+        <p>If your situation requires that some HA group members be active, while others are kept synchronized, but in standby mode, see <a href="ha_standby_optional.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"HA Standby [optional]"</span></a>. &#160;&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/ha/client_create_ha_group.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCM,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|[Step 2] Initialize an HSM|Initializing an HSM (PED Authenticated option)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Initializing a Luna SA HSM - PED Version</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/initial_setup/initializing_a_luna_hsm_ped-version.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="system-specific_instructions.htm">[Step 2] Initialize an HSM</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="about_initializing_a_ped-authenticated_hsm.htm">Initializing an HSM (PED Authenticated option)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Initializing a Luna SA HSM - PED Version</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3><a name="kanchor31"></a><a name="kanchor32"></a>Initializing a PED-Authenticated HSM</h3>
+        <p><a name="kanchor33"></a>In this section, you initialize the HSM portion of the Luna appliance, 
+ and set any policies that you require. In normal operation, you would 
+ perform these actions just once, when first commissioning your Luna appliance. 
+ </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Perform initialization only after you have 
+ set the system-level parameters - time, 
+ date, timezone, use of NTP (Network Time Protocol), etc. - 
+ and configured network and IP settings to work with your network.<br /><br /> Exception: The statement (above) applies to a new Luna SA appliance, or one that has been factory reset. One of the options when initializing an HSM is to forbid changing of time/timezone without HSM login <span style="font-family: monospace;">(hsm init -label myluna -authtimeconfig)</span>. If you make that choice, then it remains in force until you change it. Therefore, if you are following these steps for a Luna SA appliance that is not fresh from the factory, or freshly factoryReset, then you will need to take these instructions slightly out of order and perform time-related setting changes after you initialize, rather than before.</p>
+        <p>Initialization prepares the HSM for use by setting up the necessary 
+ identities, ownership and authentication that are to be associated with 
+ the HSM. You must initialize an HSM one time before you can generate or 
+ store objects, allow clients to connect, or perform cryptographic operations.</p>
+        <p> If you have not used Luna HSMs and PED&#160;Keys before, please read the sub-section "<a href="../../administration/ped_keys/ped_key_handling_intro.htm">Managing PED Keys</a>" in the <i>Administration Guide</i>, before you start initializing.</p>
+        <p>Once you have initialized an HSM, you would return to this section only 
+ to clear an entire HSM and all its contents and HSM Partitions, by re-initializing.</p>
+        <h3><a name="kanchor34"></a>Preparing to Initialize a Luna SA HSM [PED-version]</h3>
+        <p><a name="kanchor35"></a>The last thing that the production workers do, before placing your Luna&#160;SA into its shipping carton, is to press the "Decommission" button on the back of the appliance. This sets the HSM in Factory Reset mode, ensuring that when you receive it, it does not contain left-over objects and settings from factory burn-in and final-test. Depending on the options that you chose when ordering, your Luna&#160;SA HSM might also arrive in “Secure Transport Mode”. If the HSM is in Factory Reset mode only, then it is ready to be initialized by you. If the HSM is also in Secure Transport Mode, then you must run the <a href="recover_srk.htm"><span style="font-family: monospace;">hsm srk transportMode recover</span> command</a>.</p>
+        <h5>How do you know?</h5>
+        <p>After making an SSH&#160;or serial connection, and logging on as 'admin', show the Secure Recovery State :&#160;</p><pre xml:space="preserve">[myluna] lunash:&gt;hsm srk show</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Secure Recovery State flags:</pre><pre xml:space="preserve">===============================</pre><pre xml:space="preserve">External split enabled:   	yes</pre><pre xml:space="preserve">SRK resplit required: 	no</pre><pre xml:space="preserve">Hardware tampered: 	no</pre><pre xml:space="preserve">Transport mode: no</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : No Error</pre><pre xml:space="preserve">lunash:&gt;</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Show other HSM status info :&#160;</p><pre xml:space="preserve">[myluna] lunash:&gt;hsm show</pre><pre xml:space="preserve">Appliance Details:</pre><pre xml:space="preserve">==================</pre><pre xml:space="preserve">Software Version:              5.1.0-25</pre><pre xml:space="preserve">HSM Details:</pre><pre xml:space="preserve">============</pre><pre xml:space="preserve">HSM Label:   	[none]</pre><pre xml:space="preserve">Serial #:   	700022</pre><pre xml:space="preserve">Firmware:    	6.2.1</pre><pre xml:space="preserve">Hardware Model:    	Luna K6</pre><pre xml:space="preserve">Authentication Method:      	PED keys</pre><pre xml:space="preserve">HSM Admin login status:     	Not   Logged In</pre><pre xml:space="preserve">HSM Admin login attempts left:   	3 before HSM zeroization!</pre><pre xml:space="preserve">RPV Initialized:      	Yes</pre><pre xml:space="preserve">Manually Zeroized:   	No</pre>
+        <p class="code">&#160;</p><pre xml:space="preserve">Partitions created on HSM:</pre><pre xml:space="preserve">==========================</pre><pre xml:space="preserve">Partition: 700022012,             	Name: mypar1</pre><pre xml:space="preserve">Partition: 700022013,    	Name: mypar2</pre><pre xml:space="preserve">Partition: 700022016,    	Name: mypar3</pre><pre xml:space="preserve">FIPS 140-2 Operation:</pre><pre xml:space="preserve">=====================</pre><pre xml:space="preserve">The HSM is NOT in FIPS 140-2 approved operation mode.</pre><pre xml:space="preserve">HSM Storage Informaton:</pre><pre xml:space="preserve">=======================</pre><pre xml:space="preserve">Maximum HSM Storage Space (Bytes):   	2097152</pre><pre xml:space="preserve">Space In Use (Bytes):   	2097152</pre><pre xml:space="preserve">Free Space Left (Bytes):    	0</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre><pre xml:space="preserve">[myluna] lunash:&gt;</pre><pre xml:space="preserve">&#160;</pre>
+        <p>“Transport Mode” refers to a user-invoked tamper event, which preserves all contents of the HSM, but protects them behind encryption until you run the recovery command. In addition, whether or not the HSM contains useful secrets, Transport Mode assures you that nobody has interfered with the HSM while it was in storage or in transit.</p>
+        <p>"Hardware tampered" refers to a state where a hardware intrusion or failure has been detected, such as tripping of a detector. Similar to the user-invoked Transport Mode, "Hardware tampered" requires you to unlock the HSM with <span style="font-family: monospace;">hsm srk transportMode recover</span>, before you can resume using it. On a PED-authenticated HSM (with SRK enabled), that requirement takes the HSM out of service and forces you to acknowledge that the tamper has occurred before the HSM can go back into service. On a password-authenticated HSM - or a PED-authenticated HSM without SRK enabled - a tamper event is just a logged event that does not take the HSM out of service, even temporarily.</p>
+        <p>“Zeroized” state is different, and results from any of: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Factory reset by command. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The "Decommission" button being pressed.&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The HSM detecting 3 bad login attempts on the SO account. &#160;</p>
+        <p>This renders any HSM contents unrecoverable. At the factory, we would have created only unimportant test objects on the HSM - if you have previously had the HSM in service, and then either "decommissioned"&#160;it or performed <span style="font-family: monospace;">hsm factoryreset</span>  your valid objects and keys are similarly rendered permanently unrecoverable and the HSM is completely safe to store or ship.</p>
+        <p>The above states are addressed by configuring and initializing your Luna&#160;SA HSM. Instructions start on this page.</p>
+        <p>If you requested Secure Transport Mode shipment from SafeNet, then a couple of additional steps are required (also included in these instructions). </p>
+        <h3>Why Initialize?</h3>
+        <p> Before you 
+ can make use of it, the HSM must be initialized. This establishes your 
+ ownership for current and future HSM administration. Initialization assigns 
+ a meaningful label, as well as Security Officer authentication (PED Key) 
+ and Domain (another PED Key), and places the HSM in a state ready to use.</p>
+        <p>Use the instructions on this page if you have Luna&#160;SA with PED (Trusted 
+ Path) authentication.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Not the first time? &#160;&#160;Some HSM Policy changes are destructive. A destructive policy change 
+ is one that requires the HSM to be initialized again, before it can be 
+ used. Thus if you intend to perform a destructive HSM Policy change, you 
+ might need to perform this initialization step again, after the Policy 
+ change.&#160;&#160;</p>
+        <h3>Start a Serial Terminal or SSH&#160;session</h3><pre xml:space="preserve">bash#: ssh 192.20.10.203</pre><pre xml:space="preserve">login as: admin</pre><pre xml:space="preserve">admin@172.20.10.202's password:________</pre><pre xml:space="preserve">Last login: Fri Dec  2 20:16:54 2011 from 192.17.153.225</pre><pre xml:space="preserve">Luna SA 5.1.0-22 Command Line Shell - Copyright (c) 2001-2011 SafeNet, Inc. All rights reserved.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">[myluna] lunash:&gt;&#160;</pre>
+        <p>&#160;</p>
+        <h3>Initialize the HSM</h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Have the Luna 
+ PED connected and ready (in  local mode and "Awaiting command...").</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Insert a blank 
+ PED Key into the USB connector at the top of the PED.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>In a serial terminal 
+ window or with an SSH connection, log into Luna Shell as the HSM administrator 'admin':<br />lunash:&gt; </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Run the <span class="code">hsm 
+ init</span> command, giving a label for your Luna&#160;SA HSM. [If Secure Transport Mode was set, you must unlock the HSM with the purple PED&#160;Key before you can proceed; see earlier on this page and the <a href="recover_srk.htm">Recover the SRK</a> page. ]</p>
+        <p style="margin-left: 40px;">The following is an example of initialization 
+ dialog, with PED interactions inserted to show the sequence of events.</p><pre xml:space="preserve">&#160;&#160;lunash:&gt;  hsm init -label myLunaHSM</pre>
+        <p class="listLevel1">
+            <br />The following warning appears:</p><pre xml:space="preserve">CAUTION:  Are you sure you wish to re-initialize this HSM? &#160;<br />All partitions and data will be erased.</pre><pre xml:space="preserve">Type 'proceed' to initialize the HSM, or 'quit' &#160;<br />to quit now. &#160;<br />&gt;</pre><pre xml:space="preserve">Please attend to the PED.</pre>
+        <p class="code">&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Respond promptly to avoid PED timeout Error. At this 
+ time, the PED becomes active and begins prompting you for PED Keys 
+ and other responses. For security reasons, this sequence has a time-out, which is the maximum 
+ permitted duration, after which an error is generated and the process 
+ stops. If you allow the process to time-out, you must re-issue the initialization 
+ command. If the PED has timed out, press the [CLR] key for five seconds to reset, or switch the PED off, and back on, to get to the  “Awaiting command....” state before re-issuing another lunash command that invokes the PED.
+
+</p>
+        <p class="listLevel1">See <a href="imprint_a_blue_so_ped_key_-_options_and_choices.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Initialization - some additional options and description   "</span></a> for additional information and a summary of the options you might choose or encounter during this process - this procedure (below) assumes a relatively straightforward process.</p>
+        <p class="listLevel1">Luna PED asks preliminary setup questions. </p>
+        <p class="listLevel1">The simplest scenario is your first-ever HSM and new PED Keys. However, you might have previously initialized this HSM and be starting over. Or you might have other HSMs already initialized and need to share the authentication or the domain with your new HSM. </p>
+        <p class="listLevel1">The HSM and PED need to know, 
+ prior to imprinting the first SO PED Key. </p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-so_like-to-reuse_281x280.png" style="width: 281;height: 280;" />
+            <br />&#160;&#160; <br /></p>
+        <p class="listLevel1">If you say [ NO ] (on the PED keypad), then you are indicating there is nothing of value on your PED Keys to preserve. On the assumption that you will now be writing onto a new blank PED Key, or onto one that contains old unwanted authentication, Luna PED asks you to set M of N values. </p>
+        <p class="listLevel1">If you say [ YES ], you indicate that you have a PED Key (or set of PED Keys) from another HSM and you wish your current/new HSM to share the authentication with that other HSM. Authentication will be read from the PED Key that you present and imprinted onto the current HSM.</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-so_m_val_283x277.png" style="width: 283;height: 277;" />
+            <br />
+            <br />
+        </p>
+        <p style="margin-left: 40px;">and</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-so_n_val_286x281.png" style="width: 286;height: 281;" />
+            <br /> <br /></p>
+        <p class="listLevel1">Setting M and N equal to "1" means that the authentication is not to be split, and only a single PED Key will be necessary when the authentication is called for in future. &#160;&#160;</p>
+        <p class="listLevel1">Setting M and N larger than "1" means that the authentication is split into N different "splits", of which quantity M of them must be presented each time you are required to authenticate. M of N allows you to enforce multi-person access control - no single person can access the HSM without cooperation of other holders. &#160;&#160;&#160;</p>
+        <p class="listLevel1">Luna PED now asks you to provide the appropriate PED Key - a fresh blank key, or a previously used key that you intend to overwrite, or a previously used key that you intend to preserve and share with this HSM. </p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-so_insert_277x273.png" style="width: 277;height: 273;" />
+            <br />
+        </p>
+        <p class="listLevel1">Insert a blue HSM Admin / SO PED key [ of course, the PED Key is generically black - we suggest that you apply the appropriate color sticker either immediately before or immediately after imprinting ] and press [Enter].</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-so_warn_blank_overwrite_282x281.png" style="width: 282;height: 281;" />
+            <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<br /></p>
+        <p class="listLevel1">OR<br /></p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-so_warn_overwrite_286x284.png" style="width: 286;height: 284;" />
+            <br />&#160;&#160;<br /></p>
+        <p class="listLevel1">Answer (press the appropriate button on the 
+ PED keypad)</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>"<span style="font-weight: bold;">NO</span>" 
+ if the PED key that you provided carries SO authentication data that must 
+ be preserved. In that case, you must have made a mistake so the PED goes back to asking you to insert a suitable key.         
+ &#160;</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>"<span style="font-weight: bold;">YES</span>" 
+ if the PED should overwrite the PED Key with a new SO authentication.<br />If you 
+ overwrite a never-used PED Key, nothing is lost; if you overwrite a PED 
+ Key that contains authentication secret for another HSM, then this PED 
+ Key will no longer be able to access the other HSM, only the new HSM that 
+ you are currently initializing with a new, unique authentication secret 
+ - therefore "YES" means 'yes, destroy the contents on the key and create new authentication information in its place' -  be sure that this is what you wish to do. (This will be matched on the 
+ Luna&#160;SA HSM during this initialization).</p>
+        <p class="listLevel1">Luna PED makes very sure that you wish to overwrite, by asking again.</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-so_confirm_overwrite_299x289.png" style="width: 299;height: 289;" />
+            <br />&#160;&#160; <br /></p>
+        <p class="listLevel1">For any situation other than reusing a keyset, Luna PED&#160;now prompts for you to set a PED PIN. For multi-factor authentication security, the physical PED&#160;Key is "something you have". You can choose to associate that with "something you know", in the form of a multi-digit PIN code that must always be supplied along with the PED Key for all future HSM access attempts.</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-so_enter_ped-pin_303x296.png" style="width: 303;height: 296;" />
+            <br />&#160;&#160; <br /></p>
+        <p class="listLevel1">Type a numeric password  on the PED keypad, if you wish. Otherwise, just press [Enter] twice to indicate that no PED PIN is desired. &#160;&#160;</p>
+        <p class="listLevel1">Luna PED imprints the PED Key, or the HSM, or both, as appropriate, and then prompts the final question for this key:</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-so_are-you-duplicating_306x300.png" style="width: 306;height: 300;" />
+            <br /> <br /></p>
+        <p class="listLevel1">You can respond [ YES ] and present one or more blank keys, all of which will be imprinted with exact copies of the current PED Key's authentication, or you can say [ NO ], telling the PED&#160;to move on to the next part of the initialization sequence. (You should always have backups of your imprinted PED Keys, to guard against loss or damage.) &#160;&#160;</p>
+        <p class="listLevel1">To begin imprinting a Cloning Domain (red PED&#160;Key), you must first log into the HSM, so in this case you can simply leave the blue PED Key in place.</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-so_insert_305x301.png" style="width: 305;height: 301;" />
+            <br />&#160;&#160; <br /></p>
+        <p class="listLevel1">Luna PED passes the authentication along to the HSM and then asks the first question toward imprinting a cloning domain:</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-domain_like-to-reuse_309x302.png" style="width: 309;height: 302;" />
+            <br />&#160;&#160; <br /></p>
+        <p class="listLevel1">If this is your first Luna HSM, or if this HSM will not be cloning objects with other HSMs that are already initialized, then answer [ NO ]. Luna PED prompts for values of M and N. &#160;&#160;</p>
+        <p class="listLevel1">If you have another HSM and wish that HSM and the current HSM to share their cloning Domain, then you must answer [ YES ]. In that case, Luna PED&#160;does not prompt for M and N.</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-domain_m_val_310x308.png" style="width: 310;height: 308;" />
+        </p>
+        <p class="listLevel1">
+            <br />&#160;&#160; <br /></p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-domain_n_val_311x311.png" style="width: 311;height: 311;" />
+            <br />&#160;&#160; <br /></p>
+        <p class="listLevel1">Luna PED&#160;goes through the same sequence that occurred for the blue SO PED Key, except it is now dealing with a red Domain PED&#160;Key.</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-domain_insert-a-domain-key_315x310.png" style="width: 315;height: 310;" />
+            <br />&#160;&#160; <br /></p>
+        <p style="margin-left: 40px;">&#160;</p>
+        <p class="listLevel1">Insert a red HSM Cloning Domain PED key [ of course, the PED Key is generically black - we suggest that you apply the appropriate color sticker either immediately before or immediately after imprinting ] and press [Enter].</p>
+        <p style="margin-left: 40px;">&#160;</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-domain_warn_blank_overwrite_315x314.png" style="width: 315;height: 314;" />
+            <br />&#160;&#160;<br /></p>
+        <p class="listLevel1">OR</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-domain_warn_overwrite_317x313.png" style="width: 317;height: 313;" />
+            <br /> <br /></p>
+        <p class="listLevel1">Just as with the blue SO PED Key, the next message is:</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-domain_confirm_overwrite_319x316.png" style="width: 319;height: 316;" />
+            <br />&#160;&#160; </p>
+        <p class="listLevel1">When you confirm that you do wish to overwrite whatever is (or is not) on the currently inserted key, with a Cloning Domain generated by the PED, the PED&#160;asks:</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-domain_enter_ped-pin_321x318.png" style="width: 321;height: 318;" />
+            <br />&#160;&#160;<br /></p>
+        <p class="listLevel1">And finally:</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped-message_set-domain_are-you-duplicating_325x321.png" style="width: 325;height: 321;" />
+            <br />&#160;&#160; <br /></p>
+        <p class="listLevel1">Once you stop duplicating the Domain key, or you indicate that you do not wish to make any duplicates (you should have backups of all your imprinted PED&#160;Keys...), Luna PED goes back to "Awaiting 
+ command...".</p>
+        <p style="margin-left: 40px;">Lunash says:</p><pre xml:space="preserve">Command Result : No Error</pre><pre xml:space="preserve">lunash:&gt; </pre><pre xml:space="preserve">lmyluna] lunash:&gt;hsm show</pre><pre xml:space="preserve">Appliance Details:&#160;<br />==================&#160;<br />Software Version: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;               5.1.0-25&#160;</pre><pre xml:space="preserve">HSM Details:&#160;<br />============&#160;<br />HSM Label:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;                          mylunahsm<br />Serial #:                           &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;700022&#160;<br />Firmware: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;                          6.2.1&#160;<br />Hardware Model:                     &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Luna K6&#160;<br />Authentication Method: &#160;&#160;&#160;&#160;&#160;&#160;             &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;PED keys&#160;<br />HSM Admin login status: &#160;&#160;&#160;&#160;&#160;&#160;            Logged In&#160;<br />HSM Admin login attempts left:      3 before HSM zeroization!&#160;<br />RPV Initialized: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;                   Yes&#160;<br />Manually Zeroized: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;                 No</pre><pre xml:space="preserve">Partitions created on HSM:&#160;<br />==========================&#160;<br /></pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">FIPS 140-2 Operation:&#160;<br />=====================&#160;<br />The HSM is NOT in FIPS 140-2 approved operation mode.</pre><pre xml:space="preserve">HSM Storage Information:&#160;<br />========================&#160;<br />Maximum HSM Storage Space (Bytes):   2097152&#160;<br />Space In Use (Bytes): &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;               0&#160;<br />Free Space Left (Bytes): &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;            2097152</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre><pre xml:space="preserve">[myluna] lunash:&gt;</pre>
+        <p class="code">
+            <br />
+        </p>
+        <p>Notice that the HSM now has a label.</p>
+        <p>The next step is  <a href="about_creating_a_partition_ped.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Prepare to Create a Partition (PED Authenticated)"</span></a> on the HSM. </p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/initial_setup/initializing_a_luna_hsm_ped-version.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

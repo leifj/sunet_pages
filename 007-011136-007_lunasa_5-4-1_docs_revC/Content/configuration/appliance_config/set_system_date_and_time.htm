@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|[Step 1] Configure the Luna Appliance for your Network">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Set System Date and Time</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/appliance_config/set_system_date_and_time.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="gather_hsm_appliance_network_settings.htm">[Step 1] Configure the Luna Appliance for your Network</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Set System Date and Time</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Set System Date and Time</h3>
+        <p>
+            <img src="../../Resources/Images/time-and-zone-icon.png" style="border: none;width: 109px;height: 116px;border-style: none;float: left;border-style: none;float: left;" width="109" height="116" align="left" border="0" />Before proceeding with HSM and HSM Partition setup, ensure 
+ that the HSM Server’s system date, time and timezone are appropriate 
+ for your network. Setting correct system time is important because the next step is to 
+ generate your own server certificate. The certificate becomes valid at 
+ the time of its creation, which is recorded as part of the certificate, 
+ as a GMT value. If your local time is set with an inappropriate local 
+ timezone, then the GMT time on the certificate could be incorrect by several 
+ hours. When other systems (clients) attempt to reference your certificate, 
+ they might find that it has not yet become valid.</p>
+        <h4>Set Date and Time</h4>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>First, verify 
+ the current date and time on the HSM Server, to see if they need to change. 
+ <br />At the lunash prompt, type the command: <span style="font-family: 'Courier New', monospace;"><br /><br />lunash:&gt; status date</span> <br /><br />which returns the current settings of date, time and timezone. <br /><br />If desired, <br /><span style="font-family: monospace;">lunash:&gt; status time</span> <br />and/or<br /><span style="font-family: monospace;">lunash:&gt; status zone</span> <br />can also be used. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If the date, 
+ time, or timezone are incorrect for your location, change them using the 
+ <span style="font-family: monospace;">lunash sysconf</span> command. <br />For example: <span style="font-family: 'Courier New', monospace;"><br />lunash:&gt; sysconf timezone set Canada/Eastern 
+ <br />Timezone set to Canada/Eastern</span> <![CDATA[ ]]></p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You must set the timezone before setting the time and date, otherwise the 
+ timezone change adjusts the time that you just set.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>For a new Luna&#160;SA appliance, or for one that has been factory reset, the steps occur in the order presented here [set the date and time, configure the IP, generate certs, connect, initialize the HSM...]. However, if the Luna&#160;SA has been used before, then it might have been initialized with the option ."-authtimeconfig", which requires that the SO/HSM-Admin be logged in before you are allowed to set time/timezone. If that is the case, then you will need to log in with the old SO&#160;credentials, or initialize the HSM first, before you can set time and timezone.</p>
+        <h4>Timezone Codes &#160;</h4>
+        <p style="margin-left: 40px;">A list of timezone 
+ codes is provided in the <i>Appliance Administration Guide</i>. </p>
+        <p style="margin-left: 40px;">If a code is depicted in the list as a major 
+ name (such as Canada) followed by a list of minor names (such as city 
+ names), then you write the major name, followed by a forward slash (“/”) 
+ followed by the minor name.</p>
+        <p style="margin-left: 40px;">The code that 
+ you must apply from the list in the appendix may not look exactly like 
+ the code displayed by “<span style="font-family: 'Courier New', monospace;">status 
+ date</span>”. For example, “<span style="font-family: 'Courier New', monospace;">status 
+ date</span>” shows EDT (i.e., Eastern Daylight Time), but to set that 
+ you must type "EST5EDT", or “Canada/Eastern” or “America/Montreal”  – a number of values produce the same setting.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use <span style="font-family: 'Courier New', monospace;">sysconf 
+ time</span> to set the system time and date, &#160;&lt;HH:MM 
+ YYYYMMDD&gt; in the format shown. </p>
+        <p class="listLevel1"><code>Note that the time is set on a 24-hour clock (00:00 to 23:59). </code>
+            <br style="mc-tag-and-class: code;" /><code>lunash:&gt; sysconf time 12:55 20140410 </code>
+            <br style="mc-tag-and-class: code;" /><code>Sun April 10 12:55:00 EDT 2014</code> <![CDATA[ ]]></p>
+        <h5>Possible alternate scenario</h5>
+        <p>While attempting to set the time or zone, you might encounter a message saying that you must log into the HSM first.</p><pre xml:space="preserve">lunash:&gt;sysconf timezone set Europe/London</pre><pre xml:space="preserve">This HSM has been initialized to require that the SO is logged in <br />prior to running this command.</pre><pre xml:space="preserve">Verifying that the SO is logged in...</pre><pre xml:space="preserve">The SO is not currently logged in.  Please login as SO and try again.</pre>
+        <p>&#160;</p>
+        <p>That message appears only if the HSM has been previously initialized with the "-authtimeconfig" option set. The work-around at this stage is to run the command <span style="font-family: monospace;">hsm init -label &lt;yourlabeltext&gt;</span> without the "-authtimeconfig" option, which releases that flag. That is, you can just skip ahead in these instructions and perform your intended initialization out of order, and then set the appliance time and zone, and carry on.We chose an order for these configuration instructions that is usually convenient and easy to understand, but having the system time set before initializing is not required. You can perform those actions out of order. It is important to have the time set before you create certificates, later on. </p>
+        <h5>Network Time Protocol [optional]</h5>
+        <p>To use NTP, add one or more servers to the HSM appliance's 
+ NTP server list, and then activate (enable) the servers. Use the <span style="font-family: 'Courier New', monospace;">sysconf&#160;ntp</span> 
+ command as follows:&#160;<br /><br /><b>Add servers</b><br /><span style="font-weight: normal;font-family: 'Courier New', monospace;">lunash:&gt; sysconf ntp addserver &lt;hostnameoripaddress&gt;</span>&#160;<br /><br /><span style="font-weight: bold;">Activate servers</span><span style="font-family: 'Courier New', monospace;"><br />lunash:&gt; sysconf ntp enable </span></p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you wish to use Network Time Protocol (NTP), 
+ you must set the system time to within 20 minutes of the time given by 
+ the servers that you select. If the difference between NTP server time 
+ and the HSM appliance time is greater than 20 minutes, the NTP daemon 
+ ignores the servers and quits.&#160;<br /></p>
+        <h5>Drift correction for the system clock</h5>
+        <p>If you require that your appliance's system clock be as correct as is practical, but are unable to use NTP for the most accurate timekeeping possible, then you might wish to use the system's clock-drift correction protocol. See  <a href="../../sa_appliance_admin/ntp_time/drift_and_correction_non-ntp.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Correcting Time Drift"</span></a>  in the <i>Appliance Administration Guide</i> for further information.</p>
+        <p>Go to <a href="configure_ip_and_network_parameters.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Configure IP and Network Parameters"</span></a>.  &#160;&#160;&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/appliance_config/set_system_date_and_time.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

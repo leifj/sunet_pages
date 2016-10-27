@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Error Codes and Troubleshooting">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>System Operational and Error Messages</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/error_codes/system_messages.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="error_codes.htm">Error Codes and Troubleshooting</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">System Operational and Error Messages</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>System Operational and Error Messages</h2>
+        <h3>Why do I often see extra slots that say "token not present"? </h3>
+        <p>This happens for two reasons:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>PKCS#11 originated in a world of software cryptography, which only later acknowledged the existence of Hardware Security Modules, so initially it did not have the concept of physically removable crypto slots.  PKCS#11 requires a static list of slots when an application starts. The cryptographic "token" can be inserted into, or removed from a slot dynamically (by a user), for the duration of the application. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>When the token is inserted, the running application must be able to detect that token. When the token is removed, the running application gets "token not present". Because we allow for the possibility of backup, and of "PKI Bundle", we routinely declare 'place-holder' slots that might later be filled by a physical Luna G5 HSM, or a Luna Backup HSM, or a Luna DOCK2 with (potentially) two legacy token-style HSMs in its card-reader slots. As it happens, there are three (3) USB ports on a Luna SA appliance, so we are allowing for a physical HSM connection to all of them.</p>
+        <p>In the Chrystoki.conf file (or the Windows crystoki.ini file), for Luna G5, you can remove the empty slots by modifying the CardReader entry, like this:</p>
+        <p>CardReader = { <br></br> LunaG5Slots=0;<br></br>}</p>
+        <p>For Luna SA, which has its configuration file internal to the appliance, and not directly accessible for modification, you cannot change the default cryptographic slot allotments. </p>
+        <h3>Error:  'hsm update firmware' failed. (10A0B : LUNA_RET_OPERATION_RESTRICTED) when attempting to perform hsm update firmware?</h3>
+        <p>You must ensure that SRK is disabled before you run the firmware update. (SRK is fundamental to Secure Transport Mode and to enforced tamper-event acknowledgement in PED-authenticated Luna HSMs). This brings the external split of the MTK (the Secure Recovery Vector) back inside the HSM.</p>
+        <p>Also, as with any update, you should backup any important HSM contents before proceeding. </p>
+        <p>After the update is completed, you can enable SRK again. This creates a new split of the MTK to populate a new purple PED Key. <br></br>(Applies to PED-authenticated Luna HSMs.)</p>
+        <h3>I get "KR_ECC_POINT_INVALID" when decrypting a file encrypted from BSAFE through ECIES using ECC key with any of the curves from the x9_t2 section.</h3>
+        <p>As indicated on the BSAFE&#160;web site, they support only the NIST-approved curves (prime, Binary, and Koblitz). That includes most/all the curves from test items 0 through 37 in ckdemo, which is to say:  the "secp", "X9_62_prime", and "sect" curves.</p>
+        <p>The X9.62 curves that are failing in this task are X9.62 binary/char2 curves which do not appear to be supported by BSAFE. So, you appear to be encountering a BSAFE limitation and not a Luna HSM problem. </p>
+        <h3>Occasionally we see the following logged to /var/log/messages by the Luna client:  <br></br>“Error during SSL Connect ( RC_OPERATION_TIMED_OUT )”. &#160;What does it mean?</h3>
+        <p>It means that the client did not receive the SSL handshake response from the appliance within  20 seconds (hard coded).   </p>
+        <p>The following  is a list of some potential causes:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Network issue</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Appliance is under heavy load with connection requests - this can happen at start-up/restart, if client applications attempt to (re-)assert hundreds of connections all at once, without staging or staggering them, and the initial setup handshakes take too long for some transactions (start-up bottleneck). After a large number of simultaneous connections has been successfully established, they can be maintained without further problem.  </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Appliance is under heavy load servicing  connected clients crypto requests. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Appliance was powered down (perhaps the power plug was pulled) in the middle of the handshake.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>There might be high CPU load on the client computer causing it to occasionally delay responses to the appliance.</p>
+        <h3>We saw slow/interrupted response from the HSM, and the "hsm show" command showed LUNA_RET_SM_SESSION_REALLOC_ERROR - what is going on?</h3><pre xml:space="preserve">   Appliance Details:
+   ==================
+   Software Version:                4.4.0-27
+Error:  'hsm show' failed. (310102 : LUNA_RET_SM_SESSION_REALLOC_ERROR)
+
+Command Result : 65535 (Luna Shell execution)
+</pre>
+        <p>The error LUNA_RET_SM_SESSION_REALLOC_ERROR means the HSM cannot expand the session table.</p>
+        <p>The HSM maintains a table for all of the open sessions.  For performance reasons, the table is quite small initially.  As sessions are opened (and not closed) the table fills up.  When the table gets full, the HSM tries to expand the table.  If there is not enough available RAM to grow the table, this error is returned.</p>
+        <p>RAM can be used up buy an application that creates <strong>and does not delete</strong> a large number of session objects, as well as by an application that opens and <strong>fails to close</strong> a large number of sessions.</p>
+        <p>The obvious solution is proper housekeeping. Your applications MUST&#160;clean up after themselves, by closing sessions that are no longer in use - this deletes session objects associated with those sessions. If your application practice is to have long-lived sessions, and to open many objects in a given session, then your application should explicitly delete those session objects as soon as each one is no longer necessary. </p>
+        <p>By far, we see more of the former problem - abandoned sessions - and very often in conjunction with Java-based applications. Proper garbage collection includes deleting session objects when they are no longer useful, or simply closing sessions as soon as they are not required. Formally closing a session (or stopping / restarting the HSM) deletes all session objects within each affected session. These actions keep the session table small, so it uses the least possible HSM volatile memory.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/error_codes/system_messages.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

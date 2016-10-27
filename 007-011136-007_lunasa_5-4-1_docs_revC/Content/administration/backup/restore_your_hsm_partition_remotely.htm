@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Backup and Restore HSMs and Partitions|Partition Restore">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Restore Your HSM Partition Remotely</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/backup/restore_your_hsm_partition_remotely.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="backup.htm">Backup and Restore HSMs and Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition_restore.htm">Partition Restore</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Restore Your HSM Partition Remotely</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Restore Your HSM Partition Remotely</h3>
+        <h4>Restore to a Luna&#160;SA Slot</h4>
+        <p>If your primary HSM partition (the partition onto which you will restore the backed-up objects) is in Activated state, then only the Backup HSM needs PED activity for authentication during restore. However, we add a couple of steps below to show that it is straightforward to use the single Remote PED with both HSMs, in the case where your HSM partition is not in Activated state when you begin the restore operation. </p>
+        <p>For the example, start by clearing the target partition before restoring objects into it, so it is obvious that any objects after the restore operation are, in fact, restored, and not left-overs. This example is a replacement restore operation, and not an appending or cumulative restore operation. </p><pre xml:space="preserve">lunacm:&gt; partition clear
+
+        You are about to delete all the user objects.
+        Are you sure you wish to continue?
+
+        Type 'proceed' to continue, or 'quit' to quit now -&gt; proceed
+
+        85 objects were deleted.
+
+Command Result : No Error
+
+lunacm:&gt; exit</pre>
+        <p>&#160;</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>In our test setup, we have each of several Luna HSM products. An easy way to see an updated summary of all HSMs and slot assignments is to exit Lunacm and restart the utility.</p><pre xml:space="preserve" class="listLevel1">
+C:\Program Files\SafeNet\LunaClient&gt;lunacm.exe
+
+LunaCM V2.3.3 - Copyright (c) 2006-2013 SafeNet, Inc.
+
+
+        Available HSM's:
+
+        Slot Id -&gt;              1
+        HSM Label -&gt;            SA82_P1
+        HSM Serial Number -&gt;    500409014
+        HSM Model -&gt;            LunaSA
+        HSM Firmware Version -&gt; 6.10.1
+        HSM Configuration -&gt;    Luna SA Slot (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              2
+        HSM Label -&gt;            G5PKI
+        HSM Serial Number -&gt;    701968008
+        HSM Model -&gt;            LunaSA
+        HSM Firmware Version -&gt; 6.10.1
+        HSM Configuration -&gt;    Luna SA Slot (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              3
+        HSM Label -&gt;            G5backup
+        HSM Serial Number -&gt;    700101
+        HSM Model -&gt;            G5Backup
+        HSM Firmware Version -&gt; 6.10.1
+        HSM Configuration -&gt;    Remote Backup HSM (PED) Backup Device
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              4
+        Tunnel Slot Id -&gt;       6
+        HSM Label -&gt;            PCI422
+        HSM Serial Number -&gt;    500422
+        HSM Model -&gt;            K6 Base
+        HSM Firmware Version -&gt; 6.2.1
+        HSM Configuration -&gt;    Luna PCI (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              5
+        Tunnel Slot Id -&gt;       7
+        HSM Label -&gt;            K6_328
+        HSM Serial Number -&gt;    155328
+        HSM Model -&gt;            K6 Base
+        HSM Firmware Version -&gt; 6.10.1
+        HSM Configuration -&gt;    Luna PCI (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              8
+        HSM Label -&gt;            G5180
+        HSM Serial Number -&gt;    700180
+        HSM Model -&gt;            G5Base
+        HSM Firmware Version -&gt; 6.10.1
+        HSM Configuration -&gt;    Luna G5 (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+
+
+        Current Slot Id: <span style="background-color: #ffff00;">1</span>
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Verify which slot is listening for PED and whether it is expecting local or remote.</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt;ped get
+
+        HSM slot 1 listening to local PED (PED id=0).
+
+Command Result : No Error</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Connect to Remote PED.</p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; ped connect ip 192.20.10.190
+
+Command Result : No Error
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Deactivate (just to demonstrate using PED with both HSMs)</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; partition deactivate
+
+Command Result : No Error
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Log into the partition </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>This would not be necessary if the partition was activated - we are demonstrating that if the partition was not in login state or activated state, it is straightforward to briefly switch the PED to the primary HSM partition before switching the PED&#160;back to the Backup HSM.</p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; partition login
+
+        Option -password was not supplied.  It is required.
+
+        Enter the password: *******
+
+        User is not activated, please attend to the PED.
+
+Command Result : No Error
+
+lunacm:&gt; ped disconnect
+
+        Are you sure you wish to disconnect the remote ped?
+
+        Type 'proceed' to continue, or 'quit' to quit now -&gt; proceed
+
+Command Result : No Error
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Now, [re-] connect the Remote PED to the Backup HSM (which, in this example, is slot 3). </p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; ped connect ip 192.20.10.190 slot 3
+
+Command Result : No Error
+
+lunacm:&gt; ped get
+
+        HSM slot 1 listening to local PED (PED id=0).
+
+Command Result : No Error
+
+lunacm:&gt; ped get slot 3
+
+        HSM slot 3 listening to remote PED (PED id=100).
+
+Command Result : No Error
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>The currently selected slot is "slot 1" (see the lunacm startup summary, above). <br />Now restore to the current slot from the slot that corresponds to the &#160;Backup HSM (slot 3).<br /></p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; partition backup restore -slot 3 -par SAbck1
+
+        Logging in to partition SAbck1 on slot 3 as the user.
+
+        Please attend to the PED.
+
+        Verifying that all objects can be restored...
+
+        85 objects will be restored.
+
+        Restoring objects...
+        Cloned object 19 from partition SAbck1 (new handle 20).
+        Cloned object 20 from partition SAbck1 (new handle 21).
+        Cloned object 23 from partition SAbck1 (new handle 22).
+        Cloned object 25 from partition SAbck1 (new handle 25).
+        Cloned object 24 from partition SAbck1 (new handle 26).
+        Cloned object 26 from partition SAbck1 (new handle 28).
+        Cloned object 28 from partition SAbck1 (new handle 29).
+        Cloned object 27 from partition SAbck1 (new handle 30).
+        Cloned object 29 from partition SAbck1 (new handle 33).
+        Cloned object 30 from partition SAbck1 (new handle 34).
+        Cloned object 31 from partition SAbck1 (new handle 40).
+        Cloned object 35 from partition SAbck1 (new handle 44).
+        Cloned object 36 from partition SAbck1 (new handle 45).
+        Cloned object 39 from partition SAbck1 (new handle 48).
+        Cloned object 40 from partition SAbck1 (new handle 49).
+        Cloned object 44 from partition SAbck1 (new handle 53).
+        Cloned object 45 from partition SAbck1 (new handle 54).
+        Cloned object 46 from partition SAbck1 (new handle 55).
+        Cloned object 47 from partition SAbck1 (new handle 56).
+        Cloned object 48 from partition SAbck1 (new handle 57).
+        Cloned object 49 from partition SAbck1 (new handle 58).
+        Cloned object 50 from partition SAbck1 (new handle 59).
+        Cloned object 51 from partition SAbck1 (new handle 60).
+        Cloned object 52 from partition SAbck1 (new handle 61).
+        Cloned object 53 from partition SAbck1 (new handle 62).
+        Cloned object 56 from partition SAbck1 (new handle 65).
+        Cloned object 57 from partition SAbck1 (new handle 66).
+        Cloned object 58 from partition SAbck1 (new handle 67).
+        Cloned object 59 from partition SAbck1 (new handle 68).
+        Cloned object 60 from partition SAbck1 (new handle 69).
+        Cloned object 61 from partition SAbck1 (new handle 70).
+        Cloned object 62 from partition SAbck1 (new handle 71).
+        Cloned object 63 from partition SAbck1 (new handle 72).
+        Cloned object 64 from partition SAbck1 (new handle 73).
+        Cloned object 65 from partition SAbck1 (new handle 74).
+        Cloned object 66 from partition SAbck1 (new handle 75).
+        Cloned object 70 from partition SAbck1 (new handle 79).
+        Cloned object 71 from partition SAbck1 (new handle 80).
+        Cloned object 72 from partition SAbck1 (new handle 81).
+        Cloned object 73 from partition SAbck1 (new handle 82).
+        Cloned object 74 from partition SAbck1 (new handle 83).
+        Cloned object 75 from partition SAbck1 (new handle 84).
+        Cloned object 76 from partition SAbck1 (new handle 85).
+        Cloned object 77 from partition SAbck1 (new handle 86).
+        Cloned object 78 from partition SAbck1 (new handle 87).
+        Cloned object 79 from partition SAbck1 (new handle 88).
+        Cloned object 80 from partition SAbck1 (new handle 89).
+        Cloned object 81 from partition SAbck1 (new handle 90).
+        Cloned object 82 from partition SAbck1 (new handle 91).
+        Cloned object 83 from partition SAbck1 (new handle 92).
+        Cloned object 84 from partition SAbck1 (new handle 93).
+        Cloned object 86 from partition SAbck1 (new handle 94).
+        Cloned object 85 from partition SAbck1 (new handle 95).
+        Cloned object 87 from partition SAbck1 (new handle 96).
+        Cloned object 88 from partition SAbck1 (new handle 97).
+        Cloned object 89 from partition SAbck1 (new handle 98).
+        Cloned object 91 from partition SAbck1 (new handle 99).
+        Cloned object 90 from partition SAbck1 (new handle 100).
+        Cloned object 92 from partition SAbck1 (new handle 101).
+        Cloned object 96 from partition SAbck1 (new handle 105).
+        Cloned object 97 from partition SAbck1 (new handle 106).
+        Cloned object 98 from partition SAbck1 (new handle 107).
+        Cloned object 99 from partition SAbck1 (new handle 108).
+        Cloned object 103 from partition SAbck1 (new handle 112).
+        Cloned object 104 from partition SAbck1 (new handle 113).
+        Cloned object 105 from partition SAbck1 (new handle 114).
+        Cloned object 106 from partition SAbck1 (new handle 115).
+        Cloned object 107 from partition SAbck1 (new handle 116).
+        Cloned object 108 from partition SAbck1 (new handle 117).
+        Cloned object 110 from partition SAbck1 (new handle 118).
+        Cloned object 109 from partition SAbck1 (new handle 119).
+        Cloned object 111 from partition SAbck1 (new handle 120).
+        Cloned object 112 from partition SAbck1 (new handle 121).
+        Cloned object 113 from partition SAbck1 (new handle 122).
+        Cloned object 114 from partition SAbck1 (new handle 123).
+        Cloned object 115 from partition SAbck1 (new handle 124).
+        Cloned object 118 from partition SAbck1 (new handle 127).
+        Cloned object 119 from partition SAbck1 (new handle 128).
+        Cloned object 120 from partition SAbck1 (new handle 129).
+        Cloned object 121 from partition SAbck1 (new handle 130).
+        Cloned object 124 from partition SAbck1 (new handle 133).
+        Cloned object 125 from partition SAbck1 (new handle 134).
+        Cloned object 128 from partition SAbck1 (new handle 137).
+        Cloned object 129 from partition SAbck1 (new handle 138).
+        Cloned object 130 from partition SAbck1 (new handle 139).
+
+        Restore Complete.
+
+        85 objects have been restored from partition SAbck1 on slot 3.
+
+Command Result : No Error</pre><pre xml:space="preserve">&#160;</pre>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Verify that the restored slot now looks like it did just before the backup was originally performed.</p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; partition backup list -slot 3
+
+        HSM Storage Information for slot 3:
+
+           Total HSM Storage Space:      16252928
+           Used HSM Storage Space:       43616
+           Free HSM Storage Space:       16209312
+           Number Of Allowed Partitions: 20
+           Number Of Allowed Partitions: 1
+
+        Partition list for slot 3
+
+           Number of partition: 1
+
+           Name:                      SAbck1
+           Total Storage Size:        41460
+           Used Storage Size:         41460
+           Free Storage Size:         0
+           Number Of Objects:         85
+
+Command Result : No Error
+
+lunacm:&gt;
+</pre>
+        <p>&#160;</p>
+        <p>Remote Restore from backup, using RBS, is complete.</p>
+        <p>To restore onto a different remote Luna HSM, the same arrangement is required, but the remote HSM must already have a suitable partition (if the restore-target HSM is a Luna&#160;SA, the target partition can have any name - it does not need to match the name of the source partition on the backup device), and your workstation must be registered as a client to that partition.</p>
+        <p>To restate: the backup operation can go from a source partition (on a Luna HSM) to an existing partition on the Luna Remote Backup HSM, or if one does not exist, a new partition can be created during the backup -- but the restore operation cannot create a target partition on a Luna SA; it must already exist and have a registered NTLS&#160;link.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/backup/restore_your_hsm_partition_remotely.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

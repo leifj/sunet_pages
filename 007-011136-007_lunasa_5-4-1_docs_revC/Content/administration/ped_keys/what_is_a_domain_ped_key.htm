@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|PED Key Management">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Domain PED Keys</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/ped_keys/what_is_a_domain_ped_key.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ped_keys.htm">PED Key Management</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Domain PED Keys</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Domain PED Keys</h2>
+        <p> 
+ &#160;&#160;&#160;&#160;&#160;&#160;A domain PED key is an iKey 1000  
+ &#160;&#160;&#160;<img src="../../Resources/Images/hardwarekey_125x75.png" style="border: none;float: none;width: 125;height: 75;" border="0" /> (marked with) <img src="../../ped-key_domain_red_small.png" style="border: none;width: 92px;height: 63px;float: none;" width="92" height="63" border="0" />&#160;and imprinted with a domain secret. <br /></p>
+        <p>A domain PED Key (the red one) carries the key-cloning vector (the domain 
+ identifier) that allows cloning to take place among  HSMs and tokens. 
+ Cloning is a secure method of copying HSM (or Partition) or token objects, 
+ such that they can be replicated between HSMs and tokens, but:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>strongly encrypted (never 
+ in the clear), and</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><a name="kanchor137"></a>only between HSMs and 
+ tokens that share a cloning domain.</p>
+        <p>Cloning is the method by which secure HSM and Partition backup is possible 
+ to a Luna Backup HSM, and by which restoring is possible from a Backup 
+ HSM or token to a Luna HSM or Partition. It is also used when HSM log records and files are verified by an HSM other than the one that originally created those records.</p>
+        <p>At initialization time, the key-cloning vector is created on the HSM 
+ and imprinted onto a red PED Key, or if a desired cloning domain already 
+ exists, then the existing key-cloning vector from a red PED Key is read 
+ from that PED Key and imprinted on the HSM (or Backup token) as the HSM 
+ (or token) is initialized. HSMs and tokens that share a key-cloning vector 
+ are said to be members of a cloning domain. </p>
+        <p>An HSM or token can be a member of only one domain. To make an HSM or 
+ token become a member of a second or different domain, you must initialize the HSM 
+ or token and imprint the new key-cloning vector -- the first one is destroyed 
+ and the HSM or token is now a member of only the second domain. This action also destroys any previous content on the HSM&#160;being initialized.</p>
+        <p>To cause a Luna HSM or Partition to be a duplicate or mirror image of 
+ another, the procedure is to backup the first HSM or Partition, and then 
+ restore from the Backup token onto the new HSM (or Partition).</p>
+        <h3>The "New Domain" Question</h3>
+        <p><a name="kanchor138"></a>When you initialize an HSM, and are prompted for a red PED Key, Luna 
+ PED first asks:</p>
+        <p>
+            <img src="../../Resources/Images/ped-message_set-domain_like-to-reuse_320x312.png" style="width: 320;height: 312;" />
+        </p>
+        <p>&#160;</p>
+        <p>If you answer [ No ]:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>You are telling Luna PED that it should retrieve a new domain (Key Cloning Vector) from the HSM and prepare to overwrite that new domain secret onto a
+ blank key that you are about to insert, or overwrite the existing random domain vector on a red PED Key that you are about to insert.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>This was your last chance (short of aborting the procedure) to make the current HSM part of an existing cloning group. Further prompts in this sequence will give you the opportunity to remove keys that you have mistakenly offered (that have useful authentication secrets on them) and substitute another, but you get no more opportunity to change the "No"&#160;to a "Yes".</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If that red PED Key was 
+ already in use on an operational HSM (and Backup device), then that HSM 
+ (as well as the Backup device) carries the old domain and the newly overwritten 
+ red PED Key can no longer be used with it — 
+ therefore, unless you have a duplicate red PED Key with the old cloning 
+ domain (key-cloning vector), then that previous HSM cannot be backed up, 
+ and its Backup cannot be restored</p>
+        <p>If you answer [ Yes ]:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Luna PED prepares to preserve the 
+ domain (key-cloning vector) value that it now expects to find on the red PED Key, and 
+ store it onto the HSM -- this causes the current HSM to share the domain 
+ with the previous HSM and/or Backup device</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>With two or more HSMs (and 
+ at least one Backup HSM) sharing the same cloning domain, it is possible 
+ to clone the contents from one to another by means of backup and restore 
+ operations</p>
+        <p>Assuming that you responded [ No ], the PED asks additional preparatory questions, then asks you to insert a PED Key (which you should already have labeled with a red sticker). The PED scans the red PED Key for an existing key-cloning vector. If none 
+ is found, Luna PED imprints a new one, taken from the HSM, and that same new key-cloning vector 
+ is saved onto the HSM.</p>
+        <p>However, if an existing key-cloning vector (or other secret) <span style="font-style: italic;">is</span> 
+ found, Luna PED needs to know whether to retain it. Luna PED asks:</p>
+        <p>
+            <img src="../../Resources/Images/ped-message_set-domain_warn_overwrite_325x321.png" style="width: 325;height: 321;" />
+        </p>
+        <p>&#160;</p>
+        <p>If you answer Yes:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Luna PED overwrites the 
+ existing random domain vector (or other secret)&#160;on the inserted red PED Key</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If that red PED Key was 
+ already in use on an operational HSM (and Backup device), then that HSM 
+ (as well as the Backup device) carries the old domain and the newly overwritten 
+ red PED Key can no longer be used with it — 
+ therefore, unless you have a duplicate red PED Key with the old cloning 
+ domain (key-cloning vector), then that previous HSM cannot be backed up, 
+ and its Backup  cannot be restored</p>
+        <p>If you answer No:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Luna PED goes back a step and asks you to "Insert a Domain PED Key", which is your opportunity to correct the mistake by removing the first PED&#160;Key and inserting either a fresh (never-imprinted PED&#160;Key, or inserting a PED Key that contains an outmoded secret (Domain, SO, User, RPV, SRV). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Each time you insert a PED&#160;Key, during an operation that could write to the key, Luna PED tells you if it is blank or if it contains a pre-existing secret, and asks if you wish to overwrite. This continues until you insert a key and allow the PED&#160;to overwrite whatever is-or-isn't on that key, or until the operation times out.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If two or more HSMs (and 
+ at least one Backup HSM) share the same cloning domain, it is possible 
+ to clone the contents from one to another by means of backup and restore 
+ operations</p>
+        <h3>To What Does a Domain Apply?</h3>
+        <p>Each HSM has a domain that covers any object that can exist in the SO space - this is created at HSM initialization time. Usually objects in the SO area of the HSM are specialized keys used to facilitate HSM operations (example, masking key).</p>
+        <p>Each partition in an HSM has a domain of its own - this is created when the partition is created/initialized. Partitions contain customer-owned keys used in client operations, as well as data objects.</p>
+        <p>Objects on a partition can be cloned to another partition (whether on the same HSM or on another HSM) only if both partitions share the same domain.</p>
+        <p>In the current Luna SA 5.x sense, one domain is like another [ there is nothing special about one firmware 6 domain versus another firmware 6 domain] and could be applied to any partition or HSM SO space. Only your security and management policies dictate how you share domains. You can segregate HSMs and partitions into clonable groups. Cloning can occur among any/all members of a group that share a domain. Cloning cannot occur between members of two different domain groups. </p>
+        <p>Any HSM SO space can have only one domain, assigned at initialization time. </p>
+        <p>Any partition can have only one domain, assigned at partition creation time. It is not possible for a partition or an SO&#160;space to be a member of more than one domain. It is possible for different partitions on the same HSM to be members of mutually exclusive domains.</p>
+        <p>There is no limit to the number of partitions or HSMs that can share a common domain.</p>
+        <h3>What about Legacy HSMs and Partitions?</h3>
+        <p>HSMs before the K6 (the HSM inside Luna SA) and G5 (the HSM for PKI with Luna SA, and the core of the Luna Backup HSM) - legacy HSMs - used an older, smaller domain secret, which is incompatible with current HSMs. </p>
+        <p>Cloning of objects between Luna HSMs requires a shared domain.</p>
+        <p>To provide a one-way migration path to move HSM objects from legacy HSMs to modern HSMs, a command <span style="font-family: monospace;">partition setLegacyDomain</span> allows an old-style domain to be linked to a new-style domain on a K6 or G5 HSM.</p>
+        <h3>Summary</h3>
+        <p>If you can account for all the HSMs to which you have presented your red Domain PED Key (meaning that you have maintained strict control of that red PED Key), then you know with certainty that nobody else could possibly have a copy of the sensitive keys that were created  on your HSMs or partitions, or cloned to those HSMs or partitions. </p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/ped_keys/what_is_a_domain_ped_key.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

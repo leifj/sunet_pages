@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Java Interfaces">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Luna JSP Configuration</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/java/luna_jsp_config.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">SDK Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="java.htm">Java Interfaces</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Luna JSP Configuration</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor646"></a>Luna JSP Configuration</h2>
+        <p><a name="kanchor647"></a><a name="kanchor648"></a>Luna JSP consists of a single JCA/JCE service provider, that allows a Java-based 
+ application to use SafeNet Luna products for secure cryptographic operations. Please refer to the Javadocs accompanying the toolkit, for the most current information regarding the Luna JSP packages and LunaProvider functionality.</p>
+        <h3>Installation</h3>
+        <p>You must acquire a Java JDK or JRE separately and install it before installing the Luna JSP. See the QuickStart that came with your software package.</p>
+        <p>In order to use the LunaProvider you must place the jar file in your classpath.  We recommend placing it in your &lt;jre&gt;/lib/ext folder.  In addition the JNI component, which may be a .dll or .so file depending on your system architecture, should be placed in your library path.</p>
+        <h3>Luna Java Security Provider</h3>
+        <p>In general, you should use the standard JCA/JCE classes and methods to work with Luna HSMs. The following pages provide examples of when you may wish to use the special Luna methods.</p>
+        <h4>Class Hierarchy</h4>
+        <p>All public classes in the Luna Java crypto provider are included in the com.safenetinc.luna package or subpackages of that package. Thus the full class names are (for example):</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>com.safenetinc.luna.LunaSlotManager</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>com.safenetinc.luna.provider.key.LunaKey</p>
+        <p>If your application is compliant with the JCA/JCE spec, you will generally not need to directly reference any Luna implementation classes. Use the interfaces defined in the java.security packages instead. The exception is if you need to perform an HSM-specific operation, such as modifying PKCS#11 attributes.</p>
+        <p>Throughout the rest of this document, the short form of the class names is used for convenience and readability. The full class names (of SafeNet or other classes) are used only where necessary to resolve ambiguity.</p>
+        <h4>Special Classes/Methods</h4>
+        <p>The JCA/JCE interfaces were not designed with hardware security modules (HSMs) in mind and do not include methods for managing aspects of a hardware module.  Luna JSP provides some additional functions in addition to the standard JCA/JCE API.</p>
+        <p>The LunaSlotManager class provides custom methods that allow some HSM-specific information to be retrieved.  It also provides a way to log in to the HSM if your application cannot make use of the standard KeyStore interface.  For details please check the Javadoc which comes with the product.</p>
+        <p>It is not always necessary to use the LunaSlotManager class.  With proper use of the JCE API provided in Luna JSP, your code can be completely hardware-agnostic.</p>
+        <p>The LunaKey class implements the Key interface and provides all of the methods of that class along with custom methods for manipulating key objects on Luna hardware.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Sensitive attributes cannot be retrieved from keys stored on Luna hardware.  Thus certain JCE-specified methods (such as PrivateKeyRSA.getPrivateExponent() ) will throw an exception.</p>
+        <p>The LunaCertificateX509 class implements the X509Certificate methods along with custom methods for manipulating certificate objects on Luna hardware.</p>
+        <h4>Examples</h4>
+        <p>The Luna JSP comes with several sample applications that show you how to use the Luna provider. The samples include detailed comments.</p>
+        <h5>To compile on windows without an IDE (administrator privileges may be required):</h5><pre xml:space="preserve">cd &lt;Luna SA install&gt;/jsp/samples</pre><pre xml:space="preserve">javac com\safenetinc\luna\sample\*.java</pre>
+        <h5>To run:</h5><pre xml:space="preserve">java com.safenetinc.luna.sample.KeyStoreLunaDemo (or any other sample class in that package)</pre>
+        <h4>Authenticating to the HSM</h4>
+        <p>In order to make use of an HSM, it is necessary to activate the device through a login. Depending on the security level of the device, the login will require a plain-text password and/or a PED key.</p>
+        <p>The preferred method of logging in to the module is through the Java KeyStore interface.  The store type is “Luna” and the password for the key store is the challenge for the partition specified.</p>
+        <p>KeyStore files for the Luna KeyStore must be created manually.  The content of the KeyStore file differs if you wish to reference the partition by the slot number or label (preferred).  Details of authenticating to the HSM via the KeyStore interface are explained in the Javadoc for LunaKeyStore and in the KeyStoreLunaDemo sample application.</p>
+        <p>Keys in a Luna KeyStore cannot have individual passwords.  Only the KeyStore password is used.  If your HSM requires PED keys to be presented for authentication and the partition is not already activated, loading the KeyStore will cause the PED to prompt you to present this key.</p>
+        <p>Other than the KeyStore interface your application may also make use of the LunaSlotManager class or by using a login state created outside of the application through a utility called ‘salogin’.  Use of salogin is strongly discouraged unless you have a very specific need.</p>
+        <h4>Logging Out</h4>
+        <p>Logging out of the HSM is performed implicitly when the application is terminated normally.  Logging out of the HSM while the application is running can be done with the LunaSlotManager class.  Please note that any ephemeral (non-persistent) key material present on the HSM will be destroyed when the session is logged out.  Because the link to the HSM will be severed, cryptographic objects that were created by the LunaProvider will no longer be usable.  Attempting to use these objects after logging out will result in undefined behaviour.</p>
+        <p>All key material which was persisted on the HSM (either through the KeyStore interface or using the proprietary Make Persistent method) will remain on the HSM after a logout and will be accessible again when the application logs back in to the HSM.</p>
+        <h3>Keytool</h3>
+        <p>The Luna JSP may be used in combination with Java’s keytool utility to store and use keys on a Luna HSM, with the following limitations:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>You cannot use the importkeystore command to migrate keys from a Luna KeyStore to another KeyStore.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Private keys cannot be extracted from the KeyStore unless you have the Key Export model of the HSM.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>By default secret keys created with the LunaProvider are non-extractable.</p>
+        <p>The example below uses a KeyStore file containing only the line “slot:1”.  This tells the Luna KeyStore to use the token in slot 1.</p>
+        <p>For information on creating keys through Key Generator or Key Factory classes please see the LunaProvider Javadoc or the JCA/JCE API documentation.</p>
+        <p>Keys (with self signed certificates) can be generated using the keytool by specifying a valid Luna KeyStore file and specifying the KeyStore type as “Luna”.  The password presented to authenticate to the KeyStore is the challenge password of the partition.</p>
+        <h5>Example</h5><pre xml:space="preserve">keytool –genkeypair –alias myKey –keyalg RSA –sigalg SHA256withRSA –keystore keystore.luna –storetype Luna</pre><pre xml:space="preserve">Enter keystore password:</pre><pre xml:space="preserve">What is your first and last name?</pre><pre xml:space="preserve">[Unknown]:  test</pre><pre xml:space="preserve">What is the name of your organizational unit?</pre><pre xml:space="preserve">[Unknown]:  codesigning</pre><pre xml:space="preserve">What is the name of your organization?</pre><pre xml:space="preserve">[Unknown]:  SafeNet Inc</pre><pre xml:space="preserve">What is the name of your City or Locality?</pre><pre xml:space="preserve">[Unknown]:  Ottawa</pre><pre xml:space="preserve">What is the name of your State or Province?</pre><pre xml:space="preserve">[Unknown]:  ON</pre><pre xml:space="preserve">What is the two-letter country code for this unit?</pre><pre xml:space="preserve">[Unknown]:  CA</pre><pre xml:space="preserve">Is CN=test, OU=codesigning, O=SafeNet Inc, L=Ottawa, ST=ON, C=CA correct?</pre><pre xml:space="preserve">[no]:  yes</pre><pre xml:space="preserve">Enter key password for &lt;myKey&gt;</pre><pre xml:space="preserve">(RETURN if same as keystore password):</pre>
+        <h3>Cleaning Up</h3>
+        <p>Keys that are made persistent will continue to exist on the HSM until they are explicitly destroyed, or until the HSM is reinitialized. Persistent keys that are no longer needed can be explicitly destroyed to free resources on the HSM.</p>
+        <p>Keys may be removed using the Keytool, or programmatically through the KeyStore interface or other methods available through the API.</p>
+        <p>LunaSlotManager contains methods that report the number of objects that exist on the HSM. See the Javadoc for LunaSlotManager for more information.</p>
+        <h3>PKCS#11/JCA Interaction</h3>
+        <p>Keys created using the SafeNet PKCS#11 API can be used with the Luna JSP; the inverse is also true.</p>
+        <h4>Certificate Chains</h4>
+        <p>The PKCS#11 standard does not provide a certificate chain representation. When a Java certificate chain is stored on a Luna token, the certificates of the chain appear as individual objects when viewed through the PKCS#11 API.  In order for the LunaProvider to properly identify PKCS#11-created certificates as part of a chain attached to a private key, the certificates must follow the labeling scheme described below.</p>
+        <h4>Java Aliases and PKCS#11 Labels</h4>
+        <p>The PKCS#11 standard defines a large set of object attributes, including the object label. This label is analogous to the Object alias in a java KeyStore.</p>
+        <p>The Luna KeyStore key entry or a Luna KeyStore certificate entry will have a PKCS#11 object label exactly equal to the Java alias.  Similarly, a key created through PKCS#11 will have a Java alias equal to the PKCS#11 label.</p>
+        <p>Because a java certificate chain cannot be represented as a single PKCS#11 object, the individual certificates in the chain will each appear as individual PKCS#11 objects.  The labels of these PKCS#11 objects will be composed of the alias of the corresponding key entry, concatenated with "--certX", where 'X' is the index of the certificate in the java certificate chain.</p>
+        <p>For example, consider a token that has a number of objects created through the Java API. The objects consist of the following:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A key entry with alias "signing key", consisting of a private key and a certificate chain of length 2</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A trusted certificate entry with alias "root cert"</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A secret key with alias "session key"</p>
+        <p>If all objects on the token were viewed through a PKCS#11 interface, 5 objects would be seen:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A private key with label "signing key"</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A certificate with label "signing key--cert0"</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A certificate with label "signing key--cert1"</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A certificate with label "root cert"</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>	A secret key with label "session key"</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>PKCS#11 labels (strings of ascii characters) and Java aliases (of the java.lang.String type) are usually fully compatible, but problems can arise if non-printable characters are used.  To maintain compatibility between Java and PKCS#11, avoid embedding non-printable or non-ascii characters in aliases or object labels.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#sdk/java/luna_jsp_config.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

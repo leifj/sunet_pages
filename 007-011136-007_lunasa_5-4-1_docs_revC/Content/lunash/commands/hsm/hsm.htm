@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>hsm</title>
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#lunash/commands/hsm/hsm.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">hsm</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="kanchor296"></a><a name="kanchor297"></a><a name="kanchor298"></a><a name="kanchor299"></a>hsm</h2>
+        <p>Access commands that allow you to manage the HSM on the appliance.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>HSM commands from the Luna shell are queued along with other demands on the HSM (such as cryptographic operations), and can run more slowly than normal if the HSM&#160;is very busy, such as when it is performing high-volume ECDSA signing operations. </p>
+        <h3 class="ntoc">Syntax</h3>
+        <p style="font-weight: bold;">hsm</p>
+        <p class="listLevel1" style="font-weight: bold;">backup<br />changepolicy<br />changepw<br />checkcertificates<br />debug<br />displaylicenses<br />driver timeout<br />factoryreset &#160;<br />firmware<br />fwupdateinfo<br />generatedak<br />information<br />init<br />loadcustomercert<br />login<br />logout<br />ped<br />restore<br />selftest<br />setlegacydomain<br />show<br />showpolicies<br />srk<br />supportinfo<br />update<br /></p>
+        <table style="caption-side: top;width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" style="width: 101px;" />
+            <col class="Column-Column1" style="width: 105px;" />
+            <col class="Column-Column1" style="width: 232px;" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Parameter</th>
+                    <th class="HeadE-Column1-Header1">Shortcut </th>
+                    <th class="HeadD-Column1-Header1">Description </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">backup<br /></td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">b</td>
+                    <td class="BodyD-Column1-Body1"> Backs up data or objects in the HSM's SO (or HSM Admin) space, such as the HSM's masking key (used in SIM) information, to a backup token. See <a href="hsm_backup.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm backup"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">changepolicy</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">changepo</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Sets a policy on or off, 
+ or to set it to a certain value if it is a numerical policy. See <a href="hsm_changepolicy.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm changepolicy"</span></a>.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">changepw</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">changepw</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p class="TextHeader2">Changes the password or PED key contents for 
+ the HSM Admin. See <a href="hsm_changepw.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm changepw"</span></a>.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">checkcertificates</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">che</td>
+                    <td class="BodyD-Column1-Body1">Checks the HSM for presence of MAC 
+ and DAC. See <a href="hsm_checkcertificates.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm checkcertificates"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">debug</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">de</td>
+                    <td class="BodyD-Column1-Body1">Access commands that allow you to set the debug mode, and save or display debug information. See <a href="hsm_debug.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm debug"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">displaylicenses</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">di</td>
+                    <td class="BodyD-Column1-Body1">Display a list of all licenses on 
+ the HSM. See <a href="hsm_displaylicences.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm displaylicenses"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">driver timeout</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">dr</td>
+                    <td class="BodyD-Column1-Body1">Set or display the HSM driver timeout. See <a href="hsm_driver_timeout.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm driver timeout"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">factoryreset<br /></td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">fa</td>
+                    <td class="BodyD-Column1-Body1">Set the HSM back to its factory default settings. See <a href="hsm_factoryreset.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm factoryreset"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">firmware</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">fi</td>
+                    <td class="BodyD-Column1-Body1">Update or rollback the HSM firmware. See <a href="hsm_firmware.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm firmware"</span></a> .</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">fwupdateinfo</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">fw</td>
+                    <td class="BodyD-Column1-Body1">Saves HSM firmware update support information to a file. See <a href="hsm_fwupdateinfo.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm fwupdateinfo"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">generatedak</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">ge</td>
+                    <td class="BodyD-Column1-Body1">Generate a new DAK pair. See <a href="hsm_generatedak.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm generatedak"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">information</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">inf</td>
+                    <td class="BodyD-Column1-Body1">Display HSM&#160;information, reset the HSM counters, or monitor HSM&#160;performance. see <a href="hsm_information.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm information"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">init</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">ini</td>
+                    <td class="BodyD-Column1-Body1">Initialize the HSM. See <a href="hsm_init.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm init"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">loadcustomercert</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">loa</td>
+                    <td class="BodyD-Column1-Body1">Load the customer-signed MAC and DAC. See <a href="hsm_loadcustomercert.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm loadcustomercert"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">login</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">logi</td>
+                    <td class="BodyD-Column1-Body1">Log in as the HSM Admin. See <a href="hsm_login.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm login"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">logout</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">logo</td>
+                    <td class="BodyD-Column1-Body1">Log out the HSM Admin account. See <a href="hsm_logout.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm logout"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">ped</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">p</td>
+                    <td class="BodyD-Column1-Body1">Display or change the configuration of the PED. See <a href="hsm_ped.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm ped"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">restore</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">r</td>
+                    <td class="BodyD-Column1-Body1">Restore the contents of the HSM from a backup token. See <a href="hsm_restore.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm restore [reserved]"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">selftest</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">sel</td>
+                    <td class="BodyD-Column1-Body1">Test the cryptographic capabilities of the HSM. See <a href="hsm_selftest.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm selftest"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">setlegacydomain</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">set</td>
+                    <td class="BodyD-Column1-Body1">Set the legacy cloning domain on an HSM. See <a href="hsm_setlegacydomain.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm setlegacydomain"</span></a></td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">show</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">sh</td>
+                    <td class="BodyD-Column1-Body1">Display a list showing the current configuration of the HSM. See <a href="hsm_show.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm show"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">showpolicies</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">showp</td>
+                    <td class="BodyD-Column1-Body1">Display the current settings for all hsm capabilities and policies, 
+ or optionally restrict the listing to only the policies that are configurable. See <a href="hsm_showpolicies.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm showpolicies"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">srk</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">sr</td>
+                    <td class="BodyD-Column1-Body1">Configure, or display information about, secure recovery keys (SRK) and secure transport mode. See <a href="hsm_srk.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm srk"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">supportinfo</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">su</td>
+                    <td class="BodyD-Column1-Body1">Get HSM support information. See <a href="hsm_supportinfo.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm supportinfo"</span></a>.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">update</td>
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">u</td>
+                    <td class="BodyA-Column1-Body1">Display or install any available capability or firmware updates. See <a href="hsm_update.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm update "</span></a>.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../../index.html#lunash/commands/hsm/hsm.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

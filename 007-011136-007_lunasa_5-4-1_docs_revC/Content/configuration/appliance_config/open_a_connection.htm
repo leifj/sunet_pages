@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|[Step 1] Configure the Luna Appliance for your Network">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Open a Connection</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/appliance_config/open_a_connection.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="gather_hsm_appliance_network_settings.htm">[Step 1] Configure the Luna Appliance for your Network</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Open a Connection</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3><a name="kanchor23"></a>Open a Connection</h3>
+        <p><a name="kanchor24"></a>Perform your initial configuration via direct serial connection to the Luna appliance. Once network parameters are established, you can switch to an SSH session over your network.</p>
+        <p>Direct administration connection via serial 
+ terminal is the  method for initial configuration for the following reasons:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The specific IP address, randomly assigned to your Luna appliance by an automated testing harness during final factory testing,  is unknown.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Configuring network settings via SSH, in addition to requiring the original IP address, necessarily involves losing that connection when a new IP&#160;is set.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A direct serial connection is the only route to log into the "recover" account, in case you ever lose the appliance's admin password and need to reset. Therefore, you should verify, before you need it, that the connection works - performing the appliance's network configuration is an ideal test.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Similarly, if you ever need to issue the <span style="font-family: monospace;">hsm factoryreset</span> command, you must be connected through a local serial console for that command to be accepted.</p>
+        <h5>To open a connection</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Connect a null-modem serial cable (supplied) between the serial port on the HSM appliance front panel and a dumb terminal or a PC (for example a laptop) that will serve as the administration computer. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>A standard null-modem serial cable with DB9 connectors is included with the HSM appliance, as is a USB-to-serial adapter if needed. For security reasons, the USB port on the Luna SA appliance recognizes only SafeNet HSMs and peripheral devices - therefore it is prohibited from supporting general USB operations and thus does not accept a serial console link; the 9-pin serial connector must be used.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Use a terminal  emulation package provided with your operating system. Set the Serial connection parameters:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>Serial port baud rate:  &#160;115200</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>N,8,1 (no parity, 8 data-bits, one stop-bit)</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>VT-100 terminal emulation</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>hardware flow control selected.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>When the connection is made, the HSM appliance login prompt appears. [DEFAULTHOSTNAME]lunash:&amp;gt; &#160;The [DEFAULTHOSTNAME] is replaced by the new hostname that you assign to your HSM appliance, later in these instructions. The prompt changes the next time you start a secure command-line interface connection.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You might need to press [ENTER] several times 
+ to initiate the session.&#160;<br />You must <b>log in within two minutes</b> of opening an administration 
+ session, or the connection will time out.</p>
+        <p>Now that you have established a connection, go immediately to the next page to log in 
+ as “admin” and begin configuring. </p>
+        <p>Next, see <a href="first_login_and_changing_passwords.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"First Login &amp; Changing Password"</span></a>. <br /></p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/appliance_config/open_a_connection.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|High Availability (HA) Mode">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Frequently Asked Questions</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/ha/faq.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha_intro.htm">High Availability (HA) Mode</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Frequently Asked Questions</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Frequently Asked Questions</h2>
+        <p>This section provides additional information by answering questions that are frequently asked by our customers.</p>
+        <h3>Can we manage NTLS connections through a load balancer (like NetScaler, Barracuda, A10, etc.)?</h3>
+        <p>NTLS will not work through a load-balancer because it is an end-to-end TLS pipe between client and Luna&#160;SA.  That is why we have our own HA feature.</p>
+        <h3>We want to implement a client-side HA where our backup application server would be dormant until awakened by a failure of our primary application server - can we use virtual IP in the Luna SA setup, so that both primary and secondary are accepted for NTLS as the same client by Luna SA?</h3>
+        <p>Yes. At the client, generate the client cert with the command " vtl create -n &lt;any IP address, real or virtual&gt; " </p>
+        <p>Both client computers must have the Luna SA appliance's server cert in their client-side server-cert folders.</p>
+        <p>The Luna SA appliance must have the client certificate (built with the virtual IP address)</p>
+        <p> Also the following lines in the Chrystoki.conf file must point to the same cert and Keyfile on the clustered application servers:</p><pre xml:space="preserve"> &#160;&#160;&#160;&#160;&#160;LunaSA Client ={ </pre><pre xml:space="preserve">&#160;&#160;&#160;&#160;&#160;&#160; ClientCertFile=\usr\LunaClient\cert\client\&lt;your-cert-filename&gt;.pem </pre><pre xml:space="preserve">&#160;&#160;&#160;&#160;&#160;&#160; ClientPrivKeyFile=\usr\LunaClient\cert\client\&lt;your-filename&gt;Key.pem </pre>
+        <h3>For a Luna SA&#160;HA-group what is the meaning of the "modified round-robin" and "least-busy" work-flow model, and what does that mean in action, and how does it affect performance?</h3>
+        <p>Luna SA HA function is managed by the Client library. Individual Luna SA appliances are not in any way aware that they are members of an HA&#160;group. The Client takes care of that, based on the HA group configuration list.</p>
+        <p>There is no "master" HSM appliance in the Luna SA HA model. Where you might see or hear mention of a "Primary" member, that refers only to the member that happens to be the first on the configuration list. If you edit the list to place the name of a different Luna SA on top, then that becomes the new HA Group "primary" member.</p>
+        <p>When the Client has a request for HSM action, that request goes to the first member in the list, unless that member is busy. A member is busy if it has not yet responded to the most recent request that was sent to it.</p>
+        <p>Luna SA HA works on a "modified round-robin, least-busy" model. What that means is, if the primary member is busy, the client sends its next request to the next non-busy member of the HA Group. In practice, that means the primary member gets all the requests until the volume reaches a level that saturates the ability of the primary - OR a blocking request from another source prevents acceptance of new requests. Therefore, on a 7000 signings/second Luna SA doing exclusively 1024-bit RSA signings, your client would need to have approximately 30 simultaneous threads offering a total of nearly 7000 requests per second before the second member would begin seeing any requests. In other words, until the primary is fully occupied, the HA group looks like it is operating as a "hot-standby" arrangement.</p>
+        <p>The numbers above are ideal, of course. If you add network latency, or if you increase the key-size, or if you interleave other crypto operations, then the numbers must drop for the individual member, and the secondary member becomes part of the overall performance. And a third member, if you have a third active member in your group, and so on.</p>
+        <p>If you have any group members set to "Standby" status, then they do not contribute to group performance, even if the client can saturate the active members.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Note that PED operations against an HSM can block crypto operations until the PED operation has returned control to that HSM.</p>
+        <h3>Our application keeps the HSM full. Can we double the capacity by creating an HA&#160;group and having a second HSM?</h3>
+        <p>No. HA provides redundancy and can increase performance, but not capacity. Every HSM in an HA group gets synchronized with the other member[s], which means that the content of any one HSM in an HA&#160;group must be a clone of the content of any other member of that group. So, with more HA&#160;group members, you get more copies, not more space.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/ha/faq.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

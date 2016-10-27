@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|PED (Trusted Path) Authentication ">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Interaction between the HSM and the PED</title>
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/ped_auth/hsm-and-ped_interaction.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ped_auth.htm">PED (Trusted Path) Authentication </a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Interaction between the HSM and the PED</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Interaction between the HSM and the PED</h2>
+        <p>(This page is background information that might help make some operations 
+ more obvious.)</p>
+        <p>After the first-ever Luna HSM, all succeeding generations have included both password-authenticated and PED-authenticated variants. This page describes how the current-generation PED-authenticated HSMs (firmware 6.x) interact with Luna PED and PED Keys, particularly during initialization - a time when important decisions are made. Other pages describe the PED and PED Keys. This is more about flow. </p>
+        <p>The diagram shows how the components are affected as you make choices during an initialization [ this sequence depicts events and choices if you initialize a new, factory-fresh HSM, or one on which you have recently run "hsm factoryReset"; as well the process would be very similar for creation of a partition ]. This flow depicts the SO / HSM Admin secret, but the interactions for other secrets follow the same pattern.</p>
+        <p>
+            <img src="../../Resources/Images/hsm-init_ped_interaction_fw-5-and-6.png" />
+        </p>
+        <p>When you issue the "hsm init" command at the command-line, the HSM generates a secret, then turns over control to the Luna PED. </p>
+        <h5>Reuse? (a.k.a. Group PED Key)&#160;</h5>
+        <p>The first question from the PED is whether you wish to "Reuse" &#160;<img src="../../Resources/Images/ped_so_reuse_keyset_309x254.png" style="padding-left: 7px;padding-right: 7px;padding-top: 7px;padding-bottom: 7px;width: 309;height: 254;" />&#160;&#160;&#160;an existing SO / HSM Admin authentication secret (the same logic applies to the other PED Keys, so we use just the blue key in this example). This means that you have a blue PED&#160;Key from another HSM, or you have a blue PED&#160;Key from a previous initialization of this HSM. The PED&#160;is asking if you wish to import the secret from that key onto the HSM. The options at this point are: </p>
+        <p>a) you have only fresh blank PED&#160;Keys that have not been used previously with any HSM (No - do not reuse)</p>
+        <p>b) you have a previously used PED Key, but the secret it contains is not one you wish to preserve or re-use (No - do not reuse) </p>
+        <p>c) you have a previously used PED&#160;Key, with a secret from this HSM, and you don't mind reusing it (Yes - reuse)</p>
+        <p>d) you have a previously used PED&#160;Key, from another HSM, and you wish to reuse it so that the blue key can unlock both the current HSM and the other HSM. (Yes - reuse) </p>
+        <p>These options also apply to any other key color when they are being imprinted. If you elect to reuse the content of an existing key, then the secret that the current HSM generated is discarded, and the secret from the reused PED Key overwrites onto the HSM. This ensures that the PED&#160;Key and the HSM have the same authentication secret, and the key can unlock the HSM. If the secret on the key was from another HSM that is still operational, then the PED Key has become a "group PED&#160;Key" that unlocks the equivalent aspects of both HSMs. In this manner, you can include as many HSMs as you wish in a group. [ Note that this "group" of HSMs is related only by the convenience of being able to use one PED Key to unlock any of them. This "group" concept is not the same as (say) the HA Group concept for high availability. <br /><br /> The HSM slots that form an HA&#160;group interact with their client(s) via a virtual HSM slot, such that any of the real HSM slots behind the HA group is interchangeable and can be swapped in and out as needed. But members of an HA&#160;group do not need to be members of a PED&#160;Key group. In an HA group, any or all of the members could have the same or different authentication secrets, without affecting the HA function. Only the cloning domain must be identical across all HA group members. ] &#160;&#160;</p>
+        <p>If you choose to <b>not</b> reuse the content of an existing key, then the secret that the current HSM generated is copied onto the key that is currently inserted into the PED (after the PED verifies multiple times that this is what you wish to do).  This ensures that the PED&#160;Key and the HSM have the same authentication secret, and the key can unlock the HSM. If the PED&#160;Key previously had a secret for another HSM, it no longer does. The PED Key can now unlock the current HSM but is useless with the previous HSM.</p>
+        <p>Note also that your organization's security policies govern whether you can allow multiple HSMs or HSM partitions to be unlockable by the same PED Key.</p>
+        <h5>MofN?&#160;&#160;</h5>
+        <p>The second question from the PED would ask for M and N values,&#160;<img src="../../Resources/Images/ped_so_m-value_311x258.png" style="padding-left: 7px;padding-right: 7px;padding-top: 7px;padding-bottom: 7px;width: 311;height: 258;" />&#160;&#160;&#160;&#160;<img src="../../Resources/Images/ped_so_n-value_313x261.png" style="padding-left: 7px;padding-right: 7px;padding-top: 7px;padding-bottom: 7px;width: 313;height: 261;" />&#160;&#160;&#160; so that you could set up MofN split-secret, multi-person access control. However, that option would greatly complicate this explanation, so we will assume that you choose M=1 and N=1, which means "no MofN invoked". </p>
+        <p>If you wish to see an explanation of how MofN works on the HSM, go to "<a href="../../concepts/hsm_authent_model_with_mofn_and_no_ped-pins.htm">HSM Authentication Model with MofN and No PED PINs</a>". </p>
+        <h5>PED&#160;PIN? &#160;&#160;</h5>
+        <p>The PED provides the opportunity to add an <span class="MCExpanding MCExpanding_Open expanding "><span class="MCExpandingHead MCExpandingHotSpot expandingHead  MCExpandingHotSpot_" title="Expanding Text">additional layer </span><span class="MCExpandingBody expandingBody "> <img src="../../Resources/Images/ped_so_enter_new_ped-pin_320x269.png" style="padding-left: 7px;padding-right: 7px;padding-top: 7px;padding-bottom: 7px;width: 320;height: 269;" />&#160;</span></span>&#160;of authentication security to the handling of the current secret. A PED PIN&#160;is a numeric secret typed on the PED&#160;keypad. If you just press enter, no PED PIN is created, and therefore no PED-PIN&#160;flag is set on the current PED Key. If you do type in some digits on the PED's keypad, then that sequence becomes a PED PIN, a numeric password that must be typed whenever you wish to use that key in future. Whatever your response, the PED asks you to confirm by typing it in again, before proceeding to the next question. </p>
+        <p>If you wish to see an explanation of how PED PINs work on the HSM go to "<a href="../../concepts/hsm_authent_model_with_1_ped-pin.htm">HSM Authentication Model with a PED PIN</a>" or "<a href="../../concepts/hsm_authent_model_with_2_ped-pins.htm">HSM Authentication Model with Multiple PED PINs</a>". </p>
+        <h5>Duplicate? (make backups)&#160;&#160;</h5>
+        <p>The next question from the PED is whether you wish to duplicate the current PED keyset.&#160;&#160;<img src="../../Resources/Images/ped_so_duplicating_keyset_322x269.png" style="padding-left: 7px;padding-right: 7px;padding-top: 7px;padding-bottom: 7px;width: 322;height: 269;" />&#160;&#160;[&#160;&#160;The word "keyset" is used because you could have chosen to invoke MofN, splitting the (in this case) HSM secret across several blue keys, rather than just the one in this example. That&#160;is, a "keyset" can consist of one key, containing a complete secret, or multiple keys, each containing a portion of that secret.]&#160;&#160;</p>
+        <p>In general, it is a good idea to have several PED Keys with the HSM&#160;secret duplicated, so that you can have on-site and off-site backups, and to meet your other operational considerations. </p>
+        <p>The first opportunity to make copies is at initialization time, as the PED always asks this question during the process. Your answer to the "duplicate" question determines the end of the process for the current PED Key secret. </p>
+        <p>Again, your security policies dictate how many backup copies - or other operational copies - of a PED Key should be made, and how they should be handled and maintained.</p>
+        <h3>How it was - versus - how it is today</h3>
+        <p>Customers who are familiar with our legacy HSM products, and who are now preparing to use Luna SA 5.x (a firmware 6.x HSM) would observe that much of the concept and action is similar to the previous generation, but with a few important differences, described below. This would be especially important for customers who are migrating keys and HSM contents from older HSMs to the current generation.</p>
+        <p>Differences in function are driven to a considerable extent by the updating of the (optional) M of N, split-secret, multi-person access control model.</p>
+        <h4>Legacy</h4>
+        <p>In HSM firmware 4, the MofN concept was of a separate, self-contained single secret (on green keys, and no PED PIN), so all the other PED Key colors were just one secret each, which was a simple model that allowed certain possibilities and precluded others. </p>
+        <p>In that older model, if a PED PIN was created, it existed only in your head ("something you know), and was a transformation that you applied to the secret on the key ("something you have"), to make it into the secret on the HSM. In that model, it was <i>not</i> possible to have more than one PED PIN for (say) the SO secret on HSM1. However, it <i>was</i> possible to use that same key for another HSM (2) with a different PED PIN, because the secrets on the two HSMs didn’t have to match. </p>
+        <p>All that was needed was that whatever was on the blue key could be reliably transformed into what HSM1 wanted, and could also be transformed into whatever HSM2 wanted, by typing something on the keypad.  </p>
+        <p>You could minimize the number of blue keys, while still ensuring that HSM1 and HSM2 had effectively different secrets – as long as you trusted that HSM1's SO and HSM2's SO were not going to talk to each other.  But any duplicate blue keys were, indeed, exact duplicates. It was the HSMs in a group that had different secrets, not the keys.   The same idea applied to the black keys.</p>
+        <p>(Key #1 + PED PIN #1) or (Key #2 + PED PIN #1) = Success on HSM1,</p>
+        <p>(Key #1 + PED PIN #2) or (Key #2 + PED PIN #2) = Success on HSM2</p>
+        <p>(Key #1 + PED PIN #1) or (Key #2 + PED PIN #1) = Failure on HSM2</p>
+        <p>(Key #1 + PED PIN #2) or (Key #2 + PED PIN #2) = Failure on HSM1</p>
+        <h4>Modern</h4>
+        <p>In HSM  firmware 6 (Luna PCI-E 5, Luna SA 5, Luna G5), the new PED-mediated MofN-per-key-color model required some re-engineering. Additional infrastructure was needed, which makes this model incompatible with the previous method. </p>
+        <p>Functionally, in the current model, it doesn’t matter whether you choose M and N to be one (feels like no M of N) or you choose M and N to be greater than one (invoking secret-splitting) – the infrastructure is there, regardless. </p>
+        <p>One result is that the HSM takes on additional responsibility for validating splits (even if there’s only the one…), and the PED Key data now has a direct relationship to the PED PIN (which is part of the validation done when the PED Key is entered). Therefore, a “duplicate” is now a slightly fuzzier concept. Each duplicate PED Key can be given a different PED PIN (or none), and can still unlock the same HSM1. BUT, if you now make a group of HSMs by initializing a second HSM (HSM2) with the same basic secret (by imprinting the new HSM from one of the duplicate PED Keys), you must use the correct PED PIN for the Key used – any other choice will fail validation.  The result is that the second HSM uses the same secret as the first - which is different from the firmware 4 case. </p>
+        <p>You can optionally have split each secret (M and N greater than 1 when you initialized HSM1), which  just makes the combinations more interesting to track without a good set of notes, but that doesn’t change the concept… merely adds a layer.</p>
+        <p> In the following table, we  illustrate your interactions with the PED as you initialize an HSM or create a partition, with a fresh secret (not reused), and then create two duplicates of the PED Key, each with a  PED PIN different from the original and from each other, yet all three will unlock that HSM or that partition - to simplify this exercise, we ignore MofN. Assume that all keys are fresh blanks.</p>
+        <table style="caption-side: top;mc-table-style: url('../../Resources/TableStyles/Page.css');margin-left: 0;margin-right: auto;" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">HSM1 PED prompt</th>
+                    <th class="HeadE-Column1-Header1">Original key, No PED PIN<br />(your action)</th>
+                    <th class="HeadE-Column1-Header1">First duplicate key PED PIN "1234" <br />(your action)</th>
+                    <th class="HeadD-Column1-Header1">Second duplicate key PED PIN "4321" <br />(your action)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">"Do you wish to reuse an existing keyset"<br /> (creating new <br />PED Keys during <br />initialization)</td>
+                    <td class="BodyE-Column1-Body1">Press [ No ]</td>
+                    <td class="BodyE-Column1-Body1">n/a</td>
+                    <td class="BodyD-Column1-Body1">n/a</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Insert...</td>
+                    <td class="BodyE-Column1-Body1">(insert a new key)</td>
+                    <td class="BodyE-Column1-Body1">-</td>
+                    <td class="BodyD-Column1-Body1">-</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Enter new PED&#160;PIN / Confirm new PED PIN</td>
+                    <td class="BodyE-Column1-Body1">Press [ Enter ]</td>
+                    <td class="BodyE-Column1-Body1">n/a</td>
+                    <td class="BodyD-Column1-Body1">n/a</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">"Are you duplicating this keyset?"</td>
+                    <td class="BodyE-Column1-Body1">Press [ Yes ]</td>
+                    <td class="BodyE-Column1-Body1">-</td>
+                    <td class="BodyD-Column1-Body1">-</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Insert...</td>
+                    <td class="BodyE-Column1-Body1">-</td>
+                    <td class="BodyE-Column1-Body1">(insert a new key)</td>
+                    <td class="BodyD-Column1-Body1">-</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Enter new PED&#160;PIN / Confirm new PED PIN</td>
+                    <td class="BodyE-Column1-Body1">-</td>
+                    <td class="BodyE-Column1-Body1">Type "1234" and press <br />[ Enter ]</td>
+                    <td class="BodyD-Column1-Body1">&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">"Are you duplicating this keyset?"</td>
+                    <td class="BodyE-Column1-Body1">-</td>
+                    <td class="BodyE-Column1-Body1">Press [ Yes ]</td>
+                    <td class="BodyD-Column1-Body1">-</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Insert...</td>
+                    <td class="BodyE-Column1-Body1">-</td>
+                    <td class="BodyE-Column1-Body1">-</td>
+                    <td class="BodyD-Column1-Body1">(insert a new key)</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Enter new PED&#160;PIN / Confirm new PED PIN</td>
+                    <td class="BodyE-Column1-Body1">-</td>
+                    <td class="BodyE-Column1-Body1">-</td>
+                    <td class="BodyD-Column1-Body1">Type "4321" and press <br />[ Enter ]</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">"Are you duplicating this keyset?"</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyD-Column1-Body1">Press [ No ]</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyA-Column1-Body1" colspan="4">All three PED Keys have different PED PINs, but any one of them can unlock this HSM. The combination of any of those PED Keys, with its own PED PIN will produce the same secret for the HSM.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>To round out the parallel concept that finished the firmware 4 discussion above, any duplicate blue keys are not necessarily exact duplicates, they just all contain a way (PED PIN secret) to get back to the same output secret.  But in this model (firmware 6), if you want to use the same blue keys for several HSMs, all the HSMs must have exactly the same blue (SO) secret, because a duplicate of any blue key CAN have whatever PED PIN you choose (or none) but must still be able to generate the correct secret.</p>
+        <p>(Key #1 + PED PIN #1) or (Key #2 + PED PIN #2) = Success on HSM1</p>
+        <p>(Key #1 + PED PIN #1) or (Key #2 + PED PIN #2) = Success on HSM2</p>
+        <p>(Key #1 + PED PIN #2) or (Key #2 + PED PIN #1) = Failure on HSM1</p>
+        <p>(Key #1 + PED PIN #2) or (Key #2 + PED PIN #1) = Failure on HSM2</p>
+        <h3>Restating the "obvious"?</h3>
+        <p>Some important implications of the above explanations deserve restating.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If you choose to NOT reuse a secret from an existing PED Key, then the HSM and the new set of PED keys being created by initialization all receive secrets based on the secret that is newly generated by the HSM. This is how you ensure that no other HSM can be unlocked by the PED&#160;Key(s) that you are now associating with the current HSM. This exclusivity lasts as long as nobody initializes yet another HSM using the PED&#160;Key(s) that you just created for this current HSM.&#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>It is crucially important to always control your PED&#160;Keys. Know where they are, and know who is handling them.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If you choose to reuse a pre-existing secret, then the secret that the HSM generates at the start of initialization is discarded, in favor of the <span class="MCExpanding MCExpanding_Open expanding "><span class="MCExpandingHead MCExpandingHotSpot expandingHead  MCExpandingHotSpot_" title="Expanding Text">imported secret</span><span class="MCExpandingBody expandingBody "> [ the secret that you accept from an existing imprinted PED Key when you say [ Yes ] to the PED question "Would you like to reuse an existing keyset?" ]</span></span>. This is how you make group PED&#160;Keys that can unlock more than one HSM.&#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The PED PIN, if you invoke one, exists <span class="MCExpanding MCExpanding_Open expanding "><span class="MCExpandingHead MCExpandingHotSpot expandingHead  MCExpandingHotSpot_" title="Expanding Text">only in your head</span><span class="MCExpandingBody expandingBody "> [ or wherever you write it down ]</span></span> not on the PED Key - it is the combination of the secret on the key, plus the PED PIN for that key, that produces the secret that the HSM sees (and requires). </p>
+        <p>An additional question that is sometimes asked, about reuse and duplicates...</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>You can "reuse" an existing secret only for the same type of secret that is currently being requested by the HSM and the PED. That is, if you say [ Yes ] to "Would you like to reuse an existing keyset" while preparing to set the HSM's Security Officer (SO)/Administrator secret, then you must present a valid, imprinted blue PED&#160;Key. Any other color, or a blank key, is rejected as a source to reuse. A User (black key) secret cannot be "reused" as an HSM SO (blue key)&#160;secret. Nor can a Domain (red), or SRK (orange), or SRK (purple key)&#160;secret. "Reuse" is the opposite of overwrite. For the "reuse" option, with any PED Key secret, the matching kind of pre-existing secret is needed. SRKs, the purple key secrets, are unique per HSM and are not reused, ever.</p>
+        <h3>Duplicating PED keys</h3>
+        <p>Luna PED&#160;has the ability to make copies of PED Keys, without the intervention of an HSM. All the PED&#160;needs is power. </p>
+        <h4>Duplicating PED Keys / Copying PED Keys</h4>
+        <p>Insert any PED Key containing a secret that you wish to duplicate. The PED&#160;defaults to the local mode menu.  <br />Press "&lt;" to get to the Select Mode menu. <br />Press "4" for the Admin menu. <br />Press "1" for PED Key. <br />Press "1" again, for Login. <br />Press "7" for Duplicate. The PED&#160;reads the key that you already inserted, then prompts you:</p>
+        <p>&#160;&#160;Duplicate PED&#160;Key...<br />&#160;&#160;Insert target<br />&#160;&#160;PED Key.<br />&#160;&#160;Press ENTER.</p>
+        <p>When you press ENTER, the key in the slot gets the data that was read from the first key. </p>
+        <p>You can imprint as many new PED Keys as you wish.</p>
+        <p>Note that the PED&#160;does NOT prompt you for a PED PIN. <br />If the PED&#160;PIN flag was not set on the source key (the first key you inserted before invoking the Duplicate function), then the new copy also has that flag unset.<br />If the PED&#160;PIN flag was set on the original key, then that setting is automatically recorded on the duplicate. No HSM is involved in this PED-only transaction, so entering a PED PIN would have no effect in this case. Yet the correct PED&#160;PIN will be requested when you later use one of these duplicates to access the HSM. </p>
+        <p>This DIFFERS from the sequence when you are initializing and choose to make duplicates at that time - in that case you are prompted for PED PIN and can make several "duplicate" keys that have different PED PINS and yet unlock the same HSM. This method is called a "raw" duplication and works for every type of PED Key except a purple SRK.</p>
+        <h4>Comparing Duplication via PED menu - versus - "Duplication" when initializing</h4>
+        <table style="margin-left: 0;margin-right: auto;caption-side: top;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">&#160;</th>
+                    <th class="HeadE-Column1-Header1">Requires <br />HSM</th>
+                    <th class="HeadE-Column1-Header1">Launched from <br />command line</th>
+                    <th class="HeadE-Column1-Header1">Prompt (option) <br />to set PED PIN </th>
+                    <th class="HeadE-Column1-Header1">"Copies" are &#160;<br />identical </th>
+                    <th class="HeadD-Column1-Header1">"Copies" <br />unlock <br />same HSM</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">"Duplicating"<br /> (creating new <br />PED Keys during <br />initialization)</td>
+                    <td class="BodyE-Column1-Body1">Yes</td>
+                    <td class="BodyE-Column1-Body1">Yes</td>
+                    <td class="BodyE-Column1-Body1">Yes</td>
+                    <td class="BodyE-Column1-Body1">Only if no PED PIN<br />or<br />if same PED PIN is <br />repeatedly entered</td>
+                    <td class="BodyD-Column1-Body1">Yes, as long as you <br />know the correct PED PIN <br />for the key you have</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">Duplicating "raw"<br />key content via PED&#160;menu</td>
+                    <td class="BodyB-Column1-Body1">No <br />(only a power <br />&#160;connection needed)<br />Note: does not work for purple PED Key.</td>
+                    <td class="BodyB-Column1-Body1">No</td>
+                    <td class="BodyB-Column1-Body1">No</td>
+                    <td class="BodyB-Column1-Body1">Yes</td>
+                    <td class="BodyA-Column1-Body1">Yes, PED PIN is the same <br />for all raw duplicates</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/ped_auth/hsm-and-ped_interaction.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Design Considerations">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>PED-Authenticated HSMs</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/design/ped_authenticated_hsms.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">SDK Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="design.htm">Design Considerations</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">PED-Authenticated HSMs</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>PED-Authenticated HSMs</h2>
+        <p>In systems or applications using SafeNet Luna  technology, Luna 
+ PED is required for FIPS 140-2 level 3 security. In normal use, Luna PED 
+ supplies PINs and certain other critical security parameters to the token/HSM, 
+ invisibly to the user. This prevents other persons from viewing PINs, 
+ etc. on a computer screen or watching them typed on a keyboard, which 
+ in turn prevents such persons from illicitly cloning token or HSM contents.</p>
+        <p>Two classes of users operate Luna PED: the ordinary HSM Partition  Owner, and the HSM Administrator, (also called Security Officer 
+ or SO). The person handling new HSMs and using Luna PED is normally the 
+ HSM Administrator (SO), who:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>initializes the HSM,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>conducts HSM maintenance, such as firmware and capability upgrades, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>initializes HSM Partitions 
+ and tokens,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>creates users (sets PINs), </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>changes policy settings,
+ </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>changes passwords. </p>
+        <p>Following these initial activities, the Luna PED may be required to 
+ present the HSM Partition Owner’s PED Key or keys (in case of M of N operations) 
+ to enable ordinary signing cryptographic operations carried out by your 
+ applications. </p>
+        <p>With the combination of Activation and AutoActivation, the black PED 
+ Key is required only upon initial authentication and then not again unless 
+ the authentication is interrupted by power failure or by deliberate action 
+ on the part of the PED Key holders. </p>
+        <h3>About CKDemo with Luna PED</h3>
+        <p>As its name suggests, CKDemo (CryptoKi Demonstration) is a demonstration program, allowing you 
+ to explore the capabilities and functions of several Luna products. The demo program breaks out a number of PKCS 11 functions, as well as the SafeNet extensions to Cryptoki that allow the enhanced capabilities of our HSMs.However 
+ the flexibility, combined with the bare-bones nature of the program, can 
+ result in some confusion as to whether certain operations and combinations 
+ are permissible. Where these come up, in the explanation of CKDemo with 
+ Luna HSM with PED [Trusted Path] Authentication, and Luna PED, they are mentioned 
+ and explained if necessary.</p>
+        <p>The demo program appears to make it optional to permit several of the 
+ security operations via the keyboard and program interface, or to require 
+ that they be done only via the Luna PED keypad. In fact, the option is 
+ dictated by the Luna HSM, as it was configured and shipped from the factory, 
+ and cannot be changed by you. That is, you can use CKDemo to work/experiment 
+ with either type of Luna HSM – i.e., Luna HSM with Password Authentication 
+ or Luna HSM with PED Authentication, requiring Luna PED), but 
+ you cannot make one type behave like the other.</p>
+        <p>Security and design requirements, enforced by the Luna HSM with PED Authentication HSM, dictate that use of Luna PED be mandatory within 
+ the applications that you develop for it.</p>
+        <h3>Interchangeability</h3>
+        <p>As mentioned above, several secrets and security parameters related to HSMs  are imprinted on PED Keys which provide "something you have" access control, as opposed to the "something you know" access control provided by password-authenticated HSMs.  The HSM can create each type of secret, which is then also imprinted on a suitably labeled PED Key. Alternatively, the secret can be accepted from a PED Key (previously imprinted by another HSM) and imprinted on the current HSM. This is mandatory for the cloning domain, when HSMs (or HSM partitions) are to clone objects one to the other. It is optional for the other HSM secrets, as a matter of convenience or of your security policy, allowing more than one HSM to be accessed for administration by a single SO (blue PED&#160;Key holder) or more than one HSM Partition to be administered by a single Partition Owner/User. The exception is the SRK (purple PED Key) which carries a secret unique to its HSM and which cannot be imprinted on any other HSM. </p>
+        <p>PED&#160;Keys that have never been imprinted are completely interchangeable. They can be used with any modern Luna HSM, and can be imprinted with any of the various secrets. The self-stick labels are provided as a visual identifier of which type of secret has been imprinted on a PED&#160;Key, or is about to be imprinted .Imprinted PED Keys are tied to their associated HSMs and cannot be used to access HSMs or partitions that have been imprinted with different secrets. </p>
+        <p>Any Luna&#160;PED2 can be used with any Luna HSM - the PED itself contains no secrets; it simply provides the interface between you and your HSM(s). The exception is that only some Luna PEDs have the capability to be used remotely from the HSM. Any Remote-capable Luna PED2 is interchangeable with any other Remote-capable Luna&#160;PED2, and any Luna&#160;PED2 (remote-capable or not) is interchangeable with any other when locally connected to a Luna HSM.</p>
+        <p>HSM Partitions and Backup Tokens and PED Keys can be “re-cycled” for 
+ use in different combinations, but this reuse requires re-initializing 
+ the HSM(s) and re-imprinting the PED Keys with new secrets or security parameters. Re-initializing 
+ a token or HSM wipes previous information from it. Re-imprinting 
+ a PED Key overwrites any previous information it carried (PIN, 
+ domain, etc.).</p>
+        <h3>Startup</h3>
+        <p>Luna PED expects to be connected to a Luna HSM with Trusted Path Authentication. 
+ At power-up, it presents a message showing its firmware version. After 
+ a few seconds, the message changes to "Awaiting command.." The 
+ Luna PED is waiting for a command from the token/HSM. </p>
+        <p>The Luna PED screen remains in this status until the CKDemo program, 
+ or your own application, initiates a command through the token/HSM.</p>
+        <p>For the purposes of demonstration, you would now go ahead and create 
+ some objects and perform other transactions with the HSM.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>To perform most actions you must be logged 
+ in. CKDemo may not remind you before you perform actions out-of-order, 
+ but it generates error messages after such attempts. So, in general, if 
+ you receive an error message from the program, review your recent actions 
+ to determine if you have logged out or closed sessions and then not formally 
+ logged into a new session before attempting to create an object or perform 
+ other token/HSM actions.&#160;<br /><br />When you do wish to end activities, be sure to formally log 
+ out and close sessions. With CKDemo, it would be merely an inconvenience 
+ to have old sessions still open when you attempt new activities. An orderly 
+ shutdown of your application, however, should include logging out any 
+ users and closing all sessions on HSMs.</p>
+        <h3>Cloning of Tokens</h3>
+        <p>To securely copy the contents of a Luna&#160;SA HSM Partition to another 
+ Luna&#160;SA HSM Partition (on the same Luna SA or on another), you must perform a 
+ backup to a Luna  Backup HSM from the source HSM Partition followed 
+ by a restore operation from the Backup HSM to the new destination HSM 
+ Partition. This is done via lunash command line, and cannot be accomplished via CKDemo.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#sdk/design/ped_authenticated_hsms.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

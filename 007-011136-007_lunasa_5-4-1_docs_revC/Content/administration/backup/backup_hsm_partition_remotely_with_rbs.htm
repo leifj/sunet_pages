@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Backup and Restore HSMs and Partitions|Partition Backup">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Backup your HSM Partition Remotely</title>
+        <link href="../../Resources/TableStyles/List1.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/backup/backup_hsm_partition_remotely_with_rbs.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="backup.htm">Backup and Restore HSMs and Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition_backup.htm">Partition Backup</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Backup your HSM Partition Remotely with RBS</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3><a name="kanchor169"></a><a name="kanchor170"></a><a name="kanchor171"></a>Backup your HSM Partition Remotely</h3>
+        <p>The options to backup a Partition on your Luna HSM are:</p>
+        <p>a) local backup</p>
+        <p>b) remote backup.</p>
+        <p>"<b>Local</b>" backup means that the Luna Remote Backup Device is co-located and physically connected to the Luna HSM  whose contents are to be backed up (that could be a Luna&#160;PCI-E HSM card inside a host computer, a Luna&#160;G5 HSM that is USB-connected to the host computer, or a Luna&#160;SA appliance which is its own host for its internal HSM card). </p>
+        <p>In the case of Luna&#160;SA, you would most likely be using a laptop near the Luna&#160;SA appliance to run your admin session (either by network SSH session or by a local serial connection), and would use locally connected Luna PEDs to provide the necessary authentication.</p>
+        <p>"<b>Remote</b>" backup means that the Luna HSM in its host or appliance is at a remote location and you are working from a network connected  computer where you open your SSH connection to the host (or Luna&#160;SA admin) shell, and you also have the Luna Remote Backup HSM connected to the computer, at least one Luna&#160;PED (which must be remote-capable), and the PED workstation software running. </p>
+        <h4>Remote Backup</h4>
+        <p>You will need -</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col style="width: 89px;" class="Column-Column1" />
+            <col style="width: 365px;" class="Column-Column1" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Quantity</th>
+                    <th class="HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">1</td>
+                    <td class="BodyD-Column1-Body1">Luna&#160;HSM 5.2 or newer<br /></td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">1</td>
+                    <td class="BodyD-Column1-Body1">Windows computer with Luna&#160;SA 5.2 (or newer)  client software installed <br /></td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">1</td>
+                    <td class="BodyD-Column1-Body1">Luna Remote Backup HSM<br /></td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">1</td>
+                    <td class="BodyD-Column1-Body1">Set of PED Keys imprinted for the source HSM and partitions <br /></td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">1</td>
+                    <td class="BodyD-Column1-Body1">Luna PED 2 (Remote PED with f/w 2.5.0 or later)*<br /></td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">1</td>
+                    <td class="BodyD-Column1-Body1">Power cable for Luna PED 2 (Remote)    <br /></td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">2</td>
+                    <td class="BodyA-Column1-Body1">USB to mini USB cable for Luna PED 2 (Remote) and Luna Remote Backup HSM    <br /></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            <br />* The Luna PED that is connected to the Windows computer, in order to perform Remote PED&#160;operations with the distant Luna&#160;SA appliance, must be a Luna PED 2 (remote-capable version) and is used in Remote mode and in local mode. You also have the option to connect a second Luna&#160;PED, which can be Remote capable or can be a local-only version, to the Luna Backup HSM. This allows you to leave the Remote capable Luna&#160;PED connected to the workstation in Remote mode. </p>
+        <h5>Assumptions</h5>
+        <p>The following examples assume that you have set up RBS, as described in <a href="prepare_rbs_for_backup-restore.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Prepare RBS to Support Backup / Restore"</span></a> <![CDATA[ ]]></p>
+        <p>Luna Remote Backup HSM and your primary (source) Luna&#160;HSM  are initialized with appropriate keys (blue SO and black Partition Owner/User PED Keys, which can be the same for both devices, or can be different)</p>
+        <p>Both devices <strong>must</strong> share the <b>same</b> domain or RED key value.</p>
+        <p>The workstation (Windows computer) has Remote PED and Luna Remote Backup software package installed including the appropriate driver.</p>
+        <p>For Luna SA, NTLS is established between your workstation computer, acting as a Luna SA client, and the distant Luna SA - that is, the workstation is registered as a client with the partition. &#160;&#160;       </p>
+        <p>A Remote PED session key (orange RPV key) has been created and associated with the distant Luna HSM.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that your Windows workstation has the PED USB driver (from the /USBDriver folder on the software CD) installed, and that the PEDServer.exe file (the executable program file that makes Remote PED operation possible) has been copied to a convenient directory on your hard disk.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Connect all the components as follows–<br /></p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col style="width: 182px;" class="Column-Column1" />
+            <col style="width: 154px;" class="Column-Column1" />
+            <col style="width: 229px;" class="Column-Column1" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">From</th>
+                    <th class="HeadE-Column1-Header1">Using</th>
+                    <th class="HeadD-Column1-Header1">To</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Workstation</td>
+                    <td class="BodyE-Column1-Body1">USB</td>
+                    <td class="BodyD-Column1-Body1">Remote PED (Luna PED IIr in Remote mode)<br /></td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">DC power receptacle on Remote PED</td>
+                    <td class="BodyE-Column1-Body1">PED Power Supply</td>
+                    <td class="BodyD-Column1-Body1">Mains AC power (wall socket)<br /><br /></td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Workstation</td>
+                    <td class="BodyE-Column1-Body1">USB</td>
+                    <td class="BodyD-Column1-Body1">Luna Remote Backup HSM</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1"> Luna Remote Backup HSM</td>
+                    <td class="BodyE-Column1-Body1"> Power Cord</td>
+                    <td class="BodyD-Column1-Body1">Mains AC power (wall socket)<br /><br /></td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1"> Luna Remote Backup HSM</td>
+                    <td class="BodyB-Column1-Body1">Micro-D to Micro-D (local PED) cable</td>
+                    <td class="BodyA-Column1-Body1">Luna PED (can be a separate local-or-Remote PED, or can be your single Remote PED set to operate in local mode for the local connection)<br /></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>At the Remote Luna PED (Luna PED IIr connected to the USB&#160;port of the workstation,:<br /> - press [ &lt; ] on the PED keypad to exit Local mode,   <br /> - press [ 7 ] to enter Remote PED mode.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Start remote PED service on the administrative workstation (Windows) computer -. in a Command Prompt (DOS) window, change directory to the location of the PEDServer.exe file and run that file:<br />C:\&gt;cd \Program Files\LunaCient<br />C:\Program Files\LunaClient&gt;PEDServer -mode start<br /></p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Open an administrative connection (SSH) to the distant Luna HSM (for Luna SA appliance, log in as 'admin', for another HSM host, log in with the appropriate ID. Start the PED Client (the Remote PED enabling process on the appliance): <br /> Example (substitute the actual IP address of your workstation computer)-- <br /><span style="font-family: monospace;">lunash:&gt; hsm ped connect -ip 192.2.12.16 -port 1503</span> <br />or<br /><span style="font-family: monospace;">lunacm:&gt; hsm ped connect -ip 192.2.12.16 -port 1503</span><br /><br />Insert the orange RPV PED Key that matches the RPV of the distant Luna HSM. <br />The Remote PED Client in the Luna SA HSM appliance or in the Luna&#160;PCI-E or Luna&#160;G5 host establishes a connection with the listening PEDserver on your workstation. </p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Proceed to the Backup and Restore examples, below.</p>
+        <h4>RBS Remote Backup with Single Remote PED  on Windows </h4>
+        <p>Just to indicate the versatility, this example uses a Windows 2012 64-bit client. PED server is in Windows XP, Luna Backup HSM is connected to Linux centOS 5.7.</p>
+        <h5>Backup from a Luna SA slot</h5>
+        <p>This example assumes that you have already <a href="prepare_rbs_for_backup-restore.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Prepare RBS to Support Backup / Restore"</span></a>. </p>
+        <p>That is, briefly: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>You have LunaClient software installed for your primary HSM (source of objects to be backed up). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>You have LunaClient software installed with the RBS option on the host computer connected to your Backup HSM. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>You have run rbs to generate private key/certificate, run rbs again to configure (select device(s) to support), run rbs again to launch the daemon (Linux/UNIX) or the service (Windows). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>You have copied the certificate [server.pem] to your primary HSM host computer (or Luna&#160;SA appliance). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>You have run vtl on the host computer (or appliance) to add the RBS server to the server list.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Start the lunacm utility (in Windows, it resides at C:\Program Files\SafeNet\LunaClient - in Linux/UNIX, it resides at /usr/safenet/lunaclient/bin).</p><pre xml:space="preserve" class="listLevel1">C:\Program Files\SafeNet\LunaClient&gt;lunacm.exe
+
+LunaCM V2.3.3 - Copyright (c) 2006-2013 SafeNet, Inc.
+
+
+        Available HSM's:
+
+        Slot Id -&gt;              1
+        HSM Label -&gt;            SA82_P1
+        HSM Serial Number -&gt;    500409014
+        HSM Model -&gt;            LunaSA
+        HSM Firmware Version -&gt; 6.10.1
+        HSM Configuration -&gt;    Luna SA Slot (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              2
+        HSM Label -&gt;            G5PKI
+        HSM Serial Number -&gt;    701968008
+        HSM Model -&gt;            LunaSA
+        HSM Firmware Version -&gt; 6.10.1
+        HSM Configuration -&gt;    Luna SA Slot (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              3
+        HSM Label -&gt;            G5backup
+        HSM Serial Number -&gt;    700101
+        HSM Model -&gt;            G5Backup
+        HSM Firmware Version -&gt; 6.10.1
+        HSM Configuration -&gt;    Remote Backup HSM (PED) Backup Device
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              4
+        Tunnel Slot Id -&gt;       6
+        HSM Label -&gt;            PCI422
+        HSM Serial Number -&gt;    500422
+        HSM Model -&gt;            K6 Base
+        HSM Firmware Version -&gt; 6.2.1
+        HSM Configuration -&gt;    Luna PCI (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              5
+        Tunnel Slot Id -&gt;       7
+        HSM Label -&gt;            K6_328
+        HSM Serial Number -&gt;    155328
+        HSM Model -&gt;            K6 Base
+        HSM Firmware Version -&gt; 6.10.1
+        HSM Configuration -&gt;    Luna PCI (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              8
+        HSM Label -&gt;            G5180
+        HSM Serial Number -&gt;    700180
+        HSM Model -&gt;            G5Base
+        HSM Firmware Version -&gt; 6.10.1
+        HSM Configuration -&gt;    Luna G5 (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+
+
+        Current Slot Id: 1
+
+lunacm:&gt; 
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If the current slot is not the slot that you wish to backup, use the <span class="code">lunacm:&gt; slot set</span> command.</p>
+        <p>&#160;</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; slot set slot 1
+
+        Current Slot Id: 1     (Luna SA Slot 6.10.1 (PED) Signing With Cloning Mode)
+
+Command Result : No Error
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Establish that the HSM is listening for a Luna PED at the correct location (local or remote). In this example, we want the HSM to use a Luna PED that is not directly connected to the HSM - a Remote PED, at a specific location. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The pedserver must already have been set up at that host.</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt;ped get
+
+        HSM slot 1 listening to local PED (PED id=0).
+
+Command Result : No Error
+
+lunacm:&gt; ped connect ip 172.20.10.190
+
+Command Result : No Error
+
+lunacm:&gt; ped get
+
+        HSM slot 1 listening to remote PED (PED id=100).
+
+Command Result : No Error
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>[Skip this step if your source partition is Activated] <br />Log into the partition (this takes place at the currently selected slot). This step is needed only if the partition you are about to backup is not already in Activated state.</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; par login
+
+        Option -password was not supplied.  It is required.
+
+        Enter the password: *******
+
+        User is activated, PED is not required.
+
+Command Result : No Error
+
+lunacm:&gt; </pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Disconnect the PED&#160;connection from your source HSM (slot 1 in this example), and connect to the Luna [Remote] Backup HSM (slot 3 in this example).</p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; ped disconnect
+
+        Are you sure you wish to disconnect the remote ped?
+
+        Type 'proceed' to continue, or 'quit' to quit now -&gt; proceed
+
+Command Result : No Error
+
+lunacm:&gt; ped connect ip 192.20.10.190 -slot 3
+
+Command Result : No Error
+
+lunacm:&gt; ped get -slot 3
+
+        HSM slot 3 listening to remote PED (PED id=100).
+
+Command Result : No Error
+lunacm:&gt;</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Perform the backup from the current slot (slot 1 in the example, see above) to the partition that you designate on the Backup HSM. Now that the Backup HSM is listening correctly for a PED, the target partition can be created, with PED action for the authentication.</p><pre xml:space="preserve" class="listLevel1">
+
+lunacm:&gt; partition backup backup -slot 3 -par SAbck1
+
+        Logging in as the SO on slot 3.
+
+        Please attend to the PED.
+
+        Creating partition SAbck1 on slot 3.
+
+        Please attend to the PED.
+
+        Logging into the container SAbck1 on slot 3 as the user.
+
+        Please attend to the PED.
+
+        Creating Domain for the partition SAbck1 on slot 3.
+
+        Please attend to the PED.
+
+        Verifying that all objects can be backed up...
+
+        85 objects will be backed up.
+
+        Backing up objects...
+        Cloned object 99 to partition SAbck1 (new handle 19).
+        Cloned object 33 to partition SAbck1 (new handle 20).
+        Cloned object 108 to partition SAbck1 (new handle 23).
+        Cloned object 134 to partition SAbck1 (new handle 24).
+        Cloned object 83 to partition SAbck1 (new handle 25).
+        Cloned object 117 to partition SAbck1 (new handle 26).
+        Cloned object 126 to partition SAbck1 (new handle 27).
+        Cloned object 65 to partition SAbck1 (new handle 28).
+        Cloned object 140 to partition SAbck1 (new handle 29).
+        Cloned object 131 to partition SAbck1 (new handle 30).
+        Cloned object 94 to partition SAbck1 (new handle 31).
+        Cloned object 109 to partition SAbck1 (new handle 35).
+        Cloned object 66 to partition SAbck1 (new handle 36).
+        Cloned object 123 to partition SAbck1 (new handle 39).
+        Cloned object 74 to partition SAbck1 (new handle 40).
+        Cloned object 50 to partition SAbck1 (new handle 44).
+        Cloned object 43 to partition SAbck1 (new handle 45).
+        Cloned object 52 to partition SAbck1 (new handle 46).
+        Cloned object 124 to partition SAbck1 (new handle 47).
+        Cloned object 115 to partition SAbck1 (new handle 48).
+        Cloned object 98 to partition SAbck1 (new handle 49).
+        Cloned object 42 to partition SAbck1 (new handle 50).
+        Cloned object 48 to partition SAbck1 (new handle 51).
+        Cloned object 29 to partition SAbck1 (new handle 52).
+        Cloned object 54 to partition SAbck1 (new handle 53).
+        Cloned object 112 to partition SAbck1 (new handle 56).
+        Cloned object 69 to partition SAbck1 (new handle 57).
+        Cloned object 46 to partition SAbck1 (new handle 58).
+        Cloned object 116 to partition SAbck1 (new handle 59).
+        Cloned object 101 to partition SAbck1 (new handle 60).
+        Cloned object 122 to partition SAbck1 (new handle 61).
+        Cloned object 21 to partition SAbck1 (new handle 62).
+        Cloned object 45 to partition SAbck1 (new handle 63).
+        Cloned object 139 to partition SAbck1 (new handle 64).
+        Cloned object 127 to partition SAbck1 (new handle 65).
+        Cloned object 84 to partition SAbck1 (new handle 66).
+        Cloned object 30 to partition SAbck1 (new handle 70).
+        Cloned object 105 to partition SAbck1 (new handle 71).
+        Cloned object 132 to partition SAbck1 (new handle 72).
+        Cloned object 136 to partition SAbck1 (new handle 73).
+        Cloned object 28 to partition SAbck1 (new handle 74).
+        Cloned object 44 to partition SAbck1 (new handle 75).
+        Cloned object 26 to partition SAbck1 (new handle 76).
+        Cloned object 120 to partition SAbck1 (new handle 77).
+        Cloned object 104 to partition SAbck1 (new handle 78).
+        Cloned object 137 to partition SAbck1 (new handle 79).
+        Cloned object 61 to partition SAbck1 (new handle 80).
+        Cloned object 110 to partition SAbck1 (new handle 81).
+        Cloned object 125 to partition SAbck1 (new handle 82).
+        Cloned object 129 to partition SAbck1 (new handle 83).
+        Cloned object 53 to partition SAbck1 (new handle 84).
+        Cloned object 130 to partition SAbck1 (new handle 85).
+        Cloned object 73 to partition SAbck1 (new handle 86).
+        Cloned object 41 to partition SAbck1 (new handle 87).
+        Cloned object 135 to partition SAbck1 (new handle 88).
+        Cloned object 114 to partition SAbck1 (new handle 89).
+        Cloned object 22 to partition SAbck1 (new handle 90).
+        Cloned object 57 to partition SAbck1 (new handle 91).
+        Cloned object 79 to partition SAbck1 (new handle 92).
+        Cloned object 121 to partition SAbck1 (new handle 96).
+        Cloned object 34 to partition SAbck1 (new handle 97).
+        Cloned object 103 to partition SAbck1 (new handle 98).
+        Cloned object 89 to partition SAbck1 (new handle 99).
+        Cloned object 128 to partition SAbck1 (new handle 103).
+        Cloned object 119 to partition SAbck1 (new handle 104).
+        Cloned object 107 to partition SAbck1 (new handle 105).
+        Cloned object 118 to partition SAbck1 (new handle 106).
+        Cloned object 111 to partition SAbck1 (new handle 107).
+        Cloned object 133 to partition SAbck1 (new handle 108).
+        Cloned object 138 to partition SAbck1 (new handle 109).
+        Cloned object 93 to partition SAbck1 (new handle 110).
+        Cloned object 49 to partition SAbck1 (new handle 111).
+        Cloned object 100 to partition SAbck1 (new handle 112).
+        Cloned object 25 to partition SAbck1 (new handle 113).
+        Cloned object 47 to partition SAbck1 (new handle 114).
+        Cloned object 62 to partition SAbck1 (new handle 115).
+        Cloned object 51 to partition SAbck1 (new handle 118).
+        Cloned object 113 to partition SAbck1 (new handle 119).
+        Cloned object 106 to partition SAbck1 (new handle 120).
+        Cloned object 58 to partition SAbck1 (new handle 121).
+        Cloned object 102 to partition SAbck1 (new handle 124).
+        Cloned object 70 to partition SAbck1 (new handle 125).
+        Cloned object 78 to partition SAbck1 (new handle 128).
+        Cloned object 88 to partition SAbck1 (new handle 129).
+        Cloned object 40 to partition SAbck1 (new handle 130).
+
+        Backup Complete.
+
+        85 objects have been backed up to partition SAbck1
+        on slot 3.
+
+Command Result : No Error</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre>
+        <p>The backup operation is complete. See <a href="restore_your_hsm_partition_remotely.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Restore Your HSM Partition Remotely"</span></a> for an example of restoring from backup.</p>
+        <p>To restate: the backup operation can go from a source partition (on a Luna HSM) to an existing partition on the Luna Remote Backup HSM, or if one does not exist, a new partition can be created during the backup -- but the restore operation cannot create a target partition on a Luna SA; it must already exist and have a registered NTLS&#160;link.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/backup/backup_hsm_partition_remotely_with_rbs.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

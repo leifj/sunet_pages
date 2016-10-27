@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default,Primary.Print_only" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Audit Logging">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Audit Logging General Advice and Recommendations</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/audit/audit-logging_general_recommendations.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="audit.htm">Audit Logging</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Audit Logging General Advice and Recommendations</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Audit Logging General Advice and Recommendations</h2>
+        <p>The Security Audit Logging feature can produce a significant volume of data.  It is expected, however, that Audit Officers will configure it properly for their specific operating environments.  The data produced when the feature has been properly configured might be used for a number of reasons, such as:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>maintaining an audit trail that can later be used to reconstruct a particular action or set of actions (i.e., forensics);</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>maintaining an audit trail that can later be used to trace the actions of an application or individual user (i.e., accounting); and</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>maintaining an audit trail that can later be used to hold a specific individual accountable for his/her actions (i.e., non-repudiation)</p>
+        <p>That last bullet point represents the ultimate conclusion of any audit trail – to establish an irrefutable record of the chain of events leading up to a particular incident for the purpose of identifying and holding accountable the individual responsible.  Not every organization will want to use security audit to meet the strict requirements of establishing such a chain of events.  However, all security audit users will want to have an accurate representation of a particular sequence of events.  To ensure that the audit log does contain an accurate representation of events and that it can be readily interpreted when it is reviewed, these basic guidelines should be followed after the audit logging feature has been properly configured:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Use a shell script to execute the <span class="code">audit sync</span> command at least once every 24 hours, provided the host has maintained its connection(s) to its configured NTP server(s).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Do not allow synchronization with the host’s clock if the host has lost connectivity to NTP.  This ensures that the HSM’s internal clock is not set to a less accurate time than it has maintained internally.  In general, the HSM’s RTC will drift much less than the host’s RTC and will, therefore, be significantly more accurate than the host in the absence of NTP.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Review logs at least daily and adjust configuration settings if necessary.  It is important that any anomalies be identified as soon as possible and that the logging configuration that has been set is effective.  If possible, use the remote logging feature to transmit log data to a Security Information and Event Management (SIEM) system to automatically analyze log data and identify anomalous events.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>In the case of Luna SA, execute the <span class="code">audit log tarlogs</span> lush command regularly to archive the audit logs and transfer them to a separate machine for long term storage. Also, execute the ‘audit log clear” lush command regularly to free up the audit log disk space on Luna SA.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Consider installing and configuring an HSM (e.g., Luna G5 or PCI) connected to the remote log server to act as a “verification engine” for the remote log server.  Ensure that the log secret for the operational HSM(s) has been shared with the log server verification HSM.<br /><br />NOTE: This is not always possible, unless you are physically copying the logs over from the .tgz archive. <br />Because log records do not necessarily appear on the remote log server immediately, the HMAC might be incorrect. Also, if more than one Luna&#160;SA is posting log records to a remote server, this could interfere with record counts. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The audit log records are comma-delimited.  We recommend that full use be made of the CSV formatting to import records into a database system or spreadsheet tool for analysis, if an SIEM system is not available.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The ASCII hex data representing the command and returned values and error code should be examined if an anomaly is detected in log review/analysis.  It may be possible to match this data to the HSM’s dual-port data.  The dual-port, if it is available, will contain additional data that could be helpful in establishing the context surrounding the anomalous event.  For example, if an unexpected error occurs it could be possible to identify the trace through the firmware subsystems associated with the error condition.  This information would be needed to help in determining if the error was unexpected but legitimate or if it was forced in an attempt to exploit a potential weakness (e.g., searching for buffer overflows).</p>
+        <p>An important element of the security audit logging feature is the ‘Log External’ function. See the SDK for more information. For applications that cannot add this function call, it is possible to use the lunacm command-line function ‘audit log external’ within a startup script to insert a text record at the time the application is started.</p>
+        <h3>Disk Full</h3>
+        <p>In the event that all the audit disk space is used up, audit logs are written to the HSM's small persistent memory. When the HSM's persistent memory is full, normal crypto commands will fail with "disk full" error.</p>
+        <p>To resolve that situation, the audit user must: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>archive the audit logs on the host side, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>move them to some other location for safe storage, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>clear the audit log directory, and </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>restart the logger daemon.
+</p>
+        <p>To prevent the "disk full" situation, we recommend that the audit user should routinely archive the audit logs and clear the audit log directory.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/audit/audit-logging_general_recommendations.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

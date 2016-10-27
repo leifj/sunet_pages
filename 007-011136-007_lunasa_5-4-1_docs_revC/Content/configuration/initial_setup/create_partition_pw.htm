@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|[Step 4] Create a Partition|Creating a Partition (PW)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Create Partition {PW}</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/initial_setup/create_partition_pw.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="creating_partitions_placeholder.htm">[Step 4] Create a Partition</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="about_creating_a_partition_pw.htm">Creating a Partition (PW)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Create Partition (PW)</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Create the Partition [PW]</h3>
+        <p>Having logged in, you can now use the  ‘partition’ command.</p>
+        <p>When you issue the <span class="code">partition create</span> command, to create an HSM Partition, 
+ you must supply a label or name for the new Partition.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Choose a partition name that is meaningful, in the 
+ context of your operations. &#160;<br />Partition names must be unique in the HSM. You are not permitted to 
+ create two partitions with the same label on one HSM. This will be the label seen by PKCS #11 applications.</p>
+        <p class="notepad_note">A partition name can be from 1 to 64 characters in length, and can include any of the following characters : <br /><br /> !#$%'()*+,-./0123456789:=@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{}~<br /><br />No spaces.</p>
+        <p class="caution_note">When labeling HSMs or partitions, never use a numeral as the first, or only, character in the name/label. Token backup commands allow slot-number OR label as identifier which can lead to confusion if the label is a string version of a slot number. <br /><br />For example, if the token is initialized with the label "1" then the user cannot use the label to identify the target for purposes of backup, because VTL parses "1" as signifying the numeric ID of the first slot rather than as a text label for the target in whatever slot it really occupies (the target is unlikely to be in the first slot), so backup fails.</p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>
+            <br />Tips for using strong passwords:<br /><br />&#160;– use at least eight characters (Partition 
+ policy controls minimum length)<br />– mix the case of alphabetic characters<br />– include at least one numeral<br />– include at least one punctuation character or special character such 
+ as @#$%&amp;, etc.<br />– avoid words that can be found in the dictionary (any language)<br />– avoid proper names (especially family and pets)<br />– avoid birthday and other easily identifiable dates.<br /></p>
+        <p>&#160;&#160;</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Create and name 
+ an HSM Partition. At the lunash prompt, type:<br /><br /><span style="margin-left: 40px;font-family: 'Courier New', monospace;">lunash:&gt; 
+ partition create -partition myPartition1</span></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Supply the appropriate 
+ new HSM Partition password when you are prompted(that 
+ is, don't supply the password as a command option 
+
+— 
+ waiting to be prompted is generally preferable to typing the password 
+ on the command line, because a password that is typed in response to the 
+ prompt is hidden from view by “*” characters). <br />NOTE: You may not set the Password to be "PASSWORD", which is reserved as the partition creation-time default, only, and is too easy to guess for a real, operational password.
+ </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Write down the 
+ HSM Partition password. This is the password that will be used: <br />a) to authenticate the administrator performing Partition management 
+ tasks via <span style="font-family: 'Courier New', monospace;">lunash</span><br />b) to authenticate Client applications that wish to use the Luna HSM.</p>
+        <p>Repeat the above actions for each HSM Partition that you wish to create 
+ (to the limits of your Luna system's configuration).</p>
+        <h3>Partition creation  audit log entry</h3>
+        <p>Each time a partition is created, an entry is added to the audit log. Any subsequent actions logged against the partition are identified by the partition serial number that was generated when the partition was created.</p>
+        <h4>Determining the serial number of a created partition from the audit log</h4>
+        <p>An audit log entry similar to the following is generated when a partition is created on the HSM:</p><pre xml:space="preserve">5,12/12/17 16:14:14,S/N 150718 session 1 Access 2147483651:2669 SO container operation LUNA_CREATE_CONTAINER returned RC_OK(0x00000000) container=20 (using PIN (entry=LUNA_ENTRY_DATA_AREA))</pre>
+        <p>It is not obvious from this entry what the serial number is for the created partition. This information, however, can be derived from the log entry, since the partition serial number is simply a concatenation of the HSM serial number and the partition container number, which are specified in the log entry, as highlighted below:</p><pre xml:space="preserve">5,12/12/17 16:14:14,S/N <span style="color: #f39100;">150718</span> session 1 Access 2147483651:2669 SO container operation LUNA_CREATE_CONTAINER returned RC_OK(0x00000000) container=<span style="color: #f39100;">20</span> (using PIN (entry=LUNA_ENTRY_DATA_AREA))</pre>
+        <p>In the example above, the HSM serial number is 150718 and the partition container number is 20. Note that the partition container number is a three-digit number with leading zeros suppressed, so that the actual partition container number is 020. To determine the partition serial number  concatenate the two numbers as follows:</p><pre xml:space="preserve">150718020</pre>
+        <p>Use this number to identify the partition in subsequent audit log entiries.</p>
+        <h3>Next steps</h3>
+        <p>If you have been following the instructions on these pages as part of 
+ setting up a new Luna appliance, then the next step is to adjust the Partition 
+ Policy settings for the new Partition that you just configured. </p>
+        <p>You might wish to adjust <a href="partition_policies.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Partition Policies"</span></a> (Optional). &#160;&#160;</p>
+        <p>Otherwise, go to <a href="../ntls_config/prepare_the_client_for_network_trust_link.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Prepare the Client for Network Trust Link"</span></a>. &#160;&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/initial_setup/create_partition_pw.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

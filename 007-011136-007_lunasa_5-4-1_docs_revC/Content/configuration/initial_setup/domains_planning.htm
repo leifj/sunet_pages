@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|Planning Your Configuration">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Domain Planning</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/initial_setup/domains_planning.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../hsm_config/planning_your_configuration.htm">Planning Your Configuration</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Domain Planning</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Domain Planning</h2>
+        <p>Password authenticated HSMs have text-string cloning domains for the HSM SO&#160;space and for any partitions that are created on the HSM. HSM and Partition domains are typed at the command line of the host computer, when required.</p>
+        <p>PED authenticated HSMs have  cloning domains in the form of encrypted secrets on red PED Keys, for the HSM SO&#160;space and for any partitions that are created on the HSM. The following characteristics are common to domains on all Luna HSMs.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The HSM SO-space domain can be created at the HSM (therefore unique) at HSM init time, or it can be imported, meaning that it is shared with one-or-more other HSMs. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The HSM partition domain can be created at the HSM (therefore unique) at partition creation time, or it can be imported, meaning that it is shared with one-or-more other HSM partitions. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The partition domain can be the same as the HSM SO domain or different. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The partition domain can be the same as the domain of another partition on the same HSM (for HSMs that support multiple partitions) or different.</p>
+        <p>For PED authenticated HSMs, the domain secret for the SO&#160;space or for a partition can be a single red PED Key, or it can be split (by the MofN feature) over several red keys, which are then distributed among trusted personnel such that no single person is able to provide the cloning domain without oversight from other trusted personnel. </p>
+        <p>In scenarios where multiple HSM partitions are in use, it can be useful to segregate those partitions according to department or business unit, or according to function groups within your organization. This ensures that personnel in a given group are able to clone or backup/restore only the contents of partitions sharing the domain for which they are responsible. Other functional groups, even with access to the same Luna HSM hardware have cloning or backup/restore access to their own domain partitions, but not to those of the first group... and vice-versa. </p>
+        <p>For Password authenticated HSMs, that sort of segregation is maintained entirely by procedure and by trust, as you rely on personnel not to share the domain text strings, just as you rely on them not to share other passwords.</p>
+        <p>For PED authenticated HSMs, the segregation is maintained by physical and procedural control of the relevant PED Keys that each group is allowed to handle. </p>
+        <p>It can pay to pre-plan how you will divide and assign access to HSM SO&#160;space and Partitions. Cloning Domain is one aspect of such access. There is rarely much call to store objects on the SO&#160;space, so the SO&#160;function is normally purely administrative oversight, and the decisions are straightforward. Each SO takes care of just her/his own HSM, or each SO&#160;can have oversight of multiple HSMs. </p>
+        <p>Partition access can also be straightforward, if you have no particular need to segregate access by groups or by functions or by geography or other descriptors. But, because partitions contain the working keys, certificates, and objects that are used in your business, it is more likely that some scheme must be devised and maintained to control who can do what with each HSM partition. Also, as mentioned previously, you might wish to spread out and reinforce responsibility by using MofN to ensure that administrative partition access can never be achieved by a single person operating alone. These considerations require that you plan how access controls are to be implemented and tracked, because the decisions must be made before you create the partitions. </p>
+        <p>Have your naming conventions and allotments planned out ahead of HSM initialization and partition creation, including a well-thought-out map of who should control cloning domain access for HSM SO spaces and for Partitions. </p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/initial_setup/domains_planning.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notLunaSP,Primary.notPCI,Primary.notPCM,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|High Availability (HA) Mode">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>HA Operational Notes</title>
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/ha/ha_operational_notes.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha_intro.htm">High Availability (HA) Mode</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">HA Operational Notes</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor183"></a>HA Operational Notes</h2>
+        <p>When your application is using a Luna SA HA group, your application 
+ appears to be using just one HSM – 
+ the virtual or group HSM that hides/encompasses the HA group members. 
+ Your client should not attempt to directly address any partition on any 
+ Luna SA within the HA group. This defeats the purpose of HA, and can cause 
+ disruption if you/your application attempts to change anything on just 
+ one member of a synchronized group. Similarly, no other application or 
+ user should be permitted to address any of the HA group members individually. 
+ As long as your application addresses its requests to the virtual group 
+ Partition, the HA functionality takes care of all activity in transparent 
+ fashion. </p>
+        <p>&#160;The intent 
+ of Luna SA HA is to provide the following:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>load balancing &#160;&#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>operational redundancy such that if an appliance fails (or must be 
+ taken off-line for other reasons) the remaining appliances can continue 
+ to provide service to the Client until the failed/removed appliance (or 
+ a replacement unit) can be brought into the HA group.</p>
+        <h3>Reconnecting an Off-line Unit</h3>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>In HA mode, if an HSM appliance goes off-line/drops-out (due to failure, maintenance, or other reason), 
+ the application load is spread over the remaining HSM Partitions on appliances in 
+ the HA Group.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>When the unit is restarted, 
+ the application does <span style="font-weight: bold;">not</span> need 
+ be stopped and restarted, before the re-introduced unit can be used by 
+ the application.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>For the unit that was 
+ withdrawn (or for a replacement unit), if it was powered off for more 
+ than a short outage, you must re-Activate the Partitions before they can 
+ be re-included into the HA Group.</p>
+        <p>The following two re-connection scenarios are available:</p>
+        <h4>Recover the Same Group Member</h4>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Restart the failed 
+ member and verify that it has started properly.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Do <span style="font-weight: bold;">NOT</span> 
+ perform a manual re-synchronization between the members. Instead, use 
+ the “vtl” command:<span style="font-family: 'Courier New', monospace;"><br />vtl haadmin -recover -group &lt;GROUP NAME&gt;</span></p>
+        <h4>Replace a Failed Group Member with a New Appliance</h4>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Configure the 
+ new Luna SA &#160;naming 
+ it <span style="font-weight: bold;">DIFFERENTLY</span>(the 
+ name must be different to avoid any possibility of conflict between the 
+ old and new SSL certificates, which incorporate the hostnames of the respective 
+ appliances) 
+
+ 
+ &#160;from the 
+ failed member appliance and making it part of the same cloning domain 
+ as others in the HA group (at initialization, get its cloning domain from 
+ the same red domain PED Key).<br />If you require that the replacement appliance must have the same name 
+ as the replaced appliance, then you will need to stop your application 
+ before introducing the new appliance.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Create a partition 
+ with the same characteristics as others in the HA group ( password, autoActivation, 
+ auto MofN, client assignments, etc.).</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Do <span style="font-weight: bold;">NOT</span> 
+ delete the failed Luna SA member from the configuration file.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Determine the 
+ serial number of the failed member partition.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Remove the failed 
+ member from the HA group using the "vtl" command: <span style="font-family: 'Courier New', monospace;"><br />vtl haadmin -removeMember -group &lt;groupNumber&gt; -serialNum &lt;serialnumber&gt; 
+ -password &lt;password&gt;</span></p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Retrieve the 
+ server certificate of the new Luna SA.</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Replace the failed 
+ Luna SA with the new one using the "vtl" command:<span style="font-family: 'Courier New', monospace;"><br />vtl replaceServer -o &lt;oldServerName&gt; -n &lt;newServerName&gt; 
+ -c &lt;newServerCertFile&gt;</span></p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Add the new partition 
+ of the new Luna SA to the HA group using the "vtl" command:<span style="font-family: 'Courier New', monospace;"><br />vtl haadmin -addMember -group &lt;group number&gt; -serialNum &lt;serialnumber&gt; 
+ -password &lt;password&gt;</span></p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Do <span style="font-weight: bold;">NOT</span> 
+ perform a manual re-synchronization between the members. Instead, use 
+ the “vtl” command: <span style="font-family: 'Courier New', monospace;"><br />vtl haadmin -recover -group &lt;GROUP NAME&gt;</span></p>
+        <p>See <a href="ha_replacing_a_failed_lunasa.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"HA Replacing a Failed Luna&#160;SA"</span></a> for more discussion of replacing or re-introducing members to an existing HA&#160;group.</p>
+        <h3>Upgrading and Redundancy and Rotation</h3>
+        <p>For Luna SA HA function we suggest that all Luna SA appliances in an 
+ HA group be at the same appliance software and firmware level. The issue 
+ is not about firmware level, per se - what might happen is that a newer 
+ firmware could contain newer algorithms that are not supported in the 
+ replaced firmware. If your client is configured to take advantage of newer/better 
+ algorithms when they become available, it might do so while one member 
+ of an HA group has new firmware, but another member has not yet been 
+ updated, and therefore does not yet support the requested algorithm. The 
+ client might not be able to interpret the resulting imbalance. Therefore, 
+ when you intend to upgrade/update any of the Luna SA units in an HA group, 
+ or when you intend to upgrade/update the Luna SA Client software, you 
+ might schedule some downtime for your application, if you anticipate a 
+ problem.</p>
+        <p>If the application is so critical that you cannot permit that much scheduled 
+ downtime, then you can set up a second complete set of Client computer 
+ and associated HA group. One set can service the application load while 
+ the other set is being upgraded or otherwise maintained. For such up-time-critical 
+ applications, you might already have such a backup set of Client-plus-HA-group 
+ that you would rotate in and out of service during regular maintenance 
+ windows. </p>
+        <h3>Solaris (and other Unix)</h3>
+        <p>Due to a problem in the TCP/IP configuration of some Solaris systems, 
+ inconvenient delays may have been experienced with some Solaris clients. 
+ </p>
+        <p>The problem occurred if an application was started on a Solaris client 
+ while one or more expected Luna SA appliances is unavailable. The Solaris 
+ client machine experienced a considerable delay (minutes) before the remaining 
+ Luna SAs could be seen and used by the application. This was a TCP/IP 
+ setup issue in Solaris, in which the system attempted to set up sockets 
+ for each expected connection, and retried the unsuccessful attempts until 
+ timeout, before permitting successful connections to proceed.</p>
+        <p>To control this problem, the client-side library now imposes a ten-second 
+ retry window per expected appliance, 
+ and then moves on. (Thus, if your Client was configured to use three Luna SA appliances, 
+ and two of them were unavailable, the Client would retry the first missing 
+ appliance for ten seconds, then the second missing appliance for a further 
+ ten seconds, for a total of twenty seconds of retries, before resuming 
+ operation with the remaining available appliance). This applies to Linux and Unix variants.</p>
+        <p>For Windows, the per-appliance timeout is 24 seconds.</p>
+        <h3>Duplicate Objects</h3>
+        <p>If you create an object on your HA slot, and then duplicate that object in some fashion
+ (for example, by SIM'ing [wrapping] it off and then back on again, or performing a backup/restore 
+ with the 'add' option), that object will be seen as only one object on 
+ the HA slot because HA uses the object's fingerprint to build an object 
+ list. &#160;Two 
+ objects will in fact exist on each of the physical slots and could be 
+ seen by a non-HA utility/query to the HSM. </p>
+        <p>There are TWO&#160;implications from this situation:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>One implication is that repeated duplication (perhaps an application 
+ that performs periodic backups, and restores using the 'add' option rather 
+ than 'replace') could cause the Partition to reach the maximum number 
+ of Partition objects while seemingly having fewer objects. <br />If the system ever tells you that your Partition is full, but HA says 
+ otherwise, then use a tool like ckdemo that can view the "physical" 
+ slots directly (as opposed to the HA slot) on the HSM, and delete any 
+ objects that are unnecessary.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A second implication is that the HA feature uses object fingerprints to match different instances of an object on different physical HSMs. This can result in error messages if your application does not properly create and destroy session objects, and perhaps creates an object identical to one which has been removed in a separate concurrent session. The problem is self-correcting, but  the flurry of error messages could be worrying if you don't understand where they are coming from.</p>
+        <h3>Using Algorithms or Features in a Mixed HA Group</h3>
+        <p>While it is possible to have HSMs with different firmware versions within 
+ an HA group, this is not generally recommended. Be aware that the capability of the group (in terms of features 
+ and available algorithms) is that of the member with the oldest firmware.</p>
+        <p>For example, if you had an HA group that included an HSM with two different firmware versions, then certain capabilities that are 
+ part of the newer firmware would be unavailable to Clients connecting 
+ to the HA group. Specifically, operations that make use of newer cryptographic mechanisms and algorithms would likely fail. The 
+ client's calls might be initially assigned to a newer-firmware HSM and 
+ could therefore appear to work for a time, but if the task was load-balanced 
+ to an HSM that did not support the newer features it would fail. Similarly, 
+ if the newer-firmware HSM dropped out of the group, operations would fail. 
+  
+ Your Clients must not invoke those algorithms because not every member 
+ of the group supports them. The solution is to upgrade the older units 
+ to the most recent firmware and software versions (where possible) or 
+ else to limit clients to only the lowest supported feature set.</p>
+        <h3>Performance</h3>
+        <p>Luna SA 5.x in HA can provide performance improvement for asymmetric single-part operations. Gigabit ethernet connections are recommended to maximize performance. For example, we have seen as much as a doubling of asymmetric single-part operations in a two-member group in a controlled laboratory environment (without crossing subnet boundaries, without competing traffic or other latency-inducing factors). &#160;&#160;&#160;</p>
+        <p>Multi-part operations are not load-balanced by the Luna HA due to the overhead that would be needed to perform context replication for each part of a multi-part operation.</p>
+        <p>Single-part operations cryptographic operations are load-balanced by the Luna HA functionality under most circumstances (see note on PE<span class="MCTextPopup MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm  MCTextPopupHotSpot_">1746<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>SafeXcel 1746 a crypto integrated circuit within the K6 HSM (the stand-alone Luna PCI-E, and the HSM inside the Luna SA appliance).</span></span>Enabled setting).  Load-balancing these operations provides both scalability (better net throughput of operations) and redundancy by supporting transparent fail-over. </p>
+        <h4>Operational Notes</h4>
+        <p>The Luna client accepts a configuration file entry known as “PE1746Enabled”.  This configures the way Luna HSM handles symmetric encryption and decryption operations for certain algorithms – namely ECB and CBC modes of AES and TDES.  By default (beginning with release 5.4) an entry is always present in the [Misc] section of the configuration file, and its value is set to “PE1746Enabled=0”, or unset. </p>
+        <p>To set this configuration option, “PE1746Enabled=1”.</p>
+        <p>When set, this value configures the library to use fast-path cryptography directly to symmetric encryption engines.  This has the advantage of enabling high performance bulk crypto performance, but has the disadvantage of creating a direct context between the client library and the engine.  This means that the library cannot easily load-balance operations across HSMs.  This mode should  be used only by applications that perform large data encryption operations (&gt;1K data sizes).</p>
+        <p> &#160;&#160;When PE1746Enabled=0, the library uses its standard command path to the HSM.  The advantage of this is that all single-part cryptographic operations can be load-balanced. The disadvantage is lower performance for larger data sizes.  Applications should maintain this setting whenever possible to ensure the scalability and fail-over advantages. </p>
+        <p>In summary: <br /></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>when PE1746Enabled=1 load-balancing is not used for symmetric cryptographic operations; instead all symmetric operations are directed at the client’s primary member -- you see better performance, but no scalability across HSMs.  <br /></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>when PE1746Enabled=0  all single-part  cryptographic operations (with data size  less-than-or-equal-to 1K ) are load-balanced.  <br /></p>
+        <p>A single-part crypto operation is typically one that has small data sizes (&lt; 1Kb), but is also dependent on how the library makes its API calls (PKCS #11 supports explicit multi-part API calls through the use of C_EncryptUpdate and C_DecryptUpdate).  When an application uses the “Update” APIs the cryptographic operation is, by definition, multi-part.  When the application does not use these APIs (i.e. uses C_EncryptInit followed by C_Encrypt) then an operation is single-part up to a 64KB data size.</p>
+        <p>Whenever possible, run your application with PE1746Enabled=0. <br /></p>
+        <h3>HA Auto-recovery</h3>
+        <p>If all members of an HA group were to fail, then all logged-in sessions are gone, and operations that were active when the last group member went down, are terminated. It is not currently possible from the Luna&#160;SA perspective to resume the client's state unassisted when the members are restarted. However, if the client application is able to recover all that state information, then it is not necessary to restart or re-initialize in order to resume client operations with the Luna&#160;SA HA group. See <a href="ha_autorecovery_feature_using.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"HA Recovery "</span></a>.</p>
+        <h3>HA Group Members Must Not Be on the Same Appliance</h3>
+        <p>In any one HA group, always ensure that member partitions or member PKI tokens (USB-attached Luna G5 HSMs, or Luna&#160;CA4/PCM token HSMs in a USB-attached Luna DOCK2 card reader) are on different / separate appliances. <b>Do not</b> attempt to include more than one HSM partition or  PKI token (nor one of each) from the same appliance in a single HA group. This is not a supported configuration. Allowing two partitions from one HSM, or a partition from the HSM and an attached HSM (as for PKI), into a single HA&#160;group would defeat the purpose of HA by making the Luna appliance a potential single-point-of-failure.</p>
+        <h3>Slot Enumeration</h3>
+        <p>The client-side utility command "vtl listslot" shows all detected slots, including HSM partitions on the primary HSM, partitions on connected external HSMs, and HA virtual slots. Here is an example:</p>
+        <p class="code">bash-3.2# ./vtl listslot </p>
+        <p class="code">Number of slots: 11  </p>
+        <p class="code">The following slots were found: </p><pre xml:space="preserve">Slot # 	        Description 	        Label 	        Serial # 	Status</pre><pre xml:space="preserve">slot #1 	LunaNet Slot 	        - 	        - 	        Not present</pre><pre xml:space="preserve">slot #2 	LunaNet Slot 	        sa76_p1 	150518006 	Present</pre><pre xml:space="preserve">slot #3 	LunaNet Slot 	        sa77_p1 	150475010 	Present</pre><pre xml:space="preserve">slot #4 	LunaNet Slot 	        G5179 	        700179008 	Present</pre><pre xml:space="preserve">slot #5 	LunaNet Slot 	        pki1 	        700180008 	Present</pre><pre xml:space="preserve">slot #6 	LunaNet Slot 	        CA4223 	        300223001 	Present</pre><pre xml:space="preserve">slot #7 	LunaNet Slot 	        CA4129 	        300129001 	Present</pre><pre xml:space="preserve">slot #8 	HA Virtual Card Slot 	- 	        -    	        Not present</pre><pre xml:space="preserve">slot #9 	HA Virtual Card Slot    -    	        - 	        Not present</pre><pre xml:space="preserve">slot #10 	HA Virtual Card Slot    	ha3 	343610292 	Present</pre><pre xml:space="preserve">slot #11 	HA Virtual Card Slot    	G5_HA 	1700179008 	Present</pre><pre xml:space="preserve">&#160;</pre>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>- The deploy/undeploy of a PKI device  increments/decrements the Luna&#160;SA client slot enumeration list (slots appear or disappear from the list, and the slot numbers adjust for the change).&#160;When the PKI slot is temporarily not available (e.g., due to NTLS stop, unplugging of LAN/USB cable, power off, etc.), the slot list does not shift. HA group virtual slots always appear toward the end of the list, following the physical slots. The actual slot number can vary based on the currently connected external HSMs (tokens, G5).</p>
+        <p>  Due to the above behavior, we generally recommend that you run the <code>lunacm:&gt; haGroup haonly</code> command, or the <code>vtl haAdmin HAOnly enable</code> command, so that only the HA slot is visible and any confusion or improper slot use is eliminated. </p>
+        <h3>HA Standby Mode [optional]</h3>
+        <p>If your situation requires that some HA group members be active, while others are kept synchronized, but in standby mode, see <a href="ha_standby_optional.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"HA Standby [optional]"</span></a>. &#160;&#160;</p>
+        <h3>Luna Appliance Q &amp; A</h3>
+        <p>The following questions, in no particular order, represent queries that have come in from customers and from our own technical representatives in the field, about specific aspects of the workings of HA. Some are from potential customers determining whether Luna HSM appliances meet their needs.</p>
+        <h4>How Do You (or Software) Know That a Member Has Failed?</h4>
+        <p>When an HA Group member first fails, the HA status for the group <a name="kanchor184"></a>shows "device error" for the failed member. All subsequent calls return "token not <a name="kanchor185"></a>present", until the member (HSM Partition or PKI token) is returned to service.</p>
+        <h4>How does HA share load among connected devices; does it always route traffic to the primary (first registered) device unless it is busy? </h4>
+        <p>The default behavior of the client library is to attempt to load-balance the application’s cryptographic requests across the entire set of devices in the HA group.  The top level algorithm is a round-robin scheme that is modified to favor the least busy device in the set.  </p>
+        <p>As each new command is processed the Luna client looks at how many commands it has scheduled on every device in the group.  If all devices have an equal number of outstanding commands the new command is scheduled on the next device in the list – creating a round-robin behavior.  However, if the devices have a different number of commands outstanding on them, the new command is scheduled on the device with the fewest commands queued – creating a least-busy behavior. This modified round-robin has the advantage of biasing load away from any device currently performing a lengthy-command.  In addition to this least-busy bias, the type of command also affects the scheduling algorithm.</p>
+        <p>Single-part (stateless) cryptographic operations are load-balanced.  However, multi-part (stateful) and key management commands are not load-balanced. Multi-part commands would need to carry cryptographic context across the individual command parts, creating overhead. Instead multi-part commands are all targeted at the primary member. </p>
+        <p>Multi-part operations and key management operations are infrequent actions, so most applications are not affected by this restriction.</p>
+        <h4>If you disable automatic replication, does HA still work?
+</h4>
+        <p> HA might not load-balance or might fail to perform fail-over properly, if replication is turned off.<br /></p>
+        <h4>Is it possible to create mixed HA&#160;groups with Luna SA 5 and earlier-generation appliances?<br /></h4>
+        <p> This is not possible. The certificates used in replication/synchronization are not compatible. You can migrate objects from your older appliances/HSMs, but you cannot run Luna SA 4.x and Luna SA&#160;5.x concurrently in a single HA&#160;group.</p>
+        <h4 data-mc-conditions="Primary.notLunaSA">What is the impact of running HA on a group of SIMM Luna SA units?
+</h4>
+        <p data-mc-conditions="Primary.notLunaSA">SIMM replication is supported.
+ HA will work, but key replication must be performed manually...so key creation in such an environment will fail to replicate.<br /></p>
+        <h4>What is the impact of running HA on a group of export Luna SA appliances? Can you?
+</h4>
+        <p>You can, but you CANNOT clone/replicate private keys</p>
+        <h4>If one Luna SA fails (in an HA group), under what circumstances can it be automatically reintroduced (in terms of application restarts, application state, Luna SA activation policies and states)?
+ </h4>
+        <p>Automatic reintroduction is supported.
+A failed (and fixed, or replacement) HSM appliance can be re-introduced if the application continues without restart. Restarting the application causes it to take a fresh inventory of  available HSMs, and to use only those HSMs within its HA group. You cannot [re]introduce a Luna SA that was not in the group when the application started.<br /></p>
+        <h4>If a Luna SA is reintroduced with differing key material, what is synchronized automatically? Are deletions propagated, or only additions?
+</h4>
+        <p>Synchronization of token objects is a manual process using the “vtl” utility. Synchronization locates any object that exists on any one physical HSM partition (that is a member of the HA&#160;group), but not on all others, and replicates that object to any partitions (among the group) where it did not exist. </p>
+        <p>This is distinct from the replication that occurs when you create or delete an object on the HA virtual slot. Creation or deletion against the virtual slot causes that change to be immediately replicated to all connected members (addition OR deletion).</p>
+        <p>To illustrate, consider a group of three HSMs with partitions containing objects as follows:</p>
+        <table class="TableStyle-Page" style="mc-table-style: url('../../Resources/TableStyles/Page.css');width: 100%;caption-side: top;" cellspacing="0">
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1" rowspan="2">&#160;</th>
+                    <th class="HeadE-Column1-Header1" colspan="3">&#160; Members</th>
+                    <th class="HeadD-Column1-Header1">&#160;</th>
+                </tr>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">HSM 1 Partition A</th>
+                    <th class="HeadE-Column1-Header1">HSM 2 Partition B</th>
+                    <th class="HeadE-Column1-Header1">HSM 3 Partition C</th>
+                    <th class="HeadD-Column1-Header1">HA virtual slot</th>
+                </tr>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1" style="text-align: left;">Action</th>
+                    <th class="HeadE-Column1-Header1">&#160;</th>
+                    <th class="HeadE-Column1-Header1">&#160;</th>
+                    <th class="HeadE-Column1-Header1">&#160;</th>
+                    <th class="HeadD-Column1-Header1">&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Objects in partition <br /><b>before</b> synchronization<br /><br /></td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Key 1, Certificate 1</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Key 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1">Key 1, Key 2, Certificate 2</td>
+                    <td class="BodyD-Column1-Body1">Keypair 1, Key 1, Certificate 1</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Perform manual re-sync. Objects in physical partition <br /><b>after</b> synchronization (Note all partitions contain all objects)<br /><br /></td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyD-Column1-Body1">Keypair 1, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyD-Column1-Body1">&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Create Keypair 2 against the HA slot<br />(replication is immediate and automatic - all partitions contain all objects)</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 2, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 2, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 2, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyD-Column1-Body1">Keypair 1, Keypair 2, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyD-Column1-Body1">&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Create Keypair 3 against physical Partition A <br />(no replication or sync occurs)</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 2, <i>Keypair 3</i>, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 2, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 2, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyD-Column1-Body1">Keypair 1, Keypair 2, <i>Keypair 3</i>, Key 1, Key 2, Certificate 1, Certificate 2 <br />(* This would be the case ONLY&#160;if partition A is the primary member of the HA&#160;group - otherwise, the created object is NOT&#160;visible in the virtual slot until re-sync)</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Perform manual re-sync <br />Objects in partition <br></br><b>after</b> synchronization</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 2, <i>Keypair 3</i>, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 2, <i>Keypair 3</i>, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 2, <i>Keypair 3</i>, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyD-Column1-Body1">Keypair 1, Keypair 2, <i>Keypair 3</i>, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyD-Column1-Body1">&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Delete Keypair 2 from the HA&#160;slot <br />(replication is immediate and automatic - Keypair 2 is gone from all partitions)</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 3, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 3, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 3, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyD-Column1-Body1">Keypair 1, Keypair 3, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Delete Keypair 1 from physical Partition B            <br />(no replication or sync happens)</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 3, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1"> Keypair 3, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 3, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyD-Column1-Body1">Keypair 1, Keypair 3, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Perform manual re-sync<br />Objects in partition <br /><b>after</b> synchronization (note Keypair 1 has returned to Partition B)</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 3, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1"><i>Keypair 1</i>, Keypair 3, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyE-Column1-Body1">Keypair 1, Keypair 3, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                    <td class="BodyD-Column1-Body1">Keypair 1, Keypair 3, Key 1, Key 2, Certificate 1, Certificate 2</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">&#160;</td>
+                    <td class="BodyB-Column1-Body1">&#160;</td>
+                    <td class="BodyB-Column1-Body1">&#160;</td>
+                    <td class="BodyB-Column1-Body1">&#160;</td>
+                    <td class="BodyA-Column1-Body1">&#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>If a partition becomes full, what happens?
+</h4>
+        <p>You can't create any more objects on it. Some scenarios are just what they seem and have no bearing on HA, in particular...this is one of them.<br /></p>
+        <h4>Are session objects replicated or only token objects?
+</h4>
+        <p>Session objects, as well as token objects, are synchronized and replicated.<br /></p>
+        <h4>What happens to an application if a device fails mid-operation? What if it’s a multi-part operation?
+ </h4>
+        <p>Multi part operations do NOT fail over.
+
+The entire operation returns a failure. Your application deals with the failure in whatever way it is coded to do so.</p>
+        <p>Any operation that fails mid-point would need to be resent from the calling application. That is, if you don’t receive a ‘success’ response, then you must try again. This is obviously more likely to happen in a multi-part operation because those are longer, but a failure could conceivably happen during a single atomic operation as well.</p>
+        <p>With HA, if the library attempts to send a command to an HSM and it is unavailable, it will automatically retry sending that command to the next HSM in the configuration after the timeout expires.</p>
+        <p>Multi-part operations would typically be block encryption or decryption, or any other command where the previous state of the HSM is critical to the processing of the next command. It is understandable that these need to be re-sent since the HSMs do not synchronize ‘internal memory state’  … only stored key material.</p>
+        <h4>How can you tell which device is in use?
+</h4>
+        <p>“Ntls show”.<br /></p>
+        <h4>How can you tell which devices are active in an HA group?
+</h4>
+        <p>CA extension call “CA_GetHAState” lists all active. Also “vtl l” lists members.
+
+<br /></p>
+        <h4>If network connectivity fails to all connected Luna SA appliances, under what circumstances/timeouts will they automatically resume once connection is restored?
+ <br />What are the timeouts associated with waiting for a device to respond? How can they be altered? Should they be?
+ &#160;</h4>
+        <p>While the client application is active, and one HA group member is connected and active, other members can automatically resume in the HA group as long as retries have not stopped (see below). 
+</p>
+        <p>If all members fail or if the client does not have a network connection to at least one group member, then the client application must be restarted. </p>
+        <p>The more detailed answer is "it depends..." - various events and processes interact at different levels and in different situations. Here is a summary. </p>
+        <h5>Level by level
+ 
+</h5>
+        <p>At the lowest communication level, the transport protocol (TCP) is responsible for making and operating the communication connection between client and appliance (whether HA is involved or not). For Luna SA, the default protocol timeout of 2 hours was much too long, so SafeNet configured that to 3 minutes when HA is involved. This means that: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>In a period of no activity by client or appliance, the appliance's TCP will wonder if the client is still there, and will send a packet after 3 minutes of silence. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If that packet is acknowledged, the 3 minute TCP timer restarts, and the cycle repeats indefinitely. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If the packet is NOT acknowledged, then TCP sends another after approximately 45 seconds, and then another after a further 45 seconds. At the two minute mark, with no response, the connection is considered dead, and higher levels are alerted to perform their cleanup. </p>
+        <p>So altogether, a total of five minutes can elapse since the last time the other participant was heard from. This is at the transport layer.
+ 
+</p>
+        <p>Above that level, the NTLS layer provides the connection security and some other housekeeping. Any time a client sends a request for a cryptographic operation, the HSM on the appliance begins working on that operation. </p>
+        <p>While the HSM processes the request, appliance-side NTLS sends a "keep-alive PING" every two seconds, until the HSM returns the answer, which NTLS then conveys across the link to the requesting client. NTLS (nor any layer above) does not perform any interpretation of the ping. </p>
+        <p>It simply drops a slow, steady trickle of bytes into the pipe, to keep the TCP layer active.  This normally has little effect, but if your client requests a lengthy operation like (say) an 8192-bit keygen, then the random-number-generation portion of that operation could take many minutes to complete, during which the HSM would legitimately be sending nothing back to the client.  The NTLS ping ensures that the connection remains alive during long pauses.
+</p>
+        <p> 
+In the Luna configuration file, "<i>DefaultTimeout</i>" (default value is 500 seconds) governs how long the client will wait for a result from an HSM, for a cryptographic call. 
+In the case of Luna SA, the copy of the config file inside the appliance is not accessible externally. 
+The config file in the client installation is accessible to modify, but "DefaultTimeout" in that file affects only a locally connected HSM (such as might be the case if you had a Luna Remote Backup HSM attached to your client computer). The config file in the client has no effect on the configuration inside the network-attached Luna SA appliance, and thus can have no effect on the interaction between client and Luna SA appliance.
+</p>
+        <p><i>ReceiveTimeout</i> is how long the library will wait for a dropped connection to come back. </p>
+        <p>If the <i>ReceiveTimeout</i> is tripped, for a given appliance, the HA client stops talking to that appliance and deals with the remaining members of the HA group to serve your application's crypto requests. </p>
+        <p>A minute later, the HA client tries to contact the member that failed to reply. <br />If the connection is successfully re-established, the errant appliance resumes working in the group, being assigned application calls as needed (governed by application workload and HA logic).
+</p>
+        <p>If the connection is not successfully re-established, the client continues working with the remaining group members. Another minute passes, and the client once again tries the missing appliance to see if it is ready to actively resume working in the HA group. 
+ 
+</p>
+        <p>The retries continue until the missing member resumes, or until the pre-set (by you) number of retries is reached (maximum of 500). If the retry count is reached with no success, the client stops trying that member. The failed appliance is still a member of the group (it is still in the list of HA group members maintained on the client), but the client no longer tries to send it application calls, and no longer encourages it to establish a connection. You must fix the appliance (or its network connection) and manually recover it into the group for the client to resume including it in operations.<br /></p>
+        <h4>How many times, or for how long will a device be polled to be automatically reintroduced?
+</h4>
+        <p>This is set when you enable the feature through vtl. You can try once per minute, up to 500 minutes. <br /></p>
+        <h4>How does the automatic reintroduction work? Why does it need a partition policy?
+</h4>
+        <p>Logic is built into HA client code.</p>
+        <h4>If an HA group uses three Luna SA devices, one off-site, can that third device be in two HA groups? Can this be a method of propagating key material securely between sites?
+</h4>
+        <p>HA allows for varying configurations. HA is purely at the client level. Your use of it depends on your creativity and understanding of your group members. In short, any one Luna&#160;SA can be part of any number of HA groups. The Luna&#160;SA itself has no concept that it is working in HA. </p>
+        <p>A given Luna SA&#160;HSM can have multiple partitions. There is no contention if the HSM that is common to two different HA groups has two separate partitions, each partition being used by only one of the HA groups. Problems can arise if a partition on one HSM is a member of more than one active HA&#160;group. </p>
+        <h5>Consider how HA&#160;works. </h5>
+        <p>Consider two HA groups consisting of (say) appliances A and B  in group One and (say) appliances B and C in group Two. For simplicity, assume that all three HSMs have only a single partition each, so that the partition on appliance B is a member of both groups. The way in which an object would be propagated between the two groups is that it would be created in one group. The proper way to create an object in an HA&#160;group, of course, is to address the request/command to the virtual slot, the HA slot. "Behind the scenes", the new object is created on the primary member, and is immediately, automatically propagated to the other member(s) of the group. To be more specific, a request to generate a key would be issued by the client application. The request would be captured by the HA software on the client, which would try the first physical member in the HA list, as specified in the configuration file. If that operation proceeds successfully, the resulting new key is propagated to the other members of the HA group - if replication is turned on. If the keygen operation fails with a timeout - the primary HA member is busy and does not finish its current operation before the client times-out the keygen request - then the client drops the request against that member and tries the next physical member of the HA group.  &#160;</p>
+        <p>Alternatively, and usually not recommended, you could create an object directly on the physical slot of one member or the other. No synchronization is triggered, because you did not perform the operation via the group (virtual) slot.The <b>next time</b> you issue a manual synchronization request for that group, the synchronization happens. </p>
+        <p>Once synchronization/replication occurs, the AB group has the new object on both members, either because you created it in the group virtual slot and it was automatically replicated, or because you created it improperly, directly on one of the physical HSM slots, and performed a manual replication.&#160; </p>
+        <p>Next, you can perform a manual synchronization of group BC, to replicate the object within that group. </p>
+        <p>This would be a workable scenario if your practice was to keep a "master" HA group, and to temporarily make a member of that group also a member of a separate, unpopulated HA&#160;group that you were preparing to deploy. Immediately after propagating the required objects to the "child" group, you would break the connection (by changing the HA configuration of the second group to no longer include HSM B), so that the child group existed independently of the master group and was no longer affected by it. This could be repeated for each new HA group that you wished to deploy. You would add fresh (unpopulated members to the separated child group and perform synchronization. The child group members would then take on the contents that existed in HSM C at the time HSM B (the member formerly common to both groups) was removed from the child group. You would now have two completely independent HA groups, parent and child, with identical contents.</p>
+        <h5>Deletions Could Be Undone If HA Groups Share Members </h5>
+        <p>Where a problem might arise is if you choose to <b>not</b> break the connection between the original [or master or "golden"] group and the other groups. </p>
+        <p>You can propagate one or more objects, using HA, but you cannot propagate deletion if all members of the current group are not present at the time of the deletion. This could show up in two scenarios:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If a group member is off-line for any reason when an object is deleted from the group, the missing member does not have the deletion, and therefore retains the object. If that member later rejoins the group, the next synchronization causes the unwanted item to be replicated from the rejoined member to the rest of the group, undoing the deletion. &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If different groups remain connected by a common member, they could continue to replace/restore objects that you delete from any one group, as long as the object exists in the other shared group. This could result in the proliferation of outdated crypto objects that you do not wish to retain. </p>
+        <h5>Latency</h5>
+        <p>The original question (above) was asked in the context of using HA&#160;to replicate objects to distant HSMs. Thus, at least one member of the target group would be remotely located. This is perfectly fine in the HA context, except that network/Internet latency would likely have an impact on performance.- another reason to minimize situations where an HSM is a member of more than one HA&#160;group.</p>
+        <h4>At the library level, what happens when a device fails or doesn’t respond?
+ </h4>
+        <p>The client library drops the member and continues with others. It will try to reconnect that member at a minimum retry rate of once per minute (configurable) for the number of times specified in the configuration file, and then stop trying that member. You can specify a number of retries from 3 to an unlimited number.</p>
+        <h4>Under what circumstances will a device be moved out of an HA group - only in the event it cannot be contacted?
+&#160;</h4>
+        <p>You must manually remove a member using “vtl”. If the device cannot be contacted, the HA client merely stops trying it (see "retries" in the previous question), but the device remains a group member until manually removed.</p>
+        <h4>Can you add and remove devices to a HA group without restarting the application? If so what caveats apply?
+</h4>
+        <p> No, you cannot. Think of starting the application as starting a race. You cannot add in a new runner once the race is already under way. But, if you restart the race, you can.</p>
+        <h4>What is the impact of the ‘haonly’ flag, and why might you wish to use it?
+. </h4>
+        <p>The “haonly” flag shows only HA slots (virtual slots) to the client applications. It does not show the physical slots. We recommend that you use "haonly", unless you have particular reason for not using it. Having "haonly" set is the proper way for clients to deal with HA groups - it prevents the possible confusion of having both physical and virtual slots available.  </p>
+        <p>Recall that automatic replication/synchronization across the group occurs only if you cause a change (keygen or other addition, or a deletion) via the virtual HA slot. If you/your application changes the content of a physical slot, this results in the group being out-of-sync, and requires a manual re-sync to replicate a new object across all members. Similarly, if you delete from a physical slot directly, the next manual synchronization will cause the deleted object to be repopulated from another group member where that object was never deleted. Therefore, to perform a lasting deletion from a single physical slot (if you choose not to do it via the virtual slot) requires that you manually delete from every physical slot in the group, or risk your deleted object coming back. &#160;&#160;</p>
+        <p>Also, from the perspective of the Client, a member of the HA&#160;group can fail and, with "haonly" set, the slot count does not change. If "haonly"&#160;is not set, and both virtual and physical slots are visible, then failure of unit number 1 causes unit number 2 to become slot 1, and so on. That could cause problems if your application is not designed to deal gracefully with such a change. </p>
+        <h4>If an HA group member fails and an application restarts, it will not be possible to recover that device until you restart the application again. Why?
+</h4>
+        <p>This is as designed.
+You originally had your application running with X number of members. One failed, but was not removed from the group, so retries were occurring, but the application was operating with X-1 members available. Then you restarted. When the application came up after that restart, it saw only X-1 members. Having just started, it now has no notion that the Xth member exists. The "race" has restarted with X-1 runners.  You cannot add to that number within an application. To go from the number that the application now recognizes, X-1, to the new, larger number of participants X-1 +1 (or X), you must restart the application (the race) while all X members (runners) are available.</p>
+        <h4>Can a PED operation on one member of an HA group lock it out from operation (PED operations block cryptographic operations)? If so, will it automatically come back into use after the operation has concluded? &#160;</h4>
+        <p>Yes. Fail-over and recovery HA logic are invoked.</p>
+        <h4>Are there any other ambitious scenarios that you support for HA?</h4>
+        <p>In the following case, it is not so much that we actively support the scheme explicitly as that we did what we could, within the limits of Luna SA HA, to keep our hardware and software from hindering what the customer wished to accomplish. </p>
+        <p>Consider a customer with several Luna SA appliances in HA, serving an application that enables point-of-sale transactions. Necessarily, the customer wanted maximum possible up-time. The problem was to maintain such up-time even if all the members of the HA group went off-line, or needed maintenance, etc. </p>
+        <p>The eventual deployed scheme involved TWO HA groups - the principal operational group and a backup group. </p>
+        <p>To ensure uninterrupted up-time, the backup group included all the members of the principal group. The customer provided the fail-over mechanism to switch groups.</p>
+        <h4>How secure is object replication in HA?</h4>
+        <p>See <a href="ha_and_cloning_replication_security.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Cloning/HA Replication Security"</span></a> .</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/ha/ha_operational_notes.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

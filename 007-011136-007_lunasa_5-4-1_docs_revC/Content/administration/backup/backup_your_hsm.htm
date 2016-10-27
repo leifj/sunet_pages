@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Backup and Restore HSMs and Partitions">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Backup your HSM (SO space) Locally</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/backup/backup_your_hsm.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="backup.htm">Backup and Restore HSMs and Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Backup your HSM (SO space) Locally</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor159"></a><a name="kanchor160"></a>Backup your HSM (SO space) Locally</h2>
+        <p>HSM backup securely clones HSM objects from the HSM SO space to a Backup HSM. <MadCap:conditionalText data-mc-conditions="Primary.notLunaSA">Currently, 
+ this is important for SIM applications, to preserve the SIM masking key, 
+ and also to allow the SIM masking key to be restored onto another HSM 
+ in the case of HA with SIM.</MadCap:conditionalText> &#160; This does <strong>not</strong> including objects that are 
+ contained within HSM Partitions - for partition contents, separate backup/restore operations are available. </p>
+        <p>Backup of HSM objects is a local operation - meaning that the Backup HSM must be physically connected to the Luna&#160;SA appliance - and is run from the lunash:&gt; command line, only. That is, there is no provision to backup the SO space of a Luna SA HSM remotely, and lunacm does not support it. Partition backups are different. See <a href="backup_your_hsm_partition_locally.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Backup your HSM Partition Locally"</span></a> and <a href="backup_hsm_partition_remotely_with_rbs.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Backup your HSM Partition Remotely"</span></a></p>
+        <p>To backup the HSM on your Luna SA, have ready a Luna Remote Backup HSM, connected to the front-panel USB port of the Luna appliance.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The hsm restore operation has an option to 
+ add material from a backup token to an HSM, rather than to replace any 
+ material that is already on the HSM, if that is desired. However, the 
+ <strong>backup</strong> operation (from HSM onto token) is an overwrite operation, only.</p>
+        <h5>To backup your HSM:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Login to the 
+ Luna appliance
+ as admin.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>At the <span style="font-family: 'Courier New', monospace;">lunash</span> prompt: 
+ <br />for Luna&#160;SA with password authentication, type<br /><span style="font-family: 'Courier New', monospace;">hsm backup -password 
+ HSMAdminpassword -domain domain-string -tokenpw password</span> <br /><br /> or, type <br /><span style="font-family: 'Courier New', monospace;">hsm backup</span><br /><br />for Luna&#160;SA 
+ with PED Authentication.</p>
+        <p>If you see an error message about the token not being in "Factory Reset state", see <a href="error_token_not_in_factory_reset.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"What is this Error about "token not in factory reset state"?"</span></a><a href="../error_token_not_in_factory_reset.htm">.</a></p>
+        <p>To restore the HSM contents, go to "<a href="restore_your_hsm_partition_from_token.htm">Restore Your HSM from Token</a>".</p>
+        <h3>Disconnecting Luna Backup HSM </h3>
+        <p>The Luna Backup HSM is a USB device. It is not equipped with a power switch. </p>
+        <p>There is no special "procedure" for disconnecting or shutting down a Luna Backup HSM. </p>
+        <p>If the Backup HSM is used in “Remote” configuration for Luna SA, therefore connected to a workstation acting as Backup server, then your only action is to do the usual Windows (or other) dismount of a USB device (for the benefit of your workstation, not the Backup HSM - “It is now safe to disconnect your USB Device”). Linux and UNIX platforms have their equivalent unmount actions for USB. Then disconnect the cables.</p>
+        <p>If the Backup HSM is connected to Luna SA for local backup, you have no access to the Luna SA’s internal hardened kernel, so you cannot issue an un-mount instruction. Simply disconnect the cables and the system figures it out at either end. Both Luna SA and the Backup HSM accept this treatment very robustly.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/backup/backup_your_hsm.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

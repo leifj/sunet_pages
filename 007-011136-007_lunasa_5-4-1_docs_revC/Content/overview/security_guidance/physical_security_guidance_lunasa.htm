@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default,HSM5conditions.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Product Overview|Security Guidance">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Security and Handling Considerations - HSM Appliance</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#overview/security_guidance/physical_security_guidance_lunasa.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Product Overview</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="security_guidance.htm">Security Guidance</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Security and Handling Considerations - HSM Appliance</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Security and Handling Considerations - HSM Appliance</h2>
+        <p>This section discusses general security and handling issues related to the Luna&#160;SA HSM appliance.</p>
+        <h3>Physical Security of the Appliance</h3>
+        <p>The HSM appliance is a commercial-grade secure appliance. This means that:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>It is provided with anti-tamper external features that make physical intrusion into the unit difficult - tamper-resistant screws must be drilled out, in order to open the case, and tamper-evident stickers secure the seams. These measures do not deter a determined attacker, they merely deter casual intrusion and leave visible evidence of attempts (successful or otherwise) to open the unit. <br /></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Vents and other paths into the unit are baffled to prevent probing from the outside.<br /></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The HSM Keycard, inside the appliance, that houses the actual HSM components, is encased in an aluminum shell, filled with hardened epoxy. Attempts to gain access to the circuit board itself would result in physical evidence of the attempted access and likely physical destruction of the circuitry and components, thus ensuring that your keys and sensitive objects are safe from an attacker.</p>
+        <p>If an attacker with unlimited resources were to simply steal the appliance, and apply the resources of a well-equipped engineering lab, it might be possible to breach the physical security. However, without the Password (password authenticated HSMs) or the PED Keys (PED-authenticated HSMs), such an attacker would be unable to decipher any signal or data that they managed to extract.</p>
+        <p>With that said, it is your responsibility to ensure the physical security of the unit to prevent such theft, and it is your responsibility to enforce procedural security to prevent an attacker ever having possession of (or unsupervised access to) both the HSM and its authentication secrets.</p>
+        <h3>Physical Environment Issues</h3>
+        <p>The data sheets provided by SafeNet show the environmental limits that the device is designed to withstand. It is your responsibility to ensure that the unit is protected throughout its working lifetime from extremes of temperature, humidity, dust, vibration/shock that exceed the stated limits.</p>
+        <p>It is also your responsibility to ensure that the HSM appliance is installed in a secure location, safe from vandalism, theft, and other attacks. In summary, this usually means a clean, temperature-, humidity-, and access-controlled facility. We also strongly recommend power conditioning and surge suppression to prevent electrical damage, much as you would do for any important electronic equipment.</p>
+        <h3>Communication</h3>
+        <p>Communications with the unit are either local and, therefore, subject to direct oversight and control (you decide who is allowed to connect to the serial port or the PED port) or via secure remote links. All remote communications are as secure as SSH and TLS with tunneling protocol can make them.</p>
+        <h3>Authentication Data Security</h3>
+        <p>It is your responsibility to protect passwords and/or PED Keys from disclosure or theft and to ensure that personnel who might need to input passwords do not allow themselves to be watched while doing so, and that they do not use a computer or terminal with keystroke logging software installed.</p>
+        <h3>HSM Audit Data Monitoring</h3>
+        <p>The HSM Keycard of the Luna HSM appliance stores a record of past operations that is suitable for security audit review.  The easiest way in which to retrieve this record is to use the “<span style="font-family: monospace;">hsm supportinfo</span>” command and extract the dual port data provided within the <span style="font-family: monospace;">supportinfo.txt</span> file that is returned by the command.  Because of the limited storage capacity of the HSM card, it has a limited size window in which to write these records and it must periodically re-start from the beginning of the window and overwrite existing records.  For this reason, it is important that the audit data be retrieved often enough to ensure no data loss.  Under typical load conditions, retrieving the file once every eight hours should be sufficient.  However, for very heavy loads or operations containing large input data payloads, it might be necessary to retrieve the file as often as once per hour.</p>
+        <h4>Audit Logging</h4>
+        <p>Beginning with Luna HSM 5.2, the secure Audit Logging feature provides an Audit role (white PED Key) separate from all other HSM roles, to manage a secure audit logging function. Audit logging sends HSM log event records to a secure database on the local file system, with cryptographic safeguards ensuring verifiability, continuity, and reliability of HSM event log files.</p>
+        <h3>Intended Installation Environment
+</h3>
+        <p>The following assumptions are made about the environment in which the Luna  cryptographic modules will be located and installed:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Those responsible for the Luna HSM  must ensure that the authentication data for each Luna HSM account is held securely and not disclosed to persons not authorized to use that account. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Those responsible for the Luna HSM    must ensure that it is installed, managed, and operated in a manner that is consistent with the local security policy. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The host IT environment must be configured and checked to ensure that any applications installed in the host environment, that require access to the HSM are legitimate, are valid and have been vetted for authenticity and integrity (i.e., have not been modified for malicious purposes). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Those responsible for the Luna  HSM    must ensure that it is installed and operated in an environment that is protected from unauthorized physical access. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Those responsible for the Luna HSM    must ensure that there are procedures in place such that, after a system failure or other discontinuity, recovery of the Luna HSM  and the host IT environment is possible without compromise of IT security. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Those responsible for the Luna  HSM  must ensure that those using the Luna HSM  (including Security Officers and Token/Partition Users), have a level of competence sufficient to ensure its correct management and operation.  This competence may be established through a combination of training and the accompanying Installation Guide and Configuration, Administration, and Reference documentation. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Procedural and physical measures must  prevent the disclosure of cryptography-related IT assets to unauthorized individuals or users via the electromagnetic emanations of the Luna HSM .</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Those responsible for the host IT environment must ensure that no connections are provided to outside systems or users that would undermine IT security. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Those responsible for the host IT environment must ensure that the power supplied to the Luna HSM  is adequately protected against unexpected interruptions and the effects of surges and voltage fluctuations outside the normal operating range of the device. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Those responsible for the host IT environment must ensure that the Luna HSM  is operated in an environment in which there is provided adequate protection against disasters such as fire and flood. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Those responsible for the host IT environment must ensure that the Luna HSM  is located in an environment that is adequate to protect security-relevant and cryptographic key data and the Luna HSM  firmware from interference or inadvertent modification by strong electromagnetic radiation from other sources.&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#overview/security_guidance/physical_security_guidance_lunasa.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

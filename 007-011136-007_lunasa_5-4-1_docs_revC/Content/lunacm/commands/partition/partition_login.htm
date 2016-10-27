@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaCM Command Reference Guide|LunaCM Commands|partition">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>partition login</title>
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#lunacm/commands/partition/partition_login.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaCM Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaCM Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition.htm">partition</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">partition login</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">partition login</h2>
+        <p>Login to the partition.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>partition login</b>  [<b>-password</b> &lt;password-or-challenge&gt;] [-cu] [<b>-ped</b> &lt;ped Id&gt;]</p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" style="width: 142px;" />
+            <col class="Column-Column1" style="width: 99px;" />
+            <col class="Column-Column1" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Parameter</th>
+                    <th class="HeadE-Column1-Header1">Shortcut</th>
+                    <th class="HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-password</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-pa</td>
+                    <td class="BodyD-Column1-Body1">Applies to Password-authenticated HSMs; ignored for PED-authenticated HSMs. <br />Specifies the Partition Owner or Crypto Officer password, to be used as login credential. As shown, you can supply the password at the command line (useful for scripting). Normally, however, you should leave out the password when issuing the command. If the password is not provided, you are prompted for it, and your response is obscured by asterisk (****) symbols. This a more secure method of providing the password.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-cu</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-c</td>
+                    <td class="BodyD-Column1-Body1">Perform the operation as Crypto User.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">-ped</td>
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">-pe</td>
+                    <td class="BodyA-Column1-Body1">Applies to PED-authenticated HSMs, only. This option is a temporary way to override PED ID settings or default.<br /><br /> The PED Id parameter is optional. 
+(0=local,1...65535=remote)<br /> If '0' is specified, the locally
+ attached PED is used.  If a value between 1 and 65535 is
+ specified, the remote PED corresponding to that PED Id is used.
+<br /><br /> If nothing is specified, then the value stored in the library for this
+ slot is used.  Unless the value stored in the library has been changed
+ by using the 'ped set' command, or the 'PEDId' parameter in the 'Luna'
+ section of cryptoki.ini, the value in the library is '0'.<br /><br />NOTE: The '-ped' option asserts for the duration of this login command, only. After the login completes, any PED ID that was set by the '-ped' option then reverts to whatever value was in effect before "partition login -ped &lt;PED Id&gt;". <br /><br /></td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3>
+        <p>&#160;&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../../index.html#lunacm/commands/partition/partition_login.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

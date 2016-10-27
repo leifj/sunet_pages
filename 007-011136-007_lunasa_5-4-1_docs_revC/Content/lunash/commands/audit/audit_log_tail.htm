@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|audit">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>audit log tail</title>
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#lunash/commands/audit/audit_log_tail.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="audit.htm">audit</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">audit log tail</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="aanchor33"></a>
+            <MadCap:concept term="audit log">
+            </MadCap:concept><a name="aanchor34"></a>
+            <MadCap:concept term="Audit user">
+            </MadCap:concept><a name="aanchor35"></a>
+            <MadCap:concept term="white PED Key">
+            </MadCap:concept><a name="aanchor36"></a>
+            <MadCap:concept term="HSM login" /><a name="kanchor259"></a>audit log tail</h2>
+        <p>Display the last several entries of the named log file, with options to narrow the selection of the displayed entries.    </p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code"><b>audit log tail -file</b> &lt;filename&gt; [<b>-serial</b> &lt;serialnum&gt;] [<b>-entries</b> &lt;logentries&gt;] [<b>-search</b> &lt;string&gt;] &#160;&#160;</p>
+        <table style="caption-side: top;width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" style="width: 159px;" />
+            <col class="Column-Column1" style="width: 96px;" />
+            <col class="Column-Column1" style="width: 291px;" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Parameter</th>
+                    <th class="HeadE-Column1-Header1">Shortcut</th>
+                    <th class="HeadD-Column1-Header1">Description </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-entries</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-e</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Specifies the number of log entries to display.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-file</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-f</td>
+                    <td class="BodyD-Column1-Body1">Specifies the name of the log file to view.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-search</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-sea</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Specifies a search string, such that only log entries containing that string are returned, from the named file, and from the specified range of "-entries" within that file (if the "-entries" option is provided - otherwise, the entire file is searched). </p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">-serial</td>
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">-ser</td>
+                    <td class="BodyA-Column1-Body1">
+                        <p>Specifies the serial number of the HSM&#160;from which you want to clear the logs. This option s required only when there are multiple attached HSMs.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3>
+        <p>The following example lists the twenty most recent log entries.</p><pre xml:space="preserve">[sa5] lunash:&gt;&gt;audit log tail -file hsm_153722_00000000.log -entries 20
+
+1472,12/12/18 02:27:12,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1473,12/12/18 02:27:12,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_CLOSE_SESSION returned RC_OK(0x00000000) session handle 2
+1474,12/12/18 02:27:32,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1475,12/12/18 02:27:32,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_CLOSE_SESSION returned RC_OK(0x00000000) session handle 2
+1476,12/12/18 02:27:47,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1477,12/12/18 02:27:52,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_CLOSE_SESSION returned RC_OK(0x00000000) session handle 2
+1478,12/12/18 02:28:07,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1479,12/12/18 02:28:07,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_CLOSE_SESSION returned RC_OK(0x00000000) session handle 2
+1480,12/12/18 02:28:27,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1481,12/12/18 02:28:27,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_CLOSE_SESSION returned RC_OK(0x00000000) session handle 2
+1482,12/12/18 02:28:47,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1483,12/12/18 02:28:47,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_CLOSE_SESSION returned RC_OK(0x00000000) session handle 2
+1484,12/12/18 02:29:02,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1485,12/12/18 02:29:02,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_CLOSE_SESSION returned RC_OK(0x00000000) session handle 2
+1486,12/12/18 02:29:22,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1487,12/12/18 02:29:22,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_CLOSE_SESSION returned RC_OK(0x00000000) session handle 2
+1488,12/12/18 02:29:42,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1489,12/12/18 02:29:42,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_CLOSE_SESSION returned RC_OK(0x00000000) session handle 2
+1490,12/12/18 02:29:47,S/N 153722 session 2 Access 2147483651:22817 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1491,12/12/18 02:29:47,S/N 153722 session 2 Access 2147483651:22817 SO container operation LUNA_CLOSE_SESSION returned RC_OK(0x00000000) session handle 2</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre><pre xml:space="preserve">&#160;</pre>
+        <p>The following example lists only those entries that contain the string "OPEN_SESSION", within the twenty most recent entries in the log.</p><pre xml:space="preserve">[sa5] lunash:&gt;&gt;audit log tail -file hsm_153722_00000000.log -entries 20 -search OPEN_SESSION
+
+1492,12/12/18 02:29:57,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1494,12/12/18 02:30:17,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1496,12/12/18 02:30:37,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1498,12/12/18 02:30:57,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1500,12/12/18 02:31:12,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1502,12/12/18 02:31:32,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1504,12/12/18 02:31:52,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1506,12/12/18 02:32:12,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1508,12/12/18 02:32:27,S/N 153722 session 2 Access 2147483651:3 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+1510,12/12/18 02:32:27,S/N 153722 session 2 Access 2147483651:22817 SO container operation LUNA_OPEN_SESSION returned RC_OK(0x00000000) session handle 2
+
+Command Result : 0 (Success)
+[sa5] lunash:&gt;
+
+&#160;&#160;&#160;</pre>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../../index.html#lunash/commands/audit/audit_log_tail.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

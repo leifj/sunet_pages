@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Secure Transport Mode">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>MTK and SRK</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/secure_transport_mode/mtk_and_srk.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="secure_transport_mode.htm">Secure Transport Mode</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">MTK and SRK</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>MTK and SRK</h2>
+        <p>Every Luna HSM has a Master Tamper Key (MTK) that strongly encrypts all sensitive data generated and stored within the HSM. While the master tamper key remains valid, the HSM uses it to decrypt HSM contents in order to perform cryptographic operations. The master tamper key is unique for each HSM. </p>
+        <p>When the master tamper key is created, two splits of that secret are stored in separate locations within the HSM.</p>
+        <p>A tamper event erases the HSM's master tamper key, making the HSM unusable and its contents inaccessible.That is, all contents remain encrypted and the HSM cannot use the master tamper key to decrypt them while the master tamper key does not exist.
+</p>
+        <p>The&#160;master tamper key can be reconstituted from the two splits for resumption of HSM operation. </p>
+        <p>The scenarios are:</p>
+        <p>a) the two splits remain inside the HSM, and the HSM can use them to immediately recover the master key</p>
+        <p>b) one of the splits remains inside the HSM, but the other is moved out to an external device; the HSM cannot recover the HSM's master key until the external split is re-introduced into the HSM via the PED.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The MTK is NOT, in any sense, any kind of "device master key". Its purpose is to implement the tamper behavior and the related Secure Transport Mode. If someone managed to get the MTK for an HSM, they have nothing really usable. All HSM contents are further encrypted by additional layers of authentication and other strong encryption, as described elsewhere in these documents.</p>
+        <h3>Tamper and Recover with Purple Key NOT Enabled</h3>
+        <p>If a tamper event occurs, the event is logged and the HSM stops responding. A restart is required in order to resume. The master key is reconstituted from its component splits and re-validated, making the HSM usable again.  The event is recorded in the log.</p>
+        <p>The intent is to make you aware that a tamper has occurred (the log gets an entry, and the HSM waits for a restart) but not to cause ongoing inconvenience. </p>
+        <p>That scenario applies to Password-authenticated HSMs, as well as to PED-authenticated HSMs that do not have the purple SRK option invoked - both splits of the master key remain inside the HSM. </p><pre xml:space="preserve">[myluna] lunash:&gt;hsm srk show</pre><pre xml:space="preserve"><span class="code">Secure Recovery State flags:</span><br /><span class="code">===============================</span>&#160;<br /></pre><pre xml:space="preserve"><span class="code">External split enabled: </span>&#160;<span class="code">no</span>  </pre><pre xml:space="preserve"><span class="code">SRK resplit required:</span>    <span class="code">no</span>  </pre><pre xml:space="preserve"><span class="code">Hardware tampered: </span>      <span class="code">no</span>  </pre><pre xml:space="preserve"><span class="code">Transport mode:</span>          <span class="code">no</span>  </pre><pre xml:space="preserve">Command Result : 0 (Success) <br />[myluna] lunash:&gt; </pre><pre xml:space="preserve">&#160;</pre>
+        <h3>Tamper and Recover with Purple PED Key Enabled</h3>
+        <p>Some operational environments require more rigorous response to a tamper event. Your operational and security policy might require that, in addition to logging a tamper event, the HSM must stop performing until you  take authoritative action to confirm your acknowledgement and clear the tamper before operations can resume. </p>
+        <p>PED-authenticated HSMs have the option to store a split of the master key, called the Secure Recovery Vector (SRV) outside of the HSM on a physical device, the Secure Recovery Key (SRK). The situation is as above: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>master key encrypts everything, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HSM can operate on its contents while the master key is valid, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>master key splits exist, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>master key can be reconstituted and re-validated ], &#160;</p>
+        <p>But one split of the master key is imprinted onto a purple PED Key (or Keys, if you choose M of N), the SRK, and not inside the HSM. In that case, the master key component stored inside the HSM is insufficient to reconstitute the master key without the portion stored externally on the purple key(s). </p><pre xml:space="preserve">[myluna] lunash:&gt;hsm srk show</pre><pre xml:space="preserve"><span class="code">Secure Recovery State flags:</span><br /><span class="code">===============================</span>&#160;<br /></pre><pre xml:space="preserve"><span class="code">External split enabled: </span>&#160;<span class="code">yes</span>  </pre><pre xml:space="preserve"><span class="code">SRK resplit required:</span>    <span class="code">no</span>  </pre><pre xml:space="preserve"><span class="code">Hardware tampered: </span>      <span class="code">no</span>  </pre><pre xml:space="preserve"><span class="code">Transport mode:</span>          <span class="code">no</span>  </pre><pre xml:space="preserve">Command Result : 0 (Success) <br />[myluna] lunash:&gt; </pre><pre xml:space="preserve">&#160;</pre>
+        <p>Where the purple PED Key has been invoked, a tamper event invalidates the master key, but the HSM cannot immediately re-validate because not enough splits are available. You must invoke the Luna Shell command<code> hsm srk transportMode recover</code>, and present the purple PED Key (or Keys) when prompted. The PED reads the purple key(s) and provides the missing piece ( the SRV) to the HSM. The HSM combines the provided external component with the internal component and reconstitutes and validates the master key. You can resume using the HSM with no loss of crypto objects.</p>
+        <h3>Behavior with Purple PED Key Enabled but MISSING or DAMAGED</h3>
+        <p>If SRK is enabled (meaning a split of the MTK&#160;has been moved off of the HSM, onto a purple PED Key), and you have lost or destroyed the purple PED Key, then you <strong>cannot</strong> bring the HSM&#160;back from tamper or Secure Transport Mode. Your only option is to return the HSM to SafeNet for re-manufacturing.</p>
+        <p>However, you CAN run <span class="code">hsm factoryReset</span> (from a local console connection), if your security policies require active destruction of HSM objects before it leaves your possession. </p>
+        <p>When the HSM is returned to you, after re-manufacture, it has a new MTK as if it was a new HSM, so even a copy of the old purple PED Key would be of no use to an unauthorized person. You can freshly initialize the re-manufactured HSM using your existing Domain PED Key, so that you can recover objects from one of your backups onto the re-manufactured HSM. </p>
+        <h3>Secure Transport Mode
+</h3>
+        <p>If your practice is to configure and prepare your HSMs at a central location before shipping them out to remote locations in your organization, or  to configure and prepare your HSMs at a central location before shipping them out to your customers then you can invoke an enhanced security option for shipping. </p>
+        <p>By switching on Secure Transport Mode (STM), you effectively create a controlled tamper event. The HSM can be shipped in a condition that is completely unusable by anyone who might intercept it if they are not in possession of the unique SRK for that HSM. At the destination, the purple PED Key is used to reconstitute the Secure Recovery Vector, and the MTK is recovered. Your recipient begins using the HSM, with your loaded keys and certificates intact, secure in the knowledge that the HSM has not been attacked in transit.                 </p><pre xml:space="preserve">[myluna] lunash:&gt;hsm srk show</pre><pre xml:space="preserve"><span class="code">Secure Recovery State flags:</span><br /><span class="code">===============================</span>&#160;<br /></pre><pre xml:space="preserve"><span class="code">External split enabled: </span>&#160;<span class="code">yes</span>  </pre><pre xml:space="preserve"><span class="code">SRK resplit required:</span>    <span class="code">no</span>  </pre><pre xml:space="preserve"><span class="code">Hardware tampered: </span>      <span class="code">no</span>  </pre><pre xml:space="preserve"><span class="code">Transport mode:</span>          <span class="code">yes</span>  </pre><pre xml:space="preserve">Command Result : 0 (Success) &#160;<br />[myluna] lunash:&gt; </pre>
+        <p>&#160;</p>
+        <p>As a service for customers who request it, SafeNet can invoke Secure Transport Mode at our factory. Your HSM is shipped in anti-tamper packaging via a trusted courier. Meanwhile, the unique purple key is shipped via a separate channel, so that the two are never available together in transit. As a further precaution, we send you the verification code via yet another path. In this way, you enjoy the maximum possible assurance that your HSM has not been attacked between our facility and yours. 
+
+</p>
+        <p>Similarly, if your organization ships HSMs to your customers, you can offer them the same service, with new unique purple (SRK) keys generated at each stage, if desired.</p>
+        <h3>Make a New Purple PED Key (SRK external split)</h3>
+        <p>In the event that a Luna HSM appliance has been shipped to you, in Secure Transport Mode, and you have recovered from Transport Mode, OR you have decided to invoke Transport Mode to store or ship your HSM, you might wish to generate a unique, new SRK&#160;split onto a purple PED Key. That is, the existing MTK is split in two again (different splits than previous) and one new split replaces the internally stored component while the other new split us stored on a new purple PED Key (or keys).</p>
+        <p>Use the Luna Shell command <span style="font-family: monospace;">hsm srk keys resplit</span> and have a different purple key ready for imprinting. </p>
+        <p>The existing SRK is needed to validate the operation, but the HSM will not overwrite that purple key with the new split. This is a safety measure, in case the operation was interrupted before completion. If that happens, the old SRK remains valid and the HSM&#160;can still be used while you begin the re-split operation again. Once the re-split is successful, with a new SRK on a new purple key, the old purple key is of no further interest because its contents have been superseded [ It could be used in a future re-split operation for this HSM, or it could be imprinted from another HSM, if desired ]. &#160;&#160;</p>
+        <p>For example, when we (SafeNet) ship an appliance in Secure Transport Mode, we make just the one purple key that we ship to you, unless requested otherwise by you. We think that we are trustworthy, but your security auditors might be required by policy or regulation to assume otherwise. For this reason, you can perform <code>hsm srk keys resplit</code> as soon as you receive your HSM, and it would not matter if we had kept additional copies of your purple key. They would be rendered useless by the re-splitting operation on your HSM. </p>
+        <p>Similarly, your customers can do the same once they receive an HSM in Secure Tranport Mode from you. </p>
+        <p>If your application requires that you ship securely, but retain control of the HSM appliances, you can use the Remote PED&#160;option to retain all PED Keys (including the purple) and use them from your location when operating the remotely located HSM.</p>
+        <h3>Master Key must be present</h3>
+        <p>You can perform a re-splitting operation only if the HSM's master key is currently valid. That is, for security reasons, you cannot generate a new split and new purple key while an HSM is tampered and not recovered, or while an HSM is in Secure Transport Mode and not recovered. This prevents anyone not in possession of the correct purple PED Key from circumventing the HSM "lock-out" due to tamper or to STM.</p>
+        <h3>What if the purple SRK has been lost?</h3>
+        <p>If the purple SRK is lost, and you do not have a backup of it, then you must obtain an RMA and return the HSM to SafeNet for re-manufacture; any objects that existed on the HSM  are lost, unless you have backups. For Luna SA, some customers might prefer the additional assurance of pressing the red factory reset button on the back of the appliance, before shipping. For Luna&#160;PCI-E, the equivalent action is shorting/shunting the two pins of the reset header (Tamper 2) on the HSM card, near the battery. </p>
+        <h3>Disabling SRK</h3>
+        <p>If SRK has been enabled (one of the HSM's master key splits has been moved to an external purple PED Key), you can choose to disable the feature. </p>
+        <p>To do so, you must provide the appropriate purple SRK(s) when you run the command <code>hsm srk disable</code>, so that the external split can be read back into a secure internal location. </p>
+        <p>From that point on, the HSM behaves in the same way as a password-authenticated HSM with respect to tamper events:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>a real tamper event is merely noted in the log and does not hamper HSM operation (beyond requiring restart and re-login)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Secure Transport Mode is not possible (until SRK&#160;is re-enabled). </p>
+        <h3>Compare and Contrast Some "Denial" and Destructive Scenarios</h3>
+        <p>View a table that compares and contrasts various "deny access" events or actions that are sometimes confused - <a href="../decommission/destroy_scenarios.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Comparison of Destruction/Denial Actions"</span></a>.&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/secure_transport_mode/mtk_and_srk.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

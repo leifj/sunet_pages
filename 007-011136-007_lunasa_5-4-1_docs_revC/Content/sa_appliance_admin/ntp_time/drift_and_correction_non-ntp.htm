@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Luna SA Appliance Administration Guide|Timestamping – NTP and Time Drift">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Correcting Time Drift</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sa_appliance_admin/ntp_time/drift_and_correction_non-ntp.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Luna SA Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ntp_time.htm">Timestamping – NTP and Time Drift</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Correcting Time Drift</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Correcting Time Drift</h2>
+        <p>All computer systems show clock drift over time - the system time gradually deviates from accurate or "true" time. For many applications it is important that servers and clients be working to the same time standard, and that drift be prevented or corrected. </p>
+        <p>Various methods have been devised to correct drift. The simplest and most reliable way to do so is to implement Network Time Protocol and receive accurate time signals from a server that is dedicated to that task and maintained to a very high standard of accuracy. This is discussed in the <a href="secure_ntp_sample.htm" title="Example setting up Secure NTP on your appliance" alt="Example setting up Secure NTP on your appliance">NTP topics</a> of this Administration section, and in the <a href="about_ntp.htm" title="General discussion of NTP" alt="General discussion of NTP">Concepts</a> section of this Help.</p>
+        <p>Some situations might not permit maintaining a constant connection to an external time-data source (NTP server). </p>
+        <p>Here we show an example of drift (over several days) and describe how to correct it using the appliance's <span style="font-family: 'Courier New';">sysconf drift</span><a name="kanchor252"></a>&#160;local drift-correction commands.</p>
+        <h3>First, establish the drift that exists for your appliance</h3>
+        <div>
+            <p>Begin drift measurement. This also sets the time.</p>
+            <p>Note: the Luna SA appliance must run uninterrupted for several days to allow a time drift to occur. Other testing can be done, but nothing that would potentially change the system time (no power-cycles, for example) or the exercise &#160;would need to be restarted.</p>
+            <p>Issue the drift start command:</p>
+            <p>&#160;</p>
+            <p class="code">[myluna] lunash:&gt;sysconf drift startmeasure -c 15:12:15</p>
+            <p class="code">Setting the time to 15:12:15 and recording data for drift correction mechanism.</p>
+            <p class="code">Current date and time set to:  Tue Dec  9 13:47:45 EST 2008</p>
+            <p class="code">Command Result : 0 (Success)</p>
+            <p class="code">[myluna] lunash:&gt;</p>
+            <p>&#160;</p>
+            <p>At any time, you can check the status of the drift measurement to ensure it has not been interrupted:</p>
+            <p>&#160;</p>
+            <p class="code">[myluna] lunash:&gt;sysconf drift status</p>
+            <p class="code">Drift measurement started on:  Tue Dec  9 13:47:45 EST 2008</p>
+            <p class="code">Measurement has yet to be stopped.</p>
+            <p class="code">Command Result : 0 (Success)</p>
+            <p>&#160;</p>
+            <p>After issuing the start command, allow the system to run for several days before issuing the stop command. The appliance's drift system enforces a 3 day minimum - here's what it says if you attempt a shorter period:</p>
+            <p class="code">[myluna] lunash:&gt;sysconf drift stopmeasure -c 08:53:30</p>
+            <p class="code">Measuring drift correction data on this appliance.</p>
+            <p class="code">Drift measurement is not complete.  This command must be run at least 3 days</p>
+            <p class="code">after the 'sysconf drift start' command, in order to ensure accuracy of the</p>
+            <p class="code">measurement.</p>
+            <p>&#160;</p>
+            <p>It is up to you how you acquire an accurate time, in order to establish the drift and its correction. One method would be to use NTP on a different computer that has no connection to the Luna SA. In this example we used a 4 day span. Issue the “stopmeasure” command with the current and accurate time:</p>
+            <p>&#160;</p>
+            <p class="code">[myluna] lunash:&gt;sysconf drift stopmeasure -c 14:53:00</p>
+            <p class="code">Measuring drift correction data on this appliance.</p>
+            <p class="code">Storing measured drift of 8 seconds/day in internal configuration files.</p>
+            <p class="code">Use the command 'sysconf drift init' to initialize drift correction.</p>
+            <p class="code">Command Result : 0 (Success)</p>
+            <p class="code">[myluna] lunash:&gt;</p>
+            <p>&#160;</p>
+            <p>The <span class="code">sysconf drift stopmeasure</span> command stops the count and then compares the &lt;currentprecisetime&gt; that you typed in, against the calculated time (since you ran the <span class="code">sysconf drift startmeasure</span> command). The difference in seconds, the total drift, is then divided by the interval over which the measurement was running, in order to calculate a drift-per-day value. </p>
+            <p>In order for the drift to be properly corrected for operation, it is best to initialize drift correction immediately after stopping the measurement cycle, otherwise it might be necessary to redo the measurement. Note that the drift time stored is the time reported when measurement was stopped.</p>
+            <p>&#160;</p>
+            <p class="code">[myluna] lunash:&gt;sysconf drift init -c 14:58:15</p>
+            <p class="code">Measuring drift correction data on this appliance.</p>
+            <p class="code">Setting the time to 14:58:15 and initializing drift correction of 8 seconds per day on this</p>
+            <p class="code">appliance.  The time will be adjusted daily to compensate for this drift.</p>
+            <p class="code">Use the command 'sysconf drift reset' to disable drift correction.</p>
+            <p class="code">Date and time set to:  Fri Dec 12 14:58:15 EST 2008</p>
+            <p class="code">Command Result : 0 (Success)</p>
+            <p class="code">[myluna] lunash:&gt;</p>
+            <p>&#160;</p>
+            <p>For this example, we allow the system to run for a few more days and check the time to ensure the correction is maintained. To ensure that drift correction is still in effect, use the <span class="code">sysconf drift status</span> command in addition to <span class="code">status time</span>.</p>
+            <p>&#160;</p>
+            <p class="code">[myluna] lunash:&gt;sysconf drift status</p>
+            <p class="code">Drift measurement started on:  Tue Dec  9 13:47:45 EST 2008</p>
+            <p class="code">Measurement stopped on:        Tue Dec  9 13:47:45 EST 2008</p>
+            <p class="code">Current drift correction is:   8 seconds per day</p>
+            <p class="code">(Note that drift correction may be manually set.)</p>
+            <p class="code">Command Result : 0 (Success)</p>
+            <p>&#160;</p>
+            <p>For purposes of example, set the drift rate manually to ensure that it is also effective:</p>
+            <p>&#160;</p>
+            <p class="code">[myluna] lunash:&gt;sysconf drift set</p>
+            <p class="code">Enter the value to be used for drift (in seconds per day): 8</p>
+            <p class="code">This value will overwrite the previous value of the drift that may have</p>
+            <p class="code">been measured.  If you are sure that you wish to overwrite it, then type</p>
+            <p class="code">'proceed', otherwise type 'quit'</p>
+            <p class="code">&gt; proceed</p>
+            <p class="code">Proceeding...</p>
+            <p class="code">NOTE: The new value will not take effect until 'sysconf drift init' is run.</p>
+            <p class="code">Command Result : 0 (Success)</p>
+            <p class="code">[kuso] lunash:&gt;sysconf drift init -c 09:11:45</p>
+            <p class="code">Measuring drift correction data on this appliance.</p>
+            <p class="code">Setting the time to 09:11:45 and initializing drift correction of <br />8 seconds per day on this appliance.  The time will be adjusted daily <br />to compensate for this drift.</p>
+            <p class="code">Use the command 'sysconf drift reset' to disable drift correction.</p>
+            <p class="code">Date and time set to:  Mon Dec 15 09:11:45 EST 2008</p>
+            <p class="code">Command Result : 0 (Success)</p>
+            <p class="code">[myluna] lunash:&gt;</p>
+            <p>In a lab situation, this should sit for at least 3 days to ensure that the drift correction is effective.</p>
+        </div>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#sa_appliance_admin/ntp_time/drift_and_correction_non-ntp.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

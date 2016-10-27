@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|partition">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>partition backup</title>
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#lunash/commands/partition/partition_backup.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition.htm">partition</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">partition backup</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">partition backup</h2>
+        <p> Backup the HSM partition contents to a backup HSM. This command copies the contents of a HSM Partition to a special SafeNet backup token. The backup token is initialized during this process. The user is prompted to verify if this destructive command should continue (in case the token has any data on it).</p>
+        <p>The backup token is initialized to the same access control level as the HSM Partition being backed up.</p>
+        <p>This command requires the HSM's domain (string or PED Key) and the HSM Partition's Owner password (or PED Key and Partition password). If you chose M of N (values for N and for M greater than 1) at partition creation time, then quantity M of the black key are needed.</p>
+        <p>Because this is a destructive command (it initializes the backup token) , the user is given the option to proceed/quit before continuing. The Luna appliance admin may wish to use the <b>token show</b> command to see the label of a token before issuing this destructive command.</p>
+        <h5>Password-authenticated HSMs</h5>
+        <p>If the passwords and domain aren't provided via the command line, the user is interactively prompted for them. User input is echoed as asterisks. The user is asked to confirm new token Admin and user passwords (if needed).</p>
+        <h5>PED-authenticated HSMs</h5>
+        <p>Luna SA with Trusted Path Authentication backup tokens do not use text Partition Passwords in addition to PED Keys – they require only the PED Keys. Also, the passwords and blue/black PED Keys used for the backup token need not be the same as those used with the HSM.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>partition backup -partition</b> &lt;name&gt; <b>-tokenPar</b> &lt;name&gt; <b>-serial</b> &lt;serialnum&gt; [<b>-password</b> &lt;password&gt;] [<b>-tokenPw</b> &lt;password&gt;] [<b>-domain</b> &lt;domain&gt;] [<b>-add</b>] [<b>-replace</b>] <b>[-force</b>]</p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" style="width: 142px;">
+            </col>
+            <col class="Column-Column1" style="width: 142px;">
+            </col>
+            <col class="Column-Column1">
+            </col>
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Parameter</th>
+                    <th class="HeadE-Column1-Header1">Shortcut</th>
+                    <th class="HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">-add</td>
+                    <td class="BodyE-Column1-Body1">-a</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Add objects to the named backup HSM partition. Incremental backup (append). If any of the source objects already exist on the target partition, they are not duplicated, and they are not overwritten. The system flags an error and continues to the next object.</p>
+                        <p>This parameter is mandatory for pre-existing target partitions, if <b>-replace</b> is not specified.</p>
+                        <p><b>Note:</b> This parameter is not needed if the target partition did not already exist and is being created by the partition backup command. If the target partition exists, then there is no default - you must specify whether to add/append to whatever exists on the partition, or overwrite it.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">-defaultdomain</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyD-Column1-Body1">Use the default domain string.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">-domain</td>
+                    <td class="BodyE-Column1-Body1">-d</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p> Specifies the text domain string that was used when creating the partition. This parameter is optional on password-authenticated HSMs. It is ignored on PED-authenticated HSMs. See the notes, below, for more information.</p>
+                        <p><b>Note 1:</b> For Luna HSMs with Trusted Path Authentication, the red PED Key used for initializing the partition on the source HSM must be used for the backup HSM, as well. Ensure that a new domain is not created on the PED Key by answering NO to the Luna PED question “Do you wish to create a new domain?”.</p>
+                        <p><b>Note 2:</b> When you call for a cloning operation (such as backup or restore), the source HSM transfers a single object, encrypted with the source domain. The target HSM then decrypts and verifies the received blob.</p>
+                        <p>If the verification is successful, the object is stored at its destination – the domains are a match. If the verification fails, then the blob is discarded and the target HSM reports the failure. Most likely the domain string or the domain PED Key, that you used when creating the target partition, did not match the domain of the source HSM partition. The source HSM moves to the next item in the object list and attempts to clone again, until the end of the list is reached.</p>
+                        <p>This means that if you issue a backup command for a source partition containing several objects, but have a mismatch of domains between your source HSM partition and the backup HSM partition, then you will see a separate error message for every object on the source partition as it individually fails verification at the target HSM.</p>
+                        <p><b>Note 3:</b> If you do not specify a domain in the command line when creating a partition (partition create command),then you are prompted for it.</p>
+                        <p>If you type a character string at the prompt, that string becomes the domain for the partition.</p>
+                        <p>If you simply press [ Enter ] without typing any characters, the system applies, to your partition, the default domain.</p>
+                        <p>When you run the partition backup command, you are again prompted for a domain for the target partition on the backup HSM. You can specify a string at the command line, or omit the parameter at the command line and specify a string when prompted. Otherwise press [ Enter ] with no string at the prompt to apply the default domain. The domain that you apply to a backup HSM must match the domain on your source HSM partition.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">-force</td>
+                    <td class="BodyE-Column1-Body1">-f</td>
+                    <td class="BodyD-Column1-Body1">Force the action without prompting.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">-partition</td>
+                    <td class="BodyE-Column1-Body1">-par</td>
+                    <td class="BodyD-Column1-Body1">The name of the HSM partition from which all data/key objects are backed up. Obtain the HSM partition name by using the <b>partition list</b> command. </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">-password </td>
+                    <td class="BodyE-Column1-Body1">-pas</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>The HSM Partition Owner's text password to be used for login. If you do not supply this value on the command line, you are prompted for it. </p>
+                        <p>This parameter is mandatory for password-authenticated HSMs. It is ignored for PED-authenticated HSMs.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">-replace</td>
+                    <td class="BodyE-Column1-Body1">-r</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Clone objects to the target partition, overwriting whatever might already exist there. This parameter is mandatory for pre-existing target partitions, if <b>-add</b> is not specified.</p>
+                        <p><b>Note:</b> This parameter is not needed if the target partition did not already exist and is being created by the partition backup command. If the target partition exists, then there is no default - you must specify whether to add/append to whatever exists on the partition, or overwrite it.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1"> -serial </td>
+                    <td class="BodyE-Column1-Body1">-s</td>
+                    <td class="BodyD-Column1-Body1">Specifies the backup token serial number.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">-tokenPar </td>
+                    <td class="BodyE-Column1-Body1">-tokenpa</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>This is the name of the partition on the backup HSM, to which the backup objects are to be cloned. If a partition exists on the backup HSM with the name that you provide, here, that partition is selected. If no partition exists with the supplied label, then one is created.</p>
+                        <p> <b>Note:</b> Do not begin your partition label with a numeral. This can later be misinterpreted by some commands as a slot number, rather than a text label, resulting in failure of the command.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">-tokenPw </td>
+                    <td class="BodyB-Column1-Body1">-tokenpw</td>
+                    <td class="BodyA-Column1-Body1">
+                        <p>This is the password to be used as login credential for the backup token's security officer (equivalent to HSM Admin on the HSM). The token password need not be the same password or PED Key as used for the HSM Admin. </p>
+                        <p>This parameter is mandatory for password-authenticated HSMs. It is ignored for PED-authenticated HSMs.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">lunash:&gt; partition backup -partition j1 -password userpin</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">CAUTION:  Are you sure you wish to initialize the backup</pre><pre xml:space="preserve">HSM named:</pre><pre xml:space="preserve">backuphsm</pre><pre xml:space="preserve">Type 'proceed' to continue, or 'quit' to quit now.</pre><pre xml:space="preserve">&gt; proceed</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Luna PED operation required to initialize backup token - use blue PED Key.</pre><pre xml:space="preserve">Luna PED operation required to login to backup token - use blue PED Key.</pre><pre xml:space="preserve">Luna PED operation required to generate cloning domain on backup token - use red PED Key.</pre><pre xml:space="preserve">Luna PED operation required to generate partition backup space - use black PED Key.</pre><pre xml:space="preserve">Luna PED operation required to login to partition backup space - use black PED Key.</pre><pre xml:space="preserve">Luna PED operation required to login to partition - use black PED Key.</pre><pre xml:space="preserve">Key handle 10 cloned from source to target.</pre><pre xml:space="preserve">Key handle 11 cloned from source to target.</pre><pre xml:space="preserve">'partition backup' successful.</pre>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../../index.html#lunash/commands/partition/partition_backup.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

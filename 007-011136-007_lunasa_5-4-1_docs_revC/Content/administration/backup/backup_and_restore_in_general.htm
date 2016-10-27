@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Backup and Restore HSMs and Partitions">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Backup and Restore Overview               </title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/backup/backup_and_restore_in_general.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="backup.htm">Backup and Restore HSMs and Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Backup and Restore Overview</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor154"></a><a name="kanchor155"></a>Backup and Restore Overview               </h2>
+        <p>HSM Partition backup securely clones Partition objects
+ from a named HSM Partition, to a Luna [Remote] Backup HSM (that device is used whether you back up remotely or locally) or to a Small Form Factor USB Backup (eToken 7300). This allows you to safely 
+ and securely preserve important keys, certificates, etc., away from the primary 
+ Luna HSM.
+ It also allows you to restore the backup device's contents onto more than one HSM Partition, 
+ if you wish to have multiple Partitions with identical contents.</p>
+        <p>HSM Partition archive backup command with the "<b>add</b>" option is a <i>non-destructive</i> process, where the contents of your HSM partition are copied to a matching partition on Luna Remote Backup HSM, adding new/changed objects to any that already exist on (that partition of) the backup device.</p>
+        <p>HSM Partition archive backup with the "<b>replace</b>" option is a <i>destructive</i> process (destructive to any material 
+ that might already exist on the target Backup partition - it does not affect 
+ objects on the Partition that is being backed-up).</p>
+        <p>Backup for Luna SA 5 using Luna Remote Backup HSM performs backup and restore to-and-from individual partitions.</p>
+        <p>The Luna Remote Backup HSM is a separately powered unit that can connect to the HSM in one of two ways:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>locally, using Luna SA appliance's USB port</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>remotely, via USB connection to a backup workstation with secure network connection to Luna SA.</p>
+        <p>The Small Form Factor USB Backup Device is a SafeNet eToken 7300 that connects to the PED Key port on a Luna PED, which connects to the HSM remotely, via Remote PED connection.</p>
+        <p>Luna SA sees the Luna [Remote] Backup HSM or the Small Form Factor USB Backup as an additional crypto slot or slots. </p>
+        <p>Small Form Factor backup and restore are performed from a Luna Client, using the lunacm:&gt;archive commands. SFF is not supported by Luna&#160;SA lunash:&gt; partition backup commands.</p>
+        <p>The backup operation looks a lot like the restore operation, because they are basically the same event, merely in different directions. The Luna [Remote] Backup HSM is described below. The Small Form Factor USB Backup is described at <a href="small_form_backup_about.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Small Form Factor Backup"</span></a>.</p>
+        <h3>Connect</h3>
+        <p>For local backup, connect Luna [Remote] Backup HSM to a power source, and via USB cable to the Luna SA USB port.</p>
+        <p>For remote backup, connect Luna [Remote] Backup HSM to a power source, and via USB cable to a USB port on your computer.</p>
+        <p>In both cases, the cable attaches to the port on the back panel of Luna [Remote] Backup HSM, which requires a mini-USB at that end of the cable (similar cable as used to connect computers to cameras, older cellphones, etc.) </p>
+        <p>
+            <img src="../g5-back_plug_cables_411x288.png" style="width: 411;height: 288;" />
+        </p>
+        <p>&#160;</p>
+        <p><b>For PED-authenticated HSMs</b> - At the front panel, connect the Luna&#160;PED, using the supplied cable between the micro-D subminiature (MDSM) receptacle on top of the PED, and the matching MDSM receptacle on the front panel of Luna Remote Backup HSM (the receptacle labeled "PED").</p>
+        <p>&#160;</p>
+        <p>
+            <img src="../g5_ped2_connect_451x421.png" style="width: 451;height: 421;" />
+        </p>
+        <p>&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span><big>External HSMs (Token-style and G5 style)</big> <br />You can  connect a Luna DOCK2 card reader for limited use with Luna Backup tokens  tokens (legacy G4 (generation 4) PCMCIA removable token-format HSMs). The removable-token backup HSM was used to backup legacy Luna SA 4.x HSMs and can be connected to Luna&#160;SA 5.x to restore the legacy key material as part of a one-way migration. <br /><br />You can connect  the more modern Luna&#160;G5 HSM as an externally connected PKI slot, for use in the PKI Bundle option. Some customers use this arrangement to hold a root CA. &#160;<br /><br />The following caveats apply:<br />1) The "token backup" commands can see and manage only the backup device, and NOT PKI devices. &#160;<br /><br />2) The "token pki" commands can  see and manage only the PKI devices, and NOT backup devices. &#160;<br /><br />3) The PKI device must  use PED authentication only, to be deployed. &#160;<br /><br />4) Luna&#160;SA 5.x supports three (3) USB connections at one time, and thus three (3) backup/PKI devices. For example, you could attach one backup token and two PKI tokens, or three PKI tokens.  &#160;<br /><br />5) The "token pki update" commands  update the capability and firmware for PKI devices. <br /><br />6) The process to move keys off G4 token HSMs (Luna CA4) is to migrate the keys to a K6 HSM (either the K6 inside Luna&#160;SA, or the standalone K6 (Luna&#160;PCI-E 5.x inside a host computer)) and then to Luna&#160;G5. Cloning between G4 and G5 devices is not supported.</p>
+        <h3>Source and Target - full or partial</h3>
+        <p>Issue the command "partition archive backup...". </p>
+        <p>Identify the partition to be backed up (source), and the partition that will be created (or added to) on the Backup HSM - the Token Partition Name. </p>
+        <p>Specify whether to <b>add</b> only unique objects (objects that have not previously been saved onto the target partition), or to completely <b>replace</b> the target partition (overwrite it). </p>
+        <p>If you are using Luna Shell (lunash:&gt;)&#160;on Luna&#160;SA, the command is:</p><pre xml:space="preserve"> lunash:&gt;partition backup -partition &lt;name&gt; -tokenPar &lt;name&gt; [-password &lt;password&gt;] [-tokenPw &lt;password&gt;] [-domain &lt;domain&gt;] [-add] [-replace] [-force]</pre>
+        <p class="code">&#160;</p>
+        <p>If you are using lunacm:&gt; on a workstation, the command is: </p><pre xml:space="preserve"> lunacm:&gt; partition archive backup -slot &lt;slot&gt; -pas &lt;password&gt; -par &lt;backup partition&gt; &#160;&#160;
+</pre>
+        <p>The  lunacm:&gt; version assumes that the target partition already exists with the appropriate domain, while the lunash:&gt; version expects you to provide the domain, or prompts for it if it is not provided. </p>
+        <h3>Domain</h3>
+        <p>If the target partition exists on the Backup HSM, then it must already share its partition domain with the source partition.</p>
+        <p>If the target partition is being created, then it takes the domain of the source partition. </p>
+        <p>Multiple partitions, with different domains, can exist on a single Luna [Remote] Backup HSM. </p>
+        <p>As with backup operations, restore operations can take place only where the source and target partitions have the same domain. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Full/replace backup or restore creates a new target partition with the same domain as the source partition. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Partial (additive/incremental) backup or restore requires the existing source and target partitions to have the same domain before the operation can start. </p>
+        <p>No cross-domain copying (backup or restore) is possible - there is no way to "mix and match" objects from different domains.</p>
+        <h3>Replace or Append</h3>
+        <p>If a matching target partition exists and the source partition is being incrementally backed up - choosing the "add" option in the command - then the target partition is not erased. Only source objects with unique IDs are copied to the target (backup) partition, adding them to the objects already there. </p>
+        <p>If a matching target partition exists and the source partition is being fully backed up - choosing the "replace" option in the command - then the existing partition is erased and a new one created. </p>
+        <h3>PED or Password</h3>
+        <p>Luna [Remote] Backup HSM creates a partition with matching authentication type to the Luna HSM partition that is being backed up.</p>
+        <p>That does not work in the opposite direction, however. Luna [Remote] Backup HSM can restore a partition (or contents of a partition) only to a Luna HSM of matching authentication type. </p>
+        <p>You cannot mix partition authentication types on one backup device. That is, if you have a PED-authenticated HSM and a Password-authenticated HSM, you require two Luna [Remote] Backup HSMs  in order to have a backup of each HSM's partitions. There is no possibility of backing 
+ up data from a higher-security device (Trusted Path, PED-authenticated, FIPS-3) onto a lower-security 
+ device (Password protected, FIPS-2). Normally this is not a concern because a given installation is likely to employ all Luna HSMs of the same authentication type.</p>
+        <p>However, for HSMs of the same authentication type, you could backup (or restore) partitions from different HSMs onto a single Luna Remote Backup HSM, as long as there is sufficient room. Given that the type matches, the authentication (domain) is handled at the partition level.</p>
+        <h3>Compatibility with Other Devices</h3>
+        <p>Backup can co-exist with PKI Bundle operation. That is, multiple devices can be connected simultaneously to the Luna appliance (three USB connectors). Thus, you could connect a Luna Remote Backup HSM, a Luna DOCK 2 (with migration-source tokens in its reader slots), and a Luna G5 HSM to the three available USB connectors on the Luna SA.</p>
+        <h3>Remote Backup and Restore</h3>
+        <p>Remote backup and restore follow the rules for local backup and restore, with some additional considerations.</p>
+        <p>When used in Remote mode, Luna Remote Backup HSM is connected via USB to a workstation computer. That computer must be running the service to set up a secure link between the Backup HSM and the HSM associated with the remotely located Luna appliance. </p>
+        <p>As of Luna HSM 5.2 release, it is convenient to use a single Luna PED [Remote] for PED interaction with both local and remote HSMs.</p>
+        <h3>Detailed Instructions to Backup and Restore...</h3>
+        <p>. . . are on this page <a href="backup_your_hsm_partition_locally.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Backup your HSM Partition Locally"</span></a>.</p>
+        <p>. . . and  <a href="restore_your_hsm_partition_locally.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Restore Your HSM Partition - Locally "</span></a></p>
+        <p>. . . and  <a href="backup_hsm_partition_remotely_with_rbs.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Backup your HSM Partition Remotely"</span></a>.</p>
+        <p>. . . and   <a href="restore_your_hsm_partition_remotely.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Restore Your HSM Partition Remotely"</span></a></p>
+        <h3>Additional Operational Questions</h3>
+        <h5>Question</h5>
+        <p> Is Luna Remote Backup HSM capable of backing up multiple Luna HSMs or is it a one-to-one relationship? For example, if we had two Luna SA devices each with two partitions, could we backup all four partitions to a single Backup HSM? If yes, do they need to be under the same domain?</p>
+        <h5>Answer</h5>
+        <p>One Luna Remote Backup HSM can back up multiple Luna SAs.  The domains on those Luna SAs do not need to match each other (although they can, if desired), since domains can be partition-specific.  The only domains that must match are those on any given Luna SA partition and its backup partition on the Luna Remote Backup HSM. With that said, the limit on quantity of backup of partitions from multiple appliances is the remaining space available on the Backup HSM.</p>
+        <h5>Question</h5>
+        <p>Can a Luna Remote Backup HSM keep multiple backups of a single partition? For example, could we perform a backup of a partition one month and then back it up again next month without overwriting the previous month?</p>
+        <h5>Answer</h5>
+        <p>Yes, you can do this as long as each successive backup partition (target) is given a unique name.</p>
+        <h5>Question</h5>
+        <p>Is Small Form Factor USB Backup capable of backing up multiple Luna HSMs or partitions? </p>
+        <h5>Answer</h5>
+        <p>One Small Form Factor USB Backup device can back up one Luna HSM partition. Backup operations are overwrites, not incremental. To use the same Small Form Factor USB Backup device to backup a different HSM partition, you lose any data or objects that were already on the SFF Backup device.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/backup/backup_and_restore_in_general.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

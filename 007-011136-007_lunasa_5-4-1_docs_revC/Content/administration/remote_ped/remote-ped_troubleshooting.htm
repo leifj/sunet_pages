@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Remote PED">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Troubleshooting Remote PED</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/remote_ped/remote-ped_troubleshooting.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="remote_ped.htm">Remote PED</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Troubleshooting Remote PED</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Troubleshooting Remote PED</h2>
+        <p>Here are ways to recognize and fix some problems that you could encounter. </p>
+        <h3>Ped connect can fail if IP is not accessible</h3>
+        <p>On a system with two network connections, if pedserver attempts to use an IP address that is not accessible externally, then command <span class="code">lunacm:&gt;ped connect</span> can fail.</p>
+        <p>Here is an example:</p>
+        <p>This host computer is accessible through 192.20.10.175&#160;and has an additional IP address 192.168.72.1 (that is not accessible). 
+&#160;
+</p>
+        <p class="code">Ethernet adapter VMware Network Adapter VMnet8:  <br />Connection-specific DNS Suffix . : <br />IP Address. . . . . . . . . . . . : 192.168.20.1 <br />Subnet Mask . . . . . . . . . . . : 255.255.255.0 <br />Default Gateway . . . . . . . . . :  <br /><br />Ethernet adapter Local Area Connection:  <br /><br />Connection-specific DNS Suffix . : <br />IP Address. . . . . . . . . . . . : 172.20.10.175  <br />Subnet Mask . . . . . . . . . . . : 255.255.255.0 <br />Default Gateway . . . . . . . . . : 172.20.10.10  <br /><br />Ethernet adapter Wireless Network Connection:  <br /><br />Media State . . . . . . . . . . . : Media disconnected  <br /><br />Ethernet adapter VMware Network Adapter VMnet1:  <br /><br />Connection-specific DNS Suffix . :<br /> IP Address. . . . . . . . . . . . : 192.168.72.1  <br />Subnet Mask . . . . . . . . . . . : 255.255.255.0 <br />Default Gateway . . . . . . . . . : 
+&#160;
+</p>
+        <p>Command <span class="code">lunacm:&gt; pedserver -m show</span> returns 
+&#160;
+</p>
+        <p class="code">Ped Server Version 1.0.5 (10005) <br />Ped Server launched in status mode.  <br /><br />Server Information: <br />Hostname: noi1-502192 <br />IP: 192.168.72.1 <br /> Firmware Version: 0.0.0-0 <br />PedII Protocol Version: 0.0.0-0 <br />Software Version: 1.0.5 (10005)  <br /><br />Ped2 Connection Status: Disconnected <br />Ped2 RPK Count 0 <br />Ped2 RPK Serial Numbers (none)  <br /><br />Client Information: Not Available  <br /><br />Operating Information: <br />Server Port: 1503 <br />External Server Interface: Yes <br />Admin Port: 1502 <br />External Admin Interface: No  <br /><br />Server Up Time: 5 (secs) <br />Server Idle Time: 5 (secs) (100%) <br />Idle Timeout Value: 1800 (secs)  <br /><br />Current Connection Time: 0 (secs) <br />Current Connection Idle Time: 0 (secs) <br />Current Connection Total Idle Time: 0 (secs) (100%)<br /> Total Connection Time: 0 (secs) <br />Total Connection Idle Time: 0 (secs) (100%) </p>
+        <h3>What to do</h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that Pedserver is listening on the IP address that is accessible from outside. &#160;&#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If that condition (step 1) is not the case then disable the network connection on which Pedserver is listening. &#160;&#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Restart Pedserver and confirm that Pedserver is listening on the IP address that is accessible from outside.</p>
+        <p>&#160;</p>
+        <h3>VPN</h3>
+        <p>If pedserver is running on a laptop that might change location, it can happen that the active network address changes, even though the laptop is not shutdown. An example might be if you unplugged from working at home, over the corporate VPN, commuted to the office, and reconnected the laptop there. The IP address that your laptop is assigned when joining directly to the office network would be different from the address that had been assigned by the VPN server. </p>
+        <p>In that situation, pedserver is still configured with the address you had while using the VPN.That pedserver session cannot work with the new address that is now assigned to your laptop. Running pedserver -mode stop does not completely clear all settings, so running pedserver -mode start again fails with a message like "Startup failed. : 0x0000303 RC_OPERATION_TIMED_OUT".<br /></p>
+        <h3>What to do</h3>
+        <p>To resolve this problem, </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Close the current Command Prompt window. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Open a new Command Prompt. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Verify the current IP address with command <b>ipconfig</b> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Run <b>pedserver -mode start</b> <b>-ip</b> &lt;new-ip-address&gt; <b>-port</b> &lt;port-number&gt; and it should now succeed. </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/remote_ped/remote-ped_troubleshooting.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

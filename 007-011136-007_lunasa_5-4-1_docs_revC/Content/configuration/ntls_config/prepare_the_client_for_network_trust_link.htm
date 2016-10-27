@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Prepare the Client for Network Trust Link</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/ntls_config/prepare_the_client_for_network_trust_link.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Prepare the Client for Network Trust Link</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter" data-mc-autonum=" &#160;&#160;"><span class="autonumber"><span> &#160;&#160;</span></span>
+            <br />Prepare the Client for Network Trust Link</h1>
+        <p>Network Trust Links (NTL) are secure, authenticated network connections 
+ between the Luna&#160;SA <a name="kanchor46"></a><a name="kanchor47"></a> and Clients. NTLs use two-way 
+ digital certificate authentication and TLS data encryption to protect 
+ sensitive data as it is transmitted between HSM Partitions on the Luna&#160;SA
+ and Clients.</p>
+        <p>On the Luna appliance, port 1792 is used.</p>
+        <p>NTLs consist of three parts:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Network Trust Link Service 
+ (NTLS) which resides on the Luna&#160;SA </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Network Trust Link Agents 
+ (NTLA) which are installed on Clients</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The Network Trust Link 
+ itself, a secure connection that is created between the NTLS and an authenticated 
+ NTLA.</p>
+        <p>The Luna&#160;SA can support up to 800 simultaneous NTL connections. There is some overhead in setting up each link, so if you are using a large number of links, it is best to stagger their starts, to avoid timeout.</p>
+        <p>The 800-connection capability is important for client applications that are multi-process based, rather than multi-threaded.</p>
+        <h2>Preparing the Client</h2>
+        <p>With 
+ the assistance of your local network administrator, you should already 
+ have prepared the Client system   
+ &#160;for network 
+ connection. This 
+ section is about introducing a Client to the HSM appliance, by creating 
+ and exchanging certificates, so that the two systems recognize each other. Therefore the Client needs all the standard network setup required of any networked 
+ computer 
+
+— 
+ contact your Network Administrator for assistance. This means:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Configure all the necessary 
+ IP settings (hostname, IP address, DNS, gateway, etc.) as appropriate 
+ to your network, and as applicable to your Client’s operating system.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Install an ssh client 
+ (the scp copy utility should already have been installed during the HSM 
+ software installation).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Start network services 
+ on your Client machine and verify that you have achieved a proper, working 
+ network configuration (by means of “ping” and other network utilities).</p>
+        <p>In order to connect a Client to an HSM Partition on the HSM appliance, 
+ you must first create a Network Trust Link (NTL) between them. An NTL 
+ consists of:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the Network Trust Link 
+ Agent (NTLA), a software library that resides on the Client</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the Network Trust Link 
+ Server (NTLS), the server software that manages Network Trust Links on 
+ the HSM appliance and,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the NTL itself, an encrypted, 
+ secure communications channel between the Client’s NTLA and the HSM appliance's 
+ NTLS.</p>
+        <p>Network Trust Links use digital certificates to verify the identities 
+ of connecting clients. During the initial HSM system configuration (earlier 
+ in this chapter), the Administrator generated a unique certificate that 
+ identifies the HSM appliance. Similarly, each Client must generate its 
+ own certificate that identifies it uniquely (next section). Both the Client 
+ and the HSM appliance use these certificates to verify the other’s identity 
+ before an NTL is created between them.</p>
+        <p>To create an NTL, the Client and HSM appliance must first exchange 
+ certificates. Once the certificates have been exchanged, the Client registers 
+ the Luna SA’s certificate in a trust list, and the Luna SA appliance, in 
+ turn, registers the Client’s certificate in its list of clients.</p>
+        <p>When the certificates have been exchanged and registered at each end, 
+ the NTL is ready to use. This is described in upcoming pages of this section.</p>
+        <p>The client software was installed for your operating system during the 
+ general installation (refer to the <span style="font-style: italic;">Luna SA
+ QuickStart Guide</span>). </p>
+        <p>You will perform the actions in this section:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the first time you commission 
+ a Luna SA appliance, and you require a client to exchange certificates with 
+ the HSM and to be assigned to an HSM Partition, and</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>whenever you have a new 
+ client that needs access to an HSM Partition.</p>
+        <h3>Import a Server Cert</h3>
+        <p>Choose the version   for 
+ your client computer's operating system: </p>
+        <p>See <a href="import_luna_sa_server_cert_onto_client_unix.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Import HSM Appliance Server Certificate onto Client (UNIX)"</span></a>. &#160;&#160;&#160;&#160;</p>
+        <p>OR &#160;&#160;</p>
+        <p>See <a href="import_luna_sa_server_cert_onto_client_windows.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Import HSM Appliance Server Certificate onto Client (Windows)"</span></a>. &#160;&#160;&#160;&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/ntls_config/prepare_the_client_for_network_trust_link.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

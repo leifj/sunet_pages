@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Public Key Infrastructure and Removable HSMs">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using Luna G5 or Token-format HSM with Luna SA Appliance</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/pki/configuring_and_managing_pki.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="pki.htm">Public Key Infrastructure and Removable HSMs</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Using Luna G5 or Token-format HSM with Luna SA Appliance</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Using Luna G5 or Token-format HSM with Luna SA Appliance</h2>
+        <p>Traditionally, Public Key Infrastructure (PKI) with SafeNet HSMs has been implemented using removable token-style (PCMCIA format) HSMs securely connected to a local workstation via a card reader. The portable HSM contained the PKI root certificate, and was inserted, read, updated, etc., as needed, then removed and returned to safe storage. This was a high-security, low-volume/low-speed environment and requirement.</p>
+        <p>This differed from the transaction-security world where HSMs needed to be network-available in order to perform and accelerate high volumes of secure transactions.</p>
+        <p>When those two applications began to converge, the Luna SA, with its model of large, fast, network-connected HSM providing multiple virtual-HSM (Partition) workspaces, was adapted to support the addition of token-format PKI HSMs (such as Luna PCM or Luna CA4).</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span><big>External HSMs (Token-style and G5 style)</big> <br />You can  connect a Luna DOCK2 card reader for limited use with Luna Backup tokens  tokens (legacy G4 (generation 4) PCMCIA removable token-format HSMs). The removable-token backup HSM was used to backup legacy Luna SA 4.x HSMs and can be connected to Luna&#160;SA 5.x to restore the legacy key material as part of a one-way migration. <br /><br />You can connect  the more modern Luna&#160;G5 HSM as an externally connected PKI slot, for use in the PKI Bundle option. Some customers use this arrangement to hold a root CA. &#160;<br /><br />The following caveats apply:<br />1) The "token backup" commands can see and manage only the backup device, and NOT PKI devices. &#160;<br /><br />2) The "token pki" commands can  see and manage only the PKI devices, and NOT backup devices. &#160;<br /><br />3) The PKI device must  use PED authentication only, to be deployed. &#160;<br /><br />4) Luna&#160;SA 5.x supports three (3) USB connections at one time, and thus three (3) backup/PKI devices. For example, you could attach one backup token and two PKI tokens, or three PKI tokens.  &#160;<br /><br />5) The "token pki update" commands  update the capability and firmware for PKI devices. <br /><br />6) The process to move keys off G4 token HSMs (Luna CA4) is to migrate the keys to a K6 HSM (either the K6 inside Luna&#160;SA, or the standalone K6 (Luna&#160;PCI-E 5.x inside a host computer)) and then to Luna&#160;G5. Cloning between G4 and G5 devices is not supported.</p>
+        <h3>Constraints</h3>
+        <p>To use an external PKI HSM&#160;directly with Luna SA 5 requires a Luna G5 HSM, or a Luna DOCK2 reader with Luna CA4 token-style HSM at firmware 4.8.7 or later.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Whether you are using the onboard HSM or not, in order to use a Luna SA&#160;for PKI bundle operations (using Luna/HSM CA4 or Luna/HSM PCM tokens in the appliance's card-reader) you <b>must</b> at least <b>initialize</b> the <b>onboard (K6) HSM</b> in order to use the connected HSMs. Any further preparation of the onboard HSM depends on how (or if) you intend to make use of it, but having the main HSM initialized before you attempt operations with PKI HSMs connected to it is a minimum requirement.</p>
+        <h3>PKI and HA</h3>
+        <p>You can combine the PKI bundle configuration (a Luna&#160;G5 HSM, or a Luna DOCK2 with inserted Luna CA4, connected to your Luna&#160;SA appliance) with the HA grouping functionality. That is, PKI can be part of HA redundancy and load balancing. However, by design, we do not support the assigning of two or more devices from the same Luna&#160;SA to one HA group. That is:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>while Luna&#160;SA supports multiple HSM partitions, you cannot combine two or more partitions from one Luna&#160;SA into an HA group, and </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>while you can attach a Luna&#160;G5 HSM or a Luna&#160;CA4 token HSM to a Luna&#160;SA, you cannot combine two (or more) HSMs or partitions, associated with a single Luna&#160;SA, into a single HA group.</p>
+        <p>In either case, that sort of arrangement would allow the Luna SA to become a potential single-point-of-failure, which defeats HA's redundancy. </p>
+        <p>Instead, if you have multiple Luna&#160;G5 HSMs or Luna&#160;CA4 token HSMs that you wish to use in PKI bundling with Luna&#160;SA, then you should connect each Luna&#160;G5 HSM or Luna&#160;CA4 HSM to a separate Luna&#160;SA. You should not attempt to include more than one Luna SA&#160;partition, or a partition and an externally connected HSM, in a single HA group. The HA logic recognizes HA member slots from different NTLA/NTLS links, only. This is by design.</p>
+        <h4>Slot Enumeration</h4>
+        <p>The client-side utility command "vtl listslot" shows all detected slots, including HSM partitions on the primary HSM, partitions on connected external HSMs, and HA virtual slots. Here is an example:</p><pre xml:space="preserve">bash-3.2# ./vtl listslot </pre><pre xml:space="preserve">Number of slots: 11  </pre><pre xml:space="preserve">The following slots were found: </pre><pre xml:space="preserve">Slot #   	Description   	        Label     	Serial #   	Status</pre><pre xml:space="preserve">slot #1 	LunaNet Slot 	        - 	        - 	        Not present</pre><pre xml:space="preserve">slot #2 	LunaNet Slot 	        sa76_p1   	150518006 	Present</pre><pre xml:space="preserve">slot #3 	LunaNet Slot 	        sa77_p1 	150475010 	Present</pre><pre xml:space="preserve">slot #4 	LunaNet Slot 	        G5179 	        700179008 	Present</pre><pre xml:space="preserve">slot #5 	LunaNet Slot 	        pki1 	        700180008 	Present</pre><pre xml:space="preserve">slot #6 	LunaNet Slot 	        CA4223 	        300223001 	Present</pre><pre xml:space="preserve">slot #7 	LunaNet Slot 	        CA4129 	        300129001 	Present</pre><pre xml:space="preserve">slot #8 	HA Virtual Card Slot    - 	        - 	        Not present</pre><pre xml:space="preserve">slot #9 	HA Virtual Card Slot 	- 	        - 	        Not present</pre><pre xml:space="preserve">slot #10 	HA Virtual Card Slot 	ha3 	        343610292 	Present</pre><pre xml:space="preserve">slot #11   	HA Virtual Card Slot   	G5_HA 	        1700179008    	Present</pre>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The deploy/undeploy of a PKI device  increments/decrements the Luna&#160;SA client slot enumeration list (slots appear or disappear from the list, and the slot numbers adjust for the change).&#160;When the PKI slot is temporarily not available (e.g., due to NTLS stop, unplugging of LAN/USB cable, power off, etc.), the slot list does not shift.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you attempt to perform actions (such as deployment)  that require PED operations, against a token/HSM, while other applications are accessing either the onboard HSM or another token in your appliance, then the PED-requiring operations might be noticeably slow. In general, try to reserve such maintenance operations for times when clients are not accessing the HSM or other token. The possible slowness is merely inconvenient and does no harm.</p>
+        <p>See also <a href="card_reader_and_token_hsms.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Card Reader (Luna DOCK 2) and Token-style HSMs"</span></a>. &#160;</p>
+        <p>Contact SafeNet Technical Support -- e-mail: support@safenet-inc.com or phone 800-545-6608 (+1 410-931-7520 International) for the relevant Key Migration document, which includes explicit instructions to migrate your cryptographic objects between different types of Luna HSM (generally from legacy models to current models of HSM).</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/pki/configuring_and_managing_pki.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

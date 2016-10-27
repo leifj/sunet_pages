@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.LunaPCI,Primary.notPCI,Primary.Online,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|[Step 4] Create a Partition">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Creating a Partition (PW) - About</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/initial_setup/about_creating_a_partition_pw.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="creating_partitions_placeholder.htm">[Step 4] Create a Partition</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Creating a Partition (PW) - About</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Prepare to Create a Partition (Password Authenticated)</h2>
+        <p><a name="kanchor42"></a>This section is HSM Partition setup for Password Authentication. The 
+ activities in this section are required in three circumstances.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>if you just prepared 
+ an HSM on the Luna appliance for the first time and must now create your 
+ first HSM Partition, or</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>if you have purchased 
+ a Luna appliance capable of supporting multiple HSM Partitions and you 
+ wish to create those additional partitions (this 
+ procedure creates one HSM Partition at a time, and you would need to repeat 
+ it once for each Partition, up to the number supported by your Luna HSM) 
+ 
+
+, 
+ or</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>if you have deleted an 
+ HSM Partition and wish to create a new one to replace it. </p>
+        <h3>About HSM Partitions on the Initialized HSM</h3>
+        <p>At this point, the Luna appliance should already:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>have its network settings 
+ configured by <a href="../appliance_config/gather_hsm_appliance_network_settings.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Configure the Luna Appliance for your Network"</span></a>, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>have its HSM Administrator 
+ assigned by <a href="about_initializing_a_password_authenticated_hsm.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Initializing a Password-Authenticated HSM"</span></a>. &#160;</p>
+        <p>Within the HSM, separate cryptographic work-spaces must be initialized 
+ and designated for clients. A workspace, or Partition, and all its contents 
+ are protected by encryption derived (in part) from its authentication. 
+ Only a Client that presents the proper authentication is allowed to see 
+ the Partition and to work with its contents.</p>
+        <p>In this section, you will:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Create an HSM Partition 
+ </p>
+        <h4>First, Establish a Connection to your Luna Appliance</h4>
+        <p>If you do not already have a connection open, connect your administration 
+ computer to the serial Console port of the Luna appliance and open a Terminal 
+ session, or use ssh to connect via the network.</p>
+        <h4>Then, Login as HSM Admin</h4>
+        <p>To create HSM Partitions, you must login to the Luna HSM as HSM Admin. 
+ At the lunash prompt, type:</p><pre xml:space="preserve">lunash:&gt; hsm login
+
+</pre>
+        <p>Authenticate as HSM Admin by supplying the appropriate HSM Admin password 
+ when you are prompted — 
+ this is generally preferable to typing the password on the command line, 
+ because your response to the password prompt is hidden from view by “*” 
+ characters. </p>
+        <p class="warning" data-mc-autonum="&lt;b&gt;WARNING!&lt;/b&gt; &#160;"><span class="autonumber"><span><b>WARNING!</b> &#160;</span></span>If you fail three consecutive login attempts 
+ as HSM Admin, the HSM is zeroized and cannot be used — 
+ it must be re-initialized. Re-initializing zeroizes the HSM contents. 
+ &#160;Zeroizing 
+ destroys all key material. &#160;Please 
+ note that the Luna HSM must actually receive some information before it 
+ logs a failed attempt, so if you just press [Enter] without typing a password, 
+ that is not logged as a failed attempt. Also, when you successfully login, 
+ the counter is reset to zero.</p>
+        <p>If you are not sure that you are currently logged in as HSM Admin, perform 
+ an ‘<span style="font-family: 'Courier New', monospace;">hsm logout</span>’.</p>
+        <p>Next, see <a href="create_partition_pw.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Create the Partition [PW]"</span></a>. &#160;&#160;&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/initial_setup/about_creating_a_partition_pw.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

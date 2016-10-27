@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="HSM5conditions.G5" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Product Overview|Luna HSM Product Introduction">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>About Luna G5</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#overview/product_line/about_luna_g5.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Product Overview</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="product_line.htm">Luna HSM Product Introduction</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">About Luna G5</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>About Luna G5</h2>
+        <p>Your Luna G5 Cryptographic Module or HSM is shipped in a pre-initialized state, 
+ as part of the factory quality assurance process. However, in that state 
+ the HSM is not associated with Security Officer [SO] or User Authentication 
+ Data, and is not ready to receive or to create and store objects. You 
+ must perform a one-time initialization procedure with the <code>lunacm</code>  
+ utility before the HSM can operate with an application program.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Initialization is meant to be performed only 
+ once on an HSM, and it erases any Authentication Data, data or token objects 
+ contained on the HSM. Once the HSM is in use, be sure to avoid mistakenly 
+ initializing it again. On the other hand, until you put the Luna G5 into service with actual 
+ production data, keys and certificates on it, you can reinitialize it 
+ and practice with a variety of optional settings, as many times as you 
+ wish.</p>
+        <p>
+            <img src="../../Resources/Images/g5_unit_alone.png" />
+        </p>
+        <h3>Sessions and Authentication &#160;&#160;</h3>
+        <p>When you access a Luna HSM or HSM Partition, by  providing the passwords (Password Authentication versions) or the PED Keys (PED Authentication versions), you open a session. That session remains open until you (or your application) explicitly close it.</p>
+        <p>Removing power from a Luna HSM immediately closes all sessions and causes all volatile data to disappear.</p>
+        <p class="notepad_note">Your application program might not be capable 
+ of logging into the Luna G5, on its own. If not, then the program expects 
+ to encounter the HSM already in a logged-in state. For the Luna G5 HSM to 
+ operate with such an application, you must log into the HSM or its User partition (sometimes referred to as a "token" in some cryptography documentation and discussions) using the 
+ <code>lunacm</code>  utility. Find it in your LunaClient directory, following 
+ installation. Every time you reboot your computer, you are required to 
+ log into the HSM with the <code>lunacm</code>  utility before you can resume 
+ using the Luna G5 with your application, unless the application is Luna HSM-aware. <br /></p>
+        <h3>Luna G5 as Encryption/Signing HSM or as RA HSM</h3>
+        <p>The Luna G5 HSM is shipped in different configurations. The Password Authenticated 
+ version can be factory configured as an Encryption and Signature HSM (token) 
+ or as a Registration Authority (RA) HSM. An RA HSM has the same capabilities 
+ as an Encryption and Signature HSM, with the additional ability to wrap 
+ private keys off the token for use by smart cards and other applications 
+ where multiple secure key generation and issuance is required.</p>
+        <h3>Develop a security plan and associated procedures</h3>
+        <p>Not every application environment will require rigorous security and 
+ paper-trail management, with respect to HSMs and their contents. However, 
+ in high-security environments where security and process auditing is mandated, 
+ you may be required to refer to a history of any sensitive materials and 
+ any systems associated with them -- who had access, what did they do, 
+ and when. Rehearse everyday operational activities, as well as maintenance 
+ and update activities (Authentication Data [password] update cycles, personnel 
+ changes, backups, logging) before implementation in your live environment. 
+ </p>
+        <p>Have all secure physical storage sites and all the related handling 
+ procedures prepared in advance. Log your receipt of the Luna hardware 
+ and then log all storage and handling events thereafter. In an operational 
+ environment, you should be able to refer back to a complete “paper trail” 
+ – an unbroken record that tracks the existence, storage, handling, and 
+ all transitions/hand-offs experienced by each HSM that you ever 
+ use. Once you take possession, never allow yourself or your organization 
+ to lose track, even briefly, of any of your HSMs or authentication devices (PED Keys, for PED-authenticated HSMs).</p>
+        <p>If you don't know where a PED Key is, you are not in control of it. If you don't know where it has been, you cannot assert that it has not been copied. If this is ever in doubt, consider resetting or changing passwords/PED Keys. Partition authentication (password, black PED Key if applicable) can be reset with resetPw. Partition or HSM authentication can be changed with changePw. Consider exercising these options if there is any chance an HSM's authentication might have been compromised. </p>
+        <p>Password integrity is as secure as your personnel choose to keep those passwords. </p>
+        <p>Physical authentication devices (PED Keys) are as secure as your security policies and procedures and their enforcement. </p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#overview/product_line/about_luna_g5.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Backup and Restore HSMs and Partitions">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>About HSM Backup - Local and Remote</title>
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/backup/about_backup_local_and_remote.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="backup.htm">Backup and Restore HSMs and Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">About HSM Backup - Local and Remote</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>About HSM Backup - Local and Remote</h2>
+        <p>In many cases, it is sound practice to back up the contents of your Luna SA&#160;HSM, in particular the contents of HSM&#160;partitions. </p>
+        <p>If the important objects are static, then a single backup is sufficient. If important objects change frequently, or if it is important to be able to revert to an identifiable date/time/condition/content, then regular backups are a necessity. </p>
+        <h3>The Backup HSM</h3>
+        <p>Luna HSM 5.x backup is performed with the Luna Remote Backup HSM. Note that the word "Remote" in that product name merely denotes a capability. The Luna Remote Backup HSM also works fine as the local backup device for Luna HSM, and is the primary device supported for either local or remote backup of Luna SA.</p>
+        <p>The options for backup of primary/source Luna HSMs are:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><strong>Local backup of any Luna HSM</strong>, where all components are co-located. This is a possible scenario with all Luna HSMs, but is more likely with direct-connect, local-to-the-client HSMs such as Luna&#160;PCI-E. It is unlikely for Luna SA, simply because Luna SA normally resides in a server rack, distant from its administrators.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><strong>Local backup of Luna SA</strong>, where Luna SA is located remotely from a computer that has the Luna Backup HSM. This is one of the likely scenarios with Luna SA, but requires that the administrator performing backup must have client authentication access to all Luna&#160;SA partitions.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><strong>Remote backup of any Luna&#160;HSM</strong>, where the Luna HSM is located remotely from the computer that has the Luna Backup HSM. This scenario  requires that the administrator of the Luna Backup HSM's host computer must connect (via SSH or RDP) to the clients of each HSM partition that is to be backed up. The client performs the backup (or restore) under remote direction.</p>
+        <p>In local mode, you connect the Luna [Remote] Backup HSM directly to Luna SA via USB. That is, local backup is local to the HSM appliance being backed-up, not necessarily local to the administrator who is directing the process, who might be far away.</p>
+        <p>For remote backup, you connect the Luna [Remote] Backup HSM  via USB to a computer running vtl and the driver for the device. Backup and restore are then performed over the secure network connection. For PED-authenticated Luna SA, you must have a copy of the appropriate red (domain) PED Keys, from the Luna SA, to use with the Backup HSM, in order to perform the copy /cloning (backup and restore) operation between the HSMs. </p>
+        <h3>Local Backup of Co-Located HSMs</h3>
+        <p>The following diagram depicts the elements and connections of the local backup (and restore) operation, where everything is in one room.</p>
+        <p>
+            <img src="../../Resources/Images/remote_vs_local_backup_colocated_00-b_callouts.png" />
+        </p>
+        <p>&#160;</p>
+        <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <tbody>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">1 </th>
+                    <td class="BodyD-Column1-Body1">Lunacm on Client (Host) System sees the primary and backup slots and controls the backup/restore operation</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">2 </th>
+                    <td class="BodyD-Column1-Body1">Backup HSM is a slot visible to "Client (Host) System" when Client (Host) System runs lunacm</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">3 </th>
+                    <td class="BodyD-Column1-Body1">Primary HSMs are slots visible to "Client (Host) System" when Client (Host) System runs lunacm</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyB-Column1-Body1">4 </th>
+                    <td class="BodyA-Column1-Body1">Every slot on the backup must have same domain (red PED Key) as matching slot on the primary HSMs </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>For Luna SA, the above would be a minority scenario.</p>
+        <p> The other two backup and restore options: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Local backup of a distant Luna&#160;SA</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Remote backup of any Luna HSM</p>
+        <p>... require that PED operations be performed remotely. For that reason, HSMs must be prepared (locally) in advance by having orange Remote PED Keys created and matched with each HSM.</p>
+        <h3>Local Backup of a Distant Luna&#160;SA</h3>
+        <p> The diagram below summarizes the elements and setup for backing up partitions of a distant Luna SA HSM.</p>
+        <p>For the example, we assume that the System Administrator for the Luna SA appliance is also the person doing the backup, so his laptop has LunaClient software installed, including the Luna&#160;SA and Remote PED options. As well, a Luna PED (Remote) and a Luna Backup HSM are connected. The Admin is in contact with the Luna&#160;SA appliance by SSH session, and has performed the certificate exchange and registration to make the System Admin laptop a Client of each Luna&#160;SA partition.</p>
+        <p>
+            <img src="../../Resources/Images/local_backup_of_distant_hsm.png" />
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');margin-left: 0;margin-right: auto;" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" style="width: 19px;">
+            </col>
+            <col class="Column-Column1">
+            </col>
+            <tbody>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">1 </th>
+                    <td class="BodyD-Column1-Body1"> "System Admin"  <strong>is</strong> a client of Luna&#160;SA, and must have client access to each partition being backed up. In this scenario, System Admin must have black PED Keys and passwords for all client partitions.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">2 </th>
+                    <td class="BodyD-Column1-Body1">Lunacm on "System Admin" laptop (2) sees the primary  and backup slots and controls the backup/restore.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">3 </th>
+                    <td class="BodyD-Column1-Body1"> Luna&#160;SA partition is a slot visible to "System Admin" when System Admin runs lunacm.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">4</th>
+                    <td class="BodyD-Column1-Body1">Every slot on the backup must have same domain (red PED Key) as matching slot on the primary HSMs. We could have shown four different red PED Keys for the four slots (partitions) we are showing in the example, but if it is acceptable to your security protocol, you could have one common domain, re-used for all partitions, or any number that worked for you. The important consideration is that whatever domain situation exists on the primary HSM must be matched on the Backup HSM.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">5 </th>
+                    <td class="BodyD-Column1-Body1"> Backup HSM is a slot visible to "System Admin" when System Admin runs lunacm.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">&#160;</th>
+                    <td class="BodyD-Column1-Body1">PedClient runs on the Luna&#160;SA when it needs to access the Remote PED via pedserver on the System Admin laptop</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">&#160;</th>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Vtl on the laptop allows it to generate and trade certificates with Luna SA, to create an NTLS&#160;link</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">&#160;</th>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Because the laptop views the backup/restore operation in this scenario as a local transaction, between two slots visible to lunacm on the laptop, RBS is not needed.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyB-Column1-Body1">&#160;</th>
+                    <td class="BodyA-Column1-Body1">This scenario avoids the complication of an intermediary computer (as would be needed for true Remote Backup), but at the cost of giving the authentication keys for all client partitions to an administrator. Your security protocol determines whether this is acceptable.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Preparing (configuring) for Remote Backup with Remote PED</h3>
+        <p>On the premise that, if you are going to the trouble of performing backup and restore operations remotely, then you are probably also performing Luna SA administration and performing HSM and partition authentication remotely, the following diagram shows the Luna SA and related PED Keys being prepared for the remote operation.</p>
+        <p>&#160;</p>
+        <p>
+            <img src="../../Resources/Images/luna-sa-5_prep_for_remote-ped.png" />
+        </p>
+        <p>Note that in the above diagram we indicate that the admin session to the Luna SA is "local". You could administer remotely, but this operation nevertheless requires a local PED connection to the Luna SA and someone there to insert PED&#160;Keys and press buttons on the PED keypad, so we depict the most likely connection situation - one person doing all jobs at one location. Once the HSM has been matched to an orange Remote PED Key, all future authentications can be performed with Remote PED, and the HSM can safely be shipped to its distant location.</p>
+        <h3>Remote Backup </h3>
+        <p>In the following  diagram, the preparation (above) has been done, and suitable orange and red PED Keys have the appropriate secrets imprinted, to allow Remote PED connection and Remote (or local) Backup (cloning) respectively. </p>
+        <p>&#160;</p>
+        <p>
+            <img src="../../Resources/Images/remote-backup_via_client_callouts_1b.png" />
+        </p>
+        <p>&#160;</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');margin-left: 0;margin-right: auto;" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" style="width: 28px;">
+            </col>
+            <col class="Column-Column1">
+            </col>
+            <tbody>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">1 </th>
+                    <td class="BodyD-Column1-Body1">"Client (Host) System" (<i>1a</i>) is a client of Luna&#160;SA, but "System Admin" (<i>1b</i>) is <strong>not</strong> a client of Luna&#160;SA.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">2 </th>
+                    <td class="BodyD-Column1-Body1">Lunacm on "Client (Host) System" (<i>2a</i>) sees the primary (<i>2b</i>) and backup (2c) slots and controls the backup/restore.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">3 </th>
+                    <td class="BodyD-Column1-Body1">Each Luna&#160;SA (<i>3a</i>) partition is a slot visible to a "Client (Host) System" (<i>3b</i>) when Client (Host) System runs lunacm.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">4 </th>
+                    <td class="BodyD-Column1-Body1">Every slot on the backup (<i>4a</i>) must have same domain (red PED Key) as matching slot on the primary HSMs (<i>4b</i>).</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">5 </th>
+                    <td class="BodyD-Column1-Body1">Every primary HSM slot (partition) that is to be backed up or restored must be in login or activated state (black PED Keys -(<i>5</i>)), so that the Client (Host) System can access it with lunacm:&gt; backup or restore commands.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">6 </th>
+                    <td class="BodyD-Column1-Body1">Backup HSM (<i>6a</i>) is a slot visible to "Client (Host) System" (<i>6b</i>) when Client (Host) System runs lunacm.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">&#160;</th>
+                    <td class="BodyD-Column1-Body1">Lunacm is on both the Client (Host) System and the Admin System, but is run on Client (Host) System to launch and manage the backup and restore activity.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">&#160;</th>
+                    <td class="BodyD-Column1-Body1">
+                        <p>PedClient is needed on both the Client (Host) System and the Admin System, as well as on any Luna&#160;SA,</p>
+                        <p>PedClient is needed on any host that must reach out to a pedserver instance and a Remote PED.</p>
+                        <p>PedClient instances can also communicate with each other to facilitate RBS</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">&#160;</th>
+                    <td class="BodyD-Column1-Body1">PedServer must reside (and run, waiting for calls) on any computer connected to a Remote PED.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyE-Column1-Body1">&#160;</th>
+                    <td class="BodyD-Column1-Body1">RBS is required on the computer connected to the Luna Remote Backup HSM. RBS is not needed on any other computer in the scenario.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <th class="BodyB-Column1-Body1">&#160;</th>
+                    <td class="BodyA-Column1-Body1">
+                        <p>This scenario adds the "complication" of an intermediate computer "Client (Host) System" to broker the Remote Backup of Luna HSM partitions. That could be a special-purpose computer, or it could simply mean that the Admin on the laptop with the Remote Backup HSM is given remote access to each client that normally uses a Luna HSM partition.<br />The tradeoff is that those clients already have access to their registered partitions, so there is no need for the Remote Backup HSM admin to have client access (PED Keys) for those partitions. <br />Your security protocol dictates which scenario is appropriate for you. </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>In the Remote Backup scenario, above, you could have as many as three different computers (we depict two for our example) connecting to the Luna&#160;SA: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>one to run the ssh administrative connection to Luna Shell (lunash:&gt;) on the Luna SA&#160;appliance </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>one to run the Remote PED server, with the Luna PED2 (in remote mode) connected via USB to the computer and separately connected to the mains electrical power source</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>one to run a client session with vtl and the Luna Remote Backup driver, and with the Luna Remote Backup HSM with its own local Luna PED attached (<span style="color: #f39108; font-weight: bold; font-size: 14pt;">*</span> see below)</p>
+        <p>If you prefer to have all the connections and operations running from a single computer (the "Admin System" in the examples) then you would choose the Local Backup of a distant HSM, which uses Remote PED, but does not use Remote Backup Service.</p>
+        <p>As noted previously, the <span class="MCExpanding MCExpanding_Open expanding "><span class="MCExpandingHead MCExpandingHotSpot expandingHead  MCExpandingHotSpot_" title="Expanding Text">orange PED Keys</span><span class="MCExpandingBody expandingBody "> [ Remote PED Keys or RPK ]</span></span> contain a Remote PED Vector (RPV) that matches the RPV inside the Luna SA HSM. It is the presence of that RPV&#160;at both ends that allows the connection to be made between the HSM and the Remote PED.</p>
+        <p>At the same time, the Luna SA and the Luna Remote Backup HSM must share the same cloning domain, in order for backup and restore (cloning) operations to take place between the two HSMs. Therefore, red PED Keys with that cloning domain must be available for both the PEDs.</p>
+        <p>As of Luna HSM 5.2, Luna HSMs use Remote Backup Service (RBS) to facilitate Remote Backup. <br />Where formerly we ran the remote backup from the "vtl" utility, we now use vtl only for the certificate exchange that makes a computer a client of a distant Luna SA partition.</p>
+        <h3>Remote Backup of Password-Authenticated HSM vs PED-Authenticated HSM</h3>
+        <p>The general procedure is the same for Password-authenticated and for PED-authenticated HSMs. The above description illustrates Backup of PED-authenticated HSMs. Backup a Password-authenticated Luna HSM in exactly the same way as a PED-authenticated Luna HSM (Luna PCI-E or Luna SA).</p>
+        <p>When you initialize the backup device you are asked whether you want to initialize it for Password-authenticated or PED-authenticated backups. The remainder of the Backup and Restore actions are the same for either type of HSM, except you are using passwords with the Password-authenticated HSM (and the Backup HSM) instead of Luna PED and PED Keys for the various roles.</p>
+        <p>&#160;</p>
+        <p>See <a href="prepare_rbs_for_backup-restore.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Prepare RBS to Support Backup / Restore"</span></a> followed by <a href="backup_hsm_partition_remotely_with_rbs.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Backup your HSM Partition Remotely"</span></a>.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/backup/about_backup_local_and_remote.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Remote PED">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Configuring Remote PED</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/remote_ped/sa_configuring_remote_ped.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="remote_ped.htm">Remote PED</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Configuring Remote PED</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Configuring Remote PED</h2>
+        <p>Luna&#160;PED is a Luna accessory device that allows compatible Luna HSMs to securely store their authentication data on PED Keys (specially configured USB tokens), to retrieve that data when needed, and to modify the content of PED Keys for security and operational purposes. All of the Luna&#160;PED&#160;and PED&#160;Key actions can be accomplished with the Luna PED directly connected to the Luna HSM, and powered by that HSM. Sometimes that direct connection is inconvenient, due to location of the HSM and of the personnel who are charged with controlling and managing the HSM. In such circumstances, it can be useful to employ a Luna&#160;PED with Remote capability. </p>
+        <p>Remote PED is supported (and requires installation/configuration) in two parts:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>PEDClient, which runs on the Luna SA appliance and allows the HSM to seek PED Key data from a remotely located Luna&#160;PED, via &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>PEDServer, which runs on a workstation, laptop, or server computer to which a Remote-capable Luna&#160;PED is USB connected.</p>
+        <p>PEDClient is part of the LunaClient software installation for every type of Luna&#160;HSM except Luna&#160;SA (because PEDClient is already present within the Luna SA appliance).</p>
+        <p>PEDServer is installed if the "Remote PED" option is selected during Luna Client software installation, and includes the PedServer.exe executable, along with the SafeNet Luna&#160;PED device drivers. If the target computer is intended to be a PEDServer, but is not going to be a Client to your Luna HSM, then you do not need any of the other LunaClient software; you can use LunaClient installer to install only the Remote PED option. </p>
+        <h3>You will need:</h3>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Your HSM host, configured as described elsewhere in this document, with PEDClient available, and with its own working network connection.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A suitable laptop, workstation, or server computer, for PEDServer, with a supported operating system (see the Customer Release Notes for supported platforms) </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Sufficient privileges on the PEDServer computer, depending on platform and location (local network, WAN, VPN...)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Current LunaClient installer (LunaClient.msi)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Luna PED (Remote capable) V.2.5.0-2 or newer (see the bottom of the PED's Select Mode menu for the version)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The power block and cord that accompanied your Remote PED, and the USB-A to USB-Mini-b cable</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>PED Keys.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A network connection.</p>
+        <h3>Configure the PEDClient and PEDServer</h3>
+        <p>This configuration takes place in two locations: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>on the computer that has the HSM, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>on the computer that is to have the Luna Remote PED.</p>
+        <h4>HSM-Side</h4>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Install/configure your HSM host as described previously. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>With a Luna&#160;PED connected locally, initialize a Remote PED Vector for the HSM and for an orange PED Key. </p>
+        <p class="listLevel1">By means of your responses to the PED prompts, you can choose to have the HSM generate a new RPV to be held by both the HSM and a new orange PED Key, or you can choose to re-use an RPV already on an existing orange PED Key, and imprint that on the HSM. </p>
+        <p class="listLevel1">As always, we suggest that you make at least one extra copy of the Remote PED Key. </p>
+        <p class="listLevel1">Type: <code>hsm ped vector init</code> &#160;&#160;and respond to the Luna PED prompts.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Bring an orange PED Key, containing the RPV for this HSM, from the HSM to the location of the Remote PED server.</p>
+        <h4>PEDServer-Side</h4>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Install LunaClient software, selecting "Remote PED" option - for the purposes of Remote PED, any additional LunaClient installation choices are optional for this host system. <br /><br /><img src="../../Resources/Images/install_select_remote-ped_option.png" /> &#160;&#160;<br /><br /></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Luna PED should not yet be connected to the PEDServer computer.<br /><br /><img src="../../Resources/Images/driver_install_confirm.png" /> <br /><br />Select [ Install ] when prompted to install the driver. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Reboot the computer to ensure that the LunaPED driver is accepted by the operating system. This is not required for Windows Server Series.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Connect the Remote Capable Luna PED  to AC power, using the supplied power block, and to the PEDServer computer, using the supplied USB-A to USB-mini-b cable.</p>
+        <p class="listLevel1">Windows acknowledges the new device.<br /><br /><img src="../../Resources/Images/device_driver_installed_after_ped_plugged_418x141.png" style="width: 418;height: 141;" /> &#160;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Luna&#160;PED performs its start-up sequence, and settles into Local Mode, by default.</p>
+        <p class="listLevel1">Press the [ &lt; ] key to access the "Select Mode" menu.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Press [ 7 ] to select "Remote PED" mode.</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Ensure that your organization's Firewall does not block communication between PEDClient and PEDServer. If switching off the firewall for Home and Public Network is not an option, see the Troubleshooting section below.</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Open a Command Prompt window. </p>
+        <p class="listLevel1">If PedServer.exe attempts to access the pedServer.ini file in c:\Program Files\.... that is treated as an action in a restricted area in some versions of Windows. In that case, you should open the Command Prompt as Administrator, rather than as your normal user. To do so, right-click the Command Prompt icon and, from the pop-up menu, select <b>Run as administrator</b>.<br /><br /> <img src="../../Resources/Images/run_win7_console_as_admin.png" /> </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Windows Server 2008 launches Command Prompt as Administrator, by default, so no special steps are necessary. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>By default, PedServer.exe attempts to access pedServer.ini if such a file exists in the expected location. If it does not exist, then default values are used by PedServer.exe until you perform a "-mode config -set" operation to create a pedServer.ini.</p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Go to the installed LunaClient directory. </p>
+        <p class="listLevel1">Type <code>cd "\Program Files\SafeNet\LunaClient"</code> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="10."><span class="autonumber"><span class="ol1Number">10.</span></span>Launch the PEDServer. </p>
+        <p class="listLevel1">Type <code>pedserver -mode start</code> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="11."><span class="autonumber"><span class="ol1Number">11.</span></span>Verify that the service has started. </p>
+        <p class="listLevel1">Type <code>pedserver -mode show</code> &#160;and look for mention of the default port "1503" (or other, if you specified a different listening port). <br />As well, "Ped2 Connection Status:" should say "Connected". This indicates that the Luna&#160;PED that you connected (above) was found by PEDServer.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If a port other than the default 1503 was specified in  <code>pedserver -mode start</code> <br />... like  <code>pedserver -mode start -port 1523</code>&#160;<br />then&#160;&#160; <code>pedserver -mode show</code> command should pass in the same port <br />... like  <code>pedserver -mode show -port 1523</code>. <br /><br />If a non-default value for the listening port was configured (meaning that it was present in pedServer.ini), then &#160;&#160; <code>pedserver -mode show</code>&#160;&#160;&#160;finds the port from that file.</p>
+        <p class="ol1" data-mc-autonum="12."><span class="autonumber"><span class="ol1Number">12.</span></span>Note the IP address of the PEDServer host. We generally recommend using static IP, but if you are operating over a VPN, you will likely need to ascertain the current address each time you [re-]connect to the VPN server and are assigned an address.</p><pre class="listLevel1" xml:space="preserve">C:\windows\system32&gt;ipconfig
+
+Windows IP Configuration
+
+
+Ethernet adapter Bluetooth Network Connection 2:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+
+Wireless LAN adapter Wireless Network Connection 4:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+
+Wireless LAN adapter Wireless Network Connection 3:
+
+   Connection-specific DNS Suffix  . :
+   Link-local IPv6 Address . . . . . : fe80::cd74:173c:692a:22b0%26
+   IPv4 Address. . . . . . . . . . . : 192.168.0.16
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.0.1
+
+Ethernet adapter Local Area Connection 3:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+
+Ethernet adapter Local Area Connection 2:
+
+   Connection-specific DNS Suffix  . :
+   Link-local IPv6 Address . . . . . : fe80::5456:b034:a1ff:96fe%14
+   <span style="background-color: #ffff00;">IPv4 Address. . . . . . . . . . . : 182.16.153.114  &lt;&lt;--- this one, in our example </span>
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . :
+
+Tunnel adapter isatap.{9EE24CB0-63D2-4D40-902B-3DC3193701FA}:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+
+Tunnel adapter Local Area Connection* 17:
+
+   Connection-specific DNS Suffix  . :
+   IPv6 Address. . . . . . . . . . . : 2001:0:9d38:90d7:3cca:2f17:3f57:ffef
+   Link-local IPv6 Address . . . . . : fe80::3cca:2f17:3f57:ffef%11
+   Default Gateway . . . . . . . . . : ::
+
+Tunnel adapter isatap.{9D552290-62C3-479B-A312-FAEA518B1655}:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+
+Tunnel adapter isatap.{184652AE-5DF0-470C-84BE-B4D09760D3C9}:
+
+   Media State . . . . . . . . . . . : Media disconnected
+   Connection-specific DNS Suffix  . :
+
+C:\windows\system32&gt;<br /></pre>
+        <p>&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Your organization's VPN might be configured with a relatively short lease time, so that you might need to re-establish the Luna Remote PED connection at intervals of hours or days, providing the newly assigned IP address of your PEDServer computer each time. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>We generally advise not specifying the IP address when starting the PED server, unless you have a specific reason to set an address there. Just say "pedserver -mode start". <br />In a volatile network or VPN situation, this means that, when the host IP changes on the PED server, only pedclient needs restarting with the new pedserver IP address. There is no need to also stop-and-restart pedserver.exe with a new IP. <br /><br />pedserver.exe remains on, and listening until you explicitly tell it to stop, or until the host computer stops.</p>
+        <p>Once started, pedserver remains active and listening</p>
+        <h4>HSM-Side</h4>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>For the purposes of the PED Client (the HSM that seeks a Remote PED connection) you can specify the PEDServer's IP address and listening port each time you connect. Or you can use the <code>hsm ped set</code> command to configure either, or both of those parameters, which are then picked up by the <code>hsm ped connect</code> command when you wish to establish the connection. <br /><br />If the listening port of the PEDServer is not specified, then the default value "1503" is assumed. The IP address must be specified somewhere;  there is no original default. If an IP address or a port is specified in the <code>hsm ped connect</code> command, it overrides any value that was set by <code>hsm ped set</code>, but only for the current connection. <br /><br /></p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Launch the PEDClient on your HSM server, identifying the PEDServer instance (configured above) to which the HSM is to connect for its authentication requirements.</p>
+        <p class="listLevel1">Type <code>hsm ped connect -ip &lt;pedserver ip&gt; -port &lt;pedserver listening port&gt;</code> <br />(substituting your actual PEDServer IP and port) <br />for example: <code>hsm ped connect -ip 182.16.153.114 -port 1503</code></p>
+        <p class="listLevel1">Luna PED&#160;operation required to to connect to Remote PED - use orange PED Key(s). &#160;&#160;&#160;</p>
+        <p class="listLevel1">At this point, the remote Luna PED should come to life, briefly saying "Token found..." followed by this prompt:</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped_rpk_insert_orange_291x240.png" style="width: 291;height: 240;" /> &#160;&#160;&#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Insert the orange PED Key that you brought from the HSM to the remote PED, and press [ Enter ] on the PED keypad. </p>
+        <p class="listLevel1">When the orange PED Key is accepted, control returns to the HSM command-line with a success message: "Command Result :&#160; 0 &#160;(Success)"</p>
+        <p class="listLevel1">&#160;</p>
+        <p>Once you have reached this point, you can continue to issue HSM or Partition commands, and whenever authentication is needed, the Remote PED will prompt for the required PED Key and associated key-presses. </p>
+        <h3>Relinquishing Remote PED</h3>
+        <p>The PEDServer utility continues to run until explicitly stopped. </p>
+        <p>On the HSM end, PEDClient (launched by the "connect" command) continues to run until you explicitly stop with the "disconnect" command, or the link is broken. At any time, you can run the command in "show"&#160;mode to see what state it is in. </p>
+        <p>If you physically disconnect the Remote PED&#160;from its host, the link between PEDClient and PEDServer is dropped.</p>
+        <p>If the network connection is disrupted, or if your VPN closes, the link between PEDClient and PEDServer is dropped.</p>
+        <p>If you attempt to change menus on the Remote PED, the PED warns you:</p>
+        <p>
+            <img src="../../Resources/Images/ped-message_remote-ped_exit_288x283.png" style="width: 288;height: 283;" />
+        </p>
+        <p> If you persist, the link between PEDClient and PEDServer is dropped.</p>
+        <p>If the "IdleConnectionTimeoutSeconds" is reached, the link between PEDClient and PEDServer is dropped. The default is 1800 seconds, or 30 minutes. &#160;&#160;You can modify the default value with the "-idletimeout" option. &#160;&#160;</p>
+        <p>Any time the link is dropped, as long as the network connection is intact (or is resumed), you can restart PEDClient and PEDServer to reestablish the Remote PED link. In a stable network situation, the link should remain available until timeout. &#160;&#160;</p>
+        <h3>Troubleshooting</h3>
+        <p>Here are some suggestions for addressing some possible issues when configuring Luna Remote PED.</p>
+        <h4>Firewall blocking</h4>
+        <p>If you experience problems while attempting to configure a Luna Remote PED session over VPN, you might need to adjust Windows Firewall settings. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>From the Windows Start Menu, select "Control Panel".</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>From the "Control Panel", select "Windows Firewall".</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>From the "Windows Firewall" dialog, select "Change notification settings".</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/windows_firewal_settings_1.png" />
+        </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>In the dialog "Customize settings for each type of network", go to the appropriate section and activate "Notify me when Windows Firewall blocks a new program".</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/windows_firewal_settings_2.png" />
+        </p>
+        <p>Without this setting, it might not matter that you have Administrator-level privileges on the PEDServer host computer, because Windows would silently block the connection from PEDClient to PEDServer, and not give you an opportunity to exercise your power to approve the connection. </p>
+        <p>With notification turned on, a dialog box pops up whenever Windows Firewall blocks a program, allowing you to override the block, which permits the Luna Remote PED connection to  successfully listen for PEDClient connections. </p>
+        <h4>Port Access</h4>
+        <p>Another possible issue is that some networks might be configured to block access to certain ports. If such policy on your network includes ports 1503 (the default PEDServer listening port) and 1502 the administrative port, then you might need to choose a port other than the default, when starting PEDServer, and similarly, when you launch the connection from the HSM end and provide the IP and port where it should look for the PEDServer. Otherwise, perhaps your network administrator can assist. </p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/remote_ped/sa_configuring_remote_ped.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

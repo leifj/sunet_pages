@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.LunaPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|User and Password Administration">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Failed Logins</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/users/failed_logins.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="users.htm">User and Password Administration</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Failed Logins</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor147"></a><a name="kanchor148"></a>Failed Logins</h2>
+        <p>If you fail three consecutive login attempts as HSM Admin (also known as Security Officer or SO), the <a name="kanchor149"></a>HSM contents 
+ are rendered unrecoverable. This is a security feature&#160;(you 
+ DO have your important material backed up, don't you?) 
+
+ 
+ meant to thwart repeated, unauthorized attempts to access your cryptographic 
+ material. The number is <span style="font-style: italic;font-weight: bold;">not</span> 
+ adjustable. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The system must actually receive some erroneous/false 
+ information before it logs a failed attempt -- if you merely forget to 
+ insert a PED Key (for Trusted Path HSMs), or inserted the wrong color key, that is not counted as a failed attempt. As soon 
+ as you successfully authenticate, the counter is reset to zero.</p>
+        <p>View a table that compares and contrasts various "deny access" events or actions that are sometimes confused.&#160; <a href="../decommission/destroy_scenarios.htm" target="_blank">"Destroy" action/event scenarios</a>&#160;&#160;(Right-click the link if you prefer that it not open in a new window.)</p>
+        <h3>HSM Partition Owner or User</h3>
+        <p>The same security feature applies to Owner logins/activations, with 
+ some differences:</p>
+        <p>Multiple failed attempts at the user or client level affect only the 
+ HSM Partition, and not the entire Luna&#160;SA HSM.</p>
+        <h3>Configurable</h3>
+        <p>The HSM Admin (or Security Officer) can set the number of failed login 
+ attempts that trigger the feature (default is 10).</p>
+        <h3>Control the Outcome</h3>
+        <p>The configurable policy “SO/HSM Admin can reset User PIN” [HSM policy 
+ #15] allows you to control the outcome of too many consecutive bad authentication 
+ attempts. If the policy is “on” then the outcome is that the HSM Partition 
+ is locked out. This means that the Partition and its contents can be accessed 
+ again after the HSM Admin resets the HSM Partition Owner’s password. If 
+ the policy is “off”, then the partition is zeroized after too many bad 
+ attempts – meaning that all contents become inaccessible and the partition must be 
+ recreated.</p>
+        <p>“Ignore failed challenge responses” can be set per partition, which ensures that failed 
+ HSM Partition Password attempts do not cause the “failed login attempt” 
+ counter to increment.</p>
+        <h3>Crypto Officer / Crypto User</h3>
+        <p>If you are using the Crypto Officer / Crypto User model, the two IDs 
+ have their own independent "failed challenge response" counters. 
+ By default, each of Crypto Officer and Crypto User can make up to 10 consecutive 
+ attempts with an incorrect Password without triggering consequences on 
+ the Partition.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/users/failed_logins.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

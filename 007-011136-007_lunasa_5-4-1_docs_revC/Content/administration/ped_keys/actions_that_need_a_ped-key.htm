@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|PED Key Management">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Actions That Require a PED Key</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/ped_keys/actions_that_need_a_ped-key.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ped_keys.htm">PED Key Management</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Actions That Require a PED Key</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Actions That Require a PED Key</h2>
+        <p>It can, occasionally, be less than obvious why a certain action requires that you authenticate to the HSM or to the Partition, while another action does not. </p>
+        <p>Such questions have been carefully considered, from a crypto-security perspective, and we believe that we have consistently made the correct determination in all cases. </p>
+        <p>An example might be:</p>
+        <h5>Question</h5>
+        <p> If I activate an existing partition - make a service available to customers - I must have the black PED Key for that partition
+   </p>
+        <p>But if I want to deactivate the same partition - withdraw/deny the service - I 
+   do not need the black key).
+</p>
+        <p>Is making a service available considered more dangerous than taking it away? </p>
+        <h5>Answer </h5>
+        <p>The rationale behind this behavior is that when you activate a partition you are making crypto services available to applications (that have the correct challenge password, of course).  From a crypto module perspective, making crypto services available is a big thing and requires proper authentication.  Removing that availability might be an operational issue but it is not a crypto security issue and, therefore, did not require the Black key.</p>
+        <p>As well, if an attacker wishing to deny service is given physical or command access to your HSM, he or she can do a lot more damage than simply issuing a <code>partition deactivate</code>. In other words, if you have let them get that deeply inside your security perimeter, then you have far worse problems than a "partition deactivate".</p>
+        <p>If you ever discover a situation where our implementation seems inconsistent with that philosophy, please let us know by contacting support@safenet-inc.com. We will either fix the problem or explain why it is not considered a problem.</p>
+        <h5>Question</h5>
+        <p>If I have a service running, can I&#160;force my application's administrator to provide the partition's password each time the service is restarted and/or each time the application server is restarted? </p>
+        <h5>Answer</h5>
+        <p>It depends on the setup, and it depends on what you mean by password. But, in limited circumstances, yes, although you probably would not want to do that. </p>
+        <p>It doesn't really matter whether your application accesses the HSM directly, or whether a service or some other provider is between application and HSM.</p>
+        <p>If an application directly accesses the HSM partition, then when it first does so, the application must initialize the library, and open a session on the HSM. Then the application provides the partition authentication when the application needs to perform actions on partition contents. For either Password-authenticated or PED-authenticated HSMs, the partition password (or partition challenge) secret must be available to the application so that it can provide that secret when access to partition objects is needed. The application provides the partition secret to say that it (the application) has the right to perform partition-object actions. This usually means that the secret is stored somewhere on the host's file system or registry (most likely encrypted) for retrieval when needed . </p>
+        <p>This means that the application is already providing the partition password (or partition challenge secret) string whenever it is demanded by the HSM. So, in that sense, the answer to your question is already "yes".</p>
+        <p>But if you meant something stronger than the password-presenting action that the application must already perform when accessing partition objects, you probably need to consider PED authenticated HSMs. </p>
+        <p>For PED-authenticated HSMs, the PED Key data for that partition must be provided to the HSM before the partition secret string is provided. </p>
+        <p>In almost all cases, for PED-authenticated HSMs, customers would Activate the partition when  first setting up, so the PED Key data for that partition would be cached. That is, the customer would be making an authenticated administrative declaration that the partition was "open for business", and an application with the partition challenge secret could then access partition objects at any time.</p>
+        <p>Then, the application could open and close sessions at will, and whenever it needed to manipulate partition objects, the application would provide the partition (challenge) secret. Once the Partition PED Key data is available, the action of accessing and using partition objects is identical for PED-authenticated or Password-authenticated HSMs. </p>
+        <p>If the partition is autoActivated, then the black PED Key data is cached in the HSM, just as for Activation, except it is now protected against power failure for as much as two hours.  </p>
+        <p>So, for the direct application-to-HSM scenario, if you want to force the application owner to perform an authentication beyond what the application already performs with each access to partition objects, then you would need:</p>
+        <p class="ol2" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>to use a PED-authenticated HSM, and </p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>ensure that the PED Key data for that partition was NOT cached - therefore, no Activation or autoActivation (Partition Policies 22 and 23 would be set to "off").</p>
+        <p>The application still has its access to the partition challenge secret, but the partition is not "open for business". A PED Key must be provided (possibly a PED PIN as well, if you set one). &#160;&#160;</p>
+        <p>However, the drawback is that EVERY access of partition objects now requires PED Key authentication, in addition to the partition  challenge secret. The PED would remain connected to the HSM, the key for that partition would remain inserted, and somebody would have her/his finger poised to press the PED's [Enter] key every time the application needed to manipulate a partition object.</p>
+        <p>The above is the situation for direct access to the HSM by an application; it is only for very specialized situations where the partition is rarely accessed, and extremely close control is required. </p>
+        <p>If you insert a service between your application(s) and the HSM, then the application no longer needs to know anything about HSM and its authentication. Instead, the service must handle all that, translating between the application and the HSM. The conditions described earlier now apply to the service. </p>
+        <p>Similarly, if you insert a provider (a translation layer like our CSP or KSP or JSP) between your application and the HSM, or between your service and the HSM, then the provider takes care of safeguarding and using the partition password (or partition challenge) secret as needed. </p>
+        <p>In either case, the need for PED Key presentation and PED button pressing is determined by the state of Partition Policies 22 and 23).</p>
+        <p>See also <a href="../ped_auth/commands_requiring_ped.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Commands that Require Luna PED Interaction"</span></a>.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/ped_keys/actions_that_need_a_ped-key.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

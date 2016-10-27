@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|sysconf">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>sysconf hwregencert</title>
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#lunash/commands/sysconf/sysconf_hwregencert.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="sysconf.htm">sysconf</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">sysconf hwregencert</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">sysconf hwregencert</h2>
+        <p class="TextHeader2"><a name="kanchor427"></a><a name="kanchor428"></a>This command generates or re-generates the Luna appliance server certificate 
+ used for the NTLA in hardware. </p>
+        <p>If you are using a system with DNS, you should not specify an IP address. 
+ If you are using a system that does not use DNS, you should specify the 
+ IP address of eth0 so that the certificate will be properly generated. 
+ </p>
+        <p>It is very important that the certificates are properly generated or 
+ the NTLA will not work. </p>
+        <p>This command stores the resulting private and public keys in the HSM, and the certificate generated from them on the file system (hard disk) inside the Luna appliance. <br />If you prefer the additional speed of keys that are  stored in the file system, use the command 'sysconf regenCert' instead. </p>
+        <h4>Trade-off</h4>
+        <p>If you use 'sysconf hwRegenCert', the private key exists only on the HSM. Therefore the parts of the NTLS-setup handshake that need the private key take slightly longer to complete. For applications that set up an NTLS&#160;link for an extended period and perform multiple crypto operations, the additional overhead is negligible. </p>
+        <p>For applications that set up the link, perform one operation, tear down the link, then set up another for the next operation, the overhead of storing the private key on the HSM could become noticeable. </p>
+        <h4>Additional Commands Required</h4>
+        <p>To use keys in hardware, the following sequence is necessary:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>at the Luna SA, run <b>sysconf hwRegenCert</b> <![CDATA[ ]]></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>run <b>ntls bind</b>, as required; this also restarts NTLS </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>run <b>ntls activateKeys</b>, to ensure that the keys in the special partition remain available</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>transfer the new server certificate to clients</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>at the client, register the new server certificate</p>
+        <p> As well, if the Luna appliance is rebooted/restarted for any reason (secure package update, power failure...) with the NTLS&#160;keys in the HSM, you must perform <b>ntls activateKeys</b> and <b>service restart ntls</b>. </p>
+        <p>This command generates a new key-pair. If you wish to use existing keys, that you have already created in the file system (not yet stored on the HSM), then you can move your existing keys into the HSM with <b>sysconf secureKeys</b></p>
+        <p>You must be logged in to use this command.</p>
+        <p class="notepad_note">The keys in hardware feature requires a special container "Cryptoki User" to keep the RSA key pair for NTLS. Even though it shows in the partition list, this container is not meant to be managed by customers directly. Once it is created, you should never need to touch this partition at all.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code"><b>sysconf hwRegenCert</b> [&lt;eth0_ip_address&gt;]</p>
+        <table class="TableStyle-Page" style="caption-side: top;width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" cellspacing="0">
+            <col class="Column-Column1" style="width: 159px;" />
+            <col class="Column-Column1" style="width: 86px;" />
+            <col class="Column-Column1" style="width: 529px;" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1" style="text-align: left;">Parameter</th>
+                    <th class="HeadE-Column1-Header1" style="text-align: left;">Shortcut&#160;&#160;&#160;&#160;&#160;</th>
+                    <th class="HeadD-Column1-Header1" style="text-align: left;">Description &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;"><span style="font-weight: normal;">&lt;eth0_ip_address&gt;&#160;&#160;</span>
+                    </td>
+                    <td class="BodyE-Column1-Body1"> </td>
+                    <td class="BodyD-Column1-Body1">Provide the IP address of eth0 if the rest of 
+ your setup was done without DNS. </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-days</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Specifies the certificate validity period, in days.</p>
+                        <p><b>Range:</b> 1 to 3653</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-force</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyD-Column1-Body1">Force the action without prompting.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">-startdate</td>
+                    <td class="BodyB-Column1-Body1">&#160;</td>
+                    <td class="BodyA-Column1-Body1">Specifies the certificate validity start date, in numeric year, month, day format with four-digit year (yyyymmdd).</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">lunash:&gt;partition create -par "Cryptoki User"</pre><pre xml:space="preserve">Please ensure that you have purchased licenses for at least this number of partitions: 2 <br />If you are sure you wish to continue then type 'proceed', otherwise type 'quit'</pre><pre xml:space="preserve">&gt; proceed</pre><pre xml:space="preserve">Proceeding...</pre><pre xml:space="preserve">Please enter a password for the partition: <br />&gt; *******</pre><pre xml:space="preserve">Please re-enter password to confirm: <br />&gt; *******</pre><pre xml:space="preserve">Please enter the cloning domain to use when creating this <br />partition (press &lt;enter&gt; to use the default domain): <br />&gt;</pre><pre xml:space="preserve">'partition create' successful. </pre><pre xml:space="preserve">Command Result : 0 (Success) <br /></pre>
+        <p>&#160;</p><pre xml:space="preserve">lunash:&gt; sysconf hwRegenCert 192.20.11.161
+</pre><pre xml:space="preserve">WARNING !!  This command will overwrite the current server certificate and private key.
+<br />All clients will have to add this server again with this new certificate.
+<br /></pre><pre xml:space="preserve">If you are sure that you wish to proceed, then type 'proceed', otherwise type 'quit'
+</pre><pre xml:space="preserve">&gt; proceed
+<br />Proceeding...
+</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">'sysconf regenCert' successful. NTLS must be (re)started before clients can connect.
+</pre><pre xml:space="preserve">Please use the 'ntls show' command to ensure that NTLS is bound to an appropriate <br />network device or IP address/hostname
+
+for the network device(s) NTLS should be active on. <br />Use 'ntls bind' to change this binding if necessary.
+</pre><pre xml:space="preserve"> 
+
+Enter User Password: <br /></pre><pre xml:space="preserve">Proceeding to migrate keys to "Cryptoki User" with handle 13</pre><pre xml:space="preserve">Successfully migrated NTLS keys from software to hardware. 
+</pre><pre xml:space="preserve">Command Result : 0 (Success)
+
+</pre><pre xml:space="preserve">lunash:&gt;ntls activateKeys 
+
+ </pre><pre xml:space="preserve">Enter User Password: <br />Stopping ntls:OK <br />Starting ntls:OK</pre><pre xml:space="preserve">Command Result : 0 (Success)
+</pre>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../../index.html#lunash/commands/sysconf/sysconf_hwregencert.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

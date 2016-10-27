@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Secure Transport Mode">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Secure Transport Mode [Remote]</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/secure_transport_mode/secure_transport_mode_remote.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="secure_transport_mode.htm">Secure Transport Mode</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Secure Transport Mode [Remote]</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Secure Transport Mode [Remote]</h2>
+        <p>This topic describes what to do if you wish to invoke Secure Transport Mode (STM) on a remote Luna SA HSM, when shipping the appliance:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> to your customer or</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> to your partner organization or</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> to your own personnel at another site within your organization,</p>
+        <p>That is, as the appliance administrator and the HSM Admin or SO, you are not present when Secure Transport Mode is invoked and the appliance is packed for shipment, and you are not present at its destination when the appliance is unpacked and readied for use. </p>
+        <p>On-site technical personnel are performing the physical take-down, packing, unpacking and setup, but you remain at your remote location, administering the appliance  and HSM via SSH and controlling access via Remote PED.</p>
+        <p>You could also use STM for securely storing the HSM, where "transport" would take place simply into, and later out of, your warehouse or vault. However, you would also need to manage separate secure storage and handling of the imprinted purple PED&#160;Key (SRK) for that HSM until it was time to recover the HSM and return it to service.</p>
+        <p>This page applies to PED Authenticated HSMs only. It does not apply to Password Authenticated HSMs.<br />This page assumes that you have a remote-capable Luna PED 2 (Remote Capable), and associated pedserver.exe software installed on your local-to-you computer.</p>
+        <p>You have already set up the Luna SA for Remote PED operation, before you shipped it to its current remote location - that is, you imprinted the HSM and an orange PED Key with the Remote PED Vector (RPV), and you have that orange key available.</p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>If the HSM contents are of any value, perform backups of your partitions before you continue with Secure Transport Mode procedure ( <a href="../backup/backup_hsm_partition_remotely_with_rbs.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Backup your HSM Partition Remotely"</span></a> ).</p>
+        <h3>Make a Remote PED Connection</h3>
+        <p>First, using an ssh session, display the current status of the remotely located Luna SA, to know your starting point.</p><pre>[192.168.9.72] lunash:&gt;hsm ped show</pre><pre>Ped Client Version 1.0.5 (10005)</pre><pre>Ped Client launched in status mode.</pre><pre>Ped PedClient is not currently running.</pre><pre>Show command passed.</pre><pre>Command Result : 0 (Success)</pre><pre xml:space="preserve">[192.168.9.72] lunash:&gt;</pre>
+        <p>Start pedServer.exe on your local computer.</p>
+        <p>Via SSH, tell the Remote PED Client on the Luna SA to find and connect to the PED Server (pedServer.exe) on the selected computer - most likely the computer where you are currently working.</p><pre xml:space="preserve">[192.168.9.72] lunash:&gt;hsm ped connect -ip 192.168.10.175 -port 1503</pre><pre>Luna PED operation required to connect to Remote PED - use orange PED key(s).</pre><pre>Ped Client Version 1.0.5 (10005)</pre><pre>Ped Client launched in startup mode.</pre><pre>Starting background process</pre><pre>Background process started</pre><pre>Ped Client Process created, exiting this process.</pre><pre>Command Result : 0 (Success)</pre><pre>[192.168.9.72] lunash:&gt;</pre>
+        <p>&#160;</p>
+        <p>Confirm that the link is established.</p><pre>[192.168.9.72] lunash:&gt;</pre><pre>[192.168.9.72] lunash:&gt;hsm ped show</pre><pre>Ped Client Version 1.0.5 (10005)</pre><pre>Ped Client launched in status mode.</pre><pre>Ped Client is connected to a Ped Server.</pre>
+        <p style="color: #6c286b;">&#160;</p><pre xml:space="preserve">Client Information</pre><pre xml:space="preserve">Hostname: 	                192.168.9.72</pre><pre xml:space="preserve">IP: 	                        192.168.9.72/192.168.254.254</pre><pre xml:space="preserve">Firmware Version: 	        6.0.7</pre><pre xml:space="preserve">HSM Cmd Protocol Version: 	15</pre><pre xml:space="preserve">Callback IO Version: 	        1</pre><pre xml:space="preserve">Callback Protocol Version: 	1</pre><pre xml:space="preserve">Software Version: 	        1.0.5 (10005)</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Server Information</pre><pre xml:space="preserve">Hostname: 	                OTT1-202011</pre><pre xml:space="preserve">IP: 	                        192.168.10.175</pre><pre xml:space="preserve">Firmware Version: 	        2.4.0-3</pre><pre xml:space="preserve">PedII Protocol Version: 	1.0.1-0</pre><pre xml:space="preserve">Software Version: 	        1.0.5 (10005)</pre><pre xml:space="preserve">Ped2 Connection Status: 	Connected</pre><pre xml:space="preserve">Ped2 RPK Count   	        1</pre><pre xml:space="preserve">Ped2 RPK Serial Numbers   	(70540100834a2301)</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Operating Information</pre><pre xml:space="preserve">Server Port: 	                1503</pre><pre xml:space="preserve">Admin Port: 	                1501</pre><pre xml:space="preserve">External Admin Interface:  	No</pre><pre xml:space="preserve">Client Up Time: 	        31 (secs)</pre><pre xml:space="preserve">Client Current Idle Time:   	7 (secs)</pre><pre xml:space="preserve">Client Total Idle Time: 	9 (secs) (29%)</pre><pre xml:space="preserve">Idle Timeout Value:   	        1800 (secs</pre>
+        <p style="color: #6c286b;"> &#160;</p><pre style="color: #6c286b;">Show command passed.</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre><pre xml:space="preserve">[192.168.9.72] lunash:&gt;</pre>
+        <p>&#160;</p>
+        <h3>Check SRK status</h3><pre>[192.168.9.72] lunash:&gt;hsm srk show</pre><pre>Secure Recovery State flags:</pre><pre>=================================</pre><pre>External split enabled:      no</pre><pre>SRK resplit required:        no</pre><pre>Hardware tampered:           no</pre><pre>Transport mode:              no</pre><pre>Command Result : 0 (Success)</pre>
+        <p>&#160;</p>
+        <h3>Enable SRK</h3><pre>192.168.9.72] lunash:&gt;hsm srk enable</pre><pre>Luna PED operation required to enable external SRK split - use Secure Recovery (purple) PED key.</pre>
+        <p>&#160;</p>
+        <p><span style="color: #000000;">In RemotePED, answer the following prompts:</span>
+        </p><pre>M value (1-16)</pre><pre>N value (M-16)</pre><pre>Insert a SRK PED key and press ENTER</pre><pre>This PED Key is for SRK, overwrite? Yes/No</pre><pre>**warning** Are you sure you want to overwrite this PED Key? Yes/No</pre><pre>Enter new PED PIN:</pre><pre>Confirm new PED PIN:</pre><pre>Are you duplicating this keyset? (Y/N)</pre>
+        <p>&#160;</p>
+        <p><span style="color: #000000;">PED shows “STM Enabled”</span>
+        </p><pre>Command Result : 0 (Success)</pre><pre>[192.168.9.72] lunash:&gt;hsm srk show</pre><pre>Secure Recovery State flags:</pre><pre>=================================</pre><pre>External split enabled:      yes</pre><pre>SRK resplit required:        no</pre><pre>Hardware tampered:           no</pre><pre>Transport mode:              no</pre><pre>Command Result : 0 (Success)</pre>
+        <p>&#160;</p>
+        <h3>Enter Secure Transport Mode</h3><pre>[192.168.9.72] lunash:&gt;hsm srk transportMode enter</pre><pre>CAUTION:  You are about configure the HSM in transport mode.</pre><pre>If you proceed, the HSM will be inoperable until it</pre><pre>is recovered with the Secure Recovery Key.</pre><pre>Type 'proceed' to continue, or 'quit' to quit now.</pre><pre>&gt; proceed</pre><pre>Configuring the HSM for transport mode...</pre><pre>Luna PED operation required to enter transport mode - use Secure Recovery (purple) PED key.</pre><pre>Be sure to record the verification string that is displayed after the MTK is zeroized.</pre>
+        <p>In RemotePED, answer following prompts:</p><pre style="color: #008b8b;" xml:space="preserve">&#160;&#160;&#160;Insert a SRK PED key and press ENTER</pre><pre style="color: #008b8b;" xml:space="preserve">&#160;&#160;&#160;Generating a verify string ECSK-W7xT-Ep9E-psGb, Continue? (Y/N)</pre>
+        <p>PED shows “SRK was zeroized”</p><pre>HSM is now in Transport Mode.</pre><pre>Command Result : 0 (Success)</pre><pre>[192.168.9.72] lunash:&gt;hsm srk show</pre><pre>Secure Recovery State flags:</pre><pre>=================================</pre><pre>External split enabled:      yes</pre><pre>SRK resplit required:        no</pre><pre>Hardware tampered:           no</pre><pre>Transport mode:              yes</pre><pre>Command Result : 0 (Success)</pre>
+        <p>&#160;</p>
+        <p>At this point, pack the HSM appliance and ship to your eventual recipient via the most secure means (courier) available. </p>
+        <p>The options now are:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>You keep the purple PED Key and the verification string and ship only the HSM - you will perform the recovery from your administrative location, once the HSM is installed at the remote location. This would be the situation if you were shipping within your organization and retaining control centrally, or if you were shipping to a customer who is leasing the equipment, but you are retaining ultimate administrative control.<br />OR<br /></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>You have remotely configured and administered the HSM, while personnel at your own remote location did the physical work to make connections, then they disconnected the HSM when you finished accessing it, and packed it for shipment. From that transshipment point, the HSM is now being forwarded to your customer, who will take over complete responsibility.</p>
+        <p><b>If you keep control</b>
+        </p>
+        <p>In the first scenario, you retain all PED&#160;Keys and will perform further administrative actions from your location when the HSM reaches its new destination - you retain control; you manage the physical security of the purple PED&#160;Key and the verification string, which you will use when you perform STM recovery remotely (below). </p>
+        <p>The subsequent instructions on this page assume this scenario, where you have remotely set the HSM into Secure Transport Mode, and you will be remotely taking the HSM out of Secure Transport Mode, once it has arrived at its next location and been set up.</p>
+        <p><b>If you transfer control</b>
+        </p>
+        <p>In the second scenario, you relinquish administrative control of the HSM, so you ship the purple PED&#160;Key and the verification string to the eventual owners/administrators of the HSM.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Send the HSM to your recipient by the most secure means available.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Send the purple PED Key, from the above steps, to your recipient via a different carrier (courier, post, other). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Send the verification string that you just recorded (above) to your recipient by yet another means.</p>
+        <p>In this way, you are ensuring that the three components (HSM, purple PED Key, and verification string for that specific PED&#160;Key) cannot be brought together between the time they leave your hands and the time that they arrive (separately) at the recipient destination. </p>
+        <p>In this scenario, your recipient should also have this Help, and they can decide whether to use the local instructions or the remote instructions (below) to bring the received HSM out of Secure Transport Mode.</p>
+        <h3>What if someone makes a new SRK while the HSM is in Transport Mode?</h3>
+        <p>The HSM refuses to allow such action. Here is an example of an attempt, and the result.</p>
+        <h4>SRK Resplit (attempt) while HSM is in Transport Mode</h4><pre>[192.168.9.72] lunash:&gt;hsm srk keys resplit</pre><pre xml:space="preserve">Error:  The Secure Recovery Key cannot be resplit when the HSM is in 
+tranport mode or tampered.  Use the recover command to restore 
+the HSM to a functional state.</pre><pre>Error:  'hsm srk keys resplit' failed. (C0000400 : RC_TOKEN_STATE_INVALID)</pre><pre>Command Result : 65535 (Luna Shell execution)</pre>
+        <h4>SRK Key verify (attempt) while HSM in Transport Mode</h4><pre>[192.168.9.72] lunash:&gt;hsm srk keys verify</pre><pre xml:space="preserve">Error:  The SRK cannot be verified when the HSM is in transport mode&#160;
+or tampered.  Use the recover command to restore the&#160;
+HSM to a functional state.</pre><pre>Error:  'hsm srk keys verify' failed. (C0000400 : RC_TOKEN_STATE_INVALID)</pre><pre>Command Result : 65535 (Luna Shell execution)</pre>
+        <p>&#160;</p>
+        <h3>At the destination, recover from Secure Transport Mode </h3><pre>[192.168.9.72] lunash:&gt;hsm srk transportMode recover</pre><pre>Attempting to recover from Transport Mode...</pre><pre>Luna PED operation required to recover the HSM - use Secure Recovery (purple) PED key.</pre>
+        <p>In RemotePED, respond to the following prompts as appropriate:</p><pre xml:space="preserve">&#160;&#160;&#160;Insert a &#160;&#160;&#160;
+&#160;&#160;&#160;SRK PED key and 
+&#160;&#160;&#160;press ENTER</pre><pre xml:space="preserve">&#160;&#160;&#160;Generating a verify string &#160;&#160;&#160;
+&#160;&#160;&#160;ECSK-W7xT-Ep9E-psGb, 
+&#160;&#160;&#160;Continue? (Y/N)</pre>
+        <p>Luna PED shows “SRK was restored” and lunash command line shows:</p><pre>Successfully recovered from transport mode.</pre><pre>HSM restored to normal operation.</pre><pre>Command Result : 0 (Success)</pre><pre>[192.168.9.72] lunash:&gt;hsm srk show</pre><pre>Secure Recovery State flags:</pre><pre>=================================</pre><pre>External split enabled:      yes</pre><pre>SRK resplit required:        no</pre><pre>Hardware tampered:           no</pre><pre>Transport mode:              no</pre><pre>Command Result : 0 (Success)</pre>
+        <p>&#160;</p>
+        <h3>SRK key resplit</h3>
+        <p>Having received and unlocked your HSM, you might now prefer to invalidate the current SRK and create a new external split for future use.</p><pre>[192.168.9.72] lunash:&gt;hsm srk keys resplit</pre><pre>Luna PED operation required to resplit the SRK - use Secure Recovery (purple) PED key.</pre><pre>In RemotePED, answer following question accordingly:</pre><pre>Insert a SRK PED key and press ENTER</pre><pre xml:space="preserve">&#160;&#160;&#160;M value (1-16)</pre><pre xml:space="preserve">&#160;&#160;&#160;N value (M-16)</pre><pre xml:space="preserve">&#160;&#160;&#160;Insert a 
+&#160;&#160;&#160;SRK PED key and 
+&#160;&#160;&#160;press ENTER <span style="font-family: Arial; color: #000000;">(insert old SRK key here)</span></pre><pre xml:space="preserve">&#160;&#160;&#160;This PED Key is for SRK, 
+&#160;&#160;&#160;overwrite? Yes/No</pre>
+        <p>Note, you see the above message if the key that you present has previously been imprinted with a Secure Recovery Vector.</p><pre>**warning** Are you sure you want to overwrite this PED Key? Yes/No</pre><pre>Enter new PED PIN:</pre><pre>Confirm new PED PIN:</pre><pre>Are you duplicating this keyset? (Y/N)</pre><pre>Ped shows “SRK was resplit”</pre><pre>SRK resplit succeeded.</pre><pre>Command Result : 0 (Success)</pre><pre>[192.168.9.72] lunash:&gt;hsm srk show</pre><pre>Secure Recovery State flags:</pre><pre>=================================</pre><pre>External split enabled:      yes</pre><pre>SRK resplit required:        no</pre><pre>Hardware tampered:           no</pre><pre>Transport mode:              no</pre><pre>Command Result : 0 (Success)</pre>
+        <p>&#160;</p>
+        <p><b>Verify the new SRK</b>
+        </p><pre>[192.168.9.72] lunash:&gt;hsm srk keys verify</pre><pre>Luna PED operation required to verify the SRK split - use Secure Recovery (purple) PED key.</pre>
+        <p>On the Remote PED, respond to the prompts:</p><pre xml:space="preserve">Insert a SRK PED key and press ENTER</pre><pre>PED shows “SRK was restored”</pre><pre>SRK verified.</pre><pre>Command Result : 0 (Success)</pre><pre>[192.168.9.72] lunash:&gt;hsm srk show</pre><pre>Secure Recovery State flags:</pre><pre>=================================</pre><pre>External split enabled:      yes</pre><pre>SRK resplit required:        no</pre><pre>Hardware tampered:           no</pre><pre>Transport mode:              no</pre><pre>Command Result : 0 (Success)</pre>
+        <p>&#160;</p>
+        <h3>SRK disable</h3>
+        <p>This section shows how to disable SRK - returning the external split (Secure Recovery Vector) of the Master Key from its location on the external purple PED&#160;Key to a location inside the HSM. After this action, Secure Transport Mode is not possible unless you Enable again. Also, with the two recovery splits held inside the HSM, the HSM can recover from a physical tamper event with only a reboot.</p><pre>[192.168.9.72] lunash:&gt;hsm srk disable</pre><pre>Luna PED operation required to disable external SRK split - use Secure Recovery (purple) PED key.</pre>
+        <p>In RemotePED, respond to the following prompts:</p><pre xml:space="preserve">&#160;&#160;&#160;Insert a 
+&#160;&#160;&#160;SRK PED key and 
+&#160;&#160;&#160;press ENTR</pre>
+        <p>Luna PED shows “STM Disabled”</p><pre>Command Result : 0 (Success)</pre><pre>[192.168.9.72] lunash:&gt;hsm srk show</pre><pre>Secure Recovery State flags:</pre><pre>=================================</pre><pre>External split enabled:      no</pre><pre>SRK resplit required:        no</pre><pre>Hardware tampered:           no</pre><pre>Transport mode:              no</pre><pre>Command Result : 0 (Success)</pre><pre>[192.168.9.72] lunash:&gt;</pre>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/secure_transport_mode/secure_transport_mode_remote.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

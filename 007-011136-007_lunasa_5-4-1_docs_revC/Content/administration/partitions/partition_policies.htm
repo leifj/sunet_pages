@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|HSM Partitions">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Partition and HSM Capabilities and Policies</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/partitions/partition_policies.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partitions.htm">HSM Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Partition and HSM Capabilities and Policies</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Partition and HSM Capabilities and Policies</h2>
+        <p>As explained elsewhere, HSM capabilities are set at the factory and control the overall "personality" or scope of the HSM. HSM policies coincide with alterable HSM capabilities and allow those capabilities to be adjusted for the entire HSM.</p>
+        <p>Similarly, when an HSM Partition is created, it also comes with a set of capabilities and policies, based on the factory base configuration and on any HSM policy settings. Partition policies can modify the effects of some partition capabilities. This can be especially useful in multi-partition HSMs where the Owners want to emphasize different characteristics from one partition to the next, for Partition Owners and Clients with different needs. </p>
+        <p>Some HSM policies are destructive, meaning that if you change the policy, the HSM must be initialized (destroying all partitions and contents) before it can be used again. Partition policies are generally not destructive. This can be illustrated by the ability to clone objects to another HSM or partition. </p>
+        <h3>Example of related HSM and Partition Policies</h3>
+        <p>The cloning policy is destructive at the HSM level.</p>
+        <p>The policy is not destructive at the partition level.</p>
+        <p>The HSM-level switch is “all or nothing” for the HSM and for any partitions within that HSM.</p>
+        <p>Think of it as:</p>
+        <ul>
+            <li value="1" data-mc-autonum="&lt;b /&gt;"><span class="autonumber"><span><b></b></span></span>at the HSM level the setting controls ABILITY to clone (or not) </li>
+            <li value="2" data-mc-autonum="&lt;b /&gt;"><span class="autonumber"><span><b></b></span></span>at the partition level, the setting controls PERMISSION to use the ability if the ability is there.</li>
+        </ul>
+        <p>The first one is security-critical and therefore must be destructive if changed. The second one is completely dependent on the first, and therefore does not need to be destructive.</p>
+        <h3>Use Case Example</h3>
+        <p>A possible use case is where a customer wants to require the HSM Security Officer (SO) to be involved with every backup operation, so the partition cloning policies are set to ‘0’ normally, and the SO must set those policies to ‘1’ before the backup can be performed.</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/partitions/partition_policies.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

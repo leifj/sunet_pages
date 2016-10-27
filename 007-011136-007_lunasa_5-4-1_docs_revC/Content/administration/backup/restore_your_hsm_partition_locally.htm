@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Backup and Restore HSMs and Partitions|Partition Restore">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Restore Your HSM Partition - Locally </title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/backup/restore_your_hsm_partition_locally.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="backup.htm">Backup and Restore HSMs and Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition_restore.htm">Partition Restore</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Restore Your HSM Partition</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3><a name="kanchor172"></a><a name="kanchor173"></a>Restore Your HSM Partition - Locally </h3>
+        <p>The source options, in restoring to a partition are:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>to restore from a backup partition on a Luna Remote Backup HSM (modern backup and restore)     </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>to restore from a legacy backup token in a Luna DOCK slot (legacy restore, one way only, using legacy domain  and <a href="../domains/legacy_domains_and_migration.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Legacy Domains and Migration"</span></a> ). This is effectively a migration operation. </p>
+        <p>The physical arrangements of hardware for restoring a partition locally are:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If restoring to a Luna&#160;PCI-E HSM partition, the source Luna Backup HSM (or a Luna&#160;DOCK reader with a legacy Token) 
+ containing the objects to be restored to that partition is connected by USB to the host computer</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If restoring to a Luna&#160;SA partition, the source Luna Backup HSM (or a Luna&#160;DOCK reader with a legacy Token) 
+ containing the objects to be restored to that Partition is connected by USB directly to the Luna&#160;SA appliance. <br /><br />OR <br /><br /></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If restoring to a Luna&#160;SA partition, the source Luna Backup HSM (or a Luna&#160;DOCK reader with a legacy Token) 
+ containing the objects to be restored to that Partition is connected by USB to the workstation, and that workstation is registered as a client (an NTLS link is created by certificate exchange, etc.) of a distant Luna&#160;SA partition, and that partition then appears as a "local" slot in lunacm on the workstation, while the Backup HSM or Token appears as another local slot.</p>
+        <p>To restore one HSM Partition, you must have:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the Luna Backup HSM (or a legacyToken) 
+ containing the objects to be restored to that Partition</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the authentication for 
+ the Backup HSM and for the HSM Partition. </p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>The Backup HSM or Token and the HSM with the target Partition must share the same 
+ cloning domain.<br /></p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you have (say) Private Key Cloning switched 
+ off for the current Partition, then the Backup operation proceeds, but 
+ skips over any private keys, and clones only the permitted objects onto 
+ the Backup token. Similarly, if you restore from a token that includes 
+ private keys, but the target Partition has Private Key Cloning disallowed, 
+ then all other objects are recovered to the Partition, but the private 
+ keys are skipped during the operation.</p>
+        <h4>Restore from Backup HSM or Legacy Token to a Directly-Connected Luna&#160;SA</h4>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>To restore from Luna Remote Backup HSM, connect the Backup HSM by USB to the Luna&#160;SA.<br />To restore from a legacy Token, connect the Luna&#160;DOCK reader to the Luna&#160;SA and insert a Luna 
+ Backup token into the token-reader slot. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>In an SSH lunash:&gt; session, choose an HSM 
+ Partition, and type:<span style="font-family: 'Courier New', monospace;"><br />	partition restore -partition HSMPartitionname -password ClientPassword 
+ -replace<br /> </span></p>
+        <p>The partition restore command on Luna&#160;SA assumes a locally-connected backup device. Lunash:&gt; partition commands cannot be used to restore to a backup device connected to another computer - see next example.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Note that in the command above, you could 
+ have used&#160;-add instead of -replace.</p>
+        <h5>Example – partition restore Command</h5>
+        <p class="code">lunash:&gt; partition restore -partition myRoom -password 
+ 9YWt6L56FXqGC6sL -replace</p>
+        <p>In that example, either the Password came from the Luna PED of a Luna 
+ SA with Trusted Path Authentication, or it was a Password Authenticated 
+ Partition Password created by someone very enthusiastic about passwords.</p>
+        <p>On restore, you may <span style="font-weight: bold;">add</span> to existing 
+ HSM Partition contents or <span style="font-weight: bold;">replace</span> 
+ them. Adding might result in unwanted behaviors, such as having two keys 
+ with the same label, if one existed in the HSM Partition and one on the 
+ backup token. The two would be assigned different handles, however.</p>
+        <h4>Restore from Backup HSM or legacy Token to a distant Luna&#160;SA, seen as local</h4>
+        <p>LunaClient must be loaded on the workstation that you use for this restore operation, including the Luna&#160;SA&#160;option so that the vtl utility is available. As well, you should install the Remote PED option, and have a Luna PED (Remote) connected to the workstation, to authenticate to the distant Luna&#160;SA partition. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>To restore from Luna Remote Backup HSM, connect the Backup HSM by USB to your workstation.<br />To restore from a legacy Token, connect the Luna&#160;DOCK reader to your workstation and insert a Luna 
+ Backup token into the token-reader slot. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>At the workstation, run <code>vtl createcert,</code> to create a client certificate. The Luna SA should already have a server certificate.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Exchange certificates and register the client with the partition, to establish an NTLS connection. A target partition for the restore operation must exist on the HSM; it is not created by the restore operation.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>On the workstation, open a <code>lunacm:&gt;</code> session, choose an HSM 
+ Partition, and type:<span style="font-family: 'Courier New', monospace;"><br />	partition backup restore -slot &lt;backup-hsm-slotnumber&gt; -partition LunaSAPartitionname -password ClientPassword 
+ -replace<br /> </span></p>
+        <p>The partition backup restore command in this instance sees a locally-connected backup device as one slot, and sees the distant Luna&#160;SA HSM's partition as another "local" slot, because of the NTLS link between the client workstation and the partition.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Note that in the command above, you could 
+ have used&#160;-add instead of -replace.</p>
+        <p>On restore, you may <span style="font-weight: bold;">add</span> to existing 
+ HSM Partition contents or <span style="font-weight: bold;">replace</span> 
+ them. Adding might result in unwanted behaviors, such as having two keys 
+ with the same label, if one existed in the HSM Partition and one on the 
+ backup token. The two would be assigned different handles, however.</p>
+        <p>For each additional restore to a partition on that distant Luna&#160;SA, you have already exchanged the certificates, but you must register each partition and your client workstation with each other, before each partition can appear as a slot in lunacm. </p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/backup/restore_your_hsm_partition_locally.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

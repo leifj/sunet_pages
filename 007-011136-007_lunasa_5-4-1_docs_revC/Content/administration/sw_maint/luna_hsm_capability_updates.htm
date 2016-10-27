@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Software Updates and Maintenance">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Luna HSM Capability Updates</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/sw_maint/luna_hsm_capability_updates.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="sw_maint.htm">Software Updates and Maintenance</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Luna HSM Capability Updates</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor203"></a><a name="kanchor204"></a><a name="kanchor205"></a>Luna HSM Capability Updates</h2>
+        <p>This page covers upgrading (not updating) your Luna&#160;SA.</p>
+        <p>Luna appliances are shipped from the factory in specific configurations with specific sets 
+ of capabilities, to suit your requirements. It can happen that your requirements 
+ change over time. To future-proof your Luna appliance investment, you 
+ have the option to purchase Secure Capability Updates to enhance the performance 
+ or extend the capability of Luna systems already in your possession. The 
+ Secure Capability Update accomplishes system upgrades while safeguarding 
+ the integrity of your sensitive key material and of the system software.</p>
+        <p>A Secure Capability Upgrade is delivered to you as a downloaded 
+ file set. The procedure to perform the update is very similar to the procedure 
+ for Appliance Software Update or Firmware Update:</p>
+        <h3>Preparing to Upgrade</h3>
+        <p>Backup all Luna HSM Partitions to Luna Backup 
+ Tokens (if you have the Backup option).</p>
+        <p>On the Client computer, acquire the capability update software package. 
+ </p>
+        <p>&#160;&#160;-- 
+ first, follow the FTP instructions that are supplied in e-mail from SafeNet 
+ Customer Support (support@safenet-inc.com), </p>
+        <p>&#160;&#160;-- 
+ then cd to the temporary “appliance” directory &#160;(that 
+ you created for ftp files), </p>
+        <p>&#160;&#160;-- 
+ then unzip the files (as directed in the ftp instructions). </p>
+        <p>Change (cd) to the location of the scp executable: </p>
+        <p>– on Unix Clients, open a terminal window and cd /usr/safenet/lunaclient/bin &#160;</p>
+        <p>&#160;&#160;&#160;(or, 
+ cd /opt/safenet/lunaclient/bin 
+ for HP-UX)</p>
+        <p>– on Windows Clients open a DOS/Command prompt window and </p>
+        <p>&#160;&#160;&#160;cd 
+ c:\Program Files\SafeNet\LunaClient.</p>
+        <p>Copy the Luna Appliance package file from  the ftp directory 
+ to the Luna appliance, as follows:</p>
+        <h5>For UNIX:</h5>
+        <p>./scp /&lt;path&gt;/&lt;spkg_patch_file.spkg&gt; &#160;admin@&lt;LunaHostname&gt;: </p>
+        <p>admin@LunaHostname's password:
+ </p>
+        <h5>For Windows:</h5>
+        <p>pscp \&lt;path&gt;\&lt;spkg_patch_file.spkg&gt; &#160;admin@&lt;LunaHostname&gt;: </p>
+        <p>admin@LunaHostname's password:
+</p>
+        <p>
+        </p>
+        <p>of (Use </p>
+        <p>( "Pscp" is mentioned above, assuming that you are using the provided "PuTTy" and "pscp" utility. If you prefer, you can use any third-party scp application for Windows.)</p>
+        <h3>Install</h3>
+        <p>Once the package has been transferred to the appliance, it is installed in two stages. First the package is unwrapped into its component files with the "package" command. Then the update is applied to the HSM with the "hsm update command"</p>
+        <p>Here are instructions to install the upgrade.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open an SSH session or console session to the Luna&#160;SA appliance. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Log in to the appliance as "admin".</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Verify that the package has arrived: &#160;<br />[myluna] lunash:&gt;package listf       <br />7874  Dec 19 2011 16:46 caupdateK3908000139_100000.spkg        <br />7874  Dec 19 2011 16:35 caupdateK3908000086_100000.spkg  <br />Command Result : 0 (Success) <br /> [myluna] lunash:&gt;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Open the desired package: <br />&#160;[myluna] lunash:&gt;package update caupdateK3908000139_100000.spkg -a XS9p7YbsW5WJp5PT <br /> Command succeeded:  decrypt package <br /> Command succeeded:  verify package certificate  <br />Command succeeded:  verify package signature  <br />Preparing packages for installation...  <br />908-000139-001_100000-1.0.0-0  <br />Running update script   <br />Command Result : 0 (Success) <br /> [myluna] lunash:&gt;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Check that the desired package is ready to be applied :&#160;&#160;<br />[myluna] lunash:&gt;hsm update show <br /> Capability Updates:          <br />&#160;&#160;&#160;&#160;908000139_100000     <br />Command Result : 0 (Success)  <br />[myluna] lunash:&gt;<br /></p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Apply the new capability :  &#160;<br /><span class="code">[myluna] lunash:&gt;hsm update capability -capability 908000139_100000 </span><br style="mc-tag-and-class: ;" /><span class="code"> CAUTION:  This command updates the HSM Capability.            </span><br style="mc-tag-and-class: ;" /><span class="code">&#160;&#160;&#160;&#160;This process cannot be reversed.            </span><br style="mc-tag-and-class: ;" /><span class="code">&#160;&#160;&#160;&#160;Any connected clients will have their            </span><br style="mc-tag-and-class: ;" /><span class="code">&#160;&#160;&#160;&#160;connections closed.            </span><br style="mc-tag-and-class: ;" /><span class="code">&#160;&#160;&#160;&#160;All clients should disconnect and the            </span><br style="mc-tag-and-class: ;" /><span class="code">&#160;&#160;&#160;&#160;NTLS should be stopped before proceeding. </span><br style="mc-tag-and-class: ;" /><span class="code">           &#160;&#160;&#160;Type 'proceed' to continue, or 'quit'            to quit now.            </span><br style="mc-tag-and-class: ;" /><span class="code">&#160;&#160;&#160;&#160;&gt; proceed </span><br style="mc-tag-and-class: ;" /><span class="code"> FwUpdate3 Application Version 2.2  </span><br style="mc-tag-and-class: ;" /><span class="code">SafeNet Firmware/Capability Update Utility for G5 and K6 modules  </span><br style="mc-tag-and-class: ;" /><span class="code">Enter slot number (0 for the first slot found) : 0  </span><br style="mc-tag-and-class: ;" /><span class="code">This is a NON-destructive capability update  </span><br style="mc-tag-and-class: ;" /><span class="code">Update Result : 0 (Success) </span><br style="mc-tag-and-class: ;" /><span class="code"> Command Result : 0 (Success) </span><br style="mc-tag-and-class: ;" /><span class="code"> [myluna] lunash:&gt;</span> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Check that the new capability is in place : <br /><span class="code">[myluna] lunash:&gt;hsm displayLicenses     </span><br style="mc-tag-and-class: ;" /><span class="code">HSM CAPABILITY LICENSES <br />   License ID          &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Description     </span><br style="mc-tag-and-class: ;" /><span class="code">================ &#160;   ====================================== </span><br style="mc-tag-and-class: ;" /><span class="code">       621000002-000 &#160;&#160;&#160;   K6 base configuration        </span><br style="mc-tag-and-class: ;" /><span class="code">621000021-001    &#160;&#160;&#160;&#160;&#160;Performance level 15           </span><br style="mc-tag-and-class: ;" /><span class="code">620127-000    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Elliptic curve cryptography           </span><br style="mc-tag-and-class: ;" /><span class="code">620114-001    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Key backup via cloning protocol            </span><br style="mc-tag-and-class: ;" /><span class="code">620124-000    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Maximum 20 partitions        </span><br style="mc-tag-and-class: ;" /><span class="code">621000003-001    &#160;&#160;&#160;&#160;&#160;Enable government configuration           </span><br style="mc-tag-and-class: ;" /><span class="code">620109-000    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;PIN entry device (PED) enabled        </span><br style="mc-tag-and-class: ;" /><span class="code">621010089-001    &#160;&#160;&#160;&#160;&#160;Enable remote PED capability        </span><br style="mc-tag-and-class: ;" /><span class="code">621010358-001    &#160;&#160;&#160;&#160;&#160;Enable a split of the master tamper key to be stored  externally        </span><br style="mc-tag-and-class: ;" /><span class="code">908000086-001 &#160;&#160;&#160;&#160;   Enabled for 15.5 megabytes of object storage        </span><br style="mc-tag-and-class: ;" /><span class="code">908000139-001    &#160;&#160;&#160;&#160;&#160;Korean market cryptographic algorithms </span><br style="mc-tag-and-class: ;" /><span class="code">   Command Result : 0 (Success)  </span><br style="mc-tag-and-class: ;" /><span class="code">[myluna] lunash:&gt;</span> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Reboot the system to enable the new capability :  &#160;<br /> <span class="code">[myluna] lunash:&gt;sysconf appliance reboot -force  <br />Force option used. Proceed prompt bypassed.  <br />'hsm supportInfo' successful. <br /> Use 'scp' from a client machine to get file  named: <br /> supportInfo.txt <br /><br />  Broadcast message from root (pts/0) (Mon Dec 19 16:49:56 2011):  <br />The system is going down for reboot NOW!  <br />Reboot commencing     <br />Command Result : 0 (Success)  <br />[myluna] lunash:&gt;</span> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Done &#160; </p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/sw_maint/luna_hsm_capability_updates.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

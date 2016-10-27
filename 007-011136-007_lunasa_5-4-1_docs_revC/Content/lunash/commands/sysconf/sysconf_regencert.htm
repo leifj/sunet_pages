@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|sysconf">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>sysconf regencert</title>
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#lunash/commands/sysconf/sysconf_regencert.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="sysconf.htm">sysconf</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">sysconf regencert</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">sysconf regencert</h2>
+        <p>Generate server certificate in software. <a name="kanchor447"></a><a name="kanchor448"></a>This command generates or re-generates the Luna appliance server certificate 
+ used for the NTLA in the Luna appliance file system. </p>
+        <p>If you are using a system with DNS, you should not specify an IP address. 
+ If you are using a system that does not use DNS, you should specify the 
+ IP address of eth0 so that the certificate will be properly generated. 
+ </p>
+        <p>It is very important that the certificates are properly generated or 
+ the NTLA will not work. </p>
+        <p>This command stores the resulting private and public keys, and the certificate generated from them, on the file system (hard disk) inside the Luna appliance. <br />If you prefer the additional security of keys that are  stored inside the HSM, use the command <b>sysconf hwregencert</b> instead.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code"><b>sysconf regenCert</b> &lt;eth0_ipaddress&gt; [<b>-startdate</b> &lt;startdate&gt;] [<b>-days</b> &lt;days&gt;] [<b>-force</b>]</p>
+        <table style="caption-side: top;width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" style="width: 123px;" />
+            <col class="Column-Column1" style="width: 137px;" />
+            <col class="Column-Column1" style="width: 550px;" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1" style="text-align: left;">Parameter&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                    <th class="HeadE-Column1-Header1" style="text-align: left;">Shortcut</th>
+                    <th class="HeadD-Column1-Header1" style="text-align: left;">Description &#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">&lt;eth0_ipaddress&gt;</td>
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Specifies the IP address of eth0. This parameter is required if the rest of 
+ your setup was done without DNS.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-days</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-d</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Specifies the number of days for which the new certificate will remain valid, starting on &lt;startdate&gt; </p>
+                        <p><b>Default:</b> 10 years</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-force</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-f</td>
+                    <td class="BodyD-Column1-Body1">Force the action without prompting.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">-startdate</td>
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">-s</td>
+                    <td class="BodyA-Column1-Body1">Specifies the starting date upon which the certificate becomes valid - default is 24 hours ago, to obviate possible timezone mismatch issues if you need the certificate to be valid immediately anywhere in the world.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">lunash:&gt; sysconf regenCert 192.168.1.254</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">WARNING !!  This command will overwrite the current server certificate and private key.</pre><pre xml:space="preserve">All clients will have to add this server again with this new certificate.</pre><pre xml:space="preserve">If you are sure that you wish to proceed, then type 'proceed', otherwise type 'quit'</pre><pre xml:space="preserve">&gt; proceed</pre><pre xml:space="preserve">Proceeding...</pre><pre xml:space="preserve">'sysconf regenCert' successful. NTLS must be (re)started before clients can connect.</pre><pre xml:space="preserve">Please use the 'ntls show' command to ensure that NTLS is bound to an appropriate network device or IP address/hostname</pre><pre xml:space="preserve">for the network device(s) NTLS should be active on. Use 'ntls bind' to change this binding if necessary.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../../index.html#lunash/commands/sysconf/sysconf_regencert.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

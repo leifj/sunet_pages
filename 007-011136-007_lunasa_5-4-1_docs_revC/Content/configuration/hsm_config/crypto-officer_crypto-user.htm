@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|Planning Your Configuration">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>CryptoOfficer CryptoUser</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/hsm_config/crypto-officer_crypto-user.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="planning_your_configuration.htm">Planning Your Configuration</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">CryptoOfficer CryptoUser</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor13"></a><a name="kanchor14"></a>Crypto Officer &amp; Crypto User</h2>
+        <p>An available security layer is required in some security and authentication schemes, as follows:</p>
+        <p><a name="kanchor15"></a>For those who need the additional distinction, the Partition Owner role 
+ (black PED Key) can optionally be subdivided into two further roles:</p>
+        <p>&#160;- Crypto 
+ Officer<br />&#160;- Crypto User</p>
+        <p>In the past, and continuing, the separation of roles on the  Luna HSM  
+ follows the standard Cryptoki model:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>appliance admin</b> <![CDATA[ ]]></p>
+        <p class="listLevel1">This is the basic administrative access to the a Luna HSM  appliance. When you connect 
+ via ssh (putty.exe or other ssh utility), the  Luna HSM  presents the "login as:" 
+ prompt. The only ID that is accepted is "admin". </p>
+        <p class="listLevel1">You must be logged in as the appliance "admin" before you can 
+ access further authentication layers such as HSM Admin, Partition Owner, 
+ Crypto Officer. &#160;&#160;</p>
+        <p class="listLevel1">The appliance "admin" performs network administration and some 
+ other functions that do not require the additional authentication. Therefore, 
+ by controlling access to passwords (for a Luna HSM  with Password Authentication) 
+ or to PED Keys (for a Luna HSM  with Trusted Path Authentication), 
+ you can compartmentalize the various administrative and security roles. &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>HSM Admin</b> <![CDATA[ ]]></p>
+        <p class="listLevel1">HSM Admin has control of the HSM within the a Luna HSM  appliance. To access HSM Admin 
+ functions, you must first be logged in as appliance admin. &#160;&#160;</p>
+        <p class="listLevel1">In addition to all the other appliance functions, a user who has authenticated 
+ with the HSM Admin password (for a Luna HSM  with Password Authentication) 
+ or the HSM Admin (blue) PED Key (for a Luna HSM  with Trusted Path Authentication) 
+ can: </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>create and delete Partitions, 
+ </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>create and delete Partition 
+ Owners (black PED Key holders on a Luna HSM with Trusted Path Authentication 
+ only), </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>backup and restore the 
+ HSM, </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>change HSM Policies, 
+ etc.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>HSM Partition 
+ Owner (or User)</b> <![CDATA[ ]]></p>
+        <p class="listLevel1">HSM Partition Owner has control of one or more Partitions (virtual HSMs) 
+ within the Luna HSM appliance. To access HSM Partition Owner functions, you must first be 
+ logged in as appliance admin.</p>
+        <p class="listLevel1">In addition to all the other appliance functions, a user who has authenticated 
+ with the HSM Partition Owner (black) PED Key (for a Luna HSM  with Trusted Path Authentication) 
+ can: </p>
+        <p class="Bulleted">
+            <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>modify partition policies</p>
+            <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>activate a partition 
+ for use by Clients</p>
+            <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>backup and restore Partition 
+ contents</p>
+            <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Both a Luna HSM  with Password Authentication 
+ and a Luna HSM  
+ with Trusted Path Authentication have at least two layers of access control 
+ for an HSM Partition:<br />- the appliance admin login<br />- the Partition authentication</p>
+            <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span><span style="font-weight: bold;">Luna </span><span style="font-weight: bold;" data-mc-conditions="Primary.notLunaSP">HSM</span><span style="font-weight: bold;"> 
+ with PED (Trusted Path) Authentication</span>, splits the Partition access into 
+ two layers. &#160;The 
+ HSM Partition Owner (a concept that exists only for a Luna HSM  with PED Authentication) 
+ first authenticates to the Partition with the appropriate black PED Key, 
+ then activates the Partition for Clients. Thereafter, each Client must 
+ further authenticate with the Partition Password (generated by Luna PED 
+ when the Partition is created).</p>
+            <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>For <span style="font-weight: bold;">Luna </span><span style="font-weight: bold;" data-mc-conditions="Primary.notLunaSP">HSM</span><span style="font-weight: bold;"> 
+ with Password Authentication</span>, the Partition Password is the only 
+ layer of authentication to a Partition. Therefore, any Client with that 
+ password has access to the Partition. What prevents a Client from manipulating 
+ objects on the Partition and performing Partition administration activities 
+ is the need to access the lunash command shell. </p>
+            <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Therefore, in both access-control models, a Client with the 
+ Password can connect and perform object generation and deletion, and can 
+ use objects (sign, verify, encrypt, decrypt), but they cannot perform 
+ Partition management operations unless they can also login to Luna Shell 
+ (lunash) as admin.</p>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>Client</b> <![CDATA[ ]]></p>
+        <p class="listLevel1">A Client is a "working" or "production" user of 
+ one or more Luna SA HSM Partitions, that connects from a client computer 
+ (one that has set up NTLS by exchanging certificates and registering with 
+ the Luna SA). If a Client can provide the Partition Password, it can generate, 
+ delete, and use cryptographic objects (keys and certificates) on the Partition, 
+ as long as the Partition is prepared to accept the connection. </p>
+        <p class="listLevel1">In the case of Luna SA with Password Authentication (assuming the HSM 
+ Partition has been previously created with the Password), the appliance 
+ simply needs to be powered on.</p>
+        <p class="listLevel1">In the case of Luna SA with Trusted Path Authentication (assuming the 
+ HSM Partition has been previously created and the Client given the Partition 
+ Password), the Partition must also be activated by the Partition Owner. 
+ That is, a Client, even with the proper Password cannot access a Luna 
+ SA HSM Partition unless that Partition has been placed in "activated" 
+ state by the HSM Partition Owner (using the black PED Key).</p>
+        <p>That authentication model continues unaffected, for those who prefer 
+ it. However an optional, enhanced Cryptoki model is also available, to separate the Partition Owner or Partition User role into a read-write entity and a separate read-only entity:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><strong>appliance admin</strong> <![CDATA[ ]]></p>
+        <p class="listLevel1">(Same as appliance admin description above. No change.)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>HSM Admin</b> <![CDATA[ ]]></p>
+        <p class="listLevel1">(Same as HSM Admin description above. No change.)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>Crypto Officer</b> (full Read-Write access)
+ </p>
+        <p class="listLevel1">(same capabilities as HSM Partition Owner and Client in the default model)</p>
+        <p class="listLevel1">As above for HSM Partition Owner, except that two separate Passwords 
+ can now (optionally) be associated with the black PED Key. In both cases, 
+ the black PED Key must be presented, and the administrator at the lunash 
+ command-line can: </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>modify partition policies</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>activate a partition 
+ for use by Clients</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>backup and restore Partition 
+ contents &#160;&#160;</p>
+        <p class="listLevel1">The Partition Password is presented when a Client application needs 
+ to use the Partition. In this model, there are two Passwords. The Crypto 
+ Officer Partition Password allows the Client to perform any crypto-graphic 
+ operation, both manipulation (generation, deletion, wrap/unwrap), and 
+ use (encrypt/decrypt, sign/verify). &#160;&#160;</p>
+        <p class="listLevel1">The other password is used (along with the black PED Key) for the Crypto 
+ User. This is set by the HSM Admin when the Partition is created.</p>
+        <p class="listLevel1">In operation, the Crypto Officer would log in at the management interface prompt for 
+ Partition maintenance tasks, </p>
+        <p class="listLevel1">and/or</p>
+        <p class="listLevel1">a Client application could connect to a registered Partition (authenticating 
+ with the Crypto Officer Password) in order to generate and manipulate 
+ cryptographic objects in the Partition. &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><strong>Crypto User</strong> &#160;&#160;(or restricted 
+ Client user - Read-only) &#160;&#160;</p>
+        <p class="listLevel1">If the Partition has been readied for access by the black PED Key, a 
+ Client can connect with a Client application, authenticating with the 
+ Crypto User Password (a challenge secret, generated on command by the 
+ Luna PED, similar to the Crypto Officer or Partition Owner Password that 
+ is generated on the Luna PED when a Partition is created). &#160;&#160;</p>
+        <p class="listLevel1">The Crypto User Client can then make use of cryptographic materials 
+ already in the Partition (signing, verifying, encrypting, decrypting), 
+ but cannot manipulate those objects (no generating or deleting or wrapping/unwrapping). &#160;&#160;</p>
+        <p class="listLevel1">This distinction differs from the old model, with just the one Partition 
+ Password, where Client users could not be restricted from generating and 
+ deleting keys and certificates. &#160;&#160;</p>
+        <p>Either model can be used. If you work in an environment that mandates 
+ the Crypto Officer / Crypto User distinction, it is available. If you 
+ have no need of the additional password, or if you have legacy applications 
+ that use the standard Cryptoki roles, then simply do not activate the 
+ Crypto Officer / Crypto User roles.</p>
+        <h3>How the Roles are Invoked</h3>
+        <p>By default, the Crypto User role does not exist, and so the black PED 
+ Key owner is HSM Partition Owner. You create a Crypto User (the restricted 
+ Client user) with the "partition createUser" command.</p>
+        <h3>Bad Login Attempts</h3>
+        <p>By default, both the Crypto Officer and the Crypto user can make 10 
+ consecutive failed login attempts before invoking consequences. That is, 
+ the two bad-authentication counters are independent of each other. </p>
+        <p>Submissions of incorrect Partition Passwords (or Crypto Officer and 
+ Crypto User Passwords) are not counted as incorrect black PED Key attempts.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The Luna HSM must actually receive some information 
+ before it logs a failed attempt, so if you merely forget to insert a PED 
+ Key, or provide a wrong-color key, then that is not logged 
+ as a failed attempt. When you successfully login, the bad-attempt counter is 
+ reset to zero.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/hsm_config/crypto-officer_crypto-user.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

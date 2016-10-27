@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|High Availability (HA) Mode">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>HA Replacing a Failed Luna&#160;SA</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/ha/ha_replacing_a_failed_lunasa.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha_intro.htm">High Availability (HA) Mode</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">HA Replacing a Failed Luna&#160;SA</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>HA Replacing a Failed Luna&#160;SA</h2>
+        <p>Before getting into replacing HSMs in an HA group, this first section describes relevant system conditions and settings to have a Luna&#160;SA configured and in an authenticated relationship with a client computer. In particular, we are interested in the client-side config file and the client's certificate folder in ordinary, single-appliance mode, and then in HA. You would already have set up the a Luna&#160;SA as described in the configuration manual, for network setup and creation of the appliance-side certificate (see <a href="../../configuration/appliance_config/generate_new_hsm_server_cert.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Generate a New HSM Server Certificate"</span></a>). </p>
+        <h4>Chrystoki.ini before client-side certificate creation</h4><pre xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+
+[LunaSA Client]
+SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf
+ReceiveTimeout=20000
+NetClient=1
+ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem
+ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\ClientNameCert.pem
+ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\ClientNameKey.pem
+
+[Luna]
+DefaultTimeOut=500000
+PEDTimeout1=100000
+PEDTimeout2=200000
+PEDTimeout3=10000
+
+[CardReader]
+RemoteCommand=1&#160;&#160;&#160;&#160;</pre>
+        <p>&#160;</p>
+        <p>Create client-side certs (see <a href="../../configuration/ntls_config/create_a_client_certificate_windows.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Create a Client Certificate (Windows)"</span></a>).</p>
+        <h4>Generated client certificates</h4>
+        <p>
+            <img src="../../Resources/Images/ha/generated_client_certs.png" />
+        </p>
+        <h4>Chrystoki.ini after client-side certificate creation</h4><pre xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+
+[LunaSA Client]
+SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf
+ReceiveTimeout=20000
+NetClient=1
+ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem
+ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\<span style="background-color: #ffff00;">20.1.1.20</span>.pem
+ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\<span style="background-color: #ffff00;">20.1.1.20</span>.pem
+
+[Luna]
+DefaultTimeOut=500000
+PEDTimeout1=100000
+PEDTimeout2=200000
+PEDTimeout3=10000
+
+[CardReader]
+RemoteCommand=1&#160;&#160;&#160;&#160;&#160;&#160;&#160;</pre>
+        <p>&#160;</p>
+        <p>Copy Luna SA server.pem to client.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>At this point there are still no certificates in cert\server directory.</p>
+        <p>Use “vtl addserver” to register the Luna SA with the client. &#160;&#160;<br />CAFile.pem is generated in the cert\server directory.</p>
+        <h4>Cert\server directory after CAFile.pem is generated</h4>
+        <p>
+            <img src="../../Resources/Images/ha/cert_dir_after_vtl-addserver.png" />
+        </p>
+        <h4>Crystoki.ini after "vtl addserver" </h4><pre xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+
+[LunaSA Client]
+SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf
+ReceiveTimeout=20000
+NetClient=1
+ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem
+ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem
+ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem 
+<span style="background-color: #ffff00;">ServerName00=20.1.1.20
+ServerPort00=1792</span>
+
+[Luna]
+DefaultTimeOut=500000
+PEDTimeout1=100000
+PEDTimeout2=200000
+PEDTimeout3=10000
+
+[CardReader]
+RemoteCommand=1&#160;</pre><pre xml:space="preserve">&#160;&#160;&#160;</pre>
+        <h4>vtl verify results</h4><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;vtl verify
+
+
+The following Luna SA Slots/Partitions were found:
+
+Slot	Serial # 	Label
+====	========	=====
+1	154702010	p1
+
+C:\Program Files\SafeNet\LunaClient&gt;&#160;&#160;&#160;&#160;&#160;</pre>
+        <p>&#160;</p>
+        <h3>Replace a Luna SA Using the same IP</h3>
+        <p>For an existing HA&#160;group,  bring in a replacement Luna SA.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Change the IP of the new appliance to match the one that was removed. &#160;&#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Perform RegenCert on the new Luna SA. <br />Note: “vtl verify” on client at this time would fail because the cert that the client has is for the old, removed Luna&#160;SA. &#160;&#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Execute “vtl deleteserver –n &lt;original IP&gt;</p>
+        <h5>Deleting old Luna SA from Client</h5><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;vtl listservers
+Server: 20.1.1.20
+
+C:\Program Files\SafeNet\LunaClient&gt;vtl deleteserver -n 20.1.1.20
+Server: 20.1.1.20 successfully removed from server list.
+
+C:\Program Files\SafeNet\LunaClient&gt; </pre>
+        <p>&#160;</p>
+        <h5>Contents of cert\server after “deleteserver” (CAFile.pem has been deleted)</h5>
+        <p>
+            <img src="../../Resources/Images/ha/cert_dir_after_vtl-deleteserver.png" />
+        </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Copy new server.pem to client</p>
+        <h5>Copying new server.pem to client</h5><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;pscp admin@20.1.1.20:server.pem . 
+admin@20.1.1.20's password:  
+server.pem		| 1 kB | 1.1 kB/s | ETA: 00:00:00 | 100% </pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Run vtl addserver using new server.pem</p>
+        <h5>vtl addserver using new server.pem</h5><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;vtl addserver -n 20.1.1.20 -c server.pem
+New server: 20.1.1.20 successfully added to server list.
+
+C:\Program Files\SafeNet\LunaClient&gt; </pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Run vtl verify.</p>
+        <h5>vtl verify results</h5><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;vtl verify
+
+
+The following Luna SA Slots/Partitions were found:
+
+Slot	Serial # 	Label
+====	========	=====
+1	154702010	p1
+
+C:\Program Files\SafeNet\LunaClient&gt;&#160;&#160;&#160;&#160;&#160;</pre>
+        <p>&#160;</p>
+        <h3>Summary</h3>
+        <p>If a Luna SA must be replaced, the old IP can be used, but the Luna SA certificate must be regenerated. The IP must be removed from the server list on the client and then added back using the new “server.pem”</p>
+        <h4>Client side requirements review:</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Use <code>vtl deleteserver</code> to remove IP from list and delete CAFile.pem from cert\server</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Copy “new” server.pem to client</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Use <code>vtl addserver</code> to re-add IP and create CAFile.pem</p>
+        <h3>Client-side - Reconfigure HA If a Luna&#160;SA Must Be Replaced</h3>
+        <p>Note HA partition serial numbers</p><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;vtl verify
+The following Luna SA Slots/Partitions were found:
+Slot	Serial # 	Label
+====	========	=====
+1	154702011	HA1
+1	154702012	HA2&#160;&#160;&#160;&#160;&#160;
+
+C:\Program Files\SafeNet\LunaClient&gt;</pre>
+        <p>&#160;</p>
+        <p>Run "vtl haAdmin -newGroup..." <br />A group is created with HA1 as Primary.</p><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;vtl haadmin -newGroup -label SomeHAGrp -serial 154702011 -password userpin
+New  group with label "SomeHAGrp" created at group number 1154702011. 
+Group configuration is:
+
+		 HA Group label:  SomeHAGrp
+		HA Group Number:  1154702011
+		HA Group Slot #:  unknown
+		Synchronization:  enabled
+		  Group Members:  154702011
+		Standby Members:  &lt;none&gt;
+			In Sync:  yes
+
+C:\Program Files\SafeNet\LunaClient&gt; </pre>
+        <p>&#160;</p>
+        <h4>Crystoki.ini after HA group is created</h4><pre xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+
+[LunaSA Client]
+SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf
+ReceiveTimeout=20000
+NetClient=1
+ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem
+ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem
+ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem 
+ServerName00=20.1.1.20
+ServerPort00=1792
+
+[Luna]
+DefaultTimeOut=500000
+PEDTimeout1=100000
+PEDTimeout2=200000
+PEDTimeout3=10000
+
+[CardReader]
+RemoteCommand=1&#160;&#160;&#160;
+
+<span style="background-color: #ffff00;">[VirtualToken] &#160;&#160;
+VirtualToken00Label=SomeHAGrp&#160;&#160;
+VirtualToken00SN=1154702011 &#160;&#160;
+VirtualToken00Members=154702011&#160;
+
+[HASynchronize] &#160;&#160;
+SomeHAGrp=1</span>  </pre>
+        <p>Add a secondary Luna&#160;SA partition to the HA&#160;group with <code>vtl haAdmin - addMember</code>.</p>
+        <p>&#160;</p><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;vtl haadmin -addMember -group SomeHAGrp -serialNum 154702012 -password userpin
+New  group with label "SomeHAGrp" created at group number 1154702011. 
+Group configuration is:
+
+		 HA Group label:  SomeHAGrp
+		HA Group Number:  1154702011
+		HA Group Slot #:  6
+		Synchronization:  enabled
+		  Group Members:  154702011, 154702012 &#160;
+		Standby Members:  &lt;none&gt;
+			In Sync:  yes
+
+Please use the command 'vtl haAdmin -synchronize' when
+you are ready to replicate data among all members of the
+HA grou. (If you have additional members to add, you might
+wish to wait until you have added them before synchronizing
+to save time by avoiding multiple synchronizations.) &#160;
+
+C:\Program Files\SafeNet\LunaClient&gt;&#160;&#160;&#160;&#160;</pre>
+        <p>&#160;</p>
+        <h4>Crystoki.ini after second HA member is added</h4><pre xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+
+[LunaSA Client]
+SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf
+ReceiveTimeout=20000
+NetClient=1
+ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem
+ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem
+ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem 
+ServerName00=20.1.1.20
+ServerPort00=1792
+
+[Luna]
+DefaultTimeOut=500000
+PEDTimeout1=100000
+PEDTimeout2=200000
+PEDTimeout3=10000
+
+[CardReader]
+RemoteCommand=1&#160;&#160;&#160;
+
+[VirtualToken] &#160;&#160;
+VirtualToken00Label=SomeHAGrp&#160;&#160;
+VirtualToken00SN=1154702011 &#160;&#160;
+VirtualToken00Members=154702011<span style="background-color: #ffff00;">, 154702012</span>&#160;&#160;
+
+[HASynchronize] &#160;&#160;
+SomeHAGrp=1 &#160;&#160;
+ &#160;&#160;</pre>
+        <h4>Crystoki.ini after HA Only is enabled</h4><pre xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+
+[LunaSA Client]
+SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf
+ReceiveTimeout=20000
+NetClient=1
+ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem
+ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem
+ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem 
+ServerName00=20.1.1.20
+ServerPort00=1792
+
+[Luna]
+DefaultTimeOut=500000
+PEDTimeout1=100000
+PEDTimeout2=200000
+PEDTimeout3=10000
+
+[CardReader]
+RemoteCommand=1&#160;&#160;&#160;
+
+[VirtualToken] &#160;&#160;
+VirtualToken00Label=SomeHAGrp&#160;&#160;
+VirtualToken00SN=1154702011 &#160;&#160;
+VirtualToken00Members=154702011, 154702012&#160;&#160;
+
+[HASynchronize] &#160;&#160;
+SomeHAGrp=1 &#160;&#160;
+
+<span style="background-color: #ffff00;">[HAConfiguration] &#160;&#160;
+HAOnly=1</span>  </pre>
+        <h4>Crystoki.ini after "autorecovery" is enabled</h4><pre xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+
+[LunaSA Client]
+SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf
+ReceiveTimeout=20000
+NetClient=1
+ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem
+ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem
+ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem 
+ServerName00=20.1.1.20
+ServerPort00=1792
+
+[Luna]
+DefaultTimeOut=500000
+PEDTimeout1=100000
+PEDTimeout2=200000
+PEDTimeout3=10000
+
+[CardReader]
+RemoteCommand=1&#160;&#160;&#160;
+
+[VirtualToken] &#160;&#160;
+VirtualToken00Label=SomeHAGrp&#160;&#160;
+VirtualToken00SN=1154702011 &#160;&#160;
+VirtualToken00Members=154702011, 154702012&#160;&#160;
+
+[HASynchronize] &#160;&#160;
+SomeHAGrp=1 &#160;&#160;
+
+[HAConfiguration] &#160;&#160;
+HAOnly=1 
+reconnAtt=500&#160; &#160;&#160;
+ &#160;&#160;</pre>
+        <p>&#160;</p>
+        <p>Show HA configuration results with <code>vtl haAdmin -show</code> <![CDATA[ ]]></p><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;vtl haadmin -show&#160;
+
+
+================== HA Global Configuration Settings ============ &#160;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;HA Auto Recovery:  enabled &#160;&#160;&#160;&#160;&#160;&#160;
+&#160;&#160;&#160;Maximum Auto Recovery Retry:  500  
+&#160;&#160;&#160;Auto Recovery Poll Interval:  60 seconds &#160;&#160;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;HA Logging:  disabled &#160;&#160;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Only Show HA Slots:  yes
+
+
+================== HA Group and Member Information ============
+
+		 HA Group label:  SomeHAGrp
+		HA Group Number:  1154702011
+		HA Group Slot #:  1
+		Synchronization:  enabled
+		  Group Members:  154702011, 154702012 &#160;
+		Standby Members:  &lt;none&gt;
+			
+
+Slot #&#160;&#160;Member S/N 		Member Label	Status
+======	&#160;========	  	============	======
+&#160;&#160;&#160;-	&#160;154702011		&#160;&#160;&#160;	HA1	alive &#160;&#160;
+ &#160;&#160;-	&#160;154702012		&#160;&#160;	HA2	alive &#160;&#160;&#160;
+
+C:\Program Files\SafeNet\LunaClient&gt;&#160;&#160;&gt;&#160;&#160;&#160;&#160;</pre>
+        <p>&#160;</p>
+        <h3>Replacing the Secondary HA Group Member</h3>
+        <p>When the Luna SA to be replaced, in an HA Group, is a secondary member, the process is similar to above.You must delete the secondary from the HA Group and re-add it with the new partition serial number. It is not necessary to delete and recreate the group.</p>
+        <p>If a Luna SA must be replaced, the old IP address can be used, but the Luna SA certificate must be regenerated. The IP address must be removed from the server list on the client and then added back using the new “server.pem” received from the replacement Luna SA. &#160;&#160;</p>
+        <p>If the Luna SA being replaced is the Primary, you must delete the HA Group and recreate it using the new Primary Luna SA partition serial number and then add the original Secondary Luna SA partition serial number - the cert from the original Secondary is already in place on the client, and no change is needed to that.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/ha/ha_replacing_a_failed_lunasa.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Extensions to PKCS#11">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Key Export</title>
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/extensions/key_export.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">SDK Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="extensions.htm">Extensions to PKCS#11</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Key Export</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor635"></a><a name="kanchor636"></a>Key Export</h2>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>These features are supported through the PKCS #11 V2.01 API only.</p>
+        <h3>Derivation of Symmetric Keys with 3DES_ECB</h3>
+        <p>Luna Key Export supports derivation of symmetric keys by the encryption 
+ of "diversification data" with a base key. Access to the derivation 
+ functionality is through the PKCS #11 C_DeriveKey function with the CKM_DES3_ECB 
+ and CKM_DES_ECB mechanism. Diversification data is provided as the mechanism 
+ parameter. The derived key can be any type of symmetric key. The encrypted 
+ data forms the CKA_VALUE attribute of the derived key. A template provided 
+ as a parameter to the C_DeriveKey function defines all other attributes.</p>
+        <p>Rules for the derivation are as follows:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The Base Key must be of type CKK_DES2 or CKK_DES3 when using CKM_DES3_ECB. 
+ It must be of type CKK_DES when using CKM_DES_ECB.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The base key must have its CKA_DERIVE attribute set to TRUE.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The template for the derived key must identify the key type (CKA_KEY_TYPE) 
+ and length (CKA_VALUE_LEN). The type and length must be compatible. The 
+ length can be omitted if the key type supports only one length. (E.g., 
+ If key type is CKK_DES2, the length must either be explicitly defined 
+ as 16, or be omitted to allow the value to default to 16). Other attributes 
+ in the template must be consistent with the security policy settings of 
+ the Luna HSM.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The derivation mechanism must be set to CKM_DES3_ECB or CKM_DES_ECB, 
+ the mechanism parameter pointer must point to the diversification data, 
+ and the mechanism parameter length must be set to the diversification 
+ data length.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The diversification data must be the same length as the key to be derived, 
+ with one exception. If the key to be derived is16 bytes, the base key 
+ is CKK_DES2 and the diversification data is only 8 bytes, then the data 
+ is encrypted twice - once with the base key and once with the base key 
+ with its halves reversed. Joining the two encrypted pieces forms the derived 
+ key.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If the derived key is of type CKK_DES, CKK_DES2 or CKK_DES3, odd key 
+ parity is applied to the new key value immediately following the encryption 
+ of the diversification data. The encrypted data is taken as-is for the 
+ formation of all other types of symmetric keys.</p>
+        <h3>RSA Key Component Wrapping</h3>
+        <p>The RSA Key Component Wrapping is a feature that allows an application 
+ to wrap any subset of attributes from an RSA private key with 3-DES. Access 
+ to the feature is through the PKCS #11 function C_WrapKey with the CKM_DES3_ECB 
+ mechanism. The wrapping key must be a CKK_DES2 or CKK_DES3 key with its 
+ CKA_WRAP attribute set to TRUE. The key to wrap must be an RSA private 
+ key with CKA_EXTRACTABLE set to TRUE and the FPV must have FPV_WRAPPING_TOKEN 
+ turned on.</p>
+        <p>The details of the wrapping format are specified with a format descriptor. 
+ The format descriptor is provided as the mechanism parameter to the CKM_DES3_ECB 
+ mechanism. This descriptor consists of a 32-bit format version, followed 
+ by a set of field element descriptors. Each field element descriptor consists 
+ of a 32-bit Field Type Identifier and optionally some additional data. 
+ The Luna &#160;firmware 
+ parses the set of field element descriptors and builds the custom layout 
+ of the RSA private key in an internal buffer. Once all field element descriptors 
+ are processed, the buffer is wrapped with 3-DES and passed out to the 
+ calling application. It is the responsibility of the calling application 
+ to ensure that the buffer is a multiple of 8 bytes.</p>
+        <p>The format descriptor version (the first 32-bit value in the format 
+ data) must always be set to zero.</p>
+        <p>The set of supported field element descriptor constants is as follows:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_APPEND_STRING &#160;0x00000000</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_APPEND_ATTRIBUTE 0x00000001</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_APPEND_REVERSED_ATTRIBUTE 0x00000002</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_APPEND_RFC1423_PADDING 0x00000010</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_APPEND_ZERO_PADDING 0x00000011</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_APPEND_ZERO_WORD_PADDING 0x00000012</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_APPEND_INV_XOR_CHECKSUM 0x00000020</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_DEFINE_IV_FOR_CBC 0x00000030</p>
+        <p>The meanings of the field element descriptors is as follows:</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Field element descriptor</th>
+                    <th class="HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">KM_APPEND_STRING</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Appends an arbitrary string of bytes to the custom layout buffer.</p>
+                        <p>The field type identifier is followed by a 32-bit length field defining 
+ the number of bytes to append.</p>
+                        <p>The length field is followed by the bytes to append.</p>
+                        <p>There is no restriction of the length of data that may be appended, 
+ as long as the total buffer length does not exceed 3072 bytes.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">KM_APPEND_ATTRIBUTE</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Appends an RSA private key component into the buffer in big endian representation.</p>
+                        <p>The field type identifier is followed by a 32-bit CK_ATTRIBUTE_TYPE 
+ value set to one of the following: CKA_PRIVATE_EXPONENT, CKA_PRIME_1, 
+ CKA_PRIME_2, CKA_EXPONENT_1, CKA_EXPONENT_2, or CKA_COEFFICIENT.. </p>
+                        <p>The key component is padded with leading zeros such that the length 
+ is equal to the modulus length in the case of the private exponent, or 
+ equal to half of the modulus length in the case of the other 5 components.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">KM_APPEND_REVERSED_ATTRIBUTE</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Appends an RSA private key component into the buffer in little endian 
+ representation.</p>
+                        <p>The field type identifier is followed by a 32-bit CK_ATTRIBUTE_TYPE 
+ value set to one of the following: CKA_PRIVATE_EXPONENT, CKA_PRIME_1, 
+ CKA_PRIME_2, CKA_EXPONENT_1, CKA_EXPONENT_2, or CKA_COEFFICIENT.</p>
+                        <p>The key component is padded with trailing zeros such that the length 
+ is equal to the modulus length in the case of the private exponent, or 
+ equal to half of the modulus length in the case of the other 5 components.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">KM_APPEND_RFC1423_PADDING</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Applies RFC 1423 padding to the buffer (appends 1 to 8 bytes with values 
+ equal to the number of bytes, such that the total buffer length becomes 
+ a multiple of 8).</p>
+                        <p>This would typically be the last formatting element in a set, but this 
+ is not enforced.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">KM_APPEND_ZERO_PADDING</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Applies Zero padding to the buffer (appends 0 to 7 bytes with values 
+ equal to Zero, such that the total buffer length becomes a multiple of 
+ 8).</p>
+                        <p>This would typically be the last formatting element in a set, but this 
+ is not enforced.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">KM_APPEND_ZERO_WORD_PADDING</td>
+                    <td class="BodyD-Column1-Body1">Zero pads the buffer to the next 32-bit word boundary.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">KM_APPEND_INV_XOR_CHECKSUM</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Calculates and adds a checksum byte to the buffer.</p>
+                        <p>The checksum is calculated as the complement of the bytewise XOR of 
+ the buffer being built.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">KM_DEFINE_IV_FOR_CBC</td>
+                    <td class="BodyA-Column1-Body1">
+                        <p>Allows definition of an IV so that 3DES_CBC wrapping can be performed 
+ even though the functionality is invoked with the CKM_3DES_ECB mechanism.</p>
+                        <p>The field type identifier is followed by a 32-bit length field, which 
+ must be set to 8.</p>
+                        <p>The length is followed by exactly 8 bytes of data which are used as 
+ the IV for the wrapping operation.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>Examples</h4>
+        <p>To wrap just the private exponent of an RSA key in big endian representation, 
+ the parameters would appear as follows:</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Ensure that the packing alignment for your structures 
+ uses one (1) byte boundaries.<br /></p><pre xml:space="preserve">struct</pre><pre xml:space="preserve">{</pre><pre xml:space="preserve">UInt32 version = 0;</pre><pre xml:space="preserve">UInt32 elementType&#160;= KM_APPEND_ATTRIBUTE;</pre><pre xml:space="preserve">CK_ATTRIBUTE_TYPE attribute = CKA_PRIVATE_EXPONENT;</pre><pre xml:space="preserve">}</pre><pre xml:space="preserve">&#160;</pre>
+        <p>To wrap the set of RSA key components Prime1, Prime2, Coefficient, Exponent1, 
+ Exponent2 in little endian represen-tation with a leading byte of 0x05 
+ and ending with a CRC byte and then zero padding, the parameters would 
+ appear in a packed structure as follows:</p><pre xml:space="preserve">struct</pre><pre xml:space="preserve">{</pre><pre xml:space="preserve">UInt32 version = 0;</pre><pre xml:space="preserve">UInt32 elementType1 = KM_APPEND_STRING;</pre><pre xml:space="preserve">UInt32 length = 1;</pre><pre xml:space="preserve">UInt8 byteValue = 5;</pre><pre xml:space="preserve">UInt32 elementType2 = KM_APPEND_REVERSED_ATTRIBUTE;</pre><pre xml:space="preserve">CK_ATTRIBUTE_TYPE attribute1 = CKA_PRIME_1;</pre><pre xml:space="preserve">UInt32 elementType3 = KM_APPEND_REVERSED_ATTRIBUTE;</pre><pre xml:space="preserve">CK_ATTRIBUTE_TYPE attribute2 = CKA_PRIME_2;</pre><pre xml:space="preserve">UInt32 elementType4 = KM_APPEND_REVERSED_ATTRIBUTE;</pre><pre xml:space="preserve">CK_ATTRIBUTE_TYPE attribute3 = CKA_COEFFICIENT;</pre><pre xml:space="preserve">UInt32 elementType5 = KM_APPEND_REVERSED_ATTRIBUTE;</pre><pre xml:space="preserve">CK_ATTRIBUTE_TYPE attribute4 = CKA_EXPONENT_1;</pre><pre xml:space="preserve">UInt32 elementType6 = KM_APPEND_REVERSED_ATTRIBUTE;</pre><pre xml:space="preserve">CK_ATTRIBUTE_TYPE attribute5 = CKA_EXPONENT_2;</pre><pre xml:space="preserve">UInt32 elementType7 = KM_APPEND_INV_XOR_CHECKSUM;</pre><pre xml:space="preserve">UInt32 elementType8 = KM_APPEND_ZERO_PADDING;</pre><pre xml:space="preserve">}</pre>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#sdk/extensions/key_export.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

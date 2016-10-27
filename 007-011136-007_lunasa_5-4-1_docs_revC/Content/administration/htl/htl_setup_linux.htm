@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>HTL Setup on Linux</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/htl/htl_setup_linux.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">HTL Setup on Linux</h2>
+        <p>You should already have confirmed NTLS binding to the correct interface address on your Luna SA appliance, with <code>ntls bind</code> command.</p>
+        <h3>Import Luna SA Server Certificate to the Client</h3>
+        <p class="ol1" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>From the command prompt on your Linux client, navigate to this directory:
+<br /><code>/usr/safenet/lunaclient/bin</code> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Securely transfer the server.pem file from the Luna SA to the client, using the scp utility:
+<br /><code>scp admin@LunaSA:server.pem .
+</code><br style="mc-tag-and-class: code;" /><code>admin@LunaSA’s password
+
+</code><br style="mc-tag-and-class: code;" /><code>server.pem                                    100% 1164     1.1KB/s   00:00</code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <h3>Register the Luna SA with the Client (specifying HTL)
+</h3>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>From the /usr/safenet/lunaclient/bin directory, use the vtl utility to register the Luna SA appliance, making sure to specify htl:
+ &#160;&#160;<br />#  ./vtl addServer –n &lt;SAhostname-or-IPaddress&gt; -c server.pem –htl
+<br />---------------- Example --------------------------
+
+<br /><code># ./vtl addServer –n LunaSA –c server.pem –htl
+
+</code><br style="mc-tag-and-class: code;" /><code>New server LunaSA successfully added to server list.</code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <h3>Create a Client Certificate
+</h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Use the vtl utility to create a client certificate:
+<br />#  ./vtl createCert –n &lt;clienthostname-or-ipaddress&gt;
+<br />----------------- Example -------------------------
+
+<br /><code>#  ./vtl createCert –n MyClient
+</code><br style="mc-tag-and-class: code;" /><code>Private Key created and written to: /usr/safenet/lunaclient/cert/client/MyClientKey.pem
+ &#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>Certificate created and written to: /usr/safenet/lunaclient/cert/client/MyClient.pem</code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <h3>Export Client Certificate to Luna SA
+ &#160;</h3>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Use the scp utility to export the client certificate to your Luna SA:
+<br />#  scp /usr/safenet/lunaclient/cert/client/&lt;client.pem&gt; admin@&lt;SAhostname-or-IPaddress&gt;:
+<br />------------------- Example -----------------------
+
+<br /><code># scp /usr/safenet/lunaclient/cert/client/MyClient.pem admin@LunaSA:
+</code><br style="mc-tag-and-class: code;" /><code>admin@LunaSA's password: </code><br style="mc-tag-and-class: code;" /><code>
+
+MyClient.pem                                100% 1164     1.1KB/s   00:00</code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <h3>Register Client with HTL
+ &#160;&#160;</h3>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>On the Luna SA appliance, from the luna shell, after the client certificate has been transferred to your Luna&#160;SA (above), register your client ensuring that the –requireHtl flag is specified.
+<br />lunash:&gt;client register –c &lt;clientname&gt; –ip &lt;client-ip-address&gt; -requireHtl
+<br />---------------- Example ------------------------- &#160;&#160;
+<br /> <code>lunash:&gt;client register –c MyClient –ip 192.76.20.10 -requireHtl
+</code><br style="mc-tag-and-class: code;" /><code>‘client register’ successful.
+</code><br style="mc-tag-and-class: code;" /><code>Command Result : 0 (Success)
+</code><br style="mc-tag-and-class: code;" /><code>lunash:&gt;</code> <br />OR<br />lunash:&gt;client register –c &lt;clientname&gt; –hostname &lt;client-hostname&gt; -requireHtl
+<br />---------------- Example ------------------------- &#160;&#160;
+<br /> <code>lunash:&gt;client register –c MyClient –hostname myfirstclient -requireHtl
+</code><br style="mc-tag-and-class: code;" /><code>‘client register’ successful.
+</code><br style="mc-tag-and-class: code;" /><code>Command Result : 0 (Success)
+</code><br style="mc-tag-and-class: code;" /><code>lunash:&gt;</code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <h3>Generate OTT for Client on Luna SA
+ &#160;&#160;</h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>A One Time Token (OTT) is required for your client to initiate the Host Trust Link strong-binding connection with your Luna&#160;SA appliance.  On the appliance, from the luna shell, generate the OTT for the client.
+<br />lunash:&gt; htl generateOtt –client &lt;clientname&gt;
+ &#160;&#160;<br />-------------------- Example ----------------------
+ &#160;&#160;<br /><code>htl generateOtt  -client MyClient
+</code><br style="mc-tag-and-class: code;" /><code>One-time token for client MyClient is ready to use.
+ &#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>Filename is MyClient.ott
+ &#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>Command Result : 0 (Success)
+ &#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>lunash:&gt;</code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <h3>Export OTT from Luna SA to Client
+ &#160;&#160;</h3>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>On your Client, use the scp utility to transfer the newly generated OTT from the Luna SA to your client:
+ &#160;<br />#  scp admin@&lt;SAHostname-or-IPaddress&gt;:&lt;clientname.ott&gt; .
+
+ &#160;&#160;<br />--------------------- Example ---------------------
+ &#160;&#160;<br /><code># scp admin@10.2.87.61:MyClient2.ott .
+ &#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>admin@10.2.87.61's password: 
+
+ &#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>MyClient2.ott                                 100%   32     0.0KB/s   00:00 </code> <br /><br /> OR<br />--------------------- Example ---------------------
+ &#160;&#160;<br /><code># scp admin@10.2.87.61:MyClient2.ott .
+ &#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>admin@MyLunaSA's password: 
+
+ &#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>MyClient2.ott                                 100%   32     0.0KB/s   00:00 </code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <h3>Establish Host Trust Link
+ &#160;&#160;</h3>
+        <p>After the OTT has been transferred to your client, the final step is to make the token available.
+ &#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Move the token to the htl directory on the client, <strong>renaming it</strong> with the ip address or hostname of your Luna SA appliance:
+ &#160;<br /># mv MyClient2.ott  /usr/safenet/lunaclient/htl/&lt;SAHostname-or-IPaddress&gt;.ott
+ &#160;&#160;<br />-------------------- Example ----------------------
+ &#160;&#160;<br /># mv MyClient2.ott  ../htl/myLunaSA.ott
+ <br />#
+</p>
+        <p>&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You must rename the token file (see above). It is easiest to change the filename during the "move" operation.</p>
+        <p>&#160;</p>
+        <p>After the token has been moved to its correct location, it will be used during the next HTL polling interval.  This happens automatically.
+</p>
+        <p>On the Luna SA appliance, you can confirm the status of the Host Trust Link with the ‘htl show’ command. The HTL Status changes to "Up" and the OTT Status changes to "In use" after the client has successfully established a Host Trust Link</p><pre xml:space="preserve">htl show
+HTL Grace period   :  60 seconds
+Default OTT expiry :  300 seconds
+
+
+ Client Name         HTL Status     OTT Status     OTT Expiry Time
+ -----------------------------------------------------------------
+ MyClient            Down           No file        300 (default)
+ MyClient2           Up             In use         300 (default)
+
+Command Result : 0 (Success)
+</pre>
+        <p>&#160;</p>
+        <p>  <![CDATA[ ]]></p>
+        <p><a name="aanchor66"></a>
+            <MadCap:concept term="HTL" />
+        </p>
+        <p>&#160;</p>
+        <p><a class="MCHelpControl MCHelpControl-Concept conceptLink " data-mc-concepts="HTL" data-mc-topics="HTL Setup on Linux|#||HTL Setup on Windows|htl_setup_windows.htm"><span class="MCHelpControl-ConceptHotSpot_">See Also</span></a>
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p> &#160;&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/htl/htl_setup_linux.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

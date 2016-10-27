@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|HSM Initialization">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Initialization Overview for PED-authenticated HSMs</title>
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/initialization/what_is_initialization_ped-auth.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="initialization.htm">HSM Initialization</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Initialization Overview for PED-authenticated HSMs</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor79"></a>Initialization Overview for PED-authenticated HSMs</h2>
+        <p>For Luna HSMs, there are two kinds of initialization:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>"hard" init - occurs when the HSM is in a factory [re]fresh state</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>"soft" init - occurs when the HSM is not in factory [re]fresh state</p>
+        <p>Both are launched by the same command, <span style="font-family: monospace;">hsm init -l &lt;hsmlabel&gt;</span>.</p>
+        <table class="TableStyle-Page" style="caption-side: top;width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" cellspacing="0">
+            <col class="Column-Column1">
+            </col>
+            <col class="Column-Column1">
+            </col>
+            <col class="Column-Column1">
+            </col>
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Condition/Effect</th>
+                    <th class="HeadE-Column1-Header1">
+                        <p>Soft init</p>
+                    </th>
+                    <th class="HeadD-Column1-Header1">
+                        <p>Hard init&#160;</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">&#160;SO authentication required?&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;Yes</td>
+                    <td class="BodyD-Column1-Body1">&#160;No</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">&#160;Can set new HSM label&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;Yes</td>
+                    <td class="BodyD-Column1-Body1">&#160;Yes</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">&#160;Creates new SO identity&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;No</td>
+                    <td class="BodyD-Column1-Body1">&#160;Yes</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">&#160;Creates new Domain&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;No</td>
+                    <td class="BodyD-Column1-Body1">&#160;Yes</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">&#160;Destroys partitions&#160;</td>
+                    <td class="BodyE-Column1-Body1">&#160;Yes</td>
+                    <td class="BodyD-Column1-Body1">&#160;No (none exist to destroy)&#160;*</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">&#160;Destroys SO objects&#160;</td>
+                    <td class="BodyB-Column1-Body1">&#160;Yes</td>
+                    <td class="BodyA-Column1-Body1">&#160;No (none exist to destroy)&#160;* </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>* hsm factoryReset was performed, and destroyed partitions and objects, before the hard init... otherwise, it could not be a hard init.</p>
+        <h3>Hard Initialization</h3>
+        <p>Coming from the factory, the Luna SA:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>has network settings left over from our manufacturing process and not recommended for your production 
+ network</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>has only default certificates 
+ in place</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>has an undifferentiated 
+ HSM with no associations or ownership declared</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>has not yet had virtual 
+ HSMs (HSM Partitions) created or assigned</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>has not been introduced 
+ to the Clients (your Clients) with which it will be working.</p>
+        <p><a name="kanchor80"></a>Network setup of the appliance takes care of the first two items on 
+ that list. See <a href="../../configuration/appliance_config/configure_ip_and_network_parameters.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Configure IP and Network Parameters"</span></a> in the <i>Configuration Guide</i>.</p>
+        <p>Initialization takes care of the third item, which pertains specifically 
+ to the HSM portion of the appliance. </p>
+        <p><a name="kanchor81"></a>When you initialize a new (or factoryReset) HSM, several things happen, but the most important 
+ ones from your operational perspective are:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>you set up Security Officer 
+ or HSM Administrator (two names for the same entity) ownership of the HSM, and </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>you apply a cloning domain 
+ to permit secure backup and restore, and secure cloning/replication of HSM objects to 
+ other HSMs. </p>
+        <p><a name="kanchor82"></a><a name="kanchor83"></a>For Luna SA with PED (Trusted Path) Authentication, the Security Officer authentication 
+ and the Cloning Domain secret are kept on portable physical memory devices 
+ called <a name="kanchor84"></a><a name="kanchor85"></a>PED Keys ( <a href="../ped_auth/about_ped_keys.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"About PED Keys"</span></a> ). PED Keys can interact with the HSM 
+ via the Luna PED which provides a protected data path or "Trusted Path". 
+ Use of the Trusted Path for authentication prevents observation or interception of passwords such as you would 
+ type at a keyboard when seeking access to non-Trusted Path HSMs.</p>
+        <p>From the <span style="font-family: monospace;">hsm init</span> command, the eventual outcome is an initialized 
+ HSM, that can be accessed by a specific blue SO PED Key and red Domain 
+ PED Key (or the Password authentication equivalents). How you get there can vary slightly, depending upon starting 
+ conditions. For this description, we assume a factory-fresh HSM and factory-fresh 
+ ('blank') PED Keys. Alternatively, you can run <span style="font-family: monospace;">hsm factoryReset</span> (at the local serial console) to place the HSM in a similar "like new" state.</p>
+        <h3>Initializing</h3>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Your Luna PED must be 
+ connected with "Awaiting command..." showing on its display.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>When you issue the <span class="code">hsm 
+ init</span> command, the HSM passes control 
+ to the Luna PED, and the command line (<span class="code">lunash:&gt;</span>) directs you to attend 
+ to the PED prompts.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A "default" 
+ login is preformed, just to get started (you don't need to supply any 
+ authentication for this step).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Luna PED asks: "Do you wish to reuse an existing keyset?". If the answer is NO, the HSM creates a new secret which will reside on both the HSM and the key (or keys) that is (or are) about to be imprinted. If the answer is YES, then the HSM does not create a new secret and instead waits for one to be presented via the PED. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Luna PED requests 
+ a blue PED Key. It could be blank to begin, or it could have a valid secret from another HSM (a secret that you wish to preserve), or it could have a secret that is no longer useful. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Luna PED checks the 
+ key you provide. If the PED Key is not blank, and your answer to "...reuse an existing keyset" was "Yes", then Luna PED proceeds to copy the secret from the PED&#160;Key to the HSM. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If the key is not blank, and your answer to "...reuse an existing keyset" was "No", then the PED inquires if you wish 
+ to overwrite its contents with a new HSM secret. If the current content of the key is of no value, you say "Yes". If the current content of the key is a valid secret from another HSM (or if you did not expect the key to hold any data) you can remove it from the PED and replace it with a blank key or a key containing non-useful data, before you answer "Yes" to the 'overwrite' question. Even so, Luna PED asks "Are you sure...".</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Assuming that you are using a new secret, and not reusing an existing one, Luna PED asks if you wish to split the new HSM secret. It does this by asking for values of "M" and "N". You set those values to "1" and "1" respectively, unless you require MofN split-secret, multi-person access control for your HSM (See <a href="../ped_keys/mofn_using.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Using M of N"</span></a> for details).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Luna PED asks if you wish 
+ to use a PED PIN (an additional secret; <a href="../ped_auth/what_is_a_ped_pin.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"What is a PED PIN?"</span></a> for more info).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If you just press 
+ ENTER (effectively saying 'no' to the PED PIN option), then the secret 
+ generated by the HSM is imprinted on the PED Key, that same secret 
+ is retained as-is on the HSM, and the same secret becomes the piece needed to unlock the Security 
+ Officer/HSM Admin account on the HSM.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If you press some 
+ digits on the PED keypad (saying 'yes' to the PED PIN option), then the 
+ PED combines the HSM-generated &#160;secret 
+ with your PED PIN and feeds the combined data blob to the HSM. The HSM 
+ throws away the original secret and takes on the new, combined secret 
+ as its SO/HSM Admin secret. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The PED 
+ Key contains the original HSM-generated secret, but also contains the flag that tells the PED&#160;whether to demand a PED PIN (which is either no digits, or a set of digits that you supplied, and must supply at all future uses of that PED Key). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Luna PED gives you the 
+ option to create some duplicates of this imprinted key. You should make 
+ at least one duplicate for backup purposes. Make additional duplicates if your 
+ security policy permits, and your procedures require them.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Next, Luna PED requests 
+ a red Domain PED Key. The HSM provides a cloning Domain secret and the PED 
+ gives you the option to imprint the secret from the HSM, or to use a domain 
+ that might already be on the key. You choose appropriately. If you are imprinting a new Domain secret, you have the same opportunities to split the secret, and to apply a PED PIN "modifier" to the secret. Again, you 
+ are given the option to create duplicates of the key.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>At this point, the HSM 
+ is initialized and Luna PED passes control back to the appliance (<span class="code">lunash:&gt;</span> 
+ ).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Further actions are needed 
+ to prepare for use by your Clients, but you can now log in as SO/HSM Admin 
+ and perform HSM administrative actions.</p>
+        <h3>Logging In, Once You Have Initialized</h3>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>To login, you issue the 
+ <span class="code">hsm login</span> command at the <span class="code">lunash:&gt;</span> command line. Control is passed 
+ to Luna PED.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The PED prompts for the 
+ blue SO PED Key. You insert that PED Key. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If there was no PED 
+ PIN (you chose none at initialization time), then the PED combines the 
+ secret on the blue key with ... nothing... and the unchanged secret is 
+ passed via the Trusted Path to the HSM. The HSM recognizes the secret 
+ and logs you in. This assumes that you provided the correct blue PED Key. &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If there was a PED 
+ PIN (you added one at initialization time), you type it on the PED keypad, 
+ Luna PED combines the secret from the key with the digits that you type, 
+ and the modified secret is passed to the HSM. The HSM recognizes the modified 
+ secret and logs you in. This assumes that you provided the correct blue PED Key <b>and</b> the correct PED PIN digits.&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If you type an incorrect 
+ PED PIN,  what the HSM receives is much the same as if you presented a 
+ wrong PED Key. The HSM checks what it receives against what it expects, 
+ finds a mismatch and records a bad-login attempt against the bad-login 
+ counter. You have two more chances to present the correct SO/HSM Admin 
+ authentication, or the SO is locked out and the HSM must be re-initialized 
+ (where it is zeroized and all contents are gone) before it can be used again. 
+ </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>When you login successfully, 
+ the bad-login counter is reset to zero.</p>
+        <p>If you had also elected to split the login secret when you initialized, then the above sequence would need quantity M different blue keys from the set of quantity N, in order to reconstruct the needed secret (along with PED PINs, or not, for each partial-secret blue key).</p>
+        <h3>Soft Initialization</h3>
+        <p>The above description covers the situation where your HSM is new from the factory, or where you have recently run <span style="font-family: monospace;">hsm factoryReset</span> command. The result of <span style="font-family: monospace;">hsm init</span> is different if the HSM is <b>not</b> in factory reset state.</p>
+        <p>If you run <span style="font-family: monospace;">hsm init -l &lt;hsmlabel&gt;</span> on an HSM that is currently in initialized state, then you are performing a "re-initialization", or a soft init, and not a full, hard initialization. </p>
+        <p>In this situation, <span style="font-family: monospace;">hsm init -label &lt;hsmlabel&gt;</span> means remove any partitions (and their contents) and erase any token objects that reside in SO space on the HSM. The SO identity is preserved, as is the cloning domain. The HSM label can be any string - you do not need to retain the previous label - you can change the previous label with this command. You are prompted by Luna PED to insert the currently-valid blue SO PED Key (it is not changed by a soft init; it is needed only to validate your right to perform the soft initialization) and press [Enter] on the PED&#160;keypad. No other interaction is needed.</p>
+        <h3>Why choose Hard Init or Soft Init?</h3>
+        <p>A good example of a situation where you might generally prefer to perform <strong>soft initialization</strong> is when provisioning with Crypto Command Center for virtual clients. When a client (virtual or otherwise) is done with a Luna HSM resource - say, a partition or a group of partitions - the resource must be cleared (removed and re-created, re-deployed) for the next customer. </p>
+        <p>Either kind of initialization operation takes care of destroying the partitions and contents, but a <strong>soft init</strong> leaves the SO identity and the cloning domain intact. The HSM remains within its established environment, under control of the Crypto Command Center administrator, who has no need to change SO and domain, but who does wish to create new user partitions for the next deployment.</p>
+        <p>A <strong>hard initialization</strong> (factoryreset followed by init) prepares the HSM for any environment, since the factoryreset removes any traces of the previous environment (SO and domain) and makes the HSM ready to accept (or generate) new blue and red key data. </p>
+        <p>The <strong>hard init</strong> is always the safest approach to take, since you can always choose to use the existing blue and red PED Keys and imprint those onto the factoryreset HSM - emulating the end result of a soft init, but if you have security-policy reasons for not allowing the SO or domain to remain, the <strong>hard init</strong> addresses those reasons. </p>
+        <p>Similarly, if you had been validating an HSM in a laboratory environment before deploying it to a production HA environment, a <strong>soft init</strong> would leave the HSM with the lab domain in place (in a soft init, the PED does not prompt for insertion of the red PED&#160;Key, since the HSM already has a domain). The domain used by your production HA group of HSMs would not match, thereby preventing the new HSM from cloning with that group (so no HA, no synchronization). A <strong>hard init</strong> of the new HSM when introducing it to the HA group would ensure that it was initialized with the domain needed to participate in that HA group.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/initialization/what_is_initialization_ped-auth.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|[Step 5] Set Partition Policies">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Set Partition Policy</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/initial_setup/set_partition_policy.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition_policies.htm">[Step 5] Set Partition Policies</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Set Partition Policy</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor45"></a>Set Partition Policy</h2>
+        <p>Having viewed the Policy settings (previous page) you can now modify 
+ a Partition Policy for a given Partition, if required. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>To change a Partition 
+ Policy, at the <span style="font-family: 'Courier New', monospace;">lunash</span> 
+ prompt type:</p>
+        <p class="code" style="margin-left: 40px;">lunash:&gt; partition changePolicy -partition 
+ &lt;name of HSM Partition&gt; -policy &lt;policy code&gt; -value &lt;new 
+ policy value&gt;</p>
+        <p>Select an example that is applicable to your Luna appliance's HSM type:</p>
+        <h3>Policy setting example, Luna HSM with Password Authentication</h3>
+        <p>The default minimum password length is 7 characters (which the Luna 
+ HSM calculates as 255 minus 248, where 255 is the maximum length and 248 
+ is the number that can be subtracted from the maximum to yield the minimum 
+ length). We want the minimum Partition password length to be larger than 
+ 7 characters – for example, nine. To do that, we would need to change 
+ the number that is subtracted from 255 to be 246, instead of the current 
+ 248.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Login Before 
+ Changing Policies</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Change the selected 
+ policy for a Partition labeled "myPartition1". Type:<br /><span style="font-family: 'Courier New', monospace;">lunash:&gt; partition changePolicy -partition myPartition1 
+ -policy 25 -value 246<br />'partition changePolicy' successful.<br />Policy "Minimum pin length (inverted: 255 - 
+ min)" is now set to: 246<br />lunash:&gt;</span></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Log out of the 
+ HSM whenever you finish operations that require HSM login.<br /><span style="font-family: 'Courier New', monospace;">lunash:&gt; hsm logout <br />lunash:&gt;</span> <![CDATA[ ]]></p>
+        <h3>Policy setting example, Luna HSM with PED Authentication</h3>
+        <p>This is just an example. You do not need to change this particular policy, 
+ or any other, except to configure the HSM Partition more appropriately 
+ for your use.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Login Before 
+ Changing Policies</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Change a selected 
+ policy for a Partition labeled "myPartition1". Type:<br /><span style="font-family: 'Courier New', monospace;">lunash:&gt; partition changePolicy -partition myPartition1 
+ -policy 22 -value 1</span> <br /><span style="color: #008080;">(allows Activation 
+ mode to be on)</span><br /><span style="font-family: 'Courier New', monospace;">partition changePolicy successful<br />Policy allow Activation is now set to: 1</span> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>And change the 
+ other policy for the same Partition.<br /><span style="font-family: 'Courier New', monospace;">lunash:&gt; partition -changePolicy -partition myPartition1 
+ -policy 23 -value 1</span> <br /><span style="color: #008080;">(allows autoActivation 
+ mode to be on)</span> <br /><span style="font-family: 'Courier New', monospace;">partition changePolicy successful<br />Policy allow autoActivation is now set to: 1</span> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Log out of the 
+ HSM whenever you finish operations that require HSM login.<br /><span style="font-family: 'Courier New', monospace;">lunash:&gt; hsm - logout<br />lunash:&gt;</span> <![CDATA[ ]]></p>
+        <p>Go to "<a href="../ntls_config/prepare_the_client_for_network_trust_link.htm">Prepare the Client for Network Trust Link</a>". </p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/initial_setup/set_partition_policy.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

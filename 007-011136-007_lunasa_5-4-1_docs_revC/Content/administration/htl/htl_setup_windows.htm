@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>HTL Setup on Windows</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/htl/htl_setup_windows.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">HTL Setup on Windows</h2>
+        <p>You should already have confirmed NTLS binding to the correct interface/address on your Luna SA appliance, with <code>ntls bind</code> command. &#160;&#160;&#160;</p>
+        <h3>Import Luna SA Server Certificate to the Client</h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open command prompt on Windows client and navigate to this directory:
+ &#160;&#160;&#160;&#160;&#160;<br /><code>C:\Program Files\SafeNet\LunaClient&gt;</code> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Securely transfer the server.pem file from the Luna SA to the client, using the pscp utility:
+ &#160;&#160;<br /><code>C:\Program Files\SafeNet\LunaClient&gt;PSCP.EXE &#160;admin@myLuna:server.pem . &#160;&#160;
+</code><br style="mc-tag-and-class: code;" /><code>admin@myLuna’s password:
+ &#160;&#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>server.pem                | 1 kB |   1.1 kB/s | ETA: 00:00:00 | 100%</code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <h3>Register the Luna SA with the Client (specifying HTL)</h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>At the command prompt on the Windows client, navigate to this directory:
+ <br /><code>C:\Program Files\SafeNet\LunaClient&gt;</code> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Use the VTL utility to register the Luna SA:
+ &#160;&#160;<br /><code>C:\Program Files\SafeNet\LunaClient&gt;VTL.exe addserver –n &lt;SA hostname-or-IPaddress&gt; -c “C:\Program Files\SafeNet\LunaClient\cert\server\server.pem” –htl
+</code><br style="mc-tag-and-class: code;" /><code>New server &lt;SA hostname or IPaddress&gt; successfully added to server list.</code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <h3>Create a Client Certificate</h3>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use the vtl utility to create a client certificate:
+ &#160;&#160;<br /><code>C:\Program Files\SafeNet\LunaClient&gt; VTL.exe createCert –n &lt;clientHostname-or-IPaddress&gt;
+</code><br style="mc-tag-and-class: code;" /><code>----------------- Example -------------------------
+
+ &#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>C:\Program Files\SafeNet\LunaClient&gt;VTL.exe createCert –n myClient
+ &#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>Private Key created and written to: C:\Program Files\SafeNet\LunaClient\cert\client\myClientKey.pem
+</code><br style="mc-tag-and-class: code;" /><code>Certificate created and written to: C:\Program Files\SafeNet\LunaClient\cert\client\myClient.pem</code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <h3>Export Client Certificate to Luna SA</h3>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Use the pscp utility to export the client certificate to your Luna SA:
+<br />C:\Program Files\SafeNet\LunaClient&gt;PSCP.EXE cert\client\&lt;clientCert&gt;.pem admin@&lt;SAhostname-or-IPaddress&gt;
+<br />--------------------- Example ---------------------
+<br style="mc-tag-and-class: code;" /><code>C:\Program Files\SafeNet\LunaClient&gt;PSCP.EXE “C:\Program Files\SafeNet\LunaClient\cert\client\myClient.pem” </code><br style="mc-tag-and-class: code;" /><code>admin@LunaSA:
+admin@LunaSA’s password:
+
+</code><br style="mc-tag-and-class: code;" /><code>myClient.pem            | 1 kB |   1.1 kB/s | ETA: 00:00:00 | 100%
+</code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <h3>Register Client with HTL</h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>On the Luna SA appliance, from the luna shell, after the client certificate has been transferred to your Luna&#160;SA (above), register your client ensuring that the –requireHtl flag is specified.
+<br />lunash:&gt;client register –c &lt;clientname&gt; –ip &lt;client-ip-address&gt; -requireHtl
+<br />---------------- Example ------------------------- &#160;&#160;
+<br /> <code>lunash:&gt;client register –c MyClient –ip 192.76.20.10 -requireHtl
+</code><br style="mc-tag-and-class: code;" /><code>‘client register’ successful.
+</code><br style="mc-tag-and-class: code;" /><code>Command Result : 0 (Success)
+</code><br style="mc-tag-and-class: code;" /><code>lunash:&gt;</code> <br />OR<br />lunash:&gt;client register –c &lt;clientname&gt; –hostname &lt;client-hostname&gt; -requireHtl
+<br />---------------- Example ------------------------- &#160;&#160;
+<br /> <code>lunash:&gt;client register –c MyClient –hostname myfirstclient -requireHtl
+</code><br style="mc-tag-and-class: code;" /><code>‘client register’ successful.
+</code><br style="mc-tag-and-class: code;" /><code>Command Result : 0 (Success)
+</code><br style="mc-tag-and-class: code;" /><code>lunash:&gt;</code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <h3>Generate OTT for Client on Luna SA</h3>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>A One Time Token (OTT) is required for your client to initiate the Host Trust Link strong-binding connection with your Luna&#160;SA.  On the Luna SA, from the luna shell, generate the OTT for the client.
+<br />lunash:&gt; htl generateOtt –client &lt;clientname&gt;
+
+<br />------------------ Example ------------------------
+<br /><code>lunash:&gt;htl generateOtt –client MyClient
+</code><br style="mc-tag-and-class: code;" /><code>One-time token for client MyClient is ready to use.
+</code><br style="mc-tag-and-class: code;" /><code>Filename is MyClient.ott
+
+</code><br style="mc-tag-and-class: code;" /><code>Command Result : 0 (Success)
+</code><br style="mc-tag-and-class: code;" /><code>lunash:&gt;</code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <h3>Export OTT from Luna SA to Client</h3>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>On your Client,  transfer the newly generated OTT from the Luna SA appliance to your client:
+<br />PSCP.EXE admin@&lt;SAHostname-or-IPaddress&gt;:&lt;clientname.ott&gt; .
+<br />--------------- Example&#160;---------------------------
+<br /><code>C:\Program Files\SafeNet\LunaClient&gt;PSCP.EXE admin@&lt;LunaSA&gt;:MyClient.ott .
+admin@LunaSA's password:
+</code><br style="mc-tag-and-class: code;" /><code>
+MyClient.ott              | 0 kB |   0.0 kB/s | ETA: 00:00:00 | 100%</code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <h3>Establish Host Trust Link</h3>
+        <p>After the OTT has been transferred to your client, the final step is to make the token available. &#160;</p>
+        <p>1.	Move the token to the htl directory on the client, <strong>renaming it</strong> with the ip address OR hostname of your Luna SA appliance:
+<br />Move &lt;clientname.ott&gt; “C:\Program Files\SafeNet\LunaClient\htl\&lt;SAhostname-or-IPaddress.ott&gt;”
+
+ &#160;<br />---------------- Example --------------------------
+ &#160;<br /><code>C:\Program Files\SafeNet\LunaClient&gt;move MyClient.ott "C:\Program Files\SafeNet\LunaClient\htl\myLunaSA.ott"
+        </code><br style="mc-tag-and-class: code;" /><code>1 file(s) moved.
+
+</code><br style="mc-tag-and-class: code;" /><br style="mc-tag-and-class: code;" /><code>C:\Program Files\SafeNet\LunaClient&gt;</code> <![CDATA[ ]]></p>
+        <p>&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You must rename the token file (see above). It is easiest to change the filename during the "move" operation.</p>
+        <p>&#160;</p>
+        <p>After the token has been moved to its correct location and renamed to reflect the Luna&#160;SA hostname or IP, it will be used during the next HTL polling interval.  This happens automatically.</p>
+        <p>On the Luna SA appliance, you can confirm the status of the Host Trust Link with the ‘htl show’ command. The HTL Status changes to "Up" and the OTT Status changes to "In use" after the client has successfully established a Host Trust Link</p><pre xml:space="preserve">lunash:&gt;htl show
+
+
+HTL Grace period   :  60 seconds
+Default OTT expiry :  300 seconds
+ Client Name         HTL Status     OTT Status     OTT Expiry Time
+ -----------------------------------------------------------------
+ MyClient            Up           In Use        300 (default)
+
+
+Command Result : 0 (Success)
+lunash:&gt;
+</pre>
+        <p>&#160;</p>
+        <p> <![CDATA[ ]]></p>
+        <p><a name="aanchor67"></a>
+            <MadCap:concept term="HTL" />
+        </p>
+        <p>&#160;</p>
+        <p><a class="MCHelpControl MCHelpControl-Concept conceptLink " data-mc-concepts="HTL" data-mc-topics="HTL Setup on Linux|htl_setup_linux.htm||HTL Setup on Windows|#"><span class="MCHelpControl-ConceptHotSpot_">See Also</span></a>
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/htl/htl_setup_windows.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

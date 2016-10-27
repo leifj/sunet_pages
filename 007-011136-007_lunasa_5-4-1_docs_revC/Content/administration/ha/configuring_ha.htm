@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notLunaSP,Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|High Availability (HA) Mode">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Configuring HA</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/ha/configuring_ha.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha_intro.htm">High Availability (HA) Mode</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Configuring HA</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Configuring HA</h2>
+        <p>For this section you need at least two Luna SA appliances with PED Authentication, or two with Password Authentication. You may not use Password 
+ Authenticated Luna SA and PED Authenticated Luna&#160;SA simultaneously 
+ in an HA group.</p>
+        <h3>Set up Appliances for HA</h3>
+        <p>Follow these steps to set up an HA group:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Perform the network 
+ setup on your two HA units (for a description of the standard procedure, see <a href="../../configuration/appliance_config/about_configuring_luna_appliance_network_settings.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Configuring the Luna Appliance Network Settings"</span></a>elsewhere in the Configuration Guide). 
+ For this example the appliances are designated Luna1 and Luna2. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Ensure that Allow 
+ Cloning and Allow Network Replication are “On” in <span style="font-family: 'Courier New', monospace;">hsm 
+ showPolicies </span>(and 
+ if not, then set them with<span style="font-family: 'Courier New', monospace;"> 
+ hsm setPolicy</span>). If your HSMs do not have the cloning option, then they will use the SIM or Key Export functionality to backup to (and restore from) a file, rather than a hardware Backup token)..</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Initialize the 
+ HSMs on your Luna SA appliances (<a href="../../configuration/initial_setup/about_initializing_a_password_authenticated_hsm.htm" title="" alt="" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Initializing a Password-Authenticated HSM"</span></a> or <a href="../../configuration/initial_setup/initializing_a_luna_hsm_ped-version.htm" title="" alt="" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Initializing a PED-Authenticated HSM"</span></a> or ); they must have the same cloning domain 
+ – that is, they must share the same red, domain PED Key if they are PED Authenticated [Trusted 
+ Path] units, or they must share the same domain string if they are Password 
+ Authenticated units.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Create a Partition 
+ on each Luna SA. They need not have the same labels; they must have the 
+ same password. For this example, the Partitions are Partition1 (on LunaSA1) 
+ and Partition2 (on LunaSA2).</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Use the <span style="font-family: 'Courier New', monospace;">partition changePw </span> 
+ command to change the Partitions' passwords so that they match (for example, 
+ both set to 'btqx-EFGH-3456-7/K9'). <br /><br /> NOTE: The partition changePw command presents you with 4 options:<br />1. change the Partition Owner (black) PED Key data<br />2. generate a new random password for the partition owner (16 random mixed characters)<br />3. specify a new password for the partition owner (a "user-friendly" or memorable password)<br />4. both options 1 and 2<br />You are prompted for further action at the command line, to supply the existing partition password (the text challenge secret). Then you are directed to the PED, where you must present the black key for this partition. <br /><br />By making the client partition challenge password the same on both partitions (on both Luna SA&#160;appliances), you allow your clients to use that one secret when addressing the virtual partition (which includes both real partitions).</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Make a note of the serial number of each Partition 
+ created on each Luna SA (use <span style="font-family: 'Courier New', monospace;">partition 
+ show</span>). <br />For this example:<br />LunaSA1 - Partition1 - serial number 65003001 - password userpin<br />LunaSA2 - Partition2 - serial number 65005001 - password userpin.</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>[OPTION] Ensure 
+ that each Partition is Activated and AutoActivated 
+ (see <a href="../partitions/about_activation_and_auto-activation_.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"About Activation and Auto-Activation "</span></a> - applies to Luna SA with PED Authentication), so that it can 
+ retain/resume its "Activate" (persistent login) state through 
+ any brief power failure or other interruption. <br /></p>
+        <h3>Register Clients with Luna&#160;SA HA</h3>
+        <p>Proceed with normal client 
+ setup (see <a href="../../configuration/ntls_config/prepare_the_client_for_network_trust_link.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Prepare the Client for Network Trust Link"</span></a>). Register your Client computer with both Luna SAs (this 
+ example is using just two HSM appliances; obviously, you would configure 
+ and register however many HSM appliances you wish to use in your own 
+ situation).  
+ &#160;</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>On LunaSA1, assign 
+ Partition1 to ClientX (you would replace "ClientX" with the 
+ actual name of your Client computer).</p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>On LunaSA2, assign 
+ Partition2 to ClientX, as well (repeat if you have more Luna SAs and Partitions 
+ to include in the HA group).</p>
+        <p>At this point, you have completed a normal single-client, multiple HSM appliance setup.</p>
+        <p> Now proceed with the HA setup on the next page <a href="client_create_ha_group.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Client - Create HA Group"</span></a>.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/ha/configuring_ha.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

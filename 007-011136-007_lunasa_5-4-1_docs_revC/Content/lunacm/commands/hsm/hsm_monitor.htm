@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>hsm monitor</title>
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#lunacm/commands/hsm/hsm_monitor.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">hsm monitor</h2>
+        <p>Query the HSM&#160;for performance monitoring statistics, such as HSM&#160;up time, command counts, and utilization. You can display the information or save it to a file.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>hsm monitor -slot</b> &lt;slot number&gt; [<b>-interval</b> &lt;integer&gt;] [<b>-rounds</b> &lt;integer&gt;] [<b>-noheader</b>] [<b>-file</b> &lt;filename&gt;]</p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" style="width: 142px;" />
+            <col class="Column-Column1" style="width: 99px;" />
+            <col class="Column-Column1" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Parameter</th>
+                    <th class="HeadE-Column1-Header1">Shortcut</th>
+                    <th class="HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1"><b>-file</b>
+                    </td>
+                    <td class="BodyE-Column1-Body1"><b>-f</b>
+                    </td>
+                    <td class="BodyD-Column1-Body1">Save the output to the specified file. The output is also displayed to the terminal window.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-interval</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-i</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Specifies the polling interval, in seconds.</p>
+                        <p><b>Default:</b> 5<br /><b>Range:</b> 5 to 999</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-noheader</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-n</td>
+                    <td class="BodyD-Column1-Body1">Omit the header and footer from the output. This option is typically used in conjunction with the <b>-file</b> parameter.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-rounds</td>
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">-r</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p>Specifies the number of samples to collect during the HSM polling. The default is a single round, which includes a first sample at the time the command is launched, followed by the interval (either the default 5 seconds, or the interval that you specified), followed by a second sample which is compared with the first, to complete the round.</p>
+                        <p>The command exits after the specified number of rounds are displayed.</p>
+                        <p>Default: 1<br />Range: 1 to 65535</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">-slot</td>
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">-s</td>
+                    <td class="BodyA-Column1-Body1">The target slot.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3>
+        <h5>Without arguments</h5><pre xml:space="preserve">lunacm:&gt;hsm monitor</pre><pre xml:space="preserve">-------------------|---------------------------------|---------------------------------
+                   |       HSM Command Counts        |        HSM Utilization (%)
+ HSM Uptime (Secs) |-----------------|---------------|-----------------|---------------
+                   | Since HSM Reset | Last   5 Secs | Since HSM Reset | Last   5 Secs
+-------------------|-----------------|---------------|-----------------|---------------
+         1,115,399 |      57,468,854 |            30 |            1.27 |          0.21
+-------------------|-----------------|---------------|-----------------|---------------
+
+    Average HSM Utilization In This Period  :  0.21%
+    HSM Last Reset (+/-5 Secs Error Margin) :  Fri May 31 14:59:47 2013
+
+Command Result : 0 (Success)</pre>
+        <p>&#160;</p>
+        <h5>With arguments</h5><pre xml:space="preserve">lunacm:&gt;hsm monitor -interval 6 -rounds 6</pre><pre xml:space="preserve">-------------------|---------------------------------|---------------------------------
+                   |       HSM Command Counts        |        HSM Utilization (%)
+ HSM Uptime (Secs) |-----------------|---------------|-----------------|---------------
+                   | Since HSM Reset | Last   6 Secs | Since HSM Reset | Last   6 Secs
+-------------------|-----------------|---------------|-----------------|---------------
+         1,116,668 |      57,470,863 |             1 |            1.27 |          0.00
+         1,116,674 |      57,470,864 |             1 |            1.27 |          0.00
+         1,116,680 |      57,470,894 |            30 |            1.27 |          0.18
+         1,116,686 |      57,470,895 |             1 |            1.27 |          0.00
+         1,116,692 |      57,470,896 |             1 |            1.27 |          0.00
+         1,116,698 |      57,470,926 |            30 |            1.27 |          0.18
+-------------------|-----------------|---------------|-----------------|---------------
+
+    Average HSM Utilization In This Period  :  0.06%
+    HSM Last Reset (+/-5 Secs Error Margin) :  Fri May 31 14:59:46 2013
+
+Command Result : 0 (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../../index.html#lunacm/commands/hsm/hsm_monitor.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.LunaIS,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Installation Guide| Luna Client Software Installation">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Solaris Luna Client Installation</title>
+        <link href="../../Resources/TableStyles/List1.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#install/software/solaris_install.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Installation Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="software.htm"> Luna Client Software Installation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Solaris Luna Client Installation</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">Solaris Luna Client Installation</h2>
+        <p>These instructions assume that you have already acquired the Luna client software, either on CD/DVD or in the form of a downloaded .tar archive.</p>
+        <p>Applicability to specific versions of Solaris is summarized in the Customer Release Notes for the current release.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Before 
+ installing a Luna 
+ system, you should confirm that the product you have received is in factory 
+ condition and has not been tampered with in transit. &#160;Refer 
+ to the Startup Guide included with your product shipment. &#160;If 
+ you have any questions about the condition of the product that you have 
+ received, contact SafeNet Support.</p>
+        <p>Each computer that connects to the Luna HSM appliance as a client must have the 
+ cryptoki library, the vtl client shell and other utilities and supporting 
+ files installed. </p>
+        <p>Each computer that contains, or is connected to a Luna&#160;G5 or a Luna&#160;PCI-E HSM must have the cryptoki library and other utilities and supporting files installed. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>This example shows all the Luna client products and components. Some items are not supported on all operating systems and therefore do not appear as you proceed through the installation script.</p>
+        <p class="caution_note"><span style="font-size: 10pt;">Do not install Luna client software 
+ on the same system as legacy Luna&#160;CA<sup>3</sup>, Luna CA4, Luna PCM, or Luna PCI software.<br /><br />The software is intended for modern/current Luna HSMs, Luna&#160;SA, Luna&#160;PCI-E, Luna&#160;G5, Luna&#160;(Remote) Backup HSM.</span>
+        </p>
+        <h3>Prerequisites</h3>
+        <p>Before starting the installation, ensure that you have satisfied the following prerequisites:</p>
+        <h4>Random Number Generator 
+ (RNG) or Entropy Gathering Daemon (EGD)</h4>
+        <p>Ensure that you have a Random Number Generator 
+ (RNG) or Entropy Gathering Daemon (EGD) on your system 
+ in one of the following locations:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>/dev/egd-pool</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> /etc/egd-pool,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> /etc/entropy</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>/var/run/egd-pool</p>
+        <h5>RNG/EGD</h5>
+        <p>Cryptographic algorithms, including those that assure the security of 
+ communication – such as in OpenSSL and other protocols – depend upon random 
+ numbers for the creation of strong keys and certificates. A readily available 
+ source of random data is the entropy that exists in complex computer processes. 
+ Utilities exist for every operating system, to gather bits of system entropy 
+ into a pool, which can then be used by other processes. </p>
+        <p>Windows and Linux have these installed by default. Other systems may 
+ or may not. See your system administrator.</p>
+        <h5>You Need an Entropy Pool</h5>
+        <p>In the case of Luna SA, the Luna Client administration tool (<b>vtl</b>) expects 
+ to find a source of randomness at <b>/dev/random</b>. If one is not found, <b>vtl</b> 
+ fails, because the link cannot be secured from the Client end. </p>
+        <p>If your system does have an entropy pool, but the random number generator 
+ (RNG) is not in the expected place, then you can create a symbolic link 
+ between the actual location and one of the following:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>/dev/random</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> /dev/egd-pool</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> /etc/egd-pool</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>/etc/entropy</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>/var/run/egd-pool</p>
+        <p>If your system does not have an entropy gathering daemon or random number 
+ generator, please direct your system administrator to install one, and 
+ point it to one of the named devices. &#160;&#160;</p>
+        <h3>Installing the Client Software</h3>
+        <p>It is recommended that you refer to the Luna HSM Customer Release Notes for any installation-related issues or instructions before you begin the following software installation process. </p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>You must be logged in as <b>root</b> when you run the installation script.</p>
+        <p>By default, the Client programs are installed in the <b>/opt/safenet/lunaclient/bin</b>  directory. </p>
+        <h5>To install the Luna client software on a Linux workstation</h5>
+        <p class="ol1" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Log on to the 
+ client system, open a console or terminal window, and use <b>su</b> to gain administrative permissions for the installation. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Access the Luna client software:</p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">DVD</td>
+                    <td class="BodyD-Column1-Body1">
+                        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Insert the DVD 
+ (mount it if you do not have automount).</p>
+                        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Go to the DVD 
+ (<b>/cdrom</b> or whatever device name your system uses).</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">Tar archive</td>
+                    <td class="BodyA-Column1-Body1">
+                        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Copy or move the <b>.tar</b> archive to a suitable directory where you can untar the archive and launch the installation script.</p>
+                        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Extract the contents from the archive:</p>
+                        <p class="listLevel1"><b>tar xvf</b> &lt;filename&gt;<b>.tar</b></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Go to the install directory for your architecture:</p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Architecture</th>
+                    <th class="HeadD-Column1-Header1">Path</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Solaris Sparc 32-bit</td>
+                    <td class="BodyD-Column1-Body1">&lt;dvd_or_tarball_path&gt;/solaris/sparc/32</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Solaris Sparc 64-bit</td>
+                    <td class="BodyD-Column1-Body1">&lt;dvd_or_tarball_path&gt;/solaris/sparc/64</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Solaris x86 32-bit</td>
+                    <td class="BodyD-Column1-Body1">&lt;dvd_or_tarball_path&gt;/solaris/x86/32</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">Solaris x86 64-bit</td>
+                    <td class="BodyA-Column1-Body1">&lt;dvd_or_tarball_path&gt;/solaris/x86/64</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Not all platforms are supported with each release, so the available install options might not match the list above. Refer to the Customer Release Notes for more information.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>To see the help, or a list of available installer options, type:</p>
+        <p class="listLevel1"><b>sh install.sh -?</b>&#160;or <b>sh install.sh --help</b></p>
+        <p class="listLevel1">To install all available products and optional components, type:</p>
+        <p class="listLevel1"><b>sh install.sh all </b>
+        </p>
+        <p class="listLevel1">To selectively install individual products and optional components, type the command without arguments:</p>
+        <p class="listLevel1"><b>sh install.sh</b>
+        </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Type <b>y</b> 
+ if you agree to be bound by the license agreement. &#160;<br /></p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>A list of installable Luna products is displayed (might be different, depending on your platform). Select as many as you require, by typing the number of each (in any order) and pressing [Enter]. As each item is selected, the list updates, with a "*" in front of any item that has been selected. The following example shows that items 1 and 3 have been selected, and item 4 is about to be selected.</p><pre class="listLevel1" xml:space="preserve">Products
+Choose Luna Products to be installed<br style="mc-tag-and-class: ;" />&#160;&#160;&#160; *[1]: Luna SA &#160;&#160;&#160;&#160;&#160;
+     [2]: Luna PCI-E &#160;&#160;<br style="mc-tag-and-class: ;" />    *[3]: Luna G5 &#160;<br style="mc-tag-and-class: ;" />
+     [4]: Luna Remote Backup HSM &#160;&#160;</pre><pre class="listLevel1" xml:space="preserve">     [N|n]: Next
+     [Q|q]: Quit<br style="mc-tag-and-class: ;" />Enter selection: 4</pre><pre xml:space="preserve"><br /></pre>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>When the selection is complete, type "N" or "n" for "Next", and press  [Enter]. If you wish to make a change, simply type a number again and press [Enter] to de-select a single item. &#160;&#160;</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>The next list is called "Advanced" and includes additional items to install. Some items might be pre-selected to provide the optimum Luna HSM experience for the majority of customers, but you can change any selection in the   list. When the Components list is adjusted to your satisfaction, press [Enter].</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>  The installer includes the Luna SNMP Subagent as an option. If you select this option, you will need to move the SafeNet MIB files to the appropriate directory for your SNMP application after installation is complete, and you will need to start the SafeNet subagent and configure for use with your agent. See the <i>Administration Guide</i> for more information.&#160; </p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>If the script detects an existing cryptoki library, it stops and suggests that you uninstall your previous Luna software before starting the Luna Client installation again. </p>
+        <p class="ol1" data-mc-autonum="10."><span class="autonumber"><span class="ol1Number">10.</span></span>The system installs all packages related to the products and any optional components that you selected.</p>
+        <p class="caution_note">As a general rule, do not modify the Chrystoki.conf/crystoki.ini 
+ file, unless directed to do so by SafeNet Customer Support. <br />If you do modify the file, never insert TAB characters - use individual 
+ space characters. <br />Avoid modifying the PED timeout settings. These are now hardcoded in the appliance, 
+ but the numbers in the Chrystoki.conf file must match.</p>
+        <h3>Uninstalling the Luna HSM Client Software</h3>
+        <p><b>cd /opt/safenet/lunaclient/bin</b>
+            <br />
+        </p>
+        <p><b>sh uninstall.sh</b>
+        </p>
+        <h3>Java</h3>
+        <p>During the installation, the script provides the opportunity to install Luna Java components. If you select Java components, the Luna Java files are installed below <b>/opt/safenet/lunaclient/jsp/</b>. In order to use Java, you must have separately installed Java (JDK&#160;or run-time environment from the vendor of your choice) onto your system.         </p>
+        <p>Copy the Luna Java library and jar files from their default location under <b>/opt/safenet/lunaclient/jsp/lib</b> to the Java environment directory, for example <b>/opt/jre/lib/ext</b>.</p>
+        <p>The exact directory might differ depending on where you obtained your Java system, the version, and any choices that you made while installing and configuring it.</p>
+        <p>For additional Java-related information, see <a href="../../sdk/java/java.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Java Interfaces"</span></a> in the <i>SDK Reference Guide</i>.</p>
+        <h4>JSP Static Registration</h4>
+        <p>You would choose static registration of providers if you want all applications to default to our (SafeNet) provider.</p>
+        <p>Once your client has externally logged in using <span class="code">salogin</span> (see   ) in the Reference section of this document) or your own HSM-aware utility, any application would be able to use Luna product without being designed to login to the HSM Partition.</p>
+        <p>Edit the java.security file located in the \jre\lib\security directory of your Java SDK/JRE 1.6.x or 1.7.x installation to read as follows:</p>
+        <p class="code">security.provider.1=sun.security.provider.Sun</p>
+        <p class="code">security.provider.2=com.sun.net.ssl.internal.ssl.Provider</p>
+        <p class="code"><span style="color: #f59149;">security.provider.3=com.safenetinc.luna.provider.LunaProvider</span>
+        </p>
+        <p class="code">security.provider.4=com.sun.rsajca.Provider</p>
+        <p class="code">security.provider.5=com.sun.crypto.provider.SunJCE</p>
+        <p class="code">security.provider.6=sun.security.jgss.SunProvider</p>
+        <p>You can set our provider in first position for  efficiency if Luna HSM operations are your primary mode. However, if your application needs to perform operations not supported by the LunaProvider (secure random generation or random publickey verification, for example) then it would receive error messages from the HSM and would need to handle those gracefully before resorting to providers further down the list. We have found that having our provider in third position works well for most applications.</p>
+        <p>The modifications in the "java.security" file are global, and they might result in the breaking of another application that uses the default KeyPairGenerator without logging into the Luna SA first. This consideration might argue for using dynamic registration, instead.</p>
+        <h4>JSP Dynamic Registration</h4>
+        <p>For your situation, you may prefer to employ dynamic registration of Providers, in order to avoid possible negative impacts on other applications running on the same machine. As well, the use of dynamic registration allows you to keep installation as straightforward as possible for your customers.</p>
+        <h4>Compatibility</h4>
+        <p>We formally test Luna HSMs and our Java provider with SUN JDK for all platforms except AIX, and with IBM JDK for the AIX platform. We have not had problems with OpenJDK, although it has not been part of our formal test suite. The Luna JCE provider is compliant with the JCE specification, and should work with any JVM that implements the Java language specification.</p>
+        <p>Occasional problems have been encountered with respect to IBM JSSE.</p>
+        <p>GNU JDK shipped with most Linux systems has historically been incomplete and not suitable.</p>
+        <p>&#160;</p>
+        <h3>Removing components </h3>
+        <p>To uninstall the JSP component or the SDK component, you must uninstall Luna Client completely, then re-run the installation script without selecting the unwanted component(s). &#160;</p>
+        <p><b>sh uninstall.sh </b>
+        </p>
+        <h3>[Ctrl] [C] - If you interrupt the installation</h3>
+        <p>Do not interrupt the installation script in progress, and ensure that your host computer is served by an uninterruptible power supply (UPS). If you press [Ctrl] [C], or otherwise interrupt the installation (OS problem, power outage, other), some components will not be installed. It is not possible to resume an interrupted install process. The result of an interruption depends on where, in the process, the interruption occurred (what remained to install before the process was stopped).</p>
+        <p>As long as the cryptoki RPM package is installed, any subsequent installation attempt results in refusal with the message "A version of Luna Client is already installed."</p>
+        <p>If components are missing or are not working properly after an interrupted installation, or if you wish to install any additional components at a later date (following an interrupted installation, as described), you would need to uninstall everything first. If ‘sh uninstall.sh’ is unable to do it, then you must uninstall all packages manually.</p>
+        <p>Because interruption of the install.sh script is not recommended, and mitigation is possible, this is considered a low-likelihood corner case, fully addressed by these comments.</p>
+        <h3>After Installation</h3>
+        <p>When you have installed the software onto a Client, 
+ the next task is to configure the Luna  HSM, as described in the <i>Configuration Guide</i>.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#install/software/solaris_install.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Luna SA Appliance Administration Guide|Timestamping – NTP and Time Drift">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>NTP and Secure NTP on Luna SA</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sa_appliance_admin/ntp_time/about_ntp.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Luna SA Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ntp_time.htm">Timestamping – NTP and Time Drift</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">NTP and Secure NTP on Luna SA</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>NTP and Secure NTP on Luna SA</h2>
+        <p>Left to their own devices, all computer/hardware clocks are subject to some drift. These changes occur slowly and are usually small, but can be nevertheless significant in many applications. Thus it is desirable to be able to synchronize the appliance's internal clock with a known-to-be-accurate source of time information. Network Time Protocol (NTP) provides a means whereby your appliance (or any other network-connected digital device) can receive time signals from extremely accurate servers of time data.</p>
+        <p>Network Time Protocol (NTP) by default does not authenticate NTP servers. NTP version 3 provides an authentication option using symmetric keys shared between NTP clients and servers. </p>
+        <p>NTP version 4, in addition to supporting NTP v3 symmetric key authentication provides a public key authentication mechanism called ‘Autokey’. These authentication mechanisms enable NTP clients (Luna SA) to authenticate trusted NTP servers. NTP servers do not authenticate clients.</p>
+        <p>Luna SA can be configured as an NTP client, not sever or peer. Also Multicast and Manycast are not supported in Luna SA at this time. A page of the Administration &amp; Maintenance section of this Help explains configuring NTP authentication ( <a href="secure_ntp_sample.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Example Using Secure NTP"</span></a> ) in Luna SA using Luna shell (lunash:&gt;) commands. The available configuration commands are described in the Reference section of this Help, under "Lunash Appliance Commands &gt; sysconf Commands &gt; sysconf ntp Commands" (  ). <br />For more information about NTP authentication please refer to the NTP v4 documentation [1][2].</p>
+        <p>Luna SA uses NTP v4 (4.2.6p2) and supports both symmetric and public key authentication as described below. Compared with legacy Luna&#160;SA implementation, new Luna shell (lunash:&gt;) commands have been added and some of the previously-used commands (pre-2009) have been modified.</p>
+        <p>Using NTP authentication in Luna SA requires NTP servers which have been properly configured to support authentication. Configuring NTP servers is beyond the scope of this document. For information about configuring NTP servers please refer to the standard NTP documentation [1][3].</p>
+        <p>Standard, non-secure NTP&#160;is available from a variety of public sites. For greater security and control, your organization might have established its own secure NTP server(s) or might have entered into agreement with a trusted supplier of secure NTP&#160;service. Contact your local IT manager or security officer for the particulars.</p>
+        <p>The short description is that you </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> make note of the parameters of the certificate that the server provides, then &#160;&#160;&#160; </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>configure your Luna SA to use that NTP server and to accept the server's authentication certificate as identified by the parameters that you previously recorded (key ID, size, fingerprint, etc. as appropriate), and &#160;&#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>have your Luna SA begin using the time signal supplied by that secure NTP server.</p>
+        <h3>What If I Can't Use NTP?</h3>
+        <p>NTP is the most reliable and straightforward way to correct the time-drift inherent in computer systems, but your situation might preclude that solution. An alternate method of establishing and correcting the drift on your HSM appliance is to use the on-board drift-correction commands ( <a href="drift_and_correction_non-ntp.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Correcting Time Drift"</span></a> ).</p>
+        <h3>References</h3>
+        <p>=========================================================</p>
+        <p>[1] NTP Documentation Page: <a href="http://www.ntp.org/documentation.html" target="_blank">http://www.ntp.org/documentation.html</a></p>
+        <p>[2] NTP FAQ: Authentication <a href="http://www.ntp.org/ntpfaq/NTP-s-config-adv.htm#S-CONFIG-ADV-AUTH" target="_blank">http://www.ntp.org/ntpfaq/NTP-s-config-adv.htm#S-CONFIG-ADV-AUTH</a></p>
+        <p>[3] NTP Public-Key Authentication: <a href="http://www.ntp.org/ntpfaq/NTP-s-config-adv.htm#Q-CONFIG-ADV-AUTH-AUTOKEY" target="_blank">http://www.ntp.org/ntpfaq/NTP-s-config-adv.htm#Q-CONFIG-ADV-AUTH-AUTOKEY</a></p>
+        <p>[4] Autokey Identity Schemes: <a href="http://www.eecis.udel.edu/~mills/ident.html" target="_blank">http://www.eecis.udel.edu/~mills/ident.html</a></p>
+        <p>[5] ntp-keygen tool: <a href="http://doc.ntp.org/4.2.6/keygen.html" target="_blank">http://doc.ntp.org/4.2.6/keygen.html</a></p>
+        <p>[6] NTP Server configuration options <a href="http://doc.ntp.org/4.2.6/confopt.html" target="_blank">http://doc.ntp.org/4.2.6/confopt.html</a> <![CDATA[ ]]></p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#sa_appliance_admin/ntp_time/about_ntp.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

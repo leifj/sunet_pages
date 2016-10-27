@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Host Trust Link (HTL) Overview</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/htl/htl_overview.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor652"></a>Host Trust Link (HTL) Overview</h2>
+        <p>An HSM with Host Trust Link (HTL) enabled will not allow an NTLS connection with a client instance until the Host Trust Link establishes that the client requesting NTLS is the correct instance of that client.</p>
+        <p>HTL&#160;is designed to protect a client instance running on a virtual machine (VM). An unprotected client running on a VM is vulnerable to an internal attacker who could make a complete copy of the running VM, in an attempt to impersonate the original client. The following layered protections mitigate this risk when the HTL link is active:</p>
+        <p class="ul1" style="font-weight: bold;" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Binding to IP</p>
+        <p class="listLevel1">NTL binds the original VM to one IP address. If a clone of this VM is made with a different IP address, it will be unable to use the HSM. If a clone is made and assigned the same IP address, either the original VM would have to be killed (a noticeable event) or there would be network collisions (also detectable).</p>
+        <p class="ul1" style="font-weight: bold;" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>TLS encrypted communications</p>
+        <p class="listLevel1">  All HTL counter values and synchronization packets are sent over a TLS link encrypted with a dynamically generated secret. This secret is in turn derived from a private key and certificate that are generated specifically for that VM instance during the HTL setup sequence. This arrangement makes it extremely unlikely that an attacker could use a cloned VM to “take over” an existing HTL connection as they would confront the hijacking protections of the TLS protocol.</p>
+        <p class="ul1" style="font-weight: bold;" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>One-time tokens</p>
+        <p class="listLevel1">The binding protocol requires a One Time Token (OTT) from the Luna HSM appliance, generated specifically for that client instance. This prevents an attacker, cloning a VM at rest, from using the cloned image to connect to the Luna HSM.</p>
+        <p class="ul1" style="font-weight: bold;" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Random data used in generating One Time Tokens</p>
+        <p class="listLevel1">The data used to generate one-time-tokens is derived from the HSM’s hardware Random Number Generator (RNG complying with NIST SP 800-90), assuring maximum randomness, and therefore highest quality input to the process.</p>
+        <p class="ul1" style="font-weight: bold;" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>One-time-token auto-refresh</p>
+        <p class="listLevel1">  The HTL maintains a constantly changing synchronization code with the HSM server, based on a random initial counter value and step interval assigned by the HSM, which allows the authorized instance to re-establish its HTL after brief periods. The length of this period is configurable by the HSM administrator and it defaults to 2 minutes. Administrators can lengthen the time for improved reliability if the network links are unreliable, or shorten the time to increase the overall security of the HTL.</p>
+        <h3>Active Client Protection</h3>
+        <p>When the HTL mode is active, then any  unauthorized copy of the VM  will be rejected by the HSM (until it receives a valid One Time Token). For such an attack to succeed, the counter would need to be re-synchronized to match the original VM by manipulating its value in RAM. This attack might be possible, but the use of a random initial counter value, a random step interval, and the ongoing synchronization, presents a significant barrier.</p>
+        <p>If a client requires VM binding, and an existing HTL link for that client goes down, the HSM server kills all existing NTLS connections from that client. This action occurs immediately, and is independent of the grace period (if any).</p>
+        <p>A client user, using a supplied GUI tool, can check the status of the HTL link for every configured, registered appliance.</p>
+        <p>
+            <img src="htl_virtual_clients_with_instance-specific_protect_model.png" />
+        </p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/htl/htl_overview.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

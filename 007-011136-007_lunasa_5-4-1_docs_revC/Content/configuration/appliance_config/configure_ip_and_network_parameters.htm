@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|[Step 1] Configure the Luna Appliance for your Network">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Configure IP and Network Parameters</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/appliance_config/configure_ip_and_network_parameters.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="gather_hsm_appliance_network_settings.htm">[Step 1] Configure the Luna Appliance for your Network</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Configure IP and Network Parameters</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3><a name="kanchor25"></a>Configure IP and Network Parameters</h3>
+        <p>The HSM appliance is pre-configured with network settings left over from our manufacturing process and not recommended for your production network. 
+ The following procedure assumes that your network uses DNS. If you are 
+ configuring without a DNS server available, some of the commands on this 
+ and subsequent pages might be affected. Such commands are highlighted with 
+ this “No DNS” icon. <br /></p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Use a locally connected serial terminal when changing the appliance IP address, to avoid SSH admin console disconnection due to the change.</p>
+        <p class="ol1" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Use the <span style="font-family: 'Courier New', monospace;">network show</span> command 
+ to display the current settings, to see how they need to be modified for 
+ your network. <br /><span style="font-family: 'Courier New', monospace;">[local_host] lunash:&gt;net show&#160;<br />&#160;&#160;&#160;&#160;Hostname:          &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;local_host&#160;<br />&#160;&#160;&#160;&#160;Domain: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;           &lt;not set&gt;&#160;<br />&#160;&#160;&#160;&#160;IP Address (eth0):    HW Address (eth0): 00:15:B2:A2:43:60&#160;<br />&#160;&#160;&#160;&#160;Mask (eth0): &#160;&#160;&#160;&#160;&#160;         Gateway (eth0): &#160;   &lt;not set&gt;&#160;<br /><br />&#160;&#160;&#160;&#160;Name Servers:      &lt;not set&gt;&#160;<br />&#160;&#160;&#160;&#160;Search Domain(s):  &lt;not set&gt;&#160;<br /><br />Kernel IP routing table&#160;<br />Destination     Gateway         Genmask         Flags Metric Ref    Use Iface&#160;<br />Link status&#160;<br />&#160;&#160;eth0: Configured&#160;<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Link detected: yes&#160;<br />&#160;&#160;eth1: Not configured&#160;<br /><br />Command Result : 0 (Success)&#160;<br />[local_host] lunash:&gt;</span><br />&#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Use <span style="font-family: 'Courier New', monospace;">network 
+ hostname</span> to set the hostname of the HSM appliance (use lowercase 
+ characters). <span style="font-family: 'Courier New', monospace;"><br />lunash:&gt; network hostname myluna3</span> <![CDATA[ ]]></p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>To access the HSM appliance, the hostname must be resolvable to an IP address on your network. See your Network Administrator for assistance with completing this step.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The net hostname command expects a single-word 
+ text string. If you supply a name that includes a space, all text after 
+ the space is ignored. For example, if you typed: <span style="font-family: 'Courier New', monospace;"> net hostname host name</span> the system would assign a hostname of “host”. &#160;Therefore, 
+ if you want "host name", use "host_name" or "host-name" 
+ or "hostname" or similar.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Enter a meaningful hostname to allow you to identify and manage multiple Luna appliances in your network.<br /></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use <span style="font-family: 'Courier New', monospace;">network 
+ domain</span> to set the name of the network domain in which the HSM Server (appliance) is to operate. <span style="font-family: 'Courier New', monospace;"><br />lunash:&gt; net domain safenet-inc.com</span> <br /><br /></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Use ‘<span style="font-family: 'Courier New', monospace;">network 
+ dns add nameserver</span>’ to set the Nameserver IP Address (address for the 
+ local name server). <span style="font-family: 'Courier New', monospace;"><br />lunash:&gt; net dns add nameserver 192.168.1.3</span> <br />(substitute an appropriate address for the example; ask your Network 
+ Administrator).</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Your network could have multiple DNS name servers. Repeat this step for any 
+ additional name servers.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>This command manually sets a DNS parameter for the HSM appliance. If you 
+ elect to use a DHCP server (see the net -interface command later in this 
+ section) rather than static IP, then this parameter is overwritten for 
+ the HSM appliance. &#160;In 
+ general, we strongly recommend against using DHCP for HSM appliances.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Use <span style="font-family: 'Courier New', monospace;">net dns add searchdomain</span> to set the DNS Search Domain (the search list to be 
+ used for hostname lookups). <br /><span style="font-family: 'Courier New', monospace;"> lunash:&gt; net dns add searchdomain safenet-inc.com</span> <br /></p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Setting the Search Domain is important so that you can use short names 
+ for your client machines.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Your network could have multiple DNS search domains. Repeat this step to 
+ add all search domains.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>This command manually sets a DNS parameter for the HSM appliance. If you 
+ elect to use a DHCP server (see the net -interface command later in this 
+ section) rather than static IP, then this parameter is overwritten for 
+ the Luna&#160;SA. &#160;</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Use <span style="font-family: 'Courier New', monospace;">network 
+ interface</span> to change network configuration settings. &#160;<br /><br />All of the <span style="font-family: 'Courier New', monospace;">network 
+ interface</span> parameters are required for the IP setup of the ethernet 
+ device, and must be set at the same time for the HSM appliance to connect 
+ with your network. &#160;<br /><span style="font-family: 'Courier New', monospace;">&#160;lunash:&gt;net interface  -device eth0 -ip 192.168.11.82 
+ -netmask 255.255.0.0 -gateway 192.168.1.1</span> <br /><br />Use addresses and mask values as provided by your network 
+ administrator.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The first [top] ethernet port (eth0) and the [bottom] ethernet port (eth1)  on the HSM appliance's 
+ back panel, are labeled <span style="font-size: 14pt; color: #000000; font-weight: bold;">1</span><img src="Images/network-icon_33x28.png" style="width: 33;height: 28;" /><span style="color: #000000; font-weight: bold; font-size: 18pt;">/</span><span style="font-size: 14pt; color: #000000; font-weight: bold;">2</span><img src="Images/network-icon_31x27.png" style="width: 31;height: 27;" /> </p>
+        <p>If you choose to configure the second ethernet port (eth1), repeat the 
+ <span style="font-family: monospace;">network interface</span> command, above, substituting ‘eth1’ and the appropriate 
+ address for that device. Even if you do not have a need for the second ethernet port, you should configure it, specifically to a test network (e.g., <span style="font-family: monospace;">network interface –device eth1 –ip 192.168.1.254 –netmask 255.255.255.0</span>) so that it does not affect the behavior of other Luna features (e.g., remote PED).</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If either interface is configured to use DHCP, 
+ then the DNS parameters are overwritten for the entire HSM appliance. 
+ It is not possible to have manual settings preserved for one interface, 
+ while DHCP-derived settings are used for the other. In general, we 
+ recommend against using DHCP for HSM appliances.<br /></p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you have chosen to perform 
+ setup via ssh, rather than via the direct (serial) administrative connection, 
+ then you will likely lose your network connection at this point, as you 
+ confirm the change of IP address from the default setting. &#160;</p>
+        <p>View the new network settings with <span style="font-family: monospace;">network show</span>.<br />&#160;<span style="font-family: monospace;">lunash:&gt; network show</span> <![CDATA[ ]]></p>
+        <p>The <span style="font-family: 'Courier New', monospace;">network show</span> 
+ command (described earlier) displays the current settings, so you can 
+ verify that they are now correct for your environment before attempting 
+ to use them.</p>
+        <p>(Next, go to <a href="make_your_network_connection.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Make Your Network Connection"</span></a> )</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/appliance_config/configure_ip_and_network_parameters.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

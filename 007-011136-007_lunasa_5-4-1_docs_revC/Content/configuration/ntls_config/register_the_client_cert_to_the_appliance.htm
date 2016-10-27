@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|[Step 6] Set up a Network Trust Link">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Register the Client Cert to an HSM Partition</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/ntls_config/register_the_client_cert_to_the_appliance.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="prepare_the_client_for_network_trust_link.htm">[Step 6] Set up a Network Trust Link</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Register the Client Cert to an HSM Partition (All)</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="kanchor70"></a><a name="kanchor71"></a>Register the Client Certificate to an HSM Server</h2>
+        <p><a name="kanchor72"></a>The client certificate, which has been securely transferred (scp’d) 
+ from the client to the HSM Server, in previous sections, must be registered 
+ by the HSM Server.</p>
+        <p>You must be connected to the HSM Server and logged 
+ in as “admin”.</p>
+        <p>The basic command is:</p><pre xml:space="preserve">lunash:&gt; client register -client &lt;client’s-name&gt; 
+ -hostname &lt;client’s-hostname&gt; </pre>
+        <p>&#160;</p>
+        <p>The &lt;client’s-name&gt;, above can be any string that allows you to 
+ easily identify this client - many people use the hostname, but the &lt;client's-name&gt; 
+ can be any string that you find convenient. This might sound a little redundant (naming the client twice in one command), but it becomes especially useful if you are not using DNS -in that case, a well-considered &lt;client's-name&gt; is likely going to be easier to remember or recognize ( more meaningful ) than would the client's ip-address.</p>
+        <p>The command is expecting to find (on the Luna SA appliance) a client certificate 
+ filename that matches the client’s hostname (or ip-address if you are not using DNS hostnames), as you provide it here. In 
+ other words, this is a check that you are registering the client whose 
+ .pem file you created in the previous steps and scp'd to the appliance. You can register several clients to the appliance.</p>
+        <h4>Example – lunash client registerClient Command</h4><pre xml:space="preserve">lunash:&gt; client register -client MyClient -hostname MyClient 
+ </pre><pre xml:space="preserve">Client registration successful.</pre><pre xml:space="preserve">lunash:&gt; client list</pre><pre xml:space="preserve">registered client 1: MyClient</pre><pre xml:space="preserve">lunash:&gt; </pre>
+        <p>&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you are working without DNS, then register the client by its IP address, 
+ rather than its hostname. &#160;<br /><br />lunash:&gt; client register -client &lt;client’s-name&gt; 
+ -ip &lt;clientIPaddress&gt; </p>
+        <p>The foregoing is sufficient for "real" (non-VM) clients. See below if your client is a virtual-machine instance.</p>
+        <p>The Client is now registered with the Luna SA.</p>
+        <p>You can verify on the Luna SA, with the <span style="font-family: monospace;">client list</span> command.</p>
+        <p>Refer to the Reference section of this Help for command syntax and descriptions.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span><span style="font-weight: bold;">De-Register 
+ (registration not complete)</span>
+            <br />If you have multiple HSM appliances connected and registered with a client 
+ and you de-register that client from one of the HSM appliances, then 
+ you must also de-register that HSM appliance on the client side.<br />Failure to do so will result in a “Broken pipe” error, which indicates 
+ an incomplete registration.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span><span style="font-weight: bold;">Re-Register</span>
+            <br /><a name="kanchor73"></a>If you wish to de-register a client and then re-register with a new certificate, 
+ on the same HSM appliance, then you must copy the certificate to the HSM appliance (HSM server) and stop and re-start the NTLS service. 
+ Before such a restart, any connection attempts  fail, and “Error on 
+ SSL accept” is logged.<br />&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Administration 
+ commands can take a few seconds to be noted by the NTLS. If you have added 
+ or deleted a client, we suggest that you wait a few seconds before connecting.</p>
+        <h3>How Many Clients?</h3>
+        <p>Most applications require only a few separate clients to be registered with the Luna&#160;SA, and then those clients act as application servers or web servers to the rest of the world. The rest of the world usually has no need to connect as clients directly to the Luna&#160;SA.</p>
+        <p>Regardless of who is connecting (your servers acting as clients to the Luna SA, or your own customers given client access to your Luna&#160;SA) note that any registered client might make dozens or hundreds of simultaneous connections while running multi-process applications against the Luna&#160;SA HSM server. </p>
+        <p>The Luna&#160;SA appliance is designed for such multi-connection operation. See <a href="../../sa_appliance_admin/client_connections/connections_to_the_appliance.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Connections to the Appliance - Limits "</span></a> for a discussion of how total connections are determined.</p>
+        <h3>Register VM Clients</h3>
+        <p>When the client is a virtual machine instance, the possibility exists that the VM could be cloned or moved. NTL is not aware of such an event. For optimum security, when registering VM clients with Luna SA partitions, you should invoke the additional layer "HTL".<br /></p>
+        <p>The "client register" command includes the options "-requireHtl", which invokes the Host Trust Link, and "-ottExpiry" and "-generateOtt" to create and configure the One Time Token used by HTL in setting up its hardware-independent trust link.</p>
+        <p>HTL should be considered mandatory for virtual clients, and optional (but a good idea) for "real" clients.</p>
+        <h3>What's the Next Step?</h3>
+        <p>Proceed to the next section  <a href="../initial_setup/assign_a_client_to_a_luna_sa_hsm_partition.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Assign a Client to an HSM Partition"</span></a> , which is the last configuration step before you start using your application with the Luna SA HSM server.</p>
+        <p><strong>Optionally</strong> (as mentioned above), for use with virtual/cloud environments, or to additionally secure non-virtual configurations, you can choose to establish a Host Trust Link <a href="../../administration/htl/htl_configuring-using_about.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Configuring and Using HTL"</span></a>.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/ntls_config/register_the_client_cert_to_the_appliance.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

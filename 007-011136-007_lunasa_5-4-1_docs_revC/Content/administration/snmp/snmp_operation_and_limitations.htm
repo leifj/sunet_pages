@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|SNMP">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>SNMP Operation and Limitations with Luna&#160;SA</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/snmp/snmp_operation_and_limitations.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="snmp.htm">SNMP</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">SNMP Operation and Limitations with Luna&#160;SA</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor189"></a>SNMP Operation and Limitations with Luna&#160;SA</h2>
+        <p>This page applies only to Luna&#160;SA which, as a closed system, has its own agent. This contrasts with other SafeNet Luna HSMs that are installed inside a host computer, or USB-connected to a host, and therefore require you to provide an SNMP agent and configure for use with our subagent. </p>
+        <p>Various Lunash (Luna Shell, command line) commands govern the setup 
+ and use of SNMP with the Luna appliance. You provide your own SNMP application 
+ – a 
+ standard, open-source tool like net-snmp, or a commercial offering, or 
+ one that you develop yourself – 
+ and use the commands described below (and on the following pages) to enable 
+ and adjust the SNMP agent on-board the Luna appliance. &#160;</p>
+        <h3>SNMP-Related Commands</h3>
+        <p>Please refer to the Lunash Appliance Commands in the Reference Section 
+ of this Help for syntax and usage descriptions of the following:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The <span style="font-family: 'Courier New', monospace;">sysconf snmp</span> 
+ command has subcommands "enable", "disable", "notification", 
+ "show", "trap", and "user".</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>The <span style="font-family: 'Courier New', monospace;">sysconf 
+ snmp notification</span> command allows viewing and configuring the notifications 
+ that can be sent by the SNMP agent. At least one user must be configured 
+ before the SNMP agent can be accessed.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>The <span style="font-family: 'Courier New', monospace;">sysconf 
+ snmp enable</span> command enables and starts the SNMP service. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>The <span style="font-family: 'Courier New', monospace;">sysconf 
+ snmp disable</span> command stops the service. &#160;&#160;</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>The <span style="font-family: 'Courier New', monospace;">sysconf 
+ snmp show</span> command shows the current status of the service. &#160;&#160;</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>The <span style="font-family: 'Courier New', monospace;">sysconf 
+ snmp trap</span> command has sub-commands to set, show, and clear trap host information.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>The <span style="font-family: 'Courier New', monospace;">sysconf 
+ snmp user</span> command allows viewing and configuring the users that 
+ can access the SNMP agent. At least one user must be configured before 
+ the SNMP agent can be accessed.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The <span style="font-family: 'Courier New', monospace;">service list</span> 
+ command reports a service: "snmpd &#160;&#160;- 
+ SNMP agent service".</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The <span style="font-family: 'Courier New', monospace;">service status</span>, 
+ <span style="font-family: 'Courier New', monospace;">service stop</span>, 
+ <span style="font-family: 'Courier New', monospace;">service start</span> 
+ and <span style="font-family: 'Courier New', monospace;">service restart</span> 
+ commands accept the value "snmp" as a &lt;servicename&gt; parameter 
+ (that is, you can start, stop or restart the snmp service – 
+ this represents some overlap with the <span style="font-family: 'Courier New', monospace;">sysconf 
+ enable</span> and <span style="font-family: 'Courier New', monospace;">disable</span> 
+ commands, but is provided for completeness).</p>
+        <h3>Coverage</h3>
+        <p>The following are some points of interest, with regard to our reporting:</p>
+        <h4>Memory
+</h4>
+        <p>Swap usage - Covered by UCD-SNMP-MIB under memTotalSwap, memAvailSwap and memMinimumSwap OID
+
+  </p>
+        <p>Physical Memory usage - Covered by UCD-SNMP-MIB under memTotalRea, memAvailReal, memTotalFree OID
+
+  </p>
+        <p>Errors - Covered by UCD-SNMP-MIB under memSwapError and memSwapErrorMsg OID
+</p>
+        <h4>Paging   
+
+    </h4>
+        <p>Size of page file   - Not covered
+
+    </p>
+        <p>Page file usage - Not covered
+    </p>
+        <p>Paging errors - Not covered
+<br /> 
+Note: UCD-SNMP-MIB/memory will report all the data that we get from the "free" command.
+
+</p>
+        <h4>CPU
+
+  </h4>
+        <p>% Utilization
+
+  Threads - Not covered
+
+  </p>
+        <p>%user time - Covered by UCD-SNMP-MIB under ssCpuUsr OID
+
+  </p>
+        <p>%system time - Covered by UCD-SNMP-MIB under ssCpuSystem OID
+
+  </p>
+        <p>Top running processes - Not covered
+</p>
+        <h4>Network </h4>
+        <p>Interface status
+ - Covered</p>
+        <p>% utilization
+ - Covered</p>
+        <p>Bytes in
+ - Not covered</p>
+        <p>Bytes Out
+- Not covered</p>
+        <p>Errors
+ - Covered</p>
+        <p>Note: All of the above are already covered by the RFC1213-MIB.
+
+</p>
+        <h4>Monitoring Internal Hardware failure
+
+   </h4>
+        <p>We do not currently  keep any status on hardware failure. </p>
+        <h4>Environmental
+
+    </h4>
+        <p>We support only CPU and mother board temperature. </p>
+        <h3>HSM MIB</h3>
+        <p>The above concerns status of various elements of the appliance, outside the contained HSM.</p>
+        <p>HSM status is separately handled by the SAFENET-HSM-MIB.</p>
+        <p>In the current implementation, the object ntlsCertExpireNotification has no value. If you query this object, the response is "Snmp No Such Object.</p>
+        <p>Information about the HSM, retrievable via SNMP, is similar to executing the following commands:</p>
+        <p>From Luna&#160;SA (lunash:&gt; commands)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>	hsm show &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>hsm showPolicies &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>partition show &#160;&#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>partition showPolicies &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>hsm displayLicense &#160;&#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>client show</p>
+        <p>From the	Client (lunacm:&gt; commands)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>hsm showinfo &#160;&#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>hsm showpolicies (SO not shown) &#160;&#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>partition showinfo &#160;&#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>partition showpolicies</p>
+        <h3>MIBS You Need for Network Monitoring of Luna SA</h3>
+        <p>The following MIBs are not supplied as part of the Luna SA build, but can be downloaded from a number of sources. How they are implemented depends on your MIB utility. Support is restricted to active queries (trap captures only reboots).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>LM-SENSORS-MIB
+
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>RFC1213-MIB
+
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SNMP-FRAMEWORK-MIB
+
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SNMP-MPD-MIB
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SNMP-TARGET-MIB
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SNMP-USER-BASED-SM-MIB
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SNMPv2-MIB </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SNMP-VIEW-BASED-ACM-MIB</p>
+        <p>In addition, the SAFENET-APPLIANCE-MIB is included within the Luna&#160;SA appliance, to report Software Version. </p>
+        <h3>MIBS You Need for Monitoring the Status of the HSM</h3>
+        <p>You require the following MIB to monitor the status of the HSM:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SAFENET-HSM-MIB.mib</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/snmp/snmp_operation_and_limitations.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Remote PED">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Remote PED Architecture</title>
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/remote_ped/remote_ped_architecture.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="remote_ped.htm">Remote PED</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Remote PED Architecture</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Remote PED Architecture</h2>
+        <p>&#160;</p>
+        <p>
+            <img src="../../concepts/remote_ped_architecture.png" />
+        </p>
+        <p>The PED client and server are software components that allow the HSM and PED to communicate via a TCP/IP network.  The PED Client in the Luna appliance requests PED services from the PED Server through the network connection.
+</p>
+        <p>Once communicating (i.e., the data path is established), the PED and HSM establish a common Data Encryption Key (DEK) , which is used for PED protocol data encryption thereafter, and authenticate each other as described below. </p>
+        <p> An authentication failure disconnects the parties.
+</p>
+        <p>DEK establishment is based on the Diffie-Hellman key establishment algorithm and an RPV (Remote PED Vector), shared between the HSM and the PED via the “Orange” Remote PED iKey (RPK).  Once a common Diffie-Hellman value is established between the parties via the Diffie-Hellman handshake, the RPV is mixed into the value to create a 256-bit AES DEK on each side.  If the PED and the HSM do not hold the same RPV, the resulting DEKs will be different between them, and the parties won’t be able to talk.  This property is used in providing mutual authentication of the PED and the HSM.
+</p>
+        <p>Mutual authentication is achieved by exchanging random nonces, encrypted using the derived data encryption key.  The authentication scheme operates as follows:</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">HSM</th>
+                    <th class="HeadE-Column1-Header1">_</th>
+                    <th class="HeadD-Column1-Header1">Remote PED</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Send 8 bytes random nonce, R1, <br />encrypted using the derived <br />encryption key.</td>
+                    <td class="BodyE-Column1-Body1">{R1 || padding}<sub>Ke</sub> -&gt;</td>
+                    <td class="BodyD-Column1-Body1">&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyE-Column1-Body1">&lt;- {R2 || R1}<sub>Ke</sub></td>
+                    <td class="BodyD-Column1-Body1">Decrypt R1.  Generate an 8 byte <br />random nonce, R2. <br /> Concatenate R2 || R1 and <br />encrypt the result using the <br />derived encryption key.</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">Decrypt R2 || R1.  Verify that <br />received R1 value is the same as <br />the originally generated value.  <br />Re-encrypt R2 and return it to <br />Remote PED.</td>
+                    <td class="BodyB-Column1-Body1">{padding || R2}<sub>Ke</sub> -&gt;</td>
+                    <td class="BodyA-Column1-Body1">Verify that received R2 value is <br />the same as the originally <br />generated value.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Following successful authentication, the random nonce values are used to initialize the feedback buffers needed to support AES-OFB mode encryption of the two communications streams (one for each direction).
+</p>
+        <p>Sensitive data in transition between a PED and an HSM is end-to-end encrypted: plaintext security-relevant data is never exposed beyond the HSM and the PED boundaries at any time.  The sensitive data is also hashed, using a SHA-256 digest, to protect its integrity during transmission.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/remote_ped/remote_ped_architecture.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

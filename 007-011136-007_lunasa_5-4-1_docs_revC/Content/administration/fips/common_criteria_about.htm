@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Standards and Validations">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Common Criteria</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/fips/common_criteria_about.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="standards_and_validations.htm">Standards and Validations</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Common Criteria</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Common Criteria</h2>
+        <p>If you are concerned with Common Criteria validation for products that you use, this section has some information that might be useful in your decisions and planning.</p>
+        <h3>Background</h3>
+        <p>Common Criteria is an international standard for computer security certification that is becoming important worldwide (<a href="http://www.commoncriteriaportal.org/" target="_blank">http://www.commoncriteriaportal.org</a>). CC includes categories that are applicable to SafeNet HSM products. The process to have a product validated against CC rules is lengthy and expensive, so we have tended to submit our products when they are mature and when there is a demand. </p>
+        <p>The process is quite different from US government's FIPS validation, but from the perspective of Luna products it has this in common: the unit that is validated is the HSM. That is, a Luna SA (or other) appliance would not receive FIPS or CC validation - rather the HSM card that is the core of the appliance, and is used in several products, is what actually gets validated, and only for a particular firmware version. In FIPS evaluation, the HSM card at a certain firmware version is validated. In CC evaluation, the HSM card, as it is used in the Luna appliance is evaluated, a subtle difference. </p>
+        <p>Due to market requirements, the K5 generation (with firmware 4.6.1 ) as used in Luna SA 4.x was CC evaluated and achieved certification. You can check the Common Criteria portal (see link above), or contact SafeNet to find out the most current CC status of any of our products. The K5 is used in the 4.x series 1U rack-mount-format Luna SA, and is also the core of some other SafeNet HSM products.</p>
+        <p>The Common Criteria evaluation process has been started for the <b>K6</b> HSM. The earliest expected result would be some time in 2014. From time to time, you can check with the CC site, or with your SafeNet representative to learn the status of Luna products in various evaluations.</p>
+        <h3>Trade-offs</h3>
+        <p>As a general practice, when a product receives one of the major validations, and our customers invest their resources in that version of the product, we try to keep supporting that version even while the "state of the art" advances. Thus, as the Luna SA product advances (newer software and firmware versions being released) it would be our general practice to make available (sell) the "frozen" CC'd version as long as possible for customers who wish to match units that they already own, while also offering the newer versions for those customers who did not require CC compliance. </p>
+        <p>What you might notice is that - when possible - a newer release of software is  made compatible with an older milestone release of firmware (such as the Common Criteria-validated or FIPS-validated version). Features or fixes to the overall system can take the form of software-only, firmware-only, and combinations that involve changes to both software and firmware to achieve the fix or the new functionality. Thus, it becomes apparent that, if you need to retain strict Common Criteria compliance, you cannot take advantage of any fix or any functional improvement (feature) that has a firmware component to it [since it is the specific hardware and firmware combination that is evaluated and certified]. </p>
+        <p>If you choose to use newer software (Client, Appliance, or both) while retaining an older firmware, be aware that only those new features (and fixes) that are implemented entirely in software would become available to you. Any newer product features that depended on newer firmware could not be accessed without updating the firmware, which would then invalidate that HSM from its strict compliance with Common Criteria - it would no longer be the exact version that was validated. One example is when new encryption algorithms are added, they are implemented in firmware. The software might allow you to call for a new algorithm, but if you have retained older firmware that didn't include such an algorithm, the response (naturally) would be an error message, such as "Mechanism Invalid".</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Due to the way that CC rules work, a validated product must be shipped from the factory. If you already own a Luna appliance that has the proper hardware, you cannot simply apply an upgrade/update and achieve CC compliance. Naturally, any competing product faces the same constraints.</p>
+        <h3>So, What Are the Options?</h3>
+        <p>If you absolutely need CC-validated equipment, because your own organization's rules require it, or because your customers require it, then you should purchase a CC-validated version.</p>
+        <p>If you simply prefer the peace-of-mind associated with the CC blessing -&#160;unbiased third-party confirmation that we have conformed to certain rigorous standards with our product - but you also require the newer features or algorithms, consider the following possibility. You might accept that there is some "halo" effect attached to our other products, especially in the same product lines that have been submitted and validated, because we follow the same procedures in our design, testing, sourcing, manufacturing, and other handling for all our HSM products that we do for those that go into the Common Criteria submission pipeline.</p>
+        <p>In other words, we believe that any given product that we make is likely to meet a CC standard if submitted because we make them all that way. Then we select the one(s) that we believe are early enough in their life-window and their customer appeal to be worth submitting to the year(s?)-long evaluation process. </p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/fips/common_criteria_about.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

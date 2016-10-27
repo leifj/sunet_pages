@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Online,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|[Step 4] Create a Partition">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Creating a Partition (TP) - About</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/initial_setup/about_creating_a_partition_ped.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="creating_partitions_placeholder.htm">[Step 4] Create a Partition</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Creating a Partition (TP) - About</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Prepare to Create a Partition (PED Authenticated)</h2>
+        <p>This section is HSM Partition setup for PED (Trusted Path) Authentication. 
+ The activities in this section are required in these circumstances.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>if you just prepared 
+ an HSM on the HSM appliance for the first time and must now create your 
+ first HSM Partition, or</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Primary.notLunaSP"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>if you have purchased 
+ a Luna SA capable of supporting multiple HSM Partitions and you wish to 
+ create those additional partitions (this 
+ procedure creates one HSM Partition at a time, and you would need to repeat 
+ it once for each Partition, up to the number supported by your Luna SA) 
+ 
+
+, 
+ &#160;or</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>if you have deleted an 
+ HSM Partition and wish to create a new one to replace it. </p>
+        <h3>About HSM Partitions on the Initialized HSM</h3>
+        <p>At this point, the HSM appliance <i style="font-weight: bold;">should already</i>:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>have its network settings 
+ configured (see <a href="../appliance_config/about_configuring_luna_appliance_network_settings.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Configuring the Luna Appliance Network Settings"</span></a> ) <br /></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>have its HSM Administrator 
+ and its Cloning Domain assigned ( see <a href="about_initializing_a_ped-authenticated_hsm.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">" &#160;Initializing a PED-Authenticated HSM"</span></a>  ). &#160;</p>
+        <p>Within the HSM, separate cryptographic work-spaces must be initialized 
+ and designated for clients. A workspace, or Partition, and all its contents 
+ are protected by encryption derived (in part) from its authentication. 
+ Only a Client that presents the proper authentication is allowed to see 
+ the Partition and to work with its contents.</p>
+        <p>In this section, you will:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Create an HSM Partition 
+ </p>
+        <h4>First, Establish a Connection to your HSM Appliance 
+ </h4>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>If you do not 
+ already have a connection open, connect your administration computer to 
+ the serial Console port of the HSM appliance, and open a Terminal session, 
+ or use ssh to connect via the network (for Windows, we provide PuTTy; for UNIX/Linux, your operating system provides the ssh client, either as part of the distribution, or as a separate down-loadable utility).</p>
+        <h4>Then, Login as HSM Admin / SO</h4>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>To create HSM 
+ Partitions, you must login to the HSM as HSM Admin (also called Security Officer or SO). Ensure that the PED is connected to the PED port on your HSM appliance, and that 
+ the PED is powered on and "Awaiting command.."</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>At the <span style="font-family: 'Courier New', monospace;">lunash</span> prompt, type:</p><pre xml:space="preserve">lunash:&gt; hsm login
+
+</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Authenticate 
+ as HSM Admin:<br />The PED prompts for the blue PED Key</p>
+        <p style="margin-left: 40px;">
+            <br />
+            <img src="../../Resources/Images/ped_so_insert_so_key_266x220.jpg" alt="PED MESSAGE: SO LOGIN... Insert a SO / HSM Admin PED Key.  Press ENTER" title="SO LOGIN... Insert a SO / HSM Admin PED Key.  Press ENTER" style="width: 266;height: 220;" />
+            <br />
+        </p>
+        <p style="margin-left: 40px;">&#160;</p>
+        <p style="margin-left: 40px;">You must provide the blue HSM Admin PED Key 
+ that has been imprinted (initialized) for this HSM.</p>
+        <p style="margin-left: 40px;">If you had set a PED PIN, you are prompted 
+ for that, as well.<br /><br /></p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Next, see <a href="create_partition_ped.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Create (Initialize) the Partition - PED Authenticated"</span></a> .</p>
+        <p class="warning" data-mc-autonum="&lt;b&gt;WARNING!&lt;/b&gt; &#160;"><span class="autonumber"><span><b>WARNING!</b> &#160;</span></span>If you fail three consecutive login attempts 
+ as HSM Admin (also called SO), the HSM is zeroized and cannot be used — 
+ it must be re-initialized. Re-initializing zeroizes the HSM contents. 
+ Zeroizing destroys all key encryption material. Please note that the HSM must 
+ actually receive some information before it logs a failed attempt, so 
+ if you forget to insert a PED Key, or if you insert the wrong kind (for example, if you insert a black key when a red key is called for), that is not logged as a failed attempt. Also, when you successfully 
+ login, the counter is reset to zero.</p>
+        <p>If you are not sure that you are currently logged in as HSM Admin (or SO), perform 
+ an ‘<span style="font-family: 'Courier New', monospace;">hsm logout</span>’, then log in again.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/initial_setup/about_creating_a_partition_ped.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

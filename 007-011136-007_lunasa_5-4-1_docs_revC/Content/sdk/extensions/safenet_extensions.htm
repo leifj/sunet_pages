@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Extensions to PKCS#11">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>SafeNet Extensions to PKCS#11</title>
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/extensions/safenet_extensions.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">SDK Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="extensions.htm">Extensions to PKCS#11</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">SafeNet Extensions to PKCS#11</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>SafeNet Extensions to PKCS#11</h2>
+        <p>This section  presents a set of extensions which have been 
+ added to PKCS#11 by SafeNet. They cover several areas of cryptographic 
+ protocol/standard support and system information, as follows:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>FIPS 140-2 validation 
+ including a secure PIN and data port</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Key CloningTM support</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>secret sharing activation 
+ support</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>support for sharing login 
+ state across applications</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>support for an alternate 
+ login scheme, referred to as "Indirect Login"</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>support for manipulating 
+ token state vectors</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>support for synchronization 
+ of multiple Luna XL tokens for enhanced cryptographic acceleration.</p>
+        <h3>Other APIs</h3>
+        <p>These commands and functions can also be used as extensions to other 
+ Application Programming Interfaces (for example, OpenSSL).</p>
+        <h3>Summary of New Functions</h3>
+        <p>The several functions defined in this extension to PKCS#11 are introduced 
+ in the following table. These functions are described in more detail in 
+ later sections of this document.</p>
+        <table style="x-border-left: 1px table-solid;x-border-top: 1px table-solid;x-border-right: 1px table-solid;x-border-bottom: 1px table-solid;border-collapse: separate;x-border-left: 1px table-solid;x-border-top: 1px table-solid;x-border-right: 1px table-solid;x-border-bottom: 1px table-solid;border-collapse: separate;mc-table-style: url('../../Resources/TableStyles/Page.css');" border="1" class="TableStyle-Page" cellspacing="0">
+            <caption data-mc-autonum="Table 1: "><span class="autonumber"><span>Table 1: </span></span>Summary of new Cryptoki Functions </caption>
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Category</th>
+                    <th class="HeadE-Column1-Header1">Function</th>
+                    <th class="HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td rowspan="5" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">Key cloning </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_SetCloningDomain </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Sets the domain string used during token initialization.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_ClonePrivateKey </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Permits the secure transfer a private key (RSA) between 
+ a source token and a target token.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_GenerateTokenKeys </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Generate the private keys used for secure key cloning 
+ operations.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_GetTokenCertificateInfo </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Obtain the cloning certificate.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_SetTokenCertificate<br />Signature</p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Sign the cloning certificate with the private keys generated 
+ for key cloning operations</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="8" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">Secret Sharing Activation (commonly referred to as M 
+ of N)</p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_SetMofN </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Sets the security policy for the token to use the secret 
+ sharing feature.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_GenerateMofN </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Generates the secret informa-tion on a token.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_ActivateMofN </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Activates a token that has the secret sharing feature 
+ enabled.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_GenerateCloneableMofN </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Creates a clonable secret-splitting vector on a token.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_CloneMofN </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Copy a clonable secret-splitting vector from one token 
+ to another.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_DuplicateMofN </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Creates duplicates (copies) of all MofN secret splits.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_ModifyMofN </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Modifies the secret-splitting vector on a token.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_GetMofNStatus </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Retrieves the MofN structure of the specified token.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="3" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">Share login state across applications</p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_SetApplicationID</p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Sets the application's identifier.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_OpenApplicationID </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Activates an application identifier, independent of any 
+ open sessions.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_CloseApplicationID </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Deactivates an application identifier.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="2" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">Indirect Login</p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_InitIndirectPIN </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Initializes a user PIN so that it may be used normally 
+ or indirectly.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_IndirectLogin </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Performs an indirect login operation.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="5" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">Token State Vector Manipulation</p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_GetFPV </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Retrieves the token's Fixed Policy Vector (FPV).</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_GetTPV </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Retrieves the token's Token Policy Vector (TPV).</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_GetExtendedTPV </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Retrieves the token's TPV and extended TPV.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_SetTPV </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Sets the token's TPV.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_SetExtendedTPV </p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Sets the token's TPV and extended TPV.</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="2" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">XL</p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyE-Column1-Body1">
+                        <p class="CellBody">CA_GetNumberOfSSLSlots</p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyD-Column1-Body1">
+                        <p class="CellBody">Determine the number of accelerator slots (distinct from 
+ authentication slots, when Luna XL is also used with Luna CA<em class="Superscript"> 
+ 3</em> .)</p>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td rowspan="1" colspan="1" class="BodyB-Column1-Body1">
+                        <p class="CellBody">CA_SSLSynchronizeObjects</p>
+                    </td>
+                    <td rowspan="1" colspan="1" class="BodyA-Column1-Body1">
+                        <p class="CellBody">Designates a master slot in an XL installation (you pass 
+ the slot number with the call) then clones the content of the master slot 
+ to all other accelerator slots</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Cryptoki Version Supported</h3>
+        <p>The current release of SafeNet 
+ Luna Toolkit provides the Chrystoki library supporting version 2.20 of 
+ the Cryptoki standard.</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#sdk/extensions/safenet_extensions.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

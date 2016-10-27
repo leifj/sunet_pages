@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|HSM Partitions">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Separation of HSM&#160;Workspaces</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/partitions/separation_of_hsm_workspaces.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partitions.htm">HSM Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Separation of HSM&#160;Workspaces</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Separation of HSM&#160;Workspaces</h2>
+        <p>Depending on the SafeNet Luna HSM and its configuration, the HSM can have three, or more, logical partitions.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>One for the Security Officer (SO)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>One for the Auditor, and </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>One (or more) for Users and Clients.</p>
+        <p>In rare circumstance, the Security Officer might create and keep cryptographic objects, Normally it is not used for "production" cryptographic operations - the SO&#160;space is intended for overall HSM-level administration.</p>
+        <p>The Auditor partition is used to enable and manage secure audit logging activities, and generally has no other function in the HSM. </p>
+        <p>The User partition (or partitions, depending upon HSM type and configuration) is enabled (Activated) and managed by the partition User (also called Owner in some regimes), and is then used by client applications to create and use cryptographic objects, and to perform cryptographic operations. </p>
+        <p>The ordinary partition User entity can be further sub-divided into Crypto Officer and Crypto-User in cryptographic security regimes that require this distinction.</p>
+        <p>Crypto operations are normally performed from a logged-in session on the HSM. It is possible to create objects without logging in, so long as the CKA_PRIVATE attribute is set to 0 - that is, public objects. You can also delete any object that has CKA_PRIVATE=0. This is as defined in PKCS#11, and is not a security issue. </p>
+        <p>The restrictions that you expect come into play for objects that are created with CKA_PRIVATE=1, where only the owner is able to delete (or the SO&#160;could delete the entire partition containing the objects).</p>
+        <p>These distinctions can be demonstrated with CKDEMO commands 1) Open Session, and 3) Login. </p>
+        <p>The "Open Session" prompt has three options, to choose the partition that you wish to use:</p>
+        <p class="code">Enter your choice (99 or 'FULL' for full help): 1</p>
+        <p class="code">SO[0], normal user[1], or audit user[2]?</p>
+        <p>If you select "normal user [1]", when opening a session, you are telling the library that you choose to use the user partition which is owned by the partition User (or is shared by the Crypto-Officer and Crypto-User if the partition User has been separated into those two sub-entities). </p>
+        <p>The session is started, but you have not yet authenticated, and so cannot perform most operations in the session.</p>
+        <p>The Login prompt has four options, to perform the needed authentication (log into the session that you started above):</p>
+        <p class="code">Enter your choice (99 or 'FULL' for full help): 3</p>
+        <p class="code">Security Officer[0]</p>
+        <p class="code">Crypto-Officer  [1]</p>
+        <p class="code">Crypto-User     [2]:</p>
+        <p class="code">Audit-User      [3]:</p>
+        <p class="code">Enter PIN          :</p>
+        <p>If you have chosen the "normal user [1]" partition, when opening the session, then the valid login authentication options are: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Crypto-Officer (which is the same as partition User (the black PED Key) if the Crypto-Officer/Crypto-User distinction is not in force) or </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Crypto User (which is the limited user when the Crypto-Officer/Crypto-User distinction has been invoked).</p>
+        <p>If you attempt one of the other two authentications, "Security Officer [0]" or "Audit-User [3]", an error message is returned because those are not applicable to the session type (therefore, the partition type) that you selected earlier.</p>
+        <p>If certificates are created as private objects (CKA_PRIVATE=1), the Crypto User cannot delete them. Also, the Crypto User cannot create fake private objects with CKA_PRIVATE=1. The Crypto User limitations are focused on restricting access to sensitive and/or private keys and objects.</p>
+        <h3>Key Management Commands</h3>
+        <p>LUNA_CREATE_OBJECT:</p>
+        <p>LUNA_COPY_OBJECT:</p>
+        <p>LUNA_DESTROY_OBJECT:</p>
+        <p>LUNA_MODIFY_OBJECT:</p>
+        <p>LUNA_DESTROY_MULTIPLE_OBJECTS:</p>
+        <p>LUNA_GENERATE_KEY:</p>
+        <p>LUNA_GENERATE_KEY_W_VALUE:</p>
+        <p>LUNA_GENERATE_KEY_PAIR:</p>
+        <p>LUNA_WRAP_KEY:</p>
+        <p>LUNA_UNWRAP_KEY:</p>
+        <p>LUNA_UNWRAP_KEY_W_VALUE:</p>
+        <p>LUNA_DERIVE_KEY:</p>
+        <p>LUNA_DERIVE_KEY_W_VALUE:</p>
+        <p>LUNA_MODIFY_USAGE_COUNT:</p>
+        <h3>Normal Usage Commands</h3>
+        <p>LUNA_ENCRYPT_INIT:</p>
+        <p>LUNA_ENCRYPT:</p>
+        <p>LUNA_ENCRYPT_END:</p>
+        <p>LUNA_ENCRYPT_SINGLEPART:</p>
+        <p>LUNA_DECRYPT_INIT:</p>
+        <p>LUNA_DECRYPT:</p>
+        <p>LUNA_DECRYPT_END:</p>
+        <p>LUNA_DECRYPT_RAW_RSA:</p>
+        <p>LUNA_DECRYPT_SINGLEPART:</p>
+        <p>LUNA_DIGEST_INIT:</p>
+        <p>LUNA_DIGEST:</p>
+        <p>LUNA_DIGEST_KEY:</p>
+        <p>LUNA_DIGEST_END:</p>
+        <p>LUNA_SIGN_INIT:</p>
+        <p>LUNA_SIGN:</p>
+        <p>LUNA_SIGN_END:</p>
+        <p>LUNA_SIGN_SINGLEPART:</p>
+        <p>LUNA_VERIFY_INIT:</p>
+        <p>LUNA_VERIFY:</p>
+        <p>LUNA_VERIFY_END:</p>
+        <p>LUNA_VERIFY_SINGLEPART:</p>
+        <p>LUNA_GET_OBJECT_SIZE:</p>
+        <p>LUNA_SEED_RANDOM:</p>
+        <h3>Unauthenticated Commands</h3>
+        <p>LUNA_GET:</p>
+        <p>LUNA_GET_CONTAINER_LIST:</p>
+        <p>LUNA_GET_CONTAINER_NAME:</p>
+        <p>LUNA_LOGIN:</p>
+        <p>LUNA_OPEN_SESSION:</p>
+        <p>LUNA_PARTITION_SERNUM_GET:</p>
+        <p>LUNA_FIND_OBJECTS:</p>
+        <p>LUNA_GET_RANDOM:</p>
+        <p>LUNA_OPEN_ACCESS:</p>
+        <p>LUNA_GET_MECH_LIST:</p>
+        <p>LUNA_GET_MECH_INFO:</p>
+        <p>LUNA_SELF_TEST:</p>
+        <p>LUNA_GET_HSM_CAPABILITY_SET:</p>
+        <p>LUNA_GET_HSM_POLICY_SET:</p>
+        <p>LUNA_GET_CONTAINER_CAPABILITY_SET:</p>
+        <p>LUNA_GET_CONTAINER_POLICY_SET:</p>
+        <p>LUNA_GET_CONFIGURATION_ELEMENT_DESCRIPTION:</p>
+        <p>LUNA_RETRIEVE_LICENSE_LIST:</p>
+        <p>LUNA_QUERY_LICENSE:</p>
+        <p>LUNA_GET_CONTAINER_STATUS:</p>
+        <p>LUNA_GET_OUID:</p>
+        <p>LUNA_GET_CONTAINER_STORAGE_INFO:</p>
+        <p>LUNA_GET_ATTRIBUTE_VALUE:</p>
+        <p>LUNA_GET_ATTRIBUTE_SIZE:</p>
+        <p>LUNA_GET_HANDLE:</p>
+        <p>LUNA_INIT_TOKEN:</p>
+        <p>LUNA_PARTITION_INIT:</p>
+        <p>LUNA_CLOSE_ACCESS:</p>
+        <p>LUNA_DEACTIVATE:</p>
+        <p>LUNA_MTK_GET_STATE:</p>
+        <p>LUNA_MTK_RESPLIT:</p>
+        <p>LUNA_MTK_RESTORE:</p>
+        <p>LUNA_MTK_UNLOCK_CHALLENGE:</p>
+        <p>LUNA_MTK_UNLOCK_RESPONSE:</p>
+        <p>LUNA_MTK_ZEROIZE:</p>
+        <p>LUNA_CLEAN_ACCESS:</p>
+        <p>LUNA_PED_GET_SET_RAW_DATA:</p>
+        <p>LUNA_ZEROIZE:</p>
+        <p>LUNA_FACTORY_RESET:</p>
+        <p>LUNA_HA_LOGIN:</p>
+        <p>LUNA_CONFIGURE_SP:</p>
+        <p>LUNA_LOG_POLL_HOST:</p>
+        <p>LUNA_LOG_EXTERNAL:</p>
+        <p>LUNA_ROLE_STATE_GET:</p>
+        <h3>Commands That are Valid Only in a Session, But Require Special Handling</h3>
+        <p>LUNA_LOGOUT:</p>
+        <p>LUNA_CLOSE_ALL_SESSIONS:</p>
+        <p>LUNA_CLOSE_SESSION:</p>
+        <p>LUNA_GET_SESSION_INFO:</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/partitions/separation_of_hsm_workspaces.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

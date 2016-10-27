@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default,Primary.Print_only" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Audit Logging">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title> Audit Logging Overview</title>
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/audit/audit-logging_and_the_audit_role_overview.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="audit.htm">Audit Logging</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Audit Logging Overview</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2> Audit Logging Overview</h2>
+        <p>Beginning with Luna SA 5.2, Luna HSMs consolidate and enhance auditing of HSM operations. </p>
+        <p>On Luna SA, the audit logging is managed by an audit user (an appliance system role), in combination with the HSM Audit role, through a set of <span class="code">lunash:&gt;</span> commands. The audit user can perform only the audit-logging related tasks and self-related tasks. Other HSM appliance users, such as admin, operator, and monitor, have no access to the audit logging commands.</p>
+        <p>For factory configured Luna SA, and after upgrading earlier Luna SA 5.x versions to Luna SA 5.2, a default audit user is automatically created. Upon first login, the audit user is asked to change his password. That appliance audit user would need to initialize the HSM audit role first, before being able to administer the audit logging. The Luna SA admin user can create more audit users when necessary.</p>
+        <p>To simplify configuration,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the maximum log file size is capped at 4 MB &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the log path is kept internal &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the rotation offset is set at 0 </p>
+        <h3>Audit user on the appliance</h3>
+        <p>The HSM Audit role does not exist until it is created (initialized). The appliance audit user is a standard user account on Luna&#160;SA, with default password "PASSWORD" (without the quotation marks)</p>
+        <h3>Audit Role on HSM</h3>
+        <p>A Luna HSM Audit role allows complete separation of Audit responsibilities from the Security Officer (SO or HSM Admin), the Partition User (or Owner), and other HSM roles.    If the Audit role is initialized, the HSM and Partition administrators are prevented from working with the log files, and auditors are unable to perform administrative tasks on the HSM.</p>
+        <p>For Luna HSMs with Password Authentication, the auditor logs into the HSM to perform his/her activities using a password.</p>
+        <p>For Luna HSMs with PED Authentication, the auditor logs in to perform his/her activities using a white PED Key. The Audit feature works only with Luna PED version 2.5.0-1 or newer. Older versions of PED firmware are not aware of the Audit role and Audit Key. </p>
+        <p>Audit initialization - creating the Auditor role (and imprinting the white PED&#160;Key for PED authenticated HSMs) does not require the presence or cooperation of the HSM SO.</p>
+        <h3>Appliance Audit User Available Commands</h3>
+        <p>The Audit role has a limited set of operations available to it, on the HSM, as reflected in the reduced command set available to the "audit" user when logged in to the Luna Shell (lunash:&gt;). </p><pre xml:space="preserve">login as: audit</pre><pre xml:space="preserve">audit@192.20.9.23's password:</pre><pre xml:space="preserve">Last login: Tue Sep 11 09:47:25 2012 from 172.20.11.166</pre><pre xml:space="preserve">Luna SA 5.2.0-15 Command Line Shell - Copyright (c) 2001-2012 SafeNet, Inc. All rights reserved.</pre><pre xml:space="preserve">[Luna1] lunash:&gt;? </pre><pre xml:space="preserve">The following top-level commands are available:</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Name      (short)     Description </pre><pre xml:space="preserve">help       he         Get Help </pre><pre xml:space="preserve">exit       e          Exit Luna Shell </pre><pre xml:space="preserve">hsm        hs         &gt; Hsm </pre><pre xml:space="preserve">audit      a          &gt; Audit </pre><pre xml:space="preserve">my         m          &gt; My </pre><pre xml:space="preserve">network    n          &gt; Network </pre><pre xml:space="preserve">&#160;</pre>
+        <h3>Audit Logging</h3>
+        <p>Here is a summary overview of the security audit logging feature:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Log entries originate from the Luna HSM - the feature is implemented via HSM firmware (rather than in the library)&#160;for maximum security) &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Log origin is assured<br /></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Logs and individual records can be validated by any Luna HSM that is a member of the same domain &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The audit logging feature is applicable to password-authenticated (FIPS 140-2 level 2) and to PED-authenticated (FIPS 140-2 level 3) product configurations (but not between the two - see the "same domain" requirement, above)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Each entry includes <br /> &#160;&#160;&#160;- when the event occurred, <br />&#160;&#160;&#160;&#160;-&#160;who initiated the event (the authenticated entity), <br /> &#160;&#160;&#160;-&#160;what the event was, and <br /> &#160;&#160;&#160;- the result of the logging event (success, error, etc.)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Multiple categories of audit logging are supported, configured by the audit role &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Audit management is a separate role - the role creation does not require the presence or co-operation of the Luna HSM SO</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The category of audit logging is configurable by (and only by) the audit role </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Audit log integrity is ensured against - <br /> - Truncation - erasing part of a log record<br /> - Modification - modifying a log record <br /> - Deletion - erasing of the entire log record <br /> - Addition - writing of a fake log record &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Log origin is assured</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Certain critical events are logged unconditionally, regardless of the state of the audit role (initialized or not) - <br /> - Tamper<br /> - Decommission <br /> - Zeroization <br /> - SO creation <br /> - Audit role creation</p>
+        <p>The HSM creates a log secret unique to the HSM, computed during the first initialization after manufacture. The log secret resides in flash memory [ permanent, non-volatile memory ], and is used to create log records that are sent to a log file. Later, the log secret is used to prove that a log record originated from a legitimate HSM and has not been tampered with. </p>
+        <h3>Log Records</h3>
+        <p>A log record consists of two fields – the log message and the HMAC for the previous record.  When the HSM  creates a log record, it uses the log secret to compute the SHA256-HMAC of all data contained in that log message, plus the HMAC of the previous log entry.  The HMAC is stored in HSM flash memory.  The log message is then transmitted, along with the HMAC of the previous record, to the host.  The host has a logging daemon to receive and store the log data on the host hard drive. </p>
+        <p> For the first log message ever returned from the HSM to the host there is no previous record and, therefore, no HMAC in flash.  In this case, the previous HMAC is set to zero and the first HMAC is computed over the first log message concatenated with 32 zero-bytes.  The first record in the log file  then consists of the first log message plus 32 zero-bytes.  The second record consists of the second message plus HMAC1 = HMAC (message1 || 0x0000).  This results in the organization shown below.</p>
+        <table style="border-left-style: solid;border-left-width: 1px;border-left-color: #000000;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;border-top-style: solid;border-top-width: 1px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #000000;width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" style="width: 150px;" />
+            <col class="Column-Column1" style="width: 150px;" />
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">MSG 1</td>
+                    <td class="BodyD-Column1-Body1">HMAC 0</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">&#160;</td>
+                    <td class="BodyD-Column1-Body1">. . .</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">MSG n-1</td>
+                    <td class="BodyD-Column1-Body1">HMAC n-2</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">MSG n</td>
+                    <td class="BodyD-Column1-Body1">HMAC n-1</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">. . . </td>
+                    <td class="BodyD-Column1-Body1">&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">MSG n+m</td>
+                    <td class="BodyD-Column1-Body1">HMAC n+m-1</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">MSG n+m+1</td>
+                    <td class="BodyD-Column1-Body1">HMAC n+m</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">. . .</td>
+                    <td class="BodyD-Column1-Body1">&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">MSG end</td>
+                    <td class="BodyA-Column1-Body1">HMAC n+m-1</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" style="width: 150px;" />
+            <col class="Column-Column1" style="width: 150px;" />
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">Recent HMAC in NVRAM</td>
+                    <td class="BodyA-Column1-Body1">HMAC end</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>To verify a sequence of <i>m</i> log records which is a subset of the complete log, starting at index <i>n</i>, the host must submit the data illustrated above.  The HSM calculates the HMAC for each record the same way as it did when the record was originally generated, and compares this HMAC to the value it received.  If all of the calculated HMACs match the received HMACs, then the entire sequence verifies.  If an HMAC doesn’t match, then the associated record and all following records can be considered suspect.  Because the HMAC of each message depends on the HMAC of the previous one, inserting or altering messages would cause the calculated HMAC to be invalid.</p>
+        <p>The HSM always stores the HMAC of the most-recently generated log message in flash memory.  When checking truncation, the host would send the newest record in its log to the HSM; and, the HSM would compute the HMAC and compare it to the one in flash.  If it does not match, then truncation has occurred. </p>
+        <h3>Log Message Format</h3>
+        <p>Each message is a fixed-length, comma delimited, and newline-terminated string.  The table below shows the width and meaning of the fields in a message.</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <col style="width: 222px;" class="Column-Column1" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Offset &#160;&#160;</th>
+                    <th class="HeadE-Column1-Header1">Length (Chars)</th>
+                    <th class="HeadD-Column1-Header1">Description &#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">0</td>
+                    <td class="BodyE-Column1-Body1">10</td>
+                    <td class="BodyD-Column1-Body1">Sequence number</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">10</td>
+                    <td class="BodyE-Column1-Body1">1</td>
+                    <td class="BodyD-Column1-Body1">Comma</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">11</td>
+                    <td class="BodyE-Column1-Body1">17</td>
+                    <td class="BodyD-Column1-Body1">Timestamp</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">28</td>
+                    <td class="BodyE-Column1-Body1">1</td>
+                    <td class="BodyD-Column1-Body1">Comma</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">29</td>
+                    <td class="BodyE-Column1-Body1">256</td>
+                    <td class="BodyD-Column1-Body1">Message text, interpreted from raw data &#160;&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">285</td>
+                    <td class="BodyE-Column1-Body1">1</td>
+                    <td class="BodyD-Column1-Body1">Comma</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">286</td>
+                    <td class="BodyE-Column1-Body1">64</td>
+                    <td class="BodyD-Column1-Body1">HMAC of previous record as ASCII-HEX &#160;&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">350</td>
+                    <td class="BodyE-Column1-Body1">1</td>
+                    <td class="BodyD-Column1-Body1">Comma &#160;&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">351</td>
+                    <td class="BodyE-Column1-Body1">96</td>
+                    <td class="BodyD-Column1-Body1">Data for this record as ASCII-HEX (raw data) &#160;&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">447</td>
+                    <td class="BodyB-Column1-Body1">1</td>
+                    <td class="BodyA-Column1-Body1">Newline '\n'</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The raw data for the message is stored in ASCII-HEX form, along with a human-readable version. Although this format makes the messages larger, it simplifies the verification process, as the HSM expects to receive raw data records.</p>
+        <p>The following example shows a sample log record. It is separated into multiple lines for readability even though it is a single record.  Some white spaces are also omitted.</p><pre xml:space="preserve">38,12/08/13 15:30:50,session 1 Access 2147483651:22621 operation LUNA_CREATE_CONTAINER</pre><pre xml:space="preserve">returned LUNA_RET_SM_UNKNOWN_TOSM_STATE(0x00300014) (using PIN (entry=LUNA_ENTRY_DATA_AREA)),</pre><pre xml:space="preserve">29C51014B6F131EC67CF48734101BBE301335C25F43EDF8828745C40755ABE25,</pre><pre xml:space="preserve">2600001003600B00EA552950140030005D580000030000800100000000000000000000000000000000000000</pre><pre xml:space="preserve">&#160;</pre>
+        <p>The sequence number is “38”. The time is “12/08/13 15:30:50”.</p>
+        <p>The log message is “session 1 Access 2147483651:22621 operation LUNA_CREATE_CONTAINER returned LUNA_RET_SM_UNKNOWN_TOSM_STATE(0x00300014) (using PIN (entry=LUNA_ENTRY_DATA_AREA))”. In the message text, the “who” is the session identified by “session 1 Access 2147483651:22621” (the application is identified by the access ID major = 2147483651, minor = 22621).  The “what” is “LUNA_CREATE_CONTAINER”.  The operation status is “LUNA_RET_SM_UNKNOWN_TOSM_STATE(0x00300014)”.</p>
+        <p>The HMAC of previous record is “29C51014B6F131EC67CF48734101BBE301335C25F43EDF8828745C40755ABE25”.</p>
+        <p>The remainder is the raw data for this record as ASCII-HEX.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The “who” is lunash session “session 1 Access 2147483651:22621” <br />(identified by the lunash access ID major = 2147483651, minor = 22621). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The “what” is “LUNA_CREATE_CONTAINER”. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The operation status is “LUNA_RET_SM_UNKNOWN_TOSM_STATE(0x00300014)”.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Log Rotation Categories, Rotation Intervals, and other Configurable Factors are covered here in the Administration &amp; Maintenance Manual. Command syntax is in the Reference Manual. </p>
+        <h3>Synchronizing Time between HSM and Host</h3>
+        <p>The HSM has an internal real-time clock (RTC). The RTC does not have a relevant time value until it is synchronized with the HOST system time. Because the HSM and the host time could drift apart over time, periodic re-synchronization is necessary. Only an authenticated audit officer is allowed to synchronize the time.</p>
+        <h3>Log Secret and Log Verification</h3>
+        <p>The 256-bit log secret which is used to compute the HMACs is stored in the parameter area on the HSM.  It is set the first time an event is logged. It can be exported from one HSM to another so that a particular sequence of log messages can be verified by the other HSM. Conversely, it can be imported from other HSMs for verification purpose.</p>
+        <p>To accomplish cross-HSM verification, the HSM  generates a key-cloning vector (KCV, a.k.a the Domain key) for the audit role when it is initialized.  The KCV can then be used to encrypt the log secret for export to the HOST.</p>
+        <p>To verify a log that was generated on another HSM, assuming it is in the same domain, we simply import the wrapped secret, which the HSM subsequently decrypts; any records that are submitted to the host for verification will use this secret thereafter.</p>
+        <p>When the HSM exports the secret, it calculates a 32-bit checksum which is appended to the secret before it is encrypted with the KCV.</p>
+        <p>When the HSM imports the wrapped secret, it is decrypted, and the 32-bit checksum is calculated over the decrypted secret.  If this doesn’t match the decrypted checksum, then the secret that the HSM is trying to import comes from a system on a different domain, and an error is returned. &#160;&#160;</p>
+        <p>To verify a log generated on another HSM,  in the same domain, the host passes to the target HSM the wrapped secret, which the target HSM subsequently decrypts; any records submitted to the target HSM for verification use this secret thereafter.</p>
+        <p>Importing a log secret from another HSM does not overwrite the target log secret because the operation  writes the foreign log secret only to a separate parameter area for the wrapped log secret. </p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>Once an HSM has imported a wrapped log secret from another HSM, it must export and then re-import its own log secret in order to verify its own logs again.</p>
+        <h3>Capacity</h3>
+        <p>The log capacity of Luna HSMs varies depending upon the physical memory available on the device. The Luna PCI-E HSM and the HSM contained in the Luna SA appliance are the SafeNet K6 HSM card. The HSM inside both the Luna G5 and the Luna [Remote] Backup HSM is the SafeNet G5 HSM module. </p>
+        <p>The K6 HSM has approximately 16 MB available for Audit logging (or more than 200,000 records, depending on the size/content of each record).</p>
+        <p>The G5 HSM has approximately 4 MB available for Audit logging (or more than 50,000 records, depending on the size/content of each record).</p>
+        <p>In both cases, the normal function of Audit Logging is to export log entries constantly to the file system. Short-term, within-the-HSM log storage capacity becomes important only in the rare situations where the HSM remains functioning but the file system is unreachable from the HSM. This would be a rare or unlikely event for an HSM connected to a server or workstation, and almost unheard-of in the closed and hardened environment of a Luna SA appliance.</p>
+        <h3>Time Reported in Log</h3>
+        <p>When you perform <span class="code">audit time get</span> you might see a variance of a few seconds between the reported HSM time and the Host time. Any difference up to five seconds should be considered normal, as the HSM reads new values from its internal clock on a five-second interval. So, typically, Host time would show as slightly ahead.</p>
+        <h3>Configuration Persists</h3>
+        <p>Audit Logging configuration is not removed or reset upon HSM re-initialization. It survives tamper and decommission and factory reset. Logs must be cleared  by specific command. Therefore, if your security regime requires decommission at end-of-life, or prior to shipping an HSM, then explicit clearing of HSM logs should be part of that procedure.</p>
+        <p>This is by design, as part of separation of roles in the HSM. When the Audit role exists, the SO cannot modify the logging configuration, and therefore cannot hide any activity from auditors. </p>
+        <h3>Audit Logging stops working if the current log file is deleted.</h3>
+        <p>As a general rule, you should not delete a file while it is open and in use by an application. In most systems, deletion of a file is deletion of an inode, but the actual file itself, while now invisible, remains on the file system until the space is cleaned up or overwritten. If a file is in use by an application - such as audit logging, in this case - the application can continue using and updating that file, unaware that it is now in deleted status. </p>
+        <p>If you delete the current audit log file, the audit logging feature does not detect that and does not create a new file, so you might lose log entries. </p>
+        <p>The workaround is to restart the pedClient daemon, which creates a new log file.</p>
+        <h3>Supported Hardware and Software</h3>
+        <p>The audit logging feature works only with hardware and software update levels at, or newer than, the versions that introduced the feature:</p>
+        <h4>Hardware</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Luna PCI-E HSM 5.x &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Luna G5 HSM &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Luna SA 5.x appliance</p>
+        <h4>Software &#160;&#160;</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Client Software 5.2.0 or newer &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HSM Firmware 6.10.1 or newer &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Luna&#160;PED 2.5.0-2 or newer (if PED-authenticated HSM) &#160;&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/audit/audit-logging_and_the_audit_role_overview.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

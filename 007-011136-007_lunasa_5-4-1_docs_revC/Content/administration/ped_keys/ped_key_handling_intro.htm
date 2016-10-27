@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|PED Key Management">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>PED Key Management Overview</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/ped_keys/ped_key_handling_intro.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ped_keys.htm">PED Key Management</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">PED Key Management Overview</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>PED Key Management Overview</h2>
+        <p>This section applies to Luna HSMs with PED (Trusted Path) Authentication, only.</p>
+        <p>As indicated elsewhere, the capability to imprint “group-User” PED Keys 
+ and “duplicate-User” PED Keys, permits considerable flexibility in the 
+ use, archiving and general management of PED Keys.</p>
+        <p>The following pages address the ongoing management of PED Keys (which 
+ would normally include at least one "working" or "production" 
+ set, and at least one backup set, possibly stored off-site).</p>
+        <h3>"Possible" Does Not Mean "Necessary"</h3>
+        <p>When you initialize an HSM or create a Partition,  Luna PED prompts 
+ you for various PED Keys and actions. Some are mandatory, some are advisable, 
+ and some are optional, depending upon your situation and requirements. 
+ Here is a quick summary:</p>
+        <h5>Imprint a Blue PED Key</h5>
+        <p>When an HSM is initialized, it sets up a blue Security Officer (SO) or HSM Admin authentication 
+ PED Key (two names for the same function, depending upon the industry you are in). This is the key that you will need in future, to access that 
+ HSM. This can be done in one of two ways:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the HSM can generate 
+ new, unique, random authentication data and imprint it onto a blue PED 
+ Key -- the resulting blue  PED Key will now unlock that HSM, but no 
+ other <br />(you do this when you answer "NO" to the "reuse an existing keyset (roughly equivalent to the "Group PED Key" question on the old PED 1.x)" question from the Luna PED)</p>
+        <p style="margin-left: 40px;">OR</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the HSM can read the 
+ authentication from a blue PED Key that was already imprinted by another 
+ HSM, and accept that data as its own -- the blue PED Key can now unlock 
+ two (or more) different Luna HSMs <br />(you do this when you answer "YES" to the "Reuse an existing keyset" question from  Luna PED)</p>
+        <p>
+            <img src="../../Resources/Images/hsm_authent_model_general_case.png" />
+        </p>
+        <p>During initialization of an HSM, the HSM determines which blue PED Key 
+ will "unlock" the HSM in future. The HSM can create new, random 
+ authentication data and imprint that data onto a blue PED Key, <span style="font-weight: bold;">or</span> 
+ the HSM can scan an existing (previously imprinted) blue PED Key from 
+ another HSM and set the data from that older blue key as the new HSMs 
+ own "unlocking" data.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>For your very first HSM, 
+ you <span style="font-weight: bold;">must</span> initialize a blue PED 
+ Key for the HSM Admin.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If this HSM is not the 
+ first; if you are creating a group of HSMs that are related in some way, 
+ then you CAN initialize a new blue PED Key for it, or you can re-use the 
+ authentication data on another blue PED Key (by deciding it will be a Group PED 
+ Key). This is your option. The HSM requires an imprinted blue PED Key 
+ when you access it, but you decide (at HSM initialization) whether that 
+ blue PED Key should be unique to this particular HSM, or shared among 
+ two or more HSMs.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Whenever you perform 
+ an initialization, the Luna PED also gives you the option to make duplicates 
+ of your important PED Keys. If you already have enough (at least one primary 
+ and at least one backup), then you can just answer "NO" to the 
+ "Copy this key" prompt. If you need more of the current type of 
+ PED Key (in this case, the blue HSM Admin PED Key), then say "YES" 
+ and continue supplying additional blank keys until you have enough duplicates.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you are new to using PED keys and your security policy allows it, you should make a duplicate copy of the blue Security Officer and red cloning domain PED&#160;Keys as backups. See <a href="general_advice_on_ped_key_handling.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"General Advice on PED Key Handling"</span></a> for more information.</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/ped_keys/ped_key_handling_intro.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

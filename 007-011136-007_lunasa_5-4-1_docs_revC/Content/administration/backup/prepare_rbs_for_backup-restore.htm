@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.notPCI,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Backup and Restore HSMs and Partitions|Partition Backup">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Prepare RBS to Support Backup / Restore</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/backup/prepare_rbs_for_backup-restore.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="backup.htm">Backup and Restore HSMs and Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition_backup.htm">Partition Backup</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Prepare RBS to Support Remote Backup / Restore</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3><a name="kanchor166"></a><a name="kanchor167"></a><a name="kanchor168"></a>Prepare RBS to Support Backup / Restore</h3>
+        <p>Remote Backup  uses the Remote Backup Service (RBS), which must be installed and configured before you use it.</p>
+        <p>RBS is a separate option at software installation time. You do not need it on all client/admin computers, but it doesn't hurt to have it installed. </p>
+        <h5>To prepare for RBS, do the following : </h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Install LunaClient software on the computer that will manage your primary HSM (could be the administrative client for Luna&#160;SA, or the host computer containing one or more Luna&#160;PCI-E HSMs, or connected to one or more Luna&#160;G5 HSMs). Probably you will want to include the Remote PED option. <br /><br /><img src="../../Resources/Images/install_select_remote-ped_option.png" /><br /><br />If the primary HSM is other than Luna&#160;SA, install the Luna&#160;SA option in addition to the Luna&#160;G5 or Luna&#160;PCI-E software, because the Luna&#160;SA client is the only one that includes the "vtl" utility, necessary for the certificate exchange that enables Remote Backup Service.<br /><br /><img src="../../Resources/Images/install_vtl.png" /><br /> </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Install LunaClient software for the host computer connected to your Backup HSM. Select the Remote Backup option. <br /><br /><img src="../../Resources/Images/install_select_luna_remote-backup-hsm.png" /><br /><br />You could also choose to install the Remote PED&#160;option here. It depends on how you intend to separate the functions and, other than the space it occupies on your hard disk, it doesn't hurt to have any of the LunaClient options installed and available.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Run "rbs --genkey" to generate the server.pem to establish the Remote Backup Service between the Backup host and the host/client for the primary HSM. The location of the server.pem file can be found in the Chrystoki.conf /crystoki.ini file.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Run "rbs --config" to specify devices to support.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Run "rbs --daemon" to launch the rbs daemon (Linux and UNIX) or the rbs console application (on Windows, it closes after every use) .</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Create the client certificate (if not already done) :<br />vtl createCert -n &lt;host_ip_address&gt;<br /></p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Copy the certificate generated earlier [server.pem] to your primary HSM host computer (or Luna&#160;SA appliance). <br /><code># scp root@172.20.9.253:/usr/safenet/lunaclient/rbs/server/server.pem .      &#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>root@172.20.9.253's password:     ********* &#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>server.pem                | 1 kB |   1.2 kB/s | ETA: 00:00:00 | 100%</code> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Run "vtl" on the host computer (or appliance) to add the RBS server to the server list. &#160;&#160;<br /><code>vtl add -n 172.20.9.253 -c server.pem    </code><br style="mc-tag-and-class: code;" /><code>New server 192.20.9.253 successfully added to server list.</code> <br />&#160;<code>vtl list    </code><br style="mc-tag-and-class: code;" /><code>Server: 192.20.9.82     HTL required: no </code><br style="mc-tag-and-class: code;" /><code>   Server: 192.20.9.253    HTL required: no &#160;</code>&#160;&#160;&#160;</p>
+        <p>RBS requires pedClient on both the RBS client and RBS server ends. See below.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you encounter problems, try changing the RBS and pedClient ports from the default values. Check that your firewall is not blocking ports used by the service. (Refer to the command syntax pages for default values.)</p>
+        <p>Now go to <a href="backup_hsm_partition_remotely_with_rbs.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Backup your HSM Partition Remotely"</span></a>.</p>
+        <p class="notepad_note">The pedClient is half of the pedServer/pedClient duo that enables Remote PED&#160;service. <br /></p>
+        <p class="notepad_note">However, pedClient is also used in the communication component of Remote Backup Service. So, pedClient should run on all the platforms that have HSMs - where a Luna&#160;G5 or Luna&#160;PCI-E is installed (pedClient is already inside Luna&#160;SA 5.2 and newer...) - and also on any system with the RBS application. <br /></p>
+        <p class="notepad_note">The pedServer is required only on a computer with the Luna&#160;Remote&#160;PED. <br /></p>
+        <p class="notepad_note">If you consolidate your HSM administration (including Remote PED) on the same computer with your Luna&#160;Remote&#160;Backup&#160;HSM, you would have both pedClient and pedServer installed there. We observe that a majority of customers combine administrative functions this way, on a laptop or a workstation that is used to administer one-or-many HSM hosts. The HSM host (with Luna&#160;G5 or Luna&#160;PCI-E) or the Luna&#160;SA appliance resides in a physically secure, possibly remote location, while the administrator works from a laptop in her/his office. Your security policy determines how you do it. </p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/backup/prepare_rbs_for_backup-restore.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

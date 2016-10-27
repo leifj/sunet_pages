@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Remote PED">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Remote PED and pedclient and pedserver&#160;&#160;&#160;</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/remote_ped/remote-ped_and_pedclient.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="remote_ped.htm">Remote PED</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Remote PED and pedclient and pedserver</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Remote PED and pedclient and pedserver&#160;&#160;&#160;</h2>
+        <p>When it is not convenient to be physically near the host computer that contains a Luna&#160; HSM, in order to connect a Luna&#160;PED and present PED Keys, you can operate remotely and securely, as follows:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>On the host computer (which can run Windows, Linux, Solaris, HP-UX - see the current OS support table in the Customer Release Notes) with the contained Luna PCI-E or attached Luna&#160;G5 HSMs, allow remote desktop access or ssh, and have the <span style="font-family: monospace;">pedclient.exe</span> program available. <br />In the case of Luna SA, the pedclient is always available.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>On the remote administrative workstation  (which for this purpose must run the Windows operating system) use remote-desktop client or use ssh, have a Luna PED2 (with Remote capability) connected, and have the SafeNet Luna <span style="font-family: monospace;">pedserver</span> tool installed and running. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Make the Remote PED&#160;connection between the host and the remote administrative workstation. Start the pedserver listening on the workstation. Start pedclient on the host (containing the HSM)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Make the remote desktop or ssh connection between the workstation and the host computer, and run <span style="font-family: monospace;">pedclient.exe</span> on the host computer, indicating the slot number of the HSM for which Remote PED&#160;services are to be provided. &#160;The combination of <span style="font-family: monospace;">pedserver</span> on one computer and <span style="font-family: monospace;">pedclient</span> on the other provides the trusted path for secure transfer of authentication data.&#160;<br />NOTE: lunacm includes</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Run commands on the HSM (on the host computer) via the remote desktop or ssh</p>
+        <p class="caution_note">Use <b>static IP addressing</b> for PED Client / PED Server. PED Client can fail to find a server if a dynamic address is indicated. <br /><br />An example error might look like this:<br /><br /><span style="font-family: monospace;">lunash:&gt;hsm ped connect -ip 192.20.11.67 -port 1503</span><br style="font-family: monospace;" /><span style="font-family: monospace;">Luna PED operation required to connect to Remote PED - use orange PED Key(s).</span><br style="font-family: monospace;" /><br style="font-family: monospace;" /><span style="font-family: monospace;">Ped Client Version 1.0.5 (10005)</span><br style="font-family: monospace;" /><span style="font-family: monospace;">Ped Client launched in startup mode.</span><br style="font-family: monospace;" /><span style="font-family: monospace;">readIPFromConfigFile() : config file did not contain an IP address.</span><br style="font-family: monospace;" /><span style="font-family: monospace;">Startup failed. : 0xc0000404 RC_FILE_ERROR</span><br style="font-family: monospace;" /><span style="font-family: monospace;">Command Result : 65535 (Luna Shell execution)</span><br style="font-family: monospace;" /><span style="font-family: monospace;">lunash:&gt;</span> <![CDATA[ ]]></p>
+        <h3>Security of Remote PED</h3>
+        <p>The authentication conversation is between the HSM and the PED. Authentication data retrieved from the PED Keys never exists unencrypted outside of the PED or the HSM. </p>
+        <p>PEDClient and PEDServer merely provide the communication pathway between the PED and the HSM. Along that path, the authentication data remains encrypted.</p>
+        <h3>Multiple HSMs and Remote PED</h3>
+        <p>A host computer with multiple PCIe slots (the slots must be x4 or larger and not dedicated for video card operation) can accept and operate multiple Luna&#160;PCI-E 5 HSMs. A host computer can accept and operate multiple USB-connected Luna&#160;G5 HSMs. A Luna SA appliance has a single HSM card inside, but can also have a Luna&#160;G5 or Luna [Remote] Backup HSM connected. </p>
+        <p>Remote PED&#160;(via <span style="font-family: monospace;">pedclient.exe</span>) can communicate - can provide PED services - to one Luna&#160;PCI-E HSM in your host computer at any one time (pedclient sees each HSM as a numbered slot). </p>
+        <p>To provide PED interaction (remotely) to another Luna&#160;PCI-E HSM in that same host computer, you must close pedclient.exe (on your remote workstation) for that first slot/HSM and then open <span style="font-family: monospace;">pedclient.exe</span> for the next slot/HSM. </p>
+        <p>Once a Luna PCI-E HSM (a slot) has been set up with its authentication data cached (autoActivation), and <span style="font-family: monospace;">pedclient</span> has closed (perhaps because you need to open <span style="font-family: monospace;">pedclient</span> for another HSM in your host computer), you must not issue any command to that original slot that would require PED interaction. </p>
+        <p>If you issue a command that invokes a PED operation, when no PED&#160;is connected to the HSM (such as when <span style="font-family: monospace;">pedclient</span> and the Remote PED&#160;are busy with another HSM in your host computer, or when <span style="font-family: monospace;">pedclient.exe</span> is simply not running), the affected HSM pauses until the requested operation times out. This means that any client application that was using that HSM stops for the duration of the timeout. </p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/remote_ped/remote-ped_and_pedclient.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

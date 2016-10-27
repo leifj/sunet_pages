@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|[Step 2] Initialize an HSM|Initializing an HSM (PED Authenticated option)">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Recover the SRK</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/initial_setup/recover_srk.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="system-specific_instructions.htm">[Step 2] Initialize an HSM</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="about_initializing_a_ped-authenticated_hsm.htm">Initializing an HSM (PED Authenticated option)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Recover the SRK</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Recover the SRK</h3>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>This step is required only if your HSM was shipped in Secure Transport Mode. &#160;If not, then proceed to <a href="initializing_a_luna_hsm_ped-version.htm" title="Instructions to initialize the HSM - prepare it to " alt="Instructions to initialize the HSM - prepare it to ">Initializing the HSM</a>. You can read this page later if you choose to enable SRK and/or to invoke Secure Transport Mode at some future time. </p>
+        <p>PED-authenticated Luna HSMs can be shipped from the factory in Secure Transport Mode (your option, at the time you place your order). In this mode, and similar to the state following an HSM tamper event, the Master Tamper Key (MTK) is invalidated.
+</p>
+        <p>Here is a brief summary of how MTK and STM (secure transport) are related. </p>
+        <p>By default, two pieces of data are stored separately on the HSM, that can be brought together by the HSM to recreate the Master Tamper Key, which encrypts all HSM content. </p>
+        <p>If the HSM has both recovery pieces of the Master Tamper Key on-board, then: </p>
+        <p class="ol1" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>It recovers the MTK automatically following any tamper event, when the HSM is restarted. The HSM can carry on immediately. &#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>You cannot place the HSM in Secure Transport Mode (a form of controlled, intentional tamper).</p>
+        <p>You have the option to move one of the recovery pieces of the Master Tamper Key  off-board, in the form of the Secure Recovery Vector which gets imprinted on a purple Secure Recovery Key or SRK). If you choose to generate the SRK, then: </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>The HSM retains only one piece of the recovery data and does not recover the MTK&#160;automatically following a tamper event, even after restart, until you provide the external piece (the purple key). &#160;This gives you control and oversight over tamper events. Your personnel must be aware and must respond before the HSM is allowed to recover from a tamper.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>With one of the pieces stored externally, you can set the HSM into Secure Transport Mode, and it can recover from STM only when that purple PED Key is presented - this is what we do at the factory if you request that we ship in STM. Then we ship you the purple key by a separate channel.</p>
+        <p>Before you can begin configuring and using the HSM, you must recover the SRK.
+</p>
+        <p>The SRK external secret is held on the purple SRK PED Key(s), shipped to you separately from the HSM.
+
+</p>
+        <p>With the Luna SA powered and connected to a Luna PED, and also connected to a computer having the Luna Client software installed (using local serial connection, or ssh session over the network), log in as appliance 'admin'.
+Verify that the HSM is in "Hardware tampered" or "Transport mode" state. </p><pre xml:space="preserve">lunash:&gt; hsm srk show </pre><pre xml:space="preserve">Secure Recovery State flags:<br />===============================&#160;<br /></pre><pre xml:space="preserve">External split enabled: &#160;yes </pre><pre xml:space="preserve">SRK <span class="MCTextPopup MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm  MCTextPopupHotSpot_">resplit<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>[ or "re-split" ] split the MTK secret into a new internal and external recovery vectors, and install the new external portion [the Secure Recovery Vector or SRV] on a new purple PED Key - renders the previous SRV, and any external split of the previous SRV on a purple (SRK) PED Key useless.</span></span> required: no </pre><pre xml:space="preserve">Hardware tampered:  no </pre><pre xml:space="preserve">Transport mode: yes</pre><pre xml:space="preserve">   </pre><pre xml:space="preserve">Command Result : No Error <br />lunash:&gt;</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Recover the srk with the command 
+</p>
+        <p><span style="font-family: monospace;">lunash:&gt; hsm srk transportMode recover</span>
+        </p>
+        <p>Refer to the Luna PED and follow the prompts to insert the purple PED Key, enter responses on the PED keypad, etc.
+During the process, a validation string is shown. You should have received your HSM's validation string by separate mail. Compare that to the string that you see during SRK recovery. They should match. If so, acknowledge the match when requested, and the recovery process concludes with the SRK recreated on the HSM.
+</p>
+        <p>When the SRK has been used to recover the MTK on the HSM, the HSM is still in zeroized state, but you can now continue to the next configuration step, initializing the HSM. </p>
+        <h3 class="ntoc">Urgent SRK Action </h3>
+        <p>As long as the SRK (purple PED Key) remains valid, it is tied to that HSM and there is risk if it is mishandled or lost. If you do not need to have an external split (the SRV) of the MTK&#160;recovery key component, you should immediately perform an <b>srk disable</b> operation to bring the external split back into the HSM. Do not overwrite (or lose) the purple PED Key while it contains a valid SRV, unless you have copies. <br /><br />Some security regimes require that the SRV remains external to the HSM, on an SRK (purple PED Key) to enforce specific, hands-on, oversight and recovery actions, in the case of a tamper event at the HSM. In that case, keep the external split and handle with care (including having on-site and off-site backup copies, just as you would with the Security Officer (blue) PED Key). You are not "done"&#160;with a purple PED Key until its contents have been returned to its HSM with <b>srk disable</b>.  </p>
+        <h3><span class="MCTextPopup MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm  MCTextPopupHotSpot_">Re-split<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>[ see 'resplit' ]</span></span> the SRK</h3>
+        <p>You have the option to re-split the SRK at any time - you need the current external SRK split (the purple PED Key(s)) to initiate the action. The purpose would be to ensure that the SRK for your HSM is secure and that you have the only copies of the external portion of the secret. That is, by re-splitting at your convenience, you remove the risk that somebody kept a copy of the purple PED&#160;Key before they sent your HSM to you. Any copy of the previous secret becomes useless when a re-split operation is performed. Similar logic applies if a copy of your new SRK goes missing (or is thought to have been compromised) - a re-split/regeneration of the secure recovery vector onto a new external key (SRK) or keys renders the lost/stolen/compromised SRK useless to anyone.</p>
+        <h3>Other Uses of the SRK</h3>
+        <p>The SRK is also used to recover from a real tamper event on the HSM or its appliance. </p>
+        <p>The steps are the same as above, except that the HSM resumes granting access with its contents intact - [re-] initialization is not required.</p>
+        <p>You can set the HSM to Secure Transport Mode before placing it into storage, or before shipping to your organization's remote location, or before shipping to your customer (offering them the same Secure Shipping option as is available from SafeNet).</p>
+        <p>If you have just received an HSM from SafeNet in Secure Transport Mode, and recovered from STM, your next step should be to initialize the HSM.  Go to <a href="initializing_a_luna_hsm_ped-version.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Initializing a PED-Authenticated HSM"</span></a>. </p>
+        <p>See also <a href="../../administration/secure_transport_mode/re-split_required.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Re-Split Required"</span></a>. &#160;</p>
+        <p>To view a table that compares and contrasts various "deny access" events or actions that are sometimes confused, see <a href="../../administration/decommission/destroy_scenarios.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Comparison of Destruction/Denial Actions"</span></a>.&#160;&#160;&#160;</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/initial_setup/recover_srk.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

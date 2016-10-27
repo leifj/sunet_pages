@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.LunaPCI,Primary.notPCI,Primary.Online,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Partition Policies</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/initial_setup/partition_policies.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Partition Policies</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <div placeholder="" id="header" style="width: 100%;position: relative;"><a name="kanchor43"></a>
+            <p><a name="kanchor44"></a>
+            </p>
+        </div>
+        <h1 class="chapter" data-mc-autonum=" &#160;&#160;"><span class="autonumber"><span> &#160;&#160;</span></span>
+            <br />Partition Policies</h1>
+        <p>At this point, you should have initialized the HSM and created an HSM 
+ Partition. &#160;You 
+ may need to set the policies that constrain the use of the HSM Partition 
+ by clients. Capabilities are factory settings (  ). Policies 
+ are the means of modifying the adjustable capabilities. &#160;&#160;&#160;</p>
+        <p>First, 
+ display the policies (default) of the created HSM Partition.</p>
+        <p>In order to run the <span style="font-family: 'Courier New';">partition showPolicies</span> command, you do not need 
+ to be logged into the &#160;HSM 
+ Partition.</p>
+        <p>However, to change policies of either the HSM or an individual Partition, 
+ you must login as HSM Administrator.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>View the Partition 
+ policies. At the lunash prompt, type the command</p><pre xml:space="preserve">lunash:&gt; partition showPolicies -partition mypartition<br />Partition Name: mypartition<br />Partition Num: 65038002</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">   The following capabilities describe this partition and can
+   never be changed.
+
+   Description                              Value
+   ===========                              =====
+   Enable private key cloning               Allowed
+   Enable private key wrapping              Disallowed
+   Enable private key unwrapping            Allowed
+   Enable private key masking               Disallowed
+   Enable secret key cloning                Allowed
+   Enable secret key wrapping               Allowed
+   Enable secret key unwrapping             Allowed
+   Enable secret key masking                Disallowed
+   Enable multipurpose keys                 Allowed
+   Enable changing key attributes           Allowed
+   Enable PED use without challenge         Allowed
+   Allow failed challenge responses         Allowed
+   Enable operation without RSA blinding    Allowed
+   Enable signing with non-local keys       Allowed
+   Enable raw RSA operations                Allowed
+   Max failed user logins allowed           10
+   Enable high availability recovery        Allowed
+   Enable activation                        Allowed
+   Enable auto-activation                   Allowed
+   Minimum pin length (inverted: 255 - min) 248
+   Maximum pin length                       255
+   Enable Key Management Functions          Allowed
+   Enable RSA signing without confirmation  Allowed
+   Enable Remote Authentication             Allowed
+   Enable private key unmasking             Allowed
+   Enable secret key unmasking              Allowed
+   Enable RSA PKCS mechanism                Allowed
+   Enable CBC-PAD (un)wrap keys of any size Allowed
+
+
+   The following policies are set due to current configuration
+   of this partition and may not be altered directly by the
+   user.
+
+   Description                              Value
+   ===========                              =====
+   Challenge for authentication not needed  False
+
+
+   The following policies describe the current configuration
+   of this partition and may be changed by the HSM Administrator.
+
+   Description                              Value        Code
+   ===========                              =====        ====
+   Allow private key cloning                On           0
+   Allow private key unwrapping             On           2
+   Allow secret key cloning                 On           4
+   Allow secret key wrapping                On           5
+   Allow secret key unwrapping              On           6
+   Allow multipurpose keys                  On           10
+   Allow changing key attributes            On           11
+   Ignore failed challenge responses        On           15
+   Operate without RSA blinding             On           16
+   Allow signing with non-local keys        On           17
+   Allow raw RSA operations                 On           18
+   Max failed user logins allowed           10           20
+   Allow high availability recovery         On           21
+   Allow activation                         Off          22
+   Allow auto-activation                    Off          23
+   Minimum pin length (inverted: 255 - min) 248          25
+   Maximum pin length                       255          26
+   Allow Key Management Functions           On           28
+   Perform RSA signing without confirmation On           29
+   Allow Remote Authentication              On           30
+   Allow private key unmasking              On           31
+   Allow secret key unmasking               On           32
+   Allow RSA PKCS mechanism                 On           33
+   Allow CBC-PAD (un)wrap keys of any size  On           34
+
+
+</pre><pre xml:space="preserve">Command Result : 0 (Success) <br />[myluna] lunash:&gt;</pre>
+        <p>(Next, change any of the policies that you wish to change <a href="set_partition_policy.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"Set Partition Policy"</span></a> .)</p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> <![CDATA[ ]]></span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#configuration/initial_setup/partition_policies.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>

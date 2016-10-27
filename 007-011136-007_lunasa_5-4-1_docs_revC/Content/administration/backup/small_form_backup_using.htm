@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|Backup and Restore HSMs and Partitions|Small Form Factor Backup">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using Small Form Factor Backup</title>
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/SafeNet_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/backup/small_form_backup_using.htm">Open topic with navigation</a>
+        </p>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">HSM Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="backup.htm">Backup and Restore HSMs and Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="small_form_backup_about.htm">Small Form Factor Backup</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Using Small Form Factor Backup</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Using Small Form Factor Backup</h3>
+        <p>SFF backup requires that you install the serialized Capability Update File (CUF) to your Luna HSM at firmware 6.21.0 or higher. (For Luna SA, it must be in the form of a Secure Package, to get the CUF into the appliance and recognized so that you can apply it.) </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>	If you are applying SFF backup to a Password-authenticated Luna HSM, you must apply the SFF backup capability update file before you apply the Remote PED capability update file. Attempting to install the SFF backup update after the Remote PED capability update causes the following error: 10A0B : LUNA_RET_OPERATION_RESTRICTED).<br /><br />If you install the Remote PED capability before the SFF backup capability, you can correct the problem by rolling back the firmware (which removes the CUF), re-installing f/w 6.21.0, installing the SFF backup capability file, and then installing Remote PED capability file.<br /><br />This issue does not occur on PED-authenticated Luna HSMs.<br /></p>
+        <p>For Luna&#160;PCI-E and Luna G5, obtain the SFF backup capability upgrade from SafeNet, extract the update file and the authcode file on the HSM host computer, and run the lunacm <b>hsm updatecap</b> command. See <a href="../../lunacm/commands/hsm/hsm_updatecap.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm updatecap"</span></a> in the <i>LunaCM Command Reference Guide</i> for details.</p>
+        <p>For Luna&#160;SA, obtain the SFF backup capability upgrade from SafeNet, upload the spkg file to the appliance, install it with lunash <b>package update</b> command, and&#160;then&#160;use the <b>hsm update capability</b> command to apply&#160;the&#160;resulting&#160;CUF to the HSM. See <a href="../../lunash/commands/package/package_update.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"package update"</span></a> and <a href="../../lunash/commands/hsm/hsm_update_capability.htm" class="MCXref xref "><span style="color: #6c286b;" class="mcFormatColor">"hsm update capability"</span></a> in the <i>LunaSH Command Reference Guide</i> for details.</p>
+        <p>SFF backup requires a Luna PED as the interface for the eToken 7300.</p>
+        <h4>Remote Connection </h4>
+        <p>For remote SFF backup, connect the Remote PED to a USB port on the computer running the backup, and to the USB-mini port on the PED. </p>
+        <p>
+            <img src="../../Resources/Images/lunaped2_top_usb-mini_conn_409x111.png" style="width: 409;height: 111;" />
+        </p>
+        <p>Also connect the PED power block to the PED and to an AC power outlet. The mini-USB connection is not sufficient or reliable to power the PED. </p>
+        <p>
+            <img src="../../Resources/Images/lunaped2_top_power_conn_407x111.png" style="width: 407;height: 111;" />
+        </p>
+        <h4>Preparing to Backup</h4>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that PEDTimeout2 is set to at least 200000 (two hundred thousand) in the crystoki.ini file.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Run <b>pedserver</b> on the host system to which the PED is connected. You can optionally specify the current IP address of that computer, and the desired port, as illustrated below:</p><pre class="listLevel1">C:\Program Files\SafeNet\LunaClient&gt;pedserver -mode start -ip 192.20.10.109 -port 1503 <br />Ped Server Version 1.0.5 (10005) <br style="mc-tag-and-class: code;" />Failed to load configuration file.  Using default settings. <br style="mc-tag-and-class: code;" /><br style="mc-tag-and-class: code;" />Starting background process <br style="mc-tag-and-class: code;" />Background process started <br style="mc-tag-and-class: code;" />Ped Server Process created, exiting this process. <br style="mc-tag-and-class: code;" />C:\Program Files\SafeNet\LunaClient&gt;<br /><br /></pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Start the PED client on the HSM host to provide the channel between the HSM and the PED where the eToken 7300 is to connect. <br /></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>For Luna SA, use the lunash command <b>hsm ped connect</b> to specify the PED Server host, as illustrated below:<br /></p><pre class="listLevel1" xml:space="preserve">[local_host] lunash:&gt;hsm ped connect -ip 192.20.10.109 -port 1503</pre><pre class="listLevel1" xml:space="preserve">Luna PED operation required to connect to Remote PED - use orange PED key(s). &#160;<br style="mc-tag-and-class: code;" />Command Result : 0 (Success) &#160;<br /><br /></pre>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>For Luna PCI-E or Luna G5, use lunacm command <b>ped connect</b> to establish the connection, as illustrated below:</p><pre class="listLevel1">lunacm:&gt; ped connect -ip 192.20.10.109 -port 1503<br />Command Result : No Error <br /><br /></pre>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Log in, as User, to the desired HSM partition that is to be the source of material for backing up. </p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Insert the SFF backup eToken into the PED Key connector on the top of the Luna PED, and wait for the lights to steady. <br /><img src="../../Resources/Images/lunaped2_top_key_conn_395x168.png" style="width: 395;height: 168;" /><br /></p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Run the backup command, specifying the eToken as the backup target, and any appropriate label:</p><pre class="listLevel1" xml:space="preserve">partition archive backup -slot etoken -label mybackup</pre><pre class="listLevel1" xml:space="preserve"> &#160;</pre>
+        <p class="listLevel1">You can optionally specify a list (comma-delimited) of object handles, otherwise the default is that all partition objects are backed up. </p>
+        <p class="listLevel1">Depending on the number of objects to back up, the operation can take many minutes. </p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>When the operation completes with a success message at the command line, and the lights on the eToken have stopped flashing, remove the SFF backup eToken to safe storage. <br /></p>
+        <h4>Restoring</h4>
+        <p>To restore from a SFF backup eToken, prepare the Luna PED as described above.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Log in, as User to the desired HSM partition that is to receive the restored material.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Insert the SFF backup eToken into the PED Key connector on the top of the Luna PED, and wait for the lights to steady. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Run the restore command, specifying the eToken as the backup target, and any appropriate label:</p><pre class="listLevel1" xml:space="preserve">partition archive restore -slot etoken -label mybackup</pre><pre class="listLevel1" xml:space="preserve">   </pre>
+        <p class="listLevel1" xml:space="preserve">Depending on the number of objects to restore, the operation can take many minutes.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>When the operation completes with a success message at the command line, and the lights on the eToken have stopped flashing, remove the SFF backup eToken. </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Verify the objects on the restored partition. </p>
+        <p class="footer"><span class="DefaultProduct">Luna SA</span> <span class="DefaultRelease">5.4.1</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-007</span> <span class="DefaultRevision">Rev C</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultDateShort">July 2014</span> <span style="color: #5e5e5c;"> </span> <span class="DefaultCopyright">Copyright 2014</span>&#160;<span class="DefaultCompanyNameLong">SafeNet, Inc.</span> <span style="color: #5e5e5c;"> </span>All rights reserved. </p>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkBottom"><a href="../../../index.html#administration/backup/small_form_backup_using.htm">Open topic with navigation</a>
+        </p>
+    </body>
+</html>
