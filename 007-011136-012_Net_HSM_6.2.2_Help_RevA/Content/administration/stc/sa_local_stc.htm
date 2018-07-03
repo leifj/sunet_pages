@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Secure Trusted Channel (STC)">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Establishing and Configuring the STC Admin Channel on a SafeNet Network HSM Appliance</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="stc.htm">Secure Trusted Channel (STC)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Establishing and Configuring the STC Admin Channel on a Luna SA Appliance</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Establishing and Configuring the STC Admin Channel on a SafeNet Network HSM Appliance</h2>
+        <p>STC allows you to protect all communications to the HSM, including those that originate on the SafeNet Network HSM appliance by enabling the STC admin channel on the appliance. The STC admin channel is local to the appliance, and is used to transmit data between the  local services and applications running on the appliance (such as LunaSH, NTLS, and the STC service) and the HSM SO partition.  The  STC admin channel link is configured separately from the client-partition links, and can be enabled or disabled as required.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Enabling the STC admin channel forces all client-partition links (NTLS or STC) to use STC on the portion of the link from the appliance to the HSM. This may affect NTLS link performance.</p>
+        <h3>Enabling the STC Admin Channel on a SafeNet Network HSM Appliance</h3>
+        <p>When enabled, all communications from the appliance operating system to the HSM&#160;are transmitted over the STC admin channel.</p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>Enabling the STC admin channel is service affecting. It causes an STC service restart, which temporarily terminates all existing STC links to the appliance. It also terminates the existing HSM login session.</p>
+        <h5>To enable the STC admin channel on a SafeNet Network HSM appliance</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open a LunaSH session on the appliance and log in as the HSM&#160;SO.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Enter the following command to enable the STC admin channel:</p>
+        <p class="listLevel1"><b>hsm stc enable</b>
+        </p>
+        <p class="listLevel1">For example:</p><pre xml:space="preserve" class="listLevel1">lunash:&gt;hsm stc enable</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Enabling local STC will require a restart of STC service.</pre><pre xml:space="preserve" class="listLevel1">Any existing STC connections will be terminated.</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Type 'proceed' to enable STC on the admin channel, or 'quit' </pre><pre xml:space="preserve" class="listLevel1">to quit now. </pre><pre xml:space="preserve" class="listLevel1">&gt; proceed</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Successfully enabled STC on the admin channel.</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Command Result : 0 (Success)</pre>
+        <h3>Disabling the STC Admin Channel on a SafeNet Network HSM Appliance</h3>
+        <p>When disabled, all communications from the appliance operating system to the HSM&#160;are transmitted, unencrypted, over the local bus.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Disabling the STC admin channel is service affecting. It causes an STC service restart, which temporarily terminates all existing STC links to the appliance.  It also terminates the existing HSM login session.</p>
+        <h5>To disable the STC admin channel on a SafeNet Network HSM appliance</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open a LunaSH session on the appliance and log in as the HSM&#160;SO.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Enter the following command to enable the STC admin channel:</p>
+        <p class="listLevel1"><b>hsm stc disable</b>
+        </p>
+        <p class="listLevel1">For example:</p><pre xml:space="preserve" class="listLevel1">lunash:&gt;hsm stc disable</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Disabling STC on the admin channel will require a restart of STC service.</pre><pre xml:space="preserve" class="listLevel1">Any existing STC connections will be terminated.</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Type 'proceed' to disable STC on the admin channel, or 'quit' </pre><pre xml:space="preserve" class="listLevel1">to quit now. </pre><pre xml:space="preserve" class="listLevel1">&gt; proceed</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Successfully disabled STC on the admin channel.</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Command Result : 0 (Success)</pre>
+        <h3>Configuring the STC Admin Channel on a SafeNet Network HSM Appliance</h3>
+        <p>STC provides several configurable options that define the network settings for an STC link, and the security settings for the messages transmitted over the link. Although default values are provided that provide the optimal balance between security and performance, you can override the defaults, if desired. See <a href="stc_settings.htm" class="MCXref xref">Configuring the Network and Security Settings for an STC Link</a> for more information.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|Configuration without One-step NTLS|[Step 9] Configure PPSO Application Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Activate a PED-Auth PPSO Partition for the Crypto Officer Role</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../administration/appendix-a_config/appendix-a_old_config_steps.htm">Configuration without One-step NTLS</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ppso_partition_config.htm">[Step 9] Configure PPSO Application Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Activate a PED-Auth PPSO Partition for the Crypto Officer Role</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Activate a PED-Auth PPSO Partition for the Crypto Officer Role</h2>
+        <p>In this section the Partition SO and the Crypto Officer configure the partition to allow Activation (caching of the authentication), and then Activate it.</p>
+        <p>These instructions assume </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>you are running lunacm on a SafeNet HSM Client host computer containing, or connected to, an HSM with a PPSO application partition, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>that partition has a Crypto Officer created, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>that partition is the currently selected slot</p>
+        <p>As Crypto Officer of an application partition that is configured for Activation, you can log in once and have your credentials cached and ready in cache as your application opens and closes sessions, without need to re-log-in each time. </p>
+        <h5>To activate a PED-authenticated PPSO application partition for the Crypto Officer role</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Set the active slot to the desired application partition, .<br />Type <b>slot set -slot</b> &lt;slot number&gt; </p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; slot set -slot 0
+
+        Current Slot Id:    0     (Luna User Slot 6.22.0 (PED) Signing With Cloning Mode)
+
+
+Command Result : No Error
+
+lunacm:&gt; </pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Log in as the Partition Security Officer.<br />Type <b>role login -name Partition SO</b> &#160;</p>
+        <p>&#160;</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; role login -name Crypto Officer &#160;
+
+        Please attend to the PED.</pre>
+        <p>&#160;</p>
+        <p class="listLevel1">Respond to SafeNet PED prompts...</p><pre xml:space="preserve" class="listLevel1">
+
+Command Result : No Error
+
+lunacm:&gt; </pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Switch on the activation policy for the partition.<br />Type <b>partition changePolicy -slot</b> &lt;slot number&gt; <b>-policy</b> &lt;policy number&gt; <b>-value</b> &lt;policy value&gt; &#160;</p>
+        <p>&#160;</p><pre class="listLevel1">lunacm:&gt; partition changePolicy -slot 0 -policy 22 -value 1 <br />Command Result : No Error
+
+<br />lunacm:&gt; </pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Log in as the Partition Crypto Officer.<br />Type <b>role login -name Crypto Officer</b> &#160;</p>
+        <p>&#160;</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; role login -name Crypto Officer &#160;
+
+        Please attend to the PED.</pre>
+        <p>&#160;</p>
+        <p class="listLevel1">Respond to SafeNet PED prompts...</p><pre xml:space="preserve" class="listLevel1">
+
+Command Result : No Error
+
+lunacm:&gt; </pre>
+        <p>&#160;</p>
+        <p>Once the partition activation policy is set, the act of logging in by the Crypto Officer role is sufficient to cache the CO black PED Key credential. Now, only the partition challenge secret / password is required to be presented by your application whenever it requires access. The CO credential remains cached until the HSM loses power, or you explicitly log out as CO. The credential is re-cached the next time the CO logs in. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You can stop the automatic caching of the CO credential by having the partition SO switch off the activation policy (22); however doing so also ends activation of the Crypto User role, if that was in effect. </p>
+        <p>When the CO and CU roles were created, we said you could log in and start using the partition for cryptographic operations by your application(s). Now, with activation in place, you can log in once and put your CO black PED Key or your CU gray PED Key away in a safe place, and the cached credentials will continue to allow your application(s) to open and close sessions and perform their operations within those sessions. </p>
+        <p>For SafeNet Network HSM and for SafeNet PCIe HSM, you can also set partition policy 23 on (-value 1), for Autoactivation, which goes one step further and preserves the cached credentials through power outages up to 2 hours in duration. Autoactivation does not exist for SafeNet USB HSM; therefore policy 23 cannot be switched on. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

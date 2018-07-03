@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|PED Key Management">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using MofN</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ped_keys.htm">PED Key Management</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Using M of N</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Using MofN</h2>
+        <p>MofN is designed to provide additional 'eyes' on the setup and deployment 
+ of an HSM in a customer environment. The feature implements a balance 
+ between this multi-person control and the requirement for these MofN 
+ key holders to be present for all operations. For a description of what MofN is, and how it works, refer to the Product Overview document (see <a href="../../overview/security_features/mofn_about.htm" class="MCXref xref">About MofN</a> ). &#160;</p>
+        <h3>Typical Practice &#160;&#160;</h3>
+        <p>The typical deployment of 
+ a SafeNet Network HSM appliance is for it to be installed in a secure area of a data-center, 
+ typically near the certificate servers that it is servicing. Customers 
+ demand that this appliance is secure, but alongside that requirement they 
+ need to ensure that their processes and procedures aren't hindered by 
+ the addition of this HSM - this is the age-old security-versus- usability 
+ discussion. </p>
+        <p>The typical deployment of a SafeNet USB HSM is either attached to an application server, perhaps to serve as the root of a PKI, or attached to a SafeNet Network HSM appliance to serve in a similar capacity as part of a "PKI bundle". </p>
+        <p>The typical deployment of a SafeNet PCIe HSM (K6) HSM is inside its application server - again, as the root of a PKI, or as the cryptographic engine to an application on that server.</p>
+        <p>It is frequently the case that the HSM and its server(s) are kept in a locked facility and either accessed remotely by secure channels or accessed directly and physically only under specific conditions. </p>
+        <p>To satisfy these design requirements we have a concept of Partition 
+ Activation (<a href="../partitions/about_activation_and_auto-activation_.htm" class="MCXref xref">About Activation and Auto-Activation </a>).This allows administrators of the HSM to put it into such 
+ a state that the calling application is responsible for its own connections 
+ and sessions with the HSM, without requiring the presence of the operators 
+ for each and every login. This is important when an application or operating 
+ system might be rebooted for maintenance, or a power outage might occur (up to two hours duration), and it would be challenging to 
+ get the 3 or 5 management personnel together to present the MofN keys. </p>
+        <p>Another way to describe this might be: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The black PED Key(s) is presented in order to set the partition into a state of "open for business". </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>When that is true, clients can connect. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Clients must still provide their own credentials (certificates were exchanged, to register the link) and present a challenge secret (previously distributed) to enable them to perform cryptographic operations on the partition. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>At any time, the holder of the partition User/Owner black PED Keys can close the partition to access (deactivate it) and clients can no longer access the partition, regardless of their registered status and their possession of the challenge secret.</p>
+        <h3>Common MofN Usage &#160;</h3>
+        <p>A common customer scenario would see the HSM configured and brought into production 
+ at a data-center. This activity would need, first, the quantity M holders of blue HSM SO PED Keys, so that the HSM administrator could log in and create partitions, adjust policies, and so on. Then, in the legacy partition model, quantity M holders of black User PED Keys would be needed in order to activate each partition, making it available for customer connection. At this time the key holders (who would typically be 
+ management personnel, rather than day-to-day operational personnel) would 
+ give their approval to access the HSM by presenting the M keys at first 
+ login, or first partition activation. This is the electronic equivalent of them 'signing off' that the 
+ HSM is properly installed where it should be, that the security officer, 
+ partition owner and cloning domain holder - as well as the PIN holders 
+ if separate - are the correct authorized personnel. </p>
+        <p>In the PPSO model of operation, you would add a second set of blue SO-split PED Keys, probably different from the HSM SO set.</p>
+        <p>Note that MofN is optional (until you decide to invoke it when a secret is first created), and that it is optional per secret. That is (for example):</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> You could choose not to invoke MofN for any HSM authentication secret - so only one blue SO key, and one black Crypto Officer key, one gray Crypto User key,  one red cloning key, one orange Remote PED key, and one purple Secure Recovery Key, would be needed to access the respective HSM functions. A single person, per role, would be able to perform each function without oversight.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>You could choose to invoke MofN for some secrets and not for others. For example, HSM-level access could be configured to require multiple blue PED Keys while, say, the partition-level access needs only one black PED&#160;Key. The HSM security officer would need M people to agree that she/he had the right to log into the HSM, each time, but any individual partition owner/User could activate her/his own partition with no oversight. The reverse could also be true, with the SO needing just a single blue key for HSM login and HSM administration, but the various partition owners needing multiple persons with black key splits to activate or deactivate their partitions, change passwords, etc.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>You could invoke MofN for every role, but set different M and N values per role. HSM administration might have a pool (N)&#160;of 5 blue keys and need 3 (M) of them for any HSM login event. Meanwhile the pool of black keys (N) for a given partition might be 3 or 6 or 10 or as many as 16, but the number of holders (M) needed to activate the partition might be just 2 (or any number up to N)... and so on, in as many combinations and permutations as make sense for your situation. Similar choices would apply for red, orange and purple key secrets and for the Audit role. As well, while you can choose to reuse a black PED Key (or an MofN set of black PED Key splits)  to create and access multiple HSM Partitions (on a single HSM where permitted, or on different HSMs), you could also choose to imprint a different black PED Key secret (or separate MofN sets of black PED Key splits) for every partition, or any combination of those options.</p>
+        <h3>MofN and PED PINs</h3>
+        <p>In addition to the "something you have" authentication factor, each secret-share can also (optionally) have a "something you know" authentication factor. That is, for every split of every HSM secret, you have the option - or not - to declare a             PED 
+ PIN (<a href="../ped_auth/what_is_a_ped_pin.htm" class="MCXref xref">What is a PED PIN?</a> ) that must be entered at the keypad when that PED&#160;Key is presented. </p>
+        <p>As with MofN, the PED PIN secret is an option that is chosen via the PED. For each key that is imprinted, you are given the option to set a PED PIN secret (typed on the keypad) in addition to the secret contained inside that PED Key. As each PED&#160;Key is unique, it can be given:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>no PED&#160;PIN</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the same PED&#160;PIN as other members of a set</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>a completely different PED&#160;PIN.</p>
+        <p>As you can imagine, combining permutations of MofN with permutations of PED PINs could make for a very complicated security scheme. You have these options; it is up to you to choose and combine them in ways that meet your security needs without over-complicating the lives of your personnel.</p>
+        <h3>Revoking Means Re-initializing</h3>
+        <p>Once MofN is set (either M=1 and N=1 for no multi-person access, or M and N each larger than 1 to invoke multi-person access control), that setting remains in place until the HSM or partition is zeroized and re-initialized. </p>
+        <p>So, if you decided that you wanted to stop using/requiring MofN, or that you wanted to have MofN, but with a different total number of split-keys (N) or a different minimum quantity of keys that must be presented (M) to re-construct the  secret (blue, black, red, etc.), then you would need to zeroize (factory reset) and re-initialize the HSM. Or for just individual partitions, you would need to delete the partition and create a new one with the new authentication. To preserve the HSM and partition contents, you would perform backup before re-initializing the HSM, and then restore from backup afterward.</p>
+        <h3>How to Add an MofN Requirement Where There Was No MofN Before</h3>
+        <p><b>Historical Note:</b>
+        </p>
+        <p>On SafeNet Network HSM&#160;4.x systems, if one HSM had MofN (using the legacy green PED Keys), and you wanted another HSM&#160;to use the same MofN splits, you had the option to clone MofN from the first HSM to the second. </p>
+        <p><b>Current Practice:</b>
+        </p>
+        <p>With SafeNet Network HSM 5 (containing the K6 HSM keycard) where MofN is a condition of each authentication secret independently, there is no provision to "clone MofN". Instead, if you wish to have two HSMs share the same MofN scheme, you must initialize one with the desired scheme, then initialize the second (and any additional) HSM and have it re-use the secret splits from the first HSM.</p>
+        <p>At secret-creation time for the HSM, when the PED&#160;is invoked, the PED asks if you wish to re-use an existing secret. If you say "yes" to that question, then the PED expects you to offer a PED&#160;Key (for example a blue PED&#160;Key, when you are initializing) that is already imprinted with a suitable secret. If you offer a blue key that contains a partial secret - a split from your other HSM - the PED accepts that key. The connected HSM recognizes that the secret is only a split, not a full SO secret, so the PED demands additional keys from that set, until it has received M of them, enough to reconstitute the secret. It will not accept fewer than M different portions of the secret, and it will not accept members of another set. </p>
+        <p>Once the reconstituted secret has been imprinted on the new HSM, then that HSM can accept any M splits out of the full set of N, even though it has never seen some of those splits. Both HSMs now accept the same MofN authentication secret. You can do the same, individually for any of the other secrets on the new HSM (black partition User keys, red cloning Domain keys, orange RPV keys). The only exception is the purple PED&#160;Key (or Keys), since the MTK&#160;and SRK are unique to each HSM and cannot be cloned or shared.</p>
+        <p><b>Purple Keys:</b>&#160;</p>
+        <p>You <i>can</i> duplicate a purple PED&#160;Key while you are in the process of imprinting it (SRK enable, SRK&#160;resplit). </p>
+        <p>You <i>can</i> split the purple-key secret (which is already one split of a larger secret inside the HSM) so that the Secure Recovery Vector secret needs multiple purple key holders to invoke it.</p>
+        <p>You <i>can</i> re-split the internal MTK of your HSM, resulting in a new SRV portion imprinted on the external purple key (or keys, if M and N are greater than 1).</p>
+        <p>You <i>cannot</i>  generate a new master secret on the HSM - the MTK is unique and permanent for each HSM and can be changed only by re-manufacturing. Factory reset and initialization have no effect on the MTK.</p>
+        <p>You <i>cannot</i> imprint a purple key secret from one HSM onto another (for the same reason as above), unlike all the other key colors where sharing/grouping are important options.</p>
+        <p>You <i>cannot</i> duplicate a purple PED Key via the PED's stand-alone (no HSM present) Admin menu. The "raw" duplication function, which works for all other PED Keys, refuses to duplicate purple keys. This is a security feature, so that no one can duplicate a purple key without access to the HSM that created it. This applies to splits of the SRK as it applies to a single SRK purple key.</p>
+        <h3>Implementation Suggestions</h3>
+        <p>Here is one suggestion for having the security benefit of MofN, including backups, but without the risk of accidentally mixing members of original split set and backup split sets. &#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The risk is not that members of "original" and copy sets can't work together - they do - the risk is accidentally having copies of the same split-containing key together. The PED requires different splits when combining quantity M splits to recreate the authentication secret. If you offer it one split and then a copy of the same split (because they all look alike and you accidentally gathered them into incorrect groups), the PED&#160;will reject the identical offering because it correctly observes that you are offering the same split twice.  </p>
+        <p>Say, for example, that you needed an MofN set to control access to an HSM partition. You want partition access to require the presence and cooperation of 3 black PED Key holders, and you want a couple of additional splits for two alternate officers to carry, in case not all of the original three are available. So you specify MofN to be 3 of 5. You know that mishaps can occur, so you want to have a full equivalent set of black PED Key splits as backup, in case one or more of the originals is lost or destroyed. These could be stored in a secure on-site lockup, ready when needed, but requiring higher authority to release them. So you would have an original set of black PED Key splits for that partition, and a full set of duplicates. </p>
+        <p>You also want to ensure that you have a fallback in case of disaster at your operation location. So, you want a second complete backup to be held in a secure off-site lockup. </p>
+        <p>All together, you have three identical sets of five different partial secrets, for a total of 15 black PED Keys. They must be carefully labeled and handled, because you need to avoid mixing the members of different sets.</p>
+        <h3>Make one big set, instead of three small sets</h3>
+        <p>If your M and N numbers are small, like (say) 3 of 5, simply declare a large N (up to 16 splits is permitted, so in this case use 3 of 15) and simply gather them into groups of (say) 5, one group for regular operations, one group for standby, one group for off-site backup storage. In this way, all the splits are valid together in any combination- any three of the 15 can unlock the HSM. You do, of course, need to control distribution of, and access to, all those secret-split keys.</p>
+        <p>If your M number is larger, then this idea becomes less practical, since you have a maximum N of 16 to work with. It depends on how many sets of M you need. At the very least, you should have one backup of every HSM authentication secret, preferably in secure off-site storage.</p>
+        <p>MofN is not for everybody. For those who need it, it is crucial, and the added administrative task is a "cost of doing business". If you don't need MofN in your security regime, then we suggest that you not use it. </p>
+        <p>If your security policy demands that you use MofN multi-person access control and also demands that M be relatively large, consider carefully if your policy might need review. Any security regime should be no more complicated than it needs to be - no more complicated than yields a net-positive security benefit. The more complicated or onerous a security policy, the more your own personnel - even the most trust-worthy - are motivated to circumvent or simplify, in order to get on with their tasks.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

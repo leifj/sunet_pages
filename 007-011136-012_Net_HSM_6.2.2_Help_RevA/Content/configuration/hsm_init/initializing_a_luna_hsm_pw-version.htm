@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|Configuration without One-step NTLS|[Step 3] Initialize the HSM|Initializing an HSM (Password Authenticated option)">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Initializing a Password Authenticated HSM</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../administration/appendix-a_config/appendix-a_old_config_steps.htm">Configuration without One-step NTLS</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="overview_init_hsm.htm">[Step 3] Initialize the HSM</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Use hsm-init to Initialize a Password-Authenticated HSM</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Initializing a Password Authenticated HSM</h3>
+        <p>Initialize the HSM 
+
+ 
+ to set up the necessary identities, ownership and authentication on the HSM. This is required 
+ before you can create Partitions and use the HSM. &#160;&#160;</p>
+        <h4>Start the Initialization Process</h4>
+        <p>The <span style="font-family: 'Courier New', monospace;">hsm init</span> 
+ command takes several options. </p>
+        <p data-mc-conditions="Default.SA">See <a href="../../lunash/commands/hsm/hsm_init.htm" class="MCXref xref">hsm init</a> in the <i>Lunash Command Reference</i>. <br /></p>
+        <p>For an HSM with Password Authentication, you need to provide a label, password, and cloning domain. The 
+ only one that you should type at the command line is the label. The password and cloning domain 
+
+ 
+ &#160;can 
+ be typed at the command line, but this makes them visible to anyone who 
+ can see the computer screen, or to anyone who later scrolls back in your 
+ console or ssh session buffer.</p>
+        <p> If you omit the password and the  
+ &#160;domain, 
+ the system prompts 
+ you for them, and hides your input with "*" characters. This 
+ is preferable from a security standpoint. Additionally, you are prompted 
+ to re-enter each string, thus helping to ensure that the string you type 
+ is the one you intended to type. </p>
+        <h5>Label</h5>
+        <p>The label is a string of up to 32 characters that identifies this HSM unit 
+ uniquely. A labeling convention that conveys some information relating 
+ to business, departmental or network function of the individual HSM is 
+ commonly used.</p>
+        <h5>HSM password</h5>
+        <p>The HSM password is a password for the HSM Security Officer (SO). </p>
+        <p data-mc-conditions="Default.SA">For proper 
+ security, it should be different from the appliance admin password. </p>
+        <p>It should employ standard password-security characteristics:<br /></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>at least 8 characters, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>not easily guessable (therefore, no words that occur in any dictionary)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>no dates like birthdays or anniversaries, no proper names</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>should include miXEd-CAse letters, numbers, special (non-alphanumeric, 
+ -_!@#$%&amp;*...).</p>
+        <h5> Cloning domain</h5>
+        <p>The 
+ cloning domain 
+ is a shared identifier that makes cloning possible among a group of HSMs. 
+ Cloning is required for backup or for HA. Cloning cannot take place between 
+ HSMs that do not share a common domain. </p>
+        <p>Always specify a cloning domain when you initialize a Password Authenticated SafeNet HSM in a production environment. The HSM allows you to specify "defaultdomain" at initialization,  the 'factory-default' domain. This is deprecated, as it is insecure. Anyone could clone objects to or from such an HSM. The default domain is provided, for the time being, for benefit of customers who have previously used the default domain. When you prepare a SafeNet HSM to go into service in a real "production"&#160;environment, always specify a proper, secure domain string when you initialize. </p>
+        <h4>Initialize a Password Authenticated HSM</h4>
+        <p>Type the <span style="font-family: 'Courier New', monospace;">hsm init</span> 
+ command at the prompt, supplying a text label for the new HSM.</p><pre xml:space="preserve" data-mc-conditions="Default.SA">lunash:&gt; hsm -init -label myLuna<br />&gt; Please enter a password for the security officer<br />&gt; ********<br />Please re-enter password to confirm:<br />&gt; ********<br />Please enter the cloning domain to use for initializing this<br />HSM :<br />&gt; ********<br />Please re-enter domain to confirm:<br />&gt; ********<br />CAUTION: &#160;Are you sure you wish to re-initialize this HSM?<br />All partitions and data will be erased.<br />Type 'proceed' to initialize the HSM, or 'quit'<br />to quit now.<br />&gt;proceed<br />‘hsm - init’ successful.<br /><br /></pre>
+        <p>When activity is complete, the system displays a “success” message.</p>
+        <p data-mc-conditions="Default.SA">You have initialized the HSM and created an HSM SO identity, which 
+ is an additional capability set, overlaid 
+ on the HSM appliance administrator identity. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Appliance “admin” alone 
+ can use lunash to perform some administrator operations on the HSM server, 
+ such as network configuration, but cannot access the HSM without additional 
+ authentication</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HSM SO (equivalent 
+ to the Cryptoki “Security Officer” or “SO”) can administer the HSM, but 
+ requires that the system “admin” be logged in first (same ssh session), 
+ before HSM Admin can login.</p>
+        <p data-mc-conditions="Default.SA">In order to perform all possible administrative functions on the HSM appliance, you must have both the “admin” password for lunash and the HSM 
+ Admin authentication. </p>
+        <p>You are ready to adjust HSM Policies (if desired) and begin creating 
+ HSM Partitions for your Client's applications to use.</p>
+        <p><a href="../initial_setup/set_hsm_policies_password_authentication.htm" class="MCXref xref">Set HSM Policies (Password Authentication)</a> <![CDATA[ ]]></p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

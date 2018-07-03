@@ -1,0 +1,17 @@
+var xmlHelpSystemData = "";
+xmlHelpSystemData += '<?xml version=\"1.0\" encoding=\"utf-8\"?>';
+xmlHelpSystemData += '<WebHelpSystem DefaultUrl=\"Content/Home_sa.htm\" Toc=\"Data/Toc.js\" Index=\"Data/Index.js\" Concepts=\"Data/Concepts.js\" BrowseSequence=\"Data/BrowseSequence.js\" Glossary=\"Data/Glossary.js\" SearchDatabase=\"Data/Search.js\" Alias=\"Data/Alias.xml\" Synonyms=\"Data/Synonyms.xml\" SkinName=\"Gemalto_Enterprise_HTML5\" Skins=\"DefaultHTML5,Gemalto_Enterprise_HTML5,Gemalto_HTML5,SafeNet_HTML5\" BuildTime=\"12/2/2016 12:55:46 AM\" BuildVersion=\"11.1.2.31113\" TargetType=\"WebHelp2\" SkinTemplateFolder=\"Skin/\" InPreviewMode=\"false\" MoveOutputContentToRoot=\"false\" MakeFileLowerCase=\"false\" UseCustomTopicFileExtension=\"false\" PreventExternalUrls=\"false\" EnableResponsiveOutput=\"false\" IncludeGlossarySearchResults=\"true\" ResultsPerPage=\"20\">';
+xmlHelpSystemData += '    <CatapultSkin Version=\"1\" SkinType=\"WebHelp2\" Comment=\"HTML5 skin\" Anchors=\"Width,Height\" Width=\"800\" Height=\"600\" Top=\"0\" Left=\"0\" Bottom=\"0\" Right=\"0\" Tabs=\"TOC,Index,Glossary\" DefaultTab=\"TOC\" UseBrowserDefaultSize=\"True\" UseDefaultBrowserSetup=\"True\" NavigationLinkTop=\"true\" NavigationLinkBottom=\"true\" DisplayNotificationOptions=\"false\" DisplayCommunitySearchResults=\"false\" CommentsInTopic=\"false\" Name=\"DefaultHTML5\">';
+xmlHelpSystemData += '        <Toolbar EnableCustomLayout=\"true\" Buttons=\"Print|Separator|TopicRatings|Separator|EditUserProfile|Filler|PreviousTopic|CurrentTopicIndex|NextTopic\" />';
+xmlHelpSystemData += '    </CatapultSkin>';
+xmlHelpSystemData += '    <CatapultSkin Version=\"2\" SkinType=\"WebHelp2\" Comment=\"HTML5 skin\" Anchors=\"Width,Height\" Width=\"800\" Height=\"600\" Top=\"0\" Left=\"0\" Bottom=\"0\" Right=\"0\" Tabs=\"TOC,Index,Glossary\" DefaultTab=\"TOC\" UseBrowserDefaultSize=\"True\" UseDefaultBrowserSetup=\"True\" AutoSyncTOC=\"true\" Name=\"Gemalto_Enterprise_HTML5\">';
+xmlHelpSystemData += '        <Toolbar EnableCustomLayout=\"true\" Buttons=\"Print|ExpandAll|RemoveHighlight|Filler|PreviousTopic|NextTopic\" />';
+xmlHelpSystemData += '    </CatapultSkin>';
+xmlHelpSystemData += '    <CatapultSkin Version=\"2\" SkinType=\"WebHelp2\" Comment=\"HTML5 skin\" Anchors=\"Width,Height\" Width=\"800\" Height=\"600\" Top=\"0\" Left=\"0\" Bottom=\"0\" Right=\"0\" Tabs=\"TOC,Index,Glossary\" DefaultTab=\"TOC\" UseBrowserDefaultSize=\"True\" UseDefaultBrowserSetup=\"True\" AutoSyncTOC=\"true\" NavigationLinkTop=\"true\" NavigationLinkBottom=\"true\" Name=\"Gemalto_HTML5\">';
+xmlHelpSystemData += '        <Toolbar EnableCustomLayout=\"true\" Buttons=\"Print|ExpandAll|RemoveHighlight|Filler|PreviousTopic|NextTopic\" />';
+xmlHelpSystemData += '    </CatapultSkin>';
+xmlHelpSystemData += '    <CatapultSkin Version=\"1\" SkinType=\"WebHelp2\" Comment=\"HTML5 skin\" Anchors=\"Width,Height\" Width=\"800\" Height=\"600\" Top=\"0\" Left=\"0\" Bottom=\"0\" Right=\"0\" Tabs=\"TOC,Index,Glossary\" DefaultTab=\"TOC\" UseBrowserDefaultSize=\"True\" UseDefaultBrowserSetup=\"True\" AutoSyncTOC=\"true\" NavigationLinkTop=\"true\" NavigationLinkBottom=\"true\" Name=\"SafeNet_HTML5\">';
+xmlHelpSystemData += '        <Toolbar EnableCustomLayout=\"true\" Buttons=\"Print|ExpandAll|RemoveHighlight|Filler|PreviousTopic|NextTopic\" />';
+xmlHelpSystemData += '    </CatapultSkin>';
+xmlHelpSystemData += '</WebHelpSystem>';
+MadCap.Utilities.Xhr._FilePathToXmlStringMap.Add('HelpSystem', xmlHelpSystemData);

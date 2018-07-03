@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|token">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>token pki</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="token.htm">token</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">token pki</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="kanchor510"></a><a name="kanchor511"></a><a name="kanchor512"></a>token pki</h2>
+        <p>Access the <b>token pki</b> commands. These commands allow you to operate token HSMs (with SafeNet USB HSM connected to the SafeNet Network HSM via USB) when used in PKI mode.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The PKI Bundle feature is supported with  PED-authenticated SafeNet Network HSM, and the connected SafeNet USB HSM must also be PED-authenticated. <br /><br />PKI bundling with password-authenticated SafeNet Network HSM or SafeNet USB HSM is not supported. &#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The SafeNet Network HSM PKI Bundle option does not support Per-Partition Security Officer (PPSO). That is, a SafeNet USB HSM that is USB-connected to a SafeNet Network HSM appliance can be configured with any compatible firmware, including firmware version 6.22.0 (or newer), but cannot have the PPSO capability applied. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>SafeNet Network HSM PKI Bundle option <b>does not support</b> the use of SafeNet DOCK2 and removable PCMCIA token HSMs (SafeNet CA4).</p>
+        <p>An external SafeNet HSM can be USB-connected to a SafeNet Network HSM appliance for:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>local backup/restore operations (SafeNet Backup HSM)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>PKI bundle operations (SafeNet USB HSM)</p>
+        <p>SafeNet Network HSM does not pass PED operations and data through to an externally connected SafeNet HSM from a SafeNet PED that is connected locally to the SafeNet Network HSM.</p>
+        <p>If the external HSM is PED-authenticated, then the options for SafeNet PED connection are:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>local PED connection, directly to the affected HSM, when needed, or</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Remote PED connection, passed through the SafeNet Network HSM&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Support for PKI Bundles with Remote PED  begins at firmware version 6.10.1 in the external HSM.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Support for  locally connected Backup HSM with Remote PED, <br />begins at firmware version 6.10.1 in the external HSM.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Use of Remote PED with an external device is made possible when you set up with the commands <br /><b>hsm ped vector init</b> -serial &lt;serial#_of_external_HSM&gt; <br />and <br /><b>hsm ped connect</b> -serial &lt;serial#_of_external_HSM&gt; <br />before using <b>token pki</b> or <b>token backup</b> commands. &#160;</p>
+        <p>&#160;</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p style="font-weight: bold;">token pki</p>
+        <p class="listLevel1" style="font-weight: bold;">activate<br />changepin<br />clone<br />deploy<br />factoryreset<br />listall<br />listdeployed<br />predeploy<br />resetpin<br />undeploy<br />update<br /></p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col style="width: 173px;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 81px;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 282px;" class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">activate</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">a</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Activate PKI Token for use with your application. See <a href="token_pki_activate.htm" class="MCXref xref">token pki activate</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">changepin &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ch</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Change PKI Token PIN. See <a href="token_pki_changepin.htm" class="MCXref xref">token pki changepin</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clone</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">cl</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Clone PKI Token contents. See <a href="token_pki_clone.htm" class="MCXref xref">token pki clone</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">deploy</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">d</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Deploy PKI Token. See <a href="token_pki_deploy.htm" class="MCXref xref">token pki deploy</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">factoryreset &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">fr</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Factory Reset PKI Token. See <a href="token_pki_factoryreset.htm" class="MCXref xref">token pki factoryreset</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">listall &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">lista</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>List All PKI Tokens. See <a href="token_pki_listall.htm" class="MCXref xref">token pki listall</a>.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">listdeployed &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">listd</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">List All Deployed Tokens. See <a href="token_pki_listdeployed.htm" class="MCXref xref">token pki listdeployed</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">predeploy</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">p</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Pre-deploy PKI Token. See <a href="token_pki_predeploy.htm" class="MCXref xref">token pki predeploy</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">resetpin &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">r</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Reset PKI&#160;Token PIN. See <a href="token_pki_resetpin.htm" class="MCXref xref">token pki resetpin</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">undeploy</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">un</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Undeploy PKI Token. See <a href="token_pki_undeploy.htm" class="MCXref xref">token pki undeploy</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">update</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">up</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Access the token pki update commands.See <a href="token_pki_update.html" class="MCXref xref">token pki update</a>.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The above commands prepare an HSM, externally connected to a SafeNet Network HSM&#160;appliance, for operation in the PKI use-case. However, once the external HSM has been deployed for PKI bundle, it must be assigned to the remote client, by means of the command <a href="../client/client_assignpartition.htm" class="MCXref xref">client assignpartition</a>.<br />&#160;</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

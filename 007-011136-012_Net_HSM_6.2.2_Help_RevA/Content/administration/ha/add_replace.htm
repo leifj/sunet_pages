@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|High-Availability (HA) Configuration and Operation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Adding, Removing, Replacing, or Reconnecting HA Group Members</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha.htm">High-Availability (HA) Configuration and Operation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Adding, Removing, Replacing, or Reconnecting HA Group Members</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Adding, Removing, Replacing, or Reconnecting HA Group Members</h2>
+        <p>This section describes how add a new member to an HA group, reconnect an offline member, or replace a failed unit.</p>
+        <h3>Adding or Removing an HA Group Member</h3>
+        <p>Use the following LunaCM commands to add or remove a normal or standby member to or from an HA group:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>hagroup addmember</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>hagroup addstandby</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>hagroup removemember</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>hagroup removestandby</p>
+        <p>See <a href="../../lunacm/commands/hagroup/hagroup.htm" class="MCXref xref">hagroup</a> in the <i>LunaCM&#160;Command Reference Guide</i> for detailed descriptions and syntax for each hagroup command.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You must restart the application to have the added or removed member recognized.</p>
+        <h3>Reconnecting an Off-line Unit</h3>
+        <p>In HA mode, if an HSM appliance goes off-line/drops-out (due to failure, maintenance, or other reason), 
+ the application load is spread over the remaining HSM Partitions on appliances in 
+ the HA Group. When the unit is restarted, 
+ the application does <span style="font-weight: bold;">not</span> need 
+ be stopped and restarted, before the re-introduced unit can be used by 
+ the application. For the unit that was 
+ withdrawn (or for a replacement unit), if it was powered off for more 
+ than a short outage, you must re-activate the Partitions before they can 
+ be re-included into the HA Group.</p>
+        <p>The following two reconnection scenarios are available:</p>
+        <h5>To recover the same group member</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Restart the failed 
+ member and verify that it has started properly.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Do not 
+ perform a manual re-synchronization between the members. Instead, use 
+ the following LunaCM command:</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; ha -recover -group &lt;group_name&gt;</pre>
+        <h5>For Auto-insert  of a replacement for failed group member when in Active mode</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Configure the 
+ new SafeNet Network HSM as&#160;follows:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>name 
+ it differently 
+
+ 
+ &#160;from the 
+ failed member appliance, The 
+ name must be different to avoid any possibility of conflict between the 
+ old and new SSL certificates, which incorporate the hostnames of the respective 
+ appliances.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>make it part of the same cloning domain 
+ as others in the HA group. At initialization, the HSM gets its cloning domain from 
+ the same red domain PED Key. </p>
+        <p class="listLevel1">If you require that the replacement appliance must have the same name 
+ as the replaced appliance, then you will need to stop your application 
+ before introducing the new appliance.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Create a partition 
+ with the same characteristics as others in the HA group ( password, autoActivation, 
+ auto MofN, client assignments, etc.).</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Determine the 
+ serial number of the failed member partition.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Retrieve the 
+ server certificate of the new SafeNet Network HSM.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Do one of : &#160;</p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>Replace the failed 
+ SafeNet Network HSM with the new one using the following VTL command:</p><pre class="listLevel2" xml:space="preserve">vtl replaceServer -o &lt;oldServerName&gt; -n &lt;newServerName&gt; -c &lt;newServerCertFile&gt;
+ </pre>
+        <p class="listLevel2">OR</p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>Delete the failed 
+ SafeNet Network HSM member and then add the new, replacing SafeNet Network HSM member  using the following VTL commands:</p><pre class="listLevel2" xml:space="preserve">vtl replaceServer -n &lt;failedServerName&gt; </pre><pre class="listLevel2" xml:space="preserve">vtl addServer  -n &lt;newServerName&gt;  -c &lt;newServerCertFile&gt;
+ </pre>
+        <p class="listLevel1" />
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Add the new partition 
+ of the new SafeNet Network HSM to the HA group using  the relevant command below:</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; <b>ha -addMember -group</b> &lt;group number&gt; <b>-serialNum</b> &lt;serialnumber&gt; 
+ <b>-password</b> &lt;password&gt;
+ </pre>
+        <p class="listLevel2">OR        </p><pre class="listLevel1">lunacm:&gt; <b>ha -addMember -group</b> &lt;group number&gt; <b>-slot</b> &lt;slotnumber&gt; 
+ <b>-password</b> &lt;password&gt;
+        </pre>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Remove the failed 
+ member from the HA group, using the relevant command below: </p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; <b>ha -removeMember -group</b> &lt;groupNumber&gt; <b>-serialNum</b> &lt;serialnumber&gt; 
+
+</pre>
+        <p class="listLevel2">OR</p><pre class="listLevel1" xml:space="preserve">
+lunacm:&gt; <b>ha -removeMember -group</b> &lt;groupNumber&gt; <b>-slot</b> &lt;slotnumber&gt; <br /></pre>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>This step is required if lunacm is the only application running on the system. <br />Do not 
+ perform a manual re-synchronization between the members. <br />Instead, use 
+ the following command: </p><pre class="listLevel1">lunacm:&gt; <b>ha -recover -group</b> &lt;group_name&gt;
+        </pre>
+        <p>&#160;</p>
+        <h5>To replace a failed group member with a new appliance when HA&#160;is in legacy mode</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Configure the 
+ new SafeNet Network HSM as&#160;follows:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>name 
+ it differently 
+
+ 
+ &#160;from the 
+ failed member appliance, The 
+ name must be different to avoid any possibility of conflict between the 
+ old and new SSL certificates, which incorporate the hostnames of the respective 
+ appliances.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>make it part of the same cloning domain 
+ as others in the HA group. At initialization, the HSM gets its cloning domain from 
+ the same red domain PED Key. </p>
+        <p class="listLevel1">If you require that the replacement appliance must have the same name 
+ as the replaced appliance, then you will need to stop your application 
+ before introducing the new appliance.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Create a partition 
+ with the same characteristics as others in the HA group ( password, autoActivation, 
+ auto MofN, client assignments, etc.).</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Do not 
+ delete the failed SafeNet Network HSM member from the Chrystoki.conf (Unix/Linux) or Crystoki.ini (Windows) configuration file.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Determine the 
+ serial number of the failed member partition.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Retrieve the 
+ server certificate of the new SafeNet Network HSM.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Replace the failed 
+ SafeNet Network HSM with the new one using the following VTL command:</p>
+        <p class="listLevel1">vtl replaceServer -o &lt;oldServerName&gt; -n &lt;newServerName&gt; 
+ -c &lt;newServerCertFile&gt;
+        </p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Add the new partition 
+ of the new SafeNet Network HSM to the HA group using  the relevant command below:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>lunacm:&gt; ha -addMember -group &lt;group number&gt; -serialNum &lt;serialnumber&gt; 
+ -password &lt;password&gt;
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>lunacm:&gt; ha -addMember -group &lt;group number&gt; -slot &lt;slotnumber&gt; 
+ -password &lt;password&gt;
+        </p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Remove the failed 
+ member from the HA group, using the relevant command below: </p>
+        <p class="ul2" xml:space="preserve" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>lunacm:&gt; ha -removeMember -group &lt;groupNumber&gt; -serialNum &lt;serialnumber&gt; </p>
+        <p class="ul2" xml:space="preserve" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>
+lunacm:&gt; ha -removeMember -group &lt;groupNumber&gt; -slot &lt;slotnumber&gt; 
+</p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Do not 
+ perform a manual re-synchronization between the members. Instead, use 
+ the following command: </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>lunacm:&gt; ha -recover -group &lt;group_name&gt;
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <h3>Replacing a Failed SafeNet Network HSM</h3>
+        <p>Before getting into replacing HSMs in an HA group, this first section describes relevant system conditions and settings to have a SafeNet Network HSM configured and in an authenticated relationship with a client computer. In particular, we are interested in the client-side config file and the client's certificate folder in ordinary, single-appliance mode, and then in HA. You would already have set up the a SafeNet Network HSM as described in the configuration manual, for network setup and creation of the appliance-side certificate (see <a href="../../configuration/appliance_config/generate_new_hsm_server_cert.htm" class="MCXref xref">Generate a New HSM Server Certificate</a>). </p>
+        <h5>Chrystoki.ini before client-side certificate creation</h5><pre xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+
+[LunaSA Client]
+SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf
+ReceiveTimeout=20000
+NetClient=1
+ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem
+ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\ClientNameCert.pem
+ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\ClientNameKey.pem
+
+[Luna]
+DefaultTimeOut=500000
+PEDTimeout1=100000
+PEDTimeout2=200000
+PEDTimeout3=10000
+
+[CardReader]
+RemoteCommand=1&#160;&#160;&#160;&#160;</pre>
+        <p>&#160;</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Create client-side certs (see <a href="../../Utilities/vtl/vtl_createcert_clientcommand.htm" class="MCXref xref">vtl createCert </a> in the <i>Utilities Reference Guide</i>).</p>
+        <h5>Generated client certificates</h5>
+        <p>
+            <img src="../../Resources/Images/ha/generated_client_certs.png" />
+        </p>
+        <h5>Chrystoki.ini after client-side certificate creation</h5><pre xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+
+[LunaSA Client]
+SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf
+ReceiveTimeout=20000
+NetClient=1
+ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem
+ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\<span style="background-color: #ffff00;">20.1.1.20</span>.pem
+ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\<span style="background-color: #ffff00;">20.1.1.20</span>.pem
+
+[Luna]
+DefaultTimeOut=500000
+PEDTimeout1=100000
+PEDTimeout2=200000
+PEDTimeout3=10000
+
+[CardReader]
+RemoteCommand=1&#160;&#160;&#160;&#160;&#160;&#160;&#160;</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Copy SafeNet Network HSM server.pem to client.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>At this point there are still no certificates in cert\server directory.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use “vtl addserver” to register the SafeNet Network HSM with the client. &#160;&#160;</p>
+        <p class="listLevel1">CAFile.pem is generated in the cert\server directory.</p>
+        <h5>Cert\server directory after CAFile.pem is generated</h5>
+        <p>
+            <img src="../../Resources/Images/ha/cert_dir_after_vtl-addserver.png" />
+        </p>
+        <h5>Crystoki.ini after "vtl addserver" </h5><pre xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+
+[LunaSA Client]
+SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf
+ReceiveTimeout=20000
+NetClient=1
+ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem
+ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem
+ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem 
+<span style="background-color: #ffff00;">ServerName00=20.1.1.20
+ServerPort00=1792</span>
+
+[Luna]
+DefaultTimeOut=500000
+PEDTimeout1=100000
+PEDTimeout2=200000
+PEDTimeout3=10000
+
+[CardReader]
+RemoteCommand=1&#160;</pre><pre xml:space="preserve">&#160;&#160;&#160;</pre>
+        <h5>vtl verify results</h5><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;vtl verify
+
+
+The following SafeNet Network HSM Slots/Partitions were found:
+
+Slot	Serial # 	Label
+====	========	=====
+1	154702010	p1
+
+C:\Program Files\SafeNet\LunaClient&gt;&#160;&#160;&#160;&#160;&#160;</pre>
+        <h3>Replace a SafeNet Network HSM Using the same IP</h3>
+        <p>For an existing HA&#160;group,  bring in a replacement SafeNet Network HSM.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Change the IP of the new appliance to match the one that was removed. &#160;&#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Perform RegenCert on the new SafeNet Network HSM. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>“vtl verify” on client at this time would fail because the cert that the client has is for the old, removed SafeNet Network HSM. &#160;&#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Execute “vtl deleteserver –n &lt;original IP&gt;</p>
+        <h5>Deleting old SafeNet Network HSM from Client</h5><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;vtl listservers
+Server: 20.1.1.20
+
+C:\Program Files\SafeNet\LunaClient&gt;vtl deleteserver -n 20.1.1.20
+Server: 20.1.1.20 successfully removed from server list.
+
+C:\Program Files\SafeNet\LunaClient&gt; </pre>
+        <p>&#160;</p>
+        <h5>Contents of cert\server after “deleteserver” (CAFile.pem has been deleted)</h5>
+        <p>
+            <img src="../../Resources/Images/ha/cert_dir_after_vtl-deleteserver.png" />
+        </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Copy new server.pem to client</p>
+        <h5>Copying new server.pem to client</h5><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;pscp admin@20.1.1.20:server.pem . 
+admin@20.1.1.20's password:  
+server.pem		| 1 kB | 1.1 kB/s | ETA: 00:00:00 | 100% </pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Run vtl addserver using new server.pem</p>
+        <h5>vtl addserver using new server.pem</h5><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;vtl addserver -n 20.1.1.20 -c server.pem
+New server: 20.1.1.20 successfully added to server list.
+
+C:\Program Files\SafeNet\LunaClient&gt; </pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Run vtl verify.</p>
+        <h5>vtl verify results</h5><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;vtl verify
+
+
+The following SafeNet Network HSM Slots/Partitions were found:
+
+Slot	Serial # 	Label
+====	========	=====
+1	154702010	p1
+
+C:\Program Files\SafeNet\LunaClient&gt;&#160;&#160;&#160;&#160;&#160;</pre>
+        <h3>Summary</h3>
+        <p>If a SafeNet Network HSM must be replaced, the old IP can be used, but the SafeNet Network HSM certificate must be regenerated. The IP must be removed from the server list on the client and then added back using the new “server.pem”</p>
+        <h4>Client side requirements review:</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Use <code>vtl deleteserver</code> to remove IP from list and delete CAFile.pem from cert\server</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Copy “new” server.pem to client</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Use <code>vtl addserver</code> to re-add IP and create CAFile.pem</p>
+        <h3>Client-side - Reconfigure HA If a SafeNet Network HSM Must Be Replaced</h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Note HA partition serial numbers</p><pre xml:space="preserve" class="listLevel1">C:\Program Files\SafeNet\LunaClient&gt;vtl verify
+The following SafeNet Network HSM Slots/Partitions were found:
+Slot	Serial # 	Label
+====	========	=====
+1	154702011	HA1
+1	154702012	HA2&#160;&#160;&#160;&#160;&#160;
+
+C:\Program Files\SafeNet\LunaClient&gt;</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Run "lunacm ha -newGroup..." </p>
+        <p class="listLevel1">A group is created with HA1 as Primary.</p><pre xml:space="preserve" class="listLevel1">C:\Program Files\SafeNet\LunaClient&gt;vtl haadmin -newGroup -label SomeHAGrp -serial 154702011 -password userpin
+New  group with label "SomeHAGrp" created at group number 1154702011. 
+Group configuration is:
+
+		 HA Group label:  SomeHAGrp
+		HA Group Number:  1154702011
+		HA Group Slot #:  unknown
+		Synchronization:  enabled
+		  Group Members:  154702011
+		Standby Members:  &lt;none&gt;
+			In Sync:  yes
+
+C:\Program Files\SafeNet\LunaClient&gt; </pre>
+        <p>&#160;</p>
+        <h5>Crystoki.ini after HA group is created</h5><pre xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+
+[LunaSA Client]
+SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf
+ReceiveTimeout=20000
+NetClient=1
+ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem
+ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem
+ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem 
+ServerName00=20.1.1.20
+ServerPort00=1792
+
+[Luna]
+DefaultTimeOut=500000
+PEDTimeout1=100000
+PEDTimeout2=200000
+PEDTimeout3=10000
+
+[CardReader]
+RemoteCommand=1&#160;&#160;&#160;
+
+<span style="background-color: #ffff00;">[VirtualToken] &#160;&#160;
+VirtualToken00Label=SomeHAGrp&#160;&#160;
+VirtualToken00SN=1154702011 &#160;&#160;
+VirtualToken00Members=154702011&#160;
+
+[HASynchronize] &#160;&#160;
+SomeHAGrp=1</span>  </pre><pre xml:space="preserve">&#160;</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Add a secondary SafeNet Network HSM partition to the HA&#160;group with <code>lunacm:&gt; ha - addMember</code>.</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; ha -addMember -group SomeHAGrp -serialNum 154702012 -password userpin
+New  group with label "SomeHAGrp" created at group number 1154702011. 
+Group configuration is:
+
+		 HA Group label:  SomeHAGrp
+		HA Group Number:  1154702011
+		HA Group Slot #:  6
+		Synchronization:  enabled
+		  Group Members:  154702011, 154702012 &#160;
+		Standby Members:  &lt;none&gt;
+			In Sync:  yes
+
+Please use the command 'vtl haAdmin -synchronize' when
+you are ready to replicate data among all members of the
+HA grou. (If you have additional members to add, you might
+wish to wait until you have added them before synchronizing
+to save time by avoiding multiple synchronizations.) &#160;
+
+C:\Program Files\SafeNet\LunaClient&gt;&#160;&#160;&#160;&#160;</pre>
+        <p>&#160;</p>
+        <h5>Crystoki.ini after second HA member is added</h5><pre xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+
+[LunaSA Client]
+SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf
+ReceiveTimeout=20000
+NetClient=1
+ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem
+ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem
+ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem 
+ServerName00=20.1.1.20
+ServerPort00=1792
+
+[Luna]
+DefaultTimeOut=500000
+PEDTimeout1=100000
+PEDTimeout2=200000
+PEDTimeout3=10000
+
+[CardReader]
+RemoteCommand=1&#160;&#160;&#160;
+
+[VirtualToken] &#160;&#160;
+VirtualToken00Label=SomeHAGrp&#160;&#160;
+VirtualToken00SN=1154702011 &#160;&#160;
+VirtualToken00Members=154702011<span style="background-color: #ffff00;">, 154702012</span>&#160;&#160;
+
+[HASynchronize] &#160;&#160;
+SomeHAGrp=1 &#160;&#160;
+ &#160;&#160;</pre>
+        <h5>Crystoki.ini after HA Only is enabled</h5><pre xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+
+[LunaSA Client]
+SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf
+ReceiveTimeout=20000
+NetClient=1
+ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem
+ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem
+ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem 
+ServerName00=20.1.1.20
+ServerPort00=1792
+
+[Luna]
+DefaultTimeOut=500000
+PEDTimeout1=100000
+PEDTimeout2=200000
+PEDTimeout3=10000
+
+[CardReader]
+RemoteCommand=1&#160;&#160;&#160;
+
+[VirtualToken] &#160;&#160;
+VirtualToken00Label=SomeHAGrp&#160;&#160;
+VirtualToken00SN=1154702011 &#160;&#160;
+VirtualToken00Members=154702011, 154702012&#160;&#160;
+
+[HASynchronize] &#160;&#160;
+SomeHAGrp=1 &#160;&#160;
+
+<span style="background-color: #ffff00;">[HAConfiguration] &#160;&#160;
+HAOnly=1</span>  </pre>
+        <h5>Crystoki.ini after "autorecovery" is enabled</h5><pre xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+
+[LunaSA Client]
+SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf
+ReceiveTimeout=20000
+NetClient=1
+ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem
+ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem
+ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\20.1.1.20.pem 
+ServerName00=20.1.1.20
+ServerPort00=1792
+
+[Luna]
+DefaultTimeOut=500000
+PEDTimeout1=100000
+PEDTimeout2=200000
+PEDTimeout3=10000
+
+[CardReader]
+RemoteCommand=1&#160;&#160;&#160;
+
+[VirtualToken] &#160;&#160;
+VirtualToken00Label=SomeHAGrp&#160;&#160;
+VirtualToken00SN=1154702011 &#160;&#160;
+VirtualToken00Members=154702011, 154702012&#160;&#160;
+
+[HASynchronize] &#160;&#160;
+SomeHAGrp=1 &#160;&#160;
+
+[HAConfiguration] &#160;&#160;
+HAOnly=1 
+reconnAtt=500&#160; &#160;&#160;
+ &#160;&#160;</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Show HA configuration results with <code>vtl haAdmin -show</code></p><pre xml:space="preserve" class="listLevel1">C:\Program Files\SafeNet\LunaClient&gt;vtl haadmin -show&#160;
+
+
+================== HA Global Configuration Settings ============ &#160;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;HA Auto Recovery:  enabled &#160;&#160;&#160;&#160;&#160;&#160;
+&#160;&#160;&#160;Maximum Auto Recovery Retry:  500  
+&#160;&#160;&#160;Auto Recovery Poll Interval:  60 seconds &#160;&#160;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;HA Logging:  disabled &#160;&#160;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Only Show HA Slots:  yes
+
+
+================== HA Group and Member Information ============
+
+		 HA Group label:  SomeHAGrp
+		HA Group Number:  1154702011
+		HA Group Slot #:  1
+		Synchronization:  enabled
+		  Group Members:  154702011, 154702012 &#160;
+		Standby Members:  &lt;none&gt;
+			
+
+Slot #&#160;&#160;Member S/N 		Member Label	Status
+======	&#160;========	  	============	======
+&#160;&#160;&#160;-	&#160;154702011		&#160;&#160;&#160;	HA1	alive &#160;&#160;
+ &#160;&#160;-	&#160;154702012		&#160;&#160;	HA2	alive &#160;&#160;&#160;
+
+C:\Program Files\SafeNet\LunaClient&gt;&#160;&#160;&gt;&#160;&#160;&#160;&#160;</pre>
+        <p>&#160;</p>
+        <h3>Replacing the Secondary HA Group Member</h3>
+        <p>When the SafeNet Network HSM to be replaced, in an HA Group, is a secondary member, the process is similar to above. You must delete the secondary from the HA Group and re-add it with the new partition serial number. It is not necessary to delete and recreate the group.</p>
+        <p>If a SafeNet Network HSM must be replaced, the old IP address can be used, but the SafeNet Network HSM certificate must be regenerated. The IP address must be removed from the server list on the client and then added back using the new “server.pem” received from the replacement SafeNet Network HSM. &#160;&#160;</p>
+        <p>If the SafeNet Network HSM being replaced is the Primary, you must delete the HA Group and recreate it using the new Primary SafeNet Network HSM partition serial number and then add the original Secondary SafeNet Network HSM partition serial number - the cert from the original Secondary is already in place on the client, and no change is needed to that.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Extensions to PKCS#11">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>High Availability Indirect Login Functions</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">SDK Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="extensions.htm">Extensions to PKCS#11</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">High Availability Indirect Login Functions</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>High Availability Indirect Login Functions</h2>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>In order to implement High Availability Recovery, the primary and secondary 
+ tokens must exist on separate systems.</p>
+        <p>The following enhancements securely extend the indirect login capability 
+ to SafeNet CA3 tokens. SafeNet CA3 tokens to store sensitive information (encrypted) 
+ in flash memory, and must therefore be protected against attack by a man-in-the-middle 
+ who physically attacks the target token to expose the contents of flash 
+ memory, and employs that information against intercepted (or spuriously-generated) 
+ message traffic.</p>
+        <p>The SafeNet CA3 to SafeNet CA3 indirect login protocol also supports old-style MofN authentication between tokens that share an MofN secret.</p>
+        <h3>Initialization functions</h3>
+        <p>Initialization of tokens in a high-availability environment involves 
+ three steps: </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>The generation of an RSA login key pair (the public 
+ key of the pair may be discarded), </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Cloning of the private key member to the User 
+ (and optionally to the SO) spaces of all tokens within that environment 
+ and,</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Calling the <b>CA_HAInit</b> function on all tokens within 
+ that environment, in the context of the session owned by the User or SO. 
+ &#160;</p>
+        <p>The first two steps are performed using ordinary key generate and cloning 
+ Cryptoki function calls. The <b>CA_HAInit</b> function is implemented as follows:</p>
+        <h4>CA_HAInit()</h4><pre xml:space="preserve">CK_RV CK_ENTRY CA_HAInit(</pre><pre xml:space="preserve">CK_SESSION_HANDLE hSession, // Logged-in session of user</pre><pre xml:space="preserve">// who owns the Login key pair</pre><pre xml:space="preserve">CK_OBJECT_HANDLE hLoginPrivateKey // Handle to Login private key</pre><pre xml:space="preserve">);</pre>
+        <h3>Recovery Functions</h3>
+        <p>The HA recovery mechanism requires the following commands and interface 
+ functions:</p>
+        <h4>CA_HAGetMasterPublic()</h4>
+        <p>Called on the primary token, CA_HAGetMasterPublic() retrieves the primary 
+ token's TWC (Token Wrapping Certificate) and returns it as a blob (octet 
+ string and length). &#160;The 
+ format of this function is as follows:</p><pre xml:space="preserve">CK_RV CK_ENTRY CA_HAGetMasterPublic(</pre><pre xml:space="preserve">CK_SLOT_ID slotId, // Slot number of the primary</pre><pre xml:space="preserve">// token</pre><pre xml:space="preserve">CK_BYTE_PTR pCertificate, // pointer to buffer to hold</pre><pre xml:space="preserve">//TWC certificate</pre><pre xml:space="preserve">CK_ULONG_PTR pulCertificateLen // pointer to value to hold</pre><pre xml:space="preserve">//TWC certificate length</pre><pre xml:space="preserve">);</pre>
+        <h4>CA_HAGetLoginChallenge()</h4>
+        <p>Called on the secondary token, <b>CA_HAGetLoginChallenge()</b> accepts the 
+ TWC blob and returns the secondary token's login challenge blob. &#160;The 
+ format of this command is as follows:</p><pre xml:space="preserve">CK_RV CK_ENTRY CA_HAGetLoginChallenge(</pre><pre xml:space="preserve">CK_SESSION_HANDLE hSession, // Public session</pre><pre xml:space="preserve">CK_USER_TYPE userType, // User type - SO or USER</pre><pre xml:space="preserve">CK_BYTE_PTR pCertificate, // TWC certificate retrieved</pre><pre xml:space="preserve">// from primary</pre><pre xml:space="preserve">CK_ULONG ulCertificateLen, // TWC certificate length</pre><pre xml:space="preserve">CK_BYTE_PTR pChallengeBlob, // pointer to buffer to hold</pre><pre xml:space="preserve">// challenge blob</pre><pre xml:space="preserve">CK_ULONG_PTR pulChallengeBlobLen // pointer to value to hold</pre><pre xml:space="preserve">// challenge blob length</pre><pre xml:space="preserve">);</pre>
+        <h4>CA_HAAnswerLoginChallenge()</h4>
+        <p>Called on the primary token, <b>CA_HAAnswerLoginChallenge()</b> accepts the 
+ login challenge blob and returns the encrypted SO or User PIN, as 
+ appropriate.</p><pre xml:space="preserve">CK_RV CK_ENTRY CA_HAAnswerLoginChallenge(</pre><pre xml:space="preserve">CK_SESSION_HANDLE hSession, // Session of the Login Private</pre><pre xml:space="preserve">// key owner</pre><pre xml:space="preserve">CK_OBJECT_HANDLE hLoginPrivateKey, // object handle to login key</pre><pre xml:space="preserve">CK_BYTE_PTR pChallengeBlob, // pointer to buffer containing</pre><pre xml:space="preserve">// challenge blob</pre><pre xml:space="preserve">CK_ULONG ulChallengeBlobLen, // length of challenge blob</pre><pre xml:space="preserve">CK_BYTE_PTR pEncryptedPin, // pointer to buffer holding</pre><pre xml:space="preserve">// encrypted PIN</pre><pre xml:space="preserve">CK_ULONG_PTR pulEncryptedPinLen // pointer to value holding</pre><pre xml:space="preserve">// encrypted PIN length</pre><pre xml:space="preserve">);</pre>
+        <h4>CA_HALogin()</h4>
+        <p>Called on the secondary token, <b>CA_HALogin()</b> accepts the encrypted PIN 
+ and logs the secondary token in. If the second-ary token requires MofN authentication, an MofN challenge blob is returned. &#160;If 
+ no MofN authentication is required, a zero-length blob is returned. 
+ The format of this function is as follows:</p><pre xml:space="preserve">CK_RV CK_ENTRY CA_HALogin(</pre><pre xml:space="preserve">CK_SESSION_HANDLE hSession, // Same public session opened</pre><pre xml:space="preserve">// in CA_HAGetLoginChallenge, </pre><pre xml:space="preserve">//above</pre><pre xml:space="preserve">CK_BYTE_PTR pEncryptedPin, // pointer to buffer holding</pre><pre xml:space="preserve">// encrypted PIN</pre><pre xml:space="preserve">CK_ULONG ulEncryptedPinLen, &#160;//  length of encrypted PIN</pre><pre xml:space="preserve">CK_BYTE_PTR pMofNBlob, // pointer to buffer to hold</pre><pre xml:space="preserve">// MofN blob</pre><pre xml:space="preserve">CK_ULONG_PTR pulMofNBlobLen // pointer to value to hold the</pre><pre xml:space="preserve">// length of MofN blob</pre><pre xml:space="preserve">);</pre><pre xml:space="preserve">&#160;</pre>
+        <p>If the call is successful, then the session now becomes a pri-vate session 
+ owned by the User or SO (as appropriate).</p>
+        <h4>CA_AnswerMofNChallenge()</h4>
+        <p>Called on the primary token, <b>CA_AnswerMofNChallenge()</b> accepts the MofN challenge blob and returns the primary token's masked MofN secret. 
+ &#160;The format 
+ of this function is as follows:</p><pre xml:space="preserve">CK_RV CK_ENTRY CA_HAAnswerMofNChallenge(</pre><pre xml:space="preserve">CK_SESSION_HANDLE hSession, // Private session</pre><pre xml:space="preserve">CK_BYTE_PTR pMofNBlob, // passed in MofN blob</pre><pre xml:space="preserve">CK_ULONG ulMofNBlobLen, // length of MofN blob</pre><pre xml:space="preserve">CK_BYTE_PTR pMofNSecretBlob, // pointer to buffer to hold</pre><pre xml:space="preserve">// MofN secret blob</pre><pre xml:space="preserve">CK_ULONG_PTR pulMofNSecretBlobLen//pointer to value that holds</pre><pre xml:space="preserve">// the MofN secret blob len</pre><pre xml:space="preserve">);</pre>
+        <h4>CA_HAActivateMofN()</h4>
+        <p>Called on the secondary token, <b>CA_HAActivateMofN()</b> accepts the masked 
+ MofN secret and performs MofN authentication. &#160;The 
+ resulting MofN secret is checked against the CRC stored in the MofN PARAM structure.</p><pre xml:space="preserve">CK_RV CK_ENTRY CA_HAActivateMofN(</pre><pre xml:space="preserve">CK_SESSION_HANDLE hSession, // The now-private session from</pre><pre xml:space="preserve">// successful CA_HALogin call</pre><pre xml:space="preserve">CK_BYTE_PTR pMofNSecretBlob, // pointer to MofN secret </pre><pre xml:space="preserve">// blob that is passed in</pre><pre xml:space="preserve">CK_ULONG ulMofNSecretBlobLen // length of MofN secret blob</pre><pre xml:space="preserve">);</pre><pre xml:space="preserve">&#160;</pre>
+        <p>It is expected that the recovery functions will be executed in the proper 
+ sequence and as part of an atomic operation. &#160;Nonetheless, 
+ the recovery operation may be restarted at any time due to an error. &#160;Restarting 
+ the recovery operation resets the state condition of the secondary token, 
+ and any data that has been stored or generated on the token is discarded.</p>
+        <h3>Login Key Attributes</h3>
+        <p>The login keys must possess the following attributes to function properly 
+ in a HA recovery scenario:</p><pre xml:space="preserve">// Object</pre><pre xml:space="preserve">CKA_CLASS = CKO_PRIVATE_KEY,</pre><pre xml:space="preserve">// StorageClass</pre><pre xml:space="preserve">CKA_TOKEN = True,</pre><pre xml:space="preserve">CKA_PRIVATE = True,</pre><pre xml:space="preserve">CKA_MODIFIABLE = False,</pre><pre xml:space="preserve">// Key</pre><pre xml:space="preserve">CKA_KEY_TYPE = CKK_RSA,</pre><pre xml:space="preserve">CKA_DERIVE = False,</pre><pre xml:space="preserve">CKA_LOCAL = True,</pre><pre xml:space="preserve">// Private</pre><pre xml:space="preserve">CKA_SENSITIVE = True,</pre><pre xml:space="preserve">CKA_DECRYPT = False,</pre><pre xml:space="preserve">CKA_SIGN = False,</pre><pre xml:space="preserve">CKA_SIGN_RECOVER = False,</pre><pre xml:space="preserve">CKA_UNWRAP = False,</pre><pre xml:space="preserve">CKA_EXTRACTABLE = False</pre>
+        <h3>Control of HA Functionality</h3>
+        <p>Refer to  for the mechanisms by which 
+ the SO can control availability of the HA functionality.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

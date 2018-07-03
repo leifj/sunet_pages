@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|SNMP">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Overview and Installation</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="snmp.htm">SNMP</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Overview and Installation</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Overview and Installation</h2>
+        <p>This section provides an overview of the SNMP implementation and describes how to install the SNMP subagent.</p>
+        <h3>MIB</h3>
+        <p>We provide the following MIBs (management information base): </p>
+        <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">MIB Name &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description &#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CHRYSALIS-UTSP-MIB.txt &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Defines SNMP access to information about the SafeNet appliance.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">SAFENET-HSM-MIB.txt</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines SNMP access to information about the SafeNet HSM.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">SAFENET-GLOBAL-MIB.txt &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Must be found in your system path so that symbols can be resolved.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">SAFENET-APPLIANCE-MIB.txt</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Reports the software version of SafeNet Network HSM appliance. </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Copy all MIBs in &lt;luna client install dir &gt; to the MIB directory on your system.</p>
+        <p>For SafeNet Network HSM, the host is the appliance, so all the above MIBs are in the appliance, to support SNMP. </p>
+        <h3>SafeNet SNMP Subagent</h3>
+        <p>We find that most customers choosing to use SNMP already have an SNMP infrastructure in place. Therefore, we provide a subagent that you can install on your managed workstations, and  which  can point to your agent via the socket created by the agent. This applies to SafeNet USB HSM and SafeNet PCIe HSM - for SafeNet Network HSM, the subagent is already on the appliance. </p>
+        <p>The SNMP subagent (luna-snmp) is an AgentX SNMP module that extends an existing SNMP agent with support for SafeNet HSM monitoring.  It is an optional component of the SafeNet HSM client installation. The subagent has been tested against net-snmp, but should work with any SNMP agent that supports the AgentX protocol.</p>
+        <h5>To install the SNMP subagent</h5>
+        <p>After selecting one or more products from the main SafeNet HSM Client installation menu, you are presented with a list of optional components, including the  SNMP subagent.  It is not selected by default, but can be installed with any product except the SafeNet Network HSM client installed in isolation. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>In the installation media, go to the appropriate folder for your operating system. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Run the installer (install.sh for Linux and UNIX, LunaClient.msi for Windows). </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Choose the SafeNet products that you wish to install, and include SNMP among your selections. The subagent is installed for any SafeNet product except SafeNet Network HSM in isolation. </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Proceed to Post-installation configuration.</p>
+        <h5>Post-installation configuration</h5>
+        <p>After the SafeNet HSM client is installed, complete the following steps to configure the SNMP subagent:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Copy the SafeNet MIBs from &lt;install dir&gt;/snmp to the main SNMP agent’s MIB directory. &#160;&#160;Or copy to another computer (your SNMP computer) if you are not running SNMP from the same computer where SafeNet Client software is installed.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If running on Windows, configure  the subagent via the file &lt;install dir&gt;/snmp/luna-snmp.conf to point to the AgentX port where the main SNMP agent is listening.  The file must then be copied to the same directory as snmpd.conf. &#160;&#160;(This&#160;assumes net-snmp is installed; the setup might differ if you have another agent.)</p>
+        <p class="listLevel1">If running on a UNIX-based platform, the subagent should work without extra configuration assuming that the primary SNMP agent is listening on the default local socket (/var/agentx/master).  You still have the option of editing and using luna-snmp.conf. &#160;&#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>After configuration is complete, start the agent. Then start the subagent via the service tool applicable to your platform (for example, “service luna-snmp start” on Linux, or start SafeNet SNMP Subagent Service from the services in Windows). </p>
+        <p>Normally the agent is started first. However, the subagent periodically attempts to connect to the agent until it is successful. &#160;The defaults controlling this behavior are listed below.&#160;They can be overridden by changing the appropriate entries in <b>luna-snmp.conf</b>.</p>
+        <h3>Configuration Options In the luna-snmp.conf File</h3>
+        <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 341px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Option &#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Description</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">agentXSocket [&lt;transport-specifier&gt;:]&lt;transport-address&gt;[,...] &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Defines the address to which the subagent should connect. The default on
+UNIX-based systems is the Unix Domain socket "/var/agentx/master".
+</p>
+                        <p>Another common alternative is tcp:localhost:705.</p>
+                        <p>  See the section
+ LISTENING ADDRESSES in the snmpd man page for more information
+ about the format of addresses (http://www.net-snmp.org/docs/man/snmpd.html). &#160;&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The default, for Linux, is "/var/agentx/master". <br />In the file, you can choose to un-comment "tcp:localhost:705" which is most commonly used with Windows. &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">agentXPingInterval &lt;NUM&gt; &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Makes the subagent try to reconnect every &lt;NUM&gt; seconds to the
+ master if it ever becomes (or starts) disconnected. &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> 15&#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">agentXTimeout &lt;NUM&gt; &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Defines the timeout period (NUM seconds) for an AgentX request.
+&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> 1 &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">agentXRetries &lt;NUM&gt; &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Defines the number of retries for an AgentX request.&#160;</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1"> 5</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

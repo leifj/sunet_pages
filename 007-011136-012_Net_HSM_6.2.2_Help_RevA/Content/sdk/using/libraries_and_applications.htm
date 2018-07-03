@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Using the SDK">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Libraries and Applications</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">SDK Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="using.htm">Using the SDK</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Libraries and Applications</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Libraries and Applications</h2>
+        <p>This section explains how to make the Chrystoki library available to 
+ the other components of the SafeNet Software Development Kit.</p>
+        <p>An application has no knowledge of which library is to be loaded nor 
+ does the application know the library's location. &#160;For 
+ these reasons, a special scheme must be employed to tell the application, 
+ while it is running, where to find the library. &#160;The 
+ next paragraphs describe how applications connect to Chrystoki.</p>
+        <h3>SafeNet SDK Applications General Information</h3>
+        <p>All applications provided in SafeNet Network HSM Software Development Kit have been compiled with a component called CkBridge, which uses a configuration file to find the library it is intended to load. Ckbridge first uses the environment variable "ChrystokiConfigurationPath" to locate the corresponding configuration file. If this environment variable is not set, it attempts to locate the configuration file in a default location depending on the product platform (/etc on Unix, and c:\Program Files\SafeNet\LunaClient on Windows).</p>
+        <p>Configuration files differ from one platform to the next - refer to the appropriate sub-section for the operating system and syntax applicable to your development platform.</p>
+        <h4>Windows</h4>
+        <p>In Windows, an initialization file called <b>crystoki.ini</b> specifies which library is to be loaded. The syntax of this file is standard to Windows.</p>
+        <p>The following example shows proper configuration files for Windows:</p><pre xml:space="preserve">[Chrystoki2]</pre><pre xml:space="preserve">LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll </pre><pre xml:space="preserve">[LunaSA Client] </pre><pre xml:space="preserve">SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf </pre><pre xml:space="preserve">ReceiveTimeout=20000</pre><pre xml:space="preserve">NetClient=1</pre><pre xml:space="preserve">ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\server\CAFile.pem</pre><pre xml:space="preserve">ClientCertFile=C:\Program Files\SafeNet\LunaClient\cert\client\ClientNameCert.pem</pre><pre xml:space="preserve">ClientPrivKeyFile=C:\Program Files\SafeNet\LunaClient\cert\client\ClientNameKey.pem</pre><pre xml:space="preserve">[Luna]</pre><pre xml:space="preserve">DefaultTimeOut=500000</pre><pre xml:space="preserve">PEDTimeout1=100000</pre><pre xml:space="preserve">PEDTimeout2=200000 </pre><pre xml:space="preserve">PEDTimeout3=10000</pre><pre xml:space="preserve">[CardReader]</pre><pre xml:space="preserve">RemoteCommand=1</pre>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>NEVER insert TAB characters into the crystoki.ini 
+ (Windows) or chrystoki.conf (UNIX) file.</p>
+        <h4>UNIX</h4>
+        <p>In UNIX, a configuration file called "Chrystoki.conf" is used 
+ to guide CkBridge in finding the appropriate library. &#160;</p>
+        <p>The configuration file is a regular text file with a special format. 
+ It is made up of a number of sections, each section containing one or 
+ multiple entries. &#160;The 
+ following example shows a typical UNIX configuration file:</p><pre xml:space="preserve">Chrystoki2 = {</pre><pre xml:space="preserve">LibUNIX=/usr/lib/libCryptoki2.so;</pre><pre xml:space="preserve">}</pre><pre xml:space="preserve">Luna = {</pre><pre xml:space="preserve">DefaultTimeOut=500000;</pre><pre xml:space="preserve">PEDTimeout1=100000;</pre><pre xml:space="preserve">PEDTimeout2=200000;</pre><pre xml:space="preserve">PEDTimeout3=10000;</pre><pre xml:space="preserve">KeypairGenTimeOut=2700000;</pre><pre xml:space="preserve">CloningCommandTimeOut=300000;</pre><pre xml:space="preserve">}</pre><pre xml:space="preserve">CardReader = {</pre><pre xml:space="preserve">RemoteCommand=1;</pre><pre xml:space="preserve">}</pre><pre xml:space="preserve">LunaSA Client = {</pre><pre xml:space="preserve">NetClient = 1;</pre><pre xml:space="preserve">ServerCAFile = /usr/safenet/lunaclient/cert/server/CAFile.pem;</pre><pre xml:space="preserve">ClientCertFile = /usr/safenet/lunaclient/cert/client/ClientNameCert.pem;</pre><pre xml:space="preserve">ClientPrivKeyFile = /usr/safenet/lunaclient/cert/client/ClientNameKey.pem;</pre><pre xml:space="preserve">SSLConfigFile = /usr/safenet/lunaclient/bin/openssl.cnf;</pre><pre xml:space="preserve">ReceiveTimeout = 20000;</pre><pre xml:space="preserve">}</pre><pre xml:space="preserve">&#160;</pre>
+        <p>The shared object "libcrystoki2.so" is a library supporting 
+ version 2.2.0 of the PKCS#11 standard.</p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>NEVER insert TAB characters into the chrystoki.ini 
+ (Windows) or crystoki.conf (UNIX) file.</p>
+        <h3>Compiler Tools</h3>
+        <p>Tools used for SafeNet development are platform specific tools/development 
+ environments, where applicable (e.g., Visual C++ on  Windows 
+ 2008 and Windows 2012, or Workshop on Solaris, or aCC on HP-UX). Current 
+ version information is provided in the Customer Release Notes.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Contact SafeNet for information about the availability of 
+ newer versions of compilers. </p>
+        <h3>The Applications &#160;</h3>
+        <p>See the <a href="../../Utilities/Preface/Preface.htm" class="MCXref xref">About the Utilities Reference Guide</a> for information about individual tools and utilities, provided for use with SafeNet HSMs.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

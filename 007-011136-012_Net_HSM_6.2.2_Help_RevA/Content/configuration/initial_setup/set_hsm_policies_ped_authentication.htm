@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|Configuration without One-step NTLS|[Step 4] Set HSM Policies">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Set HSM Policies - PED (Trusted Path) Authentication</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../administration/appendix-a_config/appendix-a_old_config_steps.htm">Configuration without One-step NTLS</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="about_hsm_capabilities_and_policies.htm">[Step 4] Set HSM Policies</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Set HSM Policies (PED Authentication)</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor38"></a>Set HSM Policies - PED (Trusted Path) Authentication</h2>
+        <p>Set any of the alterable policies that are to apply to the HSM.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span><a name="kanchor39"></a>Capability vs Policy Interaction<br />Capabilities identify the purchased features of the product and are set 
+ at time of manufacture. Policies represent the HSM Admin’s enabling (or restriction) of those features.</p>
+        <p class="ol1" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Type the <b>hsm showPolicies</b> 
+ command, to display the current policy set for the HSM.</p><pre xml:space="preserve">lunash:&gt; hsm showPolicies &#160;
+
+   HSM Label:   mysahsm
+   Serial #:    7000022
+   Firmware:    6.22.0
+
+   The following capabilities describe this HSM, and cannot be altered
+   except via firmware or capability updates.
+
+   Description                              Value
+   ===========                              =====
+   Enable PIN-based authentication          Disallowed
+   Enable PED-based authentication          Allowed
+   Performance level                        15
+   Enable domestic mechanisms &amp; key sizes   Allowed
+   Enable masking                           Disallowed
+   Enable cloning                           Allowed
+   Enable special cloning certificate       Disallowed
+   Enable full (non-backup) functionality   Allowed
+   Enable non-FIPS algorithms               Allowed
+   Enable SO reset of partition PIN         Allowed
+   Enable network replication               Allowed
+   Enable Korean Algorithms                 Allowed
+   FIPS evaluated                           Disallowed
+   Manufacturing Token                      Disallowed
+   Enable Remote Authentication             Allowed
+   Enable forcing user PIN change           Allowed
+   Enable portable masking key              Allowed
+   Enable partition groups                  Disallowed
+   Enable remote PED usage                  Allowed
+   Enable External Storage of MTK Split     Allowed
+   HSM non-volatile storage space           16252928
+   Enable Acceleration                      Allowed
+   Enable unmasking                         Allowed
+   Enable FW5 compatibility mode            Disallowed
+   Maximum number of partitions             100
+   Enable ECIES support                     Disallowed
+   Enable Single Domain                     Allowed
+   Enable Unified PED Key                   Allowed
+   Enable MofN                              Allowed
+   Enable small form factor backup/restore  Disallowed
+   Enable Secure Trusted Channel            Allowed
+   Enable decommission on tamper            Disallowed
+   Enable Per-Partition SO                  Allowed
+   Enable partition re-initialize           Allowed
+
+
+   The following policies are set due to current configuration of
+   this HSM and cannot be altered directly by the user.
+
+   Description                              Value
+   ===========                              =====
+   PED-based authentication                 True
+   Store MTK Split Externally               False
+
+
+   The following policies describe the current configuration of
+   this HSM and may be changed by the HSM Administrator.
+
+   Changing policies marked "destructive" will zeroize (erase
+   completely) the entire HSM.
+
+   Description                              Value        Code      Destructive
+   ===========                              =====        ====      ===========
+   Allow cloning                            On           7         Yes
+   Allow non-FIPS algorithms                On           12        Yes
+   SO can reset partition PIN               On           15        Yes
+   Allow network replication                On           16        No
+   Allow Remote Authentication              On           20        Yes
+   Force user PIN change after set/reset    Off          21        No
+   Allow offboard storage                   On           22        Yes
+   Allow remote PED usage                   On           25        No
+   Allow Acceleration                       On           29        Yes
+   Allow unmasking                          On           30        Yes
+   Current maximum number of partitions     100          33        No
+   Force Single Domain                      Off          35        Yes
+   Allow Unified PED Key                    Off          36        No
+   Allow MofN                               On           37        No
+   Allow Secure Trusted Channel             Off          39        No
+   Allow partition re-initialize            Off          42        No
+
+
+Command Result : 0 (Success)
+</pre>
+        <p class="code">&#160;</p>
+        <p>According to the above example, the fixed capabilities require that 
+ this HSM be protected at FIPS 140-2 level 3, meaning that the&#160;PED 
+ and PED&#160;Keys are required for authentication, and values typed from 
+ a keyboard are ignored.</p>
+        <p>The alterable policies have numeric codes. You can alter a policy with 
+ the <span style="font-family: 'Courier New', monospace;">hsm changePolicy</span> 
+ command, giving the code for the policy that is to change, followed by 
+ the new value.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The FIPS 140-2 standard mandates a set of 
+ security factors that specify a restricted suite of cryptographic algorithms.&#160;&#160;The HSM is designed to the standard, but can permit activation 
+ of additional non-FIPS-validated algorithms if your application requires 
+ them.&#160;The example listing above indicates that non-validated algorithms 
+ have been activated. The HSM is just as safe and secure as it is with the additional algorithms switched off. The only difference is that an auditor would not validate your configuration unless the set of available algorithms is restricted to the approved subset.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>In order to change 
+ HSM policies, the HSM SO must first login. <span style="font-family: 'Courier New', monospace;"><br />lunash:&gt; hsm login</span><br /><br />(If you are not logged in, the above command begins the login process, 
+ directing you to the&#160;PED. If you are already logged in, the 
+ SafeNet Network HSM tells you so, with an error message, that you can ignore.) 
+ &#160;<br />Control is passed to the&#160;PED, which prompts you for the blue 
+ PED&#160;Key. <br />Insert the appropriate PED&#160;Key for this HSM, and press [ENT] on 
+ the&#160;PED keypad. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>If you need to 
+ modify a policy setting to comply with your operational requirements, 
+ type: <span style="font-family: 'Courier New', monospace;"><br />lunash:&gt; hsm changePolicy -policy &lt;policyCode&gt; 
+ -value &lt;policyValue&gt;</span><br /><br />As an example, change code 15 from a value of 1 (On) to 0 (Off).</p>
+        <h5>Example – Change of HSM Policy</h5><pre xml:space="preserve">lunash:&gt; hsm changePolicy -policy 15 -value 0</pre>
+        <p class="code">&#160;</p>
+        <p>That command assigns a value of zero (0) to the “HSM Admin can reset 
+ partition PIN” policy, turning it off.</p>
+        <p class="warning" data-mc-autonum="&lt;b&gt;WARNING!&lt;/b&gt; &#160;"><span class="autonumber"><span><b>WARNING!</b> &#160;</span></span>The above example is a change to a destructive 
+ policy, meaning that, if you apply this policy, the HSM is zeroized and 
+ all contents are lost. For this reason, you are prompted to confirm if 
+ that is what you really wish to do. You must now re-initialize the HSM.&#160;<br /><br />While this is not an issue when you have just initialized 
+ an HSM, it may be a very important consideration if your HSM system has 
+ been in a “live” or “production” environment and the HSM contains useful 
+ or important data, keys, certificates.</p>
+        <p>If you have been following the instructions on this page as part of 
+ setting up a new HSM system, then the next step is to create virtual 
+ HSMs or HSM Partitions on the HSM that you just configured. Click the 
+ following link: &#160;&#160;<a href="../partition_create/prepare_to_create_a_partition_ped.htm">Create 
+ Partition (Trusted Path Authentication)</a></p>
+        <p class="notepad_note">SafeNet Network HSM 6 does not currently have a Scalable Key Storage (formerly&#160;SIM) configuration. &#160;Certain HSM policy settings exist to enable migration from SafeNet Network HSM 4.x to SafeNet Network HSM 5.x or 6.x, specifically the “Enable masking” and “Enable portable masking key” values.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

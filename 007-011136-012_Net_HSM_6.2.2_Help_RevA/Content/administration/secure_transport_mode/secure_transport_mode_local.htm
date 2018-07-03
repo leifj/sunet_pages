@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Secure Transport Mode">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Secure Transport Mode [Local]</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="secure_transport_mode.htm">Secure Transport Mode</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Secure Transport Mode [Local]</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Secure Transport Mode [Local]</h2>
+        <p>This topic describes what to do if you wish to invoke Secure Transport Mode (STM) on a local SafeNet Network HSM, when shipping the appliance:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> to your customer or</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> to your partner organization or</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> to your own personnel at another site within your organization.</p>
+        <p>This page applies to PED Authenticated HSMs only. It does not apply to Password Authenticated HSMs.</p>
+        <p>As well, you could use STM for securely storing the HSM, where "transport" would take place simply into, and later out of, your warehouse or vault. However, you would also need to manage separate secure storage and handling of the imprinted purple PED&#160;Key (SRK) for that HSM until it was time to recover the HSM and return it to service.</p>
+        <h3>BACKUP</h3>
+        <p>Perform backups of your partitions before you continue with Secure Transport Mode procedure (see <a href="../backup/backup.htm" class="MCXref xref">Backup and Restore HSMs and Partitions</a>).</p>
+        <h4>First time - no existing SRK (purple key)</h4>
+        <p>This section describes the procedure if you are performing all the actions locally - that is, if your SafeNet PED is connected directly to the SafeNet Network HSM appliance when you invoke STM.</p>
+        <p>This procedure performs a new split of the HSM's master key and creates a new external split (SRV) to be imprinted on a new purple PED Key. This ensures  that nobody could have a pre-existing copy. If you do wish to re-use an existing SRK, do not disable SRK - [re-]enabling SRK includes a re-split of the HSM's Master key, followed by imprinting the new external split on a purple PED Key - any pre-existing SRK&#160;becomes invalid.</p>
+        <p><b>Have available:</b> &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> your SafeNet appliance </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> the SafeNet PED and cable </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> two "new" purple keys [either they are new and blank from the factory, or they have been used for some other purpose (could include previous use as purple keys for another HSM) that do not contain a currently valid SRV for this HSM -&#160;we suggest that you apply purple labels before you start ]</p>
+        <p>Perform the SRK enable operation,  and enter Secure Transport Mode now:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Connect the SafeNet PED to the SafeNet Network HSM appliance.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Login to the appliance as 'admin'.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Login to the HSM <br />&#160;&#160;<span style="font-family: monospace;">hsm login</span>&#160;&#160;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Run the command   &#160;<br />&#160;&#160;<span style="font-family: monospace;">hsm srk enable</span> &#160;<br />Follow the PED prompts, introducing the purple key (*) and pressing buttons on the PED keypad. &#160;<br />Record the SRV verification string when it is presented.<br />This command performs a resplit of the MTK before moving one of the (new) splits out to your purple PED Key(s).</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Run the command   &#160;<br />&#160;&#160;<span style="font-family: monospace;">hsm srk transportMode enter</span> &#160;<br />Follow the PED prompts, presenting the purple key from step 4 (above) when prompted.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>When the HSM enters Secure Transport Mode, shut it down with  &#160;<br />&#160;&#160;<span style="font-family: monospace;">sysconf appliance poweroff</span>&#160;&#160;</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Disconnect the appliance and pack it for shipment.</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Ship the imprinted purple SRK to your customer or remote location, separately from the appliance shipment.</p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Send the STM verification string via another path.</p>
+        <p>(* For simplicity, this procedure assumes that you choose Mvalue and Nvalue as "1" in order to have a single imprinted purple key. You can choose other values for M and N, to split the SRV across multiple purple PED Keys. Similarly, you are also given the opportunity to make a copy of the purple SRK - or of the MofN group of purple PED Keys if you elected to use MofN. Your choices in these matters are dictated by convenience and by your security policies.)</p>
+        <h3>RECOVER</h3>
+        <p>At the new location, unpack the appliance and connect it to power, network, and PED.</p>
+        <p>You should also have available the PED Keys for that HSM, including the purple PED Key (*) that you received by separate shipment, as well as the verification string.</p>
+        <p class="ol1" data-mc-autonum="10."><span class="autonumber"><span class="ol1Number">10.</span></span>Power up the appliance and log in.</p>
+        <p class="ol1" data-mc-autonum="11."><span class="autonumber"><span class="ol1Number">11.</span></span>Compare the verification string that was shipped with the string that is presented when you run the command&#160;<br />&#160;  <span style="font-family: monospace;">hsm srk keys verify</span>&#160;&#160;&#160;<br />The PED prompts for the SRK (purple PED Key) and shows the verification string. The displayed string should match the string that was sent by mail or courier.</p>
+        <p class="ol1" data-mc-autonum="12."><span class="autonumber"><span class="ol1Number">12.</span></span>Run the command  &#160;&#160;&#160;&#160;<br />&#160;&#160;<span style="font-family: monospace;">hsm srk transportMode recover</span>&#160;&#160;&#160;&#160;&#160;<br />Respond to the PED prompts (*).</p>
+        <p>You can now use the HSM's blue PED Key to log in and administer the HSM, and black PED Keys to activate partitions for clients to access.</p>
+        <p>(*If you invoked MofN when creating the SRK, you must provide quantity M of the purple keys containing the SRV splits.)</p>
+        <h3>No Re-split?</h3>
+        <p>This section describes the same procedure if SRK was previously enabled, and you wish to <i>re-use</i> the existing purple PED Key. This might be the case if you know that the most recent re-split of the master key was performed by your organization. </p>
+        <p><b>Have available:</b> &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> your SafeNet appliance </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> the SafeNet PED and cable </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the existing, imprinted purple PED Key[s]</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the verification string for the existing purple key [because you are not re-splitting or enabling at this time, the  verification string for the Secure Recovery Vector on the existing key is not presented, so you must already have it in your possession]</p>
+        <p>Perform the SRK enable operation,  and enter Secure Transport Mode now:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Connect the SafeNet PED to the SafeNet Network HSM appliance.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Login to the appliance as 'admin'.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Run the command   &#160;<br /> <span style="font-family: monospace;">hsm srk transportMode enter</span> <br />Follow the PED prompts, presenting the current purple PED Key (or presenting quantity M of the purple PED Keys, if you had invoked MofN during the most recent enable or resplit) when prompted.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>When the HSM enters Secure Transport Mode, shut it down with  &#160;<br />&#160;&#160;<span style="font-family: monospace;">sysconf appliance poweroff</span>&#160;&#160;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Disconnect the appliance and pack it for shipment.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Ship the imprinted purple SRK to your customer or remote location, separately from the appliance shipment.</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Send the STM verification string via another path.</p>
+        <p>(* For simplicity, this procedure assumes that you choose Mvalue and Nvalue as "1" in order to have a single imprinted purple key. You can choose other values for M and N, to split the SRV across multiple purple PED Keys. Similarly, you are also given the opportunity to make a copy of the purple SRK - or of the MofN group of purple PED Keys if you elected to use MofN. Your choices in these matters are dictated by convenience and by your security policies.)</p>
+        <h3>Additional Notes </h3>
+        <p><b>Re-split?</b>
+        </p>
+        <p>You do not need to re-split if you have recently created a new purple PED&#160;Key for this HSM (as happens when you hsm srk enable), or if you have maintained rigorous records and are confident that your purple PED Key has not been compromised.</p>
+        <p>To be absolutely sure, we recommend that you perform a re-split before placing the HSM in Secure Transport Mode, unless your procedures require that you use an existing purple PED Key.</p>
+        <p><b>Number of purple keys</b>&#160;&#160;&#160;</p>
+        <p>The basic procedures above suggest that you need either one or two purple PED Keys. </p>
+        <p>However, choices that you can make while interacting with the SafeNet PED could require several additional purple keys. </p>
+        <p><i>Copies?</i>&#160;&#160;</p>
+        <p>During every imprinting transaction, the PED asks if you wish to copy the inserted PED Key. Therefore, ensure that you have enough spare/blank keys ready for the number of copies that you expect to make (examples: alternate key holder, on-site stored back-up, off-site back-up/escrow).</p>
+        <p><i>MofN?</i>&#160;&#160;</p>
+        <p>At the beginning of an imprinting operation, the PED asks for values of "M" and "N". This is for "MofN" split-secret multi-user (or multi-part) authentication, explained elsewhere in this manual (see <a href="../ped_keys/mofn_using.htm" class="MCXref xref">Using MofN</a> ). If you input "1" for both "M" and "N", then MofN is not in operation, and only the single (in this case purple) PED Key is needed to carry the authentication secret. But if you specify numbers higher than "1", then the PED&#160;splits the secret and imprints the splits onto quantity N different keys. Later, any operation that calls for that secret will need quantity M of those splits to be re-united (presented to the PED&#160;upon demand). Thus you must have quantity "N" spare/blank keys ready if you intend to invoke MofN. </p>
+        <p><i>Copies</i> and <i>MofN?</i> &#160;&#160;</p>
+        <p>Furthermore, you might wish to combine the two scenarios above - in most situations it is prudent to have a backup of any authentication device, against loss or damage. If that is your policy, and if you intend to invoke MofN, then you will need enough spare/blank keys to make at least two full MofN sets of the SRK (purple PED Key(s)). In that case, be careful not to mix the copy sets. If you chose MofN as 3 of 5, then the 5 keys get 5 different splits of the purple-key secret. When you later need to present the secret, you need 3 different splits. If the sets are accidentally mixed, you could have three key holders standing at the PED, but with two of their keys being duplicate splits - the PED refuses to accept what it sees as the same key twice when recreating an MofN secret. To avoid the possibility of inadvertently mixing copies and originals, one option is to simply choose a small "M" and a large "N", and not make copies. For example, if you chose M=3 and N=15, you could arbitrarily select three groups of five splits and use them as though the split was "3 of 5". That is, you could distribute 5 of the 15 splits to operations personnel, so that any three of them could authenticate to the HSM. You could keep another 5 of the 15 splits in on-site lockup as on-site backup, and you could keep the third group of 5 of the 15 splits as your off-site backup. In that case, you avoid the possibility of accidentally mixing copied smaller groups, which could result in two or three of the same split in one group - which the PED&#160;would reject.</p>
+        <p>View a table that compares and contrasts various "deny access" events or actions that are sometimes confused ( <a href="../decommission/destroy_scenarios.htm" class="MCXref xref">Comparison of Destruction/Denial Actions</a> ).&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

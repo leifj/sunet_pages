@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Secure Trusted Channel (STC)">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Enabling or Disabling STC on a Partition</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="stc.htm">Secure Trusted Channel (STC)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Enabling or Disabling STC on a Partition</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Enabling or Disabling STC on a Partition</h2>
+        <p>If STC is enabled on the HSM, you can enable STC on the specific partitions on which you want to use STC instead of NTLS. This allows you to use both NTLS and STC links on different partitions on the same HSM.</p>
+        <h3>Enabling STC on a Partition</h3>
+        <p>Before you can enable STC on a partition, you must enable STC&#160;on the HSM, as described in <a href="enabling_hsm.htm" class="MCXref xref">Enabling or Disabling STC on the HSM</a>. After enabling STC&#160;on the HSM, you can enable STC on a&#160;partition by   turning on partition&#160;policy 37: Force Secure Trusted Channel. Enabling partition policy 37 disables NTLS for the partition and forces it to use STC to provide the network link between the partition and a client application. </p>
+        <p>To use STC on a partition, you must also create a client token and client identity key pair and exchange and register the partition and client identity public keys between the partition and client, as described in <a href="../../configuration/client_partition/stc_links.htm" class="MCXref xref">Creating an STC Link Between a Client and a Partition</a> in the <i>Configuration Guide</i>. Note that the partition token and identity is created automatically when you create a partition, regardless of whether STC is enabled or not.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>HSM&#160;zeroization disables partition policy 37: Force Secure Trusted Channel. After zeroization, you will need to re-establish your STC links, as described in <a href="troubleshooting.htm#STC_restore_zeroize" class="MCXref xref">Restoring STC After HSM Zeroization</a> and in <a href="../../configuration/client_partition/stc_links.htm" class="MCXref xref">Creating an STC Link Between a Client and a Partition</a> in the <i>Configuration Guide</i>.</p>
+        <h5>To enable STC on a partition</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that STC is enabled on the HSM, as described in <a href="enabling_hsm.htm" class="MCXref xref">Enabling or Disabling STC on the HSM</a>.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Enter the following command to  turn on partition policy 37: Force Secure Trusted Channel, which enables STC on the specified partition.  You must be the HSM&#160;SO&#160;to use this command:</p>
+        <p class="listLevel1"><b>partition changepolicy -partition</b> &lt;partition_name&gt; <b>-policy 37 -value 1</b></p>
+        <p class="listLevel1">For example:</p><pre class="listLevel1" xml:space="preserve">lunash:&gt; partition changepolicy -partition stc_partition -policy 37 -value 1</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">'partition changePolicy' successful.</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Policy “Force Secure Trusted Channel” is now set to: 1</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Enter the following command to verify that the policy is enabled:</p>
+        <p class="listLevel1"><b>partition showpolicies -partition</b> &lt;partition_name&gt;</p>
+        <p class="listLevel1">For example:</p><pre class="listLevel1" xml:space="preserve">lunash:&gt;partition showpolicies</pre><pre class="listLevel1">.</pre><pre class="listLevel1" xml:space="preserve">Description                                   Value       Code</pre><pre class="listLevel1">.</pre><pre class="listLevel1" xml:space="preserve">Allow CBC-PAD (un)wrap keys of any size       On          34 </pre><pre class="listLevel1" xml:space="preserve">Force Secure Trusted Channel                  On          37</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">Command Result : 0 (Success)</pre>
+        <h3>Disabling STC on a Partition</h3>
+        <p>You can disable STC on a&#160;partition by   turning off partition policy 37: Force Secure Trusted Channel. Disabling this policy terminates the existing STC connection to the partition&#160;and turns off the ability to use STC to provide the network link between the partition and a client application, so that only NTLS links are permitted. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>To disable STC on a legacy partition, use LunaSH, as described in <a href="#disable_STC_legacy_par" class="MCXref xref selected">To disable STC on a legacy partition</a></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>To disable STC on a partition with SO, use LunaCM, as described in <a href="#disable_STC_SO_par" class="MCXref xref selected">To disable STC on a  partition with SO</a></p>
+        <h5 data-mc-conditions="Default.SA"><a name="disable_STC_legacy_par"></a>To disable STC on a legacy partition</h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">1.</span></span>Enter the following command to  turn off partition&#160;policy 37: Force Secure Trusted Channel, which terminates the existing STC connection to the partition. You must be the HSM&#160;SO&#160;to use this command:</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt; <b>partition changepolicy -partition </b>&lt;partition_name&gt;<b> -policy 37 -value 0</b></p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">You are prompted to confirm the action.</p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">2.</span></span>Enter the following command to verify that the policy is disabled:</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt; <b>partition showpolicies -partition</b> &lt;partition_name&gt;</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">For example:</p><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">lunash:&gt;partition showpolicies</pre><pre class="listLevel1" data-mc-conditions="Default.SA">.</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">Description                                   Value       Code</pre><pre class="listLevel1" data-mc-conditions="Default.SA">.</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">Allow CBC-PAD (un)wrap keys of any size       On          34 </pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">Force Secure Trusted Channel                  On          37</pre><pre class="listLevel1" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">Command Result : 0 (Success)</pre>
+        <h5 data-mc-conditions="Default.SA"><a name="disable_STC_SO_par"></a>To disable STC on a  partition with SO</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Go to the slot for the partition  you want to disable STC on:</p>
+        <p class="listLevel1">lunacm:&gt;&#160;<b>slot set</b> &lt;slot_number&gt;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Enter the following command to  turn off HSM&#160;policy 37: Allow Secure Trusted Channel, which terminates the existing STC connection to the partition. You must be the partition&#160;SO&#160;to use this command:</p>
+        <p class="listLevel1">lunacm:&gt; <b>partition changepolicy -policy 37 -value 0</b></p>
+        <p class="listLevel1">You are prompted to confirm the action.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Enter the following command to verify that the policy is disabled:</p>
+        <p class="listLevel1">lunacm:&gt; <b>partition showpolicies</b></p>
+        <p class="listLevel1">For example:</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt;partition showpolicies</pre><pre class="listLevel1">.</pre><pre class="listLevel1" xml:space="preserve">Description                                   Value       Code</pre><pre class="listLevel1">.</pre><pre class="listLevel1" xml:space="preserve">Allow CBC-PAD (un)wrap keys of any size       On          34 </pre><pre class="listLevel1" xml:space="preserve">Force Secure Trusted Channel                  On          37</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">Command Result : 0 (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

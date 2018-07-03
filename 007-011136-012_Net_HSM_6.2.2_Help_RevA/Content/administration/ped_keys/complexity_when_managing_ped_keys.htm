@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|PED Key Management">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Complexity When Managing PED Keys</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ped_keys.htm">PED Key Management</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Complexity When Managing PED Keys</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Complexity When Managing PED Keys</h2>
+        <p>These options, to create group PED Keys and duplicate PED Keys, can 
+ introduce complexity and another kind of risk to the management of PED 
+ Keys, especially when the options are combined. In many establishments, 
+ security policy demands that passwords be changed on a regular basis. 
+ Naturally, passwords/PINs on HSMs, Partitions and tokens and PED Keys 
+ can be changed as needed.</p>
+        <p>However, what might be a simple procedure for a single key (Change PIN) 
+ can quickly take on new dimensions when there might also be a backup PED 
+ Key in off-site safe storage, and there might be several working copies 
+ of the PED Key in the hands of Owners, alternate/backup Owners, and alternate/backup 
+ HSM Admins. Additionally, there might be several tokens, Partitions, or 
+ HSM Servers that are unlocked by any of the PED Keys (if you chose the 
+ group PED Key option when creating any of those).</p>
+        <p>The issue is that when authentication data is changed on a PED Key, 
+ it must be changed on the associated HSM or Backup Token at the same time; 
+ otherwise the two no longer match and the PED Key can no longer unlock 
+ the HSM (or Partition) or the token. The changePw procedure does take 
+ care of this for the HSM (or Partition) or token and for the blue (or 
+ black, as appropriate) PED Key that is in the SafeNet PED slot when the change 
+ command is issued. There is also provision (explained in following pages) 
+ for having other accessible PED Keys updated, during the procedure, to 
+ maintain synchronization with the HSM (or Partition) or Backup Token. 
+ </p>
+        <p>But, what about the set of backup PED Keys that you have sensibly stored 
+ off-site? If they are not brought in and updated during the same update 
+ procedure, they are no longer backups. Your security and maintenance procedures 
+ must address this situation. &#160;</p>
+        <p>To ease the task of updating multiple PED Keys,without a complicated dance involving all sets during the same update event, the PED provides a method of stand-alone, "raw" key duplication.</p>
+        <p>[ &lt; ] to exit Local PED&#160;mode to the main PED&#160;menu<br />[ 4 ] to enter Admin mode<br />[ 1 ] to enter PED Key mode<br />[ 1 ] again to bypass key login, which is not applicable to the iKey 1000 model in current use<br />and then<br />[ 7 ] to duplicate whichever key is presented next. </p>
+        <p>This is applicable to all imprinted PED&#160;Keys except the purple SRK (excluded for security reasons). </p>
+        <p>Because the above is a "raw" duplication, there is no opportunity to modify any PED PIN that is already associated with the presented source key. Duplicates by this method are exact.</p>
+        <p>Once you have updated any or all members of a working set of PED&#160;Keys, you can take one of those keys and a PED&#160;to any other location where duplicate sets were maintained (onsite backup, offsite backup, etc.) and update your backups without any need to involve the HSM. Always be aware of the location and state of any SafeNet PED key, and keep scrupulous records of all changes and hand-offs. Your security auditors will thank you.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

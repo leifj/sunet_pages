@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|HSM Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>HSM Partitions</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partitions.htm">HSM Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">HSM Partitions</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor93"></a><a name="kanchor94"></a>HSM Partitions</h2>
+        <p>HSM Partitions are independent logical HSMs that reside within the SafeNet HSM inside, or attached to, your host computer or appliance. Each HSM Partition has its own data, 
+ access controls, security policies, and separate administration access for at least some roles, 
+ independent from other HSM partitions (if your HSM supports more than one). Depending on the product, the 
+ HSM can contain multiple HSM partitions, and each partition can be associated with one or more Clients. Each HSM Partition has a special administrative 
+ account or role, who manages it. </p>
+        <p>HSMs with firmware older than version 6.22.0 had three types of partitions:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the HSM administrative partition, administered by the HSM SO </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the Auditor partition, accessible and administered by the HSM Auditor role, only</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>application partition(s) administered at a high level by the HSM SO, but administered and operated at an operational level by the User or Crypto Officer role </p>
+        <p>HSMs with firmware 6.22.0 or newer can have three types of partitions:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the HSM administrative partition, administered by the HSM SO (see Note below)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>legacy-style application partition(s) administered at a high level by the HSM SO, but administered and operated at an operational level by the User or Crypto Officer role  (with optional Crypto User) &#160;<br /><br />or</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>PPSO application partitions (requires that the PPSO capability is installed) that are created by the HSM SO, but are thereafter owned by their own local SOs, and administered and operated at an operational level by the Crypto Officer role (with optional Crypto User) -&#160;installing the PPSO capability is destructive, and requires that you re-create partitions, if you already had any.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>For HSMs with firmware 6.22.0 or newer, the Auditor role does not have an independent partition, but controls an area within the HSM administrative partition. The role and its objects are not seen or touched by the HSM SO. <br /><br />Operationally, there is no difference from previous releases. The only caveat is that if you update an older HSM to firmware 6.22.0 or newer, the old Audit logging stops and you must initialize the Audit user again, and configure audit logging. It is perfectly acceptable to re-use the Auditor credentials (white PED Key). </p>
+        <p>HSM Partitions can be thought of as 'safe deposit boxes' that reside 
+ within the K6 Cryptographic Engine's 'vault'. The vault itself offers 
+ an extremely high level of security for all the contents inside; additionally, 
+ each safe deposit box also has it's own security and access controls; 
+ while the bank managers might have access to the vault, they still cannot 
+ open the individual safe deposit boxes, because only the owner of the safe deposit 
+ box holds the key that opens it.</p>
+        <p>A legacy application partition was/is owned by the HSM SO, who assigns a User or Crypto Officer to handle day-to-day management of partition contents, creation, use, and destruction of keys and objects, and so on. PPSO application partitions (where HSM firmware is version 6.22.0 or newer, and the PPSO capability is applied) have their own partition SO, distinct from the HSM SO. The HSM SO initializes the HSM, sets HSM-wide policies, creates an empty application partition, and hands off complete control to whomever is to become the partition SO. Thereafter, the HSM has no oversight and can do nothing with the partition except to delete it, if that is ever required. The Partition SO then initializes the partition creating a Crypto Officer</p>
+        <p data-mc-conditions="Default.SA">Depending upon the configuration, 
+ each SafeNet Network HSM can contain a number of HSM Partitions (according 
+ to your license agreement). Each HSM Partition has the capacity 
+ to hold   data objects in numbers that depend upon the memory available, divided among number of partitions that your HSM allows. You can use the partition re-size command to modify the sizes of individual partitions until all memory on the HSM&#160;is allotted. Thus, you could make room for some larger partitions by shrinking others. 
+ HSM Partitions can be dedicated 
+ to a single client, if desired, or multiple clients can all share access 
+ to a single HSM Partition.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you are both <br />&#160;- upgrading from an earlier firmware version to HSM firmware 6.22.0 (or newer) <br />AND <br />&#160;- applying the Per-Partition SO (PPSO)&#160;capability update, <br />be aware that the PPSO capability update is destructive. Therefore, there is no need to re-size partitions. <br /><br />Instead, to avoid unnecessary duplication of effort, you should <br />&#160;- safeguard (archive) any existing partition contents, <br />&#160;- then zeroize the HSM for a clean update, <br />&#160;- then perform  both the firmware AND capability updates, <br />&#160;- and finally restore to new partitions.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

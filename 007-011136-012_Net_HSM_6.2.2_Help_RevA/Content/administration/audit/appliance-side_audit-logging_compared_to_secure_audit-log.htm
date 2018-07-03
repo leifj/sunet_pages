@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Audit Logging">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Appliance-side Audit Logging Compared with Secure Audit Logging</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="audit.htm">Audit Logging</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Appliance-side Audit Logging Compared with Secure Audit Logging</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Appliance-side Audit Logging Compared with Secure Audit Logging</h2>
+        <p>The following list summarizes the functionality of the audit logging to appliance feature (compare against the equivalent list for secure audit logging in the Administration Guide of the main Luna SA documentation):</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Log entries originate from the SafeNet HSM within the appliance </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The appliance-side audit logging feature is applicable to password-authenticated (FIPS 140-2 level 2) and to PED-authenticated (FIPS 140-2 level 3) product configurations</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Logging direct to external file minimizes demand on HSM resources, enabling greater HSM performance</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Each entry includes the following:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>when the event occurred (YYYY MMM DD hh:mm:ss)</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>HSM serial number</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>session number</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>access ID - this is an AppID if you specified one, otherwise, by default, is a process number</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>partition number (HSM serial number plus suffix identifying the partition within that HSM) *</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>what the event was (operation) *</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>returned value from the operation (success = 0; specific failures identified by non-zero codes) *</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>object handle *</p>
+        <p class="listLevel2">* Partition, operation, return value, and object handle are not returned for LogExternal calls</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Multiple categories of audit logging are supported, configured by the audit role</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Audit management is a separate role - the role creation does not require the presence or co-operation of the SafeNet HSM SO</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The category of audit logging is configurable by (and only by) the audit role</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Audit-logging direct to the appliance file system bypasses the computational load of creating an HMAC of each record and chaining records for verification. <br />The following table compares the record verification between Secure Audit Logging and Appliance-side Audit Logging:</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Type of record verification &#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">HSM Secure <br />Audit Logging &#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Appliance-side <br />Audit Logging &#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">The record is valid &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">No &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">The record has not been truncated &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">No &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">The record has not been modified/edited &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">No &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">The record is in sequence (no records have been added or deleted) &#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Yes &#160;</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">No &#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Where the above assurances are not requirements in your logging (for example, where your record-handling procedures are deemed sufficient to ensure security of logs), then use appliance-side audit logging for greater HSM performance. If rigorous log security is mandated, then use secure audit logging instead, and expect reduced performance for the additional security. <br />The following table compares additional aspects of Secure Audit Logging versus Appliance-side Audit Logging:</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Attribute &#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Secure HSM Audit log &#160;</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Appliance-side HSM logging &#160;</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Logs are signed &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Yes &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Logs are chained &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">No &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Rsyslog facility &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">local3 &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">local4 (*) &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Performance of HSM &#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">lower &#160;</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">higher &#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>(* If you have trouble with the local4 configuration at your rsyslog server, try redirecting the logs via IP, <br />like :fromhost-ip,isequal,"192.20.11.50" /var/log/luna/myAppLogging.log )</p>
+        <p>The default protocol is UDP, on port 514/</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

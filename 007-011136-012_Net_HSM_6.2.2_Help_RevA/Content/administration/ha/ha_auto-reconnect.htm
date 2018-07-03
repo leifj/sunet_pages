@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|High-Availability (HA) Configuration and Operation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>HA Auto-Reconnect </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha.htm">High-Availability (HA) Configuration and Operation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">HA Auto Reconnect</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>HA Auto-Reconnect </h2>
+        <p>This section deals with reconnection of the operating client to the HA group, when the client has lost connection to all members of the HA group. This might occur due to network connectivity issues, or if a socket is closed by any of:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>firewall rules/operation </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>switch problems </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>actions of operating systems, including User Account Control (UAC) </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>settings and actions of ESXi hosts </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>migration of running Virtual Machines (such as using VMotion)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>other causes</p>
+        <p>If an application is Java or C based, then the application can call c_finalize, c_initialize, c_opensession, and c_login in order to continue without need for an application restart. But when, for example, an application is using Microsoft-based products with LunaCSP or LunaKSP, there is no opportunity to perform the sequence of calls to resume operation. We address this problem with improvements to HA recovery mode, in which the PKCS#11 context and sessions are preserved.</p>
+        <h3>Active Automatic recovery (the way it was)</h3>
+        <p data-mc-conditions="">Older versions of HA used a passive recovery process that was triggered only in conjunction with a PKCS#11 library call. This method was not sufficiently robust, and was replaced in release 6.2 by active automatic recovery using an HA Active Recovery Thread (ARCT). The ARCT sends a non-session-based message that is processed by NTLS. This allows recovery as soon as a failed member returns, and does not wait for a PKCS#11 operation. Thus, if a failed member returns to duty before an active member fails, then synchronization occurs immediately, and the secondary member is ready to take over from the active member if that now fails. </p>
+        <p data-mc-conditions="">Members can reconnect without the need to call finalize/initialize in the client application, which allows, for example multiple services that use a single JVM  to recover connections independently.</p>
+        <p data-mc-conditions="">In the event that all HA&#160;members failed to respond to the ARCT managing message, the HA slot was deemed to be unrecoverable. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;" data-mc-conditions=""><span class="autonumber"><span><b>Note:</b> &#160;</span></span>As of release 6.2.2, "passive" recovery mode is discontinued, and two modes of active recovery are available: <br /> "activeBasic" using manual opening of session and manual login<br />and <br /> "activeEnhanced" with automatic reopening of sesseion and auto login</p>
+        <h3>Preserving HA context (the HA Auto Reconnect way)</h3>
+        <p>The above feature discussion dealt with scenarios where individual HA group members suffered a fault or lost network connection with the client, but left a client-and-HA group vulnerable to the situation where a connection failure cut the client off from the entire HA group. </p>
+        <p>With Client Release 6.2.2, the client HA context is preserved, and Token Object status is retained, allowing reconnection to the HA group without need to restart client applications, and with no need to finalize the existing session and start a new one. Only ephemeral session objects are lost. In summary, previous enhancements improved the handling where individual members were disconnected, but the client maintained connection to at least one group member. The enhancement described here handles the situation where the HA client loses contact with the entire group; it can now recover and resume operation if the connection is restored. </p>
+        <h3>What do the HA Auto Reconnect options mean? </h3>
+        <p><b>OPTION:</b><![CDATA[  ]]><b>hagroup recoverymode -mode activeBasic</b> implies that context is automatically preserved, but the recovery from a complete client disconnection and reconnection requires intentional manual intervention. The known object handles (result of the most recent findobject search) allow the application to continue to use those known-object handles after the owner of the application manually intervenes to reopen a session and re-login. </p>
+        <p>This allows customers, who wish to do so, to use the HA feature while conforming to PKCS#11 standard handling after a CKR_TOKEN_NOT_PRESENT error. </p>
+        <p><b>OPTION:</b><![CDATA[  ]]><b>hagroup recoverymode -mode activeEnhanced</b> implies that context is automatically preserved (including known-object handles), and the recovery from a client disconnection and reconnection does <i>not</i> require any manual intervention. Reopening a session and re-logging-in are automatic. </p>
+        <p>This option serves customers who require hands-off recovery. </p>
+        <h3>What about timeouts and retries?</h3>
+        <p>The boundaries of this feature are established by the general HA settings. That is, the ability to reconnect from a total separation of the client from its HA group is constrained by the retry, interval, and timeout settings that govern the loss and recovery of individual members from and to the group. No additional settings are possible or required. </p>
+        <p>The number and frequency of connection retries for an individual member also applies to retries for the entire group. Any limit that you have set, after which the client will no longer attempt to reconnect to a member, is also the limit after which the client will no longer attempt to reconnect to a lost group, and will need manual intervention.</p>
+        <p>LunaCM commands affected include &#160;&#160;<a href="../../lunacm/commands/hagroup/hagroup_recoverymode.htm" class="MCXref xref">hagroup recoverymode </a> and <a href="../../lunacm/commands/hagroup/hagroup_listgroups.htm" class="MCXref xref">hagroup listgroups</a> &#160;</p>
+        <h3>When to use HA Auto Reconnect</h3>
+        <p>The feature is useful when your application is making use of token objects. Use activeBasic mode when strict PKCS#11 compliance is necessary. Use activeEnhanced mode when hands-free resumption of your application upon HA&#160;reconnect is the primary concern.</p>
+        <h3>Steps to use HA Auto Reconnect</h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Configure an HA group, as instructed in <a href="configure.htm" class="MCXref xref">Configuring HA</a> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>HA reconnect depends on HA autoRecovery. Enable HA autoRecovery by setting the recovery retry count with <a href="../../lunacm/commands/hagroup/hagroup_retry.htm" class="MCXref xref">hagroup retry</a> : </p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; hagroup retry -count -1</pre><pre class="listLevel1" xml:space="preserve">
+</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Specify the interval, in seconds, between retry attempts with command <a href="../../lunacm/commands/hagroup/hagroup_interval.htm" class="MCXref xref">hagroup interval</a>&#160;: </p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; hagroup interval-interval 120   </pre>
+        <p xml:space="preserve">
+
+</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Enable HAOnly with command&#160;<a href="../../lunacm/commands/hagroup/hagroup_haonly.htm" class="MCXref xref">hagroup  haonly</a>&#160;&#160;&#160; : </p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; hagroup HAOnly enable   
+
+</pre>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>HA&#160;logging is highly recommended. Set it with command&#160;<a href="../../lunacm/commands/hagroup/hagroup_halog.htm" class="MCXref xref">hagroup halog</a>&#160;&#160;&#160; : </p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; haGroup halog -maxlength 2560000
+
+HA Log maximum file size was successfully set to 2560000.
+
+</pre><pre xml:space="preserve" class="listLevel1">Command Result : No Error
+</pre><pre xml:space="preserve" class="listLevel1">
+</pre><pre xml:space="preserve" class="listLevel1">lunacm:&gt; hagroup halog -path "c:\Program Files\SafeNet\LunaClient\halog"
+
+HA Log path successfully set to c:\Program Files\SafeNet\LunaClient\halog.
+
+Command Result : No Error</pre><pre class="listLevel1" xml:space="preserve">   
+</pre>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Set the recovery mode to "activeEnhanced" with command <a href="../../lunacm/commands/hagroup/hagroup_recoverymode.htm" class="MCXref xref">hagroup recoverymode </a> &#160;: </p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; hagroup recoverymode -mode activeEnhanced 
+
+</pre>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Resume using your application with the HA group. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Use of HA Auto Reconnect is transparent to your application. You can change between activeBasic and activeEnhanced modes without restarting your application.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you encounter error CKR_TOKEN_NOT_PRESENT, modify your application to retry the operation every minute.</p>
+        <p>If your application is generating session objects, those are not preserved. They will need to be recreated, and will appear with new handles. </p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|PED (Trusted Path) Authentication ">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>About PED Keys</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ped_auth.htm">PED (Trusted Path) Authentication </a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">About PED Keys</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor118"></a>About PED Keys</h2>
+        <p><a name="kanchor119"></a>A PED Key is an electrically-programmed device, with USB interface, 
+ embedded in a molded plastic body for ease of handling. Specifically, 
+ a PED Key is a SafeNet iKey authentication device model 1000( must 
+ be firmware version 1.1 or later - the PED checks the firmware version 
+ of a presented iKey, and displays an error message if the version is too 
+ old ) 
+
+<a name="kanchor120"></a> 
+ with FIPS configuration. In conjunction with  PED 2 or PED 2 Remote, a PED Key can be 
+ electronically imprinted with identifying information, which it retains 
+ until deliberately changed. </p>
+        <p><a name="aanchor0"></a>
+            <MadCap:concept term="Luna PED;PED Keys" />A PED Key holds a generated secret that might unlock one or more HSMs. 
+ That secret is created by initializing the first HSM. The secret can then 
+ be copied (using PED 2.x) to other PED Keys, for purposes of backup, 
+ or to allow more than one person to have access to HSMs that are protected 
+ by that particular secret. The secret can also be copied to other HSMs 
+ (when those HSMs are initialized), so that one HSM secret is able to unlock 
+ multiple HSMs.</p>
+        <p>The HSM-related secret might be the access control for one or more HSMs, 
+ the access control for Partitions within HSMs, or the Domain key that 
+ permits secure moving/copying/sharing of secrets among HSMs that share 
+ a domain. </p>
+        <p>The PED comes in two versions:</p>
+        <p>- the standard PED 2 is designed for local connection, only, to a SafeNet HSM</p>
+        <p>- the Remote PED 2 has all the function of the standard PED 2 and can also be used remotely from an HSM, when used with PEDServer.exe workstation software.</p>
+        <h3>Why do you need PED Keys?</h3>
+        <p>The PED and PED Keys are the only means of authenticating, and permitting 
+ access to the administrative interface of the PED-authenticated HSM, and are the first part 
+ of the two-part Client authentication of the FIPS 140-2 level 
+ 3 (FIPS 
+ is the Federal Information Processing Standards of the United States government's 
+ National Institute of Standards and Technology -- FIPS 140-2 is an internationally 
+ recognized standard regarding security requirements for cryptographic 
+ modules, and level 3 is its second-highest level of security features/assurance) 
+ 
+
+ 
+ &#160;compliant 
+ SafeNet HSM with Trusted Path Authentication. See <a href="../fips/about_fips_validation.htm" class="MCXref xref">About FIPS Validation</a> for more information.</p>
+        <p>The use of PED and PED Keys prevents key-logging exploits on the 
+ host HSM, because the authentication information is delivered directly 
+ from the hand-held PED into the HSM via the independent, trusted-path 
+ interface. You do not type the authentication information at a computer 
+ keyboard, and the authentication information does not pass through the 
+ internals of the computer, where it could possibly be intercepted by spy 
+ software. &#160;</p>
+        <p>The PED does not hold the HSM authentication secrets. The PED facilitates 
+ the creation and communication of those secrets, but the secrets themselves 
+ reside on the portable PED Keys. This means that an imprinted PED Key 
+ can be used only with HSMs that share the particular secret, but 
+ PEDs are interchangeable (at least, 
+ within compatible versions - you can replace any PED 2.x with any 
+ other [unless otherwise indicated], but you cannot use a PED 1.x 
+ where a 2.x version is needed, or vice-versa) 
+
+.</p>
+        <h3>Types of PED Key</h3>
+        <p>The current-model PED uses iKey USB-fob type PED Keys of no particular 
+ color (the standard issue is black) for all functions. You can visually 
+ differentiate your PED Keys by attaching tags or labels. A set of sticky 
+ labels in appropriate colors (see below) is supplied with your PED Keys.</p>
+        <p>The roles and uses of the PED Keys employed with SafeNet HSMs and the PED 
+ are as follows:</p>
+        <p>&#160;</p>
+        <p>
+            <img src="../../Resources/Images/ped/blank_ped-key.png" style="border: none;width: 230px;height: 135px;border-style: none;float: left;border-style: none;float: left;" width="230" height="135" align="left" border="0" />
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <h4>SO &#160;</h4>
+        <p>
+            <img src="../../Resources/Images/ped/ped-key_so_blue_small.png" style="border: none;margin-left: 0px;margin-top: 0px;margin-bottom: 14px;margin-right: 14px;border-style: none;float: left;border-style: none;float: left;" width="92px" height="57px" align="left" border="0" />Security Officer (SO)’s (also 
+ sometimes called HSM Admin) 
+
+ 
+ &#160;PED Key. 
+ The first actions with a new SafeNet HSM involve creating an SO PIN and imprinting 
+ an SO PED Key. The SO identity is used for further administrative actions 
+ on the HSMs, such as creating HSM Partition Users and changing passwords, 
+ backing up HSM objects, controlling HSM Policy settings. <br /><br />A PED PIN (an additional, optional password typed on the 
+ PED keypad) can be added. SO PED 
+ Keys can be <a href="javascript:void(0);" class="MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm glossaryTermglossterm MCTextPopupHotSpot_ MCTextPopupHotSpot_glossterm" alt="Closed" data-mc-alt2="Open">duplicated<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>a PED Key can be copied so that two or more PED Keys contain the same secret - this is useful and necessary in order to have backups of each of your PED Keys, and for other operational purposes, but you must maintain rigorous control of all duplicates to prevent unauthorized persons from accessing your HSM(s), and for tracking of the "paper trail" of possession, to satisfy your security auditors.</span></a> 
+ for backup, and can be <a href="../ped_keys/what_is_a_shared_or_group_ped_key.htm">shared 
+ among HSMs</a> by imprinting subsequent HSMs with an SO PIN already on 
+ a PED Key.</p>
+        <h4>Partition User or Crypto Officer &#160;</h4>
+        <p>
+            <img src="../../Resources/Images/ped/ped-key_user_black_small.png" style="border: none;margin-left: 0px;margin-right: 14px;margin-top: 0px;margin-bottom: 14px;border-style: none;float: left;border-style: none;float: left;" width="90px" height="57px" align="left" border="0" />Application Partition User key or Crypto Officer key. For HSM SO-controlled application partitions (with no SO local to the partition) this PED Key is required to log in 
+ as HSM Partition Owner or Crypto Officer. Needed for Partition maintenance, 
+ creation and destruction of key objects, etc. Creates the optional Crypto User. <br /><br /></p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Creation of a challenge secret is  forced for an application partition owned by the HSM SO (a.k.a. "Administrator").</p>
+        <p>For application partitions that have their own SO, this PED Key is required to log in 
+ as  Crypto Officer, and is needed for Partition maintenance, 
+ creation and destruction of key objects, etc. The Crypto Officer creates the Crypto User. <br /><br />The challenge secret generated in conjunction with the Crypto Officer can grant client applications  access to create, delete, and manipulate partition objects. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Creation of a challenge secret is not forced for an application partition with its own SO.</p>
+        <p>
+            <br />A PED PIN (an additional, optional password typed on the 
+ PED keypad) can be added. Black Crypto Officer PED Keys can be <a href="javascript:void(0);" class="MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm glossaryTermglossterm MCTextPopupHotSpot_ MCTextPopupHotSpot_glossterm" alt="Closed" data-mc-alt2="Open">duplicated<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>a PED Key can be copied so that two or more PED Keys contain the same secret - this is useful and necessary in order to have backups of each of your PED Keys, and for other operational purposes, but you must maintain rigorous control of all duplicates to prevent unauthorized persons from accessing your HSM(s), and for tracking of the "paper trail" of possession, to satisfy your security auditors.</span></a> 
+ for backup, and can be shared among application Partitions using the "Group 
+ PED Key" option.<br /></p>
+        <p>&#160;</p>
+        <h4>Crypto User &#160;&#160;</h4>
+        <p>
+            <img src="../../Resources/Images/ped/ped-key_crypto-user_grey_small.png" style="border: none;margin-left: 0px;margin-right: 14px;margin-top: 0px;margin-bottom: 14px;border-style: none;float: left;border-style: none;float: left;" width="90px" height="57px" align="left" border="0" />The Crypto User has restricted read-only administrative access to application partition objects. The challenge secret generated in conjunction with the Crypto User can grant client applications restricted, sign-verify access to partition objects. <br /><br /></p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Creation of a challenge secret is  forced for an application partition owned by the HSM  SO. Creation of a challenge secret is not forced for an application partition with its own SO.</p>
+        <p>A PED PIN (an additional, optional password typed on the 
+ PED keypad) can be added. Gray User PED Keys can be <a href="javascript:void(0);" class="MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm glossaryTermglossterm MCTextPopupHotSpot_ MCTextPopupHotSpot_glossterm" alt="Closed" data-mc-alt2="Open">duplicated<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>a PED Key can be copied so that two or more PED Keys contain the same secret - this is useful and necessary in order to have backups of each of your PED Keys, and for other operational purposes, but you must maintain rigorous control of all duplicates to prevent unauthorized persons from accessing your HSM(s), and for tracking of the "paper trail" of possession, to satisfy your security auditors.</span></a> 
+ for backup, and can be shared among application Partitions using the "Group 
+ PED Key" option.</p>
+        <h4>&#160;Domain &#160;</h4>
+        <p>
+            <img src="../../Resources/Images/ped/ped-key_domain_red_small.png" style="border: none;margin-left: 0px;margin-right: 14px;margin-top: 0px;margin-bottom: 14px;border-style: none;float: left;border-style: none;float: left;" width="92px" height="56px" align="left" border="0" />Key Cloning Vector (KCV) or Domain ID key. This PED Key 
+ carries the <a href="javascript:void(0);" class="MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm glossaryTermglossterm MCTextPopupHotSpot_ MCTextPopupHotSpot_glossterm" alt="Closed" data-mc-alt2="Open">domain<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>(Also referred to as KCV – Key Cloning Vector) A domain is a shared identifier, common to a group of Luna cryptographic modules, with access controlled by a red PED Key (for Trusted Path Authentication) or by a domain string (for Password Authentication). Cloning (secure duplication) of token objects is possible among tokens/HSMs that share a particular domain. Cloning is not possible across different domains, and is not possible where the tokens lack a domain. A domain must be declared and imprinted at the time a token is initialized.</span></a> 
+ identifier for any group of HSMs for which key-cloning/backup is 
+ to be used. The red PED Key is created/imprinted upon HSM initialization. Another (or could reuse the same domain) is created/imprinted with each HSM 
+ Partition. A cloning domain key carries the domain (via PED) to other HSMs or HSM partitions which 
+ are to be initialized with the same domain, thus permitting backup and 
+ restore among (only) those containers and tokens. The red Domain PED Key 
+ receives a domain identifier the first time it is used, at which time 
+ a random domain is generated by the HSM and sent to both the red Domain 
+ key and the current HSM Partition. Once imprinted, that domain identifier 
+ is intended to be permanent on the red Domain PED Key – and on any HSM 
+ Partitions or tokens that share its domain. Any future operations with 
+ that red Domain PED Key should simply copy that domain onto future HSM 
+ Partitions or backup tokens (via PED) so that they may participate 
+ in backup and restore operations (see <a href="../ped_keys/what_is_a_domain_ped_key.htm">What 
+ is a Domain PED Key?</a> later in this section, for a more detailed explanation). 
+ A PED PIN (an additional, optional password typed on the 
+ PED keypad) can be added at the time the PED Key is created/imprinted. Red  PED Keys can be <a href="javascript:void(0);" class="MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm glossaryTermglossterm MCTextPopupHotSpot_ MCTextPopupHotSpot_glossterm" alt="Closed" data-mc-alt2="Open">duplicated<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>a PED Key can be copied so that two or more PED Keys contain the same secret - this is useful and necessary in order to have backups of each of your PED Keys, and for other operational purposes, but you must maintain rigorous control of all duplicates to prevent unauthorized persons from accessing your HSM(s), and for tracking of the "paper trail" of possession, to satisfy your security auditors.</span></a> 
+ for backup or multiple copies of the key. </p>
+        <p>The red PED Key can be considered the most important PED Key to protect from access by unauthorized persons. An unauthorized person who is able to access the HSM host could see and manipulate objects on a logged-in or activated partition, but would be able to copy those objects to another HSM only if he had possession of the partition domain secret. Without the proper red PED Key, an attacker cannot copy/clone HSM partition contents to other HSMs.              </p>
+        <h4>Remote PED  &#160;&#160;</h4>
+        <p>
+            <img src="../../Resources/Images/ped/ped-key_remote-ped_orange_small.png" style="border: none;margin-left: 0px;margin-right: 14px;margin-top: 0px;margin-bottom: 14px;border-style: none;float: left;border-style: none;float: left;" width="90px" height="57px" align="left" border="0" />This PED Key is required when you need to perform PED&#160;operations at a distance. The orange RPK carries the Remote PED&#160;Vector (RPV) and allows a SafeNet PED connected to a properly configured computer to substitute for a PED connected directly to the SafeNet appliance/HSM, when that local connection is not convenient.
+</p>
+        <p>The RPV is created/imprinted by a SafeNet HSM  with a suitable PED connected (version 2.4.0 or later, having the Remote PED feature installed). A Remote PED can be connected to the USB port of a networked computer that has the PED&#160;driver installed and is running the PEDserver.exe program.
+A SafeNet HSM (that has been initialized with a Remote PED&#160;vector) can initiate a secure connection to the Remote PED Server computer, and that connection can be validated by an orange Remote PED Key that carries the same vector as the SafeNet HSM. For the duration of that session, HSM commands can be run at that appliance with all the needed PED Keys (SO, User, Domain, even SRK) being supplied via the PED connected to the computer. There is no need to be present at the remotely located SafeNet appliance/HSM with PED Keys and PED. 
+ Orange  PED Keys can be <a href="javascript:void(0);" class="MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm glossaryTermglossterm MCTextPopupHotSpot_ MCTextPopupHotSpot_glossterm" alt="Closed" data-mc-alt2="Open">duplicated<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>a PED Key can be copied so that two or more PED Keys contain the same secret - this is useful and necessary in order to have backups of each of your PED Keys, and for other operational purposes, but you must maintain rigorous control of all duplicates to prevent unauthorized persons from accessing your HSM(s), and for tracking of the "paper trail" of possession, to satisfy your security auditors.</span></a> 
+ for backup or multiple copies of the key.</p>
+        <h4>Secure Recovery  &#160;&#160;</h4>
+        <p>
+            <img src="../../Resources/Images/ped/ped-key_recovery_purple_small.png" style="border: none;margin-left: 0px;margin-right: 14px;margin-top: 0px;margin-bottom: 14px;border-style: none;float: left;border-style: none;float: left;" width="90px" height="57px" align="left" border="0" />The purple Secure Recovery Key contains the external split of the SRV (secure recovery vector), to recreate the HSM's Master Tamper Key with which all HSM contents are encrypted. The master key is destroyed whenever a tamper event occurs, or when the HSM is deliberately set to Secure Transport Mode. For Secure Transport Mode, the purple PED Key is then shipped via a separate channel from the HSM shipment so that no attacker could obtain access to both the HSM and the SRV while they are in transit. Upon receipt, the administrator brings both the HSM and the purple key together, and invokes the  "hsm srk recover" command. This brings the internal (in the HSM) and external (on the purple SRK) components of the SRV together and recreates the HSM Master Tamper Key, allowing the HSM to be used. 
+ <br /><br /> A PED PIN (an additional, optional password typed on the 
+ PED keypad) can be added. Purple  PED Keys can be <a href="javascript:void(0);" class="MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm glossaryTermglossterm MCTextPopupHotSpot_ MCTextPopupHotSpot_glossterm" alt="Closed" data-mc-alt2="Open">duplicated<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>a PED Key can be copied so that two or more PED Keys contain the same secret - this is useful and necessary in order to have backups of each of your PED Keys, and for other operational purposes, but you must maintain rigorous control of all duplicates to prevent unauthorized persons from accessing your HSM(s), and for tracking of the "paper trail" of possession, to satisfy your security auditors.</span></a> 
+ for backup or multiple copies of the key, but only during the creation/imprinting of the key - SafeNet PED cannot duplicate purple keys via the standalone PED admin menu. Purple PED Keys are unique to each HSM, and cannot be shared.</p>
+        <h4>Audit &#160; &#160;&#160;</h4>
+        <p>
+            <img src="../../Resources/Images/ped/ped-key_audit_white_small.png" style="border: none;margin-left: 0px;margin-right: 14px;margin-top: 0px;margin-bottom: 14px;border-style: none;float: left;border-style: none;float: left;" width="90px" height="57px" align="left" border="0" />Audit is an HSM role that takes care of audit logging, under independent control. The audit role is initialized and imprints a white PED Key, without need for the SO or other role. The Auditor configures and maintains the audit logging feature, determining what HSM activity is logged, as well as other logging parameters, such as rollover period, etc. The purpose of the separate Audit role is to satisfy certain security requirements, while ensuring that no one else - including the HSM SO - can modify the logs or hide any actions on the HSM. The Audit role is optional until initialized. </p>
+        <p>A PED PIN (an additional, optional password typed on the 
+ PED keypad) can be added. White Audit PED Keys can be <a href="javascript:void(0);" class="MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm glossaryTermglossterm MCTextPopupHotSpot_ MCTextPopupHotSpot_glossterm" alt="Closed" data-mc-alt2="Open">duplicated<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>a PED Key can be copied so that two or more PED Keys contain the same secret - this is useful and necessary in order to have backups of each of your PED Keys, and for other operational purposes, but you must maintain rigorous control of all duplicates to prevent unauthorized persons from accessing your HSM(s), and for tracking of the "paper trail" of possession, to satisfy your security auditors.</span></a> 
+ for backup, and can be shared among HSMs using the "Group 
+ PED Key" option.</p>
+        <p data-mc-conditions="Default.SA">For SafeNet Network HSM, there is a separate appliance login role (audit) that has access to its own lunash:&gt; commands, in addition to a limited set of view-only commands for the HSM. The  HSM SO and others who log into the appliance as "admin" or as other named roles, do not have access to the lunash:&gt; audit commands.</p>
+        <h3>What is a Set of PED Keys?</h3>
+        <p>A nominal set of <b>blank</b> PED Keys, as purchased with a SafeNet HSM with PED (Trusted Path) 
+ Authentication, consists of ten black USB-token PED Keys, along with colored 
+ stickers to identify them (several each of blue, red,  black, orange, white, and purple), 
+ which allows some &#160;spares 
+ or backups. </p>
+        <div data-mc-target-name="t1">
+            <p> <img src="../../Resources/Images/ped/ped-key_label_sheet_2014_version.png" style="width: 474px;height: 408px;" /> </p>
+            <p>The stickers (above) are just visual labels to attach to your PED Keys. 
+ They are provided for your convenience, and you can use them, or not, at 
+ your discretion. </p>
+            <p>The set of stickers/labels does not indicate a requirement. The quantity of each color on a sheet is merely an average distribution according to customer practices that we have seen. </p>
+            <p>You are not required to have a PED Key of each color, above. The ones that are mandatory for use of your PED-authenticated HSM are the blue SO key, the red domain key, and the black Crypto Officer key. </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Operation of the HSM does not require that you create a Crypto User - it is optional, in case you need a limited-capability client. </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Operation of the HSM does not require that you create an Audit user - if your situation does not require audit logging, that is, if standard, unverified HSM logging is sufficient, then the Audit role is superfluous to your needs. On the other hand, if your implementation is likely to be audited against security standards, then creating, assigning, and using the HSM's Audit role would be recommended. </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Operation of the HSM&#160;does not require that you imprint a Remote PED Key, as long as you have local access for PED interactions, when needed. If you expect to administer the HSM remotely, then a Remote PED Key will be required. </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Operation of the HSM does not require that you imprint a Secure Recovery PED Key. If no external Secure Recovery Vector is generated, then the HSM can recover from tamper events with only a login, and the HSM cannot be placed in Secure Transport Mode. If you wish to invoke (and later recover from) Secure Transport Mode, or if you require that the HSM halt in case of a tamper event, and require intervention (presentation of a purple PED Key) to acknowledge and recover from such tamper, then enabling SRK would be necessary.</p>
+            <h4>Imprinting </h4>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A PED Key can contain only one HSM authentication secret at a time. </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>PED Keys are completely interchangeable before they are 
+ imprinted by your action - the PED&#160;checks for an existing authentication secret, and tells you if the currently presented key is blank. </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>PED Keys are imprinted by SafeNet PED during HSM 
+ initialization and Partition creation and other HSM actions that create HSM roles or invoke certain HSM functions. </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>PED Keys can be re-imprinted with new HSM authentication secrets. Imprinting a new secret overwrites (destroys) any HSM authentication secret that was already present on a PED&#160;Key when it was presented for new imprinting. The PED always warns you if the presented key contains an authentication secret. The PED has no way to know if an authentication secret that it finds on a key is useful and valid for some role on the current HSM (or on some other HSM), or if a contained authentication secret is outdated and no longer valid, and therefore safe to overwrite - so the PED&#160;simply tells you what it has found and lets you make the decision. </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>PED Keys are completely interchangeable for re-imprinting (except see Note, below) - that is, you can turn any PED Key into a different PED Key during an initialization/imprinting operation; the PED warns you that the key you have presented already contains an authentication secret (and tells you what kind), but you can choose to overwrite if you think the currently imprinted secret is no longer useful. </p>
+            <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The exception is the purple SRK PED&#160;Key. If you attempt an operation that creates and imprints a new SRK value, the PED will accept any blank key or any non-purple, previously-imprinted PED Key to accept the new external  recovery vector for the currently-connected HSM. That means, it will imprint a new SRV onto any blank key, and it will also imprint a new SRV onto any key that currently contains authentication for SO, CO, CU, Domain, Auditor, RPK, if you tell it to overwrite. <br /><br />But, it will not overwrite a purple PED Key that contains the currently valid SRV for the current HSM. This is a safety feature. <br /><br />Keep in mind that the PED&#160;has no way to determine if a discovered SRV secret on a key is currently valid for some other HSM. It can check only with the currently-connected HSM. </p>
+            <p>
+                <br />
+                <br />
+                <br />
+                <img src="../../Resources/Images/ped/key-tag_blue.jpg" style="border: none;width: 104px;height: 45px;float: none;border-style: none;border-style: none;" width="104" height="45" border="0" />
+                <img src="../../Resources/Images/ped/key-tag_red.jpg" style="border: none;width: 104px;height: 45px;float: none;border-style: none;border-style: none;" width="104" height="45" border="0" />
+                <img src="../../Resources/Images/ped/key-tag_white.GIF" style="border: none;width: 104px;height: 45px;float: none;border-style: none;border-style: none;" width="104" height="45" border="0" />
+                <br />
+                <br />We recommend that you use some system of visually identifying the role 
+ of each PED Key once it is imprinted. Ordinary key-chain tags are handy 
+ and can be acquired anywhere; they provide room for written information 
+ that is important to you, and they do not interfere with the operation 
+ of the PED Keys.</p>
+            <p><a name="aanchor1"></a>
+                <MadCap:concept term="Luna PED" />We strongly suggest that you use our supplied self-stick PED Key labels, or that you otherwise maintain the color associations that are referenced throughout the documentation and also in the HSM utilities and in SafeNet PED's own dialogs. </p>
+        </div>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Security Officer (SO) 
+ key  - blue</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>domain key - red</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Crypto Officer key (or partition Owner/ key, old scheme) - black</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Crypto User key - gray</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Remote PED - orange</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Secure Recovery (SRK) - purple</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Audit role - white</p>
+        <p>The others are spares for each role. The SO, Domain, and User roles are the minimum that you need to operate the HSM.</p>
+        <p>For purposes of backup redundancy, you would normally have at least 
+ a second full set for keeping in safe storage, once they have been imprinted. 
+ Imprinting takes place when an HSM is initialized (a backup 
+ token is initialized/re-initialized whenever a backup is performed onto 
+ it)
+
+. 
+ Initialization is also an opportunity to make more duplicates of any PED 
+ Key, if you require them. Imprinting of Partition PED Keys takes place 
+ when an HSM Partition is created (on a SafeNet HSM it is always possible to create at least one Partition -- more 
+ may be possible, depending upon the configuration that you initially purchased, 
+ or upon licensing/capability update packages that you might later choose 
+ to purchase and apply) 
+
+. 
+ Again, Partition backup is an opportunity to create more duplicate black 
+ PED Keys, or to cause a newly-created Partition to share an authentication 
+ secret that is already used on other HSMs' Partitions.</p>
+        <p>You will also require additional PED Keys if you decide to use the MofN security feature. </p>
+        <p>The numbers of PED Keys that you will need for your situation are discussed in much greater detail at <a href="../ped_keys/how_many_ped-keys_do_i_need.htm" class="MCXref xref">How Many PED Keys Do I Need?</a>.</p>
+        <h3>Physical Identification of PED Keys</h3>
+        <p>This section is a few suggestions for your handling of PED Keys. Naturally 
+ you should be guided primarily by your organization's security policies.</p>
+        <p>As indicated above, you might wish to physically mark your PED Keys, 
+ in order to help keep track of them. Colored, blank tags are suggested, 
+ in addition to the provided stickers, though you could use any identifier 
+ that does not interfere with the operation of the PED Key. At a minimum, 
+ in an operational environment, you should have at least one working set 
+ and one full backup set, and a way to tell them apart. </p>
+        <p>If multiple personnel will need access to the HSM, you might provide 
+ duplicates of some or all PED Keys that are associated with a particular 
+ HSM. It would be helpful to number them, or to write the name or title 
+ of the person who will hold each duplicate, to ease tracking. Your organization's 
+ security policy might have requirements in that regard.</p>
+        <p>If you have multiple HSMs or groups of HSMs in your organization, a 
+ thoughtful labeling convention can ease the task of tracking and differentiating 
+ the various PED Keys and key-holder personnel.</p>
+        <p>If you invoke the optional MofN security feature (see <a href="../ped_keys/mofn_using.htm" class="MCXref xref">Using MofN</a> ), you could have multiple sets of several PED Keys 
+ (containing the secret splits for SO, or for the Partition Owner, or for Domain, etc.) that 
+ might require unique visible identification. Possibly one person might 
+ be the designated holder of MofN secret shares belonging to more than 
+ one HSM in your company. If that person is carrying several PED Keys, 
+ it would be convenient to see, at a glance, which PED Key belonged to 
+ which MofN set so as to avoid making accidental bad login attempts due 
+ to mix-ups of PED Keys.</p>
+        <p>For example, if each department in your company had a SafeNet HSM, and 
+ you were using MofN feature, your key tags might be labeled something 
+ like:</p>
+        <p>
+            <img src="../../Resources/Images/ped/key-tag_blue.jpg" style="border: none;width: 104px;height: 45px;margin-left: 0px;margin-right: 12px;margin-top: 0px;margin-bottom: 12px;border-style: none;float: left;border-style: none;float: left;" width="104" height="45" align="left" border="0" /><span style="color: #000080;">Accounts Receivable<br />SO #4 of 3of5</span>
+        </p>
+        <p>&#160;</p>
+        <p>So this would be Security Officer (SO) key-share number 4, of a 5-key 
+ MofN set that requires at least three key-holders to be present to unlock 
+ the administration functions of that HSM in the Accounts Receivable department. You might prefer to not mention the "N" quantity, so that an attacker would not know how many more he/she needed to acquire.</p>
+        <p>Alternatively, you might use something obscure like:</p>
+        <p>
+            <img src="../../Resources/Images/ped/key-tag_blue.jpg" style="border: none;width: 104px;height: 45px;margin-left: 0px;margin-right: 12px;margin-top: 0px;margin-bottom: 12px;border-style: none;float: left;border-style: none;float: left;" width="104" height="45" align="left" border="0" /><span style="color: #000080;">AR4</span>
+        </p>
+        <p>&#160;</p>
+        <p>which could be a code representing a more descriptive entry that you 
+ would keep in a log book or in a database. Either way, by looking at the 
+ tag you can quickly find out which of various PED Keys you are currently 
+ holding.</p>
+        <p>Obviously, these are just basic suggestions, and you can use any identifying 
+ scheme that works for you.</p>
+        <h3>Using PED Keys</h3>
+        <p>This is described in detail at <a href="how_to_use_a_ped.htm" class="MCXref xref">How to Use a SafeNet PED</a>. </p>
+        <p>Briefly, when you perform an HSM operation that requires a PED Key, 
+ you should already have the PED connected to the HSM or appliance.</p>
+        <p>When the command is issued, the system tells you when to look to the  PED.</p>
+        <p>The PED prompts you when to insert various PED Keys, appropriate 
+ to the task. When prompted, insert the indicated PED Key into the connector 
+ at the top of the PED, immediately to the right of the PED cable connection, 
+ then respond to further instructions on the PED display, until control 
+ is returned to the administrative command-line.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

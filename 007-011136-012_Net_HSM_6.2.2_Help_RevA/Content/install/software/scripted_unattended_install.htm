@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Installation Guide|SafeNet Client Software Installation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Scripted / Unattended Installation on Windows</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/List1.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Installation Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="software.htm">SafeNet Client Software Installation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Scripted / Unattended Installation on Windows</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">Scripted / Unattended Installation on Windows</h2>
+        <p>The Windows software installation section describes interactive installation on Windows systems, using the graphical, interactive installer. This section describes how to perform unattended or scripted installations on Windows platforms. </p>
+        <h3>Installing the SafeNet Client For All SafeNet Products</h3>
+        <p>From the location of <b>Luna Client.msi</b>, run the following command:</p>
+        <p class="code"><b>msiexec.exe /i Luna Client.msi /l lunaclient_wininstall.log /quiet addlocal=all /qn</b>
+        </p>
+        <p>The setting <b>/l lunaclient_wininstall.log</b> is optional and will place the installation logs into the file <b>lunaclient_wininstall.log</b>.</p>
+        <h5>Windows security popup on each SafeNet product driver install</h5>
+        <p>The windows security notice (below) appears because “SafeNet, Inc.” is not among the trusted publishers on your computer:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If you check the <b>Always trust software from...</b> checkbox and then click on the <b>Install</b> button the dialog will not appear on future installations, on that computer.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If you do not check the <b>Always trust software from...</b> checkbox then you might see the dialog three times, once for each of the three SafeNet products (SafeNet PCIe HSM, SafeNet USB HSM and SafeNet Remote Backup HSM) that install a driver on your computer.</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/install/driver_install_confirm.png" />
+        </p>
+        <p>This is a Windows security requirement, introduced with Windows 2008, and is not under our control. Installing marks the publisher (in this case, SafeNet, Inc.) as trusted for future installations.</p>
+        <h3>Installing the SafeNet Client For SafeNet Network HSM</h3>
+        <p>From the location of <b>Luna Client.msi</b> run the following commands:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>	Install default SafeNet Client components for SafeNet Network HSM</p>
+        <p class="listLevel1"><b>msiexec.exe /i Luna Client.msi /l lunaclient_wininstall.log /quiet addlocal=SA /qn</b>
+        </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Install all SafeNet Client components for SafeNet Network HSM</p>
+        <p class="listLevel1"><b>msiexec.exe /i Luna Client.msi /l lunaclient_wininstall.log /quiet addlocal=SA, SA_CSP_KSP, SA_JSP, SA_SDK, SA_JCProv, SA_LDPC /qn</b>
+        </p>
+        <p>&#160;</p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col class="Column-Column1" style="width: 91px;" />
+            <col class="Column-Column1" style="width: 299px;" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Product or component &#160;&#160;</th>
+                    <th class="HeadD-Column1-Header1">Description &#160;&#160;&#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">SA_CSP_KSP &#160;&#160;</td>
+                    <td class="BodyD-Column1-Body1">Install SafeNet CSP and KSP components &#160;&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">SA_JSP &#160;&#160;</td>
+                    <td class="BodyD-Column1-Body1">Install SafeNet JSP component &#160;&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">SA_SDK &#160;&#160;</td>
+                    <td class="BodyD-Column1-Body1">Install SafeNet SDK component &#160;&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">SA_JCProv &#160;&#160;</td>
+                    <td class="BodyA-Column1-Body1">Install SafeNet JCPROV component</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you wish to install only some of the components, just specify the ones you want after the product name (SA in this example).</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The Windows security warning mentioned in section 1 (above)  does not appear when only SafeNet Network HSM is installed, because no driver is require. It appears only if you also install SafeNet PCIe HSM, or SafeNet USB HSM, or SafeNet Backup HSM on the client computer.</p>
+        <h3>Installing the Luna Client for SafeNet PCIe HSM</h3>
+        <p>From the location of <b>Luna Client.msi</b> run the following commands:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Install default Luna Client components for SafeNet PCIe HSM</p>
+        <p class="listLevel1"><b>msiexec.exe /i Luna Client.msi /l lunaclient_wininstall.log /quiet addlocal=PCI /qn</b>
+        </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Install all Luna Client components for SafeNet PCIe HSM</p>
+        <p class="listLevel1"><b>msiexec.exe /i Luna Client.msi /l lunaclient_wininstall.log /quiet addlocal=PCI, PCI_CSP_KSP, PCI_JSP, PCI_SDK, PCI_JCProv, PCI_SNMP /qn</b>
+        </p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col class="Column-Column1" style="width: 91px;" />
+            <col class="Column-Column1" style="width: 299px;" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Product or component &#160;&#160;</th>
+                    <th class="HeadD-Column1-Header1">Description &#160;&#160;&#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">PCI_CSP_KSP &#160;&#160;</td>
+                    <td class="BodyD-Column1-Body1">Install Luna CSP and KSP components &#160;&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">PCI_JSP &#160;&#160;</td>
+                    <td class="BodyD-Column1-Body1">Install Luna JSP component &#160;&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">PCI_SDK &#160;&#160;</td>
+                    <td class="BodyD-Column1-Body1">Install Luna SDK component &#160;&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">PCI_JCProv &#160;&#160;</td>
+                    <td class="BodyD-Column1-Body1">Install Luna JCPROV component</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">PCI_SNMP</td>
+                    <td class="BodyA-Column1-Body1">Install Luna SNMP subagent component &#160;&#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The Windows security warning mentioned in section 1 (above) also appears when you install SafeNet PCIe HSM, unless you have already accepted a driver installation, and therefore recognized SafeNet, Inc. as a trusted publisher.</p>
+        <h3>Installing the Luna Client For SafeNet USB HSM</h3>
+        <p>From the location of <b>Luna Client.msi</b> run the following command:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Install default Luna Client components for SafeNet USB HSM</p>
+        <p class="listLevel1"><b>msiexec.exe /i Luna Client.msi /l lunaclient_wininstall.log /quiet addlocal=G5 /qn</b>
+        </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Install all Luna Client components for SafeNet USB HSM</p>
+        <p class="listLevel1"><b>msiexec.exe /i Luna Client.msi /l lunaclient_wininstall.log /quiet addlocal=G5, G5_CSP_KSP, G5_JSP, G5_SDK, G5_JCProv, G5_SNMP /qn</b>
+        </p>
+        <p> </p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col class="Column-Column1" style="width: 91px;" />
+            <col class="Column-Column1" style="width: 299px;" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">Product or component &#160;&#160;</th>
+                    <th class="HeadD-Column1-Header1">Description &#160;&#160;&#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">G5_CSP_KSP &#160;&#160;</td>
+                    <td class="BodyD-Column1-Body1">Install Luna CSP and KSP components &#160;&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">G5_JSP &#160;&#160;</td>
+                    <td class="BodyD-Column1-Body1">Install Luna JSP component &#160;&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">G5_SDK &#160;&#160;</td>
+                    <td class="BodyD-Column1-Body1">Install Luna SDK component &#160;&#160;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">G5_JCProv &#160;&#160;</td>
+                    <td class="BodyD-Column1-Body1">Install Luna JCPROV component</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1">G5_SNMP</td>
+                    <td class="BodyA-Column1-Body1">Install Luna SNMP subagent component &#160;&#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The Windows security warning mentioned in section 1 (above) also appears when you install SafeNet USB HSM, unless you have already accepted a driver installation, and therefore recognized SafeNet, Inc. as a trusted publisher.</p>
+        <h3>Installing the Luna Client for SafeNet Remote Backup HSM</h3>
+        <p>From the location of <b>Luna Client.msi</b> run the following command:</p>
+        <p class="code"><b>msiexec.exe /i Luna Client.msi /l lunaclient_wininstall.log /quiet addlocal=RB, RB_SNMP /qn</b>
+        </p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 91px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 299px;" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Product or component &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description &#160;&#160;&#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">RB_SNMP</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Install Luna SNMP subagent component &#160;&#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The Windows security mentioned in section 1 (above) also appears when you install SafeNet Remote Backup HSM, unless you have already accepted a driver installation, and therefore recognized SafeNet, Inc. as a trusted publisher.</p>
+        <h3>Installing the Luna Client for Remote PED</h3>
+        <p>From the location of <b>Luna Client.msi</b> run the following command:</p>
+        <p class="code"><b>msiexec.exe /i Luna Client.msi /l lunaclient_wininstall.log /quiet addlocal=RP /qn</b>
+        </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>When msiexec.exe is used to install Luna Client there is no message confirming that the installation has completed. The msiexec.exe utility just returns to the command line when the installation finishes.</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

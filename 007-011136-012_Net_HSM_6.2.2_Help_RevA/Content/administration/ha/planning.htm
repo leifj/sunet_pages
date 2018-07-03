@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|High-Availability (HA) Configuration and Operation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Planning  Your Deployment</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha.htm">High-Availability (HA) Configuration and Operation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Planning  Your Deployment</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Planning  Your Deployment</h2>
+        <p>This section describes the supported configurations and any limitations or constraints to consider when setting up an HA group.</p>
+        <h3>HA Group Members</h3>
+        <p>It is important that all members in an HA group have the same configuration and version. That means that each HA group member must use the same authentication method, either PED-authenticated or password-authenticated, and be at the same software version. Running HA groups with different versions is unsupported. Ensure that HSMs are configured identically to ensure smooth high availability and load balancing operation. SafeNet HSMs come with various key management configurations: cloning mode, key-export mode, etc.  HA functionality is supported with both cloning and Scalable Key Storage variants – provided all members in the group have the same configuration.  Clients automatically and transparently use the correct secure key replication method based on the group’s configuration.</p>
+        <p>It is also critical that all members in an HA group share the same Security Domain role (Red PED key for PED-authenticated devices, or domain password for password-authenticated devices).  The Security Domain defines which HSMs are allowed to share key material. Because HA group members are, by definition, intended to be peers, they must  be in the same Security Domain.</p>
+        <p>The SafeNet HA and load-balancing feature works on a per-client and per-partition bases.  This provides a lot of flexibility.  For example, it is possible to define a different sub-set of HSMs in each client and even in each client’s partitions (in the event that a single client uses multiple partitions).   SafeNet recommends to avoid these complex configurations and to keep the HA topography uniform for an entire HSM.  That is, treat HSM members at the HSM level as atomic and whole.  This simplifies the configuration management associated with the HA feature.</p>
+        <h4>Mix and Match Software Is Not Supported</h4>
+        <p>All SafeNet Network HSM appliances in an HA group must 
+ be at the same revision level. If you have SafeNet Network HSM units at different 
+ version levels, perform updates as necessary, before attempting to create 
+ an HA group -this applies to the system software version, not to the HSM firmware, which             <b>can</b> differ among group members.</p>
+        <h4>Mix and Match Firmware Is Not Recommended</h4>
+        <p>Generally, keep all HA&#160;members at the same firmware version. As well, all members should have the same optional capability updates applied. If mismatches are permitted among members, synchronization might be disrupted if your application attempts to use a mechanism or a capability that not all members support. In the previous section, we indicate that HSM firmware can differ between members of an HA group, but this is not intended for ongoing operation; rather, it allows you to keep all members within a group while you individually update their firmware, to ensure minimal disruption during the updates.</p>
+        <p>While it is possible to have HSMs with different firmware versions within 
+ an HA group, this is not generally recommended. Be aware that the capability of the group (in terms of features 
+ and available algorithms) is that of the member with the oldest firmware.</p>
+        <p>For example, if you had an HA group that included  HSMs with two different firmware versions, then certain capabilities that are 
+ part of the newer firmware would be unavailable to Clients connecting 
+ to the HA group. Specifically, operations that make use of newer cryptographic mechanisms and algorithms would likely fail. The 
+ client's calls might be initially assigned to a newer-firmware HSM and 
+ could therefore appear to work for a time, but if the task was load-balanced 
+ to an HSM that did not support the newer features it would fail. Similarly, 
+ if the newer-firmware HSM dropped out of the group, operations would fail. 
+  
+ Your Clients must not invoke those algorithms because not every member 
+ of the group supports them. The solution is to upgrade the older units 
+ to the most recent firmware and software versions (where possible) or 
+ else to limit clients to only the lowest supported feature set.</p>
+        <h4>HA Group Members Must Not Be on the Same Appliance</h4>
+        <p>In any one HA group, always ensure that member partitions or member PKI tokens (USB-attached SafeNet USB HSMs, or SafeNet CA4/PCM token HSMs in a USB-attached SafeNet DOCK2 card reader) are on different / separate appliances. <b>Do not</b> attempt to include more than one HSM partition or  PKI token (nor one of each) from the same appliance in a single HA group. This is not a supported configuration. Allowing two partitions from one HSM, or a partition from the HSM and an attached HSM (as for PKI), into a single HA&#160;group would defeat the purpose of HA by making the SafeNet appliance a potential single-point-of-failure.</p>
+        <h4>Running HA on a group of Scalable Key Storage SafeNet Network HSM appliances</h4>
+        <p>SIM replication is supported.
+ HA will work, but key replication must be performed manually, that is, key creation in such an environment will fail to replicate.</p>
+        <h4>Running HA on a group of export SafeNet Network HSM appliances</h4>
+        <p>This configuration is supported, although you cannot clone/replicate private keys.</p>
+        <h3>High Availability Group Sizing</h3>
+        <p>As of SafeNet HSM release 6.x, the  high availability function supports the grouping of up to thirty-two members.  However,  the maximum practical group size for your application is driven by a trade-off between performance and the cost of replicating key material across the entire group.   A common practice is to set the group size to N+1 where N is defined by the desired performance per application server(s).  As depicted below, this solution gives the desired performance with a single extra HSM providing the availability requirement.  The number of HSMs per group of application servers varies based on the application use case but, as depicted, groups of three are typical. </p>
+        <p>&#160;</p>
+        <p>
+            <img src="../../Resources/Images/ha/ha_high-avail_cdunn_2.png" />
+        </p>
+        <p>&#160;</p>
+        <p>As performance needs grow beyond the performance capacity of three HSMs, it often makes sense to define a second independent  group of application servers and HSMs to further isolate applications from any single point of failure.  This has the added advantage of facilitating the distribution of HSM and application sets in different data centers.</p>
+        <p>&#160;</p>
+        <p>
+            <img src="../../Resources/Images/ha/ha_high-avail-grow_cdunn_3.png" />
+        </p>
+        <h3>Network Requirements</h3>
+        <p>The network topography of the HA group is generally not important to the proper functioning of the group.  As long as the client has a network path to each member the HA logic will function.   Keep in mind that having a varying range of latencies between the client and each HA member causes a command scheduling bias towards the low-latency members.  It also implies that commands scheduled on the long-latency devices have a larger overall latency associated with each command.  In this case, the command latency is a characteristic of the network; to achieve uniform load distribution ensure that  latencies to each device in the group are similar (or use standby mode). Gigabit Ethernet network connections are recommended.</p>
+        <h3>Upgrading and Redundancy and Rotation</h3>
+        <p>For SafeNet Network HSM HA function we suggest that all SafeNet Network HSM appliances in an 
+ HA group be at the same appliance software and firmware level. The issue 
+ is not about firmware level, per se - what might happen is that a newer 
+ firmware could contain newer algorithms that are not supported in the 
+ replaced firmware. If your client is configured to take advantage of newer/better 
+ algorithms when they become available, it might do so while one member 
+ of an HA group has new firmware, but another member has not yet been 
+ updated, and therefore does not yet support the requested algorithm. The 
+ client might not be able to interpret the resulting imbalance. Therefore, 
+ when you intend to upgrade/update any of the SafeNet Network HSM units in an HA group, 
+ or when you intend to upgrade/update the SafeNet Network HSM Client software, you 
+ might schedule some downtime for your application, if you anticipate a 
+ problem.</p>
+        <p>If the application is so critical that you cannot permit that much scheduled 
+ downtime, then you can set up a second complete set of Client computer 
+ and associated HA group. One set can service the application load while 
+ the other set is being upgraded or otherwise maintained. For such up-time-critical 
+ applications, you might already have such a backup set of Client-plus-HA-group 
+ that you would rotate in and out of service during regular maintenance 
+ windows. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

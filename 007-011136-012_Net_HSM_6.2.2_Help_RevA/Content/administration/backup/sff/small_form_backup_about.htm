@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Backup and Restore HSMs and Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Small Form Factor Backup</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../backup.htm">Backup and Restore HSMs and Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Small Form Factor Backup</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Small Form Factor Backup</h2>
+        <p>The small form factor (SFF) backup feature is available for PED-authenticated SafeNet HSMs only. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span> A SafeNet PED is required for SFF backup. A SafeNet PED with Remote capability is recommended for SFF backups. See the Customer Release Notes for more information.</p>
+        <h3>Characteristics</h3>
+        <p><a name="kanchor59"></a>Small form factor backup is mediated by SafeNet PED and uses SafeNet eToken 7300 USB devices as the repository for archived cryptographic objects. </p>
+        <p>
+            <img src="../../../Resources/Images/ped/etoken_7300_black 150x90.jpg" />
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The eToken 7300 is Common Criteria validated and tamper-evident.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SFF backup is supported for SafeNet Network HSM and SafeNet PCIe HSM.  Small Form-Factor Backup is not supported for SafeNet USB HSM (no capability update file is available). To back up a SafeNet USB HSM, clone the contents to another SafeNet USB HSM.) </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>One eToken 7300 can back up one HSM partition. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Backup and restore can be performed to or from an eToken 7300 inserted into a locally-connected or remotely-connected SafeNet PED (via PedServer). &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A capability update file (CUF) must be purchased and applied to each HSM (serial number specific) that is to use the SFF Backup feature. &#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Using SFF backup imposes some constraints, and affects other features like HA. See <a href="sff_and_cloning_use_cases.htm" class="MCXref xref">Cloning and SFF Backup Option Use Cases</a> for more detailed information. </p>
+        <p>
+            <img src="../../../Resources/Images/ped_hw/lunaped-upright_angled.jpg" />
+        </p>
+        <h3>Required Elements &#160;</h3>
+        <p>SFF backup requires:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SafeNet Software version 5.4.0 or newer</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HSM firmware version 6.21.0 or newer</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A SafeNet PED with firmware version 2.6.0-6 or newer. A remote PED&#160;is recommended.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Source SafeNet HSM must be cloning type, only - not applicable to Key Export (KE) HSMs </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Backup to a remotely located SFF backup requires a remote PED - a local-only PED is not field-upgradable to remote capability</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HSM must have the SFF backup capability update applied (this is a purchased option) </p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>The SFF backup capability update is a destructive change to your HSM, meaning that the upgrade enforces HSM initialization and all contents will be lost. Back up any important keys or objects before the upgrade. You can recreate your partition(s) and restore your objects after the HSM has been re-initialized, following the application of the SFF backup capability upgrade.</p>
+        <h3>Configuration &#160;</h3>
+        <p> Small Form-Factor Backup requires that the SafeNet configuration file <b>crystoki.ini</b> (Windows) or <b>Chrystoki.conf</b> (Linux/UNIX) must have two specific settings: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>CommandTimeOutPedSet = 720000</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>PEDTimeout2 = 200000 </p>
+        <p>Newly installed/created SafeNet HSM client configuration files have the necessary entries, with the correct values, but pre-existing clients might be missing an entry or might have an insufficient value assigned.</p>
+        <h5>To configure Linux/UNIX clients</h5>
+        <p>On Linux clients  the <b>Chrystoki.conf</b> file is saved upon SafeNet HSM client un-installation, and re-used on later installation. Manually run the following commands if needed:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>If <b>CommandTimeOutPedSet</b> is missing in the Luna section run this command to add it:</p><pre class="listLevel1" xml:space="preserve">/usr/safenet/lunaclient/bin/configurator setValue -s Luna -e CommandTimeOutPedSet -v 720000
+
+</pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If <b>PedTimeout2</b> value is smaller than 200000 run this command:</p><pre class="listLevel1">/usr/safenet/lunaclient/bin/configurator setValue -s Luna -e PEDTimeout2 -v 200000<br /><br /></pre>
+        <h5>To configure Windows clients</h5>
+        <p>On Windows clients, already having <b>crystoki.ini</b>, any new entry provided by the newer release of the SafeNet HSM client is added to the file. But existing entry values are not modified. Manually edit the <b>crystoki.ini</b> file and modify the needed entries as follows:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Set <b>CommandTimeOutPedSet</b>  to 720000</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Set <b>PEDTimeout</b>  to 200000. </p>
+        <h3>To Switch Off Small Form-Factor Backup </h3>
+        <p>If you have concerns about the physical security of your HSMs, and wish to ensure that sensitive application partition contents cannot be backed-up onto a very portable, concealable SFF token, then simply do not purchase or apply a Small Form-Factor capability update for that HSM. <br /></p>
+        <p>If the SFF Capability Update has been installed, and for any reason you wish to disable the ability to backup HSM content, or application partition objects, to a Small Form-Factor device, you must disable HSM&#160;Policy 38. </p>
+        <p class="warning" data-mc-autonum="&lt;b&gt;WARNING!&lt;/b&gt; &#160;"><span class="autonumber"><span><b>WARNING!</b> &#160;</span></span>Disabling SFF is HSM-wide and is destructive, meaning that HSM contents and partitions are lost. Re-initialization is required, and lost objects must be re-created or must be restored from a SafeNet Backup HSM or by synchronization in an HA group. &#160;</p>
+        <h5>To disable the Small Form-Factor feature</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Enter the following command. You must be logged in as the HSM&#160;SO.</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt;<b>hsm changepolicy -policy 38 -value 0</b> <![CDATA[ ]]></p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

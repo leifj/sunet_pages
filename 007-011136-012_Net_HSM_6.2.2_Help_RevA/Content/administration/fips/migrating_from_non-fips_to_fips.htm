@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Standards and Validations">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Migrating from Non-FIPS HSM to FIPS HSM &#160;</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="standards_and_validations.htm">Standards and Validations</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Migrating from Non-FIPS HSM to FIPS HSM</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Migrating from Non-FIPS HSM to FIPS HSM &#160;</h2>
+        <p>
+            <head>
+            </head>
+        </p>
+        <body>
+            <p>If you have objects stored in an application partition of an HSM with FIPS mode off, you might encounter a situation where you need to begin using those objects on an HSM with FIPS mode in force. Depending on the HSM and other factors, you have some options. </p>
+            <p>One approach is to clone the needed objects to a different HSM that has the FIPS mode policy set on (or to archive (back up) the objects onto a Backup HSM and restore them onto the second HSM). </p>
+            <p>Another option, requiring fewer HSMs, is to change the policy on the current HSM from off to on. The policy change is destructive, meaning that all your objects would be destroyed. Therefore, you would need to archive (back up) the application partition contents before changing the HSM policy on the primary HSM, then create a new partition on that HSM, after the policy change, and restore the objects into that partition.</p>
+            <p>The exact sequence and commands to perform that operation might vary, depending on circumstances and on the firmware level of the HSM. As well, the commands are slightly different if you are using lunash on SafeNet Network HSM (for a legacy partition), or if you are using lunacm to perform the task on a SafeNet PCIe HSM or on an NTLS-connected SafeNet Network HSM PPSO partition. </p>
+            <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>Before migrating to FIPS mode, check whether your Cryptoki application and the objects it uses for its crypto operations are suitable to run in FIPS mode for the particular version of SafeNet HSM firmware you are using. You can confirm that an application works in FIPS mode by setting up a test environment with a development HSM configured in FIPS mode. Specifically you will need to confirm that your application uses only FIPS approved mechanisms and key sizes. &#160;(See <a href="../../sdk/mechanisms/mechanisms.htm" class="MCXref xref">Supported Mechanisms</a>.)<br /><br />Be aware that FIPS object type and object size restrictions vary from firmware version to firmware version, usually becoming more restrictive in newer releases. If our documentation said that a particular mechanism or object type/size was acceptable in FIPS-mode for firmware that accompanied a previous release, that might no longer be the case if you are updating to a more current firmware version.</p>
+            <p>&#160;</p>
+            <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+                <col class="TableStyle-Page-Column-Column1" style="width: 144px;" />
+                <col class="TableStyle-Page-Column-Column1" />
+                <col class="TableStyle-Page-Column-Column1" />
+                <col class="TableStyle-Page-Column-Column1" />
+                <col class="TableStyle-Page-Column-Column1" />
+                <thead>
+                    <tr class="TableStyle-Page-Head-Header1">
+                        <th class="TableStyle-Page-HeadE-Column1-Header1">Start&#160;with&#160;objects <br />in partition&#160;on <br />Non-FIPS HSM</th>
+                        <th class="TableStyle-Page-HeadE-Column1-Header1">End with objects <br />in partition on <br />FIPS HSM</th>
+                        <th class="TableStyle-Page-HeadE-Column1-Header1">Lunash</th>
+                        <th class="TableStyle-Page-HeadE-Column1-Header1">Lunacm</th>
+                        <th class="TableStyle-Page-HeadD-Column1-Header1">&#160;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-Page-Body-Body1">
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">SafeNet USB HSM</td>
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">A different SafeNet USB HSM - (Backup HSM is not supported with SafeNet USB HSM)<br /></td>
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">n/a</td>
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">- Clone the FIPS-approved objects individually from the HSM with FIPS policy OFF to the HSM&#160;with FIPS policy ON</td>
+                        <td class="TableStyle-Page-BodyD-Column1-Body1">&#160;</td>
+                    </tr>
+                    <tr class="TableStyle-Page-Body-Body1">
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">SafeNet PCIe HSM &#160;<br /></td>
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">A different SafeNet PCIe HSM card in the same host </td>
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">n/a</td>
+                        <td class="TableStyle-Page-BodyE-Column1-Body1"> - Clone the FIPS-approved objects individually from the HSM with FIPS policy OFF to the HSM&#160;with FIPS policy ON</td>
+                        <td class="TableStyle-Page-BodyD-Column1-Body1">&#160;</td>
+                    </tr>
+                    <tr class="TableStyle-Page-Body-Body1">
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">SafeNet PCIe HSM &#160;<br /></td>
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">The same SafeNet PCIe HSM card with the policy changed</td>
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">n/a</td>
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">
+                            <p>  - note the HSM and partition settings before proceeding, so you can replicate them after the change to FIPS mode &#160;<br /> - list the objects on the source partition &#160;<br /> - for releases earlier than 6.0, review the "Mechanisms" chapter of the "SDK Reference Guide", to determine which (if any) objects on the source partition are not FIPS-approved.<br /> - for releases earlier than 6.0, delete from the source partition any objects that are not FIPS approved; you will no longer be able to store or use them when the HSM is in FIPS mode &#160;<br /> - Archive (back up) the  objects from the primary HSM, with FIPS policy OFF, to a SafeNet Backup HSM &#160;<br /> - Switch the FIPS policy of the primary HSM to ON (which destroys the partition and all objects on the HSM) &#160;<br /> - re-initialize the HSM <br /> - create a new partition on the primary HSM &#160;<br /> - Restore all of the FIPS-acceptable objects from the backup HSM to the new partition on the HSM&#160;with FIPS policy ON <br /> - begin using FIPS-acceptable mechanisms to operate on/with the objects in the new partition &#160;</p>
+                        </td>
+                        <td class="TableStyle-Page-BodyD-Column1-Body1">&#160;</td>
+                    </tr>
+                    <tr class="TableStyle-Page-Body-Body1">
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">SafeNet Network HSM<br />PPSO partition &#160;</td>
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">A PPSO partition on the same SafeNet Network HSM with the policy changed &#160;</td>
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">   - note the HSM settings before proceeding, so you can replicate them after the change to FIPS mode &#160;<br /> [continue at client in lunacm] ======&gt;&gt; &#160;<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> - Switch the FIPS policy of the primary HSM to ON (which destroys the partition and all objects on the HSM) &#160;<br /> - re-initialize the HSM <br />- create a new partition on the primary HSM &#160;<br /> - restore client/partition assignments &#160;<br />  [conclude at client in lunacm] ======&gt;&gt; &#160;</td>
+                        <td class="TableStyle-Page-BodyE-Column1-Body1">
+                            <p><![CDATA[   ]]><br /><br /><br /><br /><br /> - note the partition settings before proceeding, so you can replicate them after the change to FIPS mode &#160;<br /> - list the objects on the source partition &#160;<br /> - review the "Mechanisms" chapter of the "SDK Reference Guide", to determine which (if any) objects on the source partition are not FIPS-approved.<br /> - delete from the source partition any objects that are not FIPS approved; you will no longer be able to store or use them when the HSM is in FIPS mode <br />&#160;- Archive (back up) the  objects from the source partition (on the HSM with FIPS policy OFF) to a SafeNet Backup HSM &#160;<br />&lt;&lt;====== &#160;[continue at SafeNet Network HSM, in lunash]<br /><br /><br /><br /><br /><br /><br /><br /><br /> <br />- Restore all of the FIPS-acceptable objects from the backup HSM to the new partition on the HSM&#160;with FIPS policy ON <br /> - begin using FIPS-acceptable mechanisms to operate on/with the objects in the new partition &#160;</p>
+                        </td>
+                        <td class="TableStyle-Page-BodyD-Column1-Body1">&#160;</td>
+                    </tr>
+                    <tr class="TableStyle-Page-Body-Body1">
+                        <td class="TableStyle-Page-BodyB-Column1-Body1">SafeNet Network HSM<br />legacy partition &#160;</td>
+                        <td class="TableStyle-Page-BodyB-Column1-Body1">A legacy partition on the same SafeNet Network HSM with the policy changed &#160;</td>
+                        <td class="TableStyle-Page-BodyB-Column1-Body1">
+                            <p> - note the HSM and partition settings before proceeding, so you can replicate them after the change to FIPS mode &#160;<br />- Archive (back up) the objects from the primary HSM with FIPS policy OFF to a SafeNet Backup HSM &#160;<br /> - Switch the FIPS policy of the primary HSM to ON (which destroys the partition and all objects on the HSM &#160;<br /> - re-initialize the HSM<br /> - create a new partition on the primary HSM &#160;<br /> - Restore all of the FIPS-acceptable objects from the backup HSM to the new partition on the HSM&#160;with FIPS policy ON<br /> - restore client/partition assignments &#160; <br /> - begin using FIPS-acceptable mechanisms to operate on/with the objects in the new partition &#160;</p>
+                        </td>
+                        <td class="TableStyle-Page-BodyB-Column1-Body1">n/a</td>
+                        <td class="TableStyle-Page-BodyA-Column1-Body1">&#160;</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>&#160;</p>
+            <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>After the HSM has been set to FIPS mode, only FIPS-approved objects, as allowed by the HSM's current version of firmware, can be restored onto the new partition. <br /><br />For the KE (Key Export) HSM configuration, private keys cannot be backed up/restored.  They can only be unwrapped back onto the new FIPS-mode partitions.</p>
+            <p>&#160;</p>
+            <h3>SafeNet Network HSM legacy application partition</h3>
+            <p>The following instructions are for a legacy partition on a SafeNet Network HSM, because the legacy partition is administratively owned by the HSM SO, and all administrative commands are performed via LunaSH (lunash). </p>
+            <p>The following instructions assume that a SafeNet Backup HSM is connected locally to the SafeNet Network HSM appliance. If your SafeNet Backup HSM is located remotely from the SafeNet Network HSM, then you will need to modify these instructions by referring to additional information in <a href="../backup/remote_app_partition.htm" class="MCXref xref">Remote Application-Partition Backup and Restore Using the Backup HSM</a>. </p>
+            <p>The following instructions assume that you have a number of objects on the application partition that you have been using while the HSM is non-FIPS, and that you wish to continue using after you switch the HSM to FIPS mode.</p>
+            <p>For illustrative purposes, the example source partition in the following instructions includes a few objects that are not permitted in an HSM running in FIPS mode. &#160;</p>
+            <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>View the HSM information for the SafeNet HSM that contains the source partition. Confirm that the HSM is "...NOT in FIPS 140-2 approved operation mode" before the HSM is switched to FIPS mode.  
+</p><pre class="listLevel1" xml:space="preserve">[192.20.9.127] lunash:&gt;hsm show
+   Appliance Details:
+   ==================
+   Software Version:                6.0.0-39
+
+   HSM Details:
+   ============
+   HSM Label:                          JR
+   Serial #:                           384
+   Firmware:                           6.10.6
+   HSM Model:                          K6Base
+   Authentication Method:              PED keys
+   HSM Admin login status:             Logged In
+   HSM Admin login attempts left:      3 before HSM zeroization!
+   RPV Initialized:                    Yes
+   Audit Role Initialized:             Yes
+   Remote Login Initialized:           No
+   Manually Zeroized:                  No
+
+   Partitions created on HSM:
+   ==============================
+   Partition:            894069505, Name: mylegacypar1
+
+   Number of partitions allowed:        20
+   Number of partitions created:        1
+
+   FIPS 140-2 Operation:
+   =====================
+   The HSM is <span style="background-color: #ffff00;">NOT</span> in FIPS 140-2 approved operation mode.
+
+   HSM Storage Information:
+   ========================
+   Maximum HSM Storage Space (Bytes):   2097152
+   Space In Use (Bytes):                104857
+   Free Space Left (Bytes):             1992295
+
+Command Result : 0 (Success)
+[192.20.9.127] lunash:&gt;
+</pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>View the the policy settings of the non-FIPS HSM partition that is to be backed up, so that you can reproduce the settings in the newly-created partition after switching to FIPS mode.</p><pre class="listLevel1" xml:space="preserve">[192.20.9.127] lunash:&gt;partition showpolicies -partition mylegacypar1
+
+   Partition Name:                            mylegacypar1
+   Partition SN:                              384013
+   Partition Label:                           MyLegacyPar1
+   The following capabilities describe this partition and can
+   never be changed.
+
+   Description                              Value
+   ===========                              =====
+   Enable private key cloning               Allowed
+   Enable private key wrapping              Disallowed
+   Enable private key unwrapping            Allowed
+   Enable private key masking               Disallowed
+   Enable secret key cloning                Allowed
+   Enable secret key wrapping               Allowed
+   Enable secret key unwrapping             Allowed
+   Enable secret key masking                Disallowed
+   Enable multipurpose keys                 Allowed
+   Enable changing key attributes           Allowed
+   Enable PED use without challenge         Allowed
+   Allow failed challenge responses         Allowed
+   Enable operation without RSA blinding    Allowed
+   Enable signing with non-local keys       Allowed
+   Enable raw RSA operations                Allowed
+   Max failed user logins allowed           10
+   Enable high availability recovery        Allowed
+   Enable activation                        Allowed
+   Enable auto-activation                   Allowed
+   Minimum pin length (inverted: 255 - min) 248
+   Maximum pin length                       255
+   Enable Key Management Functions          Allowed
+   Enable RSA signing without confirmation  Allowed
+   Enable Remote Authentication             Allowed
+&#160;  Enable private key unmasking             Allowed
+   Enable secret key unmasking              Allowed
+
+
+   The following policies are set due to current configuration
+   of this partition and may not be altered directly by the
+   user.
+
+   Description                              Value
+   ===========                              =====
+   Challenge for authentication not needed  False
+
+
+   The following policies describe the current configuration
+   of this partition and may be changed by the HSM Administrator.
+
+   Description                              Value        Code
+   ===========                              =====        ====
+   Allow private key cloning                On           0
+   Allow private key unwrapping             On           2
+   Allow secret key cloning                 On           4
+   Allow secret key wrapping                On           5
+   Allow secret key unwrapping              On           6
+   Allow multipurpose keys                  On           10
+   Allow changing key attributes            On           11
+   Ignore failed challenge responses        On           15
+   Operate without RSA blinding             On           16
+   Allow signing with non-local keys        On           17
+   Allow raw RSA operations                 On           18
+   Max failed user logins allowed           10           20
+   Allow high availability recovery         On           21
+   Allow activation                         On           22
+   Allow auto-activation                    On           23
+   Minimum pin length (inverted: 255 - min) 248          25
+   Maximum pin length                       255          26
+   Allow Key Management Functions           On           28
+   Perform RSA signing without confirmation On           29
+   Allow Remote Authentication              On           30
+   Allow private key unmasking              On           31
+   Allow secret key unmasking               On           32
+
+
+
+Command Result : 0 (Success)
+[172.20.9.127] lunash:&gt;
+
+</pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use <b>partition showcontents</b> command to view the contents of the non-FIPS HSM partition to be backed up. Type: </p><pre class="listLevel1" xml:space="preserve"> 
+[192.20.9.127] lunash:&gt;partition showcontents -partition mylegacypar1 -password userpin
+
+   Partition Name:                            mylegacypar1
+   Partition SN:                              894069505
+   Partition Label:                           MyLegacyPar1
+   
+   Storage (Bytes): Total=102701, Used=2436, Free=100265
+   Number objects:  7
+
+   Object Label:  Generated AES Key
+   Object Type:   Symmetric Key
+   Object Handle: 20
+
+   Object Label:  X9_62_prime256v1(P-256)+ ECDSA Public Key
+   Object Type:   Public Key
+   Object Handle: 21
+
+   Object Label:  RSA 186-3 Aux Primes 2048bit Private Key
+   Object Type:   Private Key
+   Object Handle: 28
+
+   Object Label:  Generated DES3 Key
+   Object Type:   Symmetric Key
+   Object Handle: 31
+
+   Object Label:  X9_62_prime256v1(P-256)+ ECDSA Private Key
+   Object Type:   Private Key
+   Object Handle: 32
+
+   Object Label:  RSA 186-3 Aux Primes 2048bit Public Key
+   Object Type:   Public Key
+   Object Handle: 33
+
+   Object Label:  User Private RSA Key5-1024
+   Object Type:   Private Key
+   Object Handle: 66 &#160;
+
+
+   Object Label:  User Public RSA Key5-1024
+   Object Type:   Public Key
+   Object Handle: 65
+
+   
+
+Command Result : 0 (Success)
+[192.20.9.127] lunash:&gt;</pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Check the information of the Backup HSM, as you will need to use its serial number in the backup command: </p><pre class="listLevel1" xml:space="preserve">[192.20.9.127] lunash:&gt;token backup list
+
+   Token Details:
+   ============
+   Token Label:                        G5Backkup
+   Slot:                               5
+   Serial #:                           475292
+   Firmware:                           6.0.8
+   HSM Model:                          G5Backup
+
+
+Command Result : 0 (Success)
+
+[192.20.9.127] lunash:&gt;</pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Backup the contents of the non-FIPS partition to the SafeNet Backup HSM: </p><pre class="listLevel1" xml:space="preserve">[192.20.9.127] lunash:&gt;partition backup -partition mylegacypar1 -password userpin -serial 475292 -tokenpar mypartitionbackup1
+
+Warning:  You will need to connect Luna PED to the SafeNet Backup HSM to complete this operation.
+          You may use the same Luna PED that you used for SafeNet Network HSM.
+          Please type 'proceed' and hit &lt;enter&gt; when you are ready to proceed&gt;  proceed
+Luna PED operation required to create a partition - use User or Partition Owner (black) PED key.
+Luna PED operation required to login to user on token - use User or Partition Owner (black) PED key.
+Luna PED operation required to generate cloning domain on the partition - use Domain (red) PED key.
+
+
+  Please enter the password for the HSM user partition:
+  &gt; *******
+
+Warning:  You will need to connect Luna PED to the SafeNet Backup HSM to complete this operation.
+          You may use the same Luna PED that you used for SafeNet Network HSM.
+
+          Please type 'proceed' and hit &lt;enter&gt; when you are ready to proceed&gt;  proceed
+
+
+Luna PED operation required to login to token - use token Security Officer (blue) PED key.
+
+Luna PED operation required to create a partition - use User or Partition Owner (black) PED key.
+
+Luna PED operation required to login to user on token - use User or Partition Owner (black) PED key.
+
+Luna PED operation required to generate cloning domain on the partition - use Domain (red) PED key.
+
+Object "Generated AES Key" (handle 20) cloned to handle 242 on target
+Object "X9_62_prime256v1(P-256)+ ECDSA Public Key" (handle 21) cloned to handle 243 on target
+Object "RSA 186-3 Aux Primes 2048bit Private Key" (handle 28) cloned to handle 244 on target
+Object "Generated DES3 Key" (handle 31) cloned to handle 247 on target
+Object "X9_62_prime256v1(P-256)+ ECDSA Private Key" (handle 32) cloned to handle 248 on target
+Object "RSA 186-3 Aux Primes 2048bit Public Key" (handle 33) cloned to handle 249 on target
+Object "User Private RSA Key5-1024" (handle 66) cloned to handle 87 on target</pre><pre class="listLevel1" xml:space="preserve">Object "User Public RSA Key5-1024" (handle 65) cloned to handle 156 on target
+'partition backup' successful.
+
+Command Result : 0 (Success)
+[192.20.9.127] lunash:&gt;
+</pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Log into the HSM as SO, so that you can change an HSM policy:</p><pre class="listLevel1">[172.20.9.127] lunash:&gt;hsm login
+
+Luna PED operation required to login as HSM Administrator - use Security Officer (blue) PED key.
+
+'hsm login' successful.
+
+Command Result : 0 (Success)
+[192.20.9.127] lunash:&gt;
+</pre>
+            <p> </p>
+            <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Verify the HSM  policies before performing the change:</p><pre class="listLevel1">[192.20.9.127] lunash:&gt;hsm showpolicies
+
+
+   HSM Label:   JR
+   Serial #:    384
+   Firmware:    6.10.6
+
+   The following capabilities describe this HSM, and cannot be altered
+   except via firmware or capability updates.
+
+   Description                              Value
+   ===========                              =====
+   Enable PIN-based authentication          Disallowed
+   Enable PED-based authentication          Allowed
+   Performance level                        15
+   Enable domestic mechanisms &amp; key sizes   Allowed
+   Enable masking                           Allowed
+   Enable cloning                           Allowed
+   Enable special cloning certificate       Disallowed
+   Enable full (non-backup) functionality   Allowed
+   Enable non-FIPS algorithms               Allowed
+   Enable SO reset of partition PIN         Allowed
+   Enable network replication               Allowed
+   Enable Korean Algorithms                 Disallowed
+   FIPS evaluated                           Disallowed
+   Manufacturing Token                      Disallowed
+   Enable Remote Authentication             Allowed
+   Enable forcing user PIN change           Allowed
+   Enable portable masking key              Allowed
+   Enable partition groups                  Disallowed
+   Enable remote PED usage                  Allowed
+   Enable External Storage of MTK Split     Allowed
+   HSM non-volatile storage space           2097152
+   Enable HA mode CGX                       Disallowed
+   Enable Acceleration                      Allowed
+   Enable unmasking                         Disallowed
+   Enable FW5 compatibility mode            Disallowed
+   Unsupported                              Disallowed
+   Unsupported                              Disallowed
+   Enable ECIES support                     Disallowed
+
+
+   The following policies are set due to current configuration of
+   this HSM and cannot be altered directly by the user.
+
+   Description                              Value
+   ===========                              =====
+   PED-based authentication                 True
+   Store MTK Split Externally               False
+
+
+   The following policies describe the current configuration of
+   this HSM and may be changed by the HSM Administrator.
+
+   Changing policies marked "destructive" will zeroize (erase
+   completely) the entire HSM.
+
+   Description                              Value        Code      Destructive
+   ===========                              =====        ====      ===========
+   Allow masking                            On           6         Yes
+   Allow cloning                            On           7         Yes
+   Allow non-FIPS algorithms                <span style="background-color: #ffff00;">On</span>           12        Yes
+   SO can reset partition PIN               On           15        Yes
+   Allow network replication                On           16        No
+   Allow Remote Authentication              On           20        Yes
+   Force user PIN change after set/reset    Off           21        No
+   Allow offboard storage                   On           22        Yes
+   Allow remote PED usage                   On           25        No
+   Allow Acceleration                       On           29        Yes
+
+
+
+Command Result : 0 (Success)
+
+[192.20.9.127] lunash:&gt;
+</pre>
+            <p class="listLevel1">&#160;</p>
+            <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Change (destructive) HSM Policy 12 from 1 to 0, setting FIPS mode ON for the HSM:</p><pre class="listLevel1">[192.20.9.127] lunash:&gt;hsm changepolicy -policy 12 -value 0
+CAUTION:  Are you sure you wish to change the destructive
+          policy named:
+            Allow non-FIPS algorithms
+          Changing this policy will result in erasing all partitions
+          on the HSM! (HSM Admin, Domain, and M of N (where applicable)
+          will not be modified.)
+          Type 'proceed' to zeroize your HSM and change the policy,
+          or 'quit' to quit now.
+          &gt; proceed
+'hsm changePolicy' successful.
+Policy Allow non-FIPS algorithms is now set to value: 0
+Command Result : 0 (Success)
+[192.20.9.127] lunash:&gt;
+</pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Verify that the FIPS 140-2 mode is now ON for the HSM:</p><pre class="listLevel1" xml:space="preserve">[192.20.9.127] lunash:&gt;hsm showpolicies
+   HSM Label:   JR
+   Serial #:    384
+   Firmware:    6.10.6
+
+   The following capabilities describe this HSM, and cannot be altered
+   except via firmware or capability updates.
+
+   Description                              Value
+   ===========                              =====
+   Enable PIN-based authentication          Disallowed
+   Enable PED-based authentication          Allowed
+   Performance level                        15
+   Enable domestic mechanisms &amp; key sizes   Allowed
+   Enable masking                           Allowed
+   Enable cloning                           Allowed
+   Enable special cloning certificate       Disallowed
+   Enable full (non-backup) functionality   Allowed
+   Enable non-FIPS algorithms               Allowed
+   Enable SO reset of partition PIN         Allowed
+   Enable network replication               Allowed
+   Enable Korean Algorithms                 Disallowed
+   FIPS evaluated                           Disallowed
+   Manufacturing Token                      Disallowed
+   Enable Remote Authentication             Allowed
+   Enable forcing user PIN change           Allowed
+   Enable portable masking key              Allowed
+   Enable partition groups                  Disallowed
+   Enable remote PED usage                  Allowed
+   Enable External Storage of MTK Split     Allowed
+   HSM non-volatile storage space           2097152
+   Enable HA mode CGX                       Disallowed
+   Enable Acceleration                      Allowed
+   Enable unmasking                         Disallowed
+   Enable FW5 compatibility mode            Disallowed
+   Unsupported                              Disallowed
+   Unsupported                              Disallowed
+   Enable ECIES support                     Disallowed
+
+
+   The following policies are set due to current configuration of
+   this HSM and cannot be altered directly by the user.
+
+   Description                              Value
+   ===========                              =====
+   PED-based authentication                 True
+   Store MTK Split Externally               False
+
+
+   The following policies describe the current configuration of
+   this HSM and may be changed by the HSM Administrator.
+
+   Changing policies marked "destructive" will zeroize (erase
+   completely) the entire HSM.
+
+   Description                              Value        Code      Destructive
+   ===========                              =====        ====      ===========
+   Allow masking                            On           6         Yes
+   Allow cloning                            On           7         Yes
+   Allow non-FIPS algorithms                <span style="background-color: #ffff00;">Off</span>          12        Yes
+   SO can reset partition PIN               On           15        Yes
+   Allow network replication                On           16        No
+   Allow Remote Authentication              On           20        Yes
+   Force user PIN change after set/reset    Off           21        No
+   Allow offboard storage                   On           22        Yes
+   Allow remote PED usage                   On           25        No
+   Allow Acceleration                       On           29        Yes
+
+Command Result : 0 (Success)
+[192.20.9.127] lunash:&gt;
+</pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="10."><span class="autonumber"><span class="ol1Number">10.</span></span>Log into the HSM:</p><pre class="listLevel1">[192.20.9.127] lunash:&gt;hsm login
+Luna PED operation required to login as HSM Administrator - use Security Officer (blue) PED key.
+'hsm login' successful.
+Command Result : 0 (Success)
+[192.20.9.127] lunash:&gt;</pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="11."><span class="autonumber"><span class="ol1Number">11.</span></span>Create a partition to which [some of] the backed-up objects are to be restored:</p>
+            <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>When creating the new application partition to receive the objects that were archived, you MUST use the same domain as was associated with the original (source) application partition (the same red PED Key for PED-authenticated HSM, or the same domain string for password-authenticated HSM).&#160;<br /><br />You should also use the same partition name, if your application expects to find the partition by that name.</p><pre class="listLevel1" xml:space="preserve">[192.20.9.127] lunash:&gt;partition create -partition mylegacypar1 -label MyLegacyPar1 
+On completion, you will have this number of partitions: 1
+
+          Type 'proceed' to create the initialized partition, or
+          'quit' to quit now.
+          &gt; proceed
+Please ensure that you copy the password from the Luna PED and
+that you keep it in a safe place.
+
+Luna PED operation required to create a partition - use User or Partition Owner (black) PED key.
+
+Luna PED operation required to generate cloning domain on the partition - use Domain (red) PED key.
+
+'partition create' successful.
+
+Command Result : 0 (Success)
+[192.20.9.127] lunash:&gt; &#160;</pre>
+            <p class="listLevel1" xml:space="preserve">
+</p>
+            <p class="ol1" data-mc-autonum="12."><span class="autonumber"><span class="ol1Number">12.</span></span>Re-set the partition policies to previous values and change the partition challenge, if desired, at this time:</p><pre class="listLevel1" xml:space="preserve">[192.20.9.127] lunash:&gt;partition showpolicies -partition mylegacypar1 
+
+   Partition Name:                            mylegacypar1
+   Partition SN:                              384013
+   Partition Label:                           MyLegacyPar1
+   The following capabilities describe this partition and can
+   never be changed.
+
+   Description                              Value
+   ===========                              =====
+   Enable private key cloning               Allowed
+   Enable private key wrapping              Disallowed
+   Enable private key unwrapping            Allowed
+   Enable private key masking               Disallowed
+   Enable secret key cloning                Allowed
+   Enable secret key wrapping               Allowed
+   Enable secret key unwrapping             Allowed
+   Enable secret key masking                Disallowed
+   Enable multipurpose keys                 Allowed
+   Enable changing key attributes           Allowed
+   Enable PED use without challenge         Allowed
+   Allow failed challenge responses         Allowed
+   Enable operation without RSA blinding    Allowed
+   Enable signing with non-local keys       Allowed
+   Enable raw RSA operations                Allowed
+   Max failed user logins allowed           10
+   Enable high availability recovery        Allowed
+   Enable activation                        Allowed
+   Enable auto-activation                   Allowed
+   Minimum pin length (inverted: 255 - min) 248
+   Maximum pin length                       255
+   Enable Key Management Functions          Allowed
+   Enable RSA signing without confirmation  Allowed
+   Enable Remote Authentication             Allowed
+   Enable private key unmasking             Allowed
+   Enable secret key unmasking              Allowed
+
+
+   The following policies are set due to current configuration
+   of this partition and may not be altered directly by the
+   user.
+
+   Description                              Value
+   ===========                              =====
+   Challenge for authentication not needed  False
+
+
+   The following policies describe the current configuration
+   of this partition and may be changed by the HSM Administrator.
+
+   Description                              Value        Code
+   ===========                              =====        ====
+   Allow private key cloning                On           0
+   Allow private key unwrapping             On           2
+   Allow secret key cloning                 On           4
+   Allow secret key wrapping                On           5
+   Allow secret key unwrapping              On           6
+   Allow multipurpose keys                  On           10
+   Allow changing key attributes            On           11
+   Ignore failed challenge responses        On           15
+   Operate without RSA blinding             On           16
+   Allow signing with non-local keys        On           17
+   Allow raw RSA operations                 On           18
+   Max failed user logins allowed           10           20
+   Allow high availability recovery         On           21
+   Allow activation                         Off          22
+   Allow auto-activation                    Off          23
+   Minimum pin length (inverted: 255 - min) 248          25
+   Maximum pin length                       255          26
+   Allow Key Management Functions           On           28
+   Perform RSA signing without confirmation On           29
+   Allow Remote Authentication              On           30
+   Allow private key unmasking              On           31
+   Allow secret key unmasking               On           32
+
+
+Command Result : 0 (Success)
+[192.20.9.127] lunash:&gt;
+</pre>
+            <p class="listLevel1" xml:space="preserve"> Compare the output with the policy settings before the original partition was destroyed, and make any changes necessary.</p>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="13."><span class="autonumber"><span class="ol1Number">13.</span></span>Restore  the contents from the Backup HSM to the new application partition on the now-FIPS-mode HSM:</p><pre class="listLevel1" xml:space="preserve">[192.20.9.127] lunash:&gt;partition restore -partition mylegacypar1  -tokenPar mypartitionbackup1 -serial 475292 -add
+Warning:  You will need to connect Luna PED to the SafeNet Backup HSM to complete this operation.
+          You may use the same Luna PED that you used for SafeNet Network HSM.
+          Please type 'proceed' and hit &lt;enter&gt; when you are ready to proceed&gt;  proceed
+Luna PED operation required to login to user on token - use User or Partition Owner (black) PED key.</pre>
+            <p>&#160;</p><pre class="listLevel1" xml:space="preserve">
+Object "Generated AES Key" (handle 242) cloned to handle 20 on target
+Object "X9_62_prime256v1(P-256)+ ECDSA Public Key" (handle 243) cloned to handle 21 on target
+Object "RSA 186-3 Aux Primes 2048bit Private Key" (handle 244) cloned to handle 30 on target
+Object "Generated DES3 Key" (handle 247) cloned to handle 33 on target
+Object "X9_62_prime256v1(P-256)+ ECDSA Private Key" (handle 248) cloned to handle 34 on target
+Object "RSA 186-3 Aux Primes 2048bit Public Key" (handle 249) cloned to handle 35 on target
+Object "User Private RSA Key5-1024" (handle 87) cloned to handle 81 on target
+Error:  'partition restore' failed. (130000 : LUNA_RET_ATTRIBUTE_VALUE_INVALID)
+Object "User Public RSA Key5-1024" (handle 156) cloned to handle 140 on target
+Error:  'partition restore' failed. (130000 : LUNA_RET_ATTRIBUTE_VALUE_INVALID)
+
+
+Command Result : 65535 (Luna Shell execution)
+[192.20.9.127] lunash:&gt;</pre>
+            <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>In this example, the restore operation actually passed, but you see an error message because one of the objects was not FIPS-valid, and therefore could not be accepted by the partition on the (now) FIPS-mode HSM. Any invalid objects are skipped, and all valid objects are restored onto the new partition. &#160;</p>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="14."><span class="autonumber"><span class="ol1Number">14.</span></span>Verify the objects that have been successfully restored onto the new application partition. </p><pre class="listLevel1" xml:space="preserve">[192.20.9.127] lunash:&gt;partition showcontents -partition mylegacypar1
+  Please enter the password for the partition:
+  &gt; *******
+
+   Partition Name:                            mylegacyfipspar1
+   Partition SN:                              894069506
+   Partition Label:                           MyLegacyFIPSPar1
+   Storage (Bytes): Total=95569, Used=37760, Free=57809
+   Number objects:  6
+
+
+   Object Label:  Generated AES Key
+   Object Type:   Symmetric Key
+   Object Handle: 20
+
+   Object Label:  X9_62_prime256v1(P-256)+ ECDSA Public Key
+   Object Type:   Public Key
+   Object Handle: 21
+
+   Object Label:  RSA 186-3 Aux Primes 2048bit Private Key
+   Object Type:   Private Key
+   Object Handle: 28
+
+   Object Label:  Generated DES3 Key
+   Object Type:   Symmetric Key
+   Object Handle: 31
+
+   Object Label:  X9_62_prime256v1(P-256)+ ECDSA Private Key
+   Object Type:   Private Key
+   Object Handle: 32
+
+   Object Label:  RSA 186-3 Aux Primes 2048bit Public Key
+   Object Type:   Public Key
+   Object Handle: 33
+
+Command Result : 0 (Success)
+[192.20.9.127] lunash:&gt;
+</pre>
+            <p>&#160;</p>
+            <p>All the uncontested objects (those that are acceptable in FIPS 140-2 mode) have been restored onto the new application partition on your HSM. The objects for which an error was reported, meaning that they are not allowed in FIPS mode, could not be restored to the partition now that the HSM is in FIPS 140-2 mode. You will need to find other ways to accomplish whatever you were doing with those excluded objects, now that your operation is constrained to FIPS 140-2 mode.</p>
+            <p>&#160;</p>
+            <h3>SafeNet Network HSM or SafeNet PCIe HSM application partition (f/w 6.22.0 or newer) in LunaCM </h3>
+            <p>The following instructions are for </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>a SafeNet PCIe HSM application partition (locally installed), or </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>a SafeNet Network HSM application partition via secure network connection (NTLS or STC)</p>
+            <p>In both cases, the HSM firmware is version 6.22.0 or newer. The SafeNet Network HSM application partition is a PPSO partition (not legacy), which can be administered only via client connection (lunacm). &#160; </p>
+            <p>The following instructions assume that a SafeNet Backup HSM is connected locally to the SafeNet HSM Client host computer. &#160;&#160;</p>
+            <p>The following instructions assume that you have a number of objects on the application partition that you have been using while the HSM is non-FIPS, and that you wish to continue using after you switch the HSM to FIPS mode.</p>
+            <p>For illustrative purposes, the example source partition in the following instructions includes a few objects that are not permitted in an HSM running in FIPS mode. &#160;This includes verifying the HSM's FIPS mode, </p>
+            <p>For SafeNet Network HSM, the initial action to set up the application partition must  be performed by the HSM SO at the SafeNet Network HSM appliance using LunaSH, via SSH or via local serial console. </p>
+            <p>For SafeNet PCIe HSM, the HSM SO creates the partition in lunacm. </p>
+            <p>Thereafter, either for a SafeNet PCIe HSM local application partition (with PSO), or for a SafeNet Network HSM application partition (with PSO) viewed over NTLS connection, the actions are the same and are performed in lunacm as follows. </p>
+            <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Use <b>slot set slot</b> command to set the current-slot focus to the source application partition on the non-FIPS-mode HSM. Type: </p><pre class="listLevel1" xml:space="preserve">
+lunacm:&gt; slot set slot 1
+
+        Current Slot Id:    1     (Luna User Slot 6.22.0 (PED) Signing With Cloning Mode)
+
+Command Result : No Error
+
+
+lunacm:&gt;</pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Use <b>partition showinfo</b> command to view the HSM information for the SafeNet HSM that contains the source partition. Confirm that the HSM is "...NOT in FIPS 140-2 approved operation mode" before the HSM is switched to FIPS mode.  
+</p><pre class="listLevel1" xml:space="preserve">
+lunacm:&gt; partition showinfo
+
+        Partition Label -&gt; Cryptoki User
+        Partition Manufacturer -&gt; Safenet, Inc.
+        Partition Model -&gt; K6 Base
+        Partition Serial Number -&gt; 450039014
+        Partition Status -&gt; OK
+        Token Flags -&gt;
+                CKF_LOGIN_REQUIRED
+                CKF_USER_PIN_INITIALIZED
+                CKF_RESTORE_KEY_NOT_NEEDED
+                CKF_PROTECTED_AUTHENTICATION_PATH
+                CKF_TOKEN_INITIALIZED
+        RPV Initialized -&gt; Yes
+        Slot Id -&gt; 1
+        Tunnel Slot Id -&gt; 4
+        Session State -&gt; CKS_RW_USER_FUNCTIONS
+        Role Status -&gt;   Crypto Officer logged in
+        Token Flags -&gt;
+                TOKEN_KCV_CREATED
+        Partition OUID: 40000006f3040000f7dd0600
+
+        Partition Storage:
+                Total Storage Space:  2087864
+                Used Storage Space:   0
+                Free Storage Space:   2087864
+                Object Count:         0
+                Overhead:             9288
+
+        *** The partition is in FIPS 140-2 approved operation mode. ***
+
+
+Command Result : No Error
+
+lunacm:&gt; slot set slot 6
+
+        Current Slot Id:    6     (SafeNet USB HSM 6.0.8 (PED) Backup Device)
+
+Command Result : No Error
+
+lunacm:&gt; hsm si
+
+        HSM Label -&gt; G5Backkup
+        HSM Manufacturer -&gt; Safenet, Inc.
+        HSM Model -&gt; G5Backup
+        HSM Serial Number -&gt; 475292
+        HSM Status -&gt; OK
+        Token Flags -&gt;
+                CKF_RNG
+                CKF_LOGIN_REQUIRED
+                CKF_USER_PIN_INITIALIZED
+                CKF_RESTORE_KEY_NOT_NEEDED
+                CKF_PROTECTED_AUTHENTICATION_PATH
+                CKF_TOKEN_INITIALIZED
+        Firmware Version -&gt; 6.0.8
+        Rollback Firmware Version -&gt; Not Available
+
+        HSM Auditor: Not Supported
+        HSM Logging: Not Supported
+
+        RPV Initialized -&gt; No
+        Slot Id -&gt; 6
+        Session State -&gt; CKS_RW_PUBLIC_SESSION
+
+        SO Status-&gt; Not Logged In
+
+        SO Failed Logins-&gt; 0
+        SO Flags -&gt;
+                CONTAINER_KCV_CREATED
+
+        HSM Storage:
+                Total Storage Space:  16252928
+                Used Storage Space:   147352
+                Free Storage Space:   16105576
+                Allowed Partitions:   20
+                Number of Partitions: 7
+
+        SO Storage:
+                Total Storage Space:  262144
+                Used Storage Space:   0
+                Free Storage Space:   262144
+                Object Count:         0
+
+        *** The HSM is NOT in FIPS 140-2 approved operation mode. ***
+
+
+        License Count -&gt; 5
+                1. 621010355-000 SafeNet Remote Backup HSM base configuration
+                1. 621000006-001 Enabled for 15.5 megabytes of object storage
+                1. 621000007-001 Enable the master tamper key to be stored externally
+                1. 621000008-001 Enable remote PED capability
+                1. 621000005-001 Maximum 20 partitions
+
+Command Result : No Error
+
+lunacm:&gt;</pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use <b>slot set -slot</b> command to set the current-slot focus to the slot with the Backup HSM. Type: </p><pre class="listLevel1" xml:space="preserve">
+lunacm:&gt; slot set -s 6
+
+        Current Slot Id:    6     (SafeNet USB HSM 6.0.8 (PED) Backup Device)
+
+Command Result : No Error
+
+lunacm:&gt;</pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Use <b>partition archive list</b> to show the contents of the backup partition. Type:&#160;</p><pre class="listLevel1" xml:space="preserve">
+lunacm:&gt; partition archive list -slot 6
+
+        HSM Storage Information for slot 6:
+
+           Total HSM Storage Space: 16252928
+           Used HSM Storage Space:  147352
+           Free HSM Storage Space:  16105576
+           Allowed Partitions:      20
+           Number Of Partitions:    7
+
+        Partition list for slot 6
+
+           Number of partition: 7
+
+           Name:                      John2Backup2
+           Total Storage Size:        1684
+           Used Storage Size:         1643
+           Free Storage Size:         41
+           Number Of Objects:         2
+
+           Name:                      JohnK6backup
+           Total Storage Size:        41340
+           Used Storage Size:         40210
+           Free Storage Size:         1130
+           Number Of Objects:         85
+
+           Name:                      6106Backup
+           Total Storage Size:        41340
+           Used Storage Size:         40210
+           Free Storage Size:         1130
+           Number Of Objects:         85
+
+           Name:                      UserPartitionBackup
+           Total Storage Size:        2436
+           Used Storage Size:         2353
+           Free Storage Size:         83
+           Number Of Objects:         6
+
+           Name:                      UserPartitionBackup1
+           Total Storage Size:        2436
+           Used Storage Size:         2353
+           Free Storage Size:         83
+           Number Of Objects:         6
+
+           Name:                      John2Backup
+           Total Storage Size:        1684
+           Used Storage Size:         1643
+           Free Storage Size:         41
+           Number Of Objects:         2
+
+           Name:                      6101Backup
+           Total Storage Size:        41340
+           Used Storage Size:         40210
+           Free Storage Size:         1130
+           Number Of Objects:         85
+
+Command Result : No Error
+
+lunacm:&gt; </pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Use <b>hsm showinfo</b> to verify that the newly initialized HSM is now in FIPS mode. Type:</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; hsm showinfo
+
+        HSM Label -&gt; G5Backkup
+        HSM Manufacturer -&gt; Safenet, Inc.
+        HSM Model -&gt; G5Backup
+        HSM Serial Number -&gt; 475292
+        HSM Status -&gt; OK
+        Token Flags -&gt;
+                CKF_RNG
+                CKF_LOGIN_REQUIRED
+                CKF_USER_PIN_INITIALIZED
+                CKF_RESTORE_KEY_NOT_NEEDED
+                CKF_PROTECTED_AUTHENTICATION_PATH
+                CKF_TOKEN_INITIALIZED
+        Firmware Version -&gt; 6.0.8
+        Rollback Firmware Version -&gt; Not Available
+
+        HSM Auditor: Not Supported
+        HSM Logging: Not Supported
+
+        RPV Initialized -&gt; No
+        Slot Id -&gt; 6
+        Session State -&gt; CKS_RW_PUBLIC_SESSION
+
+        SO Status-&gt; Not Logged In
+
+        SO Failed Logins-&gt; 0
+        SO Flags -&gt;
+                CONTAINER_KCV_CREATED
+
+        HSM Storage:
+                Total Storage Space:  16252928
+                Used Storage Space:   147352
+                Free Storage Space:   16105576
+                Allowed Partitions:   20
+                Number of Partitions: 7
+
+        SO Storage:
+                Total Storage Space:  262144
+                Used Storage Space:   0
+                Free Storage Space:   262144
+                Object Count:         0
+
+        *** The HSM is NOT in FIPS 140-2 approved operation mode. ***
+
+
+        License Count -&gt; 5
+                1. 621010355-000 SafeNet Remote Backup HSM base configuration
+                1. 621000006-001 Enabled for 15.5 megabytes of object storage
+                1. 621000007-001 Enable the master tamper key to be stored externally
+                1. 621000008-001 Enable remote PED capability
+                1. 621000005-001 Maximum 20 partitions
+
+Command Result : No Error
+
+lunacm:&gt; slot set -s 1
+
+        Current Slot Id:    1     (Luna User Slot 6.22.0 (PED) Signing With Cloning Mode)
+
+Command Result : No Error
+
+lunacm:&gt; role show -name Crypto Officer
+
+        State of role 'Crypto Officer':
+                Primary authentication type:          PED
+                Secondary authentication type:        PIN
+                Failed login attempts before lockout: 10
+
+Command Result : No Error
+
+lunacm:&gt; </pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Use <b>partition showinfo</b> to verify that the new partition is in FIPS mode. Type:</p><pre class="listLevel1" xml:space="preserve">
+lunacm:&gt; partition showinfo
+
+        Partition Label -&gt; Cryptoki User
+        Partition Manufacturer -&gt; Safenet, Inc.
+        Partition Model -&gt; K6 Base
+        Partition Serial Number -&gt; 450039014
+        Partition Status -&gt; OK
+        Token Flags -&gt;
+                CKF_LOGIN_REQUIRED
+                CKF_USER_PIN_INITIALIZED
+                CKF_RESTORE_KEY_NOT_NEEDED
+                CKF_PROTECTED_AUTHENTICATION_PATH
+                CKF_TOKEN_INITIALIZED
+        RPV Initialized -&gt; Yes
+        Slot Id -&gt; 1
+        Tunnel Slot Id -&gt; 4
+        Session State -&gt; CKS_RW_USER_FUNCTIONS
+        Role Status -&gt;   Crypto Officer logged in
+        Token Flags -&gt;
+                TOKEN_KCV_CREATED
+        Partition OUID: 40000006f3040000f7dd0600
+
+        Partition Storage:
+                Total Storage Space:  2087864
+                Used Storage Space:   0
+                Free Storage Space:   2087864
+                Object Count:         0
+                Overhead:             9288
+
+        *** The partition is in FIPS 140-2 approved operation mode. ***
+
+
+Command Result : No Error
+
+lunacm:&gt; 
+
+
+lunacm:&gt; 
+</pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Use <b>partition archive restore</b> to restore the contents of the backup partition onto the newly created application partition on the now FIPS-mode HSM. Type:</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; partition archive restore -slot 6 -partition 6106Backup
+
+        Logging in to partition 6106Backup on slot 6 as the user.
+
+        Please attend to the PED.
+
+        Verifying that all objects can be restored...
+
+        85 objects will be restored.
+
+        Restoring objects...
+        Cloned object 122 from partition 6106Backup (new handle 20).
+        Cloned object 123 from partition 6106Backup (new handle 25).
+        Cloned object 124 from partition 6106Backup (new handle 26).
+        Cloned object 125 from partition 6106Backup (new handle 27).
+        Cloned object 126 from partition 6106Backup (new handle 28).
+        Cloned object 127 from partition 6106Backup (new handle 29).
+        Failed to clone object 128 from partition 6106Backup (CKR_ATTRIBUTE_VALUE_INVALID).
+        Cloned object 129 from partition 6106Backup (new handle 30).
+        Failed to clone object 130 from partition 6106Backup (CKR_ATTRIBUTE_VALUE_INVALID).
+        Failed to clone object 131 from partition 6106Backup (CKR_KEY_TYPE_INCONSISTENT).
+        Cloned object 132 from partition 6106Backup (new handle 31).
+        Cloned object 133 from partition 6106Backup (new handle 32).
+        Cloned object 136 from partition 6106Backup (new handle 35).
+        Cloned object 137 from partition 6106Backup (new handle 36).
+        Cloned object 138 from partition 6106Backup (new handle 37).
+        Cloned object 139 from partition 6106Backup (new handle 38).
+        Cloned object 143 from partition 6106Backup (new handle 42).
+        Cloned object 144 from partition 6106Backup (new handle 43).
+        Cloned object 145 from partition 6106Backup (new handle 44).
+        Cloned object 148 from partition 6106Backup (new handle 47).
+        Cloned object 149 from partition 6106Backup (new handle 48).
+        Cloned object 150 from partition 6106Backup (new handle 49).
+        Cloned object 151 from partition 6106Backup (new handle 50).
+        Cloned object 152 from partition 6106Backup (new handle 51).
+        Failed to clone object 153 from partition 6106Backup (CKR_KEY_TYPE_INCONSISTENT).
+        Cloned object 154 from partition 6106Backup (new handle 52).
+        Cloned object 158 from partition 6106Backup (new handle 56).
+        Cloned object 159 from partition 6106Backup (new handle 57).
+        Cloned object 160 from partition 6106Backup (new handle 58).
+        Cloned object 161 from partition 6106Backup (new handle 59).
+        Failed to clone object 162 from partition 6106Backup (CKR_ATTRIBUTE_VALUE_INVALID).
+        Cloned object 163 from partition 6106Backup (new handle 60).
+        Cloned object 164 from partition 6106Backup (new handle 61).
+        Cloned object 165 from partition 6106Backup (new handle 62).
+        Failed to clone object 166 from partition 6106Backup (CKR_ATTRIBUTE_VALUE_INVALID).
+        Cloned object 167 from partition 6106Backup (new handle 63).
+        Cloned object 168 from partition 6106Backup (new handle 64).
+        Cloned object 169 from partition 6106Backup (new handle 65).
+        Cloned object 170 from partition 6106Backup (new handle 66).
+        Cloned object 171 from partition 6106Backup (new handle 67).
+        Cloned object 175 from partition 6106Backup (new handle 71).
+        Failed to clone object 176 from partition 6106Backup (CKR_KEY_TYPE_INCONSISTENT).
+        Cloned object 177 from partition 6106Backup (new handle 72).
+        Cloned object 180 from partition 6106Backup (new handle 75).
+        Cloned object 181 from partition 6106Backup (new handle 76).
+        Cloned object 182 from partition 6106Backup (new handle 77).
+        Cloned object 183 from partition 6106Backup (new handle 78).
+        Failed to clone object 184 from partition 6106Backup (CKR_ATTRIBUTE_VALUE_INVALID).
+        Cloned object 185 from partition 6106Backup (new handle 79).
+        Cloned object 186 from partition 6106Backup (new handle 80).
+        Cloned object 187 from partition 6106Backup (new handle 81).
+        Cloned object 188 from partition 6106Backup (new handle 82).
+        Cloned object 189 from partition 6106Backup (new handle 83).
+        Failed to clone object 190 from partition 6106Backup (CKR_ATTRIBUTE_VALUE_INVALID).
+        Failed to clone object 191 from partition 6106Backup (CKR_ATTRIBUTE_VALUE_INVALID).
+        Cloned object 192 from partition 6106Backup (new handle 84).
+        Cloned object 193 from partition 6106Backup (new handle 85).
+        Cloned object 194 from partition 6106Backup (new handle 86).
+        Cloned object 198 from partition 6106Backup (new handle 90).
+        Cloned object 199 from partition 6106Backup (new handle 91).
+        Cloned object 200 from partition 6106Backup (new handle 92).
+        Cloned object 201 from partition 6106Backup (new handle 93).
+        Cloned object 204 from partition 6106Backup (new handle 96).
+        Cloned object 205 from partition 6106Backup (new handle 97).
+        Cloned object 206 from partition 6106Backup (new handle 98).
+        Cloned object 207 from partition 6106Backup (new handle 99).
+        Cloned object 208 from partition 6106Backup (new handle 100).
+        Cloned object 209 from partition 6106Backup (new handle 101).
+        Cloned object 210 from partition 6106Backup (new handle 102).
+        Failed to clone object 211 from partition 6106Backup (CKR_KEY_TYPE_INCONSISTENT).
+        Failed to clone object 212 from partition 6106Backup (CKR_ATTRIBUTE_VALUE_INVALID).
+        Failed to clone object 213 from partition 6106Backup (CKR_ATTRIBUTE_VALUE_INVALID).
+        Cloned object 214 from partition 6106Backup (new handle 103).
+        Cloned object 215 from partition 6106Backup (new handle 104).
+        Cloned object 216 from partition 6106Backup (new handle 105).
+        Cloned object 217 from partition 6106Backup (new handle 106).
+        Failed to clone object 218 from partition 6106Backup (CKR_ATTRIBUTE_VALUE_INVALID).
+        Cloned object 219 from partition 6106Backup (new handle 107).
+        Cloned object 220 from partition 6106Backup (new handle 108).
+        Cloned object 221 from partition 6106Backup (new handle 109).
+        Cloned object 222 from partition 6106Backup (new handle 110).
+        Cloned object 223 from partition 6106Backup (new handle 111).
+        Cloned object 227 from partition 6106Backup (new handle 115).
+        Failed to clone object 228 from partition 6106Backup (CKR_KEY_TYPE_INCONSISTENT).
+        Cloned object 229 from partition 6106Backup (new handle 116).
+
+        Not all objects can be cloned. Please verify HSM configuration.
+
+        Restore Complete.
+
+        70 objects have been restored from partition 6106Backup on slot 6.
+
+Command Result : No Error
+
+lunacm:&gt;</pre>
+            <p>&#160;</p>
+            <p>&#160;</p>
+            <p>&#160;</p>
+            <p>&#160;</p>
+        </body>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

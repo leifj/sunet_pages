@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|token|token pki|token pki update">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>token pki update firmware</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="token.htm">token</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">token pki update firmware</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">token pki update firmware</h2>
+        <p>Update Token firmware, using a firmware update package available on 
+ the SafeNet appliance.<br />The package must be transferred to the SafeNet appliance by scp (individually or as a component of a system update), and you 
+ must login to the PKI token as Token Administrator  or SO before the 'token pki update firmware' command is run.<br />The command requires no package name. </p>
+        <p>The term "token" in this case refers to removable token-format HSMs connected via SafeNet DOCK 2 and USB (legacy equipment), or to a SafeNet USB HSM, connected via USB. </p>
+        <p>Before you can use this command, you must:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>acquire the secure package update file from SafeNet and send the file to the SafeNet Network HSM (using scp or pscp)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>open the file on the SafeNet Network HSM with the lunash command <span class="code">package update &lt;filename&gt; -authcode &lt;authcode&gt;</span> <![CDATA[ ]]></p>
+        <p class="notepad_note">A capability update or a firmware update is meant to be applied just one time to an HSM. If you attempt to re-apply a capability update to an HSM that already has the capability installed, the system throws an error like " C0000002 : RC_GENERAL_ERROR ". A similar result occurs if you attempt to install a particular firmware update more than once on one HSM. This is expected behavior.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code"><b>token pki update firmware -serial</b> &lt;serialnum&gt; [<b>-force</b>]</p>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 95px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 114px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-force</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-f</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Force the action without prompting.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-serial</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-s</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Specifies the  token serial number. </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">lunash:&gt; token pki update firmware -serial 475289
+
+
+CAUTION:  This command updates the Token firmware.
+          This process cannot be reversed.
+
+          Type 'proceed' to continue, or 'quit'
+          to quit now.
+          &gt; proceed
+
+        Partition #: 14 Name: Cryptoki User     Status: Passed
+
+Update Result : 0 (Success)
+
+Command Result : 0 (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

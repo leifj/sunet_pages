@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|High-Availability (HA) Configuration and Operation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Recovery and Reconnection</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha.htm">High-Availability (HA) Configuration and Operation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Recovery and Reconnection</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="Recovery"></a>Recovery and Reconnection</h2>
+        <p>An important aspect of the HA feature is the ability of an HA group to carry on the client's cryptographic operations when a group member becomes unavailable, or to resume operation if the client temporarily loses connection to the entire group of HSMs.</p>
+        <p>The various processes combine to ensure that your client application continues to work with your HSMs. The first section in this topic (below) deals with recovery of individual HSM units failing or losing connection and concerns the integrity of the HA group. The second section, later in this topic, deals with the client losing contact with the entire HA group, and the manner in which it re-establishes connection and context. </p>
+        <h3>Recovery after failure of a member</h3>
+        <p>After a failure, the recovery process is typically straightforward.  Depending on the deployment, an automated or manual recovery process might be appropriate.   In either case there is no need to restart an application. </p>
+        <h5>Automatic recovery</h5>
+        <p>With automatic recovery, the client automatically performs periodic recovery attempts while a member is failed.  The frequency of these checks is adjustable and  the number of re-tries can be limited.   Each time a reconnection is attempted, one application command experiences a slight delay while the client attempts to recover.  As such, the retry frequency cannot be set any faster than once per minute.  Even if a manual recovery process is selected, the application does not need to be restarted.  Simply run the client recovery command and the recovery logic inside the client makes a recovery attempt the next time the application uses the HSM.  As part of recovery, any key material created while the member was offline is automatically replicated to the recovered unit .</p>
+        <h5>Failed units</h5>
+        <p>Sometimes a failure of a device is permanent.  In this event, the only solution is to deploy a new member to the group.  In this case, you can remove the failed unit from the HA group, add a new device to the group and then start the recovery process.  The running clients automatically resynchronize keys to the new member and start scheduling operations to it. See <a href="add_replace.htm" class="MCXref xref">Adding, Removing, Replacing, or Reconnecting HA Group Members</a> for more information.</p>
+        <h5>Manual recovery</h5>
+        <p>Finally, sometimes both an HSM and application fail at the same time.  If no new key material was created while an HSM was offline, the recovery is straightforward: simply return the HSM to service and then restart the application.  However, if new key material was created after an HSM failed but before the application failed, a manual re-synchronization (using the <b>hagroup synchronize</b> command) might be required.  </p>
+        <p>To perform a manual recovery: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Confirm which member, or members, have the current key material (normally the unit(s) that was online at the time the application failed). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Place it/(them) back in service with the application. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>For each member that has stale key material (a copy of an object that was deleted; or an old copy of an object who’s attributes were changed), delete all their key material after first making sure they are not part of the HA group. Be particularly careful that the member is not part of the HA group or the action might destroy active key material by causing an accidental synchronization during the delete operation.  </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>After the HSM is cleared of key material, rejoin it to the group and the synchronization logic automatically repopulates the device’s key material from the active units.</p>
+        <h5>Usage</h5>
+        <p>When a client is configured to use automatic recovery the manual recovery commands must not be used.  Invoking them can cause multiple concurrent recovery processes which result in error codes and possible key corruption.</p>
+        <p>Most customers should enable auto-insert in all configurations.  We anticipate that the only reason you might wish to choose manual recovery is if you do not want to impart the retry time to periodic transactions.  That is, each time a recovery is attempted a single application thread experiences an increased latency while the library uses that thread to attempt the re-connection (the latency impact is a few hundred milliseconds).</p>
+        <h4><a name="kanchor73"></a>Recovery Conditions</h4>
+        <p>HA recovery is hands-off resumption by failed HA Group members, or it is manual re-introduction of a failed member, if automatic recovery is not enabled. Some reasons for a member to fail from the group might be:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the appliance loses power (but regains power in less than the 2 hours that the HSM preserves its activation state)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the network link from the unit is lost and then regained.</p>
+        <p>HA recovery takes place if the following conditions are true:
+
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HA automatic recovery is enabled, or if you detect a unit failure and manually re-introduce the unit
+(or its replacement)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HA group has at least 2 nodes
+
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HA node is reachable (connected) at client startup
+
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HA node recover retry limit is not reached. </p>
+        <p>Otherwise manual recover is the only option to bring back the downed connection(s)
+</p>
+        <p>If all HA nodes fail (no links from client) no recovery is possible.</p>
+        <p>The HA recovery logic  makes its first attempt at recovering a failed member when your application makes a call to its HSM (the group). That is, an idle client does not start the recovery-attempt process.</p>
+        <p>On the other hand, a busy client would notice a slight pause every minute, as the library attempts to recover a dropped HA group member (or members) until the member has been reinstated or until the timeout has been reached and it stops trying. Therefore, set the number of retries according to your normal situation (the kinds and durations of network interruptions you experience, for example).</p>
+        <h4>Enabling and Configuring Automatic Recovery </h4>
+        <p>In previous releases, automatic recovery  was not on by default, and needed to be explicitly enabled with vtl haAdmin -autorecovery command. </p>
+        <p>Beginning with SafeNet HSM release 6.0, HA automatic recovery is automatically enabled when you set the recovery retry count  using the LunaCM command <a href="../../lunacm/commands/hagroup/hagroup_retry.htm" class="MCXref xref">hagroup retry</a> in the <i>LunaCM Reference Guide</i>. Use the command <a href="../../lunacm/commands/hagroup/hagroup_interval.htm" class="MCXref xref">hagroup interval</a> to specify the interval, in seconds, between each retry attempt. The default is 60 seconds.</p>
+        <h4>Failure of All Members</h4>
+        <p>Formerly, If all members of an HA group were to fail, then all logged-in sessions were gone, and operations that were active when the last group member went down, were terminated. Only if the client application was able to recover all that state information would it not have been necessary to restart or re-initialize in order to resume client operations with the SafeNet Network HSM HA group. </p>
+        <p>This changes with release 6.2.2 Client, where the library now preserves session state and token objects if the client loses all connection with the HA group. When the group (or member of it) becomes available again, the client application can resume the session automatically, including re-login, and all token objects that were in use before the outage are still available. See <a href="ha_auto-reconnect.htm" class="MCXref xref">HA Auto-Reconnect </a> for more detail. </p>
+        <h4>Auto-insert </h4>
+        <p>Automatic reintroduction or "auto-insert" is supported.
+A failed (and fixed, or replacement) HSM appliance can be re-introduced if the application continues without restart. Restarting the application causes it to take a fresh inventory of  available HSMs, and to use only those HSMs within its HA group. You cannot [re]introduce a SafeNet Network HSM that was not in the group when the application started. </p>
+        <p>Auto-insert is now the default behavior (from Client 6.2.1 and later). &#160;&#160;<span style="color: #ffffff;">[list below satisfies LHSM-31162]</span> &#160;&#160;</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Auto-insert requires that “Active recovery mode” is enabled. &#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>A running client automatically detects SafeNet Network HSM appliance insertion and removal to/from its configuration. &#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Connection to the new SafeNet Network HSM appliance occurs only if the client HA configuration also has a new HA member or an HA member gone missing. &#160;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>A running client does not automatically disconnect from the appliance that has been removed from its configuration until the appliance goes offline (for example,  disconnected or powered down). </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>A running client uses the new HA member that is being added to the HA group configuration and does not require the client to restart to do so. &#160;</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>A running client stops attempting to use the removed HA member that is being revoked from the HA configuration and does not require the client to restart to do so. &#160;</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>When a new member is added to the HA group, entries similar to the following appear in the client HA Log: &#160;</p><pre class="listLevel1">Mon Feb  1 11:06:55 2016 : [6619] HA group: 11079656446993 detected new member member: 286668019649</pre>
+        <p>&#160;</p><pre class="listLevel1">Mon Feb  1 11:07:25 2016 : [6619] HA group: 11079656446993 recovery attempt #1 succeeded for member: 286668019649</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>When a HA member is removed from the HA group, entries similar to the following appear in the client HA Log: &#160;</p><pre class="listLevel1">Mon Feb  1 11:07:45 2016 : [6619] HA group: 11079656446993 member: 286668019649 revoked </pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>When a new SafeNet Network HSM appliance is registered with a client that has HA configured with “Active recovery mode”, entries similar to the following appear in the client HA Log: &#160;</p><pre class="listLevel1">Sun Jan 31 21:01:52 2016 : [3820] HA subsystem detected new server : 172.20.11.175</pre>
+        <p>&#160;</p><pre class="listLevel1">Sun Jan 31 21:01:56 2016 : [3820] HA subsystem server 172.20.11.175 connected</pre>
+        <p class="listLevel1">
+            <br />Entries like these appear only if item 3, above, is true. &#160;<span style="color: #ffffff;">[LHSM-31294] </span>&#160;</p>
+        <p class="ol1" data-mc-autonum="10."><span class="autonumber"><span class="ol1Number">10.</span></span>When an existing SafeNet Network HSM appliance is removed from client that has HA configured with “Active recovery mode”, entries similar to the following appear in the client HA Log:</p><pre class="listLevel1">Tue Feb  2 15:45:12 2016 : [28001] HA subsystem detected removal of server : 172.20.11.86</pre>
+        <h4>Synchronization</h4>
+        <p>Synchronization of token objects is a manual process using the <b>hagroup synchronize</b> command. Synchronization locates any object that exists on any one physical HSM partition (that is a member of the HA&#160;group), but not on all others, and replicates that object to any partitions (among the group) where it did not exist. </p>
+        <p>This is distinct from the replication that occurs when you create or delete an object on the HA virtual slot. Creation or deletion against the virtual slot causes that change to be immediately replicated to all connected members (addition or deletion).</p>
+        <h4>Effect of PED Operations</h4>
+        <p> PED operations block cryptographic operations, so that while a member of an HA is performing a PED operation, it will appear to the HA group as a failed member. When the PED operation is complete, failover and recovery HA logic are invoked to return the member to normal operation.</p>
+        <h4>Effect of Application Restarts</h4>
+        <p>If an HA group member fails and an application restarts before the failed member recovers, it is not possible to recover that device until you restart the application again. </p>
+        <p>This is as designed.
+You originally had your application running with X number of members. One failed, but was not removed from the group, so retries were occurring, but the application was operating with X-1 members available. Then you restarted. When the application came up after that restart, it saw only X-1 members. Having just started, it now has no notion that the Xth member exists.  You cannot add to that number within an application. To go from the number that the application now recognizes, X-1, to the new, larger number of participants X-1 +1 (or X), you must restart the application  while all X members are available.</p>
+        <h4>Network failures</h4>
+        <p>If network connectivity fails to one or more connected SafeNet Network HSM appliances, the HA group will be restored automatically subject to timeouts and retries, as follows:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>While the client application is active, and one HA group member is connected and active, other members can automatically resume in the HA group as long as retries have not stopped. 
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If all members fail or if the client does not have a network connection to at least one group member, then HA auto-reconnect now preserves the session and token-object state (<a href="ha_auto-reconnect.htm" class="MCXref xref">HA Auto-Reconnect </a>). You must set hagroup recoverymode to "activeEnhanced" for the recovery to be completely hands-free. </p>
+        <h5>Process interaction</h5>
+        <p>Other events and processes interact at different levels and in different situations as described below. 
+</p>
+        <p>At the lowest communication level, the transport protocol (TCP) is responsible for making and operating the communication connection between client and appliance (whether HA is involved or not). For SafeNet Network HSM, the default protocol timeout of 2 hours was much too long, so SafeNet configured that to 3 minutes when HA is involved. This means that: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>In a period of no activity by client or appliance, the appliance's TCP will wonder if the client is still there, and will send a packet after 3 minutes of silence. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If that packet is acknowledged, the 3 minute TCP timer restarts, and the cycle repeats indefinitely. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If the packet is NOT acknowledged, then TCP sends another after approximately 45 seconds, and then another after a further 45 seconds. At the two minute mark, with no response, the connection is considered dead, and higher levels are alerted to perform their cleanup. </p>
+        <p>So altogether, a total of five minutes can elapse since the last time the other participant was heard from. This is at the transport layer.
+ 
+</p>
+        <p>Above that level, the NTLS layer provides the connection security and some other housekeeping. Any time a client sends a request for a cryptographic operation, the HSM on the appliance begins working on that operation. </p>
+        <p>While the HSM processes the request, appliance-side NTLS sends a "keep-alive PING" every two seconds, until the HSM returns the answer, which NTLS then conveys across the link to the requesting client. NTLS (nor any layer above) does not perform any interpretation of the ping. </p>
+        <p>It simply drops a slow, steady trickle of bytes into the pipe, to keep the TCP layer active.  This normally has little effect, but if your client requests a lengthy operation like (say) an 8192-bit keygen, then the random-number-generation portion of that operation could take many minutes to complete, during which the HSM would legitimately be sending nothing back to the client.  The NTLS ping ensures that the connection remains alive during long pauses.
+</p>
+        <h5>Configuration settings</h5>
+        <p> 
+In the SafeNet configuration file, "<i>DefaultTimeout</i>" (default value is 500 seconds) governs how long the client will wait for a result from an HSM, for a cryptographic call. 
+In the case of SafeNet Network HSM, the copy of the config file inside the appliance is not accessible externally. 
+The config file in the client installation is accessible to modify, but "DefaultTimeout" in that file affects only a locally connected HSM (such as might be the case if you had a SafeNet Remote Backup HSM attached to your client computer). The config file in the client has no effect on the configuration inside the network-attached SafeNet Network HSM appliance, and thus can have no effect on the interaction between client and SafeNet Network HSM appliance.
+</p>
+        <p><i>ReceiveTimeout</i> is how long the library will wait for a dropped connection to come back. </p>
+        <p>If the <i>ReceiveTimeout</i> is tripped, for a given appliance, the HA client stops talking to that appliance and deals with the remaining members of the HA group to serve your application's crypto requests. </p>
+        <p>A minute later, the HA client tries to contact the member that failed to reply. <br />If the connection is successfully re-established, the errant appliance resumes working in the group, being assigned application calls as needed (governed by application workload and HA logic).
+</p>
+        <p>If the connection is not successfully re-established, the client continues working with the remaining group members. Another minute passes, and the client once again tries the missing appliance to see if it is ready to actively resume working in the HA group. 
+ 
+</p>
+        <p>The retries continue until the missing member resumes, or until the pre-set (by you) number of retries is reached (maximum of 500). If the retry count is reached with no success, the client stops trying that member. The failed appliance is still a member of the group (it is still in the list of HA group members maintained on the client), but the client no longer tries to send it application calls, and no longer encourages it to establish a connection. You must fix the appliance (or its network connection) and manually recover it into the group for the client to resume including it in operations.</p>
+        <h3>HA Automatic add/remove feature</h3>
+        <p>The automatic add/remove feature allows individual HA group members to be added to the group or removed from it, automatically. The feature is available from release 6.2.1 and later, and has the following characteristics. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>It works only  when “Active recovery mode” is enabled. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A running client automatically detects SafeNet Network HSM appliance insertion-to and removal-from its configuration. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Connection to the SafeNet Network HSM appliance takes place only if the client HA configuration also has a new HA member or an HA member gone missing. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A running client does not automatically disconnect from the appliance that has been removed from its configuration until the appliance goes offline (for example, disconnected or powered down). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A running client uses the new HA member that is being added to the HA group configuration and does not require the client to restart to do so. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A running client stops using the removed HA member that is being revoked from the HA configuration and does not require the client to restart to do so. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>When a new member is added to the HA group, entries like the following appear in the client HA Log: </p><pre class="listLevel1" xml:space="preserve">Mon Feb  1 11:06:55 2016 : [6619] HA group: 11079656446993 detected new member member: 286668019649 </pre><pre class="listLevel1" xml:space="preserve">Mon Feb  1 11:07:25 2016 : [6619] HA group: 11079656446993 recovery attempt #1 succeeded for member: 286668019649 
+
+</pre>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>When an HA member is removed from the HA group, entries like the following appear in the client HA log: </p><pre class="listLevel1" xml:space="preserve">Mon Feb  1 11:07:45 2016 : [6619] HA group: 11079656446993 member: 286668019649 revoked
+ 
+</pre>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>When a new SafeNet Network HSM appliance is registered, the client with HA configured with “Active recovery mode” shows entries similar to the following  in the client HA log: </p><pre class="listLevel1" xml:space="preserve">Sun Jan 31 21:01:52 2016 : [3820] HA subsystem detected new server : 172.20.11.175 </pre><pre class="listLevel1" xml:space="preserve">Sun Jan 31 21:01:56 2016 : [3820] HA subsystem server 172.20.11.175 connected (*) </pre>
+        <p class="listLevel1" xml:space="preserve">(*This log entry appears only if the third bullet-point paragraph in this list is true
+"...only if the client HA configuration also has a new HA member or an HA member gone missing." )
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>When an existing SafeNet Network HSM appliance is removed, the client with HA configured with Active recovery mode, shows entries similar to the following  in the client HA log: </p><pre class="listLevel1" xml:space="preserve">Tue Feb  2 15:45:12 2016 : [28001] HA subsystem detected removal of server : 172.20.11.86 
+
+</pre>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The client re-scans the configuration file every ten seconds, ensuring that a maximum of 10 seconds would elapse before a new member is picked up, or an existing one is removed due to disconnection or failure. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>All changes to the configuration file should be made by standard VTL and LunaCM commands. No new commands or options are added for this feature; it is invoked automatically when <b>hagroup recoverymode -mode activeBasic</b> or <b>hagroup recoverymode -mode activeEnhanced</b>&#160;is set.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span><b>hagroup recoveryMode</b> is now active by default. "Passive" mode no longer exists.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>For this feature to be available, the client software must be version 6.2.1 or newer. There is no appliance version or HSM firmware version dependency. </p>
+        <p>See also <a href="ha_auto-reconnect.htm" class="MCXref xref">HA Auto-Reconnect </a> for the situation where the application client has become disconnected from the entire HA group.</p>
+        <h3>Solaris (and other Unix)</h3>
+        <p>Due to a problem in the TCP/IP configuration of some Solaris systems, 
+ inconvenient delays may have been experienced with some Solaris clients. 
+ </p>
+        <p>The problem occurred if an application was started on a Solaris client 
+ while one or more expected SafeNet Network HSM appliances is unavailable. The Solaris 
+ client machine experienced a considerable delay (minutes) before the remaining 
+ SafeNet Enterprise HSMs could be seen and used by the application. This was a TCP/IP 
+ setup issue in Solaris, in which the system attempted to set up sockets 
+ for each expected connection, and retried the unsuccessful attempts until 
+ timeout, before permitting successful connections to proceed.</p>
+        <p>To control this problem, the client-side library now imposes a ten-second 
+ retry window per expected appliance, 
+ and then moves on. (Thus, if your Client was configured to use three SafeNet Network HSM appliances, 
+ and two of them were unavailable, the Client would retry the first missing 
+ appliance for ten seconds, then the second missing appliance for a further 
+ ten seconds, for a total of twenty seconds of retries, before resuming 
+ operation with the remaining available appliance). This applies to Linux and Unix variants.</p>
+        <p>For Windows, the per-appliance timeout is 24 seconds.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

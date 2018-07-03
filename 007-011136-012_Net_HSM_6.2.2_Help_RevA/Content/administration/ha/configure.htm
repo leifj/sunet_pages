@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|High-Availability (HA) Configuration and Operation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Configuring HA</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha.htm">High-Availability (HA) Configuration and Operation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Configuring HA</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Configuring HA</h2>
+        <p>For this section you need at least two SafeNet Network HSM appliances with PED Authentication, or two with Password Authentication. You may not use Password 
+ Authenticated SafeNet Network HSM and PED Authenticated SafeNet Network HSM simultaneously 
+ in an HA group. </p>
+        <p>Partitions that are to take part in an HA group do not need to be identical (see below for the example that mixes several differences), but they should have the same firmware version and generally similar Policy settings, to avoid conflicts. For example, you would not want to have a group with a mix of partitions, some with FIPS mode switched on and some with FIPS mode switched off, because a call for a non-FIPS-approved operation would fail on any member that is not allowed to perform that operation, and attempts to synchronize the contents of group members would fail to replicate objects that were not permitted on some members. The library is not aware of individual member settings; only whether the members are available when needed, or not. </p>
+        <h3>Set up Appliances for HA</h3>
+        <p>Follow these steps to set up an HA group:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Perform the network 
+ setup on your two HA units (for a description of the standard procedure, see <a href="../../configuration/appliance_config/about_configuring_luna_appliance_network_settings.htm" class="MCXref xref">Configuring the SafeNet Appliance Network Settings</a> in the <i>Configuration Guide</i>). 
+ For this example, the appliances are designated sa1751 and sa172 and their HSMs have the same names, respectively. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Ensure that the <b>Allow 
+ Cloning</b> and <b>Allow Network Replication</b> policies are “On” in <b>hsm 
+ showPolicies</b> (and 
+ if not, then set them with 
+ <b>hsm setPolicy</b>). If your HSMs do not have the cloning option, then they will use the SIM or Key Export functionality to backup to (and restore from) a file, rather than a hardware Backup token).</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Initialize the 
+ HSMs on your SafeNet Network HSM appliances (<a href="../../configuration/hsm_init/about_initializing_a_password_authenticated_hsm.htm" title="" alt="" class="MCXref xref">About Initializing a Password-Authenticated HSM</a> or <a href="../../configuration/hsm_init/initializing_a_luna_hsm_ped-version.htm" title="" alt="" class="MCXref xref">Initializing a PED-Authenticated HSM</a> in the <i>Configuration Guide</i>). They must have the same cloning domain 
+ – that is, they must share the same red, domain PED Key if they are PED-authenticated , or they must share the same domain string if they are password-authenticated.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Create a partition 
+ on each SafeNet Network HSM. They need not have the same labels, but must have the 
+ same password. For this example, the Partitions are sa175legpar1 (on sa175) 
+ and sa172legpar1(on sa172).</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Use the <b>partition changePw</b>  
+ command to change the Partitions' passwords so that they match. </p>
+        <p class="listLevel1">By making the client partition challenge password the same on both partitions (on both SafeNet Network HSM&#160;appliances), you allow your clients to use that one secret when addressing the virtual partition (which includes both real partitions).</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Make a note of the serial number of each Partition 
+ created on each SafeNet Network HSM (use <b>partition 
+ show</b>). For this example:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>sa175 - sa175legpar1 - serial number 65003001 - password userpin</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>sa172 - sa172legpar1 - serial number 65005001 - password userpin.</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>[OPTION] Ensure 
+ that each Partition is Activated and AutoActivated 
+ (see <a href="../partitions/about_activation_and_auto-activation_.htm" class="MCXref xref">About Activation and Auto-Activation </a> - applies to SafeNet Network HSM with PED Authentication), so that it can 
+ retain/resume its "Activate" (persistent login) state through 
+ any brief power failure or other interruption. <br /></p>
+        <h3>Register Clients with SafeNet Network HSM HA</h3>
+        <p>Proceed with normal client 
+ setup (see <a href="../../configuration/client_appliance/client_appliance.htm" class="MCXref xref">[Step 7] Create a Network Trust Link Between the Client and the Appliance</a> in the <i>Configuration Guide</i>). Register your client computer with both SafeNet Enterprise HSMs (this 
+ example is using just two HSM appliances; obviously, you would configure 
+ and register however many HSM appliances you wish to use in your own 
+ situation).  
+ &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>On sa175, assign 
+ sa175legpar1 to ClientX (you would replace "ClientX" with the 
+ actual name of your Client computer).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>On sa172, assign 
+ sa172legpar1 to ClientX, as well (repeat if you have more SafeNet Enterprise HSMs and Partitions 
+ to include in the HA group).</p>
+        <p>At this point, you have completed a normal single-client, multiple HSM appliance setup.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You must Activate individual HSM partitions directly and individually - you cannot perform Activation on a virtual HA partition. <br /><br />In general, when an HA group is established, you (or your applications) can interact with the virtual partition to perform crypto operations, and the library decides which physical partitions are involved - based on load and other considerations -  but administrative activities must be performed directly on individual physical HSM partitions. <br /> </p>
+        <p>Now proceed to create the HA group.</p>
+        <h3>Create the HA Group</h3>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Your LunaCM instance needs to update the <b>Chrystoki.conf</b> (Linux/UNIX) or <b>crystoki.ini</b> file (Windows) when setting up or reconfiguring HA. Ensure that you have sufficient privileges. </p>
+        <body>
+            <p>After creating partitions </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>on (at least) two SafeNet appliances, and setting up NTLS between those partitions and your client, or </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>on two HSMs on the local host, or </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>on a mix of local and remote application partitions, </p>
+            <p>use LunaCM to configure HA on your client.</p>
+            <p>For this example, assume </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>two local HSMs, </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>two remote HSM appliances (one partition from each) </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>a mix of PSO partitions and legacy partitions (not required, just mentioning so the slot list distribution is obvious, and to show that it is possible to mix - HA is not affected), </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>a mix of firmware versions (illustrating that it is possible to mix f/w versions in HA - but remember that the group has the capabilities of the oldest firmware, not any newer)</p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>each partition has the same password/challenge secret (previously set by command <b>role changePW -oldpw</b> &lt;pw&gt; <b>-newpw</b> with the old and new partition challenge/password secrets specified in the command, to invoke changing the secondary credentials), </p>
+            <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>each partition is activated (the partition has Policies 22 and 23 turned on, and an Owner/Crypto Officer (or Crypto User) authentication has been performed) </p>
+            <p>&#160;</p><pre class="listLevel1" xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;lunacm
+LunaCM v15.11.16-135. Copyright (c) 2006-2016 SafeNet, Inc.
+
+        Available HSMs:
+
+        Slot Id -&gt;              0
+        Label -&gt;                mylegacypar1
+        Serial Number -&gt;        16298193222735
+        Model -&gt;                LunaSA 6.2.0
+        Firmware Version -&gt;     6.24.0
+        Configuration -&gt;        Luna User Partition, No SO (PED) Signing With Cloning Mode
+        Slot Description -&gt;     Net Token Slot
+
+        Slot Id -&gt;              1
+        Label -&gt;                mysapsopar1
+        Serial Number -&gt;        16298193222734
+        Model -&gt;                LunaSA 6.2.0
+        Firmware Version -&gt;     6.24.0
+        Configuration -&gt;        Luna User Partition With SO (PED) Signing With Cloning Mode
+        Slot Description -&gt;     Net Token Slot
+
+        Slot Id -&gt;              2
+        Tunnel Slot Id -&gt;       4
+        Label -&gt;                parwithpso
+        Serial Number -&gt;        349297122742
+        Model -&gt;                K6 Base
+        Firmware Version -&gt;     6.24.0
+        Configuration -&gt;        Luna User Partition With SO (PED) Signing With Cloning Mode
+        Slot Description -&gt;     User Token Slot
+
+        Slot Id -&gt;              3
+        Tunnel Slot Id -&gt;       4
+        Label -&gt;                mypcie6
+        Serial Number -&gt;        150022
+        Model -&gt;                K6 Base
+        Firmware Version -&gt;     6.24.0
+        Configuration -&gt;        Luna HSM Admin Partition (PED) Signing With Cloning Mode
+        Slot Description -&gt;     Admin Token Slot
+        HSM Configuration -&gt;    Luna HSM Admin Partition (PED)
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              5
+        Label -&gt;                myG5par
+        Serial Number -&gt;        16302360890475
+        Model -&gt;                G5Base
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna User Partition With SO (PED) Signing With Cloning Mode
+        Slot Description -&gt;     User Token Slot
+
+        Slot Id -&gt;              6
+        Label -&gt;                SafeG5
+        Serial Number -&gt;        7001812
+        Model -&gt;                G5Base
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna HSM Admin Partition (PED) Signing With Cloning Mode
+        Slot Description -&gt;     Admin Token Slot
+        HSM Configuration -&gt;    Luna HSM Admin Partition (PED)
+        HSM Status -&gt;           OK
+
+
+        Current Slot Id: 0
+
+
+Command Result : No Error
+
+lunacm:&gt; </pre>
+            <p>&#160;</p>
+            <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Use the <b>hagroup createGroup</b> command , to create the HA group with one member.</p>
+            <p>&#160;</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; hagroup createGroup -serialNumber 349297122742 -label myhagroup -p someuserpin
+
+        New group with label "myhagroup" created with group number 1349297122742.
+        Group configuration is:
+
+         HA Group Label:  myhagroup
+        HA Group Number:  1349297122742
+       HA Group Slot ID:  Not Available
+        Synchronization:  enabled
+          Group Members:  349297122742
+             Needs sync:  no
+        Standby Members:  &lt;none&gt;
+
+
+Slot #    Member S/N                      Member Label    Status
+======    ==========                      ============    ======
+------  349297122742                        parwithpso     alive
+
+
+Command Result : No Error
+LunaCM v15.11.16-135. Copyright (c) 2006-2015 SafeNet, Inc.
+
+        Available HSMs:
+
+        Slot Id -&gt;              0
+        Label -&gt;                mylegacypar1
+        Serial Number -&gt;        16298193222735
+        Model -&gt;                LunaSA 6.2.0
+        Firmware Version -&gt;     6.24.0
+        Configuration -&gt;        Luna User Partition, No SO (PED) Signing With Cloning Mode
+        Slot Description -&gt;     Net Token Slot
+
+        Slot Id -&gt;              1
+        Label -&gt;                mysapsopar1
+        Serial Number -&gt;        16298193222734
+        Model -&gt;                LunaSA 6.2.0
+        Firmware Version -&gt;     6.24.0
+        Configuration -&gt;        Luna User Partition With SO (PED) Signing With Cloning Mode
+        Slot Description -&gt;     Net Token Slot
+
+        Slot Id -&gt;              2
+        Tunnel Slot Id -&gt;       4
+        Label -&gt;                parwithpso
+        Serial Number -&gt;        349297122742
+        Model -&gt;                K6 Base
+        Firmware Version -&gt;     6.24.0
+        Configuration -&gt;        Luna User Partition With SO (PED) Signing With Cloning Mode
+        Slot Description -&gt;     User Token Slot
+
+        Slot Id -&gt;              3
+        Tunnel Slot Id -&gt;       4
+        Label -&gt;                mypcie6
+        Serial Number -&gt;        150022
+        Model -&gt;                K6 Base
+        Firmware Version -&gt;     6.24.0
+        Configuration -&gt;        Luna HSM Admin Partition (PED) Signing With Cloning Mode
+        Slot Description -&gt;     Admin Token Slot
+        HSM Configuration -&gt;    Luna HSM Admin Partition (PED)
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              5
+        Label -&gt;                myG5par
+        Serial Number -&gt;        16302360890475
+        Model -&gt;                G5Base
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna User Partition With SO (PED) Signing With Cloning Mode
+        Slot Description -&gt;     User Token Slot
+
+        Slot Id -&gt;              6
+        Label -&gt;                SafeG5
+        Serial Number -&gt;        7001812
+        Model -&gt;                G5Base
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna HSM Admin Partition (PED) Signing With Cloning Mode
+        Slot Description -&gt;     Admin Token Slot
+        HSM Configuration -&gt;    Luna HSM Admin Partition (PED)
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              10
+        HSM Label -&gt;            myhagroup
+        HSM Serial Number -&gt;    1349297122742
+        HSM Model -&gt;            LunaVirtual
+        HSM Firmware Version -&gt; 6.24.0
+        HSM Configuration -&gt;    Luna Virtual HSM (PED) Signing With Cloning Mode
+        HSM Status -&gt;           N/A - HA Group
+
+        Current Slot Id: 0
+
+lunacm:&gt;</pre>
+            <p>&#160;</p>
+            <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>For PED-authenticated HSMs, have a SafeNet PED connected, the partition already activated, and provide the partition challenge secret  as the password (must be the same for all members). For Password-authenticated HSMs, the partition password is the challenge, and must be common to all members.<br /><br />The group is represented by the virtual partition, which must have the same authentication. </p>
+            <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You cannot mix PED-authenticated and Password-authenticated HSM partitions in an HA&#160;group, because  the different authentication methods prevent them having the same cloning domain, which is required for HA synchronization. </p>
+            <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Your chrystoki.conf/crystoki.ini 
+ file should now have a new section:</p><pre class="listLevel1" xml:space="preserve">VirtualToken = {<br />VirtualToken00Members = 65003001;<br />VirtualToken00SN = 742276409;<br />VirtualToken00Label = myHAgroup;<br />} &#160;</pre>
+            <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>Never insert TAB characters into the chrystoki.ini 
+ (Windows) or crystoki.conf (UNIX) file.</p>
+            <p>So far, we have an HA group with one member, which is the SafeNet PCIe HSM user partition from the original slot list. Next we would add additional HSM partitions (slots) to the group, to make it a true, functional HA group. </p>
+            <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use the <b>hagroup addmember</b> command to add another 
+ member to the HA group, that member being the SafeNet USB HSM user partition from the original list:</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; hagroup addMember -slot 5 -group myhagroup -password someuserpin
+        Member 16302360890475 successfully added to group myhagroup. New group
+        configuration is:
+
+         HA Group Label:  myhagroup
+        HA Group Number:  1349297122742
+       HA Group Slot ID:  10
+        Synchronization:  enabled
+          Group Members:  349297122742, 16302360890475
+             Needs sync:  no
+        Standby Members:  &lt;none&gt;
+
+
+Slot #    Member S/N                      Member Label    Status
+======    ==========                      ============    ======
+------  349297122742                        parwithpso     alive
+------  16302360890475                         myG5par     alive
+
+
+        Please use the command "ha synchronize" when you are ready
+        to replicate data between all members of the HA group.
+        (If you have additional members to add, you may wish to wait
+        until you have added them before synchronizing to save time by
+        avoiding multiple synchronizations.)
+
+Command Result : No Error
+
+lunacm:&gt;</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">
+                <br />                <br />            </pre>
+            <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Check Chrystoki.conf/crystoki.ini 
+ again, the VirtualToken section should now look like this:</p><pre class="listLevel1" xml:space="preserve">VirtualToken = {<br />VirtualToken01Label = myhagroup
+VirtualToken01SN = 1349297122742;
+VirtualToken01Members = 349297122742,16302360890475;<br />}<br /> &#160;</pre>
+            <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>To extend the example, we can add one of the SafeNet Network HSM remote partitions to the group, again with command <b>hagroup addMember</b>:</p>
+            <p>&#160;</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; hagroup addMember -slot 0 -group myhagroup -password someuserpin
+        Member 16298193222735 successfully added to group myhagroup. New group
+        configuration is:
+
+         HA Group Label:  myhagroup
+        HA Group Number:  1349297122742
+       HA Group Slot ID:  10
+        Synchronization:  enabled
+          Group Members:  349297122742, 16302360890475, 16298193222735
+             Needs sync:  no
+        Standby Members:  &lt;none&gt;
+
+
+Slot #    Member S/N                      Member Label    Status
+======    ==========                      ============    ======
+------  349297122742                        parwithpso     alive
+------  16302360890475                         myG5par     alive
+------  16298193222735                    mylegacypar1     alive
+
+
+        Please use the command "ha synchronize" when you are ready
+        to replicate data between all members of the HA group.
+        (If you have additional members to add, you may wish to wait
+        until you have added them before synchronizing to save time by
+        avoiding multiple synchronizations.)
+
+Command Result : No Error
+
+lunacm:&gt;</pre>
+            <p>&#160;</p>
+            <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Use the command <b>hagroup synchronize -group</b> &lt;grouplabel&gt; <b>-password</b> &lt;password&gt; <b>-enable</b> when you are ready 
+to replicate data between/among all members of the HA group. </p>
+            <p>&#160;</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; hagroup synchronize -group myhagroup -password someuserpin -enable
+
+        HA Synchronization is already enabled
+
+        No synchronization performed/needed.
+
+Command Result : No Error
+
+lunacm:&gt;</pre>
+            <p>&#160;</p>
+            <p class="listLevel1">If you have additional 
+members to add, you might wish to wait until you have added them before 
+synchronizing to save time by avoiding multiple synchronizations. The 'synchronize' command replicates all objects on all partitions 
+ across all other partitions. As there are no objects on our newly created 
+ partitions yet, we do not need to run this command. </p>
+            <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Do not use this command when recovering a group member that has failed 
+ (or was taken down for maintenance). Use the command <b>hagroup recover -group</b> &lt;grouplabel&gt;.</p>
+            <h3>Verification Steps</h3>
+            <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>We have the two  physical slots on SafeNet HSM sa175 and SafeNet HSM sa172, and now a third virtual slot which  points at both physical slots at once, via load balancing. To test your HA setup, run multitoken against slot 3:</p>
+            <p class="listLevel1">./multitoken -mode rsasigver -key 1024 -slots 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 </p>
+            <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>(Each of the “3”s in the above sample invokes one thread performing  the selected signing operation.)</p>
+            <p class="ol1" data-mc-autonum="8." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">8.</span></span>Verify that the  network lights on both SafeNet Network HSM units are flashing. Verify that performance  on multitoken is approximately 2400 signatures/second. Fewer than ten threads might be insufficient to exercise the SafeNet Enterprise HSMs  fully. Therefore, experiment with additional threads until you see the  expected performance.</p>
+            <p>If you are satisfied that your HA setup is working, then you can begin 
+ using your application against the HA "slot" label (which, in 
+ the example above, was "myhagroup"). &#160;If 
+ you have included more SafeNet HSM application Partitions in your HA group, 
+ then the virtual slot assignment will differ accordingly, but that doesn't 
+ matter to your application, because the application should be invoking 
+ the label, not a particular slot-number. </p>
+        </body>
+        <h3>HA Standby Mode [optional]</h3>
+        <p>If you wish to add an additional member that will be designated a standby member, and not a regular participant in the group, see <a href="standby.htm" class="MCXref xref">Standby Members</a>.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

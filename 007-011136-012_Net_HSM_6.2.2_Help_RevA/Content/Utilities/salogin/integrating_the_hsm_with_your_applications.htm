@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Utilities Reference Guide|SAlogin">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using the salogin Utility</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Utilities Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="salogin.htm">SAlogin</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Using the salogin Utility</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor565"></a>Using the salogin Utility</h2>
+        <p>Cryptographic applications that are not specifically adapted to use 
+ an HSM Server can nevertheless be run using SafeNet Enterprise HSMs, with the aid 
+ of the <b>salogin</b> 
+ utility. This section provides the settings required for some widely-used 
+ applications.</p>
+        <p>An example of a situation where you might use <b>salogin</b> is where you wish to use a SafeNet HSM appliance with openssl, which can be used with HSMs, but which has no inherent ability to provide credentials to the HSM.</p>
+        <h3>The salogin Command</h3>
+        <p>The <b>salogin</b> 
+ client-side utility is provided to assist clients that do not include 
+ the requisite HSM login and logout capability within the client application. 
+ Run the utility from a shell or command prompt, or include it in scripts.</p>
+        <p>The <b>salogin</b> 
+ utility has a single command, with several arguments, as follows:</p>
+        <p class="code">&gt;salogin -h<br />Luna Login Utility 1.0 Arguments:</p>
+        <table style="border-spacing: 0px;border-spacing: 0px;width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" cellspacing="0" class="TableStyle-Page">
+            <col style="width: 6.567%;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 9.298%;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 83.569%;" class="TableStyle-Page-Column-Column1" />
+            <tr valign="top" class="TableStyle-Page-Body-Body1">
+                <td width="6.567%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">o </p>
+                </td>
+                <td width="9.298%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">&#160;</p>
+                </td>
+                <td width="83.569%" class="TableStyle-Page-BodyD-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">open application access</p>
+                </td>
+            </tr>
+            <tr valign="top" class="TableStyle-Page-Body-Body1">
+                <td width="6.567%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">c </p>
+                </td>
+                <td width="9.298%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">&#160;</p>
+                </td>
+                <td width="83.569%" class="TableStyle-Page-BodyD-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">close application access</p>
+                </td>
+            </tr>
+            <tr valign="top" class="TableStyle-Page-Body-Body1">
+                <td width="6.567%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">i </p>
+                </td>
+                <td width="9.298%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">hi:lo </p>
+                </td>
+                <td width="83.569%" class="TableStyle-Page-BodyD-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">application id; high 
+ and low component</p>
+                </td>
+            </tr>
+            <tr valign="top" class="TableStyle-Page-Body-Body1">
+                <td width="6.567%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">s </p>
+                </td>
+                <td width="9.298%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">slot </p>
+                </td>
+                <td width="83.569%" class="TableStyle-Page-BodyD-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">token slot id number 
+ (default = 1)</p>
+                </td>
+            </tr>
+            <tr valign="top" class="TableStyle-Page-Body-Body1">
+                <td colspan="1" rowspan="1" width="6.567%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">u</p>
+                </td>
+                <td colspan="1" rowspan="1" width="9.298%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">&#160;</p>
+                </td>
+                <td colspan="1" rowspan="1" width="83.569%" class="TableStyle-Page-BodyD-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">specifies that login 
+ should be performed as the Crypto-User if no user type is supplied, the 
+ Crypto-Officer will be used</p>
+                </td>
+            </tr>
+            <tr valign="top" class="TableStyle-Page-Body-Body1">
+                <td width="6.567%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">p </p>
+                </td>
+                <td width="9.298%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">pswd </p>
+                </td>
+                <td width="83.569%" class="TableStyle-Page-BodyD-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">challenge password - 
+ if not included, login will not be performed</p>
+                </td>
+            </tr>
+            <tr valign="top" class="TableStyle-Page-Body-Body1">
+                <td width="6.567%" class="TableStyle-Page-BodyE-Column1-Body1">r</td>
+                <td width="9.298%" class="TableStyle-Page-BodyE-Column1-Body1">server IP</td>
+                <td width="83.569%" class="TableStyle-Page-BodyD-Column1-Body1">remote ped server ip</td>
+            </tr>
+            <tr valign="top" class="TableStyle-Page-Body-Body1">
+                <td width="6.567%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">v </p>
+                </td>
+                <td width="9.298%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">&#160;</p>
+                </td>
+                <td width="83.569%" class="TableStyle-Page-BodyD-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">verbose</p>
+                </td>
+            </tr>
+            <tr valign="top" class="TableStyle-Page-Body-Body1">
+                <td width="6.567%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">h </p>
+                </td>
+                <td width="9.298%" class="TableStyle-Page-BodyE-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">&#160;</p>
+                </td>
+                <td width="83.569%" class="TableStyle-Page-BodyD-Column1-Body1">
+                    <p style="font-family: 'Courier New', monospace;">this help</p>
+                </td>
+            </tr>
+        </table>
+        <h3>Examples</h3><pre xml:space="preserve">salogin -o -s 1 -i 1:1 <br /># open a persistent application connection<br /># on slot 1 with app id 1:1</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">salogin -o -s 1 -i 1:1 -p HT7bHTHPRp/4/Cdb<br /># open a persistent application connection<br /># and login with Luna HSM challenge</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">salogin -c -s 1 -i 1:1 <br /># close persistent application connection 1:1<br /># on slot 1</pre>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The applications in the integrations documents
+ have been explicitly integrated by SafeNet, to work with your&#160;SafeNet HSM product. Contact your SafeNet representative.&#160;&#160;<br /><br />If you are a developer, you might prefer to create or modify 
+ your own application to include support for the  HSM or appliance. 
+ Refer to the Software Development Kit and the Extensions sections of this document set.</p>
+        <h3>Other options</h3>
+        <p>For java applications you could consider the KeyStore interface.  It is internally consistent with the service provider interface defined by SUN/Oracle and does not require any proprietary code or applications. </p>
+        <p> If you are using an integration that does not refer to a KeyStore then the <span style="font-family: 'Courier New', monospace;">salogin</span> method might be required. You are then limited to working with 1 partition. 
+
+The type of HSM doesn’t matter, as long as it is SafeNet and visible by the client at the time that the library is initialized. 
+</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|Configuration without One-step NTLS|[Step 8] Enable the Client to Access a Partition">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Creating an NTL Link Between a Client and a Partition</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../administration/appendix-a_config/appendix-a_old_config_steps.htm">Configuration without One-step NTLS</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="client_partition.htm">[Step 8] Enable the Client to Access a Partition</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Creating an NTL Link Between a Client and a Partition</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>
+            <br />Creating an NTL Link Between a Client and a Partition</h2>
+        <p>After you establish a network trust link between the client and the appliance, you can  assign the Client to a specific Partition on the appliance to grant the client access to the partition. After you assign a client to a partition, the client can establish NTL links to the partition, allowing you  to do the following:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>see the partition as a slot in LunaCM, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>use the partition with your cryptographic applications. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You must be connected to the HSM Server and logged in as “admin”.</p>
+        <h3><a name="kanchor226"></a><a name="AssignPart"></a>Assigning a Client to a Partition</h3>
+        <p>Use LunaSH <b>client assignpartition</b> command to assign a registered client to an HSM Partition. You might need to use your client IP address as your client name, if you registered your client using an IP&#160;address.</p>
+        <p>This task is performed by the HSM&#160;SO, if you are not using STC. If you are configuring a PPSO partition, this is the final task you need to complete before handing off the partition to the partition owner.</p>
+        <h5>To assign a client to a partition</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Launch LunaSH&#160;and log in as the HSM&#160;SO.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Enter the following command to assign a client to a partition:</p>
+        <p class="listLevel1"><b>client assignPartition -client</b> &lt;clientname&gt; 
+ <b>-partition</b> &lt;partition name&gt;</p>
+        <p class="listLevel1">For example:</p><pre class="listLevel1" xml:space="preserve">lunash:&gt; client assignPartition -client ntl_client -partition ntl_partition</pre><pre class="listLevel1"> 'client assignPartition' successful.</pre><pre class="listLevel1" xml:space="preserve">Command Result : 0 (Success)</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Enter the following command to verify that the HSM Partition is assigned to the client.</p>
+        <p class="listLevel1"><b>client show -client</b> &lt;clientname&gt;</p>
+        <p class="listLevel1">For example:</p><pre class="listLevel1" xml:space="preserve">lunash:&gt; client show -client ntl_client</pre><pre class="listLevel1" xml:space="preserve">ClientID:     ntl_client</pre><pre class="listLevel1" xml:space="preserve">Hostname:     Luna_Client</pre><pre class="listLevel1" xml:space="preserve">HTL Required: no</pre><pre class="listLevel1" xml:space="preserve">OTT Expiry:   n/a</pre><pre class="listLevel1" xml:space="preserve">Partitions:   ntl_partition</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>If you registered your client by host name, the appliance will need to use a DNS server to look up the device IP&#160;address. To ensure that the client is reachable in the event of a DNS failure, you can use the following command to map the client host name to its IP address, and save the mapping locally on the appliance.</p>
+        <p class="listLevel1"><b>client hostip map -client</b> &lt;client_name&gt; 
+ <b>-ip</b> &lt;client_IP_address&gt;</p>
+        <p class="listLevel1">For example:</p><pre class="listLevel1">lunash:&gt; client hostip map -client ntl_client -ip 192.20.11.21 <br /></pre><pre class="listLevel1" xml:space="preserve">Command Result : 0 (Success)</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre xml:space="preserve" class="listLevel1">lunash:&gt;client hostip show</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Client Name         Host Name                     Host IP</pre><pre xml:space="preserve" class="listLevel1">----------------------------------------------------------------------</pre><pre xml:space="preserve" class="listLevel1">ntl_client          ntl_client                    192.20.11.21</pre><pre xml:space="preserve" class="listLevel1">Command Result : 0 (Success)</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>If you are configuring a PPSO partition, hand off possession of the partition to its new owner by providing the contact information (IP address and partition name) and any necessary instructions. The receiving person will become the partition SO and begin configuring the partition for its application.</p>
+        <h3>Verifying Your Setup</h3>
+        <p>Before beginning to use a Client application with your newly configured partition, 
+ you can verify that the foregoing setup has been properly performed.</p>
+        <p>This task is performed by the partition owner, from the SafeNet HSM client workstation used to deploy the partition.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>On your Client 
+ computer, open a command-line console.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Go to the software 
+ directory (<span style="font-family: 'Courier New', monospace;">c:\Program 
+ Files\SafeNet\LunaClient</span> for Windows, or <span style="font-family: 'Courier New', monospace;">/usr/safenet/lunaclient</span> 
+ for Linux, Solaris or AIX, or <span style="font-family: 'Courier New', monospace;">/opt/safenet/lunaclient</span> 
+ for HP-UX), and type <span style="font-family: 'Courier New';">vtl verify</span>.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>The response 
+ should be similar to:<span style="font-family: 'Courier New', monospace;"><br />Slot &#160;&#160;&#160;Serial 
+ # &#160;&#160;&#160;&#160;Label<br />==== &#160;&#160;&#160;======== 
+ &#160;&#160;&#160;&#160;=====<br />1 &#160;&#160;&#160;&#160;&#160;&#160;2279315 
+ &#160;&#160;&#160;&#160;&#160;Partition1</span></p>
+        <p class="listLevel1">If you get an error message, then some part 
+ of the configuration has not been properly completed. Retrace the procedure. 
+ </p>
+        <p class="listLevel1">At this point, the client and HSM are configured and registered with 
+ each other. You can now begin to use the  SafeNet Network HSM with your application. You can use the “<span style="font-family: 'Courier New', monospace;">partition 
+ list</span>” command for a list of HSM Partitions on the HSM, and the 
+ “<span style="font-family: 'Courier New', monospace;">client list</span>” 
+ command for a list of the clients assigned to an HSM Partition.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Setup is complete. We suggest that you browse  the <i>Administration Guide</i> to develop a deeper understanding of the options and capabilities of your SafeNet Network HSM partition, and of the housekeeping tasks and utilities that you might need. </p>
+        <h3>Client Connection Limits</h3>
+        <p>See <a href="../../sa_appliance_admin/client_connections/connections_to_the_appliance.htm" class="MCXref xref">Connections to the Appliance - Limits </a>, for a discussion of the limits for client connections to a SafeNet Network HSM appliance and HSM. </p>
+        <h3>Applications and Integrations</h3>
+        <p>If you have any of dozens of third-party applications, we might already have performed system integration with it, and published an Integration Guide for the application or API that you wish to use. Contact SafeNet Customer Support for the latest list of current integrations, or to request that one be developed.</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

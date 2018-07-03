@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|Configuration without One-step NTLS|[Step 5] Create Application Partitions|Legacy Partitions|Creating a legacy Partition (PED) ">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Create a PED Authenticated Legacy-style Application Partition (f/w 6.22.0 or newer)</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../administration/appendix-a_config/appendix-a_old_config_steps.htm">Configuration without One-step NTLS</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition_create.htm">[Step 5] Create Application Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Create a PED Authenticated Legacy-style Application Partition (f/w 6.22.0 or newer)</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Create a PED Authenticated Legacy-style Application Partition (f/w 6.22.0 or newer)</h3>
+        <p>This section assumes that the HSM firmware is version 6.22.0 or newer, and that you are creating a legacy-style application partition that will remain under administrative control of the HSM SO. (For instructions to create PPSO partitions on an HSM with firmware 6.22.0 or newer, or to create true legacy partitions on an HSM with firmware older than 6.22.0, see the appropriate instruction sequences elsewhere in this document.)</p>
+        <p>For the following procedure, you must have previously initialized the HSM, and logged into the HSM as HSM SO. </p>
+        <p>Having logged in as HSM SO, you can now use the  <span style="font-family: 'Courier New', monospace;">partition 
+ create</span> command, to create an HSM Partition. </p>
+        <p>You must supply a label 
+ or name for the new Partition when you issue the command.</p><pre xml:space="preserve" data-mc-conditions="Default.SA">lunash:&gt; partition create -partition &lt;name-for-new-Partition&gt;
+
+</pre>
+        <p>(The angle brackets “&lt;“ and “&gt;” indicate that you fill in text 
+ of your choice. Do not type the brackets.) </p>
+        <h5>Rules for names and passwords </h5>
+        <p>A partition <b>name</b> or a partition <b>label</b> can include any of the following characters : <br /><br />!#$%'()*+,-./0123456789:=@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{}~<br /><br />No spaces, unless you wish to surround the name or label in double quotation marks every time it is used. <br />No question marks, no double quotation marks within the string. &#160;<br />Minimum name or label length is 1 character. Maximum is 32 characters.<br /><br />Valid characters that can be used in a <b>password</b> or in  a cloning <b>domain</b>, when entered via LunaSH [<sup style="color: #ff0000;">1</sup>]), are:<br /><br /> 
+&#160;&#160;  !#$%'*+,-./0123456789:=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{}~<br /><br />(the first character in that list is the space character)
+<br /> Invalid or problematic characters, not to be used in passwords or cloning domains are <br />"&amp;';&lt;&gt;\`|() <br /><br />Valid characters that can be used in a <b>password</b> or in  a cloning <b>domain</b>, when entered via <i>lunacm</i>, are:<br /><br /> &#160;!"#$%&amp;\'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+<br /><br />(the first character in that list is the space character)
+<br /> <br />Minimum password length is 7 characters; maximum is 255 characters in <i>lunash</i> or <i>lunacm</i>. &#160;<br /><br />Minimum domain string length is 1 character;   maximum domain length is 128 characters via <i>lunash</i>. &#160;No arbitrary maximum domain string length is enforced for domain strings entered via <i>lunacm</i>, and we have successfully input domain strings longer than 1000 characters in testing. &#160;<br /><br />[<sup style="color: #ff0000;">1</sup>] LunaSH on the SafeNet Network HSM has a few input-character restrictions that are not present in LunaCM, run from a client host. It is unlikely that you would ever be able to access, via LunaSH, a partition that received a password or domain via LunaCM, but the conservative approach would be to avoid the few "invalid or problematic characters" generally.<br /><br /></p>
+        <p class="ol1" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Create and name 
+ an application Partition. Type: </p><pre class="listLevel1" xml:space="preserve">lunash:&gt; partition create -partition mylegacypar1 </pre>
+        <p class="listLevel1" xml:space="preserve">(substitute the name of your choice for "mylegacypar1")&#160;</p><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">Please ensure that you have purchased licenses for at least this number of partitions: -1 <br style="font-family: monospace;" />If you are sure you wish to continue then type 'proceed', otherwise type 'quit'&#160;<br style="font-family: monospace;" />&gt; proceed&#160;&#160;<br style="font-family: monospace;" />Proceeding...&#160;<br /><br />Please ensure that you copy the password from the Luna PED and&#160;<br style="font-family: monospace;" />that you keep it in a safe place.&#160;<br style="font-family: monospace;" />Luna PED operation required to create a partition - use User or Partition Owner (black) PED key.</pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>The PED inquires if you intend to reuse a pre-existing imprinted black PED Key.<br /><img src="../../Resources/Images/ped/ped-message_set-user_like-to-reuse.png" /><br /><br /> <br />Respond "Yes" if you have a key from another HSM partition with a partition Owner ID already imprinted on it, that you wish to share/reuse. <br />Respond "No" if you have a fresh, never-imprinted key, or if you have a key previously imprinted with an ID&#160;that you do not wish to preserve.<br />(See <a href="../../administration/ped_keys/what_is_a_shared_or_group_ped_key.htm" class="MCXref xref">Shared or Group PED Keys</a> for more detail)</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>The PED requests values for :<br /><img src="../../Resources/Images/ped/ped-message_set-user_m_val.png" /><br /><br /><br />and <br /><br /><img src="../../Resources/Images/ped/ped-message_set-user_n_val.png" /><br /><br />(enter "1" for both, unless you wish to invoke MofN split-secret, multi-person access control, <a href="../../administration/ped_keys/mofn_using.htm" class="MCXref xref">Using MofN</a>).<br /></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>The PED then 
+ demands the black Owner PED key with the message <br /><br /><img src="../../Resources/Images/ped/ped-message_set-user_insert.png" /><br /><br /> <br />Insert the black HSM Partition Owner PED key [ of course, the unlabeled PED Key is generically black - we suggest that you apply the appropriate color sticker either immediately before or immediately after imprinting the key; before, just to ensure it gets done, or after, as a helpful indicator as to which ones are imprinted (with which secret), and which ones still blank ] and press [Enter]. A unique 
+ Partition Owner PIN is to be imprinted on both the PED key and the HSM 
+ Partition.<br /><br /><img src="../../Resources/Images/ped/ped-key_crypto-officer_black_small.png" style="width: 77px;height: 43px;" /></p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>The PED <span style="font-style: italic;">might</span> continue with: <br /><br /><img src="../../Resources/Images/ped/ped-message_set-user_warn_used_overwrite.png" /><br /><br /><br />Decide whether this should be a group PED Key (see <a href="../../administration/ped_keys/what_is_a_shared_or_group_ped_key.htm" class="MCXref xref">Shared or Group PED Keys</a>  ), press [YES] or [NO] on the PED keypad, and press [Enter].</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>This is potentially serious business (if you unintentionally overwrite a PED&#160;Key that is needed for other purposes), so SafeNet PED&#160;asks one more time if you truly intend to overwrite the key's content.</p>
+        <p class="listLevel1">
+            <br />
+            <img src="../../Resources/Images/ped/ped-message_set-user_confirm_overwrite.png" />
+        </p>
+        <p class="listLevel1">Press [YES] or [NO] on the PED keypad, and press [Enter].</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Next, you are 
+ asked to provide a PED PIN (optional, see <a href="../../administration/ped_auth/what_is_a_ped_pin.htm" class="MCXref xref">What is a PED PIN?</a>  — 
+ can be 4-to-48 digits, or can be <span style="font-style: italic;">no</span> 
+ digits if a PED PIN is not desired). <br /><br /><img src="../../Resources/Images/ped/ped-message_set-user_enter_ped-pin.png" /><br /><br /> <br />&#160;<br />You must press [Enter] to inform the PED that you are finished entering 
+ PED PIN digits, <span style="font-style: italic;">or</span> that you have 
+ decided not to use a PED PIN (no digits entered).<br />When you provide a PED PIN – even if it is the null PIN (by just pressing 
+ [Enter] with no digits) – the PED requests it a second time, to ensure 
+ that you entered it correctly, as you intended.<br /><br />Press [ENTER] again.</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>You are then 
+ prompted <br /><br /><img src="../../Resources/Images/ped/ped-message_set-user_are-you-duplicating.png" /><br /><br /><br /><br />See <a href="../../administration/ped_keys/what_is_a_duplicate_ped_key.htm" class="MCXref xref">Duplicating PED Keys</a>. &#160;&#160;<br />Respond “No”, if you want the PED to imprint just the one black HSM Admin 
+ PED Key and go on to the next step in creation of the application Partition. 
+ <br />Respond “Yes”, if you want the PED to imprint the first black key and then 
+ ask for more black PED Keys, until you have imprinted (duplicated) as 
+ many as you wish. After each duplicate is made, the PED asks: Would you like to make another duplicate set? Answer "Yes" until you have enough copies, and then press "No".<br /></p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Having created the black key User or Crypto Officer, the HSM needs you to log in as that identity, and prompts: </p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/ped/ped-message_user_login_insert..png" />
+            <br />
+            <br />Leave the black key inserted, and press Enter.</p>
+        <p class="ol1" data-mc-autonum="10."><span class="autonumber"><span class="ol1Number">10.</span></span>Next, the partition's cloning domain must be set, The PED inquires if you intend to reuse a previously imprinted red Domain PED Key. <br /><br /><br /><img src="../../Resources/Images/ped/ped-message_set-domain_like-to-reuse.png" /><br /><br /> <br />Respond "Yes" if you have a key from another HSM partition with a cloning domain ID already imprinted on it, that you wish to share/reuse. <br />Respond "No" if you have a fresh, never-imprinted key, or if you have a key previously imprinted with an ID&#160;that you do not wish to preserve. </p>
+        <p class="ol1" data-mc-autonum="11."><span class="autonumber"><span class="ol1Number">11.</span></span>As it did for the black key, the PED now requests values for M and N. Again, enter 1 for each unless you wish to invoke MofN splitting of the domain secret.</p>
+        <p class="ol1" data-mc-autonum="12."><span class="autonumber"><span class="ol1Number">12.</span></span>The PED then 
+ prompts for a red Domain PED key with the message <br /><br /><br /><img src="../../Resources/Images/ped/ped-message_set-domain_insert-a-domain-key.png" /><br /><br /> <br />Insert the red HSM Partition Domain PED key [ of course, the unlabeled PED Key is generically black - we suggest that you apply the appropriate color sticker either immediately before or immediately after imprinting the key; before, just to ensure it gets done, or after, as a helpful indicator as to which ones are imprinted (with which secret), and which ones still blank ] and press [Enter]. A  
+ cloning domain is to be imprinted on both the PED key and the HSM 
+ Partition. <br /><br /><img src="../../Resources/Images/ped/ped-key_domain_red_small.png" style="width: 80px;height: 44px;" /></p>
+        <p class="ol1" data-mc-autonum="13."><span class="autonumber"><span class="ol1Number">13.</span></span>The PED goes through the same prompts as for the black PED Key. Respond as appropriate. </p>
+        <p class="ol1" data-mc-autonum="14."><span class="autonumber"><span class="ol1Number">14.</span></span>Control returns to the command line:</p><pre class="listLevel1"><br /><span style="font-family: monospace;">'partition create' successful.&#160;</span><br style="font-family: monospace;" /><br style="font-family: monospace;" /><span style="font-family: monospace;">Command Result : 0 (Success)&#160;</span><br style="font-family: monospace;" /><span style="font-family: monospace;">[myLuna] lunash:&gt;</span><br /></pre>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>We recommend that you have at least one backup 
+ set of imprinted PED Keys, stored in a safe place, in case of loss or 
+ damage to the primary keys.</p>
+        <p class="listLevel1">You might wish to adjust <a href="../partition_policies/step-5a_partition_policies_legacy.htm" class="MCXref xref">[Step 6] Set the  Partition Policies for Legacy Partitions</a> (Optional). &#160;&#160;</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">Otherwise, go to <a href="../client_partition/ntl_links.htm" class="MCXref xref">Creating an NTL Link Between a Client and a Partition</a> . &#160;&#160; &#160;</p>
+        <h3>Partition creation  audit log entry</h3>
+        <p>Each time a partition is created, an entry is added to the audit log. Any subsequent actions logged against the partition are identified by the partition serial number that was generated when the partition was created.</p>
+        <h4>Determining the serial number of a created partition from the audit log</h4>
+        <p>An audit log entry similar to the following is generated when a partition is created on the HSM:</p><pre xml:space="preserve">5,12/12/17 16:14:14,S/N 150718 session 1 Access 2147483651:2669 SO container operation LUNA_CREATE_CONTAINER returned RC_OK(0x00000000) container=20 (using PIN (entry=LUNA_ENTRY_DATA_AREA))</pre>
+        <p>It is not obvious from this entry what the serial number is for the created partition. This information, however, can be derived from the log entry, since the partition serial number is simply a concatenation of the HSM serial number and the partition container number, which are specified in the log entry, as highlighted below:</p><pre xml:space="preserve">5,12/12/17 16:14:14,S/N <span style="color: #f39100;">150718</span> session 1 Access 2147483651:2669 SO container operation LUNA_CREATE_CONTAINER returned RC_OK(0x00000000) container=<span style="color: #f39100;">20</span> (using PIN (entry=LUNA_ENTRY_DATA_AREA))</pre>
+        <p>In the example above, the HSM serial number is 150718 and the partition container number is 20. Note that the partition container number is a three-digit number with leading zeros suppressed, so that the actual partition container number is 020. To determine the partition serial number  concatenate the two numbers as follows:</p><pre xml:space="preserve">150718020</pre>
+        <p>Use this number to identify the partition in subsequent audit log entiries.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

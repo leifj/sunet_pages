@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Domains">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Single Domain Policy</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="domains.htm">Domains</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Single Domain Policy</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Single Domain Policy</h2>
+        <p>The HSM is able to support multiple partitions [See Note * below], each with its own cloning domain, if desired, as well as partition authentication for administrative users (black User PED Key for PED-authenticated HSMs, etc.) and for clients/applications (the partition challenge secret). It is possible to force all partitions on the HSM to use the same cloning domain as the administrative partition (the SO space), by setting the "Force Single Domain" policy to "Yes". This would normally be decided before any user partitions have been created on the HSM, because it is a destructive policy change, meaning that any existing HSM contents and partitions are destroyed when this policy changes. This is a convenience feature. It does not affect other authentication secrets that apply to individual partitions on the HSM.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If the policy is set to "No" - not in force - then whenever a new partition is created, the SO is prompted to create a new cloning domain for that partition, or to imprint the partition with an existing domain. By re-using existing domain secrets, you can cause partitions to share domains, if desired, but that is optional and not forced while the policy is set to "No".</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If the policy is set to "Yes" - in force - then that prompt is skipped and each new partition is automatically assigned the cloning domain that is already in use for the HSM SO / administrative partition. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If the policy is set to yes, then the Domain PED Key cannot have a PED&#160;PIN</p><pre xml:space="preserve">Changing policies marked "destructive" will zeroize (erase
+completely) the entire HSM.
+
+Description                              Value        Code      Destructive
+===========                              =====        ====      ===========
+Allow masking                            On           6         Yes
+Allow cloning                            On           7         Yes
+Allow non-FIPS algorithms                On           12        Yes
+SO can reset partition PIN               On           15        Yes
+Allow network replication                On           16        No
+Allow Remote Authentication              On           20        Yes
+Allow offboard storage                   On           22        Yes
+Allow partition groups                   On           23        No
+Allow remote PED usage                   On           25        No
+Allow Acceleration                       On           29        Yes
+Allow unmasking                          On           30        Yes
+Allow FW5 compatibility mode             Off          31        No
+<span style="background-color: #ffff00;">Force Single Domain                      On           35        Yes</span> 
+Allow Unified PED Key                    On           36        No
+
+The HSM is NOT in FIPS 140-2 approved operation mode.
+
+Command Result : 0 (Success)
+[local_host] lush:&gt;&#160;&#160;&#160;&#160;</pre>
+        <p>&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>For SafeNet USB HSM and SafeNet PCIe HSM, two partitions can exist, the HSM Security Officer/adminstrative partition (as long as the HSM has been initialized), and a single User/Application partition (once that has been created). <br />For SafeNet Network HSM, up to 101 partitions can exist, the  HSM Security Officer/adminstrative partition (as long as the HSM has been initialized), and up to 100 User/Application partitions depending on purchased-or-upgraded configuration (once those are created).</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

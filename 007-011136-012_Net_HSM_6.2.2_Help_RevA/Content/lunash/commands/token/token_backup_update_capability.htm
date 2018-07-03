@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|token|token backup|token backup update">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>token backup update capability</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="token.htm">token</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">token backup update capability</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="kanchor508"></a>token backup update capability</h2>
+        <p>Update Backup Token Capability, using a capability update package that you have acquired from 
+ SafeNet and transferred via scp to the SafeNet appliance. Before you can use this command, you must:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>acquire the secure package update file from SafeNet and send the file to the SafeNet Network HSM (using scp or pscp)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>open the file on the SafeNet Network HSM with the lunash command <span class="code"><b>package update</b> &lt;filename&gt; <b>-authcode</b> &lt;authcode&gt;</span></p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span><b>WHEN to USE lunash "token backup" commands, or use "vtl backup" commands?</b>  &#160;<br /><br /><span style="color: #000000;">LunaSH </span><span class="code"><span style="color: #000000;">token backup</span></span><span style="color: #000000;"> commands operate a SafeNet Backup HSM  attached directly to SafeNet Network HSM via USB, and are <b>not</b> intended for use with remotely connected backup devices.</span><![CDATA[  ]]><br />You might have a <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_">locally-connected backup HSM<img class="MCExpanding_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody"> [ connects directly to a SafeNet Network HSM via USB cable ]</span></span> and a locally connected serial terminal and be walking them from SafeNet Network HSM to SafeNet Network HSM in your server room to perform backups. Or you might be administering remotely via SSH and lunash:&gt; commands, while a technician in your server center carries the backup HSM from one SafeNet Network HSM to the next. In either case, these "token backup" commands are the method to use.The important distinction is where the backup HSM is physically connected -  from the SafeNet Network HSM perspective, those are both local backup operations to a Backup HSM that is locally connected to the appliance.<br /><br /><span style="color: #000000;">VTL backup commands operate a SafeNet Backup HSM connected to a computer, and located distantly from your primary SafeNet Network HSM appliance. The VTL backup commands are <b>not</b> for use with a SafeNet Backup HSM that is connected directly to your SafeNet Network HSM appliance.</span><br />For true, hands-off, lights-out operation of your SafeNet appliances, use a SafeNet Remote Backup HSM located in your <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_">administrator's office<img class="MCExpanding_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody"> [ or other convenient location ]</span></span>, connected to a computer acting as a <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_">Remote Backup server<img class="MCExpanding_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody"> [ this could be your administrative workstation, or it could be a completely separate computer ]</span></span>. This means the computer and Backup HSM are located near you and remote/distant from your SafeNet Network HSM appliance(s). For that application, use the <b>backup commands in the VTL utility</b> supplied with the SafeNet Network HSM <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_">Client software<img class="MCExpanding_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody"> [ which must be installed on the computer that is acting as Remote Backup server ]</span></span> &#160;- the appliance <span class="code">token backup</span> commands (previous paragraph) are not designed to work for Remote Backup.</p>
+        <p class="notepad_note">A capability update or a firmware update is meant to be applied just one time to an HSM. If you attempt to re-apply a capability update to an HSM that already has the capability installed, the system throws an error like " C0000002 : RC_GENERAL_ERROR ". A similar result occurs if you attempt to install a particular firmware update more than once on one HSM. This is expected behavior.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code"><b>token backup update capability -serial</b> &lt;serialnum&gt; <b>-capability</b> &lt;capabilityname&gt;  [<b>-force</b>]</p>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 95px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 114px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-capability</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-c</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Specifies the capability name.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-force</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-f</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Force the action without prompting.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-serial</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-s</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Specifies the token serial number. </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">lunash:&gt;token backup update capability -serial 667788 -capability newcapability</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">CAUTION:  This command updates the Token Capability.</pre><pre xml:space="preserve">This process cannot be reversed.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Type 'proceed' to continue, or 'quit'</pre><pre xml:space="preserve">to quit now.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&gt; proceed</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">This is a NON-destructive capability update</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Update Result :0 (Capability newcapability added)</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

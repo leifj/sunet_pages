@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaCM Command Reference Guide|LunaCM Commands|partition">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>partition archive</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaCM Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaCM Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition.htm">partition</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">partition archive</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">partition archive</h2>
+        <p>Access the partition archive commands. </p>
+        <p>An archive (backup) device can be one of the following:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>an HSM in another slot in the current system.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>a backup HSM connected to a remote workstation.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>a USB-attached HSM connected directly to a SafeNet PCIe HSM.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>a SFF backup token (SafeNet iKey e7300) USB device connected to a SafeNet PED. The SafeNet PED can be locally or remotely connected (via PedServer) to the HSM you want to backup.</p>
+        <h5>Device configuraton</h5>
+        <p>In each scenario, the HSM that is being used as a backup device should be configured as a backup device;   the HSM capability <b>Enable full (non-backup) functionality (9)</b> is   disabled.</p>
+        <p>If the HSM is not configured as a backup device then you will not be able to create new backup partitions on the HSM.  You will only be able to backup/restore to/from any existing partitions.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If the domains of your source and target HSMs do not match or the policy settings do not permit backup, the partition archive backup command fails.   No objects are cloned to the target HSM but the command creates an empty backup partition.  In this circumstance, you must manually delete the empty backup partition.</p>
+        <h5>Specifying the backup device</h5>
+        <p>To specify a backup device in another slot in the current system, use the <b>-s</b> option and give the actual slot number (for example, <b>-s 4</b>).</p>
+        <p>To specify a backup device in a remote work station, use the <b>-s</b> option and include the keyword <b>remote</b> (for example, <b>-s remote</b>).  When specifying a remote device, you must also provide a hostname and port number using the <b>-hostname</b>   and <b>-port</b> options.   (The <b>-hostname</b> option also accepts an IP address.)</p>
+        <p>To specify a USB attached backup device directly connected to the HSM in the current slot, use the <b>-s</b> option and include the keyword <b>direct</b> (for example, <b>-s   direct</b>).  If you know the slot number that contains the USB attached HSM, you can specify that slot number explicitly (for example, <b>-s 5</b>). <br /></p>
+        <p>To specify a SFF backup (eToken 7300) inserted into a SafeNet PED connected to the local HSM or connected by USB to a host computer running PedServer, use the <b>-s</b> option and include the keyword <b>etoken</b>.</p>
+        <h5>Password-authenticated SafeNet Remote Backup HSM</h5>
+        <p>When using a password-authenticated SafeNet Remote Backup HSM, the SO password, partition   password, and domain values cannot be specified with the command.  This is because the network connection is not secured and the passwords should not be transferred across the network in the clear.  If these values are required, they are prompted on the remote workstation console.</p>
+        <h5>Device initialization</h5>
+        <p>Before a backup HSM can be used, it must be initialized.  To initialize a backup HSM, you must set your backup HSM as your current slot and use the <b>hsm init</b> command.  If your backup HSM is in a remote workstation,  then you must initialize it locally at that workstation, or remotely using remote PED if it is supported.</p>
+        <h5>Appending objects to an existing backup partition</h5>
+        <p>When backing up, the <b>append</b> option can be used to add objects to the  existing backup partition.  If the specified partition does not exist, then this option cannot be used.  If the partition does exist and this option is not used, the existing partition is deleted and a new  partition is created.  If the <b>append</b> option is not used and the specified partition does not exist, it is created.  If the partition must be created or resized,  the SO password for the backup HSM is required.</p>
+        <h5>Remote backups</h5>
+        <p>To perform remote backup (<b>-s remote</b>), a remote backup server must be running on the remote work station.  To start a remote backup server, run LunaCM on the remote workstation, select the slot you wish to use as a remote backup HSM, and use the command <b>remotebackup start</b>.  The remote backup server will accept commands and execute them against the current slot.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>partition archive</b> <![CDATA[ ]]></p>
+        <p class="listLevel1" style="font-weight: bold;">backup<br />contents<br />delete<br />list<br />restore</p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 142px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 99px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 431px;" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">backup</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">b</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Backup objects from the current slot to a backup partition in a backup device in a specified slot. See <a href="partition_archive_backup.htm" class="MCXref xref">partition archive backup</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">contents</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">c</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">List the contents of a backup partition in a backup device in a specified slot. See <a href="partition_archive_contents.htm" class="MCXref xref">partition archive contents</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">delete</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">d</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Delete the specified backup partition in a backup device in a specified slot.  See <a href="partition_archive_delete.htm" class="MCXref xref">partition archive delete</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">list</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">l</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">List the backup partitions on a backup device in a specified slot. See <a href="partition_archive_list.htm" class="MCXref xref">partition archive list</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">restore</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">r</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Restore objects from the specified backup partition in a backup device in a specified slot to the current user partition. See <a href="partition_archive_restore.htm" class="MCXref xref">partition archive restore</a>.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

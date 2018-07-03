@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Extensions to PKCS#11">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Unwrap Template</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">SDK Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="extensions.htm">Extensions to PKCS#11</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Unwrap Template</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Unwrap Template</h2>
+        <p>The CKA_UNWRAP_TEMPLATE attribute is an optional extension to the C_UnwrapKey function. This attribute points to  an array template which provides additional security by restricting important attributes in the resulting unwrapped key. This unwrap template, along with the user-supplied application template (called uTemplate in the PKCS#11 specification), determine the attributes of the unwrapped key.</p>
+        <p>To invoke an unwrap template, the base key must have the CKA_UNWRAP_TEMPLATE attribute set, pointing to a user-supplied unwrap template. When you specify this attribute on the base key and then attempt to unwrap a key, the unwrap operation adds the attributes of the application template to the attributes in the unwrap template. If there are any mismatches between attribute values specified in the two templates, the unwrap operation fails. Otherwise, the operation succeeds, producing an unwrapped key with the combined attributes of the two templates.</p>
+        <p>Any and all attributes which are valid for application template of a particular mechanism are also valid for the unwrap template. For security, the most effective attributes to restrict are those which might allow the unwrapped key to be misused or expose secret information.  All mechanisms that support key unwrapping also support unwrap templates.</p>
+        <h3>Use Case Example</h3>
+        <p>Key wrapping of asymmetric keys using asymmetric keys. Assume a 2-level wrapping scheme </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Level 1: a private key stored on the HSM will have the suggested attributes; so far, so good </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> Level 2: a wrapped symmetric key is used to wrap an asymmetric key - this is where  CKA_UNWRAP_TEMPLATE would be used on the Level 1 key to enforce these attributes on the Level 2 key as well;  without CKA_UNWRAP_TEMPLATE feature the application would have to rely on the software to ensure that attributes for the Level 2 key are set appropriately. </p>
+        <p>Like this: </p>
+        <p>Since asymmetric keys are too big to be directly wrapped using another asymmetric key (2k key in PKCS#8 would be probably require an 8K wrapping key...) use 2 layers of wrapping:</p>
+        <h5>Wrapping:</h5>
+        <p>- 2k RSA private key is wrapped using an random symmetric key (all keys and operations in software)</p>
+        <p>- random symmetric key is wrapped using 2K RSA public key (all keys and operations in software, matching private key for public key in HSM)</p>
+        <h5>Unwrapping:</h5>
+        <p>- unwrap symmetric key onto the HSM using private key on the HSM (here, want to use CKA_UNWRAP_TEMPLATE to ensure that the unwrapped symmetric key can be used to unwrap only)</p>
+        <p>- unwrap 2K RSA private key onto HSM, use it and delete it.</p>
+        <h3>Examples</h3>
+        <p>The following examples show a successful unwrapping with an unwrap template, and a failed unwrap.</p>
+        <h4>Successful Unwrap </h4>
+        <p>Here, the base key has the CKA_UNWRAP_TEMPLATE&#160;attribute pointing to the unwrap template uTmplt. There are no conflicts between uTmplt and the application template. The application template's extra attributes are added to uTmplt's attributes, and the unwrap operation produces an unwrapped key containing the attributes in the two templates. </p>
+        <p>
+            <img src="../../Resources/Images/derive_template/unwraptremplatesuccess.PNG" style="height: 418px;width: 650px;" />
+        </p>
+        <h4>Failed Unwrap </h4>
+        <p>Here, the base key has the CKA_UNWRAP_TEMPLATE&#160;attribute pointing to the unwrap template uTmplt. Notice that uTmplt has the CKA_UNWRAP&#160;attribute set to false, where the application template has the CKA_UNWRAP attribute set to true. This conflict causes the unwrap operation to fail with the error TEMPLATE_INCONSISTENT. </p>
+        <p>
+            <img src="../../Resources/Images/derive_template/unwraptremplatemismatch.PNG" style="height: 419px;width: 650px;" />
+        </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

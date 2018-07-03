@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Setting SafeNet PCIe HSM Partition Policies [Optional]</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor635"></a>Setting SafeNet PCIe HSM Partition Policies [Optional]</h2>
+        <p><a name="kanchor636"></a>Partition Capabilities represent the underlying factory configurations 
+ that are in force when a Partition is created. Partition Policies are 
+ the settings based on those configuration elements, and can be modified 
+ by the HSM Security Officer (SO). If a Capability is turned off (disabled), 
+ then it cannot be switched on with a Policy setting. Only re-manufacturing 
+ or the application of a Secure Capability Update can change a Capability 
+ from off to on (disabled to enabled). If a Capability is enabled, then 
+ the SO may be able to alter it with a Policy change, but only to make 
+ it more restrictive. The SO cannot make a Capability less restrictive. 
+ </p>
+        <p>For example, if a Capability setting requires that the minimum length 
+ of a Partition Password must be (say) seven characters, then the SO can 
+ use a Policy change to require a minimum password length of eight, nine, 
+ ten, or more characters (up to 255). A requirement for a longer password 
+ is considered to be a more restrictive security setting. The SO cannot 
+ use a Policy change to set the minimum password length to six or fewer 
+ characters, because that would be less restrictive than the original Capability 
+ which demands at least seven characters.</p>
+        <p>In most cases, Configurations and Policies are either off or on (disabled 
+ or enabled, where 0 [zero] equals off/disabled and 1 [one] equals on/enabled), 
+ but some involve a range of values, as in the example below.</p>
+        <h5>Example policy change procedure</h5>
+        <p>In this example, we show the initial values of the Partition Capabilities 
+ and their corresponding Policies, then we change one Policy, and show 
+ the values again.</p><pre xml:space="preserve">lunacm:&gt; partition showinfo
+
+        HSM Serial Number -&gt; 456278
+        Token Flags -&gt;
+                CKF_RNG
+                CKF_LOGIN_REQUIRED
+                CKF_USER_PIN_INITIALIZED
+                CKF_RESTORE_KEY_NOT_NEEDED
+                CKF_PROTECTED_AUTHENTICATION_PATH
+                CKF_TOKEN_INITIALIZED
+        Slot Id -&gt; 1
+        Tunnel Slot Id -&gt; 2
+        Session State -&gt; CKS_RW_PUBLIC_SESSION
+
+        User Status-&gt;                  Not Logged In
+        Crypto Officer Failed Logins-&gt; 0
+        Crypto User Failed Logins-&gt;    0
+        User Flags -&gt;
+                CONTAINER_KCV_CREATED
+        User OUID: 6e000000e400000056f60600
+
+        User Storage:
+                Total Storage Space:  2094996
+                Used Storage Space:   0
+                Free Storage Space:   2094996
+                Object Count:         0
+
+        *** The HSM is NOT in FIPS 140-2 approved operation mode. ***
+
+
+        License Count -&gt; 9
+                1. 0009-020 Test K6 Base Config - 9-20
+                2. 620109-000 Test K3 FIPS3 Update - 620109
+                3. 0009-030 Test K3 HSM Cloning Update - 000009-030
+                4. 620127-000 Test K3 ECC Update - 620127
+                5. 0009-025 Test K3 External MTK Update 2 - 000009-025
+                6. 620111-000 Test K3 Performance 600 Update - 620111
+                7. 0009-015 Test K3 Remote Ped Update - 000009-015
+                8. 620124-000 Test K3 Partitions 20 Update - 620124
+                9. 620114-000 Test K3 Cloning Update - 620114
+
+Command Result : No Error
+lunacm:&gt; </pre>
+        <p class="code">&#160;</p><pre xml:space="preserve">lunacm:&gt; partition showpolicies
+
+        Partition Capabilities
+                0: Enable private key cloning : 1
+                1: Enable private key wrapping : 0
+                2: Enable private key unwrapping : 1
+                3: Enable private key masking : 0
+                4: Enable secret key cloning : 1
+                5: Enable secret key wrapping : 1
+                6: Enable secret key unwrapping : 1
+                7: Enable secret key masking : 0
+                10: Enable multipurpose keys : 1
+                11: Enable changing key attributes : 1
+                14: Enable PED use without challenge : 1
+                15: Allow failed challenge responses : 1
+                16: Enable operation without RSA blinding : 1
+                17: Enable signing with non-local keys : 1
+                18: Enable raw RSA operations : 1
+                20: Max failed user logins allowed : 10
+                21: Enable high availability recovery : 1
+                22: Enable activation : 1
+                23: Enable auto-activation : 1
+                25: Minimum pin length (inverted: 255 - min) : 248
+                26: Maximum pin length : 255
+                28: Enable Key Management Functions : 1
+                29: Enable RSA signing without confirmation : 1
+                30: Enable Remote Authentication : 1
+                31: Enable private key unmasking : 1
+                32: Enable secret key unmasking : 1
+
+        Partition Policies
+                0: Allow private key cloning : 1
+                1: Allow private key wrapping : 0
+                2: Allow private key unwrapping : 1
+                3: Allow private key masking : 0
+                4: Allow secret key cloning : 1
+                5: Allow secret key wrapping : 1
+                6: Allow secret key unwrapping : 1
+                7: Allow secret key masking : 0
+                10: Allow multipurpose keys : 1
+                11: Allow changing key attributes : 1
+                14: Challenge for authentication not needed : 1
+                15: Ignore failed challenge responses : 1
+                16: Operate without RSA blinding : 1
+                17: Allow signing with non-local keys : 1
+                18: Allow raw RSA operations : 1
+                20: Max failed user logins allowed :<span style="font-size: 10pt;color: #ff0000;font-weight: bold;">10  &#160;&lt;--</span>
+                21: Allow high availability recovery : 1
+                22: Allow activation : 0
+                23: Allow auto-activation : 0
+                25: Minimum pin length (inverted: 255 - min) : 248
+                26: Maximum pin length : 255
+                28: Allow Key Management Functions : 1
+                29: Perform RSA signing without confirmation : 1
+                30: Allow Remote Authentication : 1
+                31: Allow private key unmasking : 1
+                32: Allow secret key unmasking : 1
+
+
+Command Result : No Error
+lunacm:&gt;
+</pre><pre xml:space="preserve">&#160;</pre>
+        <p class="notepad_note">In the example above, we change the maximum 
+ number of consecutive failed login attempts that is permitted on the Partition.<br />The default maximum is 10. You can change the maximum to less than 10, 
+ but not more than 10. <br />Setting to less than ten would make the partition more secure than the default, and is allowed. <br />Setting to more than ten would make the partition less secure than the default, and is not allowed.<br /></p><pre xml:space="preserve">lunacm:&gt; partition showpolicies
+
+        Partition Capabilities
+                0: Enable private key cloning : 1
+                1: Enable private key wrapping : 0
+                2: Enable private key unwrapping : 1
+                3: Enable private key masking : 0
+                4: Enable secret key cloning : 1
+                5: Enable secret key wrapping : 1
+                6: Enable secret key unwrapping : 1
+                7: Enable secret key masking : 0
+                10: Enable multipurpose keys : 1
+                11: Enable changing key attributes : 1
+                14: Enable PED use without challenge : 1
+                15: Allow failed challenge responses : 1
+                16: Enable operation without RSA blinding : 1
+                17: Enable signing with non-local keys : 1
+                18: Enable raw RSA operations : 1
+                20: Max failed user logins allowed : 10
+                21: Enable high availability recovery : 1
+                22: Enable activation : 1
+                23: Enable auto-activation : 1
+                25: Minimum pin length (inverted: 255 - min) : 248
+                26: Maximum pin length : 255
+                28: Enable Key Management Functions : 1
+                29: Enable RSA signing without confirmation : 1
+                30: Enable Remote Authentication : 1
+                31: Enable private key unmasking : 1
+                32: Enable secret key unmasking : 1
+
+        Partition Policies
+                0: Allow private key cloning : 1
+                1: Allow private key wrapping : 0
+                2: Allow private key unwrapping : 1
+                3: Allow private key masking : 0
+                4: Allow secret key cloning : 1
+                5: Allow secret key wrapping : 1
+                6: Allow secret key unwrapping : 1
+                7: Allow secret key masking : 0
+                10: Allow multipurpose keys : 1
+                11: Allow changing key attributes : 1
+                14: Challenge for authentication not needed : 1
+                15: Ignore failed challenge responses : 1
+                16: Operate without RSA blinding : 1
+                17: Allow signing with non-local keys : 1
+                18: Allow raw RSA operations : 1
+                20: Max failed user logins allowed :<span style="font-size: 10pt;color: #ff0000;font-weight: bold;">9  &#160;&lt;--</span>
+                21: Allow high availability recovery : 1
+                22: Allow activation : 0
+                23: Allow auto-activation : 0
+                25: Minimum pin length (inverted: 255 - min) : 248
+                26: Maximum pin length : 255
+                28: Allow Key Management Functions : 1
+                29: Perform RSA signing without confirmation : 1
+                30: Allow Remote Authentication : 1
+                31: Allow private key unmasking : 1
+                32: Allow secret key unmasking : 1
+
+
+Command Result : No Error
+lunacm:&gt;
+</pre><pre xml:space="preserve">&#160;</pre>
+        <p class="notepad_note">Note in the above example that HSM Capability 
+ "20: Max failed user logins allowed : 10" still has a value 
+ of 10 (meaning that 10 is as many failed Partition login attempts as can 
+ be permitted), but the associated Policy "20: Max failed user logins 
+ allowed : <span style="font-weight: bold;font-size: 10pt;">9</span>" 
+ now has a value of 9 - meaning that the SO has decided that 10 bad login 
+ attempts on the Partition was too many. The SO has used the Policy to 
+ impose greater restriction than the Capability required; that is, the SO has increased the security on the partition.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

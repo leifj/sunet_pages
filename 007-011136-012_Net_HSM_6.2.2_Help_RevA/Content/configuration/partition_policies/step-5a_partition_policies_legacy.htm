@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|Configuration without One-step NTLS">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>[Step 6] Set the  Partition Policies for Legacy Partitions</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../administration/appendix-a_config/appendix-a_old_config_steps.htm">Configuration without One-step NTLS</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">[Step 6] Set the  Partition Policies for Legacy Partitions</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <div placeholder="" id="header" style="width: 100%;position: relative;"><a name="kanchor42"></a>
+            <p><a name="kanchor43"></a>
+            </p>
+        </div>
+        <h1 class="chapter" data-mc-autonum=" &#160;&#160;"><span class="autonumber"><span> &#160;&#160;</span></span>
+            <br />
+            <MadCap:conditionalText data-mc-conditions="Default.SA">[Step 6] </MadCap:conditionalText>Set the  Partition Policies for Legacy Partitions</h1>
+        <p>At this point, you should have initialized the HSM and created one or more HSM 
+ Partitions. &#160;Before deploying the partitions, review and set the policies that constrain the use of the HSM Partition 
+ by clients, as described in the following sections:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><a href="#Displayi" class="MCXref xref selected">Displaying the Current Partition Policy Settings</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><a href="#Changing" class="MCXref xref selected">Changing the Partition Policy Settings</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><a href="#RSA" class="MCXref xref selected">RSA Blinding Mode</a>
+        </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>This&#160;section applies to application partitions that are owned and administered by the HSM SO. If the application partition was created with its own Partition SO, then you cannot use LunaSH (lunash) to administer the partition. All administration of a PPSO partition is carried out by the Partition SO, via LunaCM, from a registered client computer.</p>
+        <h5>Secure Trusted Channel Partition Policy</h5>
+        <p>If you want to use a Secure Trusted Channel (STC) to provide the network link between the partition and authorized clients, you must enable Policy 37: Force Secure Trusted Channel. See <a href="../../administration/stc/enabling_partition.htm" class="MCXref xref">Enabling or Disabling STC on a Partition</a> in the <i>Administration Guide</i> for more information.</p>
+        <h2><a name="Displayi"></a>Displaying the Current Partition Policy Settings</h2>
+        <p>First, 
+ display the policies (default) of the created legacy-style application Partition. In order to run the <span style="font-family: 'Courier New';">partition showPolicies</span> command, you do not need 
+ to be logged into the &#160;HSM 
+ Partition. However, to change policies of either the HSM or an individual Partition, 
+ you must login as HSM SO.</p>
+        <h5>To display the current partition policy settings</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open a LunaSH session on the appliance.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Enter the following command to display current partition 
+ capability and policy settings. Capabilities are factory settings. Policies 
+ are the means of modifying the adjustable capabilities:</p>
+        <p class="listLevel1"><b>partition showpolicies -partition</b> &lt;partitIon_name&gt;</p>
+        <p class="listLevel1">For example:</p><pre xml:space="preserve" class="listLevel1">lunash:&gt; partition showPolicies -partition mypartition</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Partition Name: mypartition</pre><pre xml:space="preserve" class="listLevel1">Partition Num: 65038002</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">   The following capabilities describe this partition and can
+   never be changed.
+
+   Description                              Value
+   ===========                              =====
+   Enable private key cloning               Allowed
+   Enable private key wrapping              Disallowed
+   Enable private key unwrapping            Allowed
+   Enable private key masking               Disallowed
+   Enable secret key cloning                Allowed
+   Enable secret key wrapping               Allowed
+   Enable secret key unwrapping             Allowed
+   Enable secret key masking                Disallowed
+   Enable multipurpose keys                 Allowed
+   Enable changing key attributes           Allowed
+   Enable PED use without challenge         Allowed
+   Allow failed challenge responses         Allowed
+   Enable operation without RSA blinding    Allowed
+   Enable signing with non-local keys       Allowed
+   Enable raw RSA operations                Allowed
+   Max failed user logins allowed           10
+   Enable high availability recovery        Allowed
+   Enable activation                        Allowed
+   Enable auto-activation                   Allowed
+   Minimum pin length (inverted: 255 - min) 248
+   Maximum pin length                       255
+   Enable Key Management Functions          Allowed
+   Enable RSA signing without confirmation  Allowed
+   Enable Remote Authentication             Allowed
+   Enable private key unmasking             Allowed
+   Enable secret key unmasking              Allowed
+   Enable RSA PKCS mechanism                Allowed
+   Enable CBC-PAD (un)wrap keys of any size Allowed</pre><pre xml:space="preserve" class="listLevel1">   Enable private key SFF backup/restore    Disallowed</pre><pre xml:space="preserve" class="listLevel1">   Enable secret key SFF backup/restore     Disallowed</pre><pre xml:space="preserve" class="listLevel1">   Enable Secure Trusted Channel            Allowed
+
+
+   The following policies are set due to current configuration
+   of this partition and may not be altered directly by the
+   user.
+
+   Description                              Value
+   ===========                              =====
+   Challenge for authentication not needed  False
+
+
+   The following policies describe the current configuration
+   of this partition and may be changed by the HSM Administrator.
+
+   Description                              Value        Code
+   ===========                              =====        ====
+   Allow private key cloning                On           0
+   Allow private key unwrapping             On           2
+   Allow secret key cloning                 On           4
+   Allow secret key wrapping                On           5
+   Allow secret key unwrapping              On           6
+   Allow multipurpose keys                  On           10
+   Allow changing key attributes            On           11
+   Ignore failed challenge responses        On           15
+   Operate without RSA blinding             On           16
+   Allow signing with non-local keys        On           17
+   Allow raw RSA operations                 On           18
+   Max failed user logins allowed           10           20
+   Allow high availability recovery         On           21
+   Allow activation                         Off          22
+   Allow auto-activation                    Off          23
+   Minimum pin length (inverted: 255 - min) 248          25
+   Maximum pin length                       255          26
+   Allow Key Management Functions           On           28
+   Perform RSA signing without confirmation On           29
+   Allow Remote Authentication              On           30
+   Allow private key unmasking              On           31
+   Allow secret key unmasking               On           32
+   Allow RSA PKCS mechanism                 On           33
+   Allow CBC-PAD (un)wrap keys of any size  On           34</pre><pre xml:space="preserve" class="listLevel1">   Force Secure Trusted Channel             Off          37
+
+
+</pre><pre xml:space="preserve" class="listLevel1">Command Result : 0 (Success) <br />[myluna] lunash:&gt;</pre>
+        <h2><a name="Changing"></a><a name="kanchor44"></a>Changing the Partition Policy Settings</h2>
+        <p>Having viewed the Policy settings, you can now modify 
+ a Partition Policy for a given Partition, if required. </p>
+        <h5>To change a partition policy</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open a LunaSH session on the appliance.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Enter the following command to change a Partition 
+ Policy:</p>
+        <p class="listLevel1"><b>partition changepolicy -partition</b> 
+ &lt;name of HSM Partition&gt; <b>-policy</b> &lt;policy_code&gt; <b>-value</b> &lt;new_
+ policy_value&gt;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Refer to the example below that is applicable to your SafeNet appliance's HSM type.</p>
+        <h3>Policy setting example, SafeNet HSM with Password Authentication</h3>
+        <p>The default minimum password length is 7 characters (which the SafeNet HSM calculates as 255 minus 248, where 255 is the maximum length and 248 
+ is the number that can be subtracted from the maximum to yield the minimum 
+ length). We want the minimum Partition password length to be larger than 
+ 7 characters – for example, nine. To do that, we would need to change 
+ the number that is subtracted from 255 to be 246, instead of the current 
+ 248.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Login Before 
+ Changing Policies</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Change the selected 
+ policy for a Partition labeled "myPartition1". Type:<br /><span style="font-family: 'Courier New', monospace;">lunash:&gt; partition changePolicy -partition myPartition1 
+ -policy 25 -value 246<br />'partition changePolicy' successful.<br />Policy "Minimum pin length (inverted: 255 - 
+ min)" is now set to: 246<br />lunash:&gt;</span></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Log out of the 
+ HSM whenever you finish operations that require HSM login.<br /><span style="font-family: 'Courier New', monospace;">lunash:&gt; hsm logout <br />lunash:&gt;</span> <![CDATA[ ]]></p>
+        <h3>Policy setting example, SafeNet HSM with PED Authentication</h3>
+        <p>This is just an example. You do not need to change this particular policy, 
+ or any other, except to configure the HSM Partition more appropriately 
+ for your use.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Login Before 
+ Changing Policies</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Change a selected 
+ policy for a Partition labeled "myPartition1". Type:<br /><span style="font-family: 'Courier New', monospace;">lunash:&gt; partition changePolicy -partition myPartition1 
+ -policy 22 -value 1</span><br /><span style="color: #008080;">(allows Activation 
+ mode to be on)</span><br /><span style="font-family: 'Courier New', monospace;">partition changePolicy successful<br />Policy allow Activation is now set to: 1</span> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>And change the 
+ other policy for the same Partition.<br /><span style="font-family: 'Courier New', monospace;">lunash:&gt; partition -changePolicy -partition myPartition1 
+ -policy 23 -value 1</span><br /><span style="color: #008080;">(allows autoActivation 
+ mode to be on)</span><br /><span style="font-family: 'Courier New', monospace;">partition changePolicy successful<br />Policy allow autoActivation is now set to: 1</span> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Log out of the 
+ HSM whenever you finish operations that require HSM login.<br /><span style="font-family: 'Courier New', monospace;">lunash:&gt; hsm - logout<br />lunash:&gt;</span> <![CDATA[ ]]></p>
+        <h2><a name="RSA"></a>RSA Blinding Mode</h2>
+        <p>Blinding is a technique that introduces random elements into the signature 
+ process to prevent timing attacks on the RSA private key. Use of this 
+ technique may be required by certain security policies, but it does reduce 
+ performance. </p>
+        <p>The HSM Admin or Security Officer can turn this feature on or off. </p>
+        <p>If RSA blinding is enabled in Capabilities and allowed in Policies, 
+ the partition will always run in RSA blinding &#160;mode; 
+ performance will be lower than SafeNet published performance figures. 
+ This is because the deliberate introduction of random elements causes 
+ the average signature to take longer to complete.</p>
+        <p>&#160;For maximum 
+ performance, you can switch RSA blinding mode off, at the cost of slight 
+ additional risk of so-called timing attacks on your keys. It is your decision 
+ whether your network and other security measures are sufficiently rigorous 
+ that blinding is not needed.</p>
+        <p>SafeNet HSMs are normally shipped with the Capability set to allow switching 
+ blinding on or off, and with the Policy set to <span style="font-weight: bold;">not</span> 
+ use blinding, by default.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

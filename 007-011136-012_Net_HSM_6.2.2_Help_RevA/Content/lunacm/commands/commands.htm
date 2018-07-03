@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaCM Command Reference Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>LunaCM commands</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaCM Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">LunaCM commands</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter" data-mc-autonum=" &#160;&#160;"><span class="autonumber"><span> &#160;&#160;</span></span>
+            <br />LunaCM commands<br /></h1>
+        <p>This chapter describes the commands available in LunaCM. The commands are described in alphabetical order and provide:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>a brief description of the command function</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the command syntax and parameter descriptions</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>usage examples &#160;</p>
+        <p>Lunacm opens with a slot list, showing brief descriptions of the HSM administrative or application partitions that are visible to the library, in the order that they are detected. Those include: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SafeNet Network HSM application partitions (if any), network-connected to the host computer via NTLS or STC channels, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SafeNet PCIe HSMs (if any) installed within the host computer, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SafeNet USB HSMs (if any) connected via USB to the host computer. </p>
+        <p>By default, Lunacm shows the lowest-numbered slot first. Local HSMs (SafeNet PCIe HSM or SafeNet USB HSM) might have an HSM&#160;administrative slot (for the HSM SO) or an application partition slot, or both, so lunacm leaves gaps in the slot numbering to allow for the possible slots on a given HSM.</p>
+        <h5> Where did my command go? &#160;</h5>
+        <p>The question mark (or any incorrect command) shows the lunacm commands available to be used in the current slot. <br />The availability of lunacm commands changes according to four possible scenarios: &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> the current slot is the HSM administrative partition for an HSM with firmware version 6.22.0 or newer &#160; </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the current slot is an application partition that has its own SO (a PPSO partition), on an HSM with firmware version 6.22.0 or newer &#160; </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the current slot is a separate-but-not-independent application partition that is administered by the HSM SO, and does not have its own separate SO (a legacy-style partition) on an HSM with firmware version 6.22.0 or newer &#160; </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the current slot is the HSM administrative partition and application partition for an HSM with firmware older than version 6.22.0 (a true legacy partition). &#160;</p>
+        <p>No single partition type has access to all the possible commands within lunacm. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span><b>Persistence of login state</b> &#160;<br /><br />For HSMs with firmware 6.22.0 or newer, login state of a slot is preserved until explicitly ended (such as with "logout" or "deactivate" or closing the application). Therefore, login state persists when you switch slots in lunacm. That is, if you were logged into the partition in slot 1, then set current slot to slot 2, then came back to slot 1, the login state for the partition in slot 1 would still be in force, with no need to reinstate it. <br /><br />For HSMs with older firmware, changing to a different slot terminates the login state in the original slot, as was always the case. </p>
+        <h3 class="ntoc">Lunacm command list on HSM admin partition, f/w 6.22.0 &#160;</h3>
+        <p>(These are the commands that you see if the current-slot partition is the initialized HSM's administrative partition, while the HSM is at firmware version 6.22.0 or newer. Some of these commands act on the current-slot partition; some have a -slot option to direct their action to another partition/slot.)</p>
+        <p>  Select a link to display the command syntax or to help you to navigate to the sub-command you need:&#160;&#160;</p>
+        <p class="listLevel1" style="font-weight: bold;">appid &#160;<br />audit &#160;&#160;&#160;<br />file &#160;&#160;<br />clientconfig &#160;&#160;<br />hagroup <br />hsm &#160;&#160;<br />partition &#160;&#160;<br />ped &#160;&#160;<br />remoteBackup &#160;&#160;<br />role &#160;&#160;<br />slot &#160;&#160;<br />srk &#160;&#160;<br /><MadCap:conditionalText data-mc-conditions="Default.PCI,Default.SA">stc &#160;<br />stcconfig &#160;</MadCap:conditionalText><br /><br /></p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 142px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 99px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">appid</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">a </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">&gt; Manage Application Ids. See <a href="appid/appid.htm" class="MCXref xref">appid</a> . &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">audit </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">au </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Audit commands. See <a href="audit/audit.htm" class="MCXref xref">audit</a></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clientconfig</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ccfg </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Client configuration. See <a href="clientconfig/clientconfig.htm" class="MCXref xref">clientconfig</a> .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">file </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">f </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">File commands. See <a href="file/file_display.htm" class="MCXref xref">file display</a> . </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">hagroup </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ha </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">High Availability Group commands. See <a href="hagroup/hagroup.htm" class="MCXref xref">hagroup</a> . &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">hsm </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">hs </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">HSM commands. See <a href="hsm/hsm.htm" class="MCXref xref">hsm</a> .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">partition </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">par </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Partition commands. See <a href="partition/partition.htm" class="MCXref xref">partition</a>  .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ped</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">p </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Remote PED commands. See <a href="ped/ped.htm" class="MCXref xref">ped</a> .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">remoteBackup </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">rb </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Manage Remote Backup server. See <a href="remotebackup/remotebackupstart.htm" class="MCXref xref">remotebackup start</a> .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">role </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ro </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Role management commands. See <a href="role/role.htm" class="MCXref xref">role</a> .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">slot</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">s</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Slot management commands. See <a href="slot/slot.htm" class="MCXref xref">slot</a> .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">srk </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">r </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Secure Recovery commands. See <a href="srk/srk.htm" class="MCXref xref">srk</a> .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.PCI,Default.SA">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">stc </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">stc </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Secure Trusted Channel commands. See <a href="stc/stc.htm" class="MCXref xref">stc</a> .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.PCI,Default.SA">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">stcconfig </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">stcc </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Secure Trusted Channel configuration commands. See <a href="stcconfig/stcconfig.htm" class="MCXref xref">stcconfig</a>  .</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <h3 class="ntoc">Lunacm command list on application partition, f/w 6.22.0 &#160;</h3>
+        <p>(These are the commands that you see if the current-slot partition is the initialized HSM's administrative partition, while the HSM is at firmware version 6.22.0 or newer. Some of these commands act on the current-slot partition; some have a -slot option to direct their action to another partition/slot.)</p>
+        <p>  Select a link to display the command syntax or to help you to navigate to the sub-command you need:&#160;&#160;</p>
+        <p class="listLevel1" style="font-weight: bold;"> &#160;&#160;&#160;<br />appid<br />file &#160;&#160;<br />clientconfig &#160;&#160;<br />hagroup <br />partition &#160;&#160;<br />ped &#160;&#160;<br />remoteBackup &#160;&#160;<br />role &#160;&#160;<br />slot &#160;&#160;<br /><MadCap:conditionalText data-mc-conditions="Default.PCI,Default.SA">stc &#160;<br />stcconfig &#160;<br /></MadCap:conditionalText><br /></p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 142px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 99px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">appid</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">a </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">&gt; Manage Application Ids. See <span style="color: #6c286b;" class="mcFormatColor">"appid" on page 1</span> . &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">file </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">f </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">File commands. See <span style="color: #6c286b;" class="mcFormatColor">"file display" on page 1</span> . </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clientconfig</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ccfg </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Client configuration. See <span style="color: #6c286b;" class="mcFormatColor">"clientconfig"</span> .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">hagroup </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ha </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">High Availability Group commands. See <span style="color: #6c286b;" class="mcFormatColor">"hagroup" on page 1</span> . &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">partition </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">par </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Partition commands. See <span style="color: #6c286b;" class="mcFormatColor">"partition" on page 1</span>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ped</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">p </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Remote PED commands. See <span style="color: #6c286b;" class="mcFormatColor">"ped" on page 1</span> .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">remoteBackup </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">rb </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Manage Remote Backup server. See <span style="color: #6c286b;" class="mcFormatColor">"remotebackup start" on page 1</span> .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">role </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ro </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Role management commands. See <span style="color: #6c286b;" class="mcFormatColor">"role"</span> .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">slot</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">s</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Slot management commands. See <span style="color: #6c286b;" class="mcFormatColor">"slot" on page 1</span> .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.PCI,Default.SA">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">stc </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">stc </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Secure Trusted Channel commands. See <a href="stc/stc.htm" class="MCXref xref">stc</a> .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.SA,Default.PCI">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">stcconfig </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">stcc </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Secure Trusted Channel configuration commands. See <a href="stcconfig/stcconfig.htm" class="MCXref xref">stcconfig</a>  .</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

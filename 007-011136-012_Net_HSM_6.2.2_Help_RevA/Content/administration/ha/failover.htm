@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|High-Availability (HA) Configuration and Operation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Failover</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha.htm">High-Availability (HA) Configuration and Operation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Failover</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Failover</h2>
+        <p>When an HA group is running normally the client library continues to schedule commands across all members as described above.  The client continuously monitors the health of each member at two different levels:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>  First, the connectivity with the member is monitored at the networking layer.  Disruption of the network connection invokes a fail-over event within a twenty second timeout.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Second, every command sent to a device is continuously monitored for completion.  Any command that fails to complete within twenty  seconds also invokes a fail-over event.  Most commands are completed within milliseconds.  However, some commands can take extended periods to complete – either because the command itself is time-consuming (for example, key generation), or because the device is under extreme load.   To cover these events the HSM automatically sends “heartbeats” every two seconds for all commands that have not completed within the first two seconds.  The twenty second timer is extended every time one of these heartbeats arrives at client, thus preventing false fail-over events.</p>
+        <p>A failover event involves dropping a device from the available members in the HA group.  All commands that were pending on the failed device are transparently rescheduled on the remaining members of the group.  When a failure occurs, the application experiences a latency stall on some of the commands in process (on the failing unit) but otherwise sees no impact on the transaction flow .  Note that the least-busy scheduling algorithm automatically minimizes the number of commands that stall on a failing unit during the twenty second timeout.</p>
+        <p>If the primary unit fails, clients automatically select the next member in the group as the new primary.  Any key management or single-part cryptographic operations are transparently restarted on a new group member.  In the event that the primary unit fails, any in-progress, multi-part, cryptographic operations must be restarted by the application, as the operation returns an error code.</p>
+        <p>As long as one HA group member remains functional, cryptographic service is maintained to an application no matter how many other group members fail. As discussed in  <a href="#Recovery" class="MCXref xref selected">Failover</a> , members can also be put back into service without restarting the application.</p>
+        <h5>How Do You (or Software) Know That a Member Has Failed?</h5>
+        <p>When an HA Group member first fails, the HA status for the group <a name="kanchor71"></a>shows "device error" for the failed member. All subsequent calls return "token not <a name="kanchor72"></a>present", until the member (HSM Partition or PKI token) is returned to service.</p>
+        <h5>At the library level, what happens when a device fails or doesn’t respond?
+ </h5>
+        <p>This is two separate situations. A device might not be responding because something is blocking (such as PED&#160;operations prior to HSM firmware 6.24) or, for example, because the requested operation is an RSA keygen for a keysize of 4096 or larger. Likely the device will come back. The client continues to wait so long as it receives heartbeats from the HSM (for SafeNet Network HSM, that would be as long as the NTLS connection remains alive). </p>
+        <p>A failure would be an actual failure message from the HSM (or for SafeNet Network HSM, could also be that the NTLS connection dropped). In the case of a failure, the client library drops the member and continues with others. It will try to reconnect that member at a minimum retry rate of once per minute (configurable) as long as it continues to receive heartbeats from the HSM for the pending command, and then stop trying that member. You can specify a number of retries from 3 to an unlimited number.</p>
+        <h5>What happens to an application if a device fails mid-operation? What if it’s a multi-part operation?
+ </h5>
+        <p>Multi part operations do NOT fail over.
+
+The entire operation returns a failure. Your application deals with the failure in whatever way it is coded to do so.</p>
+        <p>Any operation that fails mid-point would need to be resent from the calling application. That is, if you don’t receive a ‘success’ response, then you must try again. This is obviously more likely to happen in a multi-part operation because those are longer, but a failure could conceivably happen during a single atomic operation as well.</p>
+        <p>With HA, if the library attempts to send a command to an HSM and it is unavailable, it will automatically retry sending that command to the next HSM in the configuration after the timeout expires.</p>
+        <p>Multi-part operations would typically be block encryption or decryption, or any other command where the previous state of the HSM is critical to the processing of the next command. It is understandable that these need to be re-sent since the HSMs do not synchronize ‘internal memory state’  … only stored key material.</p>
+        <h3>Reaction to Failures</h3>
+        <p>This section looks at possible failures in an overall HA system, and what needs to be done. The assumption is that HA has been properly configured and the HA group has been seen to be functioning properly. In a complex system, it is possible to come up with any number of failure scenarios, such as this (partial) list for an HA group: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Failure at the HSM or appliance </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>HSM card failure </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>HSM re-initialization </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>Deactivated partition</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>Power failure of a member </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>Reboot of member</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>NTL failure </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>STC failure </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Failure at the client</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>Power failure of the client </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>Reboot of client</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>Network keepalive failure</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Failure between client and group members </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>Network failure near the member appliance <br />(so only one member might disappear from client's view)</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>Network failure near the client <br />(client loses contact with all members)</p>
+        <h4>HSM-Side Failures</h4>
+        <p>The categories of failure at the HSM side of an HA arrangement are temporary or permanent. </p>
+        <h5>Temporary</h5>
+        <p>Temporary failures like reboots, or failures of power or network are self-correcting, and as long as you have set HA automatic recovery parameters that are sufficiently lenient, then recovery is automatic shortly after the HSM partition becomes visible to the HA client.  </p>
+        <h5>Permanent</h5>
+        <p>Permanent failures require overt intervention at the HSM end, including possibly complete physical replacement of the unit, or at least initialization of the HSM. </p>
+        <p>All that concerns the HA service is that the particular unit is gone, and isn't coming back. If an entire SafeNet Network HSM&#160;unit is replaced, then obviously you must go through the entire appliance and HSM configuration of a new unit, before introducing it to the HA group. If a non-appliance HSM (resides in the Client host computer, such as SafeNet PCIe HSM or SafeNet USB HSM) is replaced, then it must be initialized and a new partition created. </p>
+        <p>Either way, your immediate options are </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>to use a new name for the partition, or </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>to make the HA SafeNet HSM Client forget the dead member (lunacm command <b>ha removeMember</b>) so you can reuse the old name. </p>
+        <p>Then, you must ensure that automatic synchronization is enabled  (lunacm command <b>ha synchronize -enable</b>), and manually introduce a new member to the group (lunacm command <b>ha addMember</b>). After that, you can carry on using your application with full HA&#160;redundancy. </p>
+        <p>Because your application should be using only the HA virtual slot (lunacm command <b>ha HAOnly</b>), your application should not have noticed that one HA group member went away, or that another one was added and synchronized. The only visible sign might have been a brief dip in performance, but only if your application was placing high demand on the HSM(s). </p>
+        <h4>Client-Side Failures</h4>
+        <p>For <b>SafeNet Network HSM</b>, any failure of the client (such as operating system problems), that does not involve corruption or removal of files on the host, should resolve itself when the host computer is rebooted. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If the host seems to be working fine otherwise, but you have lost visibility of the HSMs in lunacm or your client, verify that the SafeNet drivers are running, and retry. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If that fails, reboot.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> If that fails, restore your configuration from backup of your host computer. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If that fails, re-install SafeNet HSM Client, re-perform certificate exchanges, creation of HA group, adding of members, setting HAOnly, etc. </p>
+        <p>For <b>SafeNet PCIe HSM, and SafeNet USB HSM</b>, the client is the host of the HSMs, so if HA has been working, then any sudden failure is likely to be </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>OS or driver related (so your response is to restart) or </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>corruption of files (so your response is to re-install). </p>
+        <p>If a re-install is necessary, you will need to recreate the HA group and re-add all members and re-assert all settings (like HAOnly). </p>
+        <h4>Failures Between the HSM and Client (SafeNet Network HSM only) </h4>
+        <p>The only failure that could likely occur between a SafeNet Network HSM (or multiple SafeNet Enterprise HSMs) and a client computer coordinating an HA group is a network failure. In that case, the salient factor is whether the failure occurred </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>near the client or </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>near one (or more) of the SafeNet Network HSM appliances. </p>
+        <p>If the failure occurs near the client, and you have not set up port bonding on the client, then the client would lose sight of all HA group members, and the client application would fail. The application would resume according to its timeouts and error-handling capabilities, and HA would resume automatically if the members reappeared within the recovery window that you had set. </p>
+        <p>If the failure occurs near a SafeNet Network HSM member of the HA&#160;group, then that member might disappear from the group until the network failure is cleared, but the client would still be able to see other members, and would carry on normally. </p>
+        <p>If the recovery window is exceeded, then you must manually restart HA, or use lunacm to trigger a manual recover request so that the application tries to recover again. Manual recovery performs only a single retry. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

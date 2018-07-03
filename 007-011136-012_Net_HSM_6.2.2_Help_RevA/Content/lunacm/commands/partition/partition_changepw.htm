@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaCM Command Reference Guide|LunaCM Commands|partition">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>partition changepw</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaCM Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaCM Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition.htm">partition</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">partition changepw</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">partition changepw</h2>
+        <p>Change Partition User password. Use this command to change the password that authenticates the Crypto Officer or Crypto User and/or the client to the application partition. You, as User (or Crypto Officer), need to know the current password in order to change it.</p>
+        <p>Contrast this command with the <b>partition resetpw</b> command, used by the SO, where the SO does not need to know the current partition User/Crypto Officer password in order to reset it.</p>
+        <h5>Password authentication</h5>
+        <p>For Password authenticated SafeNet HSM, the partition password needed by the administrator (Partition Owner/User) is also the challenge secret needed by the client.</p>
+        <h5>PED authentication</h5>
+        <p>For PED authenticated SafeNet HSM, the data on the black PED Key is the administrative authentication (used by the Partition Owner/User or Crypto Officer to log in or to activate the partition), and the challenge secret is a separate text secret used by the client before performing cryptographic operations.</p>
+        <p>If you run the <b>partition changPw</b> command without additional arguments, the HSM offers to change only the black PED Key secret.</p>
+        <p>To change the challenge secret, you must run the command with the -newpw and -oldpw options - OR use the -p option instead, which tells the HSM to prompt for old and new challenge secrets.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>partition changepw</b> [<b>- newpw</b> &lt;new_user_password&gt; <b>-oldpw</b> &lt;old_user_password&gt;] [<b>-prompt</b>]</p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 142px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 99px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-newpw</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-n</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The new password for the partition User.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-oldpw</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-o</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The old partition User password that is being replaced.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-prompt</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-p</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>The system prompts for old and new passwords (for password-authenticated HSM) or challenge secrets (for PED-authenticated HSM) and obscures your typing with asterisks, so an unauthorized person cannot see the passwords onscreen, and the scroll-back log of your terminal would not show what you had typed.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3>
+        <h5>Password-authenticated HSM partition, with the passwords typed visibly at the command line.</h5><pre xml:space="preserve">lunacm:&gt; partition changePw -newpw &lt;new_user_password&gt; -oldpw &lt;old_user_password&gt;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : No Error</pre>
+        <h5>PED-authenticated HSM partition with the challenge typed visibly at the command line.</h5><pre xml:space="preserve">lunacm:&gt; partition changePw -newpw &lt;new_user_password&gt; -oldpw &lt;old_user_password&gt;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">User is not activated, please attend to the PED.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : No Error</pre>
+        <p>&#160;</p>
+        <h5>Password-authenticated HSM partition, with the passwords prompted by the HSM and obscured by asterisks.</h5><pre xml:space="preserve">lunacm:&gt; partition changepw -p</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Option -oldpw was not supplied. It is required.</pre><pre xml:space="preserve">Enter the old password: ***********</pre><pre xml:space="preserve">Option -newpw was not supplied. It is required.</pre><pre xml:space="preserve">Enter the new password: ***********</pre><pre xml:space="preserve">Re-enter the new password: ***********</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : No Error</pre>
+        <h5>PED-authenticated HSM partition with the passwords prompted by the HSM and obscured by asterisks.</h5><pre xml:space="preserve">lunacm:&gt; partition changePw -p</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Option -oldpw was not supplied. It is required.</pre><pre xml:space="preserve">Enter the old challenge: ***********</pre><pre xml:space="preserve">Option -newpw was not supplied. It is required.</pre><pre xml:space="preserve">Enter the new challenge: ***********</pre><pre xml:space="preserve">Re-enter the new password: ***********</pre><pre xml:space="preserve">User is not activated, please attend to the PED.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : No Error</pre>
+        <p>&#160;</p>
+        <h5>Changing the black key secret on a PED-authenticated HSM partition without changing the challenge secret.</h5><pre xml:space="preserve">lunacm:&gt; partition changePw</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">User is not activated, please attend to the PED.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : No Error</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

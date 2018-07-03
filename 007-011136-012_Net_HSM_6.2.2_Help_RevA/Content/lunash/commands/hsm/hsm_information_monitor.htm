@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|hsm|hsm information">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>hsm information monitor</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="hsm.htm">hsm</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">hsm information monitor</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="kanchor291"></a>hsm information monitor</h2>
+        <p>Sample the HSM to get some statistics, such as, HSM up-time, command counts, and utilization counters.</p>
+        <p class="notepad_note">A single run of this command, without arguments, takes approximately five seconds to complete. One measurement is taken at launch, then after five seconds (the default minimum) a second measurement is taken and compared with the first.</p>
+        <p>The date and time in the output are derived from: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the system time and </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the HSM count of seconds since reset.</p>
+        <p>In the examples, note the line "HSM Last Reset (+/- 5 Secs Error Margin)..." That margin is due to possible variability of the default system clock. To improve the accuracy of the input to those calculations, we suggest that you use NTP for system time. If that is inconvenient, or is blocked by your security regime, then we suggest using <a href="../sysconf/sysconf_drift.htm" class="MCXref xref">sysconf drift</a> to precisely set the time, and then manage/prevent clock drift. &#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>This command requires HSM firmware version 6.20.0 or newer. &#160;</p>
+        <p>
+            <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>For ongoing/continual collection of such HSM information, we recommend using SNMP.</p>
+        </p>
+        <p>See <a href="../../../administration/performance/hsm_information_monitor.htm" class="MCXref xref">HSM Information Monitor</a>. </p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code"><b>hsm information monitor</b> [<b>-serial</b> &lt;integer&gt;] [<b>-interval</b> &lt;integer&gt;] [<b>-rounds</b> &lt;integer&gt;] [<b>-noheader</b>] [<b>-save</b>]</p>
+        <table style="caption-side: top;width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 126px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 149px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p> Parameter</p>
+                    </th>
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Shortcut  </p>
+                    </th>
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Description </p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-interval</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-i</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Set the interval over which the HSM is polled, in seconds</p>
+                        <p><b>Range:</b> 5 to 999</p>
+                        <p><b>Default:</b> 5 seconds.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-noheader</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-n</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Turn off the header and footer that are normally provided with the displayed or saved records. You might choose to omit the header and footer in a saved file, in order to make the file cleaner for concatenation and parsing by your analysis tools. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-rounds</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-r</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Set the number of samples to collect during the HSM polling. The default is a single round, which includes a first sample at the time the command is launched, followed by the interval (either the default 5 seconds, or the interval that you specified), followed by a second sample which is compared with the first, to complete the round. &#160;&#160;The maximum number of rounds for one operation of <code>hsm information monitor</code> is 65535.</p>
+                        <p><b>Range:</b> 1 to 65535</p>
+                        <p><b>Default:</b> 1</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-save</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-sa</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Save the captured-and-calculated records to a file named <b>hsm_stats</b>, while also displaying the output to your terminal. The filename is not modifiable, so contents are overwritten each time the command is run. Use 'scp' to retrieve the file to a workstation for analysis.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-serial</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-se</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Specifies the serial number of HSM to monitor. The default is to use the embedded HSM. This parameter is optional if your SafeNet Network HSM does not have additional HSMs attached. If you have a USB-connected HSM, such as SafeNet USB HSM for PKI, then this command defaults to showing utilization data from the embedded HSM, but the serial parameter allows you to select an HSM other than the default. Data is collected for a single HSM when the command is run.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3>
+        <h5>With no arguments (output to terminal):</h5><pre xml:space="preserve">&#160;[mysa5] lunash:&gt;hsm information monitor
+
+-------------------|---------------------------------|---------------------------------
+                   |       HSM Command Counts        |        HSM Utilization (%)
+ HSM Uptime (Secs) |-----------------|---------------|-----------------|---------------
+                   | Since HSM Reset | Last   5 Secs | Since HSM Reset | Last   5 Secs
+-------------------|-----------------|---------------|-----------------|---------------
+         1,115,399 |      57,468,854 |            30 |            1.27 |          0.21
+-------------------|-----------------|---------------|-----------------|---------------
+
+    Average HSM Utilization In This Period  :  0.21%
+    HSM Last Reset (+/-5 Secs Error Margin) :  Fri May 31 14:59:47 2013
+
+Command Result : 0 (Success)
+[mysa5] lunash:&gt;
+&#160;&#160;</pre>
+        <h5>&#160;&#160;With arguments (output to terminal): </h5><pre xml:space="preserve">&#160;[local_host] lunash:&gt;hsm information monitor -interval 6 -rounds 6
+
+-------------------|---------------------------------|---------------------------------
+                   |       HSM Command Counts        |        HSM Utilization (%)
+ HSM Uptime (Secs) |-----------------|---------------|-----------------|---------------
+                   | Since HSM Reset | Last   6 Secs | Since HSM Reset | Last   6 Secs
+-------------------|-----------------|---------------|-----------------|---------------
+         1,116,668 |      57,470,863 |             1 |            1.27 |          0.00
+         1,116,674 |      57,470,864 |             1 |            1.27 |          0.00
+         1,116,680 |      57,470,894 |            30 |            1.27 |          0.18
+         1,116,686 |      57,470,895 |             1 |            1.27 |          0.00
+         1,116,692 |      57,470,896 |             1 |            1.27 |          0.00
+         1,116,698 |      57,470,926 |            30 |            1.27 |          0.18
+-------------------|-----------------|---------------|-----------------|---------------
+
+    Average HSM Utilization In This Period  :  0.06%
+    HSM Last Reset (+/-5 Secs Error Margin) :  Fri May 31 14:59:46 2013
+
+Command Result : 0 (Success)
+[local_host] lunash:&gt;
+ </pre>
+        <h5>&#160;&#160;With arguments (output to file): </h5><pre xml:space="preserve">&#160;[local_host] lunash:&gt;hsm information monitor -interval 6 -rounds 6 -save
+
+-------------------|---------------------------------|---------------------------------
+                   |       HSM Command Counts        |        HSM Utilization (%)
+ HSM Uptime (Secs) |-----------------|---------------|-----------------|---------------
+                   | Since HSM Reset | Last   6 Secs | Since HSM Reset | Last   6 Secs
+-------------------|-----------------|---------------|-----------------|---------------
+         1,117,227 |      57,471,775 |             1 |            1.27 |          0.00
+         1,117,233 |      57,471,805 |            30 |            1.27 |          0.18
+         1,117,239 |      57,471,806 |             1 |            1.27 |          0.00
+         1,117,245 |      57,471,807 |             1 |            1.27 |          0.00
+         1,117,251 |      57,471,837 |            30 |            1.27 |          0.18
+         1,117,257 |      57,471,838 |             1 |            1.27 |          0.00
+-------------------|-----------------|---------------|-----------------|---------------
+
+    Average HSM Utilization In This Period :  0.06%
+    HSM Last Reset                         :  Fri May 31 14:59:46 2013
+
+
+The HSM untilization counters are saved to file hsm_stats.
+Please run `my file list` command to see it. You may also
+want to `scp` the file out for further analysis.
+
+Command Result : 0 (Success)
+</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

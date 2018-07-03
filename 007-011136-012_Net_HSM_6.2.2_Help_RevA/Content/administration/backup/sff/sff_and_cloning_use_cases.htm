@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-conditions="Default.SA,Default.PCI" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Backup and Restore HSMs and Partitions|Small Form Factor Backup">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Cloning and SFF Backup Option Use Cases</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../backup.htm">Backup and Restore HSMs and Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="small_form_backup_about.htm">Small Form Factor Backup</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Cloning and SFF Backup Option Use Cases</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Cloning and SFF Backup Option Use Cases</h3>
+        <p>This section describes the compatibility of small form factor (SFF) backup with HSM-to-HSM cloning in various configurations.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span> SFF backup requires  firmware 6.21.0 or greater. HSMs with older firmware do not support SFF backup. </p>
+        <p>The SFF backup feature can be added only to PED-authenticated cloning HSMs. Cloning and SFF backup are two different HSM features that provide copying or archiving of partition objects in different ways, for different purposes. They can co-exist, but with limitations.</p>
+        <p>Changes to cloning behavior were necessary in order to implement the SFF backup feature  on a cloning HSM. These changes come into effect only when an HSM has the SFF backup  capability update file (CUF) installed, and the SFF backup feature is turned on in the HSM policies. </p>
+        <p>An HSM that is factory-configured for cloning supports secure HSM-to-HSM copying of objects. That cloning ability remains part of the HSM throughout its life. An HSM that was configured for cloning before the addition of SFF backup is still capable of cloning, but now additionally can archive objects to off-board storage by means of SFF backup. </p>
+        <p>A cloning-only HSM (without the SFF capability enabled) can accept cloning only of objects that have never been stored off the HSM (except keys clearly marked as extractable). Therefore, when SFF backup is installed and enabled on a cloning HSM (cloning plus SFF),  the operation of cloning to or from that HSM becomes restricted to HSMs that also have SFF backup installed and enabled. This is particularly important in HA implementations. If SFF backup is enabled on an HA group member, it must also be enabled for all other members of the HA group. See <a href="#Effect" class="MCXref xref selected">Effect on HA</a>for more information.</p>
+        <h4>Cloning and SFF backup compatibility</h4>
+        <p>The following table sets out the compatibility constraints for HSMs with and without the SFF backup capability. </p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 71px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 49px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 49px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 224px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1" colspan="3">Source HSM &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1" colspan="3">Target HSM &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">&#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">&#160;</th>
+                </tr>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Firmware <br />Version &#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Has <br />CUF?</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Has HSM-<br />level policy <br />set?&#160;</p>
+                        <p>[See Note 1] &#160;</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Firmware <br />Version &#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Has <br />CUF?&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Has HSM-<br />level policy <br />set?&#160;<br /><p>[See Note 1] &#160;</p></th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Cloning Outcome &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">SFF backup? &#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">F/w prior to version 6.21.0 &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">F/w prior to version 6.21.0 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No change. Cloning from one HSM to another is possible if the two HSMs share the same cloning domain. This was always the case.&#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">None &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">F/w prior to version 6.21.0 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">F/w version 6.21.0 or <br />newer &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No change. Cloning from one HSM to another is possible if the two HSMs share the same cloning domain. &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">None &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">F/w version 6.21.0 or <br />newer &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">F/w prior to version 6.21.0 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No change. Cloning from one HSM to another is possible if the two HSMs share the same cloning domain. &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">None &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">F/w version 6.21.0 or <br />newer &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">F/w prior to version 6.21.0 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Cloning is NOT possible. Cloning from one HSM to the other is prevented when mismatch of settings is detected.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Source can use SFF backup, Target cannot &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">F/w version 6.21.0 or <br />newer &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">F/w version 6.21.0 or <br />newer &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Cloning is NOT possible. Cloning from one HSM to the other is prevented when mismatch of settings is detected. &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Source can use SFF backup, Target cannot &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">F/w version 6.21.0 or <br />newer &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">F/w version 6.21.0 or <br />newer &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Cloning from one HSM to another is possible if the two HSMs share the same cloning domain. &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Source and Target can both use SFF backup. Can interchange provided the same Scalable Key Storage secret is on both HSMs &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyA-Column1-Body1" colspan="8">
+                        <p colspan="8"><b>Note 1:</b> The partition SFF backup policy does not have an effect at this level. The HSM-level policy governs. <br />The partition policy is used when the HSM-level policy is on and the SO wishes to disallow SFF backup for just a particular partition.</p>
+                        <p colspan="8"><b>Note 2:</b> In addition to the requirement for minimum firmware level, the Capability Update <b>must</b> be present and the appropriate policy <b>must</b> be set for the feature to work. The above table has separate columns for each condition to highlight them, but does not include possible instances where the CUF&#160;is installed but the policy is off. If any of the three (firmware, CUF, policy) is not correct, the SFF backup feature cannot work.<br /></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h5>SFF&#160;Backup Compatibility Summary</h5>
+        <p>The following rules apply to the SFF backup feature:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If your HSM is not factory configured for cloning, you cannot apply the SFF backup capability. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If your HSM has  firmware lower than 6.21.0, you cannot apply the SFF backup capability.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If your HSM has version 6.21.0 (or higher) firmware, and is a cloning version HSM, you can apply the SFF backup capability.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span> If you do not apply the capability then the HSM can clone as it always did.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span> If you do apply the capability, but do not switch on the policy, cloning is still not affected. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span> If you do apply the capability, and switch on the policy, you can archive partition objects to an SFF backup eToken. Your ability to clone, however, is restricted to other HSMs that also have the SFF capability applied and the policy switched on. </p>
+        <h4>Cloning Compatibility Summary</h4>
+        <p>This section might seem repetitive, given the previous section, but readers might come to this page from a perspective of wishing to clone, or of wishing to use the SFF&#160;feature. Viewed from the cloning perspective, the simple statement regarding SFF is that, in the case where either HSM has the SFF policy enabled, the other must also have it enabled for cloning to function. Otherwise, if you wish to clone between the HSMs, then you must disable the policy on the HSM with the SFF CUF. Without that preparation, a cloning attempt results in an error CKR_DATA_INVALID. &#160;</p>
+        <p>Firmware 6.21.0 was the dividing line, the first firmware that supports the SFF&#160;feature; if firmware is earlier, then the SFF capability update cannot be installed. In this table, we show several examples of both pre-6.21 and 6.21-or-newer, in both the Source and Destination positions, to indicate that our testing has covered a variety of situations.</p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Source &#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Destination &#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Cloning Result &#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Pre-6.21.0 (FW6.2.1) &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">FW6.22.0 with SFF Off &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">No error &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+FW6.22.0 with SFF Off &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Pre-6.21.0 (FW 6.0.8) &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">No error &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Pre-6.21.0 (FW6.2.1)</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">FW6.22.0 with SFF On &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">CKR_DATA_INVALID error &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">FW6.22.0 with SFF On</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Pre-6.21.0 (FW 6.0.8) &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">CKR_DATA_INVALID error &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">FW6.22.0 with SFF Off &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">FW6.22.0 with SFF Off &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">No error &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">FW6.22.0 with SFF On &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">FW6.22.0 with SFF On &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">No error &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">FW6.22.0 with SFF Off &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">FW6.22.0 with SFF On &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">CKR_DATA_INVALID error &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">FW6.22.0 with SFF On &#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">FW6.22.0 with SFF Off &#160;</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">CKR_DATA_INVALID error &#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The takeaway message, where all involved HSMs are cloning type, is: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If both the intended cloning source and cloning target/destination have older firmware, which does not allow the SFF capability to be installed, then cloning proceeds with no difficulty, as was always the case. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If either the source or the destination has older firmware, and the other has newer firmware, but with SFF not turned on, then cloning proceeds with no difficulty. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If either the source or the destination has older firmware, and the other has newer firmware where SFF is installed and ON, then cloning fails. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If both the source and the destination have newer firmware but SFF is OFF for both, then cloning proceeds with no difficulty. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If both the source and the destination have newer firmware and SFF is ON for both, then cloning proceeds with no difficulty. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If both the source and the destination have newer firmware but SFF is ON for one, but OFF for the other, then cloning fails. </p>
+        <h3><a name="Effect"></a>Effect on HA</h3>
+        <p>HSMs that do not have  SFF backup enabled, and have previously been able to participate in an HA group, continue to function in HA, even when updated to a firmware version that can support  SFF backup. This remains true as long as the other members of the HA&#160;group have the previous firmware, or have the newer firmware, but with  SFF backup not enabled. </p>
+        <p>HSMs that have the  SFF backup capability applied, and the feature policy switched on, can share an HA group only with other HSMs that have the capability applied and the policy switched on. </p>
+        <h3>Applicability</h3>
+        <p>The above general rules apply at the HSM-wide level. It is not possible to have different settings, affecting the above-described compatibilities, at the partition level. The only partition-level option is to forbid  SFF backup for a particular partition while the HSM, as a whole, supports and permits it. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

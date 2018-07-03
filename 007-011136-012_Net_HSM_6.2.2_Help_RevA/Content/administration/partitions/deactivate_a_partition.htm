@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|HSM Partitions|Activating and AutoActivating Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>De-Activate a Partition</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partitions.htm">HSM Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="about_activation_and_auto-activation_.htm">Activating and AutoActivating Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">DeActivate a Partition</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3>De-Activate a Partition</h3>
+        <p><a name="kanchor111"></a><a name="kanchor112"></a>You can turn off Activation for an HSM Partition by issuing the deactivate 
+ command.</p>
+        <h5>To deactivate an application partition  </h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>To deactivate, do one of the following.  </p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">For SafeNet Network HSM legacy partitions, type:<br /></p>
+        <p class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">
+            <b>partition deactivate -partition</b> &lt;partitionname&gt;  
+
+</p>
+        <p class="listLevel1"> For SafeNet PCIe HSM or SafeNet USB HSM legacy application partition, type:<br /></p>
+        <p class="listLevel1" xml:space="preserve">
+            <b>partition deactivate</b> &#160;
+
+</p>
+        <p class="listLevel1">For  PPSO application partition on SafeNet PCIe HSM or SafeNet USB HSM or SafeNet Network HSM, type:<br /></p>
+        <p class="listLevel1" xml:space="preserve">
+            <b>role deactivate -name</b> &lt;name of role&gt; 
+<br /></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>This turns off activation until the next time a login or activation is performed, at which time the authentication data is re-cached. Deactivation is temporary un-caching. <br />If you wish to turn off caching more permanently, so that it does not re-assert at the next login, change the Activation policy. </p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">For SafeNet Network HSM legacy partitions, type:<br /></p>
+        <p class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">
+            <b>partition changepolicy -par</b> &lt;partitionname&gt; <b>-policy</b> 22 <b>-value</b> 0 
+</p>
+        <p class="listLevel1"> For SafeNet PCIe HSM or SafeNet USB HSM legacy application partition, type:<br /></p>
+        <p class="listLevel1" xml:space="preserve">
+            <b>partition changepolicy -policy</b> 22 <b>-value</b> 0
+</p>
+        <p class="listLevel1">For SafeNet PCIe HSM or SafeNet USB HSM or SafeNet Network HSM PPSO application partition, type:<br /></p>
+        <p class="listLevel1" xml:space="preserve">
+            <b>partition changepolicy -slot</b> &lt;slot number&gt; <b>-policy</b> 22 <b>-value</b> 0 </p>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>If Activation is turned off, then autoActivation is also turned off 
+ (cached authentication data is cleared) at the same time, but when the SafeNet HSM is Activated again, autoActivation resumes. <br />To turn off autoActivation, you must turn off the policy. </p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">For SafeNet Network HSM legacy partitions, type:<br /></p>
+        <p class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">
+            <b>partition changepolicy -par</b> &lt;partitionname&gt; <b>-policy</b> 23 <b>-value</b> 0 
+</p>
+        <p class="listLevel1"> For SafeNet PCIe HSM or SafeNet USB HSM legacy application partition, type:<br /></p>
+        <p class="listLevel1" xml:space="preserve">
+            <b>partition changepolicy -policy</b> 23 <b>-value</b> 0
+</p>
+        <p class="listLevel1">For SafeNet PCIe HSM or SafeNet USB HSM or SafeNet Network HSM PPSO application partition, type:<br /></p>
+        <p class="listLevel1" xml:space="preserve">
+            <b>partition changepolicy -slot</b> &lt;slot number&gt; <b>-policy</b> 23 <b>-value</b> 0 </p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

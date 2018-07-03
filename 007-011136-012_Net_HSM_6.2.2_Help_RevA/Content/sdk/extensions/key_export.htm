@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Extensions to PKCS#11">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Key Export Features</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">SDK Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="extensions.htm">Extensions to PKCS#11</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Key Export Features</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor532"></a><a name="kanchor533"></a>Key Export Features</h2>
+        <p>The SafeNet Key Export HSM&#160;provides the  feature(s) detailed in this section.</p>
+        <h3>RSA Key Component Wrapping</h3>
+        <p>The RSA Key Component Wrapping is a feature that allows an application 
+ to wrap any subset of attributes from an RSA private key with 3-DES. Access 
+ to the feature is through the PKCS #11 function C_WrapKey with the CKM_DES3_ECB 
+ mechanism. The wrapping key must be a CKK_DES2 or CKK_DES3 key with its 
+ CKA_WRAP attribute set to TRUE. The key to wrap must be an RSA private 
+ key with CKA_EXTRACTABLE set to TRUE and the FPV must have FPV_WRAPPING_TOKEN 
+ turned on.</p>
+        <p>The details of the wrapping format are specified with a format descriptor. 
+ The format descriptor is provided as the mechanism parameter to the CKM_DES3_ECB 
+ mechanism. This descriptor consists of a 32-bit format version, followed 
+ by a set of field element descriptors. Each field element descriptor consists 
+ of a 32-bit Field Type Identifier and optionally some additional data. 
+ The SafeNet firmware 
+ parses the set of field element descriptors and builds the custom layout 
+ of the RSA private key in an internal buffer. Once all field element descriptors 
+ are processed, the buffer is wrapped with 3-DES and passed out to the 
+ calling application. It is the responsibility of the calling application 
+ to ensure that the buffer is a multiple of 8 bytes.</p>
+        <p>The format descriptor version (the first 32-bit value in the format 
+ data) must always be set to zero.</p>
+        <p>The set of supported field element descriptor constants is as follows:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_APPEND_STRING &#160;0x00000000</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_APPEND_ATTRIBUTE 0x00000001</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_APPEND_REVERSED_ATTRIBUTE 0x00000002</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_APPEND_RFC1423_PADDING 0x00000010</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_APPEND_ZERO_PADDING 0x00000011</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_APPEND_ZERO_WORD_PADDING 0x00000012</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_APPEND_INV_XOR_CHECKSUM 0x00000020</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>#define KM_DEFINE_IV_FOR_CBC 0x00000030</p>
+        <p>The meanings of the field element descriptors is as follows:</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Field element descriptor</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">KM_APPEND_STRING</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Appends an arbitrary string of bytes to the custom layout buffer.</p>
+                        <p>The field type identifier is followed by a 32-bit length field defining 
+ the number of bytes to append.</p>
+                        <p>The length field is followed by the bytes to append.</p>
+                        <p>There is no restriction of the length of data that may be appended, 
+ as long as the total buffer length does not exceed 3072 bytes.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">KM_APPEND_ATTRIBUTE</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Appends an RSA private key component into the buffer in big endian representation.</p>
+                        <p>The field type identifier is followed by a 32-bit CK_ATTRIBUTE_TYPE 
+ value set to one of the following: CKA_PRIVATE_EXPONENT, CKA_PRIME_1, 
+ CKA_PRIME_2, CKA_EXPONENT_1, CKA_EXPONENT_2, or CKA_COEFFICIENT.. </p>
+                        <p>The key component is padded with leading zeros such that the length 
+ is equal to the modulus length in the case of the private exponent, or 
+ equal to half of the modulus length in the case of the other 5 components.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">KM_APPEND_REVERSED_ATTRIBUTE</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Appends an RSA private key component into the buffer in little endian 
+ representation.</p>
+                        <p>The field type identifier is followed by a 32-bit CK_ATTRIBUTE_TYPE 
+ value set to one of the following: CKA_PRIVATE_EXPONENT, CKA_PRIME_1, 
+ CKA_PRIME_2, CKA_EXPONENT_1, CKA_EXPONENT_2, or CKA_COEFFICIENT.</p>
+                        <p>The key component is padded with trailing zeros such that the length 
+ is equal to the modulus length in the case of the private exponent, or 
+ equal to half of the modulus length in the case of the other 5 components.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">KM_APPEND_RFC1423_PADDING</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Applies RFC 1423 padding to the buffer (appends 1 to 8 bytes with values 
+ equal to the number of bytes, such that the total buffer length becomes 
+ a multiple of 8).</p>
+                        <p>This would typically be the last formatting element in a set, but this 
+ is not enforced.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">KM_APPEND_ZERO_PADDING</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Applies Zero padding to the buffer (appends 0 to 7 bytes with values 
+ equal to Zero, such that the total buffer length becomes a multiple of 
+ 8).</p>
+                        <p>This would typically be the last formatting element in a set, but this 
+ is not enforced.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">KM_APPEND_ZERO_WORD_PADDING</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Zero pads the buffer to the next 32-bit word boundary.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">KM_APPEND_INV_XOR_CHECKSUM</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Calculates and adds a checksum byte to the buffer.</p>
+                        <p>The checksum is calculated as the complement of the bytewise XOR of 
+ the buffer being built.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">KM_DEFINE_IV_FOR_CBC</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>Allows definition of an IV so that 3DES_CBC wrapping can be performed 
+ even though the functionality is invoked with the CKM_3DES_ECB mechanism.</p>
+                        <p>The field type identifier is followed by a 32-bit length field, which 
+ must be set to 8.</p>
+                        <p>The length is followed by exactly 8 bytes of data which are used as 
+ the IV for the wrapping operation.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>Examples</h4>
+        <p>To wrap just the private exponent of an RSA key in big endian representation, 
+ the parameters would appear as follows:</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Ensure that the packing alignment for your structures 
+ uses one (1) byte boundaries.<br /></p><pre xml:space="preserve">struct</pre><pre xml:space="preserve">{</pre><pre xml:space="preserve">UInt32 version = 0;</pre><pre xml:space="preserve">UInt32 elementType&#160;= KM_APPEND_ATTRIBUTE;</pre><pre xml:space="preserve">CK_ATTRIBUTE_TYPE attribute = CKA_PRIVATE_EXPONENT;</pre><pre xml:space="preserve">}</pre><pre xml:space="preserve">&#160;</pre>
+        <p>To wrap the set of RSA key components Prime1, Prime2, Coefficient, Exponent1, 
+ Exponent2 in little endian represen-tation with a leading byte of 0x05 
+ and ending with a CRC byte and then zero padding, the parameters would 
+ appear in a packed structure as follows:</p><pre xml:space="preserve">struct</pre><pre xml:space="preserve">{</pre><pre xml:space="preserve">UInt32 version = 0;</pre><pre xml:space="preserve">UInt32 elementType1 = KM_APPEND_STRING;</pre><pre xml:space="preserve">UInt32 length = 1;</pre><pre xml:space="preserve">UInt8 byteValue = 5;</pre><pre xml:space="preserve">UInt32 elementType2 = KM_APPEND_REVERSED_ATTRIBUTE;</pre><pre xml:space="preserve">CK_ATTRIBUTE_TYPE attribute1 = CKA_PRIME_1;</pre><pre xml:space="preserve">UInt32 elementType3 = KM_APPEND_REVERSED_ATTRIBUTE;</pre><pre xml:space="preserve">CK_ATTRIBUTE_TYPE attribute2 = CKA_PRIME_2;</pre><pre xml:space="preserve">UInt32 elementType4 = KM_APPEND_REVERSED_ATTRIBUTE;</pre><pre xml:space="preserve">CK_ATTRIBUTE_TYPE attribute3 = CKA_COEFFICIENT;</pre><pre xml:space="preserve">UInt32 elementType5 = KM_APPEND_REVERSED_ATTRIBUTE;</pre><pre xml:space="preserve">CK_ATTRIBUTE_TYPE attribute4 = CKA_EXPONENT_1;</pre><pre xml:space="preserve">UInt32 elementType6 = KM_APPEND_REVERSED_ATTRIBUTE;</pre><pre xml:space="preserve">CK_ATTRIBUTE_TYPE attribute5 = CKA_EXPONENT_2;</pre><pre xml:space="preserve">UInt32 elementType7 = KM_APPEND_INV_XOR_CHECKSUM;</pre><pre xml:space="preserve">UInt32 elementType8 = KM_APPEND_ZERO_PADDING;</pre><pre xml:space="preserve">}</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

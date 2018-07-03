@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|partition">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>partition resetpw</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition.htm">partition</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">partition resetpw</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">partition resetpw</h2>
+        <p> Resets a Partition Owner's password, or PED key data.</p>
+        <p>The HSM Admin must be logged in to execute this command. This command is available only if the destructive HSM policy “SO can reset partition PIN” is ON.</p>
+        <p>This command detects firmware level and determines whether an action is allowed.</p>
+        <p>For password-authenticated HSMs, if the new password is not provided via the command line, the user is interactively prompted for it. Input is echoed as asterisks, and the user is asked for password confirmation.</p>
+        <p>For PED-authenticated HSMs, PED action is required, and a Partition Owner PED Key (black) is imprinted. Any password provided at the command line is ignored.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Reset the black PED Key before resetting the challenge. If not, the system presents an error <br />"Error: The HSM security policy does not allow the HSM Administrator to reset the password for partitions." <br />which should say something more informative like : <br />"Please reset black PED Key first before resetting challenge."</p>
+        <p>This command does not perform a 'pure' password reset, which would simply apply a default until the partition owner changed it to a suitable replacement. Doing so would create a security hole in a system deployed in a production environment. Instead, the HSM SO assigns a secure password and must inform the partition owner of the change, and must pass along the new password (whether that is a text string or a new PED Key). </p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>partition resetPw -partition</b> &lt;partitionname&gt; [-<b>cu</b>] [-<b>password</b> &lt;password&gt;] [-<b>newpw</b> &lt;password&gt;]</p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 142px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 142px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-cu</b> &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-c</b> &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Perform task as Crypto-User &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-newpw</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-n</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The new password to be used as the HSM Partition Owner's login credential to the named HSM Partition. Requires the SO to be logged in.</p>
+                        <p>This parameter is mandatory for password-authenticated HSMs. It is ignored on PED-authenticated HSMs. If you omit the password from the command line, you are prompted for it (password-authenticated HSMs). <br /></p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-password</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-pas</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Partition Password</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-partition</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-par</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Specifies the name of the HSM Partition ID for which to reset the Owner's PIN. Obtain the HSM partition name by using the <b>partition list</b> command. </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">lunash:&gt; partition resetpw -partition mypar  
+
+Which part of the partition password do you wish to change? 
+  
+
+  1.  change Partition Owner (black) PED key data 
+
+  2.  generate new random password for partition owner 
+
+  3.  use default password for partition owner 
+
+  4.  both options 1 and 2 
+
+  5.  change crypto-user (black) PED key data 
+
+  6.  generate new random password for crypto-user 
+
+  7.  use default password for crypto-user 
+
+  0.  abort command  &#160;
+
+Please select one of the above options: 1 &#160;
+
+Luna PED operation required to reset partition PED key data - use User or Partition Owner (black) PED key. 
+
+'partition resetPw' successful. &#160;
+
+Command Result : (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

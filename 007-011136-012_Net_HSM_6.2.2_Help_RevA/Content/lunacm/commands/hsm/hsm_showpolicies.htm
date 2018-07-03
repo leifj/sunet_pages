@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaCM Command Reference Guide|LunaCM Commands|hsm">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>hsm showpolicies</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaCM Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaCM Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="hsm.htm">hsm</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">hsm showpolicies</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">hsm showpolicies</h2>
+        <p>Displays the HSM-level capability and policy settings for the HSM [and for the SO - deprecated; see notes below].</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Some mechanisms (such as KCDSA) are not enabled unless you have purchased and installed the required Secure Capability Update package. If you require a particular mechanism, and do not see it listed when you generate a mechanism list for your SafeNet HSM, contact SafeNet Support.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The lunacm <b>hsm</b> commands appear only when the current slot selected in lunacm is for a locally-installed HSM, such as a SafeNet PCIe HSM or SafeNet USB HSM. When lunacm is directed at a slot corresponding to a remote SafeNet Network HSM, the HSM-level commands do not appear, since lunacm has a client-only connection to a remote HSM and therefore cannot log in as SO to a remote HSM. To access HSM commands on the SafeNet Network HSM appliance, you must use the  Luna Shell (lunash).</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The output of this command differs considerably, depending on the firmware version of the HSM in the current slot. See the examples and discussion below.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>hsm showpolicies</b>
+        </p>
+        <h3 class="ntoc">Examples</h3>
+        <h5>Example with HSM firmware older than 6.22.0</h5><pre xml:space="preserve">lunacm:&gt;hsm sp
+
+        HSM Capabilities
+                0: Enable PIN-based authentication : 1
+                1: Enable PED-based authentication : 0
+                2: Performance level : 15
+                4: Enable domestic mechanisms &amp; key sizes : 1
+                6: Enable masking : 1
+                7: Enable cloning : 1
+                8: Enable special cloning certificate : 0
+                9: Enable full (non-backup) functionality : 1
+                12: Enable non-FIPS algorithms : 1
+                15: Enable SO reset of partition PIN : 1
+                16: Enable network replication : 1
+                17: Enable Korean Algorithms : 0
+                18: FIPS evaluated : 0
+                19: Manufacturing Token : 0
+                20: Enable Remote Authentication : 1
+                21: Enable forcing user PIN change : 1
+                22: Enable offboard storage : 1
+                23: Enable partition groups : 0
+                25: Enable remote PED usage : 0
+                26: Enable External Storage of MTK Split : 0
+                27: HSM non-volatile storage space : 2097152
+                28: Enable HA mode CGX : 0
+                29: Enable Acceleration : 1
+                30: Enable unmasking : 0
+                31: Enable FW5 compatibility mode : 0
+                34: Enable ECIES support : 0
+                35: Enable Single Domain : 0
+                36: Enable Unified PED Key : 0
+                37: Enable MofN : 0
+                38: Enable small form factor backup/restore : 0
+
+        HSM Policies
+                0: PIN-based authentication : 1
+                1: PED-based authentication : 0
+                6: Allow masking : 1
+                7: Allow cloning : 1
+                12: Allow non-FIPS algorithms : 1
+                15: SO can reset partition PIN : 1
+                16: Allow network replication : 1
+                20: Allow Remote Authentication : 1
+                21: Force user PIN change after set/reset : 0
+                22: Allow offboard storage : 1
+                23: Allow partition groups : 0
+                25: Allow remote PED usage : 0
+                26: Store MTK Split Externally : 0
+                29: Allow Acceleration : 1
+                30: Allow unmasking : 0
+                31: Allow FW5 compatibility mode : 0
+                34: Allow ECIES support : 0
+                35: Force Single Domain : 0
+                36: Allow Unified PED Key : 0
+                37: Allow MofN : 0
+                38: Allow small form factor backup/restore : 0
+
+        SO Capabilities
+                0: Enable private key cloning : 1
+                1: Enable private key wrapping : 0
+                2: Enable private key unwrapping : 1
+                3: Enable private key masking : 0
+                4: Enable secret key cloning : 1
+                5: Enable secret key wrapping : 1
+                6: Enable secret key unwrapping : 1
+                7: Enable secret key masking : 0
+                10: Enable multipurpose keys : 1
+                11: Enable changing key attributes : 1
+                14: Enable PED use without challenge : 1
+                15: Allow failed challenge responses : 1
+                16: Enable operation without RSA blinding : 1
+                17: Enable signing with non-local keys : 1
+                18: Enable raw RSA operations : 1
+                20: Max failed user logins allowed : 3
+                21: Enable high availability recovery : 1
+                22: Enable activation : 0
+                23: Enable auto-activation : 0
+                25: Minimum pin length (inverted: 255 - min) : 248
+                26: Maximum pin length : 255
+                28: Enable Key Management Functions : 1
+                29: Enable RSA signing without confirmation : 1
+                30: Enable Remote Authentication : 1
+                31: Enable private key unmasking : 1
+                32: Enable secret key unmasking : 1
+                33: Enable RSA PKCS mechanism : 0
+                34: Enable CBC-PAD (un)wrap keys of any size : 0
+                35: Enable private key SFF backup/restore : 0
+                36: Enable secret key SFF backup/restore : 0
+
+        SO Policies
+                0: Allow private key cloning : 1
+                1: Allow private key wrapping : 0
+                2: Allow private key unwrapping : 1
+                3: Allow private key masking : 0
+                4: Allow secret key cloning : 1
+                5: Allow secret key wrapping : 1
+                6: Allow secret key unwrapping : 1
+                7: Allow secret key masking : 0
+                10: Allow multipurpose keys : 1
+                11: Allow changing key attributes : 1
+                14: Challenge for authentication not needed : 1
+                15: Ignore failed challenge responses : 1
+                16: Operate without RSA blinding : 1
+                17: Allow signing with non-local keys : 1
+                18: Allow raw RSA operations : 1
+                20: Max failed user logins allowed : 3
+                21: Allow high availability recovery : 1
+                22: Allow activation : 0
+                23: Allow auto-activation : 0
+                25: Minimum pin length (inverted: 255 - min) : 248
+                26: Maximum pin length : 255
+                28: Allow Key Management Functions : 1
+                29: Perform RSA signing without confirmation : 1
+                30: Allow Remote Authentication : 1
+                31: Allow private key unmasking : 1
+                32: Allow secret key unmasking : 1
+                33: Allow RSA PKCS mechanism : 0
+                34: Allow CBC-PAD (un)wrap keys of any size : 0
+                35: Allow private key SFF backup/restore : 0
+                36: Allow secret key SFF backup/restore : 0
+
+
+Command Result : No Error
+</pre>
+        <p>&#160;</p>
+        <h5>Example with HSM firmware 6.22.0 or newer</h5><pre xml:space="preserve">llunacm:&gt;hsm sp
+        HSM Capabilities
+                 0: Enable PIN-based authentication : 1
+                 1: Enable PED-based authentication : 0
+                 2: Performance level : 15
+                 4: Enable domestic mechanisms &amp; key sizes : 1
+                 6: Enable masking : 1
+                 7: Enable cloning : 1
+                 8: Enable special cloning certificate : 0
+                 9: Enable full (non-backup) functionality : 1
+                12: Enable non-FIPS algorithms : 1
+                15: Enable SO reset of partition PIN : 1
+                16: Enable network replication : 1
+                17: Enable Korean Algorithms : 0
+                18: FIPS evaluated : 0
+                19: Manufacturing Token : 0
+                20: Enable Remote Authentication : 1
+                21: Enable forcing user PIN change : 1
+                22: Enable offboard storage : 1
+                23: Enable partition groups : 0
+                25: Enable remote PED usage : 0
+                26: Enable External Storage of MTK Split : 0
+                27: HSM non-volatile storage space : 2097152
+                29: Enable Acceleration : 1
+                30: Enable unmasking : 0
+                31: Enable FW5 compatibility mode : 0
+                33: Maximum number of partitions : 20
+                34: Enable ECIES support : 0
+                35: Enable Single Domain : 1
+                36: Enable Unified PED Key : 1
+                37: Enable MofN : 1
+                38: Enable small form factor backup/restore : 0
+                39: Enable Secure Trusted Channel : 1
+                40: Enable decommission on tamper : 0
+                41: Enable Per-Partition SO : 1
+                42: Enable partition re-initialize : 1
+
+        HSM Policies
+                 0: PIN-based authentication : 1
+                 1: PED-based authentication : 0
+                 6: Allow masking : 1
+                 7: Allow cloning : 1
+                12: Allow non-FIPS algorithms : 1
+                15: SO can reset partition PIN : 1
+                16: Allow network replication : 1
+                20: Allow Remote Authentication : 1
+                21: Force user PIN change after set/reset : 0
+                22: Allow offboard storage : 1
+                23: Allow partition groups : 0
+                25: Allow remote PED usage : 0
+                26: Store MTK Split Externally : 0
+                29: Allow Acceleration : 1
+                30: Allow unmasking : 0
+                31: Allow FW5 compatibility mode : 0
+                33: Current maximum number of partitions : 20
+                34: Allow ECIES support : 0
+                35: Force Single Domain : 0
+                36: Allow Unified PED Key : 0
+                37: Allow MofN : 1
+                38: Allow small form factor backup/restore : 0
+                39: Allow Secure Trusted Channel : 0
+                40: Allow decommission on tamper : 0
+                42: Allow partition re-initialize : 0
+
+
+Command Result : No Error
+
+</pre>
+        <p>&#160;</p>
+        <p>Notice that, as of HSM firmware 6.22.0, "SO Capabilities" and "SO Policies" are no longer part of the <b>hsm showpolicies</b> output. They have been moved to the output of command <a href="../partition/partition_showpolicies.htm" class="MCXref xref">partition showpolicies</a>, when the current slot is the HSM admin partition. If the current slot is an application partition, then command <b>partition showpolicies</b> shows capabilities and policies under the control of a partition SO (for PPSO partitions) or the HSM SO (for legacy partitions). </p>
+        <p>So, for example, if you were looking for "Max failed user logins allowed", you would now look at <b>partition showpolicies</b>.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Secure Trusted Channel (STC)">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using a Hard Token to Store the STC Client Identity</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/List2.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="stc.htm">Secure Trusted Channel (STC)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Using a Hard Token to Store the STC Client Identity</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Using a Hard Token to Store the STC Client Identity</h2>
+        <p>By default, STC uses a software token to store the client identity.   When using a software token, the client’s private key is intentionally portable.  That is, it can be moved or copied to another host and used – so any client that possesses this identity pair is considered the authentic client. Allowing this enables an elastic client model – an important capability for many applications.</p>
+        <p>Alternatively, you can choose to use a SafeNet eToken 7300 hardware token to protect the client’s private key.  When using hard tokens, the client’s private key is marked as non-extractable, so only a host with the hard token inserted can successfully authenticate to the HSM partition.  The SafeNet eToken 7300  is a FIPS 140-2 Level 3 device. The eToken 7300 comes pre-configured for one of two certification types, Common Criteria or FIPS. STC supports the Common Criteria version only.</p>
+        <p>If you want to use a SafeNet eToken 7300 hardware token to store the client identity, you must initialize the hard token to prepare it for use with STC, as described in <a href="#Initiali" class="MCXref xref selected">Initializing a SafeNet eToken 7300 Hardware Token</a>.</p>
+        <p>If you want to recover  a SafeNet eToken 7300 hardware token that is in a bad state, you must use the SafeNet Authentication Client software to re-initialize the token and reset the default password, as described in <a href="#Recoveri" class="MCXref xref selected">Recovering  a SafeNet eToken 7300 Hardware Token</a>.</p>
+        <h3><a name="Initiali"></a>Initializing a SafeNet eToken 7300 Hardware Token</h3>
+        <p>This section describes how to initialize a new (out of the box) SafeNet eToken 7300 for use with STC. Hard token initialization is supported in Windows only. Once the hard token is initialized, you can use it with a Windows, Linux, or Solaris SafeNet Client.</p>
+        <h5>Prerequisites</h5>
+        <p>You require the following software on the workstation used to initialize a SafeNet eToken 7300 hardware token:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>a supported Windows 64-bit operating system</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the SafeNet Client software (6.0 or higher)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the SafeNet Authentication Client software (64 bit, 8.3 or higher) </p>
+        <h5>To initialize a SafeNet eToken 7300 hardware token</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that the required software is installed on the workstation you are going to use to initialize the token.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Edit the <b>C:\Program Files\SafeNet\LunaClient\crystoki.ini</b> file to specify the path to the client token library:</p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>Go to the <b>Secure Trusted Channel</b> section and add or update the <b>ClientTokenLib</b> entry as follows:</p>
+        <p class="listLevel2"><b>ClientTokenLib=C:\Windows\System32\eToken.dll </b>
+        </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Insert the SafeNet eToken 7300 token into an available USB slot.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Launch LunaCM and enter the following command to verify that the token is recognizable:</p>
+        <p class="listLevel1"><b>stc tokenlist</b>
+        </p>
+        <p class="listLevel1">For example:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span> Unitialized token:</p><pre class="listLevel2" xml:space="preserve">lunacm:&gt; stc tokenlist</pre><pre class="listLevel2" xml:space="preserve">&#160;</pre><pre class="listLevel2">Token Slot ID  Token Label                      Serial Number    Initialized</pre><pre class="listLevel2" xml:space="preserve">1                                               51ea973112       No</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>Previously initialized token</p><pre class="listLevel2" xml:space="preserve">lunacm:&gt; stc tokenlist</pre><pre class="listLevel2" xml:space="preserve">&#160;</pre><pre class="listLevel2">Token Slot ID  Token Label                      Serial Number    Initialized</pre><pre class="listLevel2" xml:space="preserve">1              stcHWtoken                       51ea973112       Yes</pre><pre class="listLevel2" xml:space="preserve">&#160;</pre>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Enter the following command to initialize the token:</p>
+        <p class="listLevel1"><b>stc tokeninit -label</b> &lt;label&gt;</p>
+        <p class="listLevel1">For example:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span> Unitialized token:</p><pre class="listLevel2" xml:space="preserve">lunacm:&gt; stc tokeninit stcHWtoken</pre><pre class="listLevel2" xml:space="preserve">&#160;</pre><pre class="listLevel2" xml:space="preserve">Successfully initialized the client token.</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>Previously initialized token</p><pre class="listLevel2" xml:space="preserve">lunacm:&gt; stc tokenlist</pre><pre class="listLevel2" xml:space="preserve">&#160;</pre><pre class="listLevel2" xml:space="preserve">The client token stcHWtoken is already initialized.</pre><pre class="listLevel2" xml:space="preserve">Are you sure you want to re-initialize?</pre><pre class="listLevel2" xml:space="preserve">     Type 'proceed' to continue, or 'quit' to quit now --&gt; proceed</pre><pre class="listLevel2" xml:space="preserve">Successfully initialized the client token.</pre><pre class="listLevel2" xml:space="preserve">&#160;</pre>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>You can now take the token and use it for STC purposes. You can use it in Solaris, Linux, and Windows at this point. You must perform the following tasks on any SafeNet Client workstations on which you intend to use the SafeNet eToken 7300 hardware token:</p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>Install the SafeNet Authentication Client software (8.3 or higher)</p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>Add the following line to the <b>Secure Trusted Channel</b> section of the <b>crystoki.ini</b> (Windows) or <b>Chrystoki.conf</b> (UNIX/Linux) file, to specify the path to the SafeNet Authentication Client eToken library:</p>
+        <table style="width: 92%;mc-table-style: url('../../Resources/TableStyles/List2.css');" class="TableStyle-List2" cellspacing="0">
+            <col class="Column-Column1" style="width: 92px;" />
+            <col class="Column-Column1" />
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">Windows</td>
+                    <td class="BodyD-Column1-Body1"><b>ClientTokenLib=C:\Windows\System32\eToken.dll </b>
+                    </td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">Linux/UNIX</td>
+                    <td class="BodyA-Column1-Body1"><b>ClientTokenLib=</b>&lt;path_to_libeToken.so&gt;<p>For example, on CentOS, the path is <b>/usr/lib/libeToken.so</b></p></td>
+                </tr>
+            </tbody>
+        </table>
+        <h3><a name="Recoveri"></a>Recovering  a SafeNet eToken 7300 Hardware Token</h3>
+        <p>You can use the Windows SafeNet Authentication Client software (8.3 or higher, 64-bit) to recover a SafeNet eToken 7300 that is in an unresponsive state. </p>
+        <h5>To recover an unresponsive SafeNet eToken 7300</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Update the registry to add or modify the following entries:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>HKEY_CURRENT_USER\Software\SAFENET\AUTHENTICATION\SAC\Init\KeepTokenInit = 1</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>HKEY_LOCAL_MACHINE\Software\policies\SAFENET\AUTHENTICATION\SAC\PQ\pqMaxPin = 64</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>HKEY_LOCAL_MACHINE\Software\policies\SAFENET\AUTHENTICATION\SAC\PQ\pqWarnPeriod = 0</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Launch <b>SafeNet Authentication Client Tools</b> from <b>Windows</b> &gt; <b>All Programs</b> &gt; <b>SafeNet</b> &gt; <b>SafeNet Authentication Client</b>, and click the <b>Advanced View</b> icon.</p>
+        <p class="listLevel1">
+            <br />
+            <img src="../../Resources/Images/sffb/01_sffb_token-init_open_tool.png" />
+        </p>
+        <p class="listLevel1">
+            <br />
+        </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Under the <b>Tokens</b> heading in the left-hand column, select the eToken you want to initialize, and click the <b>Initialize Token</b> icon to start the initialization. <br /><br /><img src="../../Resources/Images/sffb/05_sffb_token-init_select_token_and_start.png" /><br /><br /></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>On the <b>Token Initialization</b> dialog, apply a token name to distinguish this eToken 7300 from other SafeNet STC tokens, and reset the password as follows:</p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>Set the new token password to <b>password</b></p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>Uncheck the <b>Token Password must be changed on first logon</b> checkbox.</p>
+        <p class="listLevel1">
+            <br />
+            <img src="../../Resources/Images/sffb/06_sffb_token-init_config_basic_init_settings.png" />
+            <br />
+            <br />
+        </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Select <b>Advanced Settings</b> at the bottom left of the dialog.<br /></p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>In the <b>Advanced Settings</b> dialog, ensure that the <b>Certification</b> type matches the type of the eToken (in this case, Common Criteria) and click <b>OK</b> to return to the <b>Token Initialization</b> dialog.<br /></p>
+        <p class="listLevel1">
+            <br />
+            <img src="../../Resources/Images/sffb/07_sffb_token-init_config_advanced_init_settings_cc.png" />
+            <br />
+        </p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>In <b>Token Initialization</b>, click <b>Start</b> to launch token initialization. Two progress bars are shown followed by a success announcement. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|HSM Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Partition Creation - Notes</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partitions.htm">HSM Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Partition Creation - Notes</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Partition Creation - Notes</h2>
+        <p>[This is supplementary information. You can create and use HSM partitions, using default parameters, without ever referring to this page. However, if you wish to adjust and control the sizes of your partitions, the information on this page might be helpful.]</p>
+        <p>The syntax of the <b>partition create</b> command is described in the <i>Lunash Command Reference Guide</i>.</p>
+        <p>The procedure is described as part of SafeNet Network HSM&#160;Configuration, &#160;password version ( <a href="../../configuration/partition_create/about_creating_a_legacy_partition_pw.htm" class="MCXref xref">Prepare to Create a Legacy Partition (Password Authenticated)</a> ) or &#160;PED version ( <a href="../../configuration/partition_create/prepare_to_create_a_partition_ped.htm" class="MCXref xref">Prepare to Create a Partition (PED Authenticated)</a> ) in the <i>Configuration Guide</i>.</p>
+        <p>The output of the command <b>hsm show</b> includes information about </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the amount of HSM storage that is supported (whether it is the default non-volatile memory size, or maximum memory following a memory configuration upgrade), and </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>how much of that memory is used, and how many application partitions currently exist, as well as </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the permitted maximum number of partitions. </p>
+        <p>The output of the command <b>partition list</b> shows </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>all currently created application partitions, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the total storage allotted to each, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the total storage used and still unused within each partition. </p>
+        <p>That information can be helpful when you prepare to create multiple new partitions (if you have purchased upgrades beyond the default allotment), informing decisions about the sizes/capacities of partitions that you create, the possibility (or need) to revise/recreate existing partitions that have unused space, thereby allowing additional or larger new application partitions to be created, etc.</p>
+        <h3><a name="Sizes_of_Partitions_"></a>Sizes of Partitions &#160;</h3>
+        <p>The   SafeNet Network HSM supports a maximum of 100 partitions (subject to change in future versions). In use, the HSM supports only the number of partitions that are explicitly licensed, either from the factory, or by later upgrade. The upgrade is locked to the serial number of a specific HSM. Available values are 2, 10,  20, 35, 50, 75, or 100 partitions. Those partitions are divided among the available memory, with each being assigned an equal share when it is created, by default. We do not specify an exact size in bytes, because this can be affected by other features of the factory-installed configuration that you purchased, and by later changes</p>
+        <p>The basic allotment ensures that you can create all allowed partitions, each having enough space to hold (at least) an RSA key-pair. </p>
+        <p>If you don't specify an amount at partition creation, then each partition is assigned the default amount for your HSM.</p>
+        <p>You can see what that default amount is for your HSM by creating a single partition and then viewing partition information with <b>partition show</b>.</p>
+        <p>The default total storage space on the HSM is 2 MB, which, less partition overhead, is available for storage of objects.</p>
+        <h4>Memory Amount </h4>
+        <p>A purchased upgrade (at the time the HSM is ordered, or as a customer-installed upgrade at a later date) is available, increasing the allotment to 15.5 MB of storage. If your application uses only a small amount of memory per partition, then increasing the total memory might not be necessary if you increase the partition count. However, if your application uses a significant portion of the default 2 MB when you have only 2 or 5 partitions, then when upgrading to 10, 15,  20, 50, or 100 partitions, you would likely need to increase the total memory. </p>
+        <p><a href="javascript:void(0);" class="MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm MCTextPopupHotSpot_" alt="Closed" data-mc-alt2="Open">Partition overhead<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>Internal data structures, within each application partition, to accommodate cryptographic keys and other security infrastructure. Partition overhead uses up some of the non-volatile memory space that is nominally allotted to a partition - approximately 2k bytes per partition on  pre-firmware-6.22.0 HSMs, and approximately 9k bytes per partition on HSMs with firmware 6.22.0 and newer. Calculations of available space for your cryptographic objects must allow for the overhead, with particular care when upgrading firmware.</span></a>, for HSMs with firmware older than version 6.22.0,is just slightly greater than 2 KB per partition. Partition overhead, for HSMs with firmware  version 6.22.0 or newer, is approximately 9 KB per partition, and is subject to change in future releases.</p>
+        <h4>Sizing of Partitions</h4>
+        <p>You have the option, when creating any partition, to specify "-size" followed by a number of bytes, to directly set the amount of storage to be used by this partition. The HSM runs a boundary check, to determine whether that much storage space remains, and either proceeds with the partition creation, or refuses with an error message.</p>
+        <p>The upper boundary definition is defined as: F / (M - N) - O <br />where:<br />F is the free HSM space remaining, <br />M is the maximum number of partitions allowed on the HSM, <br />N is the number of existing partitions already created on the HSM, and <br />O is the partition overhead.</p>
+        <p>The purpose of the upper boundary is to reserve a usable share of space for future partitions that you might wish to create.</p>
+        <p>You have the option, when creating any partition, to specify "-allfreestorage", which forcibly allocates all remaining storage to that partition, without reserving any space. If you do this before you have created the maximum number of partitions (say, 20), then you are not able to create additional partitions - all the previously unallocated storage is used by the last one that you created (with -allfreestorage option), leaving none for additional partitions.</p>
+        <h4>Resizing</h4>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you intend to re-size partitions, or to perform a firmware update (example, from pre-6.22.0 to version 6.22.0 or newer) that alters the available space in partitions, be sure to backup the contents of your HSM first. It might be required to remove some objects from partitions that are at-or-near capacity. They can be restored after all re-sizing and new-partition creation has finished. </p>
+        <p>The command <b>partition resize</b>  has the "-size"&#160;and "-allfreestorage" options that work as described for <b>partition create</b>, above, with these constraints: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The "-size" option allows you to increase the size of the application partition if space is available. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The "-size" option does not allow you to decrease the application partition size to less than the current free space available - that constraint ensures that no partition objects are lost. If you wish to further decrease the size of a partition, you must intentionally delete objects from it until the remaining objects occupy no more space than the desired partition size. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>For the <b>partition resize</b> command, you must specify either "-size" or "-allfreestorage"; those options are mutually exclusive. </p>
+        <h3>How to use fewer, larger partitions</h3>
+        <p>If you need twenty partitions on your HSM, then you must create twenty partitions (assuming that you have purchased that capability), and their size is constrained by the available storage space - about 100,000 bytes per partition for an HSM with 2 MB of storage, or about 3/4 of a megabyte per partition for an HSM with 15.5 MB of storage. </p>
+        <p>However, you might prefer a smaller number of partitions, each having more space allocated.</p>
+        <p>With the maximum number of partitions that you will need, and their sizes, you can do the arithmetic and simply create each partition with the "-size" option, taking care to not exceed the total space available. The HSM creates your partitions with your specified sizes, except that the last partition is constrained by the boundary calculation to leave enough room for 20-x minimal partitions (that is, twenty minus x where x is the number of large partitions that you want). This wastes some storage that could otherwise be allocated to that last large partition. </p>
+        <p>You can get around that limitation by creating x-1 partitions (where x is the number you desire in total) using the "-size" option, and then creating your last partition with "-allfreestorage" specified instead. </p>
+        <p>So if, for example, you create four partitions in total, using the above suggestion, the assumption is that you are confident you will never need more than four, and can safely use up all storage for just those four. </p>
+        <h4>Example with four equal partitions using all storage</h4>
+        <p>If you prefer to have all your partitions sized equally, and to let the HSM do the calculations, the following procedure might be of some value.</p>
+        <p>In this example, create four equal-size partitions, using all the storage possible:</p>
+        <p>-	start by creating 20 partitions (the maximum allowed) – each will have X bytes available to it</p>
+        <p>-	delete 4 of them (leaving 16)</p>
+        <p>-	resize one partition to use “-allfreestorage”, which makes that partition large (as large as <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_">five small partitions<img class="MCExpanding_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody"> [ the four partitions you just deleted, freeing their allotment, plus the one you are currently resizing ]</span></span> ) and leaves the HSM with 15 partitions having X bytes each, plus the large one</p>
+        <p>-	delete another four small partitions</p>
+        <p>-	resize one small partition to use “-allfreestorage”, which makes that partition large (there are now two large partitions ) and leaves the HSM with 10 partitions having X bytes each, plus the two large ones</p>
+        <p>-	delete another four small partitions</p>
+        <p>-	resize one small partition to use “-allfreestorage”, which makes that partition large (there are now three large partitions ) and leaves the HSM with 5 partitions having X bytes each, plus the three large ones</p>
+        <p>-	delete another four small partitions</p>
+        <p>-	resize the single remaining small partition to use “-allfreestorage”, which makes that partition large  and leaves 0 (zero) of the original partitions with X bytes each, and the four large partitions of equal size, and no unallocated space on the HSM.</p>
+        <p>For the example, we chose conveniently round numbers. You might have a few bytes left over, or one partition slightly larger or smaller than the others, depending on the actual configuration of your HSM. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

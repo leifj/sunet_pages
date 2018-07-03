@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|token|token backup">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>token backup show</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="token.htm">token</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">token backup show</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="kanchor506"></a><a name="kanchor507"></a>token backup show</h2>
+        <p>Displays the token label and firmware version for the specified backup token. </p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>Wait at least 20 seconds before you run the <b>token backup
+ show</b> command after performing a backup token backup
+firmware update.<br />If you run the <b>token backup
+ show</b>command within 10 seconds or less following a successful completion 
+ of &#160;token 
+ backup update firmware, the <b>token backup
+ show</b> command will hang and the green LED on the token reader will 
+ continue to flash. The work-around for the hanging state is to remove and re-insert 
+ the backup token and then rerun the <b>token backup
+ show</b> command.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span><b>WHEN to USE lunash "token backup" commands, or use "vtl backup" commands?</b>  &#160;<br /><br /><span style="color: #000000;">LunaSH </span><span class="code"><span style="color: #000000;">token backup</span></span><span style="color: #000000;"> commands operate a SafeNet Backup HSM  attached directly to SafeNet Network HSM via USB, and are <b>not</b> intended for use with remotely connected backup devices.</span><![CDATA[  ]]><br />You might have a <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_">locally-connected backup HSM<img class="MCExpanding_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody"> [ connects directly to a SafeNet Network HSM via USB cable ]</span></span> and a locally connected serial terminal and be walking them from SafeNet Network HSM to SafeNet Network HSM in your server room to perform backups. Or you might be administering remotely via SSH and lunash:&gt; commands, while a technician in your server center carries the backup HSM from one SafeNet Network HSM to the next. In either case, these "token backup" commands are the method to use.The important distinction is where the backup HSM is physically connected -  from the SafeNet Network HSM perspective, those are both local backup operations to a Backup HSM that is locally connected to the appliance.<br /><br /><span style="color: #000000;">VTL backup commands operate a SafeNet Backup HSM connected to a computer, and located distantly from your primary SafeNet Network HSM appliance. The VTL backup commands are <b>not</b> for use with a SafeNet Backup HSM that is connected directly to your SafeNet Network HSM appliance.</span><br />For true, hands-off, lights-out operation of your SafeNet appliances, use a SafeNet Remote Backup HSM located in your <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_">administrator's office<img class="MCExpanding_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody"> [ or other convenient location ]</span></span>, connected to a computer acting as a <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_">Remote Backup server<img class="MCExpanding_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody"> [ this could be your administrative workstation, or it could be a completely separate computer ]</span></span>. This means the computer and Backup HSM are located near you and remote/distant from your SafeNet Network HSM appliance(s). For that application, use the <b>backup commands in the VTL utility</b> supplied with the SafeNet Network HSM <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_">Client software<img class="MCExpanding_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody"> [ which must be installed on the computer that is acting as Remote Backup server ]</span></span> &#160;- the appliance <span class="code">token backup</span> commands (previous paragraph) are not designed to work for Remote Backup.</p>
+        <p class="notepad_note">The HSM firmware needs approximately 2K bytes of memory to manage each partition and data objects in it. &#160;To avoid you having to calculate the exact memory space available for data storage -- with you deducting the memory used by internal data structures --the "partition list" command adjusts &#160;the memory size attributes for you. &#160;Thus, the total available memory reported by "partition list" will be different than that reported by "token backup show" and "token backup partition list."</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code"><b>token backup show -serial</b> &lt;serialnum&gt;</p>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 81px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-serial</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-s</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">The serial number of thebackup HSM/token.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">lunash:&gt; token backup show -serial 667788</pre><pre xml:space="preserve">Token Details:</pre><pre xml:space="preserve">============</pre><pre xml:space="preserve">Token Label: samBK</pre><pre xml:space="preserve">Serial #: 667788</pre><pre xml:space="preserve">Firmware: 6.0.8</pre><pre xml:space="preserve">Hardware Model: SafeNet USB HSM</pre><pre xml:space="preserve">Authentication Method: PED keys</pre><pre xml:space="preserve">Token Admin login status: Logged In</pre><pre xml:space="preserve">Token Admin login attempts left: 3 before Token zeroization!</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Partition Information:</pre><pre xml:space="preserve">======================</pre><pre xml:space="preserve">Partitions licensed on token: 20</pre><pre xml:space="preserve">Partitions created on token: 0</pre><pre xml:space="preserve">----------------------</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">There are no partitions.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Token Storage Information:</pre><pre xml:space="preserve">==========================</pre><pre xml:space="preserve">Maximum Token Storage Space (Bytes): 16252928</pre><pre xml:space="preserve">Space In Use (Bytes): 0</pre><pre xml:space="preserve">Free Space Left (Bytes): 16252928</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">License Information:</pre><pre xml:space="preserve">====================</pre><pre xml:space="preserve">621010355-000 621-010355-000 G5 Backup Device Base</pre><pre xml:space="preserve">621000005-001 621-000005-001 Backup Device Partitions 20</pre><pre xml:space="preserve">621000006-001 621-000006-001 Backup Device Storage 15.5 MB</pre><pre xml:space="preserve">621000007-001 621-000007-001 Backup Device Store MTK Split Externally</pre><pre xml:space="preserve">621000008-001 621-000008-001 Backup Device Remote Ped Enable</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command result : 0 (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

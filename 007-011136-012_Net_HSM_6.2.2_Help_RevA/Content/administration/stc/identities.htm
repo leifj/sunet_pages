@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Secure Trusted Channel (STC)">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Managing STC Tokens and Identities</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="stc.htm">Secure Trusted Channel (STC)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Managing STC Tokens and Identities</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Managing STC Tokens and Identities</h2>
+        <p>Each SafeNet HSM client and partition, (including the HSM&#160;SO&#160;partition and the SafeNet Network HSM operating system, for the admin channel link) that serves as an STC endpoint has a unique identity, defined by a 2048-bit  RSA asymmetric public/private key pair. The STC identity key pair is stored in the STC token associated with the client or partition. Before STC can create secure tunnels, trust must be established between the client and the partition, through the exchange of public keys.</p>
+        <p>Partition tokens and identities are created automatically.</p>
+        <p>Client tokens and identities are created manually, using LunaCM. Client can use either a software token (the default) or a SafeNet eToken 7300 Hardware Token (see <a href="token.htm" class="MCXref xref">Using a Hard Token to Store the STC Client Identity</a>).</p>
+        <p>Under normal operating conditions, you should not need to re-create the STC tokens or identities. If, however, you want or need to re-create the STC tokens or identities for operational or security reasons, STC provides commands to do so, as follows:</p>
+        <h5>Client Tokens and Identities</h5>
+        <p>Refer to the following commands in the <i>LunaCM Command Reference Guide</i>:</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 135px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>identitycreate</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Create a client identity on the STC client token. See <a href="../../lunacm/commands/stc/stc_identitycreate.htm" class="MCXref xref">stc identitycreate</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>identitydelete</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> 	Delete a client identity from the STC identity token. See <a href="../../lunacm/commands/stc/stc_identitydelete.htm" class="MCXref xref">stc identitydelete</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>identityexport</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Export the STC client identify to a file. See <a href="../../lunacm/commands/stc/stc_identityexport.htm" class="MCXref xref">stc identityexport</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>identityshow</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> 	Display the client name, public key hash, and registered partitions for the STC client token. See <a href="../../lunacm/commands/stc/stc_identityshow.htm" class="MCXref xref">stc identityshow</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>partitionderegister</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Remove a  partition identity from the STC client token. See <a href="../../lunacm/commands/stc/stc_partitionderegister.htm" class="MCXref xref">stc partitionderegister</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>partitionregister</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Register a partition to the STC client token. See <a href="../../lunacm/commands/stc/stc_partitionregister.htm" class="MCXref xref">stc partitionregister</a></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>tokeninit</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Initialize a client token. See <a href="../../lunacm/commands/stc/stc_tokeninit.htm" class="MCXref xref">stc tokeninit</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1"><b>tokenlist</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">List the available STC client identity tokens. See <a href="../../lunacm/commands/stc/stc_tokenlist.htm" class="MCXref xref">stc tokenlist</a>.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h5>STC Admin Channel Identity</h5>
+        <p>Refer to the following commands in the <i>LunaSH Command Reference Guide</i>:</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 256px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Command</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>hsm stc identity create</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Create a STC client identity for the STC admin channel. See <a href="../../lunash/commands/hsm/hsm_stc_identity_create.htm" class="MCXref xref">hsm stc identity create</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>hsm stc identity delete</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Delete the STC admin channel client identity. See <a href="../../lunash/commands/hsm/hsm_stc_identity_delete.htm" class="MCXref xref">hsm stc identity delete</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>hsm stc identity initialize</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Initialize the STC admin channel client token. See <a href="../../lunash/commands/hsm/hsm_stc_identity_initialize.htm" class="MCXref xref">hsm stc identity initialize</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>hsm stc identity partition deregister</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Remove the HSM&#160;SO&#160;partition identity public key that is currently registered with the STC admin channel client token. See <a href="../../lunash/commands/hsm/hsm_stc_identity_partition_deregister.htm" class="MCXref xref">hsm stc identity partition deregister</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>hsm stc identity partition register</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Register the HSM&#160;SO&#160;partition identity public key with the STC admin channel client token. See <a href="../../lunash/commands/hsm/hsm_stc_identity_partition_register.htm" class="MCXref xref">hsm stc identity partition register</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1"><b>hsm stc identity show</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Display the client name, public key hash, and registered partitions for the STC admin channel client token. See <a href="../../lunash/commands/hsm/hsm_stc_identity_show.htm" class="MCXref xref">hsm stc identity show</a>.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

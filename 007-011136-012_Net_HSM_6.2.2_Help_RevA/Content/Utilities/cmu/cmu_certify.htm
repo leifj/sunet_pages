@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Utilities Reference Guide|Certificate Management Utility (CMU)">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>cmu certify</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Utilities Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="cmu.htm">Certificate Management Utility (CMU)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">cmu certify</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="kanchor551"></a>cmu certify</h2>
+        <p>This function creates an X.509 V3 certificate from a PKCS #10 certificate 
+ request. The parent certificate and corresponding private key must already 
+ exist on the token or HSM. The private key is located on the token using 
+ the public key info inside the parent certificate.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>cmu certify</b> &lt;parameters&gt;</p>
+        <h3 class="ntoc">Mandatory Parameters</h3>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 164px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-handle</b>=&lt;handle#&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">This is 
+ a mandatory parameter that defines the handle to parent certificate. If this parameter is omitted and there is only one certificate on the HSM, that certificate is automatically selected. If this parameter is omitted and there are multiple certificates on the HSM, the user is asked to select the certificate.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-inputfile</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>This 
+ parameter defines the name of the file that contains the PKCS #10 certificate 
+ request.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-startDate</span>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">This 
+ parameter defines the validity start of the certificate, in the format 
+ YYYYMMDD.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-endDate</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">This 
+ parameter defines the validity end of the certificate, in the format YYYYMMDD.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1"><span style="font-weight: bold;">-serialNumber</span>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>This 
+ parameter defines the serial number of the certificate, in big-endian 
+ hexadecimal form.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Optional Parameters</h3>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 162px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-keyusage</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">This 
+ is an optional parameter that defines the key usage extension for the 
+ certificate. It can be set to any of the following: digitalsignature, 
+ nonrepudiation, keyencipherment, dataencipherment, keyagreement, keycertsign, 
+ crlsign, encipheronly, decipheronly. This parameter may appear more than 
+ once in the parameter set to define multiple usages, or it can be used 
+ once with a comma separated list of usage types.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-md5WithRsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">This 
+ is an optional parameter that defines the signature algorithm for the 
+ certificate to be pkcs-1-MD5withRSAEncryption. The default is to use sha1WithRsa.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha1WithRsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;This 
+ is an optional parameter that defines the signature algorithm for the 
+ certificate to be pkcs-1-SHA1withRSAEncryption. The default is to use 
+ sha1WithRsa.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-label</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>This 
+ is an optional parameter that defines the label attribute for the certificate 
+ object that gets created on the HSM. If omitted, the common name of the 
+ subject DN is used instead.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha224withrsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p> This is an optional parameter that defines the signature algorithm for the certificate to be pkcs-1-SHA224withRSAEncryption. The default is to use sha1WithRsa.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha256withrsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>This is an optional parameter that defines the signature algorithm for the certificate to be pkcs-1-SHA256withRSAEncryption. The default is to use sha1WithRsa.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha384withrsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>This is an optional parameter that defines the signature algorithm for the certificate to be pkcs-1-SHA384withRSAEncryption. The default is to use sha1WithRsa.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha512withrsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>This is an optional parameter that defines the signature algorithm for the certificate to be pkcs-1-SHA512withRSAEncryption. The default is to use sha1WithRsa.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha1withdsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p> This is an optional parameter that defines the signature algorithm for the certificate to be pkcs-1-SHA1withDSAEncryption. The default is to use sha1WithRsa.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha1withecdsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p> This is an optional parameter that defines the signature algorithm for the certificate to be pkcs-1-SHA1withECDSAEncryption. The default is to use sha1WithRsa.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>- sha224withecdsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p> This is an optional parameter that defines the signature algorithm for the certificate to be pkcs-1-SHA224withECDSAEncryption. The default is to use sha1WithRsa.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha256withecdsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p> This is an optional parameter that defines the signature algorithm for the certificate to be pkcs-1-SHA256withECDSAEncryption. The default is to use sha1WithRsa.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha384withecdsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p> This is an optional parameter that defines the signature algorithm for the certificate to be pkcs-1-SHA384withECDSAEncryption. The default is to use sha1WithRsa.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>- sha512withecdsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p> This is an optional parameter that defines the signature algorithm for the certificate to be pkcs-1-SHA512withECDSAEncryption. The default is to use sha1WithRsa.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-id</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">This optional parameter defines the CKA_ID attribute for the certificate object that gets created on the HSM. If omitted, the CKA_ID attribute of the private key is used instead.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-certificatepolicy</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">This optional parameter defines the certificate policy to be used.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1"><b>-keyids</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p> This optional parameter indicates to use a subject key identifier from the parent. Set to True or False (or 1 or 0).</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">cmu certify -input=testCert.req -h=8</pre><pre xml:space="preserve">&#160;</pre>
+        <p>- create and sign a new certificate using certificate 8 as the parent.</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

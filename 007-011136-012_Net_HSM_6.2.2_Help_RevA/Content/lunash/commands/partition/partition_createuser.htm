@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|partition">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>partition createuser</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition.htm">partition</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">partition createuser</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">partition createuser</h2>
+        <p> The Crypto Officer creates a Crypto User on a partition. </p>
+        <p>For SafeNet HSM with firmware 6.22.0 and newer, this command applies to either PED-authenticated or Password-authenticated HSMs. The  Crypto Officer's password is included as authentication before specifying the password that is assigned to the new Crypto User. </p>
+        <p>For older SafeNet HSM firmware versions, this command applied only to PED-authenticated HSMs, and had only the "-partition" option.<br /></p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>partition createuser -partition</b> &lt;partition_name&gt; [<b>-coPassword</b> &lt;password&gt;] [<b>-cuPassword</b> &lt;password&gt;] [<b>-defaultChallenge</b>]</p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 142px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 142px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-partition</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-p &#160;&#160;&#160;&#160;&#160;&#160;&lt;name&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The name of the HSM partition on which to create the Crypto User. Obtain the HSM partition name by using the <b>partition list</b> command.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-coPassword</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-co &#160;&#160;&#160;&#160;&lt;password&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The password of the Crypto Officer, when creating a Crypto User on a password-authenticated HSM.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-cuPassword</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-cu &#160;&#160;&#160;&#160;&lt;password</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The Crypto User password, being assigned when creating a Crypto User on a password-authenticated HSM.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-defaultChallenge</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-d &#160;&#160;&#160;&#160;&#160;.</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">For PED-authenticated HSM, sets the default challenge string "PASSWORD", instead of getting a random, 16-character string from SafeNet PED.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example creating Crypto User on password-authenticated HSM partition &#160;</h3><pre xml:space="preserve">lunash:&gt; partition createuser -partition b1 -coPassword somePWstring -cuPassword someotherPWstring</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">'partition createuser' successful.</pre>
+        <p>&#160;</p>
+        <h3 class="ntoc">Example creating Crypto User on PED-authenticated HSM partition &#160;</h3>
+        <p>For PED-authenticated HSM, the <b>partition createuser</b> dialog directs you to the PED for two separate PED Key operations:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The first time, you provide the black PED Key for authentication by the Crypto Officer that was created when the application partition was first initialized. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The second time, if you have the newer label sheets that include gray stickers, you provide a PED Key labeled with a gray sticker; otherwise, just use a black-labeled PED Key, but be sure to identify that key as Crypto User, to prevent confusing it with the black Crypto Officer key. </p><pre xml:space="preserve">[MyLunaSA2] lunash:&gt;partition show
+
+   Partition Name:                            P1SA2
+   Partition SN:                              356654569703
+   Partition Label:                           P1SA2
+   Crypto Officer   PIN To Be Changed:        no
+   Crypto Officer   Challenge To Be Changed:  no
+   Crypto Officer   Locked Out:               no
+   Crypto Officer   Login Attempts Left:      10
+   Crypto Officer   is activated:             no
+   Crypto User      is not initialized.
+   Legacy Domain Has Been Set:                no
+   Partition Storage Information (Bytes):     Total=2087864, Used=0, Free=2087864
+   Partition Object Count:                    0
+
+
+Command Result : 0 (Success)
+[MyLunaSA2] lunash:&gt;partition createuser -partition P1SA2 -d
+
+
+  Please enter Crypto Officer password for the partition:
+  &gt; *******
+
+Warning:  This partition will be created with default challenge password.
+
+Luna PED operation required to activate partition on HSM - use Partition Owner (black) PED key.
+
+Luna PED operation required to create user on partition - use Crypto User (black) PED key.
+
+'partition createuser' successful.
+
+
+Command Result : 0 (Success)
+[MyLunaSA2] lunash:&gt;partition show
+
+   Partition Name:                            P1SA2
+   Partition SN:                              356654569703
+   Partition Label:                           P1SA2
+   Crypto Officer   PIN To Be Changed:        no
+   Crypto Officer   Challenge To Be Changed:  no
+   Crypto Officer   Locked Out:               no
+   Crypto Officer   Login Attempts Left:      10
+   Crypto Officer   is activated:             no
+   Crypto User      PIN To Be Changed:        no
+   Crypto User      Challenge To Be Changed:  yes
+   Crypto User      Locked Out:               no
+   Crypto User      Login Attempts Left:      10
+   Crypto User      is activated:             no
+   Legacy Domain Has Been Set:                no
+   Partition Storage Information (Bytes):     Total=2087864, Used=0, Free=2087864
+   Partition Object Count:                    0
+
+
+Command Result : 0 (Success)
+[MyLunaSA2] lunash:&gt;
+</pre>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

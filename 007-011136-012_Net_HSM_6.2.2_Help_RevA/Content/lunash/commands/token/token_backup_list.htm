@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|token|token backup">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>token backup list</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="token.htm">token</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">token backup list</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="kanchor500"></a>token backup list</h2>
+        <p class="code">Display a list all of the backup tokens on the system. This command shows all connected backup devices with their serial numbers. Use the serial number that you find with this command to identify specific backup HSMs or partitions that you can then query with the&#160; <b>token backup partition list</b> command for more detailed information.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span><b>WHEN to USE lunash "token backup" commands, or use "vtl backup" commands?</b>  &#160;<br /><br /><span style="color: #000000;">LunaSH </span><span class="code"><span style="color: #000000;">token backup</span></span><span style="color: #000000;"> commands operate a SafeNet Backup HSM  attached directly to SafeNet Network HSM via USB, and are <b>not</b> intended for use with remotely connected backup devices.</span><![CDATA[  ]]><br />You might have a <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_">locally-connected backup HSM<img class="MCExpanding_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody"> [ connects directly to a SafeNet Network HSM via USB cable ]</span></span> and a locally connected serial terminal and be walking them from SafeNet Network HSM to SafeNet Network HSM in your server room to perform backups. Or you might be administering remotely via SSH and lunash:&gt; commands, while a technician in your server center carries the backup HSM from one SafeNet Network HSM to the next. In either case, these "token backup" commands are the method to use.The important distinction is where the backup HSM is physically connected -  from the SafeNet Network HSM perspective, those are both local backup operations to a Backup HSM that is locally connected to the appliance.<br /><br /><span style="color: #000000;">VTL backup commands operate a SafeNet Backup HSM connected to a computer, and located distantly from your primary SafeNet Network HSM appliance. The VTL backup commands are <b>not</b> for use with a SafeNet Backup HSM that is connected directly to your SafeNet Network HSM appliance.</span><br />For true, hands-off, lights-out operation of your SafeNet appliances, use a SafeNet Remote Backup HSM located in your <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_">administrator's office<img class="MCExpanding_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody"> [ or other convenient location ]</span></span>, connected to a computer acting as a <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_">Remote Backup server<img class="MCExpanding_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody"> [ this could be your administrative workstation, or it could be a completely separate computer ]</span></span>. This means the computer and Backup HSM are located near you and remote/distant from your SafeNet Network HSM appliance(s). For that application, use the <b>backup commands in the VTL utility</b> supplied with the SafeNet Network HSM <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_">Client software<img class="MCExpanding_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody"> [ which must be installed on the computer that is acting as Remote Backup server ]</span></span> &#160;- the appliance <span class="code">token backup</span> commands (previous paragraph) are not designed to work for Remote Backup.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code">token backup  list </p>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">lunash:&gt;token backup list</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Token Details:</pre><pre xml:space="preserve">============</pre><pre xml:space="preserve">Token Label: G5backup2</pre><pre xml:space="preserve">Slot: 6</pre><pre xml:space="preserve">Serial #: 7000179</pre><pre xml:space="preserve">Firmware: 6.0.8</pre><pre xml:space="preserve">Hardware Model: SafeNet USB HSM</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Token Details:</pre><pre xml:space="preserve">============</pre><pre xml:space="preserve">Token Label: G5backup1</pre><pre xml:space="preserve">Slot: 7</pre><pre xml:space="preserve">Serial #: 700010</pre><pre xml:space="preserve">Firmware: 6.0.8</pre><pre xml:space="preserve">Hardware Model: SafeNet USB HSM</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Token Details:</pre><pre xml:space="preserve">============</pre><pre xml:space="preserve">Token Label: p1-15/04/2011</pre><pre xml:space="preserve">Slot: 1</pre><pre xml:space="preserve">Serial #: 5</pre><pre xml:space="preserve">Firmware: 4.8.6</pre><pre xml:space="preserve">Hardware Model: Luna PCM G4</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

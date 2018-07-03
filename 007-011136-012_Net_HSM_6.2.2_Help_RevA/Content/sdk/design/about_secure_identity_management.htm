@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Design Considerations">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>About Scalable Key Storage</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">SDK Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="design.htm">Design Considerations</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">About Secure Identity Management</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>About Scalable Key Storage</h2>
+        <p>For customer applications involving large numbers of keys, that might 
+ exceed the internal flash-memory capacity of the SafeNet Network HSM K6 engine, support 
+ is provided for secure external storage of keys. </p>
+        <p>For the most part, Scalable Key Storage functionality must be supported by custom programming. 
+ Our Software Development Kit (available separately) includes documentation 
+ and samples for Cryptoki and Java APIs.</p>
+        <p>The following characteristics apply to the Scalable Key Storage capability: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Scalable Key Storage is a purchased capability 
+ that must be enabled when your SafeNet Network HSM is manufactured. Scalable Key Storage cannot be 
+ implemented with a SafeNet Network HSM that was not explicitly enabled for Scalable Key Storage. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The database-management 
+ aspects of large numbers of externally stored keys are beyond the scope 
+ of SafeNet Network HSM. SafeNet Network HSM ensures the security of those keys, without reference 
+ to their management and retrieval. Such management is the responsibility 
+ of the customer's application. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>All keys that are externally 
+ stored with this feature are strongly encrypted, using symmetric keys 
+ that are never exposed outside the HSM server. Additional encryption and 
+ security measures are employed within the HSM server to afford multiple 
+ levels of security. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>All manipulations of 
+ the keys take place within protected, volatile memory inside the SafeNet Network HSM K6 engine. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span><a name="kanchor539"></a>Each SafeNet Network HSM leaving the factory has a unique masking key, 
+ which is used for Secure Identity Management. To give several SafeNet Enterprise HSMs 
+ the same masking key, choose one and perform hsm -backup. Then, using 
+ that Backup HSM, perform hsm -restore onto each SafeNet Network HSM that must share 
+ that masking key. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>When the HSM is initialized, a new masking 
+ secret is created. The new masking secret will be backed up onto a backup token 
+ if "hsm backup" is performed, but the <span style="font-weight: bold;">old</span> 
+ masking secret will continue to be used for all masking operations until 
+ the HSM is powered off.</p>
+        <p>A SafeNet Network HSM with Scalable Key Storage enabled can support only a single HSM Partition. 
+ </p>
+        <p class="warning" data-mc-autonum="&lt;b&gt;WARNING!&lt;/b&gt; &#160;"><span class="autonumber"><span><b>WARNING!</b> &#160;</span></span>If the masking key is lost, then all extracted key material 
+ (all the keys in your database) is effectively lost as well. Therefore, 
+ perform an HSM Backup, to backup the Scalable Key Storage Masking Key. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

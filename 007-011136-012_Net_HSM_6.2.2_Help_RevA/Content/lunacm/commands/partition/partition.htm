@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaCM Command Reference Guide|LunaCM Commands">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>partition</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaCM Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaCM Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">partition</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">partition</h2>
+        <p>Access the partition-level commands. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The partition command with no options shows the partition commands available to be used in the current slot. <br /><br />The availability of partition commands changes according to four possible scenarios: <br /><br /> - the current slot is the HSM administrative partition for an HSM with firmware version 6.22.0 or newer &#160;<br /><br /> - the current slot is an application partition that has its own SO (a PPSO partition), on an HSM with firmware version 6.22.0 or newer &#160;<br /><br /> - the current slot is a separate-but-not-independent application partition that is administered by the HSM SO, and does not have its own separate SO (meaning, this is a legacy-style partition) on an HSM with firmware version 6.22.0 or newer &#160;<br /><br /> - the current slot is the HSM administrative partition and application partition for an HSM with firmware older than version 6.22.0 (meaning, this is a true legacy partition).<br /><br />No single partition type has access to all the possible partition commands within lunacm. <br /></p>
+        <h3 class="ntoc">Syntax of partition command on HSM admin partition, f/w 6.22.0 &#160;</h3>
+        <p>(These are the commands that you see if the current-slot partition is the initialized HSM's administrative partition, while the HSM is at firmware version 6.22.0 or newer. Some of these commands act on the current-slot partition; some have a -slot option to direct their action to another partition/slot.)</p>
+        <p><b>partition</b>
+        </p>
+        <p class="listLevel1" style="font-weight: bold;">archive<br />changePolicy<br />clear<br />clone<br />contents<br />create<br />createchallenge<br />delete<br />policyTemplateChange &#160;<br />policyTemplateCreate &#160;<br />policyTemplateDelete &#160;<br />policyTemplateList <br />policyTemplateLoad &#160;<br />policyTemplateSave &#160;<br />policyTemplateShow &#160;<br />resetpw<br />resize<br />restoresim3file<br />setlegacydomain<br />showinfo<br />showmechanism<br />showpolicies<br /><br /></p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 158px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 99px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">archive</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ar</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">&gt; Partition archive management commands. See <a href="partition_archive.htm" class="MCXref xref">partition archive</a>. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">changePolicy</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">changepo</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Change the Partition Policy value. See <a href="partition_changepolicy.htm" class="MCXref xref">partition changepolicy</a></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clear</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clr</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Delete all of the user's token objects. See <a href="partition_clear.htm" class="MCXref xref">partition clear</a>. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clone</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clo</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Clone user objects. See <a href="partition_clone.htm" class="MCXref xref">partition clone</a>. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">contents</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">con</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Show the contents of the application partition. See <a href="partition_contents.htm" class="MCXref xref">partition contents</a>. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">create</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">crp</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Create the application partition. See <a href="partition_create.htm" class="MCXref xref">partition create</a>. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">createchallenge</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">crc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Create the user challenge. See <a href="partition_createchallenge.htm" class="MCXref xref">partition createchallenge</a>. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">delete</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">del</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Delete an application partition. See <a href="partition_delete.htm" class="MCXref xref">partition delete</a>. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">policyTemplateChange &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">tch</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Modify policy settings. See <a href="partition_policytemplatechange.htm" class="MCXref xref">partition policyTemplateChange &#160;</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">policyTemplateCreate &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">tcr</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Create partition policy template . See <a href="partition_policytemplatecreate.htm" class="MCXref xref">partition policyTemplatecreate &#160;&#160;</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">policyTemplateDelete &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">td</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Delete partition policy template . See <a href="partition_policytemplatedelete.htm" class="MCXref xref">partition policyTemplateDelete &#160;&#160;</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">policyTemplateList &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">tli</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">List partition policy templates . See <a href="partition_policytemplatelist.htm" class="MCXref xref">partition policyTemplateList</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">policyTemplateLoad &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">tchlo</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Load partition policy template . See <a href="partition_policytemplateload.htm" class="MCXref xref">partition policytemplateload &#160;</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">policyTemplateSave &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">tsa</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Save partition policy template . See <a href="partition_policytemplatesave.htm" class="MCXref xref">partition policyTemplateSave &#160;</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">policyTemplateShow &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">tsh</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Show partition policy template . See <a href="partition_policytemplateshow.htm" class="MCXref xref">partition policyTemplateShow &#160;</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">resetpw</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">rp</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Reset the partition password. See <a href="partition_resetpw.htm" class="MCXref xref">partition resetpw</a>. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">resize</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">res</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Re-size an application partition. See <a href="partition_resize.htm" class="MCXref xref">partition resize</a>. &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">restoresim3</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">rsim3f</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Restore user objects (using Scalable Key Storage3). See <a href="partition_restoresim3.htm" class="MCXref xref">partition restoresim3</a>. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">setlegacydomain</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">sld</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set the legacy domain. <a href="partition_setlegacydomain.htm" class="MCXref xref">partition setlegacydomain</a>. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">showinfo</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">si</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Display partition information. See <a href="partition_showinfo.htm" class="MCXref xref">partition showinfo</a>. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">showmechanism</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">showm</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Show all available mechanisms. See <a href="partition_showmechanism.htm" class="MCXref xref">partition showmechanism </a>. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">showpolicies</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">sp</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Get partition policy information. See <a href="partition_showpolicies.htm" class="MCXref xref">partition showpolicies</a>. &#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <h3 class="ntoc">Syntax of partition command on PPSO application partition (f/w 6.22.0 or newer) &#160;</h3>
+        <p>(Same as for legacy-style partition, later on this page, except that this version of the partition command set does include an <b>init</b> command for the PPSO application partition. These are the commands that you see if the current-slot application partition was created using the "-slot" option while the HSM was at firmware version 6.22.0 or newer.)</p>
+        <p><b>partition</b>
+        </p>
+        <p class="listLevel1" style="font-weight: bold;">archive<br />changepolicy<br />clear<br />clone<br />contents<br />init<br />restoresim3<br />setlegacydomain<br />showinfo<br />showmechanism<br />showpolicies<br /><br /></p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 142px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 99px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">archive</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ar</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">&gt; Partition archive management commands.See <a href="partition_archive.htm" class="MCXref xref">partition archive</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">changepolicy</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">changepo</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Change the Partition Policy value. See <a href="partition_changepolicy.htm" class="MCXref xref">partition changepolicy</a></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clear</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clr</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Delete all of the user's token objects. See <a href="partition_clear.htm" class="MCXref xref">partition clear</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clone</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clo</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Clone user objects. See <a href="partition_clone.htm" class="MCXref xref">partition clone</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">contents</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">con</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Show the contents of the user partition. See <a href="partition_contents.htm" class="MCXref xref">partition contents</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">init</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">in</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Initialize an application partition. See <a href="partition_init.htm" class="MCXref xref">partition init</a>. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">restoresim3</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">rsim3</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Restore user objects (using Scalable Key Storage3). See <a href="partition_restoresim3.htm" class="MCXref xref">partition restoresim3</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">setlegacydomain</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">sld</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set the legacy domain. <a href="partition_setlegacydomain.htm" class="MCXref xref">partition setlegacydomain</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">showinfo</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">si</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Display partition information. See <a href="partition_showinfo.htm" class="MCXref xref">partition showinfo</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">showmechanism</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">showm</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Show all available mechanisms. See <a href="partition_showmechanism.htm" class="MCXref xref">partition showmechanism </a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">showpolicies</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">sp</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Get partition policy information. See <a href="partition_showpolicies.htm" class="MCXref xref">partition showpolicies</a>.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <h3 class="ntoc">Syntax of partition command on legacy application partition (f/w 6.22.0 or newer) &#160;</h3>
+        <p>(Same as for PPSO partition, above, except there is no partition init command for the legacy application partition. These are the commands that you see if the current-slot application partition was created using the "-label" option while the HSM was at firmware version 6.22.0 or newer.)</p>
+        <p><b>partition</b>
+        </p>
+        <p class="listLevel1" style="font-weight: bold;">archive<br />changepolicy<br />clear<br />clone<br />contents<br />createchallenge<br />restoresim3<br />setlegacydomain<br />showinfo<br />showmechanism<br />showpolicies<br /><br /></p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 142px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 99px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">archive</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ar</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">&gt; Partition archive management commands. See <a href="partition_archive.htm" class="MCXref xref">partition archive</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">changepolicy</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">changepo</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Change the Partition Policy value. See <a href="partition_changepolicy.htm" class="MCXref xref">partition changepolicy</a></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clear</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clr</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Delete all of the user's token objects. See <a href="partition_clear.htm" class="MCXref xref">partition clear</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clone</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clo</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Clone user objects. See <a href="partition_clone.htm" class="MCXref xref">partition clone</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">contents</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">con</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Show the contents of the user partition. See <a href="partition_contents.htm" class="MCXref xref">partition contents</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">createchallenge</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">crc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">restoresim3</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">rsim3</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Restore user objects (using Scalable Key Storage3). See <a href="partition_restoresim3.htm" class="MCXref xref">partition restoresim3</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">setlegacydomain</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">sld</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set the legacy domain. <a href="partition_setlegacydomain.htm" class="MCXref xref">partition setlegacydomain</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">showinfo</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">si</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Display partition information. See <a href="partition_showinfo.htm" class="MCXref xref">partition showinfo</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">showmechanism</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">showm</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Show all available mechanisms. See <a href="partition_showmechanism.htm" class="MCXref xref">partition showmechanism </a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">showpolicies</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">sp</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Get partition policy information. See <a href="partition_showpolicies.htm" class="MCXref xref">partition showpolicies</a>.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <h3 class="ntoc">Syntax of partition command on HSM admin and application partition (f/w pre-6.22.0) &#160;</h3>
+        <p>(These are the commands that you see if the current-slot partition is the initialized HSM's administrative partition, while the HSM is at firmware version <i>older</i> than 6.22.0. )</p>
+        <p><b>partition</b>&#160;&#160;</p>
+        <p class="listLevel1" style="font-weight: bold;">archive &#160;<br />changepolicy &#160;&#160;<br />changepw &#160;&#160;<br />clear &#160;&#160;<br />clone<br />contents &#160;&#160;<br />create &#160;&#160;<br />login &#160;&#160;<br />logout &#160;&#160;<br />recoveryinit &#160;&#160;<br />recoverylogin &#160;&#160;<br />resetpw &#160;&#160;<br />restoreSIM2<br />restoreSIM3<br />setlegacydomain &#160;&#160;<br />showinfo &#160;&#160;<br />showmechanism &#160;<br />showpolicies &#160;<br /><br /></p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 142px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 99px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">archive</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ar</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">&gt; Partition archive management commands. See <a href="partition_archive.htm" class="MCXref xref">partition archive</a>. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">changepolicy</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">changepo</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Change the Partition Policy value. See <a href="partition_changepolicy.htm" class="MCXref xref">partition changepolicy</a></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">changepw</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">changepw</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Change the partition password. See <a href="partition_changepw.htm" class="MCXref xref">partition changepw</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clear</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clr</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Delete all of the user's token objects. See <a href="partition_clear.htm" class="MCXref xref">partition clear</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clone</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">clo</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Clones user objects. See <a href="partition_clone.htm" class="MCXref xref">partition clone</a>. &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">contents</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">con</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Show the contents of the user partition. See <a href="partition_contents.htm" class="MCXref xref">partition contents</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">create</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">f</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Create the user partition. See <a href="partition_create.htm" class="MCXref xref">partition create</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">login</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">logi</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Login to the HSM as user. See <a href="partition_login.htm" class="MCXref xref">partition login</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">logout</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">logo</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Logout from the HSM as user. See <a href="partition_logout.htm" class="MCXref xref">partition logout</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">recoveryinit</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ri</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Setup/configure User for "Recovery Login"
+(formerly "HA Init", not related to load balancing). See <a href="partition_recoveryinit.htm" class="MCXref xref">partition recoveryinit</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">recoverylogin</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">rl</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Login as the User using "Recovery Login"
+(formerly "HA Login", not related to load balancing). See <a href="partition_recoverylogin.htm" class="MCXref xref">partition recoverylogin</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">resetpw</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">resetpw</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Reset the partition password. See <a href="partition_resetpw.htm" class="MCXref xref">partition resetpw</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">restoresim2</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">rsim2</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Restore user objects (using Scalable Key Storage2). See <a href="partition_restoresim2.htm" class="MCXref xref">partition restoresim2</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">restoresim3</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">rsim3</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Restore user objects (using Scalable Key Storage3). See <a href="partition_restoresim3.htm" class="MCXref xref">partition restoresim3</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">setlegacydomain</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">sld</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set the legacy domain. <a href="partition_setlegacydomain.htm" class="MCXref xref">partition setlegacydomain</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">showinfo</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">si</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Display partition information. See <a href="partition_showinfo.htm" class="MCXref xref">partition showinfo</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">showmechanism</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">showm</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Show all available mechanisms. See <a href="partition_showmechanism.htm" class="MCXref xref">partition showmechanism </a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">showpolicies</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">sp</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Get partition policy information. See <a href="partition_showpolicies.htm" class="MCXref xref">partition showpolicies</a>.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

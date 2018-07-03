@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>[Step 7] Create a trusted link and register Client and Appliance with each other</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">[Step 7] Create a trusted link and register Client and Appliance with each other</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1>
+            <br />
+            <MadCap:conditionalText data-mc-conditions="Default.SA">[Step 7] </MadCap:conditionalText>Create a trusted link and register Client and Appliance with each other</h1>
+        <h2>PREVIEW </h2>
+        <p>In this section,  setup  a network trust link (NTL) between a LunaClient and an application partition on a SafeNet Network HSM, then register each with the other, enabling applications on a client computer to access the partition.</p>
+        <h3>Pre-requisites</h3>
+        <p>Before using the "deploy" option, the following pre-requisite conditions must be in place: </p>
+        <h4>On the SafeNet Network HSM side &#160;</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The SafeNet Network HSM's server.pem file must be available on the appliance (<b>sysconf recenCert</b> command in lunash). &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>An application partition must exist on the HSM (use the <b>partition create</b> command in lunash - you did this in <a href="../partition_create/partition_create.htm" class="MCXref xref">[Step 5] Create  Application Partitions</a>). </p>
+        <h4>On the client side</h4>
+        <p>Two files, pscp and plink (previously part of the Windows installation) are included on all platform installations to make the deploy option possible (see <a href="../../lunacm/commands/clientconfig/clientconfig_deploy.htm" class="MCXref xref">clientconfig deploy</a>). Those files are 32-bit applications. For Linux 64-bit platforms only, ensure that glibc.i686 is installed. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you do not wish to install glibc.i686, you can use the older multi-step NTLS configuration in the Administration Guide. </p>
+        <h3>What to do </h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>On the client computer, where lunaclient is installed, launch lunacm. &#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>In lunacm, run the <b>clientconfig deploy</b> command:</p>
+        <p class="listLevel1">lunacm:&gt; <b>clientconfig deploy -server</b> &lt;HSM-appliance-IP&gt; <b>-client</b> &lt;name-of-client&gt; <b>-partition</b> &lt;name-of-selected-partition-on-HSM&gt; <b>-password</b> &lt;password-of-partition&gt;</p>
+        <h3>Example in use</h3>
+        <h5>On the SafeNet Network HSM side &#160;</h5><pre xml:space="preserve">
+[SA192201730] lunash:&gt;hsm init -label mysa30hsm
+
+  Please enter a password for the HSM Administrator:
+  &gt; ********
+  Please re-enter password to confirm:
+  &gt; ********
+  Please enter a cloning domain to use for initializing this HSM:
+  &gt; ********
+  Please re-enter cloning domain to confirm:
+  &gt; ********
+
+CAUTION:  Are you sure you wish to initialize this HSM?
+          Type 'proceed' to initialize the HSM, or 'quit'
+          to quit now.
+          &gt; proceed
+'hsm init' successful.
+
+Command Result : 0 (Success)
+[SA192201730] lunash:&gt;hsm login
+
+  Please enter the HSM Administrators' password:
+  &gt; ********
+
+'hsm login' successful.
+
+Command Result : 0 (Success)
+[SA172201730] lunash:&gt;partition create -partition mysa30leg -label mysa30leg
+
+On completion, you will have this number of partitions: 1
+
+  Please enter a password for the partition:
+  &gt; ********
+  Please re-enter password to confirm:
+  &gt; ********
+  Please enter a cloning domain to use when creating this partition:
+  &gt; ********
+  Please re-enter cloning domain to confirm:
+  &gt; ********
+
+          Type 'proceed' to create the initialized partition, or
+          'quit' to quit now.
+          &gt; proceed
+'partition create' successful.
+
+Command Result : 0 (Success)
+[SA172201730] lunash:&gt;
+</pre>
+        <p>&#160;</p>
+        <h5>On the client side</h5><pre xml:space="preserve">lunacm:&gt; <b>clientconfig deploy -server</b> 192.20.17.30 <b>-client</b> MyTestTower <b>-partition</b> mysa30leg <b>-password</b> pA_s$werd9
+Please wait...
+
+The server's host key is not cached in the registry. You
+have no guarantee that the server is the computer you
+think it is.
+The server's rsa2 key fingerprint is:
+ssh-rsa 2048 15:86:1d:82:d9:8f:e9:51:90:62:0d:f5:87:e5:89:a3
+If you trust this host, enter "y" to add the key to
+PuTTY's cache and carry on connecting.
+If you want to carry on connecting just once, without
+adding the key to the cache, enter "n".
+If you do not trust this host, press Return to abandon the
+connection.
+Store key in cache? (y/n) y
+Using username "admin".
+Last login: Thu Jun  9 20:39:09 2016 from 10.105.186.208
+
+Luna SA 6.2.1-10 Command Line Shell - Copyright (c) 2001-2016 SafeNet, Inc. All rights reserved.
+
+
+New server 192.20.17.30 successfully added to server list.
+
+The following Luna SA Slots/Partitions were found:
+
+Slot    Serial #                Label
+====    ================        =====
+   0      16298193222735        mysa30leg
+   1      16298193222734        mysapsopar1
+
+Command Result : No Error
+
+lunacm:&gt; lunacm:&gt;
+</pre>
+        <p>&#160;</p>
+        <h3>What was happening </h3>
+        <p>&#160;</p>
+        <p>0. &#160;Check conditions prior to running the deploy command</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>check if the SafeNet Network HSM  is already registered on the client station</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>check appliance and client connectivity</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>check if the client is already registered on the appliance</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>check that the target partition has been created</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Retrieve the HSM appliance's certificate. &#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Register HSM appliance's certificate with the client. &#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Create client's certificate, if one does not already exist. &#160;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Export the client's .pem file to the SafeNet Network HSM. &#160;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Connect to the appliance,  register the client, and assign the partition. &#160;</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Verify that the <b>clientconfig deploy</b> command has setup the NTLS connection successfully between the client and appliance. </p>
+        <p>During the process, if a failure is encountered, the command attempts to back out of the operation and clean-up, all the way back to the start of the 'deploy' operation.</p>
+        <h3>Next &#160;</h3>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA,Default.PCI" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Backup and Restore HSMs and Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Remote Application-Partition Backup and Restore Using the Backup HSM</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/List1.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="backup.htm">Backup and Restore HSMs and Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Remote Application Partition Backup and Restore Using the Backup HSM</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Remote Application-Partition Backup and Restore Using the Backup HSM</h2>
+        <p>This section describes how to perform remote backup and restore operations using the SafeNet Remote Backup HSM&#160;(Backup HSM). It contains the following sections:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><a href="#Overview" class="MCXref xref selected">Overview</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><a href="#Configur" class="MCXref xref selected">Configuring the Remote Backup Service (RBS)</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><a href="#Backing" class="MCXref xref selected">Backing Up an Application Partition  to a Remotely Located Backup HSM</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><a href="#Restorin" class="MCXref xref selected">Restoring an HSM Partition From a Remotely Located Backup HSM</a>
+        </p>
+        <h3><a name="Overview"></a>Overview</h3>
+        <p>Remote backups are enabled by the SafeNet Remote Backup Service (RBS). RBS is a utility, included with the SafeNet HSM client software, that  runs as a service (Windows) or daemon (Unix/Linux) on a workstation used to host one or more remote Backup HSMs. </p>
+        <p>To use RBS, you do the following:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> configure it to define which of the Backup HSMs connected to the workstation running RBS that you want to make available to other SafeNet HSM client workstations or SafeNet Network HSM appliances for performing remote backups.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>register the workstation running RBS with any SafeNet HSM client workstations or SafeNet Network HSM appliances that you want to be able to use the remote Backup HSMs.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>start the RBS service/daemeon.</p>
+        <p>Once RBS is configured and running, the SafeNet HSM client workstations or SafeNet Network HSM appliances registered  with the workstation running RBS can see its available Backup HSMs  as slots in  LunaCM (SafeNet HSM client workstation) or LunaSH&#160;(SafeNet Network HSM appliance). To perform backup and restore operations using the remote Backup HSMs, you open a LunaCM or LunaSH session, as relevant, on the SafeNet HSM client workstation or SafeNet Network HSM appliance used to host the slot you want to backup, and specify the slot for the remote Backup HSM as the slot to use for the backup/restore operation.</p>
+        <p>The backup operation can go from a source partition (on a SafeNet HSM) to an existing partition on the SafeNet Remote Backup HSM, or if one does not exist, a new partition can be created during the backup. The restore operation cannot create a target partition on a SafeNet Network HSM; it must already exist and have a registered NTLS&#160;link.</p>
+        <p>To back up PED-authenticated partitions, you can connect a remote PED to the Backup HSM host workstation, or you can use a separate computer to provide PED operations. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Remote PED (PEDServer) is supported on Windows only.</p>
+        <h4>Configurations for Remote Backup of a SafeNet Client Workstation Slot</h4>
+        <p>The possible configurations for performing a remote backup of a SafeNet HSM client workstation slot are illustrated in the following figures. Only PED-authenticated backup configurations are shown. </p>
+        <p class="figureCaption" data-mc-autonum="Figure 1: "><span class="autonumber"><span>Figure 1: </span></span>Configuration for remote backup of a SafeNet HSM client workstation slot with the remote PED connected to the backup workstation</p>
+        <p>
+            <img src="../../Resources/Images/backup/remote_backup_attached_remote_ped.png" />
+        </p>
+        <p>&#160;</p>
+        <p class="figureCaption" data-mc-autonum="Figure 2: "><span class="autonumber"><span>Figure 2: </span></span>Configuration for remote backup of a SafeNet HSM client workstation slot with the remote PED connected to a separate workstation</p>
+        <p>
+            <img src="../../Resources/Images/backup/remote_backup_separate_remote_ped.png" />
+        </p>
+        <h4>Configurations for Remote Backup of a SafeNet Network HSM Appliance</h4>
+        <p>The possible configurations for performing a remote backup of a SafeNet Network HSM appliance are illustrated in the following figures. Only PED-authenticated backup configurations are shown.</p>
+        <p class="figureCaption" data-mc-autonum="Figure 3: "><span class="autonumber"><span>Figure 3: </span></span> Configuration for remote backup of a SafeNet Network HSM appliance with the remote PED connected to the backup workstation</p>
+        <p>
+            <img src="../../Resources/Images/backup/remote_backup_SA_attached_remote_ped.png" />
+        </p>
+        <p>&#160;</p>
+        <p class="figureCaption" data-mc-autonum="Figure 4: "><span class="autonumber"><span>Figure 4: </span></span>Configuration for remote backup of a SafeNet Network HSM appliance with the remote PED connected to a separate workstation</p>
+        <p>
+            <img src="../../Resources/Images/backup/remote_backup_SA_separate_remote_ped.png" />
+        </p>
+        <h3><a name="Configur"></a><a name="kanchor53"></a><a name="kanchor54"></a><a name="kanchor55"></a>Configuring the Remote Backup Service (RBS)</h3>
+        <p>RBS is not a standalone feature. It is a service that facilitates certain scenarios when backing-up HSM partitions or restoring onto those partitions, using a backup HSM that is distant from the primary HSM and its host or client. RBS is run on the computer that hosts the SafeNet Remote Backup HSM, only. RBS is a separate option at software installation time. You do not need it on all client/admin computers, but it doesn't hurt to have it installed. Running RBS also requires running PEDClient on that computer, as well as on the distant primary - the paired instances of PEDClient form the communications link that makes RBS possible. </p>
+        <p>RBS requires PEDClient on both the RBS client and RBS server ends. </p>
+        <p class="notepad_note">The PEDClient is half of the PEDServer/PEDClient duo that enables Remote PED&#160;service. <br /></p>
+        <p class="notepad_note">However, PEDClient is also used in the communication component of Remote Backup Service. So, PEDClient should run on all the platforms that have HSMs - where a SafeNet USB HSM or SafeNet PCIe HSM is installed (PEDClient is already inside SafeNet Network HSM 5.2 and newer...) - and also on any system with the RBS application. <br /></p>
+        <p class="notepad_note">The PEDServer is required only on a computer with the SafeNet Remote&#160;PED. <br /></p>
+        <p class="notepad_note">If you consolidate your HSM administration (including Remote PED) on the same computer with your SafeNet Remote&#160;Backup&#160;HSM, you would have both PEDClient and PEDServer installed there. We observe that a majority of customers combine administrative functions this way, on a laptop or a workstation that is used to administer one-or-many HSM hosts. The HSM host (with SafeNet USB HSM or SafeNet PCIe HSM) or the SafeNet Network HSM appliance resides in a physically secure, possibly remote location, while the administrator works from a laptop in her/his office. Your security policy determines how you do it. </p>
+        <h5>To configure RBS</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Install the SafeNet HSM client software on the computer used to manage the HSMs/partitions you want to back up. If you use PED authentication, ensure that the Remote PED option is installed. You must also install the SafeNet Network HSM client software in addition to the SafeNet USB HSM or SafeNet PCIe HSM software, because the SafeNet Network HSM client is the only one that includes the <b>vtl</b> utility, which is required to perform the certificate exchange that enables Remote Backup Service.</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/install/install_select_remote-ped_option.png" />
+        </p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/install/install_vtl.png" />
+            <br />
+        </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Install the SafeNet HSM client software on the workstation used to host your Backup HSM. Select the Remote Backup option. If the workstation is running Windows, and will be used to connect a Remote PED,  install the Remote PED&#160;option here.</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/install/install_select_luna_remote-backup-hsm.png" />
+            <br />
+        </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Run <b>rbs --genkey</b> to generate the <b>server.pem</b> to establish the Remote Backup Service between the Backup host and the host/client for the primary HSM. The location of the <b>server.pem</b> file can be found in the <b>Chrystoki.conf /crystoki.ini</b> file.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Run <b>rbs --config</b> to specify the devices to support.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Run <b>rbs --daemon</b> to launch the rbs daemon (Linux and UNIX) or the rbs console application (on Windows, it closes after every use) .</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Create the client certificate (if not already done) :<br /><b>vtl createCert -n</b> &lt;host_ip_address&gt;<br /></p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Use <b>scp</b> (Unix/Linux) or <b>pscp</b> (Windows) to copy the certificate generated earlier (<b>server.pem</b>) to your primary HSM host computer (or SafeNet Network HSM appliance). <br /><code># scp root@172.20.9.253:/usr/safenet/lunaclient/rbs/server/server.pem .      &#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>root@172.20.9.253's password:     ********* &#160;&#160;</code><br style="mc-tag-and-class: code;" /><code>server.pem                | 1 kB |   1.2 kB/s | ETA: 00:00:00 | 100%</code> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Run <b>vtl</b> on the host computer (or appliance) to add the RBS server to the server list. &#160;&#160;<br /><code>vtl add -n 172.20.9.253 -c server.pem    </code><br style="mc-tag-and-class: code;" /><code>New server 192.20.9.253 successfully added to server list.</code><br /><code>vtl list    </code><br style="mc-tag-and-class: code;" /><code>Server: 192.20.9.82     HTL required: no </code><br style="mc-tag-and-class: code;" /><code>   Server: 192.20.9.253    HTL required: no &#160;</code> <![CDATA[ ]]></p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you encounter problems, try changing the RBS and PEDClient ports from the default values. Check that your firewall is not blocking ports used by the service. (Refer to the command syntax pages for default values.)</p>
+        <h3><a name="Backing"></a><a name="kanchor56"></a><a name="kanchor57"></a><a name="kanchor58"></a>Backing Up an Application Partition  to a Remotely Located Backup HSM</h3>
+        <p>This section describes how to backup an application partition to a remotely located Backup HSM using RBS.</p>
+        <h5>Prerequisites</h5>
+        <p>You will need the following components to perform a remote backup:</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col style="width: 89px;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 365px;" class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Quantity</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SafeNet HSM 5.2 or newer<br /></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Windows computer with SafeNet Network HSM 5.2 (or newer)  client software installed <br /></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SafeNet Remote Backup HSM<br /></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set of PED Keys imprinted for the source HSM and partitions <br /></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SafeNet PED 2 (Remote PED with f/w 2.4.0 or later)*<br /></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Power cable for SafeNet PED 2 (Remote)    <br /></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">2</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">USB to mini USB cable for SafeNet PED 2 (Remote) and SafeNet Remote Backup HSM    <br /></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The SafeNet PED that is connected to the Windows computer, in order to perform Remote PED&#160;operations with the distant SafeNet Network HSM appliance, must be a SafeNet PED 2 (remote-capable version) and is used in Remote mode and in local mode. You also have the option to connect a second SafeNet PED, which can be Remote capable or can be a local-only version, to the SafeNet Backup HSM. This allows you to leave the Remote capable SafeNet PED connected to the workstation in Remote mode. </p>
+        <h5>Assumptions</h5>
+        <p>The following examples assume that you have set up RBS, as described in <a href="#Configur" class="MCXref xref selected">Configuring the Remote Backup Service (RBS)</a>, and have prepared for the backup, as follows: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the Backup HSM and the&#160;HSMs/partitions you want to back up are initialized with appropriate keys (blue SO and black Partition Owner/User PED Keys, which can be the same for both devices, or can be different)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Both devices <strong>must</strong> share the <b>same</b> domain or RED key value.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The workstation (Windows computer) has Remote PED and SafeNet Remote Backup software package installed including the appropriate driver, if you are using it to </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>For SafeNet Network HSM, NTLS is established between your workstation computer, acting as a SafeNet Network HSM client, and the distant SafeNet Network HSM - that is, the workstation is registered as a client with the partition. &#160;&#160;       </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A Remote PED session key (orange RPV key) has been created and associated with the distant SafeNet HSM.</p>
+        <h5>To Backup an Application Partition to a Remotely Located Backup HSM</h5>
+        <p>The following procedure provides an example illustrating how to remotely backup a PED-authenticated application partition. In this example a single remote PED, attached to the Windows workstation used to host the Backup HSM, is used.</p>
+        <p style="font-weight: bold;">Set up the remote PED</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that your Windows workstation has the PED USB driver (from the <b>/USBDriver</b> folder on the software CD) installed, and that the <b>PEDServer.exe</b> file (the executable program file that makes Remote PED operation possible) has been copied to a convenient directory on your hard disk.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Connect all of the components as follows:<br /></p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col style="width: 182px;" class="Column-Column1" />
+            <col style="width: 154px;" class="Column-Column1" />
+            <col style="width: 229px;" class="Column-Column1" />
+            <thead>
+                <tr class="Head-Header1">
+                    <th class="HeadE-Column1-Header1">From</th>
+                    <th class="HeadE-Column1-Header1">Using</th>
+                    <th class="HeadD-Column1-Header1">To</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Workstation</td>
+                    <td class="BodyE-Column1-Body1">USB</td>
+                    <td class="BodyD-Column1-Body1">Remote PED (SafeNet PED IIr in Remote mode)<br /></td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">DC power receptacle on Remote PED</td>
+                    <td class="BodyE-Column1-Body1">PED Power Supply</td>
+                    <td class="BodyD-Column1-Body1">Mains AC power (wall socket)<br /></td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1">Workstation</td>
+                    <td class="BodyE-Column1-Body1">USB</td>
+                    <td class="BodyD-Column1-Body1">SafeNet Remote Backup HSM</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1"> SafeNet Remote Backup HSM</td>
+                    <td class="BodyB-Column1-Body1"> Power Cord</td>
+                    <td class="BodyA-Column1-Body1">Mains AC power (wall socket)<br /></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>At the Remote SafeNet PED (SafeNet PED 2 with remote capability, connected to the USB&#160;port of the workstation), do the following:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>press  <b>&lt;</b>  on the PED keypad to exit local mode.   </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>press  <b>7</b>  to enter remote mode.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Run <b>PEDServer</b> to start the remote PED service on the administrative workstation (Windows) computer, as follows:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span> In a Command Prompt (DOS) window, change directory to the location of the <b>PEDServer.exe</b> file and run that file:</p><pre class="listLevel2" xml:space="preserve">C:\&gt;cd \Program Files\LunaCient<br />C:\Program Files\LunaClient&gt;PEDServer -mode start
+<br /></pre>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Open an administrative connection (SSH) to the distant SafeNet HSM (for SafeNet Network HSM appliance, log in as 'admin', for another HSM host, log in with the appropriate ID. Start the PED Client (the Remote PED enabling process on the appliance): <br /> Example (substitute the actual IP address of your workstation computer)-- <br /><span style="font-family: monospace;">lunash:&gt; hsm ped connect -ip 192.2.12.16 -port 1503</span><br />or<br /><span style="font-family: monospace;">lunacm:&gt; hsm ped connect -ip 192.2.12.16 -port 1503</span><br /><br />Insert the orange RPV PED Key that matches the RPV of the distant SafeNet HSM. <br />The Remote PED Client in the SafeNet Network HSM appliance or in the SafeNet HSM client workstation establishes a connection with the listening PEDserver on your remote PED workstation. </p>
+        <p style="font-weight: bold;">Backup a  slot to the remotely located backup HSM</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The following steps apply to LunaCM only. For LunaSH, follow the procedure <a href="local_app_partition.htm#SA_partition_backup_procedure" class="MCXref xref">To backup a SafeNet Network HSM partition to a directly connected Backup HSM</a>. Use the <b>token backup list</b> and <b>token backup show</b> commands to ensure that the remote Backup HSM&#160;is visible.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Start the LunaCM utility (in Windows, it resides at C:\Program Files\SafeNet\LunaClient - in Linux/UNIX, it resides at /usr/safenet/lunaclient/bin).</p><pre xml:space="preserve" class="listLevel1">C:\Program Files\SafeNet\LunaClient&gt;lunacm.exe
+
+LunaCM V6.0.0 - Copyright (c) 2006-2015 SafeNet, Inc.
+
+
+        Available HSM's:
+
+        Slot Id -&gt;              1
+        HSM Label -&gt;            SA82_P1
+        HSM Serial Number -&gt;    16298193222733
+        HSM Model -&gt;            LunaSA
+        HSM Firmware Version -&gt; 6.22.0
+        HSM Configuration -&gt;    Luna User Partition, With SO (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              2
+        HSM Label -&gt;            G5PKI
+        HSM Serial Number -&gt;    701968008
+        HSM Model -&gt;            LunaSA
+        HSM Firmware Version -&gt; 6.10.1
+        HSM Configuration -&gt;    SafeNet Network HSM Slot (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              3
+        HSM Label -&gt;            G5backup
+        HSM Serial Number -&gt;    700101
+        HSM Model -&gt;            G5Backup
+        HSM Firmware Version -&gt; 6.10.1
+        HSM Configuration -&gt;    Remote Backup HSM (PED) Backup Device
+        HSM Status -&gt;           OK
+
+        Current Slot Id: 1
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>If the current slot is not the slot that you wish to backup, use the  <b>slot set</b> command to go to the correct slot.</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; slot set slot 1
+
+        Current Slot Id: 1     (Luna User Slot 6.22.0 (PED) Signing With Cloning Mode)
+
+Command Result : No Error
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Establish that the HSM is listening for the remote SafeNet PED at the correct location.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The PEDServer must already have been set up at that host.</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt;ped get
+
+        HSM slot 1 listening to local PED (PED id=0).
+
+Command Result : No Error
+
+lunacm:&gt; ped connect ip 172.20.10.190
+
+Command Result : No Error
+
+lunacm:&gt; ped get
+
+        HSM slot 1 listening to remote PED (PED id=100).
+
+Command Result : No Error
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Skip this step if your source partition is activated.</p>
+        <p class="listLevel1">Log into the partition (this takes place at the currently selected slot). This step is needed only if the partition you are about to backup is not already in the activated state.</p>
+        <p class="listLevel1">Example for HSM with firmware 6.22.0 or newer: </p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; role login -name Crypto Officer
+
+        Option -password was not supplied.  It is required.
+
+        Enter the password: *******
+
+        User is activated, PED is not required.
+
+Command Result : No Error
+</pre>
+        <p xml:space="preserve" class="listLevel1">&#160;</p>
+        <p class="listLevel1">Example for HSM with firmware older than version 6.22.0: </p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; par login
+
+        Option -password was not supplied.  It is required.
+
+        Enter the password: *******
+
+        User is activated, PED is not required.
+
+Command Result : No Error
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="10."><span class="autonumber"><span class="ol1Number">10.</span></span>Disconnect the PED&#160;connection from your source HSM (slot 1 in this example), and connect to the remote Backup HSM (slot 3 in this example).</p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; ped disconnect
+
+        Are you sure you wish to disconnect the remote ped?</pre><pre xml:space="preserve" class="listLevel1">        Type 'proceed' to continue, or 'quit' to quit now -&gt; proceed
+
+Command Result : No Error
+
+lunacm:&gt; ped connect ip 192.20.10.190 -slot 3
+
+Command Result : No Error
+
+lunacm:&gt; ped get -slot 3
+
+        HSM slot 3 listening to remote PED (PED id=100).
+
+Command Result : No Error
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="11."><span class="autonumber"><span class="ol1Number">11.</span></span>Perform the backup from the current slot (slot 1 in the example, see above) to the partition that you designate on the remote Backup HSM. Now that the Backup HSM is listening correctly for a PED, the target partition can be created, with PED action for the authentication.</p><pre xml:space="preserve" class="listLevel1">
+
+lunacm:&gt; partition archive backup -slot 3 -par SAbck1
+
+        Logging in as the SO on slot 3.</pre><pre xml:space="preserve" class="listLevel1">        Please attend to the PED.
+
+        Creating partition SAbck1 on slot 3.
+        Please attend to the PED.
+
+        Logging into the container SAbck1 on slot 3 as the user.
+        Please attend to the PED.
+
+        Creating Domain for the partition SAbck1 on slot 3.</pre><pre xml:space="preserve" class="listLevel1">        Please attend to the PED.
+
+        Verifying that all objects can be backed up...
+
+        85 objects will be backed up.
+
+        Backing up objects...
+        Cloned object 99 to partition SAbck1 (new handle 19).
+        Cloned object 33 to partition SAbck1 (new handle 20).
+        Cloned object 108 to partition SAbck1 (new handle 23).
+        .</pre><pre xml:space="preserve" class="listLevel1">        .</pre><pre xml:space="preserve" class="listLevel1">        .
+        Cloned object 78 to partition SAbck1 (new handle 128).
+        Cloned object 88 to partition SAbck1 (new handle 129).
+        Cloned object 40 to partition SAbck1 (new handle 130).
+
+        Backup Complete.
+
+        85 objects have been backed up to partition SAbck1
+        on slot 3.
+
+Command Result : No Error</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre>
+        <p class="ol1" data-mc-autonum="12."><span class="autonumber"><span class="ol1Number">12.</span></span>The backup operation is complete. </p>
+        <h3><a name="Restorin"></a>Restoring an HSM Partition From a Remotely Located Backup HSM</h3>
+        <p>This section describes how to restore an application partition from a remotely located Backup HSM using RBS.</p>
+        <h5>To restore an application partition from a remotely located backup HSM</h5>
+        <p>The following procedure provides an example of how to restore a partition from a remotely located Backup HSM. In this example, the partition is restored to a SafeNet Network HSM partition that is not in the activated state. A single remote PED is used to authenticate to the remote Backup HSM&#160;and the SafeNet Network HSM partition. If your primary HSM partition (the partition onto which you will restore the backed-up objects) is in the activated state, then only the Backup HSM needs PED activity for authentication during restore.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The following steps apply to LunaCM only. For LunaSH, follow the procedure <a href="local_app_partition.htm#SA_partition_restore_procedure" class="MCXref xref">To restore a SafeNet Network HSM partition from a directly connected Backup HSM</a>. Use the <b>token backup list</b> and <b>token backup show</b> commands to ensure that the remote Backup HSM&#160;is visible.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>In our test setup, we have each of several SafeNet HSM products. An easy way to see an updated summary of all HSMs and slot assignments is to exit LunaCM and restart the utility.</p><pre xml:space="preserve" class="listLevel1">
+C:\Program Files\SafeNet\LunaClient&gt;lunacm.exe
+
+LunaCM v6.0.0 - Copyright (c) 2006-2015 SafeNet, Inc.
+
+
+        Available HSMs:
+
+         Slot Id -&gt;              0
+        Label -&gt;
+        Serial Number -&gt;        16298193222733
+        Model -&gt;                LunaSA
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna User Partition With SO (PED) Signing With Cloning Mode
+        Slot Description -&gt;     Net Token Slot
+
+        Slot Id -&gt;              1
+        Label -&gt;
+        Serial Number -&gt;        16298193222735
+        Model -&gt;                LunaSA
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna User Partition With SO (PED) Signing With Cloning Mode
+        Slot Description -&gt;     Net Token Slot
+
+        Slot Id -&gt;              2
+        Label -&gt;                legacypar1
+        Serial Number -&gt;        16298193222734
+        Model -&gt;                LunaSA
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna User Partition, No SO (PED) Signing With Cloning Mode
+        Slot Description -&gt;     Net Token Slot
+
+        Slot Id -&gt;              3
+        Label -&gt;                SAbck1
+        Serial Number -&gt;        700101
+        Model -&gt;                G5Backup
+        Firmware Version -&gt;     6.10.4
+        Configuration -&gt;        Luna User Partition With SO (PED) Signing With Cloning Mode
+        Slot Description -&gt;     User Token Slot
+
+
+        Slot Id -&gt;              5
+        Tunnel Slot Id -&gt;       7
+        Label -&gt;
+        Serial Number -&gt;        349297122734
+        Model -&gt;                K6 Base
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna User Partition With SO (PED) Signing With Cloning Mode
+        Slot Description -&gt;     User Token Slot
+
+        Slot Id -&gt;              6
+        Tunnel Slot Id -&gt;       7
+        Label -&gt;                mypcie6
+        Serial Number -&gt;        150022
+        Model -&gt;                K6 Base
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna HSM Admin Partition (PED) Signing With Cloning Mode
+        Slot Description -&gt;     Admin Token Slot
+        HSM Configuration -&gt;    Luna HSM Admin Partition (PED)
+        HSM Status -&gt;           OK
+
+        Slot Id -&gt;              8
+        HSM Label -&gt;            myG5pw
+        HSM Serial Number -&gt;    7001312
+        HSM Model -&gt;            G5Base
+        HSM Firmware Version -&gt; 6.10.4
+        HSM Configuration -&gt;    SafeNet USB HSM (PW) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+
+        Current Slot Id: 0</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Verify which slot is listening for PED and whether it is expecting local or remote.</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt;ped get
+
+        HSM slot 0 listening to local PED (PED id=0).
+
+Command Result : No Error</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Connect to Remote PED.</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; ped connect ip 192.20.10.190
+
+Command Result : No Error</pre><pre class="listLevel1">&#160;</pre>
+        <p class="listLevel1">(Causes the currently selected slot in lunacm (still slot 0 in this example) to connect to the remote PED.)<br /></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Log into the partition <b>to</b> which you want to restore. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>This would not be necessary if the partition was activated - we are demonstrating that if the partition was not in login state or activated state, it is straightforward to briefly switch the PED to the primary HSM partition before switching the PED&#160;back to the Backup HSM.</p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; role login -n Crypto Officer
+
+        enter password: *******
+
+        Please attend to the PED.
+
+
+Command Result : No Error
+
+lunacm:&gt; ped disconnect
+
+        Are you sure you wish to disconnect the remote ped?
+
+        Type 'proceed' to continue, or 'quit' to quit now -&gt; proceed
+
+Command Result : No Error
+</pre>
+        <p>
+            <br />(The current selected slot in lunacm is still slot 0, and having ensured login status on that slot/partition we have just released the Remote PED connection there. The other end of the Remote PED pair, the PED-connected host computer running PedServer, is now free to accept a Remote PED link from another PedClient, which will be the host attached to the SafeNet Backup HSM.)</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>In this example, the SafeNet Network HSM partition, to which we will restore objects, is visible in lunacm at slot 0 because it is linked to this SafeNet HSM client by NTLS, while this Client is registered to that partition at the SafeNet Network HSM. <br /><br />The SafeNet Remote Backup HSM is visible in lunacm, at slot 3 in this case, because it is linked by the RBS connection that you previously established (see "To Configure RBS" above in this chapter); that is, pedclient is running on this Client, and pedclient and rbs.exe are running on the Backup HSM's host, with each other identified as their partner in the RBS link.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Connect the Remote PED to the Backup HSM (which, in this example, is slot 3). </p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; ped connect ip 192.20.10.190 slot 3
+
+Command Result : No Error
+
+lunacm:&gt; ped get
+
+        HSM slot 0 listening to local PED (PED id=0).
+
+Command Result : No Error
+
+lunacm:&gt; ped get slot 3
+
+        HSM slot 3 listening to remote PED (PED id=100).
+
+Command Result : No Error
+</pre>
+        <p>
+            <br />(The <b>ped connect</b> command specifies the slot (now the SafeNet Backup HSM) that makes a new Remote PED connection, because that slot indication is  part of the command - and <b>ped get</b> verifies the new Remote PED-connected slot. But the focus of the library/lunacm has not changed from slot 0; any other lunacm commands that act on a slot will act on slot 0 until you change that with <b>slot set</b>. You could verify that current focus, if you wished, by running <b>slot list</b> again.)</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Restore to the current slot (slot 0) from the slot that corresponds to the &#160;Backup HSM (slot 3).<br /></p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; partition archive restore -slot 3 -par SAbck1
+
+        Logging in to partition SAbck1 on slot 3 as the user.
+
+        Please attend to the PED.
+
+        Verifying that all objects can be restored...
+
+        85 objects will be restored.
+
+        Restoring objects...
+        Cloned object 19 from partition SAbck1 (new handle 20).
+        Cloned object 20 from partition SAbck1 (new handle 21).
+        Cloned object 23 from partition SAbck1 (new handle 22).
+        .
+        . 
+        .
+        Cloned object 128 from partition SAbck1 (new handle 137).
+        Cloned object 129 from partition SAbck1 (new handle 138).
+        Cloned object 130 from partition SAbck1 (new handle 139).
+
+        Restore Complete.
+
+        85 objects have been restored from partition SAbck1 on slot 3.
+
+Command Result : No Error</pre>
+        <p>
+            <br />(Because the lunacm focus rests with the target partition in slot 0, your <b>partition archive restore</b> command must explicitly identify the slot from which backup source objects are to be cloned, slot 3 in this example, onto the target partition, current-slot 0 in this case. You also specified the backup partition name, because a SafeNet Backup HSM can contain more than one archived partition.)</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Verify that the restored slot now looks like it did just before the backup was originally performed.</p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; partition archive list -slot 3
+
+        HSM Storage Information for slot 3:
+
+           Total HSM Storage Space:      16252928
+           Used HSM Storage Space:       43616
+           Free HSM Storage Space:       16209312
+           Number Of Allowed Partitions: 20
+           Number Of Allowed Partitions: 1
+
+        Partition list for slot 3
+
+           Number of partition: 1
+
+           Name:                      SAbck1
+           Total Storage Size:        41460
+           Used Storage Size:         41460
+           Free Storage Size:         0
+           Number Of Objects:         85
+
+Command Result : No Error
+
+lunacm:&gt;
+</pre>
+        <p>
+            <br />
+        </p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Remote restore from backup, using RBS, is complete.</p>
+        <p>To restore onto a different remote SafeNet HSM, the same arrangement is required: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> the remote HSM must already have a suitable partition </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>if the restore-target HSM is a SafeNet Network HSM, the target partition can have any name - it does not need to match the name of the source partition on the backup device, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>your workstation must be registered as a client to that partition.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

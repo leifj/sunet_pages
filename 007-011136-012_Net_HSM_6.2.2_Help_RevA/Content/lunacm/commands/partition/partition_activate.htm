@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaCM Command Reference Guide|LunaCM Commands|partition">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>partition activate</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaCM Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaCM Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition.htm">partition</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">partition activate</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">partition activate</h2>
+        <p>Cache Partition PED Key data [SafeNet PCIe HSM with PED (Trusted Path) Authentication only]. Use this command to cache a Partition's PED Key data. Clients can then connect, authenticate with their Partition password (challenge secret), and perform operations with Partition objects, without need for hands-on PED operations each time. Activation/caching endures until explicitly terminated with "partition deactivate" or host computer power off. If a Partition has not been activated, then each access attempt by a Client causes a login call which initiates a SafeNet PED operation (requiring the appropriate black PED Key). Partition activation makes unattended operation possible. </p>
+        <h3>Partition Policy settings needed &#160;</h3>
+        <p>Partition policies must be set before you can activate.</p>
+        <h5>Note: Activate only</h5>
+        <p>If you wish to activate a Partition, then Partition policy number 22 "Allow activation" must be set to "On" for the named partition. Use <b>partition showPolicies</b> to view the current settings and use <b>partition changePolicy</b> to change the setting. The policy shows as "Off" or "On", but to change the policy you must give a numeric value of "0" or "1".</p>
+        <h5>Note: Activate and Autoactivate &#160;</h5>
+        <p>If you wish to activate a Partition, then Partition policy number 23 "Allow auto-activation" can be set to "On" for the partition. Use <b>partition showPolicies</b> to view the current settings and use <b>partition changePolicy</b> to change the setting.<br /><br />The policy shows as "Off" or "On", but to change the policy you must give a numeric value of "0" or "1".<br />Autoactivation caches the activation authentication data in battery-backed memory so that activation can persist or recover following a shutdown/restart or a power outage up to 2 hours duration. <br /><br />If Partition Policy 23 is set, then partition activation includes autoactivation. If Partition Policy 23 is not set, then partition activation persists only while the host computer is powered on, and requires your intervention to reinstate activation following a shutdown or power outage, no matter how brief.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>This partition activate command is used for "legacy" or "legacy-style" partitions, application partitions that are administratively owned by the HSM Security Officer (SO), either because the HSM firmware is older than version 6.22.0 or because the application partition has been declared without a Partition Security Officer (even though the firmware version might support PSO). <br /><br />If the application partition has its own SO, then the policies must be set, as discussed above, but simply logging in as Crypto Officer or Crypto User activates the partition for client access.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>partition activate -password</b> &lt;partition_user_password&gt;</p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 142px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 99px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-password</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-p</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The password to be used as login credential by the Partition User. As shown, you can supply the password at the command line (useful for scripting). Normally, however, you should leave out the password when issuing the command.</p>
+                        <p> If the password is not provided, you are prompted for it, and your response is obscured by asterisk (****) symbols. This a more secure method of providing the password.
+</p>
+                        <p>NOT USED for PED-authenticated HSMs, which need the data from the black PED Key instead, however the challenge-secret/password is still needed by the client application. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-cu</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-c</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Selects to perform the login as Crypto-User, which has a limited subset of "User". Use this option only if your security scheme makes use of the Crypto-Officer/Crypto-User distinction.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-ped</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-ped</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">This parameter is optional. If it is not specified, then the value of the "PEDId" parameter in the "Luna" section of Chrystoki.conf (cryptoki.ini) is used. Otherwise the default is "0" or local PED.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3>
+        <h5>Password-authentication</h5><pre xml:space="preserve">lunacm:&gt; partition activate -password Userpa55word!</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : No Error</pre>
+        <h5>PED-authentication</h5><pre xml:space="preserve">lunacm:&gt; partition activate</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Option -password was not supplied. It is required.</pre><pre xml:space="preserve">Enter the password: ****************</pre><pre xml:space="preserve">User is not activated, please attend to the PED.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : No Error</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

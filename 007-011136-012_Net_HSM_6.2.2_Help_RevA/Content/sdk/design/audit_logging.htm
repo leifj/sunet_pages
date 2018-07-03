@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Design Considerations">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Audit Logging</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">SDK Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="design.htm">Design Considerations</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Audit Logging</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Audit Logging</h2>
+        <p>By default, the HSM logs select events to the file hsm.log.</p>
+        <p>For more robust and verifiable logging, SafeNet HSM (after version 5.2) includes the Audit Logging feature, to log select HSM events to files that can be securely verified for audit purposes.</p>
+        <p>The HSM creates a log secret unique to the HSM, computed during the first initialization after manufacture. The log secret resides in flash memory (permanent, non-volatile memory), and is used to create log records that are sent to a log file. Later, the log secret is used to prove that a log record originated from a legitimate HSM and has not been tampered with.</p>
+        <h3>Audit Log Records</h3>
+        <p>A log record consists of two fields – the log message and the HMAC for the previous record.  When the HSM  creates a log record, it uses the log secret to compute the SHA256-HMAC of all data contained in that log message, plus the HMAC of the previous log entry.  The HMAC is stored in HSM flash memory.  The log message is then transmitted, along with the HMAC of the previous record, to the host.  The host has a logging daemon to receive and store the log data on the host hard drive. </p>
+        <p> For the first log message ever returned from the HSM to the host there is no previous record and, therefore, no HMAC in flash.  In this case, the previous HMAC is set to zero and the first HMAC is computed over the first log message concatenated with 32 zero-bytes.  The first record in the log file  then consists of the first log message plus 32 zero-bytes.  The second record consists of the second message plus HMAC1 = HMAC (message1 || 0x0000).  This results in the organization shown below.</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 150px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 150px;" />
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">MSG 1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">HMAC 0</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">. . .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">MSG n-1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">HMAC n-2</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">MSG n</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">HMAC n-1</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">. . . </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">MSG n+m</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">HMAC n+m-1</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">MSG n+m+1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">HMAC n+m</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">. . .</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">MSG end</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">HMAC n+m-1</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 150px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 150px;" />
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Recent HMAC in NVRAM</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">HMAC end</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>To verify a sequence of <i>m</i> log records which is a subset of the complete log, starting at index <i>n</i>, the host must submit the data illustrated above.  The HSM calculates the HMAC for each record the same way as it did when the record was originally generated, and compares this HMAC to the value it received.  If all of the calculated HMACs match the received HMACs, then the entire sequence verifies.  If an HMAC doesn’t match, then the associated record and all following records can be considered suspect.  Because the HMAC of each message depends on the HMAC of the previous one, inserting or altering messages would cause the calculated HMAC to be invalid.</p>
+        <p>The HSM always stores the HMAC of the most-recently generated log message in flash memory.  When checking truncation, the host would send the newest record in its log to the HSM; and, the HSM would compute the HMAC and compare it to the one in flash.  If it does not match, then truncation has occurred. </p>
+        <h3>Audit Log Message Format</h3>
+        <p>Each message is a fixed-length, comma delimited, and newline-terminated string.  The table below shows the width and meaning of the fields in a message.</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col style="width: 222px;" class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Offset &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Length (Chars)</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description &#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">0</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">10</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Sequence number</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">10</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Comma</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">11</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">17</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Timestamp</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">28</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Comma</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">29</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">256</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Message text, interpreted from raw data &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">285</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Comma</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">286</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">64</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">HMAC of previous record as ASCII-HEX &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">350</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Comma &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">351</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">96</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Data for this record as ASCII-HEX (raw data) &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">447</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">1</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Newline '\n'</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The raw data for the message is stored in ASCII-HEX form, along with a human-readable version. Although this format makes the messages larger, it simplifies the verification process, as the HSM expects to receive raw data records.</p>
+        <h5>Example</h5>
+        <p>The following example shows a sample log record. It is separated into multiple lines for readability even though it is a single record.  Some white spaces are also omitted.</p><pre xml:space="preserve">38,12/08/13 15:30:50,session 1 Access 2147483651:22621 operation LUNA_CREATE_CONTAINER</pre><pre xml:space="preserve">returned LUNA_RET_SM_UNKNOWN_TOSM_STATE(0x00300014) (using PIN (entry=LUNA_ENTRY_DATA_AREA)),</pre><pre xml:space="preserve">29C51014B6F131EC67CF48734101BBE301335C25F43EDF8828745C40755ABE25,</pre><pre xml:space="preserve">2600001003600B00EA552950140030005D580000030000800100000000000000000000000000000000000000</pre><pre xml:space="preserve">&#160;</pre>
+        <p>The sequence number is “38”. The time is “12/08/13 15:30:50”.</p>
+        <p>The log message is “session 1 Access 2147483651:22621 operation LUNA_CREATE_CONTAINER returned LUNA_RET_SM_UNKNOWN_TOSM_STATE(0x00300014) (using PIN (entry=LUNA_ENTRY_DATA_AREA))”. In the message text, the “who” is the session identified by “session 1 Access 2147483651:22621” (the application is identified by the access ID major = 2147483651, minor = 22621).  The “what” is “LUNA_CREATE_CONTAINER”.  The operation status is “LUNA_RET_SM_UNKNOWN_TOSM_STATE(0x00300014)”.</p>
+        <p>The HMAC of previous record is “29C51014B6F131EC67CF48734101BBE301335C25F43EDF8828745C40755ABE25”.</p>
+        <p>The remainder is the raw data for this record as ASCII-HEX.</p>
+        <h3>Log External</h3>
+        <p>An important element of the security audit logging feature is the ‘Log External’ function.  This SafeNet extension to PKCS #11 allows a user application to insert text of the user’s choice into the log record stream.  The function call is <b>CA_LogExternal ( )</b>. It can be used, for example, to insert an application name or the name of the user who is logged into the application and have the inserted text string protected as part of the audit log in the same way as records that have been generated by the HSM itself.  It is recommended that applications use the <b>CA_LogExternal ( )</b> function when the application starts to insert the application name and also to insert the user name each time an individual user logs into or out of the application. The function is called as:</p>
+        <p>CA_LogExternal(CK_SLOT_ID slotID, CK_SESSION_HANDLE hSession, CK_CHAR_PTR pData, CK_ULONG puldataLen); </p>
+        <p>where: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>slotID</b> is PKCS #11 slot containing the HSM or partition being addressed, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>hSession</b> is the handle of the session with which the record is to be associated, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>pData</b> is the pointer to the character array containing the external message and</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>puldataLen</b> is the length of the character array.  </p>
+        <p>Note that the input character array is limited to a maximum of 100 characters and it will be truncated at 100 characters if <span class="code" style="font-weight: bold;">puldataLen</span> &gt; 100.</p>
+        <p>For applications that cannot add this function call, it is possible to use the <span class="code">lunacm </span>command-line function <span class="code">audit log external</span> within a startup script to insert a text record at the time the application is started.</p>
+        <p>When a user logs in to the SafeNet Network HSM lunash:&gt; session, the <span class="code">CA_LogExternal ( )</span> function is automatically called to register the user name and access ID. Subsequent HSM operations can be tracked by the access ID.</p>
+        <p>You must configure the “log external” event category in order for the HSM to log the <span class="code">CA_LogExternal()</span> messages.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

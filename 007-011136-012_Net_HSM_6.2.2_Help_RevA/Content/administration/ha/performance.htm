@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|High-Availability (HA) Configuration and Operation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Performance</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha.htm">High-Availability (HA) Configuration and Operation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Performance</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Performance</h2>
+        <p>For repetitive operations, like a high volume of signings using the same key, an HA&#160;group can expand SafeNet Network HSM performance in linear fashion as HA group members are added. HA groups of 16 members have undergone long-term, full-throttle testing, with excellent results. </p>
+        <p>Do keep in mind that simply adding more and more SafeNet Network HSM appliances to an HA group is not an infallible recipe for endless performance improvement. For best overall performance, all HA group members should be driven near their individual performance "sweet spot", which for SafeNet Network HSM 5.2 and later is around 30 simultaneous threads per HSM. If you assemble an HA group that is considerably larger than your server(s) can drive, then you might not achieve full performance from all. </p>
+        <p>The best approach is an HA group balanced in size for the capability of the application servers that will be driving the group, and the expected loads - with an additional unit to provide capacity for bursts of traffic and for redundancy. &#160;&#160;</p>
+        <h3>Maximizing Performance</h3>
+        <p>SafeNet Network HSM 6.x in HA can provide performance improvement for asymmetric single-part operations. Gigabit ethernet connections are recommended to maximize performance. For example, we have seen as much as a doubling of asymmetric single-part operations in a two-member group in a controlled laboratory environment (without crossing subnet boundaries, without competing traffic or other latency-inducing factors). &#160;&#160;&#160;</p>
+        <p>Multi-part operations are not load-balanced by the SafeNet HA due to the overhead that would be needed to perform context replication for each part of a multi-part operation.</p>
+        <p>Single-part cryptographic operations are load-balanced by the SafeNet HA functionality under most circumstances (see note on PE<a href="javascript:void(0);" class="MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm MCTextPopupHotSpot_" alt="Closed" data-mc-alt2="Open">1746<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>crypto integrated circuit within the K6 HSM (the stand-alone Luna PCI-E, and the HSM inside the Luna SA appliance.</span></a>Enabled setting).  Load-balancing these operations provides both scalability (better net throughput of operations) and redundancy by supporting transparent fail-over. </p>
+        <h4>Performance is Dependent on the Type of Operation</h4>
+        <p>Performance is also affected by the kind of operation you are performing. HA is better for performance when all HSM operations are performed on keys and material that reside within the HSM. This changes if part of the operation involves importing and unwrapping of keys; it can be instructive to consider what happens when such HSM operations are performed both with and without HA.</p>
+        <h5>With HA</h5>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>         One encryption (to wrap the key)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>One decryption in the HSM (to unwrap the key)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Object Creation on the HSM (the unwrapped key is created and stored as a key object)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Key Replication happens for HA</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>RSA 4096-bit operation used to derive a shared secret between HSM</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>Encryption of the key on the primary HA member using the shared secret</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>Decryption of the key on the secondary HA member hsm using the shared secret</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>Object Creation on the second HA member</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>One encryption (uses the unwrapped key object to encrypt the data)</p>
+        <h5>Without HA</h5>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>One encryption (to wrap the key)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>One decryption in the HSM (to unwrap the key)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Object Creation on the HSM (the unwrapped key is created and stored as a key object)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>One encryption (uses the unwrapped key object to encrypt the data)</p>
+        <p>From the above it is apparent that, with HA,  many more operations are performed.  Most significant in the above case are the RSA 4096-bit operation and the additional Object Creation performed.  Those two operations are by far the slowest operations in the list, and so this type of task would have much better performance without HA. </p>
+        <p>By contrast, if the task had made use of objects already within the HSM, then at most a single synchronization would have propagated the objects to all HA&#160;members, and all subsequent operations would have seen a performance boost from HA operation. The crucial consideration is whether the objects being manipulated are constant or are constantly being replaced. </p>
+        <h4>HA and FindObjects</h4>
+        <p>Performance implications of HA in general, and of C_FindObjects in particular, are discussed in detail at <a href="application_behavior.htm" class="MCXref xref">Using HA With Your Applications</a>. </p>
+        <p>Briefly, C_FindObjects can be called with an option to search for ALL objects, or to search more specifically for a subset of all objects in the HA group. The search for ALL objects can be lengthy and initially slows performance of the HA group. </p>
+        <p>If your application is the type that launches and then remains running while performing ongoing crypto operations, then a call to C_FindObjects ALL at the beginning is just a momentary performance hit and then your application benefits from maximum HA performance thereafter.</p>
+        <p>However, if your application is programmed to launch, run a small number of crypto operations and then close, the use of C_FindObjects ALL can impose a significant performance penalty. For that kind of application, you should use C_FindObjects with very specific search parameters for the fastest possible creation of the minimum Virtual Objects Table necessary for your application.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The cached object list is ephemeral, and only exists for the current session. If you restart the application, HA must recreate the object list cache. Best practice is to execute C_FindObjects to create the cached object list at application start up.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Beginning with release 6.2.1, the initial call to C_FindObjects ALL is optimized, but we still recommend that you avoid running "C_FindObjects" with the "all" option if you can avoid it by using a more limited search. </p>
+        <h4>HA and the PE1746Enabled Setting</h4>
+        <p>The SafeNet HSM client accepts a configuration file entry known as “PE1746Enabled”.  This configures the way SafeNet HSM handles symmetric encryption and decryption operations for certain algorithms – namely ECB and CBC modes of AES and TDES.  By default (beginning with release 5.4) an entry is always present in the [Misc] section of the configuration file, and its value is set to “PE1746Enabled=0”, or unset. </p>
+        <p>To set this configuration option, “PE1746Enabled=1”.</p>
+        <p>When set, this value configures the library to use fast-path cryptography directly to symmetric encryption engines.  This has the advantage of enabling high performance bulk crypto performance, but has the disadvantage of creating a direct context between the client library and the engine.  This means that the library cannot easily load-balance operations across HSMs.  This mode should  be used only by applications that perform large data encryption operations (&gt;1K data sizes).</p>
+        <p> &#160;&#160;When PE1746Enabled=0, the library uses its standard command path to the HSM.  The advantage of this is that all single-part cryptographic operations can be load-balanced. The disadvantage is lower performance for larger data sizes.  Applications should maintain this setting whenever possible to ensure the scalability and fail-over advantages. </p>
+        <p>In summary: <br /></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>when PE1746Enabled=1 load-balancing is not used for symmetric cryptographic operations; instead all symmetric operations are directed at the client’s primary member -- you see better performance, but no scalability across HSMs.  <br /></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>when PE1746Enabled=0  all single-part  cryptographic operations (with data size  less-than-or-equal-to 1K ) are load-balanced.  <br /></p>
+        <p>A single-part crypto operation is typically one that has small data sizes (&lt; 1Kb), but is also dependent on how the library makes its API calls (PKCS #11 supports explicit multi-part API calls through the use of C_EncryptUpdate and C_DecryptUpdate).  When an application uses the “Update” APIs the cryptographic operation is, by definition, multi-part.  When the application does not use these APIs (i.e. uses C_EncryptInit followed by C_Encrypt) then an operation is single-part up to a 64KB data size.</p>
+        <p>Additionally, the HSM has a limit of 1000 contexts for SafeXcel 1746 operations, which is a consideration when many client threads are involved, and depends upon the number of concurrent threads. <span style="color: #ffffff;">(LHSM-12630)</span> &#160;</p>
+        <p>Whenever possible, run your application with PE1746Enabled=0. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

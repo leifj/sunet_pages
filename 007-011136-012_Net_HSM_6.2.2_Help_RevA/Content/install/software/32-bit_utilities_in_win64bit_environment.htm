@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Installation Guide|SafeNet Client Software Installation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using 32-bit Utilities in Windows 64-bit Environment</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Installation Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="software.htm">SafeNet Client Software Installation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Using 32-bit Utilities in Windows 64-bit Environment</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Using 32-bit Utilities in Windows 64-bit Environment</h2>
+        <p>Some customers have 32-bit applications that they use within 64-bit Windows. In order to use a SafeNet HSM in that environment along with 32-bit versions of our standard tools (lunacm, vtl, multitoken, etc.) follow these steps, below. &#160;</p>
+        <p>&#160;</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span> Perform a standard LunaClient software installation as instructed for Windows. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Two "windows 32" folders are involved.</p>
+        <p class="listLevel1">One resides only in the LunaClient install medium (DVD or LunaClient_x.y.z.tar, and contains only the 32-bit SafeNet Luna tool binary files and, after the contents are extracted,  looks like this:</p><pre class="listLevel1" xml:space="preserve"> C:\Users\myname\Downloads\LunaClient_6.2.0-15\windows\32&gt;dir
+ Volume in drive C has no label.
+ Volume Serial Number is 1216-4343
+
+ Directory of C:\Users\myname\Downloads\LunaClient_6.2.0-15\windows\32
+
+12/17/2015  04:52 PM    &lt;DIR&gt;          .
+12/17/2015  04:52 PM    &lt;DIR&gt;          ..
+12/15/2015  02:28 PM           274,112 ckdemo.exe
+12/15/2015  02:28 PM           650,944 cmu.exe
+12/15/2015  02:28 PM         1,412,800 lunacm.exe
+12/15/2015  02:28 PM           249,536 multitoken.exe
+12/15/2015  02:28 PM            97,984 salogin.exe
+12/15/2015  02:28 PM         1,728,192 vtl.exe
+               6 File(s)      4,413,568 bytes
+               2 Dir(s)  188,938,604,544 bytes free &#160;</pre>
+        <p class="listLevel1">&#160;</p>
+        <p class="listLevel1">And one is created by the 64-bit installer in the LunaClient folder; it contains the 32-bit libraries and related files, but does not include the tool binary files. </p><pre class="listLevel1" xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;dir
+ Volume in drive C has no label.
+ Volume Serial Number is 1216-4343
+
+ Directory of C:\Program Files\SafeNet\LunaClient
+
+12/02/2015  11:04 AM    &lt;DIR&gt;          .
+12/02/2015  11:04 AM    &lt;DIR&gt;          ..
+11/09/2015  09:57 AM    &lt;DIR&gt;          cert
+11/07/2015  04:58 AM           323,776 ckdemo.exe
+11/07/2015  04:58 AM           896,704 cklog201.dll
+11/07/2015  04:58 AM               128 cklog201.dll.sig
+11/07/2015  04:58 AM           944,832 Cmu.exe
+11/09/2015  09:57 AM    &lt;DIR&gt;          config
+11/07/2015  04:58 AM         2,764,992 cryptoki.dll
+11/07/2015  04:58 AM               128 cryptoki.dll.sig
+11/09/2015  09:57 AM             1,613 crystoki.ini
+11/09/2015  09:57 AM    &lt;DIR&gt;          CSP
+11/09/2015  09:57 AM    &lt;DIR&gt;          data
+11/09/2015  09:57 AM    &lt;DIR&gt;          G5Driver
+11/09/2015  09:57 AM    &lt;DIR&gt;          htl
+11/09/2015  09:57 AM    &lt;DIR&gt;          JCProv
+11/09/2015  09:57 AM    &lt;DIR&gt;          JSP
+11/09/2015  09:57 AM    &lt;DIR&gt;          KSP
+11/07/2015  04:58 AM         1,995,456 lunacm.exe
+11/07/2015  04:58 AM         2,459,840 lunadiag.exe
+12/02/2015  10:16 AM                16 lunasa_update-6.2.0-15.auth
+12/02/2015  10:16 AM       130,904,834 lunasa_update-6.2.0-15.spkg
+11/07/2015  04:58 AM           301,248 multitoken.exe
+11/07/2015  04:44 AM             7,145 openssl.cnf
+11/07/2015  04:58 AM         2,608,832 PedClient.exe
+11/09/2015  09:57 AM    &lt;DIR&gt;          PedClient_service
+11/07/2015  04:58 AM           216,256 PedServer.exe
+11/07/2015  04:27 AM           315,392 PSCP.EXE
+11/07/2015  04:27 AM           483,328 PUTTY.EXE
+11/07/2015  04:27 AM           657,290 PUTTY.HLP
+11/07/2015  04:58 AM         2,280,640 rbs.exe
+11/07/2015  04:58 AM         2,673,856 rbs_processor2.dll
+11/09/2015  09:57 AM    &lt;DIR&gt;          RemotePEDDriver
+12/10/2015  11:53 PM            33,017 remotePedServerLog.log
+11/07/2015  04:58 AM            99,520 salogin.exe
+11/09/2015  09:57 AM    &lt;DIR&gt;          samples
+11/07/2015  04:58 AM           220,864 shim.dll
+11/07/2015  04:58 AM               128 shim.dll.sig
+10/20/2015  12:11 PM    &lt;DIR&gt;          softtoken
+11/07/2015  04:58 AM         1,575,616 softtoken.dll
+11/07/2015  04:58 AM            81,600 ureset.exe
+11/07/2015  04:58 AM         2,558,144 VTL.exe
+<span style="background-color: #ffff00;">11/09/2015  09:57 AM    &lt;DIR&gt;          win32</span>
+              27 File(s)    154,405,195 bytes
+              16 Dir(s)  190,472,613,888 bytes free 
+
+
+ &#160;C:\Program Files\SafeNet\LunaClient\win32&gt;dir
+ Volume in drive C has no label.
+ Volume Serial Number is 1216-4343
+
+ Directory of C:\Program Files\SafeNet\LunaClient\win32
+
+11/09/2015  09:57 AM    &lt;DIR&gt;          .
+11/09/2015  09:57 AM    &lt;DIR&gt;          ..
+11/07/2015  04:43 AM           413,376 cklog201.dll
+11/07/2015  04:43 AM               128 cklog201.dll.sig
+11/07/2015  04:43 AM         1,924,800 cryptoki.dll
+11/07/2015  04:43 AM               128 cryptoki.dll.sig
+11/09/2015  09:57 AM    &lt;DIR&gt;          csp
+11/09/2015  09:57 AM    &lt;DIR&gt;          JCProv
+11/09/2015  09:57 AM    &lt;DIR&gt;          jsp
+11/09/2015  09:57 AM    &lt;DIR&gt;          KSP
+11/07/2015  04:43 AM           175,808 shim.dll
+11/07/2015  04:43 AM               128 shim.dll.sig
+11/07/2015  04:43 AM         1,101,504 softtoken.dll
+               7 File(s)      3,615,872 bytes
+               6 Dir(s)  188,937,732,096 bytes free
+
+C:\Program Files\SafeNet\LunaClient\win32&gt;
+
+</pre>
+        <p class="listLevel1">&#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>From the \windows\32 folder of the unpacked archive, copy all the 32-bit utilities into the installed LunaClient directory (C:\Program Files\SafeNet\LunaClient\win32). </p><pre class="listLevel1">C:\Program Files\SafeNet\LunaClient\win32&gt;dir
+ Volume in drive C has no label.
+ Volume Serial Number is 1216-4343
+
+ Directory of C:\Program Files\SafeNet\LunaClient\win32
+
+12/17/2015  05:18 PM    &lt;DIR&gt;          .
+12/17/2015  05:18 PM    &lt;DIR&gt;          ..
+12/15/2015  02:28 PM           274,112 ckdemo.exe
+11/07/2015  04:43 AM           413,376 cklog201.dll
+11/07/2015  04:43 AM               128 cklog201.dll.sig
+12/15/2015  02:28 PM           650,944 cmu.exe
+11/07/2015  04:43 AM         1,924,800 cryptoki.dll
+11/07/2015  04:43 AM               128 cryptoki.dll.sig
+11/09/2015  09:57 AM    &lt;DIR&gt;          csp
+11/09/2015  09:57 AM    &lt;DIR&gt;          JCProv
+11/09/2015  09:57 AM    &lt;DIR&gt;          jsp
+11/09/2015  09:57 AM    &lt;DIR&gt;          KSP
+12/15/2015  02:28 PM         1,412,800 lunacm.exe
+12/15/2015  02:28 PM           249,536 multitoken.exe
+12/15/2015  02:28 PM            97,984 salogin.exe
+11/07/2015  04:43 AM           175,808 shim.dll
+11/07/2015  04:43 AM               128 shim.dll.sig
+11/07/2015  04:43 AM         1,101,504 softtoken.dll
+12/15/2015  02:28 PM         1,728,192 vtl.exe
+              13 File(s)      8,029,440 bytes
+               6 Dir(s)  188,933,582,848 bytes free
+</pre>
+        <p class="listLevel1">&#160;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Go to the 64 bit LunaClient directory (C:\Program Files\SafeNet\LunaClient), copy the crystoki.ini file, and paste it into the win32 folder (C:\Program Files\SafeNet\LunaClient\win32). &#160;</p><pre class="listLevel1">C:\Program Files\SafeNet\LunaClient\win32&gt;dir
+ Volume in drive C has no label.
+ Volume Serial Number is 1216-4343
+
+ Directory of C:\Program Files\SafeNet\LunaClient\win32
+
+12/17/2015  05:23 PM    &lt;DIR&gt;          .
+12/17/2015  05:23 PM    &lt;DIR&gt;          ..
+12/15/2015  02:28 PM           274,112 ckdemo.exe
+11/07/2015  04:43 AM           413,376 cklog201.dll
+11/07/2015  04:43 AM               128 cklog201.dll.sig
+12/15/2015  02:28 PM           650,944 cmu.exe
+11/07/2015  04:43 AM         1,924,800 cryptoki.dll
+11/07/2015  04:43 AM               128 cryptoki.dll.sig<span style="background-color: #ffff00;">
+11/09/2015  09:57 AM             1,613 crystoki.ini</span>
+11/09/2015  09:57 AM    &lt;DIR&gt;          csp
+11/09/2015  09:57 AM    &lt;DIR&gt;          JCProv
+11/09/2015  09:57 AM    &lt;DIR&gt;          jsp
+11/09/2015  09:57 AM    &lt;DIR&gt;          KSP
+12/15/2015  02:28 PM         1,412,800 lunacm.exe
+12/15/2015  02:28 PM           249,536 multitoken.exe
+12/15/2015  02:28 PM            97,984 salogin.exe
+11/07/2015  04:43 AM           175,808 shim.dll
+11/07/2015  04:43 AM               128 shim.dll.sig
+11/07/2015  04:43 AM         1,101,504 softtoken.dll
+12/15/2015  02:28 PM         1,728,192 vtl.exe
+              14 File(s)      8,031,053 bytes
+               6 Dir(s)  188,932,857,856 bytes free</pre>
+        <p class="listLevel1">&#160;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Open the copied crystoki.ini file in a text editor. </p><pre class="listLevel1" xml:space="preserve">[Chrystoki2]
+LibNT=C:\Program Files\SafeNet\LunaClient\cryptoki.dll
+[Luna]
+PEDTimeout1=100000
+PEDTimeout2=200000
+CommandTimeoutPedSet=720000
+KeypairGenTimeOut=2700000
+CloningCommandTimeOut=300000
+PEDTimeout3=10000
+DefaultTimeOut=500000
+[CardReader]....... etc. </pre>
+        <p class="listLevel1">&#160;</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Under the [Chrystoki2] section replace the old LibNT path with : LibNT=C:\Program Files\SafeNet\LunaClient\win32\cryptoki.dll &#160;</p><pre class="listLevel1" xml:space="preserve">[Chrystoki2]
+<span style="background-color: #ffff00;">LibNT=C:\Program Files\SafeNet\LunaClient\win32\cryptoki.dll</span>
+[Luna]
+PEDTimeout1=100000
+PEDTimeout2=200000
+CommandTimeoutPedSet=720000
+KeypairGenTimeOut=2700000
+CloningCommandTimeOut=300000
+PEDTimeout3=10000
+DefaultTimeOut=500000
+[CardReader]
+....... etc. </pre>
+        <p class="listLevel1">&#160;</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>In Windows, change make an Evironment Variables change as follows: </p>
+        <p class="listLevel1">In Computer -&gt; Properties -&gt; Advanced Settings -&gt; Environment Variables -&gt; System Variables &#160;<br />Change ChrystokiConfigurationPath value to <b>C:\Program Files\SafeNet\LunaClient\win32</b> &#160;&#160;</p>
+        <p>You can now use your 32 bit utilities in a 64 bit Windows environment.</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|PED Key Management">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>How Many PED Keys Do I Need?</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ped_keys.htm">PED Key Management</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">How Many PED Keys Do I Need?</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>How Many PED Keys Do I Need?</h2>
+        <p>You need enough to satisfy your operational and security-policy requirements. How that translates to an actual number of PED Keys depends on your situation. Here is some guidance.</p>
+        <h3>Basic amount for operation &#160;</h3>
+        <p>The basic amount is described in the topic/page <a href="../ped_auth/about_ped_keys.htm" class="MCXref xref">About PED Keys</a>.&#160;If&#160;you elect not to make use of some of the roles and functions, then you have fewer to manage than the seven (legacy) or eight (with Per-Partition SO) that are described there. </p>
+        <p>The next question is: How many HSMs do you have? If you have just one SafeNet HSM, then there is no need to consider other HSMs when you determine your security/role/authentication policy. If you have more than one SafeNet HSM, you need to make decisions about how they are to be administered and who will do it. These issues are discussed and illustrated in the following sections. </p>
+        <p>Regarding HSM authentication, the factors to consider are:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>How many HSMs are to be administered by one identity (are you making a group PED Key for several HSMs, or a unique PED Key per HSM)? &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Does your security policy allow a single person to control access to HSM functions, or should that access be divided, requiring multiple authorized persons to oversee authentication to an HSM&#160;role ( <a href="../../overview/security_features/mofn_about.htm" class="MCXref xref">About MofN</a>, or <a href="#MofN" class="MCXref xref selected">Many PED Keys for one HSM - MofN</a> below)? &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Will these decisions apply to all HSMs within your sphere? &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Will these decisions apply to all, or to just some roles on each HSM? </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>For each role or authentication secret related to an HSM, how many operational and on-site- and off-site-backup copies must be created and maintained and tracked?</p>
+        <h3> <a name="group-ped-key"></a>One PED Key for many HSMs - grouping or reuse &#160;</h3>
+        <p>This section discusses the number of on-site full sets required, for different choices regarding PED Key reuse/grouping, and then considers the implications of having backup authentication keys. For this discussion, assume that you have more than one HSM to administer - for this example, we arbitrarily assume six, but the concepts could apply to any number.</p>
+        <p>The following example considers grouping of PED Keys, which is the outcome of your response to the SafeNet PED prompt "Do you wish to reuse a keyset? Y/N". You can imprint a new, unique secret onto both the HSM and the current PED Key, by responding "No" to the reuse question. This is the "no group" or the "group of 1" scenario. </p>
+        <p>Alternatively, you can accept a currently-valid PED Key and imprint that secret onto the HSM, such that the current PED Key can unlock its role or function on the current HSM as well as on one or more HSMs that already have the same secret (for that role or function). This is the "grouping" scenario, where one PED Key is good for multiple HSMs, which eases the administrative burden if your security policy so permits.</p>
+        <p>
+            <img src="../../Resources/Images/ped_mofn_groups/1of1_6hsms_group-keys.png" />
+        </p>
+        <p>The above chart depicts some options for the "...reusing a keyset..."&#160;question from SafeNet PED when you are imprinting an HSM authentication secret. The example shown is an organization responsible for six (6) SafeNet HSMs. </p>
+        <p>The first column of each pair in the chart, in orange, depicts how many keys you would need for a given secret : </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>On the left, "No Groups", if you set a unique secret for each of the six HSMs (responding "No" every time SafeNet PED asked if you were reusing a keyset; therefore 6 different keys, one for each HSM). Six keys are needed for that one secret. &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If you chose to imprint authentication secrets onto your six HSMs in three groups of two HSMs (responding "No" when asked if you were reusing a keyset, for the first HSM of each group, then responding "Yes" when imprinting the secret for the second HSM of each group). Three keys are needed for that secret. &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If you chose to imprint authentication secrets onto your six HSMs in two groups of three HSMs (responding "No" when asked if you were reusing a keyset, for the first HSM of each group, then responding "Yes" when imprinting the secret for the second HSM, and again for the third HSM of each group). Two keys are needed for that secret. &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If you chose to imprint authentication secrets onto your six HSMs in one group of six HSMs (responding "No" when asked if you were reusing a keyset, for the first HSM of the group, then responding "Yes" when imprinting the secret for the second HSM, and again for the third HSM, and again for the fourth HSM, and again for the fifth HSM, and again for the sixth HSM of the group). One key is needed for that secret. &#160;&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Yes, you could also do a group of five and a group of one, or a group of two and a group of four... any combination that works in your operational environment and satisfies your security requirements.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>So far, we are discussing just one authentication secret, out of seven or eight for any HSM. We would need to repeat this discussion for each of the other secrets, per HSM that you manage. </p>
+        <p>However, those quantities, enumerated above, imply that you have just one set of PED&#160;Keys for the HSMs that you need to access. This is unwise; if you lose or damage the only key of a given color (for a given role or feature), you lose access to that aspect of that HSM or that group of HSMs. With that in mind, the second column of each pair in the chart, in gray, represents how many physical PED Keys you would need in each situation for reliable access to your six HSMs, if you have one working (primary) set, as well as an additional, backup set of keys.</p>
+        <p>Many organizations would go further, and insist on having three complete sets, one primary or working set, one backup set to be stored in on-site secure lockup, and a third set to be stored in off-site secure lockup. This kind of requirement might be specified or implied in a Business Continuity/Disaster Recovery plan, or in a comprehensive security policy.</p>
+        <p>Again, with each HSM and with each authentication secret or secured function on that HSM, at the time the secret is created or reset, the PED gives you the opportunity:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>to "Reuse an existing keyset" - make the current HSM secret part of an existing group that is unlocked by an already-imprinted  PED Key (or an already-imprinted MofN keyset), or  </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>to <b>not</b> "Reuse an existing keyset", and thereby use a fresh, unique secret generated by the current HSM that is not shared by any other HSM, meaning that this is the opportunity to start a new group, independent of any existing group of HSMs.</p>
+        <p>The same issues arise with respect to all PED-mediated secrets (HSM SO, partition SO, cloning domain, Crypto Officer and Crypto User, Remote PED, Auditor). The exception is the purple Secure Recovery PED Key, which is unique to its HSM and cannot be grouped. </p>
+        <p>The other special case is the red Cloning Domain PED Key, which <b>must</b> be shared where you wish to be able to clone contents among HSMs or among application partitions.</p>
+        <h4>Secrets are independent for grouping</h4>
+        <p>The different secrets are independent. You could group SO authentication keys but keep partition Crypto Officer authentication keys unique. You could maintain unique SO and Crypto Officer authentication keys for all your HSMs and their partitions, while at the same time having a single, grouped Cloning Domain for all... or for some. </p>
+        <p>You could decide that some combination of grouping and uniqueness was suitable for all your HSMs and their partitions and roles, but that you wanted a single Auditor identity for all HSMs in your organization. </p>
+        <p>You could implement any combination of unique and grouped authentication secrets that suited your organization's working methods and security policies.</p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>Always have at least one complete set of backup PED Keys in addition to the working or operational set. &#160;</p>
+        <p>The above sections have discussed deploying HSM authentication secrets on a one-for-one (unique PED Key per HSM) or a one-for-many (grouped PED Key for multiple HSMs) basis, or any of several possible combinations. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>HSM grouping, or PED Key reuse, helps to reduce the number of PED Keys that must be tracked and managed in your organization. If you have multiple HSMs, and if there is no operational or security reason to maintain unique authentication for each, then grouping several HSMs to be accessed by one PED Key is a useful option. </p>
+        <p>The next sections discuss a different option, regarding PED Keys, that can have considerable effect on the number of PED&#160;Keys that you must manage.</p>
+        <h3>Many PED Keys for one HSM - MofN<a name="MofN"></a></h3>
+        <p>Does your security policy allow you to trust your personnel? Perhaps you wish to spread the responsibility - and reduce the possibility of unilateral action - by splitting an authentication secret, invoking split-secret, multi-person, access control. Choose the MofN option so that (for example) no single blue PED Key is sufficient to unlock an HSM SO role. </p>
+        <p>If you invoke MofN, two or more of a given color of PED Keys (your choice, up to a maximum of 16 splits of each  secret) would then be needed to access that role or that secure function on each HSM. Distribute each split to a different person, ensuring that no one person can unlock that aspect of the HSM  (HSM SO, partition SO, cloning domain, Crypto Officer and Crypto User, Remote PED, Auditor, Secure Recovery). </p>
+        <p>If you have decided that you want (in this example) three different people to be present whenever a particular role authenticates to the HSM, you should also allow a few extra splits of that secret to accommodate accidents, illness, vacations, business travel, or other reasons that would take some key-holders away from the HSM site. Perhaps you settle on two additional splits as sufficient additional key-holders, beyond the initial three. You have thus specified MofN to be 3 of 5. So, if this example applied to the HSM SO, then each HSM's SO secret might be split into five components or partial secrets imprinted onto a set of five blue PED Keys, of which any three from that set can combine to reconstitute the SO secret, but never less than three. </p>
+        <p>&#160;</p>
+        <p>
+            <img src="../../Resources/Images/ped_mofn_groups/mof5_keys_to_manage_newer.png" />
+        </p>
+        <p>&#160;</p>
+        <p>The purple bars show N=5 for every choice of M, the orange bars in this example. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>M=N is not recommended because it allows no scope for one of the holders to be unavailable, while still allowing you to access your HSM. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>M=1 is not recommended, because it is no more secure than if there were no splits of the secret - a single person can unlock the HSM role or function without oversight. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Any choice where N&gt;M&gt;1 is prudent and useful, as it ensures oversight but allows for at least one split-holder to be unavailable, while still permitting authorized access to the HSM roles and functions. </p>
+        <p>Whether you assigned SOs to HSMs on a one-for-one or a group basis (see <a href="#group-ped-key" class="MCXref xref selected"> One PED Key for many HSMs - grouping or reuse &#160;</a> above), you now multiply that number of SOs by N (the number of splits into which each SO secret is separated). There is no overlap - no split can be part of more than one secret. The number of PED Keys to manage has become significant, especially when you consider that each one (each split of each SO secret) should have at least one backup. You can apply the above example to any of the other authentication secrets instead of (or in addition to) the SO.</p>
+        <p>With MofN, you need very good procedures to physically identify and track the various keys.</p>
+        <h4>Secrets are independent for MofN </h4>
+        <p>Each HSM must have at least one application partition, in addition to the HSM administrative (SO) partition. Some SafeNet products can have multiple partitions. The number depends upon your operational requirement and the number that you purchased, per HSM, up to the product maximum per unit. Each partition requires as many as three role authentications (Partition SO, Crypto Officer, and (optionally) Crypto User) in addition to a cloning domain secret. For each of the three roles, plus the domain, you must initialize the role or secret and decide whether that role needs MofN access control, and if so, what the values of M and N should be for that role.</p>
+        <p>If you require verifiable HSM audit logs, you must initialize the HSM Auditor role (white PED Key) and decide whether that role needs MofN access control, and if so, what the values of M and N should be for that role.</p>
+        <p>If you intend to manage your PED-authenticated HSM remotely, you must initialize a Remote PED Vector (orange PED Key) and decide whether that role needs MofN access control, and if so, what the values of M and N should be for that role.</p>
+        <p>If you wish to set the HSM into Secure Transport Mode, or if you wish to require that any tamper event must be physically acknowledged and the HSM must wait until it is explicitly returned from tamper condition, then you must enable the Secure Recovery Vector (purple PED Key) and decide whether that role needs MofN access control, and if so, what the values of M and N should be for that role.</p>
+        <p> As shown, you can elect to split none of the HSM roles and secrets, some of them, or all of them. And if you do elect to impose MofN for some, or all roles and secrets, you can set different values of M and N, independently per HSM role or secret.</p>
+        <h3>Combining MofN with Grouped/Unique Authentication</h3>
+        <p>So, we have as many as eight different authentications on an HSM with a single application partition; nine if the application partition's cloning domain is different from the HSM SO's cloning domain. Only one of those - the purple SRK PED&#160;Key - is not subject to grouping if you have more than one HSM under your control. </p>
+        <p>Keeping in mind the need for backup sets, if you impose MofN for some or all secrets, that choice can drastically increase the number of PED Keys that must be imprinted, tracked, and managed, while the ability to group authentication secrets across some or all of your HSMs can help reduce the numbers of PED Keys in play. </p>
+        <p>The chart below shows how the two options interact.</p>
+        <p>
+            <img src="../../Resources/Images/ped_mofn_groups/3of5_6hsms_group-keys.png" />
+        </p>
+        <p>In the above chart, we modify the original PED Key grouping scenarios (earlier in this topic, M=N=1 so no MofN), by adding a requirement for MofN where the full set of keys for that secret (N) is five splits, and the number required to access that role or function of the HSM (M) is three. That covers just one secret (of the eight or nine) on six HSMs. </p>
+        <p>Here is a visual suggestion of how many physical PED Keys you would be dealing with in an example scenario where: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>one HSM is in play (or all secrets are grouped for several HSMs), </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>you had invoked every possible role or access-controlled function on the HSM</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>you had both an HSM SO and a different SO for one application partition</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>you had chosen to apply MofN = 3of5 for every secret </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>you were keeping an operational PED KEY set, as well as two backup sets in different locations.</p>
+        <p>&#160;</p>
+        <p>
+            <img src="../../Resources/Images/ped_mofn_groups/5_everything_ped-keys_6_hsms_grouped.png" />
+        </p>
+        <p>Why are there so many purple keys, when we have grouped all the secrets for our six HSMs? <br />Recall that you can group any of the other HSM access secrets, but the purple SRK PED Key cannot be grouped. The SRK is unique to each HSM. The above illustration shows the smallest number of PED Keys you could have if you insisted on MofN at 3of5 for every secret on the six HSMs that you manage in this scenario. (The value that you chose for "M" is not important in this context. It is the value of "N" that determines how many PED Keys you must manage.) This illustrated example is a good indication that you should carefully consider whether a given HSM access secret really needs to be protected by split-secret multi-person access control (MofN greater than 1of1).</p>
+        <p>Now, look what happens if you have the six HSMs from our earlier example, and instead of grouping each HSM/secret in a single group of six, you instead elected to have no HSM grouping for any secret.</p>
+        <p>
+            <img src="../../Resources/Images/ped_mofn_groups/n5_every-secret_6hsms_ped-keys.png" />
+        </p>
+        <p>The above large number of PED Keys represents the number of physical keys you would need to manage for just six SafeNet HSMs with a single application partition per HSM where you had made these choices:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>six HSMs are in play, with no grouping of any of the HSMs for any of their secrets, so each secret is unique for every HSM, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>every possible role or access-controlled function on each HSM has been invoked (*)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the HSM SO and the SO for the application partition on each HSM are different secrets (so a blue key set for the HSM SO and a blue key set for the partition SO... times six)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>you had chosen to apply MofN = 3of5 for every secret </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>you were keeping a complete operational PED KEY set for each HSM, as well as two backup sets in different locations, for each HSM.</p>
+        <p>Granted, the illustration seems extreme, but it is the inevitable outcome if you were to make the choices that are described. </p>
+        <p>(* It is very plausible that you might have initialized different domains for the HSM and for the application partition on each HSM, in which case you could have seen an additional bunch of three sets of red keys for each HSM in the above illustration.)</p>
+        <p>The take-away observations from the examples, as you plan the deployment of your own SafeNet HSMs in your organization, should be: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>if you need a role or an access-controlled HSM function, by all means, initialize it for that HSM, but if a role or function is not needed (for example, Audit or SRK), then leave it uninitialized</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>grouping of HSM secrets (re-use of keysets from other HSMs that you control, when initializing roles and functions) is good, as long as there is no countervailing security concern</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>MofN is an excellent security measure, but should be invoked only when necessary, to avoid proliferation of PED Keys and the associated management burden.</p>
+        <h4>Example calculation</h4>
+        <p>So, with a primary keyset (for a given role or function) plus a single backup set, if all HSMs have unique secrets ("Reuse..." was chosen as "No") then you need: </p>
+        <p>N * G * S = T</p>
+        <p>where:</p>
+        <p>N is the number of MofN splits, which in this example is 5</p>
+        <p>G is the number of groups (which is 6, in our example, if all 6 HSMs have a unique secret, no grouping, or which is 1 if all 6 HSMs use the same secret for that role)</p>
+        <p>S is the number of sets (which in this case is a primary set plus one backup set, or a total of 2)</p>
+        <p>T is the Total number of PED Keys needed for just the one role or function for your six HSMs</p>
+        <p>5 * 6 * 2 = 60 is the largest number, with MofN at 3of5 and no grouping (no reuse of this secret across HSMs)</p>
+        <p>If all six of the HSMs use the same keyset for that role (a single group), then the number of PED Keys required to manage is greatly reduced:</p>
+        <p>5 * 1 * 2 = 10 in total. &#160;&#160;</p>
+        <p>That was for one secret to access a role or function of the HSM.</p>
+        <h3>Calculate PED Key requirements for some or all HSM authentication secrets</h3>
+        <p>The calculations above were examples for just one of the eight or nine secrets that apply to your HSM and its partitions. If more than one authentication secret is split for multi-person access control, then the number of PED Keys that you must manage grows dramatically. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>We strongly urge methodical handling and labeling of your imprinted PED Keys, in order to track them and to avoid mixing members from different sets. &#160;<br /><br />The PED Key secret that the HSM tests, for authentication to an HSM role or function, is attempted only when it is complete.<br /><br />Without MofN, the secret is complete on one PED Key. Presenting a PED Key from a wrong set, when MofN is not involved, can result in lockout of a role, or zeroization of content, depending upon which secret is attempted. For SO PED&#160;Keys, you have three tries, for other roles the default is 10 tries, but HSM or partition policies can adjust that to a lower number.<br /><br />With MofN, the secret is complete only when M unique splits from the needed set, are presented and successfully combined. Presenting a PED Key from a wrong MofN set, or presenting the same split twice because members of primary and backup sets were accidentally mingled, does not allow the splits to successfully combine. Therefore that error does not increment the bad-login-attempt counter for that secret. Instead, it results in looping prompts on the PED until it gets enough of the correct splits or until the operation times out. </p>
+        <h3>Maintaining Your PED Keys</h3>
+        <p>Other than tracking </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>where PED Keys are, &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>to which HSMs they apply, &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>who is in possession of, or has access to, each PED Key, </p>
+        <p>maintaining your PED Keys means </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>making new copies if any suffer damage, and </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>ensuring that the secrets on the keys, and any associated passwords (PED PINs, client challenge secrets) are updated in a prompt and orderly fashion, in case of suspected compromise, and in compliance with any "password-change" security policy requirements at your organization.</p>
+        <p>That last item, adherence to a policy of frequent password changes, could be the most intensive. Consider some of the examples, earlier in this topic, and how much logistical and organizational effort would be involved in a mass password change for one secret. In one example, assuming that you had all six of your HSMs in one operation center, that would be ninety PED Keys located in two different locations at your operation site (the operational set and the on-site backup set), as well as at a distant secure off-site lockup. So that would be three sets of five keys for that secret (so 15 keys for one secret for one HSM), multiplied by the six HSMs in the no-grouping scenario (so 90 keys for one secret). Now consider that one iteration of the password-change process would cover one secret (like HSM SO, blue PED Key) and would leave an additional six, or seven secrets (red, black, gray, orange, purple, white, as well as another blue key secret if your application partition has its own SO) potentially needing to be updated.</p>
+        <p>These considerations are important when you develop your authentication and security schemes around SafeNet HSMs and PED Keys.</p>
+        <h3>Conclusion</h3>
+        <p>With all of the above in mind, it is not possible to suggest one "correct" number of PED Keys for your situation. It depends upon the choices that you make at several stages. In all cases, we repeat the recommendation to have at least one backup in case a PED Key (any color) is lost or damaged. </p>
+        <p>HSM grouping (PED Key reuse) reduces the number of PED Keys that must be managed, but puts more than one HSM at risk if a PED Key is compromised. MofN increases the number of PED Keys that must be managed, but increases the security of all affected HSM roles or functions by ensuring that no single key-holder can act unilaterally. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

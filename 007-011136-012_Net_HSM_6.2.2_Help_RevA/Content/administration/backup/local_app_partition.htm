@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA,Default.PCI" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Backup and Restore HSMs and Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Local Application-Partition Backup and Restore  Using the Backup HSM</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="backup.htm">Backup and Restore HSMs and Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Local Application Partition Backup and Restore Using the Backup HSM</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Local Application-Partition Backup and Restore  Using the Backup HSM</h2>
+        <p>This section describes how to perform local backup and restore operations using the SafeNet Remote Backup HSM&#160;(Backup HSM). A local backup is defined as one in which the Backup HSM is local to the HSM&#160;or to the SafeNet HSM client workstation used to administer the HSM. To perform a local backup/restore, you can connect the Backup HSM using one of the following methods:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>to a USB port on the SafeNet Network HSM appliance. This method allows you use LunaSH to backup all of the SafeNet Network HSM partitions on the appliance that are owned by you, the HSM&#160;SO. It does not allow you to backup partitions that have their own SO. See  <a href="#Partitio" class="MCXref xref selected">Partition Backup  and Restore Using a   Backup HSM Connected Directly to a SafeNet Network HSM Appliance</a> for details.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>to a USB&#160;port on the SafeNet HSM client workstation. This method allows you use LunaCM to backup any SafeNet Network HSM or SafeNet PCIe HSM partitions that are visible as slots. See <a href="#Partitio2" class="MCXref xref selected">Partition Backup  and Restore Using a   Backup HSM Connected to a Local Client Workstation</a> for details.</p>
+        <p>The backup operation can go from a source partition (on a SafeNet Network HSM) to an existing partition on the Backup HSM, or if one does not exist, a new partition can be created during the backup . The restore operation, however, cannot create a target partition on a SafeNet Network HSM; it must already exist.</p>
+        <p>You can restore a partition backup to the source HSM or to a different SafeNet Network HSM. The HSM you restore to must already have a suitable partition created for the restored objects. The partition can have any name - it does not need to match the name of the source partition on the backup HSM.</p>
+        <h3><a name="Partitio"></a>Partition Backup  and Restore Using a   Backup HSM Connected Directly to a SafeNet Network HSM Appliance</h3>
+        <p>The simplest way to backup your SafeNet Network HSM is to connect the Backup HSM directly to the SafeNet Network HSM appliance. To perform a backup/restore, you open an SSH or serial connection from your workstation to the appliance, and then launch  LunaSH in a terminal session to perform the backup, as illustrated in the following figure:</p>
+        <p class="figureCaption" data-mc-autonum="Figure 1: "><span class="autonumber"><span>Figure 1: </span></span>Configuration for SafeNet Network HSM partition backup/restore using a Backup HSM connected directly to the SafeNet Network HSM appliance</p>
+        <p>
+            <img src="../../Resources/Images/backup/backup_direct_connect.png" />
+        </p>
+        <p>&#160;</p>
+        <p>The workstation is simply a display terminal for LunaSH running on the appliance. It does not require the SafeNet HSM client software.</p>
+        <p>The PEDs are required only if the SafeNet Network HSM is PED-authenticated. The appropriate SO (blue), partition (black) and domain (red) PED keys are required. The SO (blue), partition (black) PED keys can be the same for both devices, or can be different. Both devices must share the same domain (red) PED key value. Although two PEDs are recommended (one connected to the SafeNet Network HSM and one connected to the Backup HSM)&#160;you can use a single PED, if desired. If using a single PED, note that you can connect the PED to only one HSM at a time. You will need to disconnect it from the source (SafeNet Network HSM) HSM and connect to the target (SafeNet Remote Backup HSM) when PED&#160;operations are needed at those HSMs respectively. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You can use this method to backup the partitions on the SafeNet Network HSM appliance that are owned by you, the HSM&#160;SO. You cannot use this method to backup partitions configured with their own SO. To backup a partition with SO, you must use LunaCM, as described in <a href="#Partitio2" class="MCXref xref selected">Partition Backup  and Restore Using a   Backup HSM Connected to a Local Client Workstation</a>.</p>
+        <h5><a name="SA_partition_backup_procedure"></a>To backup a SafeNet Network HSM partition to a directly connected Backup HSM</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Connect all the required components and open a terminal session to the SafeNet Network HSM appliance. See the following topics for details:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span><a href="../../configuration/appliance_config/open_a_connection.htm" class="MCXref xref">Open a Connection</a> in the <i>Configuration Guide</i></p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span><a href="backup_hsm_install_maintain.htm" class="MCXref xref">Backup  HSM Installation, Storage, and Maintenance</a>
+            <br />
+        </p>
+        <p class="listLevel1">As soon as the PED&#160;is connected to a powered HSM it starts up and defaults to Local mode with the <b>Awaiting command...</b> prompt.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Open a LunaSH session on the  SafeNet Network HSM appliance.  </p><pre class="listLevel1" xml:space="preserve">login as: admin <br />admin@192.20.10.202's password: <br />Last login: Tue Dec 30 16:03:46 2014 from 192.16.153.111 <br /><br />SafeNet Network HSM 6.0.0-25 Command Line Shell - Copyright (c) 2001-2014 SafeNet, Inc. All rights reserved.  <br />[myluna] lunash:&gt;  <br /><br /></pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use the <b>token backup list</b> and <b>token backup show</b> commands to determine the serial number of the Backup HSM&#160;and to verify its partition and storage configuration:</p><pre class="listLevel1" xml:space="preserve">[myluna] lunash:&gt;token backup list <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />Token Details: <br style="mc-tag-and-class: ;" />============ <br style="mc-tag-and-class: ;" />Token Label: &#160; &#160; BackupHSM <br style="mc-tag-and-class: ;" />Slot: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;  6 <br style="mc-tag-and-class: ;" />Serial #:        7000179 <br style="mc-tag-and-class: ;" />Firmware:        6.22.0 <br style="mc-tag-and-class: ;" />Hardware Model:  SafeNet USB HSM <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />Command Result : 0 (Success) <br style="mc-tag-and-class: ;" />[myluna] lunash:&gt; <br /><br />lunash:&gt; token backup show -serial 700179<br style="mc-tag-and-class: ;" />Token Details: &#160;<br style="mc-tag-and-class: ;" />============ <br style="mc-tag-and-class: ;" />Token Label: &#160;&#160;&#160;                  BackupHSM &#160;<br style="mc-tag-and-class: ;" />Serial #: &#160;&#160;&#160;&#160;&#160;&#160;                  700179 &#160;<br style="mc-tag-and-class: ;" />Firmware: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;  6.22.0 &#160;<br style="mc-tag-and-class: ;" />Hardware Model:                   SafeNet USB HSM &#160;<br style="mc-tag-and-class: ;" />Authentication Method:            PED keys &#160;<br style="mc-tag-and-class: ;" />Token Admin login status:         Logged In &#160;<br style="mc-tag-and-class: ;" />Token Admin login attempts left:  3 before Token zeroization! <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />Partition Information: &#160;<br style="mc-tag-and-class: ;" />====================== <br style="mc-tag-and-class: ;" />Partitions licensed on token: &#160;&#160;&#160; 20 &#160;<br style="mc-tag-and-class: ;" />Partitions created on token: &#160;&#160;&#160;&#160;&#160;0 <br style="mc-tag-and-class: ;" />---------------------- <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />There are no partitions.   <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />Token Storage Information: &#160;<br style="mc-tag-and-class: ;" />========================== <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />Maximum Token Storage Space (Bytes): 16252928 &#160;<br style="mc-tag-and-class: ;" />Space In Use (Bytes): &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0 &#160;<br style="mc-tag-and-class: ;" />Free Space Left (Bytes): &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;16252928 <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />License Information: &#160;<br style="mc-tag-and-class: ;" />==================== <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />621010355-000      621-010355-000 G5 Backup Device Base &#160;<br style="mc-tag-and-class: ;" />621000005-001      621-000005-001 Backup Device Partitions 20 &#160;<br style="mc-tag-and-class: ;" />621000006-001      621-000006-001 Backup Device Storage 15.5 MB &#160;<br style="mc-tag-and-class: ;" />621000007-001      621-000007-001 Backup Device Store MTK Split Externally &#160;<br style="mc-tag-and-class: ;" />621000008-001      621-000008-001 Backup Device Remote Ped Enable <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />Command result : 0 (Success) &#160;<br style="mc-tag-and-class: ;" />lunash:&gt; <br /><br /></pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Use the <b>partition backup</b> command to backup a specified partition and provide the PED keys as prompted, for example:</p><pre class="listLevel1" xml:space="preserve">[myluna] lunash:&gt;par backup -s 7000179 -par p1 -tokenPar bck1  <br /><br />Type 'proceed' to continue the backup, or 'quit' <br />           to abort this operation.            <br />&gt; proceed    <br />Please enter the password for the HSM partition:    <br />&gt; ******* <br /><br />Warning: You will need to attach Luna PED to the SafeNet Backup HSM <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;to complete this operation.            <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;You may use the same Luna PED that you used for SafeNet Network HSM. </pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Please hit &lt;enter&gt; when you are ready to proceed. <br /><br />Luna PED operation required to login to token - use token Security Officer (blue) PED key. <br />Luna PED operation required to create a partition - use User or Partition Owner (black) PED key.  <br />Luna PED operation required to login to user on token - use User or Partition Owner (black) PED key. <br />Luna PED operation required to generate cloning domain on the partition - use Domain (red) PED key. <br /></pre><pre class="listLevel1" xml:space="preserve">
+            <br />Object "1-User DES Key1" (handle 17) cloned to handle 11 on target  <br />Object "1-User DES Key2" (handle 18) cloned to handle 12 on target  <br />Object "1-User Public RSA Key1-512" (handle 19) cloned to handle 13 on target  <br />.</pre><pre class="listLevel1" xml:space="preserve">.</pre><pre class="listLevel1" xml:space="preserve">.</pre><pre class="listLevel1" xml:space="preserve">Object "1-User ARIA Key3" (handle 124) cloned to handle 118 on target  <br />Object "1-User ARIA Key4" (handle 125) cloned to handle 119 on target  <br />Object "1-User ARIA Key5" (handle 126) cloned to handle 120 on target  <br />'partition backup' successful.<br /><br />Command Result : 0 (Success)<br />[myluna] lunash:&gt; </pre>
+        <p class="listLevel1" xml:space="preserve">
+            <br /></p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Use the <b>token backup show</b> command to verify the backup:</p><pre class="listLevel1" xml:space="preserve">lunash:&gt; token backup show -serial 667788<br style="mc-tag-and-class: ;" />Token Details: &#160;<br style="mc-tag-and-class: ;" />============ <br style="mc-tag-and-class: ;" />Token Label: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;BackupHSM &#160;<br style="mc-tag-and-class: ;" />Serial #: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;700179 &#160;<br style="mc-tag-and-class: ;" />Firmware: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;6.22.0 &#160;<br style="mc-tag-and-class: ;" />Hardware Model: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SafeNet USB HSM &#160;<br style="mc-tag-and-class: ;" />Authentication Method: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;PED keys &#160;<br style="mc-tag-and-class: ;" />Token Admin login status: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Logged In &#160;<br style="mc-tag-and-class: ;" />Token Admin login attempts left: &#160;3 before Token zeroization! <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />Partition Information: &#160;<br style="mc-tag-and-class: ;" />====================== <br style="mc-tag-and-class: ;" />Partitions licensed on token:     20 &#160;<br style="mc-tag-and-class: ;" />Partitions created on token: &#160;    1 <br style="mc-tag-and-class: ;" />---------------------- <br />Partition: 7000179008, &#160;&#160;&#160;&#160;    &#160;&#160;&#160;Name: bck1.<br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />Token Storage Information: &#160;<br style="mc-tag-and-class: ;" />========================== <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />Maximum Token Storage Space (Bytes):   16252928 &#160;<br style="mc-tag-and-class: ;" />Space In Use (Bytes): &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;  43616 &#160;<br style="mc-tag-and-class: ;" />Free Space Left (Bytes): &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;  16209312 &#160;<br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />License Information: &#160;<br style="mc-tag-and-class: ;" />==================== <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />621010355-000      621-010355-000 G5 Backup Device Base &#160;<br style="mc-tag-and-class: ;" />621000005-001      621-000005-001 Backup Device Partitions 20 &#160;<br style="mc-tag-and-class: ;" />621000006-001      621-000006-001 Backup Device Storage 15.5 MB &#160;<br style="mc-tag-and-class: ;" />621000007-001      621-000007-001 Backup Device Store MTK Split Externally &#160;<br style="mc-tag-and-class: ;" />621000008-001      621-000008-001 Backup Device Remote PED Enable <br style="mc-tag-and-class: ;" /><br style="mc-tag-and-class: ;" />Command result : 0 (Success) &#160;<br style="mc-tag-and-class: ;" />lunash:&gt;</pre>
+        <h5><a name="SA_partition_restore_procedure"></a>To restore a SafeNet Network HSM partition from a directly connected Backup HSM</h5>
+        <p>To restore the partition contents from the SafeNet Remote Backup Device to the same local SafeNet Network HSM, use the same setup described above, but use the <b>partition backup restore</b> command instead .</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Connect all the required components and open a terminal session to the SafeNet Network HSM appliance. See the following topics for details:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span><a href="../../configuration/appliance_config/open_a_connection.htm" class="MCXref xref">Open a Connection</a> in the <i>Configuration Guide</i></p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span><a href="backup_hsm_install_maintain.htm" class="MCXref xref">Backup  HSM Installation, Storage, and Maintenance</a>
+            <br />
+        </p>
+        <p class="listLevel1">As soon as the PED&#160;is connected to a powered HSM it starts up and defaults to Local mode with the <b>Awaiting command...</b> prompt.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Open a LunaSH session on the  SafeNet Network HSM appliance.  </p><pre class="listLevel1">login as: admin <br />admin@192.20.10.202's password: <br />Last login: Tue Feb 28 16:03:46 2012 from 192.16.153.111 <br /><br />SafeNet Network HSM 5.1.0-25 Command Line Shell - Copyright (c) 2001-2011 SafeNet, Inc. All rights reserved.  <br />[myluna] lunash:&gt;  <br /><br /></pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use the <b>partition restore</b> command to restore a partition:</p><pre class="listLevel1">[myluna] lunash:&gt;par restore -s 7000179 -tokenPar bk5 -par p1 -replace </pre><pre class="listLevel1">Please enter the password for the HSM partition:   <br />&gt; ******* <br /><br />  CAUTION:  Are you sure you wish to erase all objects in the          <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;partition named:              p1            <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Type 'proceed' to continue, or 'quit' to quit now.           <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&gt; proceed   <br />Warning:  You will need to attach Luna PED to the SafeNet Backup HSM to complete this operation. <br /> &#160;&#160;&#160;&#160;&#160;&#160;&#160;         You may use the same Luna PED that you used for SafeNet Network HSM.             <br /><br />Please hit &lt;enter&gt; when you are ready to proceed. <br /><br />Luna PED operation required to login to user on token - use User or Partition Owner (black) PED key.</pre><pre class="listLevel1" xml:space="preserve">Object "1-User DES Key1" (handle 17) cloned to handle 11 on target  <br />Object "1-User DES Key2" (handle 18) cloned to handle 12 on target  <br />Object "1-User Public RSA Key1-512" (handle 19) cloned to handle 13 on target  <br />.</pre><pre class="listLevel1" xml:space="preserve">.</pre><pre class="listLevel1" xml:space="preserve">.<br />Object "1-User ARIA Key3" (handle 124) cloned to handle 118 on target  <br />Object "1-User ARIA Key4" (handle 125) cloned to handle 119 on target  <br />Object "1-User ARIA Key5" (handle 126) cloned to handle 120 on target  <br />'partition restore' successful.<br /><br />Command Result : 0 (Success)<br />[myluna] lunash:&gt; &#160;</pre>
+        <h3><a name="Partitio2"></a>Partition Backup  and Restore Using a   Backup HSM Connected to a Local Client Workstation</h3>
+        <p>You can connect the Backup HSM&#160;to a SafeNet HSM client workstation  to backup any SafeNet Network HSM or SafeNet PCI partitions  that are visible as slots in LunaCM, as illustrated in the following figure:</p>
+        <p class="figureCaption" data-mc-autonum="Figure 2: "><span class="autonumber"><span>Figure 2: </span></span>Configuration for SafeNet Network HSM/PCIe partition backup/restore using a Backup HSM connected to a local client workstation</p>
+        <p>
+            <img src="../../Resources/Images/backup/local_backup_connect_client.png" />
+        </p>
+        <p>In this configuration, you connect the Backup HSM and SafeNet Remote PED, via USB, to your SafeNet HSM client workstation. The SafeNet Network HSM appliance is remote to the SafeNet HSM client workstation and is connected using NTLS. Any installed PCIe devices communicate with the SafeNet HSM client over the PCI bus. </p>
+        <p>Any partitions you want to backup must be registered with the SafeNet HSM client workstation, and be visible as slots in LunaCM. The Backup HSM most also be visible as a slot.</p>
+        <p>If you are backing up PED-authenticated partitions, you require a PED.  If you want to backup SafeNet Network HSM partitions, the PED must have remote capability (Remote PED). Remote PED uses the pedserver/pedclient processes running on the SafeNet HSM client workstation and on the SafeNet Network HSM appliance to provide remote PED services for the network-attached SafeNet Network HSM appliance. The PED provides authentication for all of the attached HSMs  (the USB-connected SafeNet Remote Backup HSM,  the NTLS-connected SafeNet Network HSM, and the PCI bus-connected SafeNet PCIe HSM). Every slot on the backup must have same domain (red PED Key) as the matching slot on the source HSMs.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you have Private Key Cloning switched 
+ off for the current partition, then the backup operation proceeds, but 
+ skips over any private keys, and clones only the permitted objects onto 
+ the Backup HSM. Similarly, if you restore from a token that includes 
+ private keys, but the target partition has Private Key Cloning disallowed, 
+ then all other objects are recovered to the partition, but the private 
+ keys are skipped during the operation.</p>
+        <h5>To backup an application partition to a Backup HSM connected to a SafeNet HSM client workstation</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Configure the remote PED, as described in <a href="../remote_ped/remote_ped.htm" class="MCXref xref">Remote PED</a>.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Start the LunaCM utility on the SafeNet HSM client workstation.</p><pre xml:space="preserve" class="listLevel1">C:\Program Files\SafeNet\LunaClient&gt;lunacm.exe
+
+LunaCM V2.3.3 - Copyright (c) 2006-2014 SafeNet, Inc.
+
+        Available HSM's:
+
+        Slot Id -&gt;              1
+        HSM Label -&gt;            SA52_P1
+        HSM Serial Number -&gt;    500409014
+        HSM Model -&gt;            LunaSA
+        HSM Firmware Version -&gt; 6.22.0
+        HSM Configuration -&gt;    SafeNet Network HSM Slot (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+     
+        Slot Id -&gt;              2
+        HSM Label -&gt;            BackupHSM Serial Number -&gt;    700101
+        HSM Model -&gt;            G5Backup
+        HSM Firmware Version -&gt; 6.22.0
+        HSM Configuration -&gt;    Remote Backup HSM (PED) Backup Device
+        HSM Status -&gt;           OK
+
+        Current Slot Id: 1
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use the <b>slot set</b> command to go to the slot you want to back up.</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; slot set slot 1
+
+        Current Slot Id: 1     (SafeNet Network HSM Slot 6.10.1 (PED) Signing With Cloning Mode)
+
+Command Result : No Error</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Establish that the HSM is listening for a SafeNet Remote PED. </p><pre xml:space="preserve" class="listLevel1">lunacm:&gt;ped get
+
+        HSM slot 1 listening to local PED (PED id=0).
+
+Command Result : No Error
+
+lunacm:&gt; ped connect ip 192.20.10.190
+
+Command Result : No Error
+
+lunacm:&gt; ped get
+
+        HSM slot 1 listening to remote PED (PED id=100).
+
+Command Result : No Error
+
+lunacm:&gt;</pre><pre xml:space="preserve" class="listLevel1">   </pre>
+        <p class="listLevel1">The SafeNet Network HSM&#160;is now listening for PED interaction via the  link between PEDclient on the SafeNet Network HSM appliance and PEDserver on the workstation, and is not expecting a PED connected directly at the location of the SafeNet Network HSM.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Log into the partition in the  current slot. This is the partition that you want to back up.</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; role login -name "Crypto Officer"
+
+        Option -password was not supplied.  It is required.
+
+        Enter the password: *******
+
+        User is activated, PED is not required.
+
+Command Result : No Error
+
+lunacm:&gt; </pre><pre class="listLevel1">&#160;</pre>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Disconnect the logical PED&#160;connection from your source HSM (slot 1 in this example), and connect to the Backup HSM (slot 2 in this example). The PED remains physically connected by USB cable to the SafeNet HSM client workstation, and remains in Remote mode - you are merely changing slots that are in conversation with that PED. </p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>First,  tell the SafeNet Network HSM to disconnect from Remote PED. </p><pre class="listLevel2" xml:space="preserve">
+lunacm:&gt; ped disconnect
+
+        Are you sure you wish to disconnect the remote ped?
+
+        Type 'proceed' to continue, or 'quit' to quit now -&gt; proceed
+
+Command Result : No Error
+
+</pre>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>Then tell the Backup HSM to connect to Remote PED (it makes no difference that the PED and the Remote Backup HSM are USB-connected to the same workstation/laptop; when use of "Remote PED"&#160;is invoked by command "ped connect" and verified by "ped get", all HSM-PED&#160;interaction takes place between "pedclient" running on that workstation and "pedserver", also running on that workstation).</p><pre xml:space="preserve" class="listLevel2">
+lunacm:&gt; ped connect ip 192.20.10.189 -slot 2
+
+Command Result : No Error
+
+lunacm:&gt; ped get -slot 2
+
+        HSM slot 2 listening to remote PED (PED id=100).
+
+Command Result : No Error
+
+</pre>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Use the <b>partition archive backup</b> command to perform the backup from the current slot (slot 1 in the example, see above) to the partition that you designate on the Backup HSM. Now that the Backup HSM is listening correctly for a PED, the target partition can be created, with PED action for the authentication.</p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; partition archive backup -slot 2 -par SAbck1
+
+        Logging in as the SO on slot 2.
+        Please attend to the PED.
+
+        Creating partition SAbck1 on slot 2.
+        Please attend to the PED.
+
+        Logging into the container SAbck1 on slot 2 as the user.
+        Please attend to the PED.
+
+        Creating Domain for the partition SAbck1 on slot 2.
+        Please attend to the PED.
+
+        Verifying that all objects can be backed up...
+        85 objects will be backed up.
+
+        Backing up objects...
+        Cloned object 99 to partition SAbck1 (new handle 19).
+        Cloned object 33 to partition SAbck1 (new handle 20).
+        Cloned object 108 to partition SAbck1 (new handle 23).
+        Cloned object 134 to partition SAbck1 (new handle 24).
+        Cloned object 83 to partition SAbck1 (new handle 25).
+        Cloned object 117 to partition SAbck1 (new handle 26).
+        Cloned object 126 to partition SAbck1 (new handle 27).
+        Cloned object 65 to partition SAbck1 (new handle 28).
+        Cloned object 140 to partition SAbck1 (new handle 29).
+        Cloned object 131 to partition SAbck1 (new handle 30).
+        Cloned object 94 to partition SAbck1 (new handle 31).
+        Cloned object 109 to partition SAbck1 (new handle 35).
+        Cloned object 66 to partition SAbck1 (new handle 36).
+        Cloned object 123 to partition SAbck1 (new handle 39).
+        Cloned object 74 to partition SAbck1 (new handle 40).
+        Cloned object 50 to partition SAbck1 (new handle 44).
+        Cloned object 43 to partition SAbck1 (new handle 45).
+        Cloned object 52 to partition SAbck1 (new handle 46).
+        Cloned object 124 to partition SAbck1 (new handle 47).
+        Cloned object 115 to partition SAbck1 (new handle 48).
+        
+        Backup Complete.
+
+        20 objects have been backed up to partition SAbck1
+        on slot 2.
+
+Command Result : No Error</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Backup is complete, and can be verified if you like. </p>
+        <h5>To restore an application partition from a Backup HSM connected to a SafeNet HSM client workstation</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Create a target partition for the restore operation on the HSM&#160;you are restoring to, if it does not already exist, and register the partition with the SafeNet HSM client workstation so that it is visible as a slot in LunaCM.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Start the LunaCM utility on the SafeNet HSM client workstation.</p><pre xml:space="preserve" class="listLevel1">C:\Program Files\SafeNet\LunaClient&gt;lunacm.exe
+
+LunaCM V2.3.3 - Copyright (c) 2006-2014 SafeNet, Inc.
+
+        Available HSM's:
+
+        Slot Id -&gt;              1
+        HSM Label -&gt;            SA52_P1
+        HSM Serial Number -&gt;    500409014
+        HSM Model -&gt;            LunaSA
+        HSM Firmware Version -&gt; 6.22.0
+        HSM Configuration -&gt;    SafeNet Network HSM Slot (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+     
+        Slot Id -&gt;              2
+        HSM Label -&gt;            BackupHSM Serial Number -&gt;    700101
+        HSM Model -&gt;            G5Backup
+        HSM Firmware Version -&gt; 6.22.0
+        HSM Configuration -&gt;    Remote Backup HSM (PED) Backup Device
+        HSM Status -&gt;           OK
+
+        Current Slot Id: 1
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use the <b>slot set</b> command to go to the slot you want to restore to.</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; slot set slot 1
+
+        Current Slot Id: 1     (SafeNet Network HSM Slot 6.22.0 (PED) Signing With Cloning Mode)
+
+Command Result : No Error
+
+</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Open a remote PED session to the SafeNet Network HSM you are restoring to. </p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; ped connect ip 192.20.10.190
+
+Command Result : No Error
+
+lunacm:&gt; ped get
+
+        HSM slot 1 listening to remote PED (PED id=100).
+
+Command Result : No Error
+
+lunacm:&gt;</pre><pre xml:space="preserve" class="listLevel1">   </pre>
+        <p class="listLevel1">The SafeNet Network HSM&#160;is now listening for PED interaction via the  link between PEDclient on the SafeNet Network HSM appliance and PEDserver on the workstation, and is not expecting a PED connected directly at the location of the SafeNet Network HSM.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Log into the partition in the  current slot. This is the partition that you want to restore to.</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; role login -name "Crypto Officer"
+
+        Option -password was not supplied.  It is required.
+
+        Enter the password: *******
+
+        User is activated, PED is not required.
+
+Command Result : No Error
+
+lunacm:&gt; </pre><pre xml:space="preserve" class="listLevel2">
+
+</pre>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Use the <b>partition archive restore</b> command restore the partition from the Backup HSM&#160;to the current slot, adding to, or replacing, the current partition contents.</p><pre class="listLevel1" xml:space="preserve">partition archive restore -slot &lt;backup-hsm-slotnumber&gt; -partition LunaSAPartitionname -password ClientPassword -replace
+</pre>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>In the command above, you could 
+ have used&#160;<b>-add</b> instead of <b>-replace</b>. Adding might result in unwanted behaviors, such as having two keys 
+ with the same label, if one existed in the HSM Partition and one on the 
+ backup token. The two would be assigned different handles, however.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

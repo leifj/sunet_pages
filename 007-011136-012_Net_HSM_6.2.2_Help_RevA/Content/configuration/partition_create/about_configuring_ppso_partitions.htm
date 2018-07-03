@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|Configuration without One-step NTLS|[Step 5] Create Application Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>About Configuring an Application Partition with Its Own SO &#160;</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../administration/appendix-a_config/appendix-a_old_config_steps.htm">Configuration without One-step NTLS</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition_create.htm">[Step 5] Create Application Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">About Configuring an Application Partition with Its Own SO &#160;</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>About Configuring an Application Partition with Its Own SO &#160;</h2>
+        <p>When you are ready to create and configure an application partition, it is assumed that you have already initialized and configured the HSM that is to contain the application partition.</p>
+        <p>SafeNet HSMs have two types of partition spaces:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HSM administrative partition &#160;- where HSM-wide policies are set and changed, application partitions are created/destroyed, HSM firmware and capabilities are updated, etc. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Application partition - where cryptographic operations are performed by your applications</p>
+        <p>Starting with SafeNet HSM firmware version 6.22.0, the ability to have an independent Security Officer per partition was implemented, which results in some changes from previous handling. To distinguish the different styles of partition we will call them "legacy" and "PPSO" application partitions. The options, when running SafeNet HSM Client software at the most current release are:</p>
+        <p>&#160;</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 115px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 180px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 429px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 227px;" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">HSM firmware <br />version &#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">PPSO Capability applied? &#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Ownership/oversight of partition (type) &#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Commands visible in lunacm when this HSM partition is the currently selected slot &#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">&lt;6.22.0</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">cannot &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>legacy (see note 1) - </p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HSM SO has full ownership <br />of application partition and <br />controls the application <br />throughout its life &#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">All commands are as they were <br />before SafeNet HSM release 6.0 <br />and firmware 6.22.0 &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">&gt;=6.22</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">no &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>legacy option (see note 2) - </p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HSM SO has full ownership <br />of application partition and <br />controls the application <br />throughout its life &#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">lunacm HSM and partition login <br />commands and others are replaced <br />by "role" commands; some other <br />commands have new <br />options/parameters &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">&gt;=6.22</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">yes &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>PPSO option (see note 2)  - </p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>an application partition has its own SO <br />(which is the optional newer way to <br />configure a new application partition) &#160;</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the HSM SO can create or delete the <br />partition, but has no visibility or control <br />in the partition through its life; <br />complete separation of roles &#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">lunacm HSM and partition login <br />commands, and others, are replaced <br />by "role" commands; some other <br />commands have new <br />options/parameters &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="4">Note 1 - No choice. With older firmware, only legacy-style partition management is available.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyA-Column1-Body1" colspan="4">Note 2 - With firmware 6.22.0 and newer, you can choose to create a partition to be owned/controlled by the HSM SO (legacy), or you can choose to create a partition to be owned and managed by its own SO (the PPSO option, invoked when you specify "slot" while creating a partition in lunacm, or when you specify "haspso" while creating a partition in lunash).</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <p>To summarize, until firmware 6.22 (or newer) version of SafeNet HSM receives FIPS validation, and becomes the default version shipping from the factory, you could have a new SafeNet HSM, or one that you already owned, at a firmware version older than 6.22.0. If you install newer SafeNet HSM Client, the included lunacm utility version is capable of supporting both the older command set or the newer command set, depending on the HSM firmware of the currently selected slot. That is, if you have multiple SafeNet HSMs in, or connected to, your SafeNet HSM Client host, which could include: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>internally installed SafeNet PCIe HSM, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>USB-connected SafeNet USB HSM, or </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>network (NTLS- or STC-connected) SafeNet Network HSM partitions, </p>
+        <p>you could see different available command sets as you switch slots in lunacm, depending on the firmware version in the currently selected slot.</p>
+        <p>The high-level steps are summarized below, to go from a new or factory reset HSM to having a configured application partition, ready for keys and objects and cryptographic operations. Normally, each set of actions would be performed by a different person with different responsibilities. </p>
+        <h4 data-mc-conditions="Default.SA">As the HSM Administrator or SO</h4>
+        <p class="ol1" data-mc-autonum="1." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">1.</span></span>Complete the certificate exchanges and registrations necessary to create the secure link between Client and application partitions on the appliance.</p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">2.</span></span>Initialize the HSM; create the SO role and the cloning domain for the HSM's administrative partition (see <a href="../../administration/initialization/hsm_initialization_and_zeroization.htm" class="MCXref xref">HSM Initialization and Zeroization</a>). &#160;</p>
+        <p class="ol1" data-mc-autonum="3." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">3.</span></span>Log into the administrative partition, as SO. &#160;</p>
+        <p class="ol1" data-mc-autonum="4." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">4.</span></span>Create the empty application partition.</p>
+        <h4>As the application partition Security Officer &#160;</h4>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Select/set the slot to the newly created application partition. &#160;</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Initialize the SO role and the cloning domain for the application partition. &#160;</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Log into the application partition as SO. &#160;</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Initialize the Crypto Officer role. &#160;</p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Log out.</p>
+        <h4>As the application partition Crypto Officer</h4>
+        <p class="ol1" data-mc-autonum="10."><span class="autonumber"><span class="ol1Number">10.</span></span>Select/set the slot to  the application partition. &#160;</p>
+        <p class="ol1" data-mc-autonum="11."><span class="autonumber"><span class="ol1Number">11.</span></span>Log into the application partition as Crypto Officer. &#160;</p>
+        <p class="ol1" data-mc-autonum="12."><span class="autonumber"><span class="ol1Number">12.</span></span>Initialize the Crypto User role.</p>
+        <h3>Next step</h3>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Before you begin configuring and initializing a PED-authenticated SafeNet HSM, we strongly urge that you familiarize yourself with the pages at <a href="../../administration/ped_auth/ped_auth.htm" class="MCXref xref">PED Authentication</a>. <br /><br />Your responses to PED prompts are required during many of the steps. Most of the PED-prompt sequences require decisions that have serious implications for ongoing use of your HSM. PED operations are subject to timeout restrictions for security reasons, meaning that, if your selections and actions are not prompt, the PED&#160;will quit the current sequence. In the event of a timeout, you must reissue the HSM command that called the PED.</p>
+        <p data-mc-conditions="Default.SA">For PED-authenticated SafeNet Network HSM, the first step is to initialize the HSM; see <a href="hsm-so_action_to_config_appliance_ped-ppso_partition_1a.htm" class="MCXref xref">HSM  SO Configures PED-authenticated SafeNet Network HSM Partition with SO </a>. &#160; &#160;&#160;</p>
+        <p data-mc-conditions="Default.SA">For Password-authenticated SafeNet Network HSM, the first step is to initialize the HSM; see <a href="hsm-so_action_to_config_appliance_pw-ppso_partition_1a.htm" class="MCXref xref">HSM  SO Configures SafeNet Network HSM Password-authenticated Partition with SO </a>. &#160; &#160;&#160;</p>
+        <p> &#160;&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

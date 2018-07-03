@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|PED (Trusted Path) Authentication ">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using the PED</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ped_auth.htm">PED (Trusted Path) Authentication </a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Using the PED</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Using the PED</h2>
+        <p>A SafeNet PED is required  to authenticate to an HSM that requires PED (Trusted 
+ Path) Authentication.</p>
+        <p>The requirement for Trusted Path Authentication, as opposed to Password 
+ Authentication, is part of the specific model of HSM, as configured 
+ at the factory (the one exception is the SafeNet Backup HSM, which configures itself, at backup time, as either Password-authenticated or PED-authenticated, depending on the type of primary HSM it is backing up).</p>
+        <p class="figureCaption" data-mc-autonum="Figure 1: "><span class="autonumber"><span>Figure 1: </span></span> PED (2.x) front view &#160;</p>
+        <p>
+            <br /> <img src="../../Resources/Images/ped_ill/lunaped2_front1.png" style="border: none;float: none;border-style: none;border-style: none;" border="0" /> <br /><br /></p>
+        <p class="figureCaption" data-mc-autonum="Figure 2: "><span class="autonumber"><span>Figure 2: </span></span>PED top view </p>
+        <p>
+            <br />
+            <img src="../../Resources/Images/ped_ill/lunaped2_top.png" style="border: none;width: 421px;height: 117px;float: none;border-style: none;border-style: none;" width="421" height="117" border="0" /> </p>
+        <h3>&#160;</h3>
+        <h3>&#160;</h3>
+        <h3>Interaction with Other Operations</h3>
+        <p>HSM firmware version 6.24.0 introduces a change in how ongoing PED&#160;operations interact with cryptographic operations requested simultaneously.</p>
+        <h5>Behavior before HSM&#160;firmware version 6.24.0</h5>
+        <p>PED&#160;operations interrupt other operations occuring at the same time on the HSM. The HSM waits for a PED&#160;operation to complete before processing requests for other operations. This can cause delays in production.</p>
+        <h5>Behavior after HSM&#160;firmware version 6.24.0</h5>
+        <p>PED&#160;operations no longer interrupt other operations occurring at the same time on the HSM in most cases. The most beneficial effect is that PED operations acting on a partition no longer block operations occurring on other partitions on the same HSM. For example, you can now create new partitions or backups while running cryptographic operations on a separate partition. In this way, you can perform maintenance and configuration on your HSM without interrupting important client applications. PED&#160;operations might still block cryptographic operations occurring on the same partition, especially high volumes of write object requests. </p>
+        <h3>Versions</h3>
+        <p>PEDs 
+ are generally unit-interchangeable (with limitations within the version range,  PED 
+ 2.x, see table), and more specifically interchangeable within the same PED-firmware version. That is, if a SafeNet PED&#160;with a given firmware  supports your current operation with your current HSM version, then any SafeNet PED with the same, or newer, firmware can replace it. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Exception - If you are using the Remote PED feature, only another PED with Remote capability can support that operation, regardless of firmware version.</p>
+        <p>Newer PED firmware versions are compatible with HSM versions shown in their row in the table, and backward compatible with any earlier HSM that requires a version 2.x PED.</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 156px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 100px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 128px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 94px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 87px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 93px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 310px;" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">PED firmware <br />version</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Local PED <br />operation and <br />Remote PED <br />capable</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>PED-mediated <br />MofN per secret <br />(with HSM f/w 6.x) <br />also SRK (purple <br />PED Key) and <br />Secure Transport <br />Mode &#160;</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Field <br />update-able </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Audit User <br />(white PED <br />Key)</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Small Form-<br />factor Backup</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1"> PED version is <br />feature-compatible <br />with SafeNet HSM <br />firmware version(s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">2.2.0 </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SafeNet HSM 4, f/w 4.x</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">2.4.0-3 </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">To 2.5.0 </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SafeNet 5.0, f/w 6.0.8 <br />SafeNet 5.1.x, f/w 6.2.1<br /></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">2.5.0-3 </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">To 2.6.0 </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Yes </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">No </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SafeNet 5.2, f/w 6.10.2 <br />SafeNet 5.3.1 f/w 6.20.0 </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">2.6.0-6 </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Yes </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Yes </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Yes </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Yes </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Yes </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>SafeNet 5.4, f/w 6.21.0<br />SafeNet 6.0, f/w 6.22.0 </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>PED firmware 2.2.0 is mentioned in the table above because many customers who first bought SafeNet HSM 5.0 were already in possession of older PEDs since they already had earlier SafeNet HSMs (f/w 4.x). SafeNet HSM 5.0 needed PED f/w 2.4.0-3 to access all functions. </p>
+        <p>PED firmware 2.5.0-3 or newer is suitable for all local and remote authentication and is required for some PED-mediated features added since SafeNet HSM 5.0.  </p>
+        <p>PED firmware 2.6.0-x, available as a field upgrade or on newly-purchased PEDs, supports SafeNet Small Form-Factor Backup - a completely separate function mediated by SafeNet PED, and using different USB tokens - and also supports all previous PED 2.x authentication functions. </p>
+        <h3>Authentication</h3>
+        <p>In this current discussion, we ignore SFF Backup, and focus on the HSM authentication function of SafeNet PED. The authentication 
+ information for your HSM roles is contained on the PED Key, 
+ and SafeNet PED is the device that provides the interface so that authentication 
+ data can pass between PED Key and HSM (see <a href="about_ped_keys.htm" class="MCXref xref">About PED Keys</a>).</p>
+        <p>
+            <img src="../../Resources/Images/ped/hardwarekey.png" style="border: none;float: none;border-style: none;border-style: none;" width="153px" height="81px" border="0" />
+        </p>
+        <p>The keypad on the PED is used to acknowledge prompts (on the PED&#160;screen) and to optionally input a "something you know" additional secret, called a PED PIN (see <a href="what_is_a_ped_pin.htm" class="MCXref xref">What is a PED PIN?</a>) to augment the "something you have" secret contained in the PED Key.</p>
+        <h3>Local and Remote</h3>
+        <p>A locally-connected PED is powered by its connection 
+ to the HSM. </p>
+        <p>
+            <img src="../../Resources/Images/ped_ill/lunaped2_top_mdsm_conn.png" style="border: none;float: none;border-style: none;border-style: none;" width="297px" height="122px" border="0" />
+        </p>
+        <p>That connection - directly between the PED and 
+ the HSM card inside the host - bypasses your computer bus and the 
+ computer bus of the HSM host (if separate). It is the only data path between the HSM 
+ and the PED and therefore is considered much more secure (trusted) than 
+ any authentication path that passes through the appliance's computer data 
+ paths. The Trusted Path cannot be monitored by any software (whether authorized 
+ by you or not) on your administrative or client computer. Also, because 
+ you use the PED Keypad to input the optional PED 
+ PIN password (to unlock the secret that, in turn, unlocks your 
+ HSM see <a href="what_is_a_ped_pin.htm" class="MCXref xref">What is a PED PIN?</a>), nothing is typed on a computer keyboard. No virus, trojan, spyware, 
+ remote-session software or other method can be used to acquire those secrets, 
+ because they never pass through the normal computer data pathways, never 
+ reside in computer memory or on disk.</p>
+        <p>With HSM appliances and host computers  often tucked away in server farms, which are frequently run as "lights-off" facilities with the minimum possible human intervention, the PED cannot always be conveniently connected directly to the HSM. Instead, a callback server arrangement (Remote PED) uses a SafeNet PED connected to a separate computer, at a convenient location, to serve PED interactions over a network connection. The connection is strongly secured and, like the direct connection, prevents unauthorized persons from gaining access to the authentication data. A Remote PED does not have the direct connection to an HSM to provide power; it uses a USB connection for data exchange, which might not provide sufficient stable power for operation. Therefore a PED&#160;used in Remote mode also needs a dedicated power connection via the provided power block.</p>
+        <p>For both local and remote PED use, the only way for another person to discover a PED PIN password while 
+ you are inputting it is if you allow that person to observe while you use 
+ the PED keypad.</p>
+        <h3>When Do I Need A PED?</h3>
+        <p>You need to use the PED whenever you perform any action with the 
+HSM that causes it to look for authentication (with some exceptions, 
+ see below). For example, using the shell (lunash on SafeNet Network HSM) or Lunacm (for any SafeNet HSM) you might login as Security 
+ Officer, login as User, or initialize the HSM. When the HSM receives such 
+ a command, it requests the appropriate data from the PED - or in 
+ the case of initialization, the HSM might send data to the PED.</p>
+        <p>Therefore, you should have the PED connected and in its ready state 
+ ("Awaiting command...") when you issue a command that invokes 
+ the PED. One MDSM connector attaches to the matching connector on the 
+ HSM or appliance, and the other MDSM (Micro-D Sub-Miniature) connector attaches 
+ to its matching connector on the top of the PED (tighten the connector 
+ screws if you intend to leave the PED connected; this makes the most reliable 
+ connection and provides strain relief to the cable-connector junction 
+ during handling of the device).</p>
+        <p>If you are using the Activation/autoActivation feature then, after authentication, 
+ the data is cached on the HSM, where it remains until you deactivate or 
+ you remove power to the HSM. In that case, once the authentication is 
+ performed, you can disconnect the PED and store it until the next 
+ time it is required.</p>
+        <p>If you are not using activation, then authentication data is not 
+ cached and every time you or your client application needs access to the 
+ HSM, the HSM will look to the PED, which must remain connected. </p>
+        <p>For Remote PED connections, the MDSM connector is not used, and power and USB connections are used instead.</p>
+        <h3>What Do I Do?</h3>
+        <p>As soon as it receives power from a connection 
+ to a powered HSM, or from the supplied power block if you are using Remote PED, the  PED performs its start-up and self-test 
+ routines and then goes to its normal operating  mode, displaying 
+ the prompt "Awaiting command...". &#160;The 
+ PED is ready for use in Local mode, by default.</p>
+        <p>There are three things that you can do with the PED at this point:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Wait for a prompt, which 
+ results when a program has caused the HSM to request authentication</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Change to the Remote Mode (which expects encrypted commands from a computer USB connection, where you would be running Pedserver, rather than from a direct PED-HSM connection) &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Perform standalone PED 
+ operations.</p>
+        <p>To perform prompted actions, just do what is asked on the PED screen. 
+ Normally the prompts are:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Insert a PED Key </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Press "YES", 
+ "NO" or "ENTER" on the keypad</p>
+        <p>Insert and remove 
+ appropriate PED Keys, type numeric passwords (PED PINs) when requested, and so on. The particular 
+ sequence depends upon the operation that the HSM needs at the time, which 
+ in turn depends on the command-line administrative operations that you 
+ are performing (with lunacm, lunadiag, multitoken, or other SafeNet utilities), 
+ or operations triggered by your applications.</p>
+        <p>
+            <img src="../../Resources/Images/ped_ill/lunaped2_top_key_conn.png" style="border: none;float: none;border-style: none;border-style: none;" width="337px" height="119px" border="0" />
+        </p>
+        <p>The operations  <a href="../../configuration/hsm_init/initializing_a_luna_hsm_ped-version.htm" class="MCXref xref">Initializing a PED-Authenticated HSM</a> and <a href="../../configuration/partition_create/prepare_to_create_a_partition_ped.htm" class="MCXref xref">Prepare to Create a Partition (PED Authenticated)</a>  are described elsewhere in this documentation. </p>
+        <p data-mc-conditions="Default.SA">As a networked HSM appliance, your SafeNet Network HSM is expected to perform 
+ large volumes of client-requested cryptographic operations without human 
+ intervention. &#160;Therefore, 
+ in normal practice, you would perform initial configuration operations 
+ one time before placing the unit in service, then perform only monitoring 
+ and occasional maintenance thereafter. See the table below for a simple 
+ breakdown of the normal tasks and if/how the PED and PED Keys might 
+ apply.</p>
+        <table style="border-spacing: 0px;border-spacing: 0px;mc-table-style: url('../../Resources/TableStyles/Page.css');width: 100%;" cellspacing="0" class="TableStyle-Page" data-mc-conditions="Default.SA">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1" data-mc-conditions="Default.SA">Situation</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1" data-mc-conditions="Default.SA">Needs</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1" data-mc-conditions="Default.SA">Action with PED and PED 
+ Keys</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">Setup/configuration</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">Appliance admin password (only for SafeNet Network HSM), blue, red and black PED Keys and PED.</p>
+                        <p data-mc-conditions="Default.SA">Network connection to the appliance from your administrative PC, and 
+ preferably also a local serial connection.<br /><br />Optionally a purple PED Key, if you or someone invoked Secure Transport Mode, and an orange PED Key if an RPK was already created, and you are performing these actions remotely.</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">You perform the HSM initialization, create Partition Groups, set up 
+ a redundant, load-sharing HA group with other SafeNet HSM appliance(s). This 
+ is the kind of chore you must perform before first putting the unit into 
+ "production", and then might never need to do again. The PED 
+ Keys are required at several stages, as well as the PED.</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">Occasional Maintenance of HSM</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">Appliance admin password, blue and black PED Keys, possibly the red 
+ if you need to initialize a new cluster member, and the PED.</p>
+                        <p data-mc-conditions="Default.SA">Network connection to the appliance.</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">Add and remove HA-group members, modify number and assignment of Partitions/Groups, 
+ enable and disable... you might need some or all PED Keys for authentication, 
+ depending on the activity.</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td colspan="1" rowspan="1" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">Occasional Maintenance of appliance (non-HSM part)</p>
+                    </td>
+                    <td colspan="1" rowspan="1" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">Appliance admin password</p>
+                    </td>
+                    <td colspan="1" rowspan="1" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">None. You just login as appliance admin and perform any needed task 
+ related to network settings, logging, snmp, or other non-HSM chores. No 
+ PED Key or PED use is needed when you are not logging into the HSM, 
+ within the appliance.</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td colspan="1" rowspan="1" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">Client access to their assigned cluster partitions</p>
+                    </td>
+                    <td colspan="1" rowspan="1" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">Clients need their own authentication that is set up when clients are 
+ registered; no PED Key or PED required. </p>
+                        <p data-mc-conditions="Default.SA">Network connection from the Client(s) - which, depending on your application, 
+ might be other servers serving further downstream clients, or might be 
+ end-user Client computers.</p>
+                    </td>
+                    <td colspan="1" rowspan="1" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">None. You would normally have activated/auto-activated the HA-group members 
+ (in other sections of this table), and put the PED and PED Keys away in 
+ safe storage. They aren't needed in ongoing operation.</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">PED Key administration</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">A PED and whichever PED Keys you wish.</p>
+                        <p data-mc-conditions="Default.SA">You can connect to any SafeNet HSM that has the proper connector 
+ - this is to power the PED only. Alternatively, you can use the PED power supply kit provided with Remote PED, and not need any HSM connection.</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p data-mc-conditions="Default.SA">While you can perform some PED Key admin during HSM operations (mentioned 
+ elsewhere), you can also just power up the PED, go to Admin mode 
+ (instead of the default "Local PED" mode), and perform actions like 
+ creating duplicates of your existing, imprinted PED Keys. No HSM access 
+ is required. See the next section on this page (below) for more detail.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Standalone or local or off-line PED operations</h3>
+        <p>You can perform some operations on PED Keys without going through the 
+ HSM.</p>
+        <h5>To perform standalone operations:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Press the "&lt;" 
+ key to exit from  Local PED mode.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Press "4" to enter Admin mode.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>In Admin mode, 
+ options are 1 PED Key or 7 Software Update. (The software update function is 
+ rarely used and requires that you be sent a PED software file from SafeNet, 
+ along with directions about how to use it. Therefore, we'll assume that 
+ you are selecting "1 PED Key", which brings the PED to PED Key 
+ mode.) <br />Press "1".</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>To perform an 
+ operation on a particular PED Key, insert that PED Key into the PED Key 
+ connector on top of the PED.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>PED Key mode 
+ has an option "1" to login to that PED Key, which applies to 
+ models other than iKey 1000 PED Keys - just press "1" to get 
+ to the next menu, if you are using iKey 1000 PED Keys, which do not need login.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>At the PED Key 
+ Mode menu you have options to Login (which 
+ you have just done, but the prompt is available in case you might wish 
+ to login to a different PED Key) 
+
+, 
+ Logout, or Duplicate the PED Key. Only the "Duplicate" option 
+ is meaningful for your iKey 1000 PED Key. To <span style="font-weight: bold;">duplicate</span> 
+ the contents of the currently connected  PED Key to another (blank 
+ or re-used) PED Key, press "7" on the PED keypad.</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>When prompted, insert a blank 
+ target PED Key, or a non-blank whose data is no longer needed, and press 
+ ENTER.</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>If data already 
+ exists on the target PED Key, you are warned and required to press YES 
+ two times, to confirm that you really do wish to overwrite whatever is 
+ on the PED Key that is currently connected to the PED. <br />If the source PED Key had an optional PED PIN assigned, then that PED 
+ PIN is automatically applied to the duplicate during this process.</p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Remove the newly 
+ imprinted PED Key and press ENTER. The PED goes back to "PED Key 
+ mode" awaiting further commands. If you wish to duplicate another 
+ PED Key, repeat the above steps. Otherwise, press "&lt;" to 
+ go back to "Admin mode", and press "&lt;" again to 
+ reach the main menu, and finally press "1" to resume "SCP 
+ mode", which is the normal operating mode of the PED, awaiting 
+ commands from the connected HSM.</p>
+        <p class="ol1" data-mc-autonum="10."><span class="autonumber"><span class="ol1Number">10.</span></span>Identify the 
+ new PED Key with a tag or other marker, and record a PED PIN (if any) 
+ in secure fashion, according to your security policies.</p>
+        <h3>EXCEPTION: Secure Recovery</h3>
+        <p>The PED will not perform a standalone copy operation (that is, without an HSM) of a purple PED Key. This is a security feature. You can copy a purple PED Key (just like any other PED&#160;Key for any other HSM&#160;role or function) during an imprinting operation controlled by a SafeNet HSM. Because purple PED Keys are specific to a single HSM, no other HSM can share a purple key or make a copy. The PED refusal to make standalone copies of purple keys is just an additional barrier to anyone wanting to attack an HSM that has been placed in Secure Transport Mode.</p>
+        <h3>EXCEPTION: Remote PED</h3>
+        <p>The Remote PED 2 functions as described earlier, when it is in Local or Admin mode. However, when it is placed in Remote mode, it is capable of setting up a secure connection, via a specially-configured computer workstation, to a remotely located HSM. The remote functionality is described separately at <a href="../remote_ped/about_remote_ped.htm" class="MCXref xref">About Remote PED</a>. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

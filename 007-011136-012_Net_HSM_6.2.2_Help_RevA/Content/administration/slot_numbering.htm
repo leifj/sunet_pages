@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Slot Numbering and Behavior</title>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Slot Numbering</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter" data-mc-autonum=" &#160;&#160;"><span class="autonumber"><span> &#160;&#160;</span></span>
+            <br />Slot Numbering and Behavior</h1>
+        <p>Administrative partitions and application partitions are identified as PKCS#11 cryptographic slots in SafeNet utilities, such as LunaCM and multitoken, and for applications that use the SafeNet library. </p>
+        <h2>Order of Occurrence for Different SafeNet HSMs</h2>
+        <p>A host computer with SafeNet HSM Client software and SafeNet libraries installed can have SafeNet HSMs connected in any of three ways:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>PCIe embedded/inserted SafeNet PCIe HSM card (one or multiple HSMs installed - administrative partitions and application partitions are shown separately if HSM firmware is version 6.22.0 or newer) &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>USB-connected SafeNet USB HSMs (one or multiple - administrative partitions and application partitions are shown separately  if HSM firmware is version 6.22.0 or newer) </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SafeNet Network HSM application partitions(<b style="color: #ffa500; font-size: 12pt;">*</b>), registered and connected via NTLS or via STC. </p>
+        <p>Any connected HSM partitions are shown as numbered slots. Slots are numbered from zero or from one, depending on configuration settings (see <a href="#Settingsforslotorder" class="MCXref xref selected">Settings Affecting Slot Order</a>, below), and on the firmware version of the HSM(s). </p>
+        <p>(<b style="font-size: 12pt; color: #ffa500;">*</b>One or multiple application partitions. Administrative partitions on SafeNet Enterprise HSMs are not visible via lunacm and other client-side tools. Only registered, connected application partitions are visible, of which multiple-per-HSM, up to 100, can exist. That is, a remote SafeNet Network HSM might support 100 application partitions, but your application and lunacm might see only one or two or fifteen of them if those were the only ones that had established certificate-exchange NTLS links with the current Client computer.)</p>
+        <p>In lunacm, a slot list would normally show:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SafeNet Network HSM application partitions for which NTLS links are established with the current host, followed by </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SafeNet PCIe HSM cards, followed by &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SafeNet USB HSMs</p>
+        <p>For SafeNet Network HSM, as seen from a client (via NTLS), only application partitions are visible. The HSM administrative partition of a remote SafeNet Network HSM is never seen by a SafeNet HSM Client. The SafeNet Network HSM slots are listed in the order they are polled, dictated by the entries in the [SafeNet Network HSM] section of the Crystoki.ini / chrystoki.conf file, like this: &#160;<br /></p><pre xml:space="preserve">ServerName00=192.20.17.200
+ServerPort00=1792
+ServerHtl00=0
+ServerName01=192.20.17.220
+ServerPort01=1793
+ServerHtl01= &#160;</pre>
+        <p>
+            <br />For SafeNet PCIe HSM and SafeNet USB HSM, if you have multiple of either HSM type connected on a single host, then the order in which they appear is the hardware slot number, as discovered by the host computer.</p>
+        <p>For SafeNet PCIe HSM and SafeNet USB HSM, the HSM administrative slot always appears immediately after the application partition. If no application partition has yet been created, a space is reserved for it, in the slot numbering. </p>
+        <h2><a name="Settingsforslotorder"></a>Settings Affecting Slot Order</h2>
+        <p>Settings in the [Presentation] section of the configuration file (Chrystoki.conf for UNIX/Linux, crystoki.ini for Windows) can affect the numbering that the API presents to SafeNet tools (like lunacm) or to your application.</p>
+        <p>[Presentation]<br />ShowUserSlots=&lt;slot&gt;(&lt;serialnumber&gt;)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Sets starting slot for the identified partition. &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Default, when ShowUserSlots is not specified, is that all available partitions are visible and appear in default order.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Can be applied, individually, to multiple partitions, by a single entry containing a comma-separated list like:<br />ShowUserSlots=1(351970018022),2(351970018021),3(351970018020),.... </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Affects only PPSO partitions (f/w 6.22.0 or newer) &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If multiple partitions on the same HSM are connected to the SafeNet HSM Client host computer, redirecting one of those partitions with ShowUserSlots= causes all the others to disappear from the slot list, unless they are also explicitly re-ordered by the same configuration setting. </p>
+        <p>ShowAdminTokens=yes</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Default is yes. Admin partitions of local HSMs are  visible in a slot listing. &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Remotely connected partitions (SafeNet Network HSM) are not affected by this setting, because NTLS connects only application partitions, not HSM SO (Admin) partitions to clients, so a SafeNet Network HSM SO administrative partition would never be visible in a client-side slot list, regardless.</p>
+        <p>ShowEmptySlots=1 </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Controls how C_GetSlotList - as used by lunacm slot list command, or ckdemo command 14, and by your PKCS#11 application - displays, or does not display unused potential slots, when the number of partitions on an HSM is not at the limit. &#160;</p>
+        <p>OneBaseSlotId=1</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Causes basic slot list to start at slot number 1 (one) instead of default 0 (zero).<br />(Any submitted number other than zero is treated as "1". Any letter or other non-numeric character is treated as "0".)<br /></p>
+        <h3>Effects of Settings on Slot List</h3>
+        <p>Say, for example, you have multiple HSMs connected to your host computer (or installed inside), with any combination of firmware 6.22.0 (and newer) or pre-6.22.0 firmware, and no explicit entries exist for slot order in the config file. The defaults prevail and the slot list would start at zero. </p>
+        <p>If you set OneBaseSlotId=1 in the configuration file, then the slot list starts at "1" instead of at "0". You could set this for personal preference, or according to how your application might expect slot numbering to occur (or if you have existing scripted solutions that depend on slot numbering starting at zero or starting at one). OneBaseSlotId affects the starting number for all slots, regardless of firmware. </p>
+        <p>If you set ShowUserSlots=20(17923506), then the identified token or HSM or application partition would appear at slot 20, regardless of the locations of other HSMs and partitions, but only if the indicated partition is firmware 6.22.0 or newer and is a PPSO partition.</p>
+        <h3>Effects of New Firmware on Slot Login State</h3>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Slots retain login state when current-slot focus changes. <br /><br />For HSMs with firmware earlier than version 6.22.0, when you used <b>slot set</b> to move the focus from an HSM partition or slot with logged in session(s), to another partition or slot, any sessions on the original slot were automatically closed (thus logged out). <br /><br />For HSMs with firmware version 6.22.0 of newer, you can use <b>slot set</b> to repeatedly shift focus among slots, and whatever login state was in force when you were previously focused on a slot is still in effect when you return to that slot. </p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

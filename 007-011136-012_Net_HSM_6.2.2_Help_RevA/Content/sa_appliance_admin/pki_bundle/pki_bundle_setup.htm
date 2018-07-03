@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|PKI Bundle">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Set Up and Use PKI-bundle Option</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="pki_bundle_intro.htm">PKI Bundle</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Set Up and Use PKI-bundle Option</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1>Set Up and Use PKI-bundle Option</h1>
+        <h2>What is PKI Bundle?</h2>
+        <p>The PKI Bundle option is the use of a SafeNet USB HSM, connected externally to a SafeNet Network HSM appliance, allowing the SafeNet USB HSM to share the networked capabilities of the SafeNet Network HSM. </p>
+        <p>It works like this: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>General online cryptographic operations are carried out via the SafeNet Network HSM and its on-board application partitions for constant, rapid access. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The SafeNet USB HSM (a single-slot or single-partition HSM) is pre-deployed (initialized) and then deployed as a slot/partition of the appliance, used for operations where high performance is not a requirement. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The PKI Bundle feature is supported with PED-authenticated SafeNet Network HSM, and the connected SafeNet USB HSM must also be PED-authenticated. PKI bundling with password-authenticated SafeNet Network HSM or SafeNet USB HSM is not supported.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The SafeNet Network HSM PKI Bundle option does not support Per-Partition Security Officer (PPSO). That is, a SafeNet USB HSM that is USB-connected to a SafeNet Network HSM appliance can be configured with any compatible firmware, including firmware version 6.22.0 (or newer), but cannot have the PPSO capability applied. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>SafeNet Network HSM PKI Bundle option <b>does not support</b> the use of SafeNet DOCK2 and removable PCMCIA token HSMs (SafeNet CA4).</p>
+        <h3>Prepare to use the PKI Bundle feature</h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>If you have not already done so, set up Remote PED between the SafeNet Network HSM appliance and an instance of PEDserver on a suitable host computer; see <a href="../../administration/remote_ped/remote_ped_config.htm" class="MCXref xref">Configuring Remote PED</a> &#160;&#160;&#160;&#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Have the SafeNet USB HSM USB-connected to the SafeNet Network HSM appliance, and ensure that the SafeNet USB HSM is imprinted with the desired orange PED Key, in order to perform the following actions using Remote PED. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use the <b>token pki predeploy</b> command to initialize the SafeNet USB HSM for use as a PKI device with SafeNet Network HSM. Type: </p><pre class="listLevel1" xml:space="preserve">lunash:&gt; token pki predeploy -label myPKI -serial 777199 
+
+Please type "proceed" to continue, anything else to abort: proceed
+********************************************
+*                                          *
+*     About to factory Reset the HSM       *
+*                                          *
+********************************************
+********************************************
+*                                          *
+*   About to initialize the HSM            *
+*   Please pay attention to the PED        *
+*                                          *
+******************************************** 
+Do you want to use FIPS-approved algorithms and key strengths only (yes or no)? yes 
+********************************************
+*                                          *
+*   About to change the HSM FIPS policy    *
+*   Please pay attention to the PED        *
+*                                          *
+********************************************
+********************************************
+*                                          *
+*   About to create a partition on the HSM *
+*   Please pay attention to the PED        *
+*                                          *
+********************************************
+********************************************
+*                                          *
+*   About to set the partition policies    *
+*   Please pay attention to the PED        *
+*                                          *
+********************************************
+********************************************
+*                                          *
+*   About to create a partition challenge  *
+*   and activate the partition.            *
+*   Please pay attention to the PED        *
+*   Please write down the PED secret!      *
+*                                          *
+******************************************** 
+
+Please enter the partition challenge:       
+
+        Please attend to the PED. 
+Success predeploying the token!! 
+
+Command Result : 0 (Success)
+lunash:&gt; </pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Use the <b>token pki deploy</b> command to make the pre-deployed SafeNet USB HSM available to the SafeNet Network HSM as a (removable) partition or PKCS#11 slot, for use by your applications. Type: </p><pre class="listLevel1" xml:space="preserve">lunash:&gt; token pki deploy -label myPKI -serial 777199 
+********************************************** 
+*                                            * 
+*   About to activate the token for testing. * 
+*   Please pay attention to the PED          * 
+*                                            * 
+********************************************** 
+
+Please enter the current user challenge: 
+
+Success deploying token myPKI with serial num 777199 ! 
+
+Command Result : 0 (Success)
+lunash:&gt;</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Use the <b>client assignpartition</b> command to assign the deployed HSM to the remote client, much as you assigned application partitions with the SafeNet Network HSM to their client(s). Type </p><pre class="listLevel1" xml:space="preserve">lunash:&gt;client assignPartition -client myPC -partition myPKI  
+
+'client assignPartition' successful. 
+
+Command Result : 0 (Success)&#160;
+lunash:&gt;</pre>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

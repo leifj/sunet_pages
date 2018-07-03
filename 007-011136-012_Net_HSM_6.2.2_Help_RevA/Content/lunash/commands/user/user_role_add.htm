@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|user|user role">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>user role add</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="user.htm">user</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">user role add</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">user role add</h2>
+        <p>A <i>user</i> is an identity on the SafeNet appliance. A user has a name. The name of a user:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>can be one of four standard/ built-in user names (the general administrative users 'admin', 'operator' or 'monitor', and the special 'audit' user whose only function is managing the auditing of the HSM), or </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>it can be any name that you wish to make up for operational convenience. </p>
+        <p>A <i>role</i> is a profile defining a level of access and authority with respect to the appliance. A role has a name that can be any of 'admin', 'operator',  'monitor' or 'audit'. Those role names happen to be the same as the names of the built-in, permanent user names. The access and authority conferred by a role do not change. </p>
+        <p>A named user - one that you create - can have one of the four roles assigned to it, which confers upon that user a specific access and authority on the appliance. A built-in user always has the same role as its name, but a named user can have any one of the four roles, which then defines what that named user can do on the appliance.</p>
+        <p>This <b>user role add</b> command adds a role to a named LunaSH administrative or auditor user that you have already created with the <b>user add</b> command.  This command is available only to the original ‘admin’ account, and cannot be used to modify the "built-in" 'admin', 'operator',  'monitor' or 'audit' accounts (whose names are permanently the same as their roles). </p>
+        <p>The purpose of this command in combination with the <b>user add</b> command is  to apply one of the possible roles to a new named user, which defines the scope of access and authority of that named user. </p>
+        <p>For example, in the sample below, we create a new user called "indigo" and give indigo the authority of "operator". Therefore, if you can log in as the built-in user named "operator", you can perform read-and-write operations with some limits, and if you can log in as user "indigo", you have exactly the same scope of operation and abilities/constraints as would someone logged in as user "operator". Of course, this assumes that the role is also enabled with <b>user enable</b> command. </p>
+        <p>Adding a role to a user displaces or overwrites any previous role held by that user. To see the role currently held by a user, run the <b>user role list -userName</b> &lt;username&gt; command. </p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>user role add -username</b> &lt;username&gt; <b>-role</b> &lt;rolename&gt;</p>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 90px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-username</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-u</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">       Specifies the  name of the existing named user account to which the role is being added.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-role</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-r</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1"> The name of the administrative role being added to that user. The available roles, in descending order of capability are admin, operator, and monitor, for general administration, and audit for managing HSM auditing functions.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">lunash:&gt;user role add -role operator -username indigo</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">User indigo was successfully modified.&#160;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success) </pre><pre xml:space="preserve">lunash:&gt;user role list -userName indigo
+
+
+Roles for user indigo:
+--------------------------------------------------
+operator
+--------------------------------------------------
+
+
+
+Command Result : 0 (Success)
+</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

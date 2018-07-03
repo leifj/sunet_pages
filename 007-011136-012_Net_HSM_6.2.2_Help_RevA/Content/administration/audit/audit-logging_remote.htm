@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Audit Logging">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Remote Audit Logging</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="audit.htm">Audit Logging</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Remote Audit Logging</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Remote Audit Logging</h2>
+        <p>With SafeNet Network HSM, the audit logs can be sent to one or more remote logging servers.  Either UDP or TCP protocol can be specified. The default is UDP and port 514. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You or your network administrator will need to adjust your firewall to pass this traffic (iptables).</p>
+        <h3>UDP Considerations</h3>
+        <p>If you are using the UDP protocol for logging, the following statements are required in the <b>/etc/rsyslog.conf</b> file:
+</p><pre class="listLevel1">$ModLoad imudp
+$InputUDPServerRun (PORT)
+	</pre>
+        <p>Possible approaches include the following:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>With templates:
+			</p><pre class="listLevel1" xml:space="preserve">$template AuditFile,"/var/log/luna/audit_remote.log"</pre><pre class="listLevel1" xml:space="preserve">if $syslogfacility-text == 'local3' then ?AuditFile;AuditFormat
+					</pre>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Without templates:</p><pre class="listLevel1">local3.* /var/log/audit.log;AuditFormat
+		</pre>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Dynamic filename:</p><pre class="listLevel1">$template DynFile,"/var/log/luna/%HOSTNAME%.log"
+if $syslogfacility-text == 'local3' then ?DynFile;AuditFormat </pre>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The important thing to remember is that the incoming logs go to <b>local3</b>, and the port/protocol that is set on the SafeNet appliance must be the same that is set on the server running rsyslog. </p>
+        <h3>Example using TCP</h3>
+        <p>The following example illustrates how to setup a remote Linux system to receive the audit logs using TCP:
+</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Register the remote Linux system IP address or hostname with the SafeNet Network HSM:</p><pre class="listLevel1" xml:space="preserve">
+lunash:&gt; audit remotehost add -host 172.20.9.160 -protocol tcp -port 1660</pre><pre class="listLevel1" xml:space="preserve">   </pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Modify the remote Linux system <b>/etc/rsyslog.conf</b> file to receive the audit logs:
+</p><pre class="listLevel1" xml:space="preserve">$ModLoad imtcp <br />$InputTCPServerRun 514 <br />$template AuditFormat,"%msg:F,94:2%\n" <br />#save log messages from SafeNet Network HSM
+local3.* /var/log/luna/audit.log;AuditFormat
+
+</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Modify the remote Linux system <b>/etc/sysconfig/rsyslog</b> file to receive the remote logs:</p><pre class="listLevel1"># Enables logging from remote machines. The listener will listen to the specified port.
+SYSLOGD_OPTIONS="-r -m 0" <br /> </pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Restart the <b>rsyslog</b> daemon on the remote Linux system:</p><pre class="listLevel1" xml:space="preserve"># service rsyslog restart 
+ </pre>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Monitor the audit logs on the remote Linux system:</p><pre xml:space="preserve" class="listLevel1">
+# tail -f /var/log/luna/audit.log  </pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

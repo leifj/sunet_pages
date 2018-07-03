@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Utilities Reference Guide|VTL">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>vtl haAdmin addMember </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Utilities Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="vtl.htm">VTL</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">vtl haAdmin addMember</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="kanchor598"></a><a name="kanchor599"></a>vtl haAdmin addMember </h2>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>This command is disabled. See lunacm command <a href="../../lunacm/commands/hagroup/hagroup_addmember.htm" class="MCXref xref">hagroup addmember</a>. </p>
+        <h3 class="ntoc">Name</h3>
+        <p>&#160;vtl haAdmin addMember &#160;&#160;- Add a member to an HA group</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code"><a name="kanchor600"></a>vtl haAdmin addMember -group &lt;groupNum&gt; -serialNum 
+ &lt;SN&gt; -password &lt;password&gt;</p>
+        <h3 class="ntoc">Description</h3>
+        <p>Add a member to a HA group that already exists on this client. If network 
+ replication is allowed on the partition, the new member will share the 
+ same HA key as the existing members in the group. </p>
+        <p>Use the command <span class="code">vtl haAdmin -synchronize</span> to replicate any objects on 
+ other group members to the new member (only works if network replication 
+ is allowed - if network replication is not allowed, use the <span class="code">lunash:&gt; partition 
+ backup</span> and <span class="code">partition restore</span> commands to manually copy objects among 
+ the HA group members.)</p>
+        <h3 class="ntoc">Options</h3>
+        <p><span style="font-weight: bold;">-group &lt;groupNum&gt;</span> &#160;[mandatory] 
+ The HA group's number. Group numbers can be found using the <b>vtl 
+ haAdmin -listGroups</b> command. </p>
+        <p><span style="font-weight: bold;">-serialNum &lt;SN&gt;</span> &#160;[mandatory] 
+ The serial number of the partition to add to the group. The partition's 
+ serial number can be obtained using 'partition -show' from the lunash, 
+ or by using C_GetTokenInfo via a PKCS#11 application such as ckdemo. All 
+ partitions have unique serial numbers.</p>
+        <p><span style="font-weight: bold;">-password &lt;password&gt;</span> &#160;[mandatory] 
+ The text password for the partitions. The password must be the same as 
+ other partitions in the group or an error will occur.</p>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">vtl haAdmin addMember -group testgroup -serial 66010002 -password testpassword<br />Member 66010002 successfully added to group testgroup. New group configuration is:<br />HA Group Label: &#160;testgroup<br />HA Group Number: &#160;165010001<br />HA Group Slot#: &#160;6<br />Synchronization: enabled<br />Group Members: &#160;65010001, 66010002<br />Standby members: &lt;none&gt;<br /> &#160;&#160;In sync: &#160;yes</pre><pre xml:space="preserve">Please use the command 'vtl haAdmin -synchronize' when you are ready to replicate data between
+all members of the HA group. (If you have additional members to add, you may wish to wait until
+you have added them before synchronizing to save time by avoiding multiple synchronizations.)</pre>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Notice here that you are told to synchronize 
+ - do NOT synchronize if you intend to perform a recovery. Synchronization 
+ occurs automatically when you use the <span style="font-family: 'Courier New', monospace;font-size: 10pt;">vtl 
+ haAdmin recover</span> command.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|High-Availability (HA) Configuration and Operation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Standby Members</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha.htm">High-Availability (HA) Configuration and Operation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Standby Members</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Standby Members</h3>
+        <p>By default, all members in an HA group are treated as active so that they are kept current with key material and are used to load-balance cryptographic services.   In some deployment scenarios, however, it makes sense to define some members as standby. Standby members are registered just like active members except that they are defined as “standby” after they are added to the HA group.</p>
+        <p> As depicted below, applications can be deployed in geographically dispersed locations.  In this scenario, you can use Luna’s standby capability to use the HSMs in the remote data center to cost-effectively improve availability.  In this mode, only the local units (non-standby) are used for active load-balancing.  However, as key material is created, it is automatically replicated to both the active (local) units and standby (remote) unit.   In the event of a failure of all local members, the standby unit is automatically promoted to active status.  You can use this feature is to reduce costs, while improving reliability. This approach allows remote HSMs that have high latency to be avoided when not needed.  However, in the worst case scenario where all the local HSMs fail, the remote member automatically activates itself and keeps the application running. &#160;&#160;</p>
+        <p>
+            <img src="../../Resources/Images/ha/ha_standby-mode_cdunn_4.png" />
+        </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>In normal operation, the HA standby units do not perform any cryptographic operations. However, the HA&#160;service must log into all units in a group (C_OpenSession/Login is performed against all members), including standby units. This is necessary because, in the case where the standby unit is called into action, it must already be up-to-date with respect to key material that is being used in the group - it cannot synchronize with HSMs that have failed or that have gone off-line. Therefore, when the HA group consists of PED-authenticated HSMs, they must all be Activated, including the standby HSM(s). </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span><b>STANDBY BEHAVIOR</b> - Standby members become active only to keep the group alive. In an HA group that includes more than one standby member, if all active members go down/off-line, only one standby member becomes active in the group. Other standby members remain on standby until/unless that first standby member goes down, at which point the next standby member becomes active. <br /><br />In other words, in an HA group, the load-sharing and redundancy capability is as large as all the active members, but if all active members become unavailable to the application, then the group load-sharing and redundancy consists of one member, even if other standby members are still available.</p>
+        <h5>To set an HSM to standby status</h5>
+        <p>In <a href="configure.htm" class="MCXref xref">Configuring HA</a>, we created an HA group with label "myHAgroup" and group number 742276409, with two active members, serial number 65003001 and serial number 65005001.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Create a third member, as previously described, and add it to the HA&#160;group. </p><pre xml:space="preserve" class="listLevel1">lunacm: hagroup addmember -group 742276409 -serialnumber 66010002
+<br />Member 65005002 successfully added to group 742276409.<br />Group configuration is:   
+   HA Group Label:  myHAgroup<br />  HA Group Number: &#160;742276409 
+ HA Group Slot ID:  Not Available 
+  Synchronization:  enabled<br />    Group Members: &#160;65003001, 65005001, 66010002   <br />       Needs sync: &#160;no
+
+Slot #    Member S/N                      Member Label    Status
+======    ==========                      ============    ====== 
+     0    65003001                        sa175legpar1     alive
+     1    65005001                        sa172legpar1     alive 
+     1    66010002                        sa172legpar1     alive
+
+Command Result : No Error
+
+
+LunaCM v6.0.0 - Copyright (c) 2006-2015 SafeNet, Inc.
+
+
+        Available HSMs:
+
+        Slot Id -&gt;              0
+        Label -&gt;                sa175legpar1
+        Serial Number -&gt;        65003001
+        Model -&gt;                LunaSA
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna User Partition, No SO (PW) Signing With Cloning Mode
+        Slot Description -&gt;     Net Token Slot
+
+        Slot Id -&gt;              1
+        Label -&gt;                sa172legpar1
+        Serial Number -&gt;        65005001
+        Model -&gt;                LunaSA
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna User Partition, No SO (PW) Signing With Cloning Mode
+        Slot Description -&gt;     Net Token Slot
+
+        Slot Id -&gt;              2
+        Label -&gt;                sa177legpar1
+        Serial Number -&gt;        66010002 
+        Model -&gt;                LunaSA
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna User Partition, No SO (PW) Signing With Cloning Mode
+        Slot Description -&gt;     Net Token Slot
+
+        Slot Id -&gt;              3
+        HSM Label -&gt;            myHAgroup
+        HSM Serial Number -&gt;    742276409
+        HSM Model -&gt;            LunaVirtual
+        HSM Firmware Version -&gt; 6.22.0
+        HSM Configuration -&gt;    Luna Virtual HSM (PW) Signing With Cloning Mode
+        HSM Status -&gt;           N/A - HA Group
+
+
+
+        Current Slot Id: 0
+<br /></pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Set the member to standby status. &#160;&#160;<br /></p><pre xml:space="preserve" class="listLevel1">lunacm: hagroup addstandby -group 742276409 -serialnumber 66010002<br />Member 65005002 successfully added to group 742276409.<br />Group configuration is:   
+   HA Group Label:  myHAgroup<br />  HA Group Number: &#160;742276409 
+ HA Group Slot ID:  Not Available 
+  Synchronization:  enabled<br />    Group Members: &#160;65003001, 65005001, 66010002   <br />       Needs sync: &#160;no
+
+Slot #    Member S/N                      Member Label    Status
+======    ==========                      ============    ====== 
+     0    65003001                        sa175legpar1     alive
+     1    65005001                        sa172legpar1     alive 
+     1    66010002                        sa172legpar1   standby
+
+Command Result : No Error
+
+
+LunaCM v6.0.0 - Copyright (c) 2006-2015 SafeNet, Inc.
+
+
+        Available HSMs:
+
+        Slot Id -&gt;              0
+        Label -&gt;                sa175legpar1
+        Serial Number -&gt;        65003001
+        Model -&gt;                LunaSA
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna User Partition, No SO (PW) Signing With Cloning Mode
+        Slot Description -&gt;     Net Token Slot
+
+        Slot Id -&gt;              1
+        Label -&gt;                sa172legpar1
+        Serial Number -&gt;        65005001
+        Model -&gt;                LunaSA
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna User Partition, No SO (PW) Signing With Cloning Mode
+        Slot Description -&gt;     Net Token Slot
+
+        Slot Id -&gt;              2
+        Label -&gt;                sa177legpar1
+        Serial Number -&gt;        66010002 
+        Model -&gt;                LunaSA
+        Firmware Version -&gt;     6.22.0
+        Configuration -&gt;        Luna User Partition, No SO (PW) Signing With Cloning Mode
+        Slot Description -&gt;     Net Token Slot
+
+        Slot Id -&gt;              3
+        HSM Label -&gt;            myHAgroup
+        HSM Serial Number -&gt;    742276409
+        HSM Model -&gt;            LunaVirtual
+        HSM Firmware Version -&gt; 6.22.0
+        HSM Configuration -&gt;    Luna Virtual HSM (PW) Signing With Cloning Mode
+        HSM Status -&gt;           N/A - HA Group
+
+
+
+        Current Slot Id: 0
+<br /></pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

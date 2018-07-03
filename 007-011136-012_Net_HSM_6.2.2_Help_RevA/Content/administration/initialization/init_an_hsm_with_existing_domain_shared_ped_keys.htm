@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|HSM Initialization">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Initialize an HSM With Existing Domain and Shared PED Keys</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="initialization.htm">HSM Initialization</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Initialize an HSM with Existing Domain and Shared PED Keys</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor92"></a>Initialize an HSM With Existing Domain and Shared PED Keys</h2>
+        <p>For two SafeNet HSMs, the following procedure assumes that you wish to 
+ have a set of PED Keys that will work with either HSM. One HSM is already 
+ initialized, so you have a full set of PED Keys, imprinted with the authentication 
+ data and the domain for that HSM. You want the second HSM to share the 
+ same domain (for backup, and the ability to restore to either HSM from 
+ a Backup token), and both the old and the new PED Keys should work interchangeably 
+ with both HSMs.</p>
+        <p>For this example procedure, HSMs are designated: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HSM 1, with its PED Keys 
+ Blue K1 and Red K1, and </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HSM 2, with its PED Keys 
+ Blue K2 and Red K2.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that you 
+ can log in to HSM 1 as a Security Officer using Blue K1 (if not, then 
+ do not continue with the procedure).</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Log out.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Begin initialization 
+ of HSM 2.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Insert Blue K1 
+ at the PED prompt, and when asked if you would "like to reuse an existing keyset", answer [YES] on the PED keypad. </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Duplicate Blue 
+ K1 to Blue K2 when prompted. (That is, when asked “Are you duplicating 
+ this keyset”, answer [YES], then insert the target Blue K2).</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>When “Generating 
+ a domain” appears, insert Red K1 at the prompt. <br />	When asked “Would you like to reuse an existing keyset”, answer [YES].</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Duplicate Red 
+ K1 to Red K2.</p>
+        <p>The procedure to make a backup of the black PED Key (for HSM Partitions) 
+ would be similar to the procedure for the blue PED Key.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You might receive a message that the key is blank, or that it contains valid data (for whatever type of key it was previously) and asking if you wish to overwrite. If the PED&#160;has indicated that the target PED&#160;Key is occupied and you are not certain that any authentication it contains is obsolete, then you should not allow it to be overwritten. Either remove the current, problematic key, insert  another "blank" target key, and press [ENTER], or abort the operation. To abort, 
+ remove the PED Key and  wait for PED time-out. Do NOT press 
+ [ENTER] at the “overwritten” message, if that is not your intent. Retry when you have sorted out your PED&#160;Keys and are confident that your target key is blank or contains truly obsolete authentication that can legitimately be overwritten. 
+ <br /></p>
+        <p>If you wish to have a separate set of keys for each HSM, then instead 
+ of following the procedure as written you should use the Blue K2 and Black 
+ K2 for HSM2 and answer 'NO' to the question “Would you like to reuse an existing keyset?”  This will imprint/overwrite 
+ the new blue or black keys making them specific to HSM2. For the Red key 
+ you should still insert Red K1 and answer 'YES' to the “Would you like to reuse an existing keyset?” question 
+ (the token/HSMs must share a common domain, or backup/restore cannot take 
+ place).</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

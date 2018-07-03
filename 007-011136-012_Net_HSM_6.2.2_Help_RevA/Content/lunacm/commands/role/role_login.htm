@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaCM Command Reference Guide|LunaCM Commands|role">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>role login</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaCM Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaCM Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="role.htm">role</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">role login</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">role login</h2>
+        <p>Logs the named user into the partition at the current slot. <br />For Password-authenticated HSM, the entire credential is the password. You can provide it at the command line, in the clear, or you can wait and be prompted, and then type it in with your typed characters disguised by asterisks (*). This is the administrative password (Crypto Officer or Crypto User), and it is also the same password that is presented by your application program when it performs cryptographic operations on the application partition.</p>
+        <p>For PED-authenticated HSM, the authentication is the black PED Key and the password/challenge for Crypto Officer, or the gray PED Key and the password/challenge for Crypto User. </p>
+        <p>If Partition Policy 22: Allow activation is not set (value = 0), then the full authentication is required for each login, including authentication by your application program. &#160;&#160;<br />If Partition Policy 22: Allow activation is  set  (value = 1 see <a href="../partition/partition_changepolicy.htm" class="MCXref xref">partition changepolicy</a>), then the PED Key secret is cached, and only the password/challenge string is required for each subsequent login. That is, if the partition is activated, you are not prompted to respond to the PED. <br />At that point, your application program can authenticate with just the password/challenge string, as if the HSM was PW-authenticated. </p>
+        <p>Activation (caching of the PED Key secret) persists until you explicitly deactivate (see <a href="role_deactivate.htm" class="MCXref xref">role deactivate</a>) or until the HSM is restarted or loses power.</p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>If too many bad login attempts are made against a role, the appropriate security policy for that role is enacted. For example, three bad attempts to log into the HSM SO role causes all HSM contents to be zeroized. Too many attempts on the Crypto Officer role causes that role to be locked out until reset by the SO. The bad-login count is reset by a successful login.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>For the Auditor role, if the bad login attempt threshold is exceeded, the HSM locks out that role for 60 seconds. The output of <b>role show</b>, during that time, gives a status of "Locked out". <br /><br />However, <b>role show</b> continues to show a state of "Locked out" even after the lockout time has expired; the displayed status does not reset until after a successful login.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>PKCS#11 permits one role to be logged into a slot, per session.  If a role is logged in, and you attempt to log in as a different role, the HSM presents an error message like USER_ALREADY_LOGGED_IN, indicating that some other user role is logged into the current slot via the current session. If you need to log in, your options are: <br /> - log out the other user and log in as the desired user, in the current session<br /> &#160;&#160;or <br /> - launch another session (lunacm or other tool), select the slot, and log in from there.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Slots retain login state when current-slot focus changes. <br /><br />For HSMs with firmware earlier than version 6.22.0, when you used <b>slot set</b> to move the focus from an HSM partition or slot with logged in session(s), to another partition or slot, any sessions on the original slot were automatically closed (thus logged out). <br /><br />For HSMs with firmware version 6.22.0 of newer, you can use <b>slot set</b> to repeatedly shift focus among slots, and whatever login state was in force when you were previously focused on a slot is still in effect when you return to that slot. </p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>role login -name</b> &lt;name of role&gt; [<b>-password</b> &lt;password&gt;]</p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 142px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 99px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-name</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-n</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies the name of the role that is logging in. </p>
+                        <p><b>Note:</b> If you specify multiple users (for example <b>role login -n Crypto Officer -n Partition SO</b>, the last one entered (in this example, <b>Partition SO</b>), is used.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-password</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-p</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1"> Specifies the password for the role. Omit this parameter to be prompted for a password, which will be obscured by * characters when entered.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3>
+        <h5> Logging in to the administrative slot as the HSM SO</h5><pre xml:space="preserve">lunacm:&gt; role list
+
+        Roles 
+        ============== 
+        SO                                  
+        Admin User                       
+        Auditor            
+
+Command Result : No Error
+
+lunacm:&gt; role login -name SO
+
+        Please attend to the PED.
+
+Command Result : No Error
+
+lunacm:&gt; </pre>
+        <h5>Logging in to the application partition slot as the Partition SO</h5><pre xml:space="preserve">lunacm:&gt; role list
+
+        Roles 
+        ============== 
+        Partition SO                    
+        Crypto Officer                  
+        Crypto User                     
+
+Command Result : No Error
+
+lunacm:&gt; role login -name Partition SO
+
+        Please attend to the PED.
+
+Command Result : No Error
+</pre>
+        <h5>Bad log in attempt as the HSM SO</h5><pre xml:space="preserve">lunacm:&gt; role list
+
+        Roles 
+        ============== 
+        SO                                      
+        Admin User                             
+        Auditor                             
+
+Command Result : No Error
+
+lunacm:&gt; role login -name SO
+
+        Please attend to the PED.
+ Caution: You have only 2 Administrator login attempts left. If you fail 2
+ more consecutive login attempts (i.e. with no successful
+ logins in between) the HSM will be ZEROIZED!!!
+
+Error in execution: CKR_PIN_INCORRECT.
+
+Command Result : 0xa0 (CKR_PIN_INCORRECT)</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

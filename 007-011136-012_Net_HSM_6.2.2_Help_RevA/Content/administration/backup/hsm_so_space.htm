@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA,Default.PCI" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Backup and Restore HSMs and Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Backing Up and Restoring Your HSM SO&#160;Space</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/List1.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="backup.htm">Backup and Restore HSMs and Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Backing Up and Restoring Your HSM SO&#160;Space</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor62"></a><a name="kanchor63"></a>Backing Up and Restoring Your HSM SO&#160;Space</h2>
+        <p>HSM backup securely clones the Scalable Key Storage masking key from the SafeNet Network HSM SO space to a Backup HSM. <![CDATA[  ]]></p>
+        <p>Backup/restore of the SO space is a local operation only, using LunaSH. The Backup HSM must be physically connected to the SafeNet Network HSM appliance. That is, there is no provision to backup a SafeNet Network HSM Admin partition remotely, and LunaCM does not support it. </p>
+        <p>The authentication type must match - if your source Backup HSM is password authenticated, then its contents can be restored onto a password authenticated HSM only; if your source Backup HSM is PED authenticated, then its contents can be restored onto a PED authenticated HSM  only.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The Backup HSM and the target HSM must share the same cloning domain.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The <b>hsm restore</b> operation has an option to 
+ add material from a backup token to an HSM, rather than to replace any 
+ material that is already on the HSM, if that is desired. However, the 
+ <strong>hsm backup</strong> operation (from HSM onto token) is an overwrite operation, only.</p>
+        <h5>To backup the SafeNet Network HSM SO space</h5>
+        <p>To backup the SO space on a SafeNet Network HSM, have ready a SafeNet Remote Backup HSM, connected to the front-panel USB port of the SafeNet appliance.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Login to the SafeNet appliance
+ as admin.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>At the <span style="font-family: 'Courier New', monospace;">lunash</span> prompt, type: </p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">Password authentication</td>
+                    <td class="BodyD-Column1-Body1"><b>hsm backup -password</b> &lt;HSM_Admin_password&gt; <b>-domain</b> &lt;domain_string&gt; <b>-tokenpw</b> &lt;password&gt;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">PED authentication</td>
+                    <td class="BodyA-Column1-Body1"><b>hsm backup</b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>If you see an error message about the token not being in "Factory Reset state", see <a href="troubleshooting.htm" class="MCXref xref">Troubleshooting</a>.</p>
+        <h5>To restore the SafeNet Network HSM SO&#160;space</h5>
+        <p>To restore the SO space on a SafeNet Network HSM, have ready a SafeNet Remote Backup HSM, connected to the front-panel USB port of the SafeNet appliance.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Login to the SafeNet appliance
+ as admin.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>At the <span style="font-family: 'Courier New', monospace;">lunash</span> prompt, type: </p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col class="Column-Column1" />
+            <col class="Column-Column1" />
+            <tbody>
+                <tr class="Body-Body1">
+                    <td class="BodyE-Column1-Body1" style="font-weight: bold;">Password authentication</td>
+                    <td class="BodyD-Column1-Body1">hsm restore  -serial &lt;backup_hsm_serialnum&gt; -password &lt;hsm_admin_password&gt; -tokenadminpw &lt;token_password&gt;</td>
+                </tr>
+                <tr class="Body-Body1">
+                    <td class="BodyB-Column1-Body1" style="font-weight: bold;">PED authentication</td>
+                    <td class="BodyA-Column1-Body1"><b>hsm restore -serial</b> &lt;backup_hsm_serialnum&gt;</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

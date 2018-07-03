@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|syslog">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>syslog show</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="syslog.htm">syslog</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">syslog show</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="kanchor493"></a>syslog show</h2>
+        <p>Display the current log rotation configuration, and show the configured log levels. Optionally show a list of the log files.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>syslog show</b> [<b>-files</b>]</p>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 196px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-files</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-f</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>Binary option. <br />If this option is present, a list of all log files is presented. <br />If this option is absent, then a summary of log configuration is shown, without the file list. </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3>
+        <p class="notepad_note">In the example below, the asterisk beside the "hsm" entry indicates that ALL HSM events get logged and that this setting is not user configurable.</p><pre xml:space="preserve">mylunasa6] lunash:&gt;syslog show
+
+Syslog configuration
+
+   Rotations:         4
+   Rotation Period:   weekly
+   Log disk full policy:    tarlogs_cleanup
+
+Configured Log Levels:
+----------------------------
+syslog:    *
+lunalogs:  info
+hsm:       *
+secure:    *
+cron:      notice
+boot:      *
+
+Note: '*' means all log levels.
+
+Command Result : 0 (Success)
+[mylunasa6] lunash:&gt;
+
+
+[mylunasa6] lunash:&gt;syslog show -file
+
+Syslog configuration
+
+   Rotations:         4
+   Rotation Period:   weekly
+   Log disk full policy:    tarlogs_cleanup
+
+Configured Log Levels:
+----------------------------
+syslog:    *
+lunalogs:  info
+hsm:       *
+secure:    *
+cron:      notice
+boot:      *
+
+Note: '*' means all log levels.
+
+LogFileName                   Size Date Time
+-------------------------------------------
+acpid                          940  Apr 17 10:33
+acpid-2014-04-09               439  Apr 9 2014
+anaconda.log                140447  Mar 5 2013
+anaconda.syslog              25575  Mar 5 2013
+boot.log                         0  Apr 9 2014
+btmp                          5760  Apr 2 00:53
+btmp-20130516-0402             768  May 15 2013
+btmp-2015-04-01               5376  Mar 6 14:38
+cron                           456  Apr 29 04:02
+cron-2015-04-05               1028  Apr 5 04:02
+cron-2015-04-12                912  Apr 12 04:02
+cron-2015-04-19                797  Apr 19 04:02
+cron-2015-04-26                910  Apr 26 04:02
+dmesg                        21618  Apr 17 10:33
+faillog                          0  Feb 6 09:45
+hsm.log                      50063  Apr 28 19:04
+lastlog                      21900  Apr 29 14:36
+lost+found                   16384  Mar 5 2013
+lunalogs                   1353225  Apr 29 14:52
+lunalogs-2015-04-05        2896633  Apr 5 04:02
+lunalogs-2015-04-12        2892767  Apr 12 04:01
+lunalogs-2015-04-19        2537642  Apr 19 04:01
+lunalogs-2015-04-26        2746220  Apr 26 04:01
+maillog                          0  Mar 5 2013
+messages                   2604899  Apr 29 14:51
+messages-2015-04-05        8710648  Apr 5 04:02
+messages-2015-04-12        8709357  Apr 12 04:02
+messages-2015-04-19        6948162  Apr 19 04:02
+messages-2015-04-26        5284444  Apr 26 04:02
+ntls_bt_2015-02-06_10_08_34     3112  Feb 6 10:08
+ntls_bt_2015-02-06_14_17_11     3112  Feb 6 14:17
+prelink                       4096  Mar 6 2013
+rpmpkgs                       5719  Apr 29 04:02
+rpmpkgs-20130310-0402         4649  Mar 9 2013
+rpmpkgs-20130317-0402         4649  Mar 16 2013
+rpmpkgs-20130516-0402         4649  Mar 20 2013
+rpmpkgs-20130519-0402         4649  May 18 2013
+rpmpkgs-2015-04-05            5719  Apr 4 04:02
+rpmpkgs-2015-04-12            5719  Apr 11 04:02
+rpmpkgs-2015-04-19            5719  Apr 18 04:02
+rpmpkgs-2015-04-26            5719  Apr 25 04:02
+secure                         248  Apr 29 14:36
+secure-2015-04-05             9995  Apr 2 00:53
+secure-2015-04-12              362  Apr 6 21:14
+secure-2015-04-19             1662  Apr 17 13:36
+secure-2015-04-26              720  Apr 20 13:55
+spooler                          0  Mar 5 2013
+tallylog                         0  Feb 6 09:45
+update5_2_6_1.log              828  Feb 17 18:02
+update6_0_0_31.log           11131  Feb 6 10:02
+update6_0_0_33.log           10615  Feb 17 18:12
+wtmp                        173184  Apr 29 14:36 &#160;
+wtmp-2015-04-23            1061760  Apr 23 03:14 &#160;
+
+Command Result : 0 (Success)
+</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

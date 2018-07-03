@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Product Overview|Luna HSM Product Introduction">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Ownership of Application Partitions</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Product Overview</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="product_line.htm">Luna HSM Product Introduction</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Ownership of Application Partitions</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Ownership of Application Partitions</h2>
+        <p>Beginning with firmware 6.22.0, SafeNet HSMs support two modes of ownership of an application partition in the HSM. </p>
+        <h3>Who is in Charge?</h3>
+        <h4>Per-Partition SO (PPSO) </h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The application partition is entirely owned and controlled by its own Security Officer (SO). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The HSM SO can create or delete application partitions, but has no ability to see or touch contents. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The uninitialized partition can be handed off to a person who is not associated with the HSM SO, and who can create the Partition SO identity without assistance from the HSM SO. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>On a Password-authenticated HSM, this means that the Partition SO can set and manage a partition SO secret that is not known by the HSM SO. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>On a PED-authenticated HSM, it means that the Partition SO can authenticate to the application with a blue PED Key that is completely unrelated to the blue PED Key used by the HSM SO.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Only the application Partition SO can create the Crypto Officer. On a Password-authenticated HSM, this is an administrative role with its own text-string secret, but that secret must also be shared with any application that performs creative and destructive crypto operations. On a PED-authenticated HSM, the Crypto Officer authenticates with a black PED Key, and provides a text-string secret that is used by any application that performs creative and destructive crypto operations (like keygen, deletion of keys, etc.).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Only the Crypto Officer can create the Crypto User. On a Password-authenticated HSM, this is an administrative role with its own text-string secret, but that secret must also be shared with any application that performs read-only crypto operations. On a PED-authenticated HSM, the Crypto User authenticates with a gray PED Key, and provides a text-string secret that is used by any application that performs read-only crypto operations (like sign/verify).</p>
+        <h4>Legacy application partition</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The application partition's Security Officer is the Security Officer of the HSM (also called the HSM Administrator). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The HSM SO can create or delete application partitions, and can see the objects in the application partition. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The HSM SO creates the Crypto Officer (also known as the Partition Owner or User).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The HSM SO creates the Crypto User, if desired. </p>
+        <p>&#160;</p>
+        <p>The Legacy option is the default, and is the way SafeNet HSMs have worked in the past. This option applies for new, and for upgraded HSMs until you install firmware 6.22.0 or newer, and install the PPSO Capability Update. That is, if you do not update the HSM firmware, and do not also install the PPSO Capability Update, then your HSM works as previously. </p>
+        <p>The PPSO functionality requires new "role" commands in Lunacm. Those commands are not visible if the HSM firmware version is earlier than 6.22.0. Some of those commands are visible if you update the firmware to version 6.22.0 or newer, but most do not become functional until you also apply the PPSO Capability Update. </p>
+        <h3>PPSO Feature Benefits and Limitations in a Nutshell</h3>
+        <p>The PPSO feature is very useful if you have need of it, but is not for everyone.</p>
+        <h5>Terminology note  </h5>
+        <p>"Partitions" refer to virtual HSMs within the physical HSM; "slots" refer to PCKS#11 cryptographic slots. </p>
+        <p>The appliance administrative shell (lunash) on the SafeNet Network HSM considers application partitions as partitions when they are created, and as partitions when they are used. </p>
+        <p>The client-side lunacm (on computers running SafeNet HSM Client software) considers application partitions as partitions when they are created, and as slots when they are managed and when they are used by customer applications. The terminology might switch back and forth depending on which point of view is indicated, but they are all HSM partitions - logically and cryptographically insulated, and generally independent (with some caveats), virtual HSMs. &#160;</p>
+        <h4>Benefit:</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>PPSO is a building block to support multi-tenant HSM services, where, for example, multiple PKCS#11 slots can be used and managed by different organizations accessing one SafeNet Network HSM. &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Separation of roles is enhanced by separating management of application partitions from management of the overall HSM. </p>
+        <h4>Limitations:</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Secure logging is done at the whole HSM level. Currently, there is no per-slot audit logging ability.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The PPSO capability is applied at the whole HSM level. Only policies (not capabilities) can be changed on a per-slot (per-partition) basis. For example, you cannot mix Password-authenticated (a.k.a. FIPS2) and PED-authenticated (a.k.a. FIPS3) partitions/slots on the same SafeNet Network HSM.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>RPED (Remote PED) applies to the whole HSM. All partition owners/slot-holders share the same RPV (Remote PED Vector, or orange PED Key). If one slot owner changes the RPV, all other slot owners are no longer able to make the Remote PED connection.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Most HSM commands are parallelized, which means that PED operations on one partition do not interfere with crypto operations on any other partition on the same HSM. As well, operations on the same partition tend not to interfere. Some exceptions exist, such as Delete operations, which must lock objects while the operation occurs.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The Partition SO cannot be added to any pre-existing slots. A customer who has created the maximum number of partitions afforded by the currently applied license must either delete some partitions or purchase a larger license CUF (Capability Update File or Secure Package).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The ability to create partitions with their own SOs (PPSO) adds some overhead to partition structure. Because the partition overhead is part of the user storage space, customers might need to shrink the storage usage per partition (by deleting some objects) in order to upgrade to firmware 6.22.0 or newer.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The Audit role is destroyed by factory reset. The HSM administrator (or HSM SO) can issue the factoryReset . This means that the auditor is at the mercy of HSM SO even though he is supposed to audit the HSM SO activities as well. This is independent of the kind of application partitions you create, so the effect is the same for operation and activity tracking on the HSM as a whole.</p>
+        <h4>Customer impact:</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>All partitions, pre-existing or new, will have HSM generated serial numbers once the HSM is upgraded to firmware 6.22.0 (or newer). Customer's existing applications or administrative tools/procedures might need to be adjusted accordingly.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Slot enumeration changes (see <a href="../../administration/slot_numbering.htm" class="MCXref xref">Slot Numbering and Behavior</a>). </p>
+        <h3>Legacy Partition Benefits and Limitations in a Nutshell</h3>
+        <p>The PPSO feature is very useful if you have need of it, but is not for everyone. Many customers already have legacy or legacy-style partitions and wish to continue in that mode when adding new application partitions.</p>
+        <h5>Terminology note  </h5>
+        <p>"Partitions" refer to virtual HSMs within the physical HSM; "slots" refer to PCKS#11 cryptographic slots. </p>
+        <p>The appliance administrative shell (lunash) on the SafeNet Network HSM considers application partitions as partitions when they are created, and as partitions when they are used. </p>
+        <p>The client-side lunacm (on computers running SafeNet HSM Client software) considers application partitions as partitions when they are created, and as slots when they are managed and when they are used by customer applications. The terminology might switch back and forth depending on which point of view is indicated, but they are all HSM partitions - logically and cryptographically insulated, and generally independent (with some caveats), virtual HSMs. &#160;</p>
+        <h4>Benefit:</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Legacy application partitions are best used when the needs and operating parameters of application clients are known and controlled by a single entity. For example, a government agency might own the HSM and allot partitions to functional departments for their individual use. Similarly, an enterprise, or a business group within an enterprise, might own the HSM and allot partitions to departments or branches. In these situations, it could make sense for the individual partition owners to have minimal administrative oversight over a restricted set of controls. &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The HSM SO, who created the application partition(s) has administrative access to all partitions as part of management of the overall HSM. Usually that person would be part of IT or a member of the organization's security team, and would have greater technical and security knowledge than persons who are responsible for individual applications. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>No separate SO is required for each application partition. The partition Owners or Crypto Officers can leave HSM-related management tasks to the HSM SO, and require less HSM-specific training. </p>
+        <h4>Limitations:</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Secure logging is done at the whole HSM level. Currently, there is no per-slot audit logging ability. This is the same as for PPSO, but with just one SO&#160;for the HSM and all partitions, there is no assumption of separation. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>RPED (Remote PED) applies to the whole HSM. All partition owners/slot-holders share the same RPV (Remote PED Vector, or orange PED Key). If one slot owner changes the RPV, all other slot owners are no longer able to make the Remote PED connection. This is the same as for PPSO, but the HSM SO is performing all such actions, so there is no conflict. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Most HSM commands are parallelized, which means that PED operations on one partition do not interfere with crypto operations on any other partition on the same HSM. As well, operations on the same partition tend not to interfere. Some exceptions exist, such as Delete operations, which must lock objects while the operation occurs. For legacy partitions, the HSM SO would normally have the only PED, and would schedule and perform all such operations on behalf of partition Owners or Crypto Officers (who would normally be logged in, regardless, as part of partition activation).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The Partition SO cannot be added to any pre-existing slots. A customer who has created the maximum number of partitions afforded by the currently applied license must either delete some partitions or purchase a larger license CUF (Capability Update File or Secure Package). Obviously, this has no effect on legacy partitions that you might create, except in the sense of planning, if you might introduce PSO partitions in future. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The ability to create partitions with their own SOs (PPSO) adds some overhead to partition structure. Because the partition overhead is part of the user storage space, customers might need to shrink the storage usage per partition (by deleting some objects) in order to upgrade to firmware 6.22.0 or newer. Because this is an infrastructure element, implemented by firmware, if you update to firmware 6.22.0 or newer for any reason, the same considerations apply, whether or not you install the PPSO update. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The Audit role is destroyed by factory reset. The HSM administrator (or HSM SO) can issue the factoryReset . This means that the auditor is at the mercy of HSM SO even though he is supposed to audit the HSM SO activities as well. This is independent of the kind of application partitions you create, so the effect is the same for operation and activity tracking on the HSM as a whole.</p>
+        <h4>Customer impact:</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>All partitions, pre-existing or new, will have HSM generated serial numbers once the HSM is upgraded to firmware 6.22.0 (or newer). Customer's existing applications or administrative tools/procedures might need to be adjusted accordingly.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Slot enumeration changes (see <a href="../../administration/slot_numbering.htm" class="MCXref xref">Slot Numbering and Behavior</a>). </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

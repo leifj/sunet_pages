@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|HSM Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Partition Creation with Policy Template Using LunaCM</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partitions.htm">HSM Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Partition Creation with Policy Template Using LunaCM</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Partition Creation with Policy Template Using LunaCM</h2>
+        <p>Partition Policy Templates enable administrators to replicate configured application partitions, speeding the provisioning process and ensuring consistent policy assignments across partitions with similar security requirements. The Partition Policy Template feature enables scalable policy management across tens and hundreds of partitions while also simplifying future audit and compliance requirements.</p>
+        <p>Administrators can specify the initial value for each policy, as well as whether changes to the policy AFTER the partition is created will be destructive to existing user objects on the partition. This destructive or non-destructive behavior can be specified independently for the on-to-off and off-to-on transitions of the policy. Once the combined initial values and destructiveness of each partition policy are configured as desired, they can be saved as a named policy template. Multiple such policy templates can be saved on the appliance, or <i>exported and imported between appliances</i>.</p>
+        <p>An administrator creating an application partition can optionally specify a previously saved policy template in order to create the partition with policy settings as configured in the template. If no policy template is specified during partition creation, the HSM uses built-in default partition policy values.</p>
+        <p>Partition policy templates can <i>not</i> be used to alter settings for an existing application partition. Once a partition has been created, with or without the use of policy templates, the administrator continues to use the <b>partition changePolicy</b> command to make changes to individual policy values.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Policy destructiveness settings can <i style="font-weight: bold;">not</i> be altered on an existing application partition, as these can be specified only at the time the partition is created.</p>
+        <p>The examples on this page apply to manipulating application partitions via lunacm. <MadCap:conditionalText data-mc-conditions="Default.SA">(For partition policy template examples using lunash, see <a href="lunash_partition_creation_with_policytemplate.htm" class="MCXref xref">Partition Creation with Policy Template Using Lunash</a>.)</MadCap:conditionalText></p>
+        <h3>Process for a New Template</h3>
+        <p>The general procedure is as follows: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Create (and load for editing) a new, unnamed partition policy template. The possible policy codes, along with their default settings, are displayed.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Make changes to those default values, one at a time, until you are satisfied. Each change is echoed back. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Save the new partition policy template, applying a name that is unique and easily recognized, and also applying additional descriptive text to assist yourself and future users to recall the purpose of this specific template among any others you might create. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Create an application partition, specifying a particular partition policy template by name. This creates the partition with policies applied to it, conforming to the selected template, different from the default set for the HSM.</p>
+        <h4>Create and apply a new partition policy template </h4>
+        <p>For this example, before starting, here are the policy values for a default partition that was created without using a template:</p><pre xml:space="preserve"> lunacm:&gt; partition showpolicies
+        Partition Capabilities
+                 0: Enable private key cloning : 1
+                 1: Enable private key wrapping : 0
+                 2: Enable private key unwrapping : 1
+                 3: Enable private key masking : 0
+                 4: Enable secret key cloning : 1
+                 5: Enable secret key wrapping : 1
+                 6: Enable secret key unwrapping : 1
+                 7: Enable secret key masking : 0
+                10: Enable multipurpose keys : 1
+                11: Enable changing key attributes : 1
+                15: Allow failed challenge responses : 1
+                16: Enable operation without RSA blinding : 1
+                17: Enable signing with non-local keys : 1
+                18: Enable raw RSA operations : 1
+                20: Max failed user logins allowed : 10
+                21: Enable high availability recovery : 1
+                22: Enable activation : 1
+                23: Enable auto-activation : 1
+                25: Minimum pin length (inverted: 255 - min) : 248
+                26: Maximum pin length : 255
+                28: Enable Key Management Functions : 1
+                29: Enable RSA signing without confirmation : 1
+                30: Enable Remote Authentication : 1
+                31: Enable private key unmasking : 1
+                32: Enable secret key unmasking : 1
+                33: Enable RSA PKCS mechanism : 1
+                34: Enable CBC-PAD (un)wrap keys of any size : 1
+                35: Enable private key SFF backup/restore : 1
+                36: Enable secret key SFF backup/restore : 1
+                37: Enable Secure Trusted Channel : 1
+
+        Partition Policies
+                 0: Allow private key cloning : 1
+                 1: Allow private key wrapping : 0
+                 2: Allow private key unwrapping : 1
+                 3: Allow private key masking : 0
+                 4: Allow secret key cloning : 1
+                 5: Allow secret key wrapping : 1
+                 6: Allow secret key unwrapping : 1
+                 7: Allow secret key masking : 0
+                10: Allow multipurpose keys : 1
+                11: Allow changing key attributes : 1
+                15: Ignore failed challenge responses : 1
+                16: Operate without RSA blinding : 1
+                17: Allow signing with non-local keys : 1
+                18: Allow raw RSA operations : 1
+                20: Max failed user logins allowed : 10
+                21: Allow high availability recovery : 1
+                22: Allow activation : 0
+                23: Allow auto-activation : 0
+                25: Minimum pin length (inverted: 255 - min) : 248
+                26: Maximum pin length : 255
+                28: Allow Key Management Functions : 1
+                29: Perform RSA signing without confirmation : 1
+                30: Allow Remote Authentication : 1
+                31: Allow private key unmasking : 1
+                32: Allow secret key unmasking : 1
+                33: Allow RSA PKCS mechanism : 1
+                34: Allow CBC-PAD (un)wrap keys of any size : 1
+                35: Allow private key SFF backup/restore : 1
+                36: Allow secret key SFF backup/restore : 1
+                37: Force Secure Trusted Channel : 0
+
+
+Command Result : No Error
+
+
+</pre>
+        <p>&#160;</p>
+        <p>Now, create a partition policy template and then create a new application partition using the new template.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You must be in the administrative (HSM SO) slot in order to create a partition policy template. &#160;</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Use command <b>partition policyTemplateCreate</b> to create a new partition policy template: </p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; partition policytemplatecreate 
+
+                                                            Destructive
+ Code Description                                   Value Off-To-On On-To-Off
+______________________________________________________________________________
+
+  0   Allow private key cloning                      On      Yes       No
+  1   Allow private key wrapping                     Off     Yes       No
+  2   Allow private key unwrapping                   On      No        No
+  3   Allow private key masking                      Off     Yes       No
+  4   Allow secret key cloning                       On      Yes       No
+  5   Allow secret key wrapping                      On      Yes       No
+  6   Allow secret key unwrapping                    On      No        No
+  7   Allow secret key masking                       Off     Yes       No
+  10  Allow multipurpose keys                        On      Yes       No
+  11  Allow changing key attributes                  On      Yes       No
+  15  Ignore failed challenge responses              On      Yes       No
+  16  Operate without RSA blinding                   On      Yes       No
+  17  Allow signing with non-local keys              On      No        No
+  18  Allow raw RSA operations                       On      Yes       No
+  20  Max failed user logins allowed                 10      N/A       N/A
+  21  Allow high availability recovery               On      No        No
+  22  Allow activation                               On      No        No
+  23  Allow auto-activation                          On      No        No
+  24  Allow indirect login                           Off     No        No
+  25  Minimum pin length (inverted: 255 - min)       248     N/A       N/A
+  26  Maximum pin length                             255     N/A       N/A
+  28  Allow Key Management Functions                 On      Yes       No
+  29  Perform RSA signing without confirmation       On      Yes       No
+  30  Allow Remote Authentication                    On      No        No
+  31  Allow private key unmasking                    On      No        No
+  32  Allow secret key unmasking                     On      No        No
+  33  Allow RSA PKCS mechanism                       On      Yes       No
+  34  Allow CBC-PAD (un)wrap keys of any size        On      Yes       No
+  35  Allow private key SFF backup/restore           Off     Yes       No
+  36  Allow secret key SFF backup/restore            Off     Yes       No
+  37  Force Secure Trusted Channel                   Off     No        Yes
+
+          Type 'proceed' to continue, or 'quit'
+          to quit now.
+          &gt; proceed
+
+Successfully created and loaded the new partition policy template.
+
+Use 'partition policyTemplateChange' to edit the template and
+'partition policyTemplateSave' to save the template once you have applied all necessary
+changes.
+
+Command Result : No Error</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Use command <b>partition policyTemplateChange</b> to change some policy values in the new partition policy template: </p><pre class="listLevel1"> lunacm:&gt; partition policyTemplateChange -policy 25 -value 246
+
+                                                              Destructive
+ Code Description                                   Value Off-To-On On-To-Off
+ ______________________________________________________________________________
+
+  25  Minimum pin length (inverted: 255 - min)       246     N/A       N/A
+
+Command Result : No Error
+
+lunacm:&gt; partition policyTemplateChange -policy 20 -value 9
+
+                                                              Destructive
+ Code Description                                   Value Off-To-On On-To-Off
+ ______________________________________________________________________________
+
+  20  Max failed user logins allowed                  9      N/A       N/A
+
+Command Result : No Error
+
+lunacm:&gt; partition policyTemplateChange -policy 7 -on non-destructive
+
+                                                              Destructive
+ Code Description                                   Value Off-To-On On-To-Off
+ ______________________________________________________________________________
+
+  7   Allow secret key masking                       Off     No        No
+
+Command Result : No Error
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use command <b>partition policyTemplateSave</b> to save the new partition policy template with its modified policy values: </p><pre class="listLevel1">lunacm:&gt; partition policyTemplateSave -name sample01
+
+sample01 successfully saved.
+
+Command Result : No Error
+
+lunacm:&gt; partition policyTemplateList
+
+ Name                        Description
+ _______________________________________________________________
+
+ sample01
+
+No partition policy template is currently loaded.
+
+Command Result : No Error
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Use command <b>partition create</b> with the -policytemplate option to create a new application partition, using the partition policy template that you previously created: </p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; partition create -label parfortemplate -policyTemplate sample01
+
+        Please attend to the PED.
+
+Command Result : No Error
+
+lunacm:&gt; slot set slot 0
+
+        Current Slot Id:    0     (Luna User Slot 6.24.0 (PED) Signing With Cloning Mode)
+
+Command Result : No Error
+
+lunacm:&gt; partition showpolicies
+        Partition Capabilities
+                 0: Enable private key cloning : 1
+                 1: Enable private key wrapping : 0
+                 2: Enable private key unwrapping : 1
+                 3: Enable private key masking : 0
+                 4: Enable secret key cloning : 1
+                 5: Enable secret key wrapping : 1
+                 6: Enable secret key unwrapping : 1
+                 7: Enable secret key masking : 0
+                10: Enable multipurpose keys : 1
+                11: Enable changing key attributes : 1
+                15: Allow failed challenge responses : 1
+                16: Enable operation without RSA blinding : 1
+                17: Enable signing with non-local keys : 1
+                18: Enable raw RSA operations : 1
+                20: Max failed user logins allowed : 10
+                21: Enable high availability recovery : 1
+                22: Enable activation : 1
+                23: Enable auto-activation : 1
+                25: Minimum pin length (inverted: 255 - min) : 248
+                26: Maximum pin length : 255
+                28: Enable Key Management Functions : 1
+                29: Enable RSA signing without confirmation : 1
+                30: Enable Remote Authentication : 1
+                31: Enable private key unmasking : 1
+                32: Enable secret key unmasking : 1
+                33: Enable RSA PKCS mechanism : 1
+                34: Enable CBC-PAD (un)wrap keys of any size : 1
+                35: Enable private key SFF backup/restore : 1
+                36: Enable secret key SFF backup/restore : 1
+                37: Enable Secure Trusted Channel : 1
+
+        Partition Policies
+                 0: Allow private key cloning : 1
+                 1: Allow private key wrapping : 0
+                 2: Allow private key unwrapping : 1
+                 3: Allow private key masking : 0
+                 4: Allow secret key cloning : 1
+                 5: Allow secret key wrapping : 1
+                 6: Allow secret key unwrapping : 1
+                 7: Allow secret key masking : 0
+                10: Allow multipurpose keys : 1
+                11: Allow changing key attributes : 1
+                15: Ignore failed challenge responses : 1
+                16: Operate without RSA blinding : 1
+                17: Allow signing with non-local keys : 1
+                18: Allow raw RSA operations : 1
+                20: Max failed user logins allowed : 9
+                21: Allow high availability recovery : 1
+                22: Allow activation : 0
+                23: Allow auto-activation : 0
+                25: Minimum pin length (inverted: 255 - min) : 246
+                26: Maximum pin length : 255
+                28: Allow Key Management Functions : 1
+                29: Perform RSA signing without confirmation : 1
+                30: Allow Remote Authentication : 1
+                31: Allow private key unmasking : 1
+                32: Allow secret key unmasking : 1
+                33: Allow RSA PKCS mechanism : 1
+                34: Allow CBC-PAD (un)wrap keys of any size : 1
+                35: Allow private key SFF backup/restore : 1
+                36: Allow secret key SFF backup/restore : 1
+                37: Force Secure Trusted Channel : 0
+
+
+Command Result : No Error  </pre>
+        <p>&#160;</p>
+        <h3>Modify a partition template, then apply the modified partition template</h3>
+        <p>For this example, we create an application using a partition template that has only one policy modified, then change the template to modify an additional policy, and create yet another partition to which we apply the modified partition template:</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You must be in the administrative (HSM SO) slot in order to create, load, and modify a partition policy template. &#160;</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Create and save partition policy template Sample02 with policy 22 set to On, but policy 23  not set (see previous example for steps). </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Use command <b>partition create</b> with the -policytemplate option to create a new application partition, using  partition policy template Sample02 previously created:</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; partition create -label parfortemplateagain -policyTemplate Sample02
+
+        Please attend to the PED.
+
+Command Result : No Error 
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Change to the slot of the newly-created partition and use command <b>partition showpolicies</b> to show the policies of the new partition: </p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; slot set slot 0
+
+        Current Slot Id:    0     (Luna User Slot 6.24.0 (PED) Signing With Cloning Mode)
+
+Command Result : No Error
+
+lunacm:&gt; partition showpolicies
+        Partition Capabilities
+                 0: Enable private key cloning : 1
+                 1: Enable private key wrapping : 0
+                 2: Enable private key unwrapping : 1
+                 3: Enable private key masking : 0
+                 4: Enable secret key cloning : 1
+                 5: Enable secret key wrapping : 1
+                 6: Enable secret key unwrapping : 1
+                 7: Enable secret key masking : 0
+                10: Enable multipurpose keys : 1
+                11: Enable changing key attributes : 1
+                15: Allow failed challenge responses : 1
+                16: Enable operation without RSA blinding : 1
+                17: Enable signing with non-local keys : 1
+                18: Enable raw RSA operations : 1
+                20: Max failed user logins allowed : 10
+                21: Enable high availability recovery : 1
+                22: Enable activation : 1
+                23: Enable auto-activation : 1
+                25: Minimum pin length (inverted: 255 - min) : 248
+                26: Maximum pin length : 255
+                28: Enable Key Management Functions : 1
+                29: Enable RSA signing without confirmation : 1
+                30: Enable Remote Authentication : 1
+                31: Enable private key unmasking : 1
+                32: Enable secret key unmasking : 1
+                33: Enable RSA PKCS mechanism : 1
+                34: Enable CBC-PAD (un)wrap keys of any size : 1
+                35: Enable private key SFF backup/restore : 1
+                36: Enable secret key SFF backup/restore : 1
+                37: Enable Secure Trusted Channel : 1
+
+        Partition Policies
+                 0: Allow private key cloning : 1
+                 1: Allow private key wrapping : 0
+                 2: Allow private key unwrapping : 1
+                 3: Allow private key masking : 0
+                 4: Allow secret key cloning : 1
+                 5: Allow secret key wrapping : 1
+                 6: Allow secret key unwrapping : 1
+                 7: Allow secret key masking : 0
+                10: Allow multipurpose keys : 1
+                11: Allow changing key attributes : 1
+                15: Ignore failed challenge responses : 1
+                16: Operate without RSA blinding : 1
+                17: Allow signing with non-local keys : 1
+                18: Allow raw RSA operations : 1
+                20: Max failed user logins allowed : 10
+                21: Allow high availability recovery : 1
+                22: Allow activation : 1
+                23: Allow auto-activation : 0
+                25: Minimum pin length (inverted: 255 - min) : 248
+                26: Maximum pin length : 255
+                28: Allow Key Management Functions : 1
+                29: Perform RSA signing without confirmation : 1
+                30: Allow Remote Authentication : 1
+                31: Allow private key unmasking : 1
+                32: Allow secret key unmasking : 1
+                33: Allow RSA PKCS mechanism : 1
+                34: Allow CBC-PAD (un)wrap keys of any size : 1
+                35: Allow private key SFF backup/restore : 1
+                36: Allow secret key SFF backup/restore : 1
+                37: Force Secure Trusted Channel : 0
+
+
+Command Result : No Error 
+</pre>
+        <p>&#160;</p>
+        <p class="listLevel1">Observe that policy 22 is on; policy 23 is off, the result of creating the partition with partition policy template Sample02 as it exists at the moment. </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Use command <b>partition policyTemplateList</b> to show the available partition policy templates: &#160;</p><pre class="listLevel1" xml:space="preserve">partition policyTemplate list
+
+ Name                        Description
+_______________________________________________________________
+
+ Sample02                    Another template
+ sample01                    Sample partition policyTemplate
+
+No partition policy template is currently loaded.
+
+Command Result : No Error 
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Go back to the administrative slot if necessary, and use command <b>partition policyTemplateLoad</b> to load template Sample02 for modification: </p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; partition policyTemplateLoad -name Sample02
+
+Successfully loaded Sample02 partition policy template for editing.
+
+Command Result : No Error </pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Use command <b>partition policyTemplateChange</b> to change policy 23 in the loaded (for editing) partition policy template: </p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; partition policyTemplateChange -policy 23 -value on
+
+                                                              Destructive
+ Code Description                                   Value Off-To-On On-To-Off
+ ______________________________________________________________________________
+
+  23  Allow auto-activation                          On      No        No
+
+Command Result : No Error 
+</pre>
+        <p>&#160;</p>
+        <p>Observe that we can use the text string "On" or "Off" interchangeably with the numeric setting "1" or "0" to set a policy; both options are acceptable. </p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Use command <b>partition policyTemplateSave</b> to save the newly modified partition policy template with its modified policy value. Do not provide a name; the loaded policy already has one (in this case, "Sample02"): </p><pre class="listLevel1" xml:space="preserve">
+
+lunacm:&gt; partition policyTemplateSave
+
+        Saving the modified settings will overwrite the existing template "Sample02".
+
+        Type 'proceed' to continue, or 'quit' to quit now -&gt; proceed
+
+Sample02 successfully saved.
+
+Command Result : No Error 
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Delete the previously-created demonstration partition, if necessary to make room. <br />Use command <b>partition create</b> with the -policytemplate option to create another new application partition, using  partition policy template Sample02 previously created, and just now modified: &#160;</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; partition create -label parfortemplateyetagain -policyTemplate Sample02
+
+        Please attend to the PED.
+
+Command Result : No Error 
+</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Use command <b>partition showpolicies</b> to show the policies of the new partition: </p><pre class="listLevel1">lunacm:&gt; slot set slot 0
+
+        Current Slot Id:    0     (Luna User Slot 6.24.0 (PED) Signing With Cloning Mode)
+
+Command Result : No Error
+
+lunacm:&gt; partition showpolicies
+        Partition Capabilities
+                 0: Enable private key cloning : 1
+                 1: Enable private key wrapping : 0
+                 2: Enable private key unwrapping : 1
+                 3: Enable private key masking : 0
+                 4: Enable secret key cloning : 1
+                 5: Enable secret key wrapping : 1
+                 6: Enable secret key unwrapping : 1
+                 7: Enable secret key masking : 0
+                10: Enable multipurpose keys : 1
+                11: Enable changing key attributes : 1
+                15: Allow failed challenge responses : 1
+                16: Enable operation without RSA blinding : 1
+                17: Enable signing with non-local keys : 1
+                18: Enable raw RSA operations : 1
+                20: Max failed user logins allowed : 10
+                21: Enable high availability recovery : 1
+                22: Enable activation : 1
+                23: Enable auto-activation : 1
+                25: Minimum pin length (inverted: 255 - min) : 248
+                26: Maximum pin length : 255
+                28: Enable Key Management Functions : 1
+                29: Enable RSA signing without confirmation : 1
+                30: Enable Remote Authentication : 1
+                31: Enable private key unmasking : 1
+                32: Enable secret key unmasking : 1
+                33: Enable RSA PKCS mechanism : 1
+                34: Enable CBC-PAD (un)wrap keys of any size : 1
+                35: Enable private key SFF backup/restore : 1
+                36: Enable secret key SFF backup/restore : 1
+                37: Enable Secure Trusted Channel : 1
+
+        Partition Policies
+                 0: Allow private key cloning : 1
+                 1: Allow private key wrapping : 0
+                 2: Allow private key unwrapping : 1
+                 3: Allow private key masking : 0
+                 4: Allow secret key cloning : 1
+                 5: Allow secret key wrapping : 1
+                 6: Allow secret key unwrapping : 1
+                 7: Allow secret key masking : 0
+                10: Allow multipurpose keys : 1
+                11: Allow changing key attributes : 1
+                15: Ignore failed challenge responses : 1
+                16: Operate without RSA blinding : 1
+                17: Allow signing with non-local keys : 1
+                18: Allow raw RSA operations : 1
+                20: Max failed user logins allowed : 10
+                21: Allow high availability recovery : 1
+                22: Allow activation : 1
+                23: Allow auto-activation : 1
+                25: Minimum pin length (inverted: 255 - min) : 248
+                26: Maximum pin length : 255
+                28: Allow Key Management Functions : 1
+                29: Perform RSA signing without confirmation : 1
+                30: Allow Remote Authentication : 1
+                31: Allow private key unmasking : 1
+                32: Allow secret key unmasking : 1
+                33: Allow RSA PKCS mechanism : 1
+                34: Allow CBC-PAD (un)wrap keys of any size : 1
+                35: Allow private key SFF backup/restore : 1
+                36: Allow secret key SFF backup/restore : 1
+                37: Force Secure Trusted Channel : 0
+
+
+Command Result : No Error
+</pre>
+        <p>&#160;</p>
+        <p>Observe that both policy 22 and policy 23 are on (value = 1), as soon as the partition parfortemplateyetagain) is created, using the recently-modified partition policy template "Sample02". For more information about those frequently-used policies, see <a href="about_activation_and_auto-activation_.htm" class="MCXref xref">About Activation and Auto-Activation </a>.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The chosen partition affects the policies of a partition only when a partition is created. <br /><br />In the examples on this page, partition parfortemplateagain was created when policy template Sample02 was set to modify only partition policy 22. Therefore, partition parfortemplateagain does not have partition policy 23 set. The change to the policy template does not affect a partition that was already in existence. It has effect only for partitions that are created with that template after the template was modified. <br /><br />Partition parfortemplate<b>yet</b>again was created with the template after that modification, so it shows both policies changed. <br /><br />You can change a policy manually, using <b>partition changepolicy</b> command.</p>
+        <h3>Delete a partition policy template</h3>
+        <p>If a partition policy template is no longer useful, use command <b>partition policyTemplate delete</b> to remove that template from the list. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You must be in the administrative (HSM SO) slot in order to delete a partition policy template. &#160;</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; slot list
+
+        Slot Id -&gt;              0
+        Tunnel Slot Id -&gt;       2
+        Label -&gt;
+        Serial Number -&gt;        349297122742
+        Model -&gt;                K6 Base
+        Firmware Version -&gt;     6.24.0
+        Configuration -&gt;        Luna User Partition With SO (PED) Signing With Cloning Mode
+        Slot Description -&gt;     User Token Slot
+
+        Slot Id -&gt;              1
+        Tunnel Slot Id -&gt;       2
+        Label -&gt;                mypcie6
+        Serial Number -&gt;        150022
+        Model -&gt;                K6 Base
+        Firmware Version -&gt;     6.24.0
+        Configuration -&gt;        Luna HSM Admin Partition (PED) Signing With Cloning Mode
+        Slot Description -&gt;     Admin Token Slot
+        HSM Configuration -&gt;    Luna HSM Admin Partition (PED)
+        HSM Status -&gt;           OK
+
+        Current Slot Id: 1
+
+
+Command Result : No Error
+
+lunacm:&gt; slot set slot 1
+
+        Current Slot Id:    1     (Luna Admin Slot 6.24.0 (PED) Signing With Cloning Mode)
+
+Command Result : No Error
+
+lunacm:&gt; partition policyTemplateList
+
+ Name                        Description
+ _______________________________________________________________
+
+ Sample02                    Another template
+ sample01
+
+
+No partition policy template is currently loaded.
+
+Command Result : No Error
+
+lunacm:&gt; partition policyTemplateDelete -name sample01
+
+        Are you sure you wish to delete partition policy template: sample01
+
+        Type 'proceed' to continue, or 'quit' to quit now -&gt; proceed
+
+Successfully deleted partition policy template: sample01
+
+Command Result : No Error
+
+lunacm:&gt; slot set slot 1
+
+        Current Slot Id:    1     (Luna Admin Slot 6.24.0 (PED) Signing With Cloning Mode)
+
+Command Result : No Error
+
+lunacm:&gt; partition policyTemplateList
+
+ Name                        Description
+ _______________________________________________________________
+
+ Sample02                    Another template
+
+No partition policy template is currently loaded.
+
+Command Result : No Error</pre>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

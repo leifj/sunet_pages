@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|HSM Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>About Activation and Auto-Activation </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partitions.htm">HSM Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">About Activation and Auto-Activation </span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor106"></a>About Activation and Auto-Activation </h2>
+        <p>Client access to Partitions, on an HSM with PED Authentication, 
+ needs to be as efficient and convenient as Client access to a Password 
+ Authenticated HSM <a name="kanchor107"></a><a name="kanchor108"></a><a name="kanchor109"></a>. Activation and auto-Activation 
+ are ways to manage the additional layer of authentication - the PED 
+ and PED Keys - so that Clients can reliably connect using just their passwords.</p>
+        <h3 data-mc-conditions="Default.SA">Authentication in General</h3>
+        <p data-mc-conditions="Default.SA">SafeNet Network HSM,
+ in general, requires authentication from anyone wishing to use the appliance. 
+ Access falls into two categories, defined by purpose:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><span style="font-weight: bold;">Administrative</span> 
+ - you can log in locally via a terminal connected to the serial interface, 
+ or remotely via SSH session, to perform administration/maintenance/housekeeping 
+ tasks (detailed elsewhere)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><span style="font-weight: bold;">Client</span><a name="kanchor110"></a> 
+ - you can connect remotely via TLS to perform "production" activities, 
+ using objects and cryptographic functions on an HSM Partition within the 
+ HSM <br /></p>
+        <h4 data-mc-conditions="Default.SA">Administrative</h4>
+        <p data-mc-conditions="Default.SA">To perform any administrative task on the HSM appliance, you must first login at 
+ the console or via an SSH session and provide the "admin", or "operator", or "monitor" password (as appropriate), 
+ in order to reach the <span style="font-family: 'Courier New', monospace;">lunash</span> 
+ prompt. This is how you access the <span style="font-family: 'Courier New', monospace;">lunash</span> 
+ commands. In this explanation, we will assume that you are using the "admin" identity, for greatest administrative scope. </p>
+        <p data-mc-conditions="Default.SA">At that first level of authentication and administrative access (an SSH admin session or a locally connected serial console session)
+ you can perform some basic, appliance-wide administrative functions (such 
+ as configuring or modifying network settings, time setting, handling of 
+ logs, updating the system with update packages, etc.) 
+
+ 
+ that do not involve the HSM<span style="font-size: 12pt; color: #e40910; font-weight: bold;">*</span> or any of the Partitions<span style="font-size: 12pt; color: #e40910; font-weight: bold;">*</span> (virtual 
+ HSMs that you might have created within the HSM -- you need to create 
+ and assign Partitions if you are to use the HSM appliance in any meaningful way) 
+
+. </p>
+        <p data-mc-conditions="Default.SA">(<b style="color: #e40910;">*</b> Exceptions are HSM and Partition list and view commands that do not involve security-sensitive operations in the HSM.)
+ </p>
+        <p data-mc-conditions="Default.SA">Subsets of the lunash command menu require a further level of authentication 
+ in order to perform HSM or Partition administrative commands. The HSM 
+ and Partition commands require the appropriate blue and black PED Keys.  See <a href="../ped_keys/ped_keys_and_operational_roles.htm" class="MCXref xref">PED Keys and Operational Roles</a>. &#160;&#160;</p>
+        <p data-mc-conditions="Default.SA">When a command is issued to the HSM appliance that requires HSM or Partition 
+ authentication, the HSM with Trusted Path looks to 
+ the PED. The PED responds by prompting you for actions involving the 
+ appropriate PED Keys and the PED keypad. If the PED gets the appropriate 
+ response, it confirms the authentication back to the HSM, via the PED interface (the 
+ Trusted Path). The required PED Keys would be:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the blue key(s) needed when 
+ the HSM Security Officer logs in, or issues an <span style="font-family: 'Courier New', monospace;">hsm</span> 
+ command.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the black key(s), needed 
+ when the  Crypto Officer issues Partition administration commands, or creates, deletes 
+ (or otherwise manipulates) non-public objects.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the gray key(s), needed 
+ when the  Crypto User issues Partition administration commands, or uses non-public objects.</p>
+        <p data-mc-conditions="Default.SA">Those PED Keys (as appropriate), are demanded by SafeNet PED when you perform 
+ administrative operations via the <span style="font-family: 'Courier New', monospace;">lunash</span> 
+ interface (meaning that you must be logged in as the appliance admin first, 
+ either at a local, serial console, or via ssh). The authentication can 
+ consist of:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>presenting the required 
+ PED Key(s) and pressing [ENTER] on the keypad, or</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>presenting the required 
+ PED Key(s), pressing [ENTER], entering a PED PIN (if one had been assigned 
+ at initialization) and pressing [ENTER] again.</p>
+        <p data-mc-conditions="Default.SA">Performing the above actions gets you to a login state in which HSM appliance will carry out HSM or Partition commands (according to the level of 
+ authentication that you invoked).</p>
+        <h4 data-mc-conditions="Default.SA">Authentication and Access Control for Clients</h4>
+        <p data-mc-conditions="Default.SA">However, the point of the HSM appliance is that authorized remote 
+ Client applications must be able to access their Partitions, in order 
+ to perform useful work (such as signing, verifying, encrypting, decrypting), 
+ and also that unauthorized clients be prevented from doing so. Before 
+ authorized access can happen, the Partition must be in a logged-in state (as 
+ described above) by means of the black PED Key. </p>
+        <p data-mc-conditions="Default.SA"> To preclude access by unauthorized 
+ clients/applications, the HSM appliance requires that three authentication 
+ conditions be in place:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The Client and HSM appliance certificates must have been exchanged, and the Client registered to the 
+ Partition (during Setup and Configuration). This gives provisional access 
+ to the appliance, but not yet to the HSM or any of its Partitions. The 
+ Certificate exchange and registration can be initiated by a potential 
+ client, but are controlled at the HSM appliance. That is, no potential Client 
+ can register without the explicit approval of the HSM appliance administrator.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The Partition must be 
+ readied to accept Client access in a login state authenticated by the 
+ black PED Key which is accepted only via the PED (this gives 
+ administrative access to the Partition, and opens the Partition to Client 
+ access, but only if the third authentication element is supplied), </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The Client must provide 
+ its credentials in the form of an authentication (a text-string password).</p>
+        <p data-mc-conditions="Default.SA">The Client authentication is the Partition Password that was displayed 
+ by the PED, and recorded by you, at the time the Partition was created (or it is the string to which you changed that original Partition Password, for your convenience, or to fit your security scheme).</p>
+        <p data-mc-conditions="Default.SA">If you provide that Partition Password only to registered, authorized 
+ Clients, and if they in turn keep it secret, then no unauthorized client 
+ can ever access the HSM appliance or its HSM. If you place an HSM
+ Partition into a login state, then any registered application that presents 
+ the Partition Password is welcomed as an authorized Client.</p>
+        <p data-mc-conditions="Default.SA">The login state continues as long as a Client has the connection open 
+ to the Partition.</p>
+        <h3>Activation</h3>
+        <p>Activation is just a login with explicit caching of the  login 
+ data, on the HSM. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>For legacy partitions, the cached authentication data is referred to as partition login data, handled by partition commands. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>For PPSO partitions, the cached authentication data is referred to as role login data, handled by role commands.</p>
+        <p>Login caching, or Activation, is convenient so that 
+ you can remove the black or gray PED key (perhaps to allow other uses of the 
+ PED, such as administrative logins by the HSM SO, or moving the PED to another HSM), while ensuring that 
+ access by Clients is not stopped, and that nobody is required to be present 
+ to press [ENTER] on the keypad on behalf of Clients. </p>
+        <p>To use Activation, you must first allow it by setting Partition Policy 
+ 22 &#160;(Allow 
+ Activation) to <span style="font-style: italic;">on</span>, for each partition 
+ that you create. This is done by the HSM SO for legacy application partitions, and by the Partition SO for PPSO application partitions. If the Policy (22, Allow Activation) is <i>on</i>, then the 
+ partition Crypto Officer) can issue the <span style="font-family: 'Courier New', monospace;">partition 
+ activate</span> command for legacy partitions. For PPSO partitions, once the policy is active it requires just <b>role login</b> to activate. The PED prompts for the black PED Key(s) and  PED PIN if appropriate. 
+ Once you provide  a black PED Key (Crypto Officer) or gray PED Key (Crypto User), the HSM appliance caches that authentication 
+ and the partition remains in a login state (Activated) until:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>you explicitly deactivate 
+ (with lunash command <span style="font-family: 'Courier New', monospace;">partition 
+ deactivate</span>, or lunacm command <b>partition deactivate</b> or <b>role deactivate</b>, as appropriate)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>power is lost to the 
+ HSM.</p>
+        <p>You can remove the black PED Key (or gray PED Key) and keep it in your pocket or in safe 
+ storage. Activation remains on, and any registered Client with the Partition 
+ challenge password is able to connect and perform operations on the partition.</p>
+        <p>Activation is not a big advantage for Clients that connect and remain 
+ connected. It is  an indispensable advantage in cases where Clients repeatedly 
+ connect to perform a task and then disconnect or close the cryptographic session following completion of each task.</p>
+        <h5>To activate an application partition for use by registered Clients </h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that the partition policy "Allow activation" has been switched on.  </p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">For SafeNet Network HSM legacy partitions, type:<br /></p>
+        <p class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">
+            <b>partition changepolicy -par</b> &lt;partitionname&gt; <b>-policy</b> 22 <b>-value</b> 1 
+</p>
+        <p class="listLevel1"> For SafeNet PCIe HSM or SafeNet USB HSM legacy application partition, type:<br /></p>
+        <p class="listLevel1" xml:space="preserve">
+            <b>partition changepolicy -policy</b> 22 <b>-value</b> 1 
+</p>
+        <p class="listLevel1">For SafeNet PCIe HSM or SafeNet USB HSM or SafeNet Network HSM PPSO application partition, type:<br /></p>
+        <p class="listLevel1" xml:space="preserve">
+            <b>partition changepolicy -slot</b> &lt;slot number&gt; <b>-policy</b> 22 <b>-value</b> 1 
+<br /></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>To start activation of the desired partition, type: </p>
+        <p class="listLevel1"><b>partition activate -par</b> &lt;partitionname&gt; </p>
+        <p class="listLevel1">for legacy application partitions, or type: </p>
+        <p class="listLevel1"><b>role login -name</b> &lt;name of role to log in&gt;</p>
+        <p class="listLevel1">for PPSO application partitions.</p>
+        <p class="listLevel1">Respond to the PED prompts.</p>
+        <p class="listLevel1">
+            <br />
+        </p>
+        <h3>AutoActivation</h3>
+        <p>AutoActivation is supported for SafeNet Network HSM and for SafeNet PCIe HSM, but not for SafeNet USB HSM. </p>
+        <p>AutoActivation extends the Activation feature, and allows automatic re-activation of the partition or the role, using 
+ the cached Crypto Officer or Crypto User authentication data, in the 
+ event of a restart or a short power outage (up to 2 hours). That is, the Activated state can recover 
+ to allow Clients to re-connect and continue using the application partition, without 
+ need for human intervention to insert the black PED Key (or gray PED Key) and press [ENTER] 
+ on the PED keypad. </p>
+        <p>AutoActivation, which you set by the &#160;<span style="font-family: 'Courier New', monospace;">partition changePolicy</span> command, requires that Partition Policy 
+ 23 &#160;(Allow 
+ AutoActivation) be <span style="font-style: italic;">on</span>, for the affected
+ partition. </p>
+        <p>When you run the <span style="font-family: 'Courier New', monospace;">partition 
+ activate</span> command for legacy partitions, or when you simply <b>role login</b> for PSO partitions, autoactivation is set as well (if you set policy 23 for that partition). You are directed to the  
+ PED
+, 
+ depending upon the current status of cashed data.</p>
+        <p> If the authentication 
+ data requires refreshing, then the PED prompts you to insert the appropriate black or gray PED Key (that 
+ is, a PED Key that was imprinted with the partition authentication 
+ data for the particular partition [legacy] or role [PPSO]) 
+
+ 
+  and press [ENTER]. Once control returns to the command line,
+ and the system 
+ announces success, you can remove the black PED Key and store it away. 
+ Clients can begin connecting and using the application partition. </p>
+        <p>We anticipate that most customers will set Partition Policy 23 Allow auto-activation (battery-backed caching of partition authentication) to <i>on</i> for their partitions, to ensure the convenience (uptime) of their clients. </p>
+        <p>Customers who prefer to not set auto-activation <i>on</i>, but who keep their SafeNet appliances located remotely from their administrative staff, might prefer to 'manually' resume partition activation by means of Remote PED. These options are entirely a matter of your preference and of your security policy.</p>
+        <h5>To auto-activate an application partition for use by registered Clients </h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that Activation is switched on (see previous section). </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Log in as the partition's administrator (HSM SO for legacy partition, Partition SO for PPSO partition).</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Ensure that the partition policy "Allow auto-activation" has been switched on. </p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">For SafeNet Network HSM legacy partitions, type:<br /></p><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">partition changepolicy -par &lt;partitionname&gt; -policy 23 -value 1 
+</pre>
+        <p class="listLevel1"> For SafeNet PCIe HSM or SafeNet USB HSM legacy application partition, type:<br /></p><pre class="listLevel1" xml:space="preserve">partition changepolicy -policy 23 -value 1 
+</pre>
+        <p class="listLevel1">For SafeNet PCIe HSM or SafeNet USB HSM or SafeNet Network HSM PPSO application partition, type:<br /></p><pre class="listLevel1" xml:space="preserve">partition changepolicy -slot &lt;slot number&gt; -policy 23 -value 1 
+</pre>
+        <h3 data-mc-conditions="Default.SA">Other Measures</h3>
+        <p data-mc-conditions="Default.SA">For best reliability and up-time, in conjunction with the AutoActivation option, you can also set <a href="../../lunash/commands/sysconf/sysconf_appliance_rebootonpanic_enable.htm" class="MCXref xref">sysconf appliance rebootonpanic enable</a>.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

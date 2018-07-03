@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|Configuration without One-step NTLS|[Step 5] Create Application Partitions|Legacy Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Prepare to Create a Partition (PED Authenticated)</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../administration/appendix-a_config/appendix-a_old_config_steps.htm">Configuration without One-step NTLS</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition_create.htm">[Step 5] Create Application Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Prepare to Create a Partition (PED Authenticated)</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Prepare to Create a Partition (PED Authenticated)</h2>
+        <p>This section is HSM application partition setup for PED  Authenticated HSMs. 
+ The activities in this section are required in these circumstances.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>if you just initialized the HSM  for the first time and must now create your 
+ first application Partition, or</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>if you have purchased 
+ a SafeNet HSM capable of supporting multiple HSM Partitions and you wish to 
+ create those additional partitions (this 
+ procedure creates one HSM Partition at a time, and you would need to repeat 
+ it once for each Partition, up to the number supported by your SafeNet HSM) 
+ 
+
+, 
+ &#160;or</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>if you have deleted an 
+ HSM Partition and wish to create a new one to replace it. </p>
+        <h3>About HSM Partitions on the Initialized HSM</h3>
+        <p>At this point, the HSM  <i style="font-weight: bold;">should already</i>:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>have its network settings 
+ configured (see <a href="../appliance_config/about_configuring_luna_appliance_network_settings.htm" class="MCXref xref">Configuring the SafeNet Appliance Network Settings</a> ) </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>have appliance and client-side certificates exchanged and registered (see <a href="../client_appliance/client_appliance.htm" class="MCXref xref">[Step 7] Create a Network Trust Link Between the Client and the Appliance</a>)<br /></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>have its HSM SO 
+ and its Cloning Domain assigned ( see <a href="../hsm_init/about_initializing_a_ped-authenticated_hsm.htm" class="MCXref xref"> &#160;About Initializing a PED-Authenticated HSM</a>  ). &#160;</p>
+        <p>Within the HSM, separate cryptographic work-spaces must be initialized 
+ and designated for client operations. A workspace, or Partition, and all its contents 
+ are protected by encryption derived (in part) from its authentication. 
+ Only a Client that presents the proper authentication is allowed to see 
+ the Partition and to work with its contents.</p>
+        <p>In this section, you will:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Decide the type of application partition to create </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Create an HSM application partition 
+ </p>
+        <h4 data-mc-conditions="Default.SA">Establish a Connection to your HSM Appliance 
+ </h4>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">1.</span></span>If you do not 
+ already have a connection open, connect your administration computer to 
+ the serial Console port of the HSM appliance, and open a Terminal session, 
+ or use ssh to connect via the network (for Windows, we provide PuTTy; for UNIX/Linux, your operating system provides the ssh client, either as part of the distribution, or as a separate down-loadable utility).</p>
+        <h4>Login as HSM  SO</h4>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>To create HSM 
+ Partitions, you must login to the HSM as HSM Security Officer or SO. <br />Ensure that the PED is connected to the PED port on your HSM host , and that 
+ the PED is powered on and "Awaiting command..."</p>
+        <p class="listLevel1">Or, ensure that you have set up a Remote PED connection, and the PED is ready (see <a href="../../install/ped_install/remote-ped_qsg.htm" class="MCXref xref">Installing and Configuring a SafeNet Remote PED</a> and <a href="../../administration/remote_ped/remote_ped_config.htm" class="MCXref xref">Configuring Remote PED</a>).</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>At the command prompt, type the login command.</p><pre xml:space="preserve" class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt; hsm login</pre>
+        <p xml:space="preserve" class="listLevel1" data-mc-conditions="Default.SA">
+</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Authenticate 
+ as HSM SO:<br />The PED prompts for the blue PED Key</p>
+        <p style="margin-left: 40px;">
+            <br />
+            <img src="../../Resources/Images/ped/ped-message_so_login_insert.png" alt="PED MESSAGE: SO LOGIN... Insert a SO / HSM Admin PED Key.  Press ENTER" title="SO LOGIN... Insert a SO / HSM Admin PED Key.  Press ENTER" />
+            <br />
+        </p>
+        <p style="margin-left: 40px;">Provide the blue HSM Admin PED Key 
+ that has been imprinted (initialized) for this HSM.</p>
+        <p style="margin-left: 40px;">If you had set a PED PIN, you are prompted 
+ for that, as well. <br /><br /></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>At this point, you are about to create an application partition. The options are: </p>
+        <p class="ol2" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span><i>a legacy-style partition</i> old firmware </p>
+        <p class="listLevel2">- HSMs with firmware earlier than 6.22.0 (only legacy partitions possible), <br /></p>
+        <p class="listLevel2">- the HSM SO owns and administers the partition </p>
+        <p class="listLevel2">- the remaining partition configuration steps are carried out at the command line, as you have been doing to this point - go to <a href="create_a_legacy_partition_ped_old-fw.htm" class="MCXref xref">Create a PED Authenticated Legacy-style Application Partition (f/w pre-6.22.0)</a></p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span><i>a legacy-style partition</i>newer firmware  &#160;</p>
+        <p class="listLevel2">-  HSMs with f/w 6.22.0 or newer without PPSO capability installed (only legacy partitions possible), <br />or HSMs with f/w 6.22.0 or newer, with PPSO capability installed, but you choose to create a legacy partition, rather than a PPSO partition </p>
+        <p class="listLevel2">- the HSM SO owns and administers the partition </p>
+        <p class="listLevel2">- the remaining partition configuration steps are carried out at the command line, as you have been doing to this point - go to <a href="create_a_legacy_partition_ped_6-22-fw.htm" class="MCXref xref">Create a PED Authenticated Legacy-style Application Partition (f/w 6.22.0 or newer)</a></p>
+        <p class="ol2" data-mc-autonum="c."><span class="autonumber"><span class="ol2Number">c.</span></span><i>a PPSO or Per-Partition SO partition</i> <br />(optional in HSMs with firmware 6.22.0 or newer, and with the PPSO capability installed), </p>
+        <p class="listLevel2">- each partition has its own SO, and the HSM SO&#160;has no access other than to delete the application partition </p>
+        <p class="listLevel2" data-mc-conditions="Default.SA">- the creation of an empty partition is performed next at the LunaSH command line, but subsequent steps are performed at a registered SafeNet HSM Client computer, over NTL or STC link </p>
+        <p class="listLevel2" data-mc-conditions="Default.SA">- go to <a href="hsm-so_action_to_config_appliance_ped-ppso_partition_1a.htm" class="MCXref xref">HSM  SO Configures PED-authenticated SafeNet Network HSM Partition with SO </a> &#160;</p>
+        <p data-mc-conditions="">&#160;</p>
+        <p data-mc-conditions="Default.SA">If you don't remember whether you are logged in as HSM SO, you can use the <b>hsm show</b> command to find out:</p><pre xml:space="preserve" data-mc-conditions="Default.SA">[mylunasa6] lunash:&gt;hsm show
+
+
+   Appliance Details:
+   ==================
+   Software Version:                6.0.0-33
+
+   HSM Details:
+   ============
+   HSM Label:                          mysa6
+   Serial #:                           7000022
+   Firmware:                           6.22.0
+   HSM Model:                          K6 Base
+   Authentication Method:              PED keys
+   HSM Admin login status:             <span style="background-color: #ffff00;">Not Logged In</span>     &#160;(alternatively could show "Logged in")
+   HSM Admin login attempts left:      3 before HSM zeroization!
+   RPV Initialized:                    Yes
+   Audit Role Initialized:             Yes
+   Remote Login Initialized:           No
+   Manually Zeroized:                  No
+
+   Partitions created on HSM:
+   ==============================
+   Partition:       16298193222733, Name: mypsopar1
+   Partition:       16298193222735, Name: mylegacypar1
+
+   Number of partitions allowed:        100
+   Number of partitions created:        2
+
+   FIPS 140-2 Operation:
+   =====================
+   The HSM is NOT in FIPS 140-2 approved operation mode.
+
+   HSM Storage Information:
+   ========================
+   Maximum HSM Storage Space (Bytes):   16252928
+   Space In Use (Bytes):                325058
+   Free Space Left (Bytes):             15927870
+
+
+Command Result : 0 (Success)
+[mylunasa6] lunash:&gt;
+</pre>
+        <p data-mc-conditions="">&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

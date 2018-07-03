@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Design Considerations">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Scalable Key Storage (formerly&#160;SIM) APIs</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">SDK Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="design.htm">Design Considerations</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Secure Identity Management (SIM) APIs</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Scalable Key Storage (formerly&#160;SIM) APIs</h2>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The SafeNet Network HSM HA feature and Scalable Key Storage can be used simultaneously 
+ in SafeNet Network HSM release 3.0 and later.</p>
+        <p>Applications use the following APIs to extract/insert keys under Scalable Key Storage. 
+ The multisign function call is an optimization that allows you to insert 
+ and sign (potentially) many objects at once.</p><pre class="listLevel1">CK_RV CK_ENTRY CA_ExtractMaskedObject(CK_SESSION_HANDLE hSession,</pre><pre class="listLevel2">CK_ULONG ulObjectHandle,</pre><pre class="listLevel2">CK_BYTE_PTR pMaskedKey,</pre><pre class="listLevel2">CK_USHORT_PTR pusMaskedKeyLen);</pre><pre class="listLevel1">CK_RV CK_ENTRY CA_InsertMaskedObject( CK_SESSION_HANDLE hSession,</pre><pre class="listLevel2">CK_ULONG_PTR pulObjectHandle,</pre><pre class="listLevel2">CK_BYTE_PTR pMaskedKey,</pre><pre class="listLevel2">CK_USHORT usMaskedKeyLen);</pre><pre class="listLevel1">CK_RV CK_ENTRY CA_MultisignValue( CK_SESSION_HANDLE hSession,</pre><pre class="listLevel2">CK_MECHANISM_PTR pMechanism,</pre><pre class="listLevel2">CK_ULONG ulMaskedKeyLen,</pre><pre class="listLevel2">CK_BYTE_PTR pMaskedKey,</pre><pre class="listLevel2">CK_ULONG_PTR pulBlobCount,</pre><pre class="listLevel2">CK_ULONG_PTR pulBlobLens,</pre><pre class="listLevel2">CK_BYTE_PTR CK_PTR ppBlobs,</pre><pre class="listLevel2">CK_ULONG_PTR pulSignatureLens,</pre><pre class="listLevel2" xml:space="preserve">CK_BYTE_PTR CK_PTR ppSignatures);</pre><pre class="listLevel2" xml:space="preserve">&#160;</pre>
+        <p>The SafeNet Software Developers Kit contains example code in our ckdemo 
+ example program that shows how to use this API.</p>
+        <p>In general, the normal life cycle of a key pair is assumed to consist 
+ of the following steps:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the key pair is generated 
+ </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the public exponent and 
+ modulus are extracted for the creation of a certificate (CA_ExtractMaskedObject) 
+ </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the keys are used (some 
+ number of times, over a period of years) for cryptographic operations 
+ </p>
+        <p>You can use <b>CA_MultisignValue</b> to perform signing operations on multiple 
+ objects at one time. <b>CA_MultisignValue</b> is a self-contained call that cleans 
+ up after itself by destroying the inserted key before exiting.</p>
+        <p>You can use <b>CA_InsertMaskedObject</b> to use the inserted key for other 
+ operations (such as encryption) that you would invoke via standard cryptoki 
+ calls. You must clean up by deleting the object when you have finished, 
+ to free the volatile memory that was used.</p>
+        <p>The external keys are destroyed (wiped from the database) when no longer 
+ needed.</p>
+        <h3>SIM II (Enhancements to SIM)</h3>
+        <p>SIM&#160;II provides enhancements to SIM for the Cyptoki API and the Java API, as described in the following sections:</p>
+        <h4>Cryptoki API</h4>
+        <p>Three forms of authorization data are supported: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>text-based PINs</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>a challenge/response 
+ mechanism similar to the one used in SafeNet HSM (with Trusted Path Authentication) 
+ login</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>a PED key mechanism similar 
+ to our legacy M-of-N activation for the HSM. &#160;</p>
+        <p>The form of authorization data is identified using the following definitions:</p><pre xml:space="preserve" class="listLevel1">typedef CK_ULONG SIM_AUTHORIZATION_FORM;</pre><pre xml:space="preserve" class="listLevel1">#define SIM_AUTHORIZATION_PIN 0</pre><pre xml:space="preserve" class="listLevel1">#define SIM_AUTHORIZATION_CHALLENGE 1</pre><pre xml:space="preserve" class="listLevel1">#define SIM_AUTHORIZATION_PED 2</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Three new API functions are added to <span class="code">cryptoki.h</span>, as follows:</p>
+        <h5>The CK_RV CA_SIMExtract function</h5><pre xml:space="preserve">CK_RV CA_SIMExtract(CK_ULONG handleCount, CK_ULONG *handleList, 
+</pre><pre xml:space="preserve">   CK_ULONG authForm, CK_ULONG authDataCount, CK_ULONG subsetRequired, </pre><pre xml:space="preserve">   CK_BYTE **authDataList, </pre><pre xml:space="preserve">   CK_BOOL deleteAfterExtract, </pre><pre xml:space="preserve">   CK_ULONG *pBlobSize, CK_BYTE *pBlob );</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p>This function takes a list of object handles, extracts them using the given authorization 
+ data for protection and returns the extracted set of objects as a single 
+ data blob. &#160;The 
+ objects are left on the partition or destroyed, based on the value of 
+ the delete-after-extract flag.</p>
+        <p>The <b>authDataCount</b> parameter defines the N value. &#160;The 
+ <b>subsetRequired</b> parameter defines the M value. &#160;The 
+ <b>authDataList</b> parameter should have N entries in it if it is used.</p>
+        <p>For an authorization data form of PED or challenge/response, <b>authDataList</b> 
+ parameter is null – values are defined through the PED.</p>
+        <h5>The CK_RV SIMInsert function</h5><pre xml:space="preserve">CK_RV SIMInsert( CK_ULONG blobSize, CK_BYTE *pBlob, </pre><pre xml:space="preserve">&#160;&#160;&#160;CK_ULONG authForm, CK_ULONG authDataCount, CK_BYTE **authDataList,</pre><pre xml:space="preserve">&#160;&#160;&#160;CK_ULONG *pHandleListSize, CK_ULONG *pHandleList );</pre><pre xml:space="preserve">&#160;</pre>
+        <p>This function takes a previously extracted blob as input, validates the authorization 
+ data, inserts the objects contained in the blob into the HSM, and returns 
+ the list of handles assigned to the objects.</p>
+        <p>For an authorization data form of PED, the <b>authDataCount</b> and <b>authDataList</b> 
+ parameters are not used. &#160;For 
+ other authorization data forms, the <b>authDataCount</b> value should equal M, 
+ and the <b>authDataList</b> should have M elements in it.</p>
+        <h5>The CK_RV SIMMultiSign function</h5><pre xml:space="preserve">CK_RV SIMMultiSign( CK_ULONG blobSize, CK_BYTE *pBlob, </pre><pre xml:space="preserve">&#160;&#160;&#160;CK_ULONG authForm, CK_ULONG authDataCount, CK_BYTE **authDataList,</pre><pre xml:space="preserve">&#160;&#160;&#160;CK_ULONG inputDataCount, </pre><pre xml:space="preserve">&#160;&#160;&#160;CK_ULONG *inputDataLengths, CK_BYTE **inputDataTable,</pre><pre xml:space="preserve">&#160;&#160;&#160;CK_ULONG *signatureLengths, CK_BYTE **signatureTable);</pre><pre xml:space="preserve">&#160;</pre>
+        <p>This function takes a previously extracted blob as input, validates the authorization 
+ data, then uses the key material in the given key blob to sign the various 
+ pieces of data in the input data table, returning the signatures through 
+ the signature table. &#160;The 
+ key blob must contain a single key, otherwise an error is returned.</p>
+        <p>The authorization data parameters are handled as for the <span class="code">SIMInsert</span> function.</p>
+        <h4>Java API</h4>
+        <p>The standard java keystore API supports a single password for each keystore, 
+ and a single password for each key in the keystore. &#160;We 
+ &#160;provide 
+ a keystore implementation that stores key material in a file, using Scalable Key Storage (formerly&#160;SIM) 
+ to extract the key material. &#160;The 
+ password on the keystore is not used, but the password for each key is 
+ used as authorization data for the Scalable Key Storage masking process.</p>
+        <p>When a key is stored in this type of keystore, it is extracted using 
+ Scalable Key Storage and the appropriate authorization data, but the key is left on the 
+ HSM. &#160;When 
+ a key is retrieved from this type of keystore, it is inserted onto the 
+ HSM.</p>
+        <p>The standard keystore API supports 1-of-1 authorization inputs of the 
+ text form. &#160;Different 
+ authorization data forms are supported through a custom API. &#160;The <b>LunaTokenManager</b> class is enhanced to provide a new method to allow the 
+ authorization data for subsequent keystore operations to be defined. &#160;If 
+ the password parameter of a keystore <b>SetKeyEntry</b> or <b>SetCertificateEntry</b> 
+ method call is given a null value, the actual authorization data will 
+ be taken from the <b>LunaTokenManager</b> interface.</p>
+        <p>Note that it is up to application to serialize calls to <b>LunaTokenManager</b> 
+ and the keystore object if multiple threads are simultaneously using keystores. 
+ &#160;That is, 
+ each thread must ensure that it sets its authorization data in <b>LunaTokenManager</b> 
+ and then performs its keystore operation without being interrupted by 
+ another thread changing the <b>LunaTokenManager</b> authorization data.</p>
+        <h3>Example Operations Using CKDemo</h3>
+        <p>The following examples show how to use the ckdemo utility to perform SIM operations.</p>
+        <h4>Multisign Challenge (Trusted Path Authentication Only)</h4>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open Ckdemo and 
+ login as user.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Create a 1024 
+ bit RSA key pair - 45,7,1024,1,1,1,1,1,1,1,1,1 </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Sim Extract (105) 
+ <br />Enter 
+ your choice : 105<br />Enter 
+ handle of object to add to blob (0 to end list, -1 to cancel): 10<br />Enter 
+ handle of object to add to blob (0 to end list, -1 to cancel): 0<br />Enter 
+ authentication form:<br />0 - 
+ none<br />1 - 
+ password<br />2 - 
+ challenge response<br />3 - 
+ PED-based<br />enter 
+ “2”<br />Enter number of authorization secrets (N value): 3<br />Enter subset size required for key use (M value): 2</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>The SafeNet PED 
+ displays your challenge secrets, be sure to record them. <br />Delete after extract? [0 = false, 1 = true] : 1</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>For every instance 
+ of data &#160;to 
+ sign, enter “12345678”. <br />The signatures should complete and be placed in a file.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Ensure that the 
+ private key has been extracted by performing CKDemo command 26,6 . This 
+ shows all the objects on the token. The private key handle that you noted 
+ earlier should not be there.</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Now, insert the 
+ blobfile back onto the token: <br />Select 
+ Insert masked object (106)<br />Enter 
+ “simkey.blob” as the keyblob to be re-inserted<br />Input 
+ 2 of the 3 challenges that you recorded earlier.</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>CKDemo 26,6 should 
+ reveal that the private key has been re-inserted.</p>
+        <h4>SIM2 Multisign PED-based (PED/Trusted Path Configuration 
+ Only) </h4>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open Ckdemo and 
+ login as user.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Create a 1024 
+ bit RSA key pair - 45,7,1024,1,1,1,1,1,1,1,1,1. Note the private and public 
+ key handles.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Sim Extract (105) 
+ <br />Enter 
+ your choice : 105<br />Enter 
+ handle of object to add to blob (0 to end list, -1 to cancel): 10<br />Enter 
+ handle of object to add to blob (0 to end list, -1 to cancel): 0<br />Enter 
+ authentication form:<br />3 - 
+ none<br />4 - 
+ password<br />5 - 
+ challenge response<br />6 - 
+ PED-based<br />Enter 
+ “3”<br /></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Delete after extract? [0 = false, 1 = true] : 1</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>For every instance 
+ of data &#160;to 
+ sign, enter “12345678”. <br />The signatures should complete and the key should be placed in the 
+ file simkey.blob.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Ensure that the 
+ private key has been extracted by performing a 26,6 . This will show all 
+ the objects on the token. The private key handle that you noted earlier 
+ should not be there.</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Now, insert the 
+ blobfile back onto the token: <br />Select Insert masked object (106)<br />Enter 
+ “simkey.blob” as the keyblob to be re-inserted.<br />Input 
+ 2 of the 3 challenges that you recorded earlier.</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>CKDemo command 
+ 26,6 should reveal that the private key has been re-inserted.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

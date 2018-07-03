@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>[Step 3] Initialize the HSM </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter" data-mc-autonum=" &#160;&#160;"><span class="autonumber"><span> &#160;&#160;</span></span>
+            <br />
+            <MadCap:conditionalText data-mc-conditions="Default.SA">[Step 3] </MadCap:conditionalText>Initialize the HSM </h1>
+        <p>In this chapter you will initialize your HSM. To initialize an HSM is to prepare it for operation under the control of an HSM Security Officer or SO (the entity that administers the HSM). </p>
+        <h2>Password-Authenticated versus PED-Authenticated HSMs</h2>
+        <p>The HSM is available in  PED-authenticated or password-authenticated versions. Follow the initialization steps in this chapter to initialize the type of HSM that you have purchased.</p>
+        <p>There is no externally visible difference between a password-authenticated  or PED-authenticated HSM. For an installed HSM, you 
+ can determine its mode of authentication by attempting to log in. A PED-authenticated version will direct you to the SafeNet PED. A Password Authenticated 
+ version will prompt you for the password. You cannot change the authentication type of a SafeNet HSM. It is a manufacturing 
+ configuration, set at the factory.  If you have a PED-authenticated version, you cannot 
+ access the HSM and partitions by means of passwords. &#160;</p>
+        <p>For password-authenticated HSMs, you authenticate to the HSM as Security Officer, or Crypto Officer, or User, etc., by typing a password on your computer keyboard. </p>
+        <p>For PED-authenticated HSMs, you authenticate to the HSM as Security Officer, or Crypto Officer, or User, etc., by presenting an iKey PED Key device that contains the authentication. </p>
+        <h3>Which kind do I have?</h3>
+        <p>SafeNet HSMs are shipped from the factory as one or the other type. This is not a field-changeable setting. If you are not sure which kind you have, verify the type of HSM with the command&#160;</p>
+        <p data-mc-conditions="Default.SA"><b>hsm 
+ displayLicenses</b> in lunash.</p>
+        <p>That command is one of several non-sensitive HSM commands that does not require HSM authentication. The output lists the configuration packages (additions to the basic build) that make up your SafeNet HSM. Look for the term <b>FIPS3</b> appearing in that list to indicate that your SafeNet HSM is PED Authenticated  - otherwise, your HSM&#160;is Password Authenticated.</p>
+        <p>See a comparison of Password-authenticated versus PED-authenticated at <a href="../../overview/authentication/password-vs-ped_comparison.htm" class="MCXref xref">Comparing Password and PED Authentication</a>. &#160;</p>
+        <h3>What if I make a mistake about the type of authentication I present?</h3>
+        <p>No harm. Offering the wrong kind of authentication is not harmful - the only result is a brief delay. However, offering the wrong authentication of the correct type starts the counter for "bad login" attempts. The following paragraphs offer a little more detail.</p>
+        <p>As a general rule, when you attempt to login to the HSM or to issue any command that requires authentication, the command-line prompts you for the needed authentication. If yours is a Password Authenticated  HSM, you are asked for the password, and the command eventually times out if the password is not given. (Of course, if you provide a wrong password, that is applied against the count of bad login attempts. However, connecting a PED and offering a PED&#160;Key to a Password Authenticated HSM has no effect; it is ignored.)</p>
+        <p>If yours is a PED Authenticated (Trusted Path) HSM, the prompt asks you to attend to the PED for further instructions. If a PED&#160;is not connected and/or you don't supply the appropriate PED&#160;Keys and keypad actions, the command eventually times out. (If you do have a PED connected and supply the wrong PED Key [of the type requested], then that action is applied against the count of bad login attempts. However, if you mistakenly provide a password [at the command-line] for a PED Authenticated SafeNet HSM, that password is ignored and the bad-login-attempt count is not incremented.)</p>
+        <p>In either case, just wait for the timeout (a few minutes) to conclude, then begin again, using the correct authentication method.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>We recommend that you read through the pages in the Configuration Guide at least once in advance of starting the procedure, so that you can resolve any questions before beginning any time-limited operations. For a Password Authenticated SafeNet HSM, you should have passwords already determined according to your organization's security policies. For a PED Authenticated SafeNet HSM, you should have a SafeNet PED connected, and an appropriate set of PED Keys available.</p>
+        <p>If this is your only PED Authenticated SafeNet HSM, then you should have received a PED and PED Keys along with the HSM/appliance. If you have other PED Authenticated units at your location, then you can use a PED from one of them. </p>
+        <h3>High-Level Configuration Steps</h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Initialize the HSM. Choose one or the other of: </p>
+        <p class="ol2Start" data-mc-autonum="a." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol2Number">a.</span></span>"<a href="../../configuration/hsm_init/about_initializing_a_password_authenticated_hsm.htm">About Initializing a Password Authenticated HSM</a>"</p>
+        <p class="ol2" data-mc-autonum="b." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol2Number">b.</span></span>"<a href="../../configuration/hsm_init/initializing_a_luna_hsm_ped-version.htm">About Initializing a PED Authenticated HSM</a>"</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Change the HSM policies, if desired, as described in&#160;</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA"><a href="../../configuration/initial_setup/about_hsm_capabilities_and_policies.htm" class="MCXref xref">[Step 4] Set the HSM  Policies</a> <![CDATA[ ]]></p>
+        <p class="listLevel1">If any of the policies you set are destructive, you must re-initialize the HSM&#160;after setting the polices.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Create a partition on the HSM, as described in&#160;</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA"><a href="../../configuration/partition_create/partition_create.htm" class="MCXref xref">[Step 5] Create  Application Partitions</a> <![CDATA[ ]]></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Change the partition policies, if desired, as described in <a href="../../config_pci/config_ped_auth/set_luna_pci_applic-partition_policies_ped.htm" class="MCXref xref">Setting SafeNet PCIe HSM Partition Policies [Optional]</a></p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

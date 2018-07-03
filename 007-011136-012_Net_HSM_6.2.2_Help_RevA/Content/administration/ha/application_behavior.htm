@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|High-Availability (HA) Configuration and Operation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using HA With Your Applications</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha.htm">High-Availability (HA) Configuration and Operation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Using HA With Your Applications</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Using HA With Your Applications</h2>
+        <p>This section describes how HA affects your applications, and describes the settings your can use and actions you can take to mitigate any performance or stability issues.</p>
+        <h3>HAOnly</h3>
+        <p>By default, the client lists both the physical slots and virtual slots for the HA group.  Directing applications at the physical slots bypasses the high availability and load balancing functionality.  An application must be directed at the virtual slots to activate the high availability and load balancing functionality.  A configuration setting referred to as <b>HAonly</b>  hides the physical slots, and is recommended to prevent incorrect application configurations. Doing so also simplifies the PKCS #11 slot ordering given a dynamic HA group.</p>
+        <h5>What is the impact of the ‘haonly’ flag, and why might you wish to use it?
+. </h5>
+        <p>The “haonly” flag shows only HA slots (virtual slots) to the client applications. It does not show the physical slots. We recommend that you use "haonly", unless you have particular reason for not using it. Having "haonly" set is the proper way for clients to deal with HA groups - it prevents the possible confusion of having both physical and virtual slots available.  </p>
+        <p>Recall that automatic replication/synchronization across the group occurs only if you cause a change (keygen or other addition, or a deletion) via the virtual HA slot. If you/your application changes the content of a physical slot, this results in the group being out-of-sync, and requires a manual re-sync to replicate a new object across all members. Similarly, if you delete from a physical slot directly, the next manual synchronization will cause the deleted object to be repopulated from another group member where that object was never deleted. Therefore, to perform a lasting deletion from a single physical slot (if you choose not to do it via the virtual slot) requires that you manually delete from every physical slot in the group, or risk your deleted object coming back. &#160;&#160;</p>
+        <p>Also, from the perspective of the Client, a member of the HA&#160;group can fail and, with "haonly" set, the slot count does not change. If "haonly"&#160;is not set, and both virtual and physical slots are visible, then failure of unit number 1 causes unit number 2 to become slot 1, and so on. That could cause problems if your application is not designed to deal gracefully with such a change. </p>
+        <h3>Key Generation</h3>
+        <p>An application that continuously generates key material will need to have its HA group carefully selected. Contact SafeNet support for help in architecting your HA group for these applications.</p>
+        <h5>Example</h5>
+        <p>Multi-token is a general-purpose demonstration/exercise 
+ tool for SafeNet HSMs. It is not optimized for all tasks. If you run the 
+ extract/insert options (for Scalable Key Storage) in multitoken against SafeNet Network HSM with several 
+ threads against the HA slot, performance appears to be about 10 times 
+ slower than in non-HA single slot mode. &#160;<br /><br />The reason is that in this mode multitoken continuously creates 
+ session objects that need to be replicated to the additional physical HA slots. 
+ &#160;This creates 
+  overhead that does not exist in single slot mode. 
+ &#160;For optimum 
+ real-life performance, your applications should avoid this approach.</p>
+        <h3>Application Object Handles</h3>
+        <p>Application developers should be aware that the PKCS #11 object handle model is fully virtualized with the SafeNet HA logic.  As such, the application must not assume fixed handle numbers across instances of an application.  A handle’s value remains consistent for the life of a process; but it might be a different value the next time the application is executed. </p>
+        <h4>HA and FindObjects</h4>
+        <h5>HA vs Individual</h5>
+        <p>When an application is addressing a single HSM, all objects in the application partition can be addressed by their handles. When an application is addressing an HA group, a layer of abstraction overlays the physical slots and presents a virtual slot to represent them. All calls and operations by applications should be directed against the virtual (HA) slot. Asserting HAOnly avoids potential problems that can arise if applications interfere directly with physical slots when HA is in force. </p>
+        <h5>Inside HA</h5>
+        <p>For best ongoing functioning of an application with HA, the application makes calls to examine specific objects in the virtual slot, or to perform operations on those objects. Objects are represented by handles in the physical slots, but the same object might have a different handle in two-or-more HSMs. Furthermore, those handles could change if an HSM&#160;drops out (fails or loses communication) and is replaced. The HA functionality deals with the differences by establishing a virtual-to-physical mapping, such that an application requests a virtual handle, and HA "invisibly" takes care of matching that virtual handle to actual physical objects. </p>
+        <p>In order to make those mapping connections, HA refers to a Virtual Object Table that establishes a virtual handle for  OUIDs in the group. If the mapping of virtual handle to physical already exists, it was previously determined from that Virtual Object Table. If there is no existing match of virtual handle to physical, then HA looks in the Virtual Handle Table to discover the OUID associated with that virtual handle, then goes to the physical slot (HSM application partition) to retrieve the physical handle that matches the OUID. The physical handle is matched to the virtual handle, and now the application can examine attributes or perform crypto operations on the mapped object, needing only to know the virtual handle.</p>
+        <h5>C_FindObjects Behavior</h5>
+        <p>The next question, of course, is where did the Virtual Object Table come from? The Virtual Object Table, that assigned virtual handles to physical-object OUIDs in the group, was created by HA responding to your application's C_FindObjects call sometime after the client application was launched - that is, the table is ephemeral and must be recreated for each instance of your application. It is then maintained by HA while your application is open. The table is populated: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>partially if your C_FindObjects asks for specific attributes, or </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>fully if your C_FindObjects searches for ALL objects.</p>
+        <p>A non-specific C_FindObjects ALL can be a lengthy process, since it must search through all physical objects. A more narrow, focused and specific C_FindObjects generally takes less time. </p>
+        <p>If an earlier call to C_FindObjects resulted in a partial Virtual Object Table, and then a later call to C_FindObjects looks for objects that were not previously included, then the Virtual Object Table is expanded incrementally.</p>
+        <p>The HA client builds a Virtual Object Table for <b>each</b> running application that loads the Luna library. </p>
+        <h5>Application Interaction with HA </h5>
+        <p>In the previous section, most of the described action is invisible to your application. Your application makes a call to a crypto slot (the HA virtual slot) and gets a response back. Between those two events, HA is taking care of </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>intercepting the call, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>translating virtual to physical, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>launching actions on the appropriate HSM, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>receiving the result, and </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>forwarding that result to your application, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>as well as ensuring that any changes in objects on the physical HSM that performed the action are propagated to all members of the HA group. </p>
+        <p>Some client applications launch once and then run continuously for a long time. In this case, once the mapping of physical object handles to virtual object handles  has completed, the Virtual-to-Physical table is available and can be referred instantly, with no need to rebuild (the time-consuming part).</p>
+        <p>Some client applications launch, perform a search, then close quickly. If such an application can search by description, handles, or other attributes, then minimal performance penalty is imposed. If such an application (open-and-shut type) performs C_FindObjects ALL before running a call against an object, then this imposes a significant performance penalty, as the complete Virtual Object Table must be constructed each time. </p>
+        <p>HA needs to be aware of only the objects that your application needs to use; a larger or less-specific search that returns more objects than required by your application is wasteful, and degrades performance unnecessarily. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The cached object list is ephemeral, and only exists for the current session. If you restart the application, HA must recreate the object list cache. Best practice is to execute C_FindObjects to create the cached object list at application start up.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Beginning with release 6.2.1, the initial call to C_FindObjects ALL is optimized, but we still recommend that you avoid running "C_FindObjects" with the "all" option if you can avoid it by using a more limited and focused search. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

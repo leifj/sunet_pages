@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|SNMP">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>The SAFENET HSM MIB</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="snmp.htm">SNMP</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">The SAFENET HSM MIB</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>The SAFENET HSM MIB</h2>
+        <p>The SAFENET-HSM-MIB defines HSM status information and HSM Partition information that can be viewed via SNMP. </p>
+        <p> To access tables, use a command like:</p><pre xml:space="preserve">snmptable  -a SHA  -A snmppass  -u snmpuser -x AES -X snmppass -l authPriv -v 3 172.20.11.59   SAFENET-HSM-MIB::hsmTable</pre><pre xml:space="preserve">&#160;</pre>
+        <p>The information is defined in tables, as detailed in the following sections:</p>
+        <h3>SNMP Table Updates</h3>
+        <p>The SNMP tables are updated and cached every 60 seconds. Any changes made on the HSM&#160;may therefore take up to 60 seconds to be included in the tables. When a query is received to view the tables, the most recent cached version is displayed. If a change you were expecting is not displayed, wait 60 seconds and try again.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Some values may not get updated automatically, such as the HSM firmware version (hsmFirmwareVersion) following a firmware upgrade. To force an update, restart the SNMP agent.</p>
+        <h3>hsmTable &#160;&#160;</h3>
+        <p>This table provides a list of all the HSM information on the managed element.</p>
+        <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 88px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 293px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Item &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Type &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Description &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Values &#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>hsmSerialNumber &#160;&#160;          &#160;&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Serial number of the HSM &#160;&#160;- used as an index into the tables.&#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">From&#160;factory &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmFirmwareVersion &#160;&#160;       &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Version of firmware executing on the HSM. &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">As found &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmLabel &#160;&#160;                 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"> Label associated with the HSM. &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Provided by SO at init time &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmModel &#160;&#160;                 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Model identifier for the HSM.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">From factory &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmAuthenticationMethod &#160;&#160;  &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">INTEGER &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Authentication mode of the HSM. &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">        unknown(1),      -- not known
+        <br />password(2),     -- requires passwords
+<br />     pedKeys(3)       -- requires PED
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmRpvInitialized &#160;&#160;        &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">INTEGER &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Remote ped vector initialized flag of the HSM. &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">        notSupported(1),    -- rpv not supported
+<br />        uninitialized(2),   -- rpv not initialized
+<br />        initialized(3)      -- rpv initialized</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmFipsMode &#160;&#160;              &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">TruthValue &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">FIPS 140-2 operation mode enabled flag of the HSM. &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Factory set &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPerformance &#160;&#160;          &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">INTEGER &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Performance level of the HSM. &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> <![CDATA[ ]]></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmStorageTotalBytes &#160;&#160;     &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Unsigned32 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Total storage capacity in bytes of the HSM &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Factory&#160;set &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmStorageAllocatedBytes &#160;&#160; &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Unsigned32 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Number of allocated bytes on the HSM &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Calculated&#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmStorageAvailableBytes &#160;&#160; &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Unsigned32 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Number of available bytes on the HSM &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Calculated&#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmMaximumPartitions &#160;&#160;     &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Unsigned32 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Maximum number of partitions allowed on the HSM &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">2, 5, 10, 15, or 20, per license</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPartitionsCreated &#160;&#160;    &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Unsigned32 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Number of partitions created on the HSM &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">As found &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPartitionsFree &#160;&#160;       &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Unsigned32 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Number of partitions that can still be created on the HSM &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Calculated &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmBackupProtocol &#160;&#160;        &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">INTEGER &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Backup protocol used on the HSM &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">        unknown(1),
+<br />       none(2),
+<br />       cloning(3),
+<br />keyExport(4)
+ &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmAdminLoginAttempts &#160;&#160;    &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Counter32 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Number of failed Administrator login attempts left before HSM zeroized &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">As found, calculated &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmAuditRoleInitialized &#160;&#160;  &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">INTEGER &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Audit role is initialized flag &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">        notSupported(0),
+        &#160;&#160;<br />yes(1),
+        <br />no(2)
+ &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmManuallyZeroized &#160;&#160;      &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">TruthValue &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Was HSM manually zeroized flag &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">As found &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmUpTime &#160;&#160;                &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Counter64 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Up time in seconds since last HSM reset &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Counted &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmBusyTime &#160;&#160;              &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Counter64 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Busy time in seconds since the last HSM reset &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Calculated &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">hsmCommandCount &#160;&#160;          &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Counter64 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">HSM commands processed since last HSM reset &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Counted &#160;&#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>The hsmPartitionTable &#160;&#160;</h4>
+        <p>This table provides a list of all the partition information on the managed element.</p>
+        <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Item &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Type &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Description &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Values &#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPartitionSerialNumber &#160;&#160;          &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Serial number for the partition &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Generated &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPartitionLabel &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Label assigned to the partition &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Provided at partition creation &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPartitionActivated &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">             TruthValue &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Partition activation flag &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set by policy &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPartitionStorageTotalBytes &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Unsigned32 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Total storage capacity in bytes of the partition &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set or calculated at partition creation or re-size &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPartitionStorageAllocatedBytes &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Unsigned32 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Number of allocated (in use) bytes on the partition&#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Calculated &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPartitionStorageAvailableBytes &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Unsigned32 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Number of avalailable (unused) bytes on the partition &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Calculated &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">hsmPartitionObjectCount</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Unsigned32 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Number of objects in the partition &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Counted</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>hsmLicenseTable</h3>
+        <p>This table provides a list of all the license information on the managed element. More than one HSM might be connected to a Host, so they are accessed with two indices; the first index identifies the HSM for which the license entry corresponds (hsmSerialNumber), the second is the index for the corresponding license (hsmLicenseID).</p>
+        <p>&#160;</p>
+        <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Item &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Type &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Description &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Values &#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmLicenseID &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">License identifier &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set at factory or&#160;at capability update &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">hsmLicenseDescription &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">License description &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Set at factory or&#160;at capability update &#160;&#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>hsmPolicyTable &#160;&#160;</h3>
+        <p>This table provides a list of all the HSM policy information on the managed element.</p>
+        <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Item &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Type &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Description &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Values &#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPolicyType &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">INTEGER &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Type of policy &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">        capability(1),
+        &#160;&#160;<br />policy(2)
+ &#160;&#160;&#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPolicyID &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Unsigned32 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Policy identifier &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Numeric value identifies policy and is used as a index into the policy table &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPolicyDescription &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Description of the policy &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Brief text description of what the policy does &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">hsmPolicyValue</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">                 DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Current value of the policy</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Brief text description to show current state/value of policy &#160;&#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>hsmPartitionPolicyTable &#160;&#160;</h3>
+        <p>This table provides a list of all the partition policy information on the managed element.</p>
+        <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 166px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Item &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Type &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Description &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Values &#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPartitionPolicyType&#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">INTEGER &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Capability or policy &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">        capability(1),
+ &#160;&#160;<br />policy(2)
+ &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPartitionPolicyID &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Unsigned32 &#160;&#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Policy identifier &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Numeric value identifies policy and is used as a index into the policy table &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmPartitionPolicyDescription &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Description of the policy &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Brief text description of what the policy does &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">hsmPartitionPolicyValue &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Current value of the policy &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Brief text description to show current state/value of policy &#160;&#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>hsmClientRegistrationTable &#160;&#160;</h3>
+        <p>This table provides a list of registered clients. </p>
+        <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 83px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Item &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Type &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Description &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Values &#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmClientName &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Name of the client &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Name provided on client cert &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmClientAddress &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Address of the client &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">IP address of the client &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmClientRequiresHTL &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">TruthValue &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Flag specifying if HTL required for the client &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Flag set at HSM host side to control client access </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">hsmClientOTTExpiry &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">INTEGER &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">OTT expiry time (-1 if not provisioned)</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Expiry time, in seconds, for HTL&#160;OneTimeToken (range is 0-3600); -1 indicates not provisioned, 0 means never expires &#160;&#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>hsmClientPartitionAssignmentTable &#160;&#160;</h3>
+        <p>This table provides a list of assigned partitions for a given client. &#160;&#160;</p>
+        <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Item &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Type &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Description &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Values &#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsmClientHsmSerialNumber &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Index into the HSM table &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">--</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">hsmClientPartitionSerialNumber          DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">DisplayString &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Index into the Partition Table &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">--</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>SNMP output compared to SafeNet tools output</h3>
+        <p>For comparison, the following shows lunacm or lunash command outputs that provide HSM information equivalent to the SNMP information depicted in the tables above (from the HSM MIB).</p>
+        <h4>HSM Information</h4>
+        <p>At the HSM level the information in the outputs of "hsm show" and "hsm showp" and "hsm di"  includes the following :</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SW Version</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>FW Version</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HSM label</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Serial #</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HW Model</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Authentication Method</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>RPV state</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>FIPS mode</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HSM storage space (bytes)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HSM storage space used (bytes)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>HSM storage free space (bytes)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Performance level</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Max # of partitions</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span># of partitions created</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span># of free partitions</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Configuration (Cloning/CKE)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>License information similar to the output of the "hsm displayLicenses" command</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Policies as shown below.</p><pre xml:space="preserve">Description Value
+=========== =====
+Enable PIN-based authentication Allowed
+Enable PED-based authentication Disallowed
+Performance level 15
+Enable domestic mechanisms &amp; key sizes Allowed
+Enable masking Disallowed
+Enable cloning Allowed
+Enable special cloning certificate Disallowed
+Enable full (non-backup) functionality Allowed
+Enable non-FIPS algorithms Allowed
+Enable SO reset of partition PIN Allowed
+Enable network replication Allowed
+Enable Korean Algorithms Allowed
+FIPS evaluated Disallowed
+Manufacturing Token Disallowed
+Enable Remote Authentication Allowed
+Enable forcing user PIN change Allowed
+Enable portable masking key Allowed
+Enable partition groups Disallowed
+Enable remote PED usage Disallowed
+Enable External Storage of MTK Split Disallowed
+HSM non-volatile storage space 2097152
+Enable HA mode CGX Disallowed
+Enable Acceleration Allowed
+Enable unmasking Allowed
+Enable FW5 compatibility mode Disallowed
+Unsupported Disallowed
+Unsupported Disallowed
+Enable ECIES support Disallowed
+The following policies are set due to current configuration of
+this HSM and cannot be altered directly by the user.
+Description Value
+=========== =====
+PIN-based authentication True
+The following policies describe the current configuration of
+this HSM and may by changed by the HSM Administrator.
+Changing policies marked "destructive" will zeroize (erase
+completely) the entire HSM.
+Description 				Value Code Destructive
+=========== 				===== ==== ===========
+Allow cloning 				On 	7 	Yes
+Allow non-FIPS algorithms 		On 	12 	Yes
+SO can reset partition PIN 		On 	15 	Yes
+Allow network replication 		On 	16 	No
+Allow Remote Authentication 		On 	20 	Yes
+Force user PIN change after set/reset 	Off 	21 	No
+Allow offboard storage 		On 	22 	Yes
+Allow Acceleration 			On 	29 	Yes
+Allow unmasking 			On 	30 	Yes&#160;&#160;&#160;</pre>
+        <h4>Partition Information</h4>
+        <p>At the HSM Partition level the information in the outputs of"partition show" and "partition showp" includes the following :</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Partition Name</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Partition Serial #</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Activation State</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>AutoActivation State</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Partition storage space (bytes)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Partition storage space used (bytes)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Partition storage free space (bytes)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Partition Object Count</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Partition Policies from the Partition showpolicies command</p><pre xml:space="preserve" class="listLevel1">lunash:&gt; partition showPolicies -partition mypartition</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Partition Name: mypartition</pre><pre xml:space="preserve" class="listLevel1">Partition Num: 65038002</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">   The following capabilities describe this partition and can
+   never be changed.
+
+   Description                              Value
+   ===========                              =====
+   Enable private key cloning               Allowed
+   Enable private key wrapping              Disallowed
+   Enable private key unwrapping            Allowed
+   Enable private key masking               Disallowed
+   Enable secret key cloning                Allowed
+   Enable secret key wrapping               Allowed
+   Enable secret key unwrapping             Allowed
+   Enable secret key masking                Disallowed
+   Enable multipurpose keys                 Allowed
+   Enable changing key attributes           Allowed
+   Enable PED use without challenge         Allowed
+   Allow failed challenge responses         Allowed
+   Enable operation without RSA blinding    Allowed
+   Enable signing with non-local keys       Allowed
+   Enable raw RSA operations                Allowed
+   Max failed user logins allowed           10
+   Enable high availability recovery        Allowed
+   Enable activation                        Allowed
+   Enable auto-activation                   Allowed
+   Minimum pin length (inverted: 255 - min) 248
+   Maximum pin length                       255
+   Enable Key Management Functions          Allowed
+   Enable RSA signing without confirmation  Allowed
+   Enable Remote Authentication             Allowed
+   Enable private key unmasking             Allowed
+   Enable secret key unmasking              Allowed
+   Enable RSA PKCS mechanism                Allowed
+   Enable CBC-PAD (un)wrap keys of any size Allowed</pre><pre xml:space="preserve" class="listLevel1">   Enable private key SFF backup/restore    Disallowed</pre><pre xml:space="preserve" class="listLevel1">   Enable secret key SFF backup/restore     Disallowed</pre><pre xml:space="preserve" class="listLevel1">   Enable Secure Trusted Channel            Allowed
+
+
+   The following policies are set due to current configuration
+   of this partition and may not be altered directly by the
+   user.
+
+   Description                              Value
+   ===========                              =====
+   Challenge for authentication not needed  False
+
+
+   The following policies describe the current configuration
+   of this partition and may be changed by the HSM Administrator.
+
+   Description                              Value        Code
+   ===========                              =====        ====
+   Allow private key cloning                On           0
+   Allow private key unwrapping             On           2
+   Allow secret key cloning                 On           4
+   Allow secret key wrapping                On           5
+   Allow secret key unwrapping              On           6
+   Allow multipurpose keys                  On           10
+   Allow changing key attributes            On           11
+   Ignore failed challenge responses        On           15
+   Operate without RSA blinding             On           16
+   Allow signing with non-local keys        On           17
+   Allow raw RSA operations                 On           18
+   Max failed user logins allowed           10           20
+   Allow high availability recovery         On           21
+   Allow activation                         Off          22
+   Allow auto-activation                    Off          23
+   Minimum pin length (inverted: 255 - min) 248          25
+   Maximum pin length                       255          26
+   Allow Key Management Functions           On           28
+   Perform RSA signing without confirmation On           29
+   Allow Remote Authentication              On           30
+   Allow private key unmasking              On           31
+   Allow secret key unmasking               On           32
+   Allow RSA PKCS mechanism                 On           33
+   Allow CBC-PAD (un)wrap keys of any size  On           34</pre><pre xml:space="preserve" class="listLevel1">   Force Secure Trusted Channel             Off          37
+
+
+</pre><pre xml:space="preserve" class="listLevel1">Command Result : 0 (Success) <br />[myluna] lunash:&gt;</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

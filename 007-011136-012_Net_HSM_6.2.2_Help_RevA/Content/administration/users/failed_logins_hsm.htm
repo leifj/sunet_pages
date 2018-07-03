@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|User and Password Administration">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Failed Logins</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="users.htm">User and Password Administration</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Failed Logins</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor151"></a><a name="kanchor152"></a>Failed Logins</h2>
+        <p>If you fail three consecutive login attempts as HSM  Security Officer (or SO), the <a name="kanchor153"></a>HSM contents 
+ are rendered unrecoverable. This is a security feature&#160;(you 
+ DO have your important material backed up, don't you?) 
+
+ 
+ meant to thwart repeated, unauthorized attempts to access your cryptographic 
+ material. The number is <span style="font-style: italic;font-weight: bold;">not</span> 
+ adjustable. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The system must actually receive some erroneous/false 
+ information before it logs a failed attempt -- if you merely forget to 
+ insert a PED Key (for PED-authenticated HSMs), or inserted the wrong color key, that is not counted as a failed attempt. <br /><br />To fail a login attempt on a Password-authenticated HSM, you would need to type an incorrect password. To fail a login attempt on a PED-authenticated HSM, you would need to insert an incorrect PED Key of the correct color, or to type an incorrect PED PIN, if one had been set for that PED Key. <br /><br />As soon 
+ as you successfully authenticate, the counter is reset to zero.</p>
+        <p>View a table that compares and contrasts various "deny access" events or actions that are sometimes confused. See <a href="../decommission/destroy_scenarios.htm" class="MCXref xref">Comparison of Destruction/Denial Actions</a>.&#160;  </p>
+        <p>Other roles and functions that need authentication on the HSM have their own responses to too many bad authentication attempts. Some functions do not keep a count of bad attempts; the simple failure of a multi-step or time-consuming operation is considered sufficient deterrent to a brute-force attack. The table in the next section summarizes the responses.</p>
+        <h3>HSM Response When You Reach the Bad-attempt Threshold </h3>
+        <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Role</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Threshold (number of tries)</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Result of too many bad login attempts</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Recovery</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">HSM SO</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">3</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">HSM is zeroized (all HSM objects identities, and all partitions are gone)</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">HSM must be reinitialized. Contents can be restored from backup(s).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Partition SO</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">3</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Partition is zeroized.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Partition must be reinitialized. Contents can be restored from backup.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Audit</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">10</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Lockout</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Unlocked automatically after 10 minutes.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Crypto Officer <br />[Note 1] &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">10 (can be decreased by SO,)</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Lockout</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Must be unlocked/reset by the partition's SO.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Crypto User <br />[Note 2] &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">10 (can be decreased by SO)</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Lockout</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Must be unlocked/reset by the partition's CO.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Domain</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">n/a</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Operation fails</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Retry the operation with the correct Domain - usually that would be a backup or restore</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Remote PED Key</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">n/a</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Operation fails</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Retry establishing a Remote PED connection, providing the correct orange PED Key (PED-authenticated only).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Secure Recovery Key</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">n/a</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Recovery from tamper or Secure Transport Mode fails. Entire HSM is locked. The only operation that is not locked out is establishing a Remote PED connection.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Retry recovery from tamper or from STM, providing the correct purple PED Key (PED-authenticated only).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="4">[<b>Note 1</b>] &#160;If the policy "SO can reset PIN" is on, then this user is locked. If "SO can reset PIN" is off, then this user is deleted - as is any user that depends upon it, specifically the Crypto User. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyA-Column1-Body1" colspan="4">[<b>Note 2</b>] &#160;The Crypto User is created by the Crypto Officer. Therefore, only the Crypto Officer, and not the SO of the partition, is able to reset the Crypto User. If the policy "SO can reset PIN" is off, then this user is deleted, rather than locked out when too many bad attempts are made on the CU. Similarly, if too many bad attempts are made on his creator the Crypto Officer, and that role is deleted, then the associated CU is also deleted.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <h3>Control the Outcome</h3>
+        <p>The configurable policy “SO/HSM Admin can reset User PIN” [HSM policy 
+ #15] allows you to control the outcome of too many consecutive bad authentication 
+ attempts. If the policy is “on” then the outcome is that the HSM Partition 
+ is locked out. This means that the Partition and its contents can be accessed 
+ again after the HSM Admin resets the HSM Partition Owner’s password. If 
+ the policy is “off”, then the partition is zeroized after too many bad 
+ attempts – meaning that all contents become inaccessible and the partition must be 
+ recreated.</p>
+        <p>“Ignore failed challenge responses” can be set per partition, which ensures that failed 
+ HSM Partition Password attempts do not cause the “failed login attempt” 
+ counter to increment.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

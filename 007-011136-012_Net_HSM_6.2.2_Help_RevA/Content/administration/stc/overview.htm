@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Secure Trusted Channel (STC)">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>STC Overview </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="stc.htm">Secure Trusted Channel (STC)</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">STC Overview</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>STC Overview </h2>
+        <p>STC protects your HSM/client communications using endpoint and message authentication, verification, and encryption. With STC, HSM/client message integrity is ensured, even when those messages are sent over public, or otherwise unsecured networks. You can use STC links to confidently deploy HSM&#160;services in cloud environments, or in situations where message integrity is paramount. </p>
+        <h5>Security features</h5>
+        <p>STC offers the following security features to ensure the privacy and integrity  of your HSM/client communications:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>Symmetric encryption</b>. This ensures that only the STC end-points can read data transmitted over an STC link.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>Message authentication</b>. Message authentication codes are used to ensure the integrity of the communicated data, to prevent attacks that attempt to add, delete, modify, or replay the messages sent over an STC&#160;link.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>Bi-directional endpoint authentication</b>. Each endpoint (HSM or client) is assigned a unique identity, which is stored as a hardware or software token. This ensures that only authorized entities can establish an STC connection, and eliminates the risk of a man-in-the-middle attack. See <a href="#Client" class="MCXref xref selected">Client and Partition Identities</a>.</p>
+        <h5>Secure tunneling and messaging</h5>
+        <p>STC connections are established in  two distinct phases:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span> <b>Secure tunnel creation</b>. To ensure client integrity, STC&#160;performs bi-directional HSM/client authentication, and creates  unique session keys for each STC connection, as described in <a href="#Secure" class="MCXref xref selected">Secure Tunnel Creation</a>.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span><b>Secure message transport</b>. To ensure message integrity, STC&#160;uses symmetric data encryption and message integrity verification, ensuring that any attempt to alter, insert, or drop messages is detected by both end-points, resulting in immediate termination  of the connection, as described in <a href="#Secure2" class="MCXref xref selected">Secure Message Transport</a>.</p>
+        <h5>All messages protected outside the HSM</h5>
+        <p>When STC&#160;is fully enabled on an HSM, all sensitive communications with the HSM&#160;are protected all the way into the HSM. That is, any messages exchanged between a client application and the HSM&#160;use STC encryption, authentication, and verification from the client interface to the HSM&#160;interface, regardless of whether those links traverse a network, or are internal to an HSM&#160;appliance (LunaSH to HSM) or SafeNet HSM client workstation (SafeNet Client to HSM). In addition, all STC links that use a network connection also use the same network protection as NTLS links, that is, they are wrapped using SSL.</p>
+        <p data-mc-conditions="Default.SA">On a SafeNet Network HSM appliance, there are two separate STC link types, which are configured separately:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> between the client and a partition. These links are configured as described in <a href="../../configuration/client_partition/stc_links.htm" class="MCXref xref">Creating an STC Link Between a Client and a Partition</a> in the <i>Configuration Guide</i>. Each client-partition link is configured separately.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>between the local services and applications running on the appliance (such as LunaSH, NTLS, and the STC service) and the HSM SO partition. This link is called the STC admin channel, and is configured as described in <a href="sa_local_stc.htm" class="MCXref xref">Establishing and Configuring the STC Admin Channel on a SafeNet Network HSM Appliance</a>.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The STC admin channel is local to the appliance, and is used to transmit data between the  local services and applications running on the appliance (such as LunaSH, NTLS, and the STC service) and the HSM SO partition</p>
+        <h5> Configurable options</h5>
+        <p>The security features offered by STC are configurable, allowing you to specify the level of security you require, and achieve the correct balance between security and performance. Client/partition STC link parameters are configured using LunaCM. LunaSH/partition STC link parameters are configured using LunaSH.</p>
+        <h3><a name="Client"></a>Client and Partition Identities</h3>
+        <p>The identity of a client or partition at an STC&#160;endpoint is defined by a 2048-bit  RSA asymmetric public/private key pair,  unique to each endpoint. Before you can establish an STC&#160;link, you must exchange public keys between the client and partition to establish trust. </p>
+        <h4>Partition Identities</h4>
+        <p>The partition private  key is always kept in the HSM and is strongly associated with its partition. Only the partition security officer  can retrieve the partition’s public key for delivery to a client. Upon receipt, the client administrator can use the public key hash to confirm its authenticity, before registering it. You can register multiple partition public keys to a client.</p>
+        <h4>Client Identities</h4>
+        <p>By default, the client’s identity pair is stored in a software token on the client’s file system, protected by the operating system’s access control systems.  When using a software token, the client’s private key is intentionally portable.  That is, it can be moved or copied to another host and used – so any client that possesses this identity pair is considered the authentic client. Allowing this enables an elastic client model – an important capability for many applications.</p>
+        <p>If you require stronger client authentication, you can choose to use a SafeNet eToken 7300 hardware token to protect the client’s private key.  When using hard tokens, the client’s private key is marked as non-extractable, so only a host with the hard token inserted can successfully authenticate to the HSM partition.  The SafeNet eToken 7300  is a FIPS 140-2 Level 3 device.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>After establishing an STC link, the hardware token can be removed from the host computer for safe storage. If the STC link goes down, the hardware token is required to re-establish the link.</p>
+        <h3><a name="Secure"></a>Secure Tunnel Creation</h3>
+        <p>Each STC connection is established between a client application and a specific partition on the HSM.  As such, each application and partition pair goes through STC tunnel establishment individually. Before STC can create secure tunnels, trust must be established between the client and the partition, through the manual exchange of public keys. Once trust has been established, STC&#160;links between the client applications and the partition are created.</p>
+        <h4>Establishing Trust Between the Client and the Partition</h4>
+        <p>  Before STC can establish a tunnel, it requires that trust has been established between the client and the partition. This trust relationship is built as follows:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>When you create a partition, the STC partition identity asymmetric key pair is generated automatically, and stored in the partition.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>The partition SO extracts the partition’s STC public key and provides it (out of band) to the client administrator.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>The client administrator enables STC on the client machine if not already done.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>The client administrator registers the partition identity provided in step 2 to the client token (software token or hardware token, as configured). The client administrator can verify the hash of the partition public key before registering it to the client, if desired.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>The client administrator creates the STC client identity asymmetric key pair, on the client token. This will also automatically export the generated STC client public key to a file.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span> If you are the partition SO, connecting to your un-initialized PSO partition, skip to step 8. Your STC client registration will occur automatically when you initialize the partition. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>For all others, proceed to step 6.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>The client administrator takes the client identity public key that was exported automatically during step 5, and provides it (out of band) to the partition SO.</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>The partition SO registers the client’s STC identity public key to the partition.</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>The client can now connect to the partition.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>For the partition SO, if this the first time connecting to your uninitialized partition, your client identity will be automatically registered to the partition when you issue the LunaCM <b>partition initialize</b> command.</p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Once bi-directional STC public key registration is complete, registered and authorized client applications can establish fully authenticated and confidential STC tunnels with the partition.</p>
+        <p>Once this sequence is completed the partition will only accept authenticated STC connections from a registered client.  You can register additional partitions with this client machine by repeating this process.  You can register additional clients  to a partition, but any additional client identities need to be registered by the partition SO from a pre-registered client machine.</p>
+        <h5>Recovering lost clients</h5>
+        <p>In the event all registered clients for a legacy partition are lost, there is no way the partition user or security officer can connect to the partition.  As a recovery method, the HSM security officer has the ability to delete all registered clients to the partition.  When deleted, the partition’s objects remain intact, but only restricted clients are allowed to connect.  As such, the partition security officer needs to repeat the steps above to register the authorized clients.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>This procedure is not available for PSO partitions as the HSM security officer has no access to the partition once it has been initialized. Therefore, if all registered client tokens to a PSO partition are lost, the only recourse is to have the HSM security officer delete and recreate the partition. The partition objects are lost in this case.</p>
+        <h4>Establishing a Secure Tunnel Between a Client Application and a Partition</h4>
+        <p>Once public keys have been exchanged between a client and a partition, STC is able to establish a secure tunnel between a client application and the partition. To establish a tunnel, the client and partition use secret handshaking to perform the following tasks:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Exchange credentials.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Establish a unique session ID for the tunnel.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Create unique message authentication and message encryption keys for the session.</p>
+        <h5>Session Re-Negotiation</h5>
+        <p> Session keys for tunnel are periodically renegotiated, as specified by the STC rekey threshold set for a partition.  The rekey threshold specifies the number of API&#160;calls, or messages, that can be transmitted over an STC link to the partition before the session keys are renegotiated. You can adjust this value based on your application use cases and security requirements. See <a href="stc_settings.htm" class="MCXref xref">Configuring the Network and Security Settings for an STC Link</a> for more information.</p>
+        <h5>Abnormal Termination</h5>
+        <p>When a client shuts down a connection under normal conditions, it sends a secured message informing the HSM that the connection can be terminated. If a client terminates abnormally, or the network link is lost,   the STC Daemon (STCD) detects the abnormal termination, and sends a message to the HSM informing it that the connection has ended, and the connection is closed. If the STCD sends an incorrect connection termination message, the client transparently re-establishes a new STC tunnel.</p>
+        <h3><a name="Secure2"></a>Secure Message Transport</h3>
+        <p>Once a secure tunnel is established, any messages sent over the STC link are encrypted and authenticated using the unique session keys created when the tunnel is established. In addition, as with NTLS, all STC&#160;links use the TLS  protocol to secure the link when it traverses a network.</p>
+        <p>Messages traversing an STC&#160;link are protected using the following security features. These features are configurable for each partition and are used for each STC link to that partition. See <a href="stc_settings.htm" class="MCXref xref">Configuring the Network and Security Settings for an STC Link</a> for more information.</p>
+        <h4>Symmetric Encryption</h4>
+        <p>You can configure the STC links to use a symmetric encryption cipher algorithm (AES 128, AES 192, or AES 256) to encrypt the data traversing the link. You can also disable encryption for STC&#160;links to a partition, if desired. </p>
+        <h4>Message Integrity Verification</h4>
+        <p>You can configure the STC links to use an HMAC message digest algorithm (SHA 256 or SHA 512) to verify each message traversing the link. Once STC enabled, message integrity verification is automatic and cannot be disabled.</p>
+        <h4>Anti-Replay Protection</h4>
+        <p>You can configure the size of the packet replay window for for STC&#160;links to a partition. This value specifies the number of packets in the window of sequenced packets that are tracked to provide anti-replay protection.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Extensions to PKCS#11">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title> Shared Login State and Application IDs</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">SDK Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="extensions.htm">Extensions to PKCS#11</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Shared Login State and Application IDs</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2> Shared Login State and Application IDs</h2>
+        <p>The PKCS#11 specification states that sessions within an application 
+ share a login state. &#160;An application is defined as a single address space and all threads that 
+ execute within it. Thus, if process A spawns multiple threads, and all of those threads 
+ open sessions on token #1, then all of those sessions share a login state. When one is logged in, they all are, and when one is logged out, they all 
+ are. However, if process B also has sessions open on token #1, they are independent 
+ from the sessions of process A. The login state of process B sessions 
+ is irrelevant to process A sessions (except where they conflict, such 
+ as process A logging in as USER when process B is already logged in as 
+ SO).</p>
+        <p>The Chrystoki library provides additional functionality that allows 
+ separate applications to share a login state. Within Chrystoki, each application has an application ID. &#160;An 
+ application ID is a 64-bit integer, normally specified in two 32-bit parts. 
+ A default application ID for the application is generated automatically 
+ by the Chrystoki library, when the application invokes <b>C_Initialize</b>. &#160;The 
+ default value is based upon the process ID of the application, so different 
+ applications will always have different application IDs.</p>
+        <p>Each session also has an application ID associated with it. This is 
+ the application ID of the application that created the session. &#160;Within 
+ Chrystoki and SafeNet tokens, login states are shared by sessions which have 
+ identical application IDs. &#160;Since 
+ there is usually a one-to-one mapping between applications and application 
+ IDs, this means that login states are normally shared between sessions 
+ within an application but not between applications. In order to allow separate Chrystoki applications to share session state, 
+ Chrystoki provides functionality that allows applications to alter their 
+ application IDs.</p>
+        <h3>Why Share Session State Between Applications?</h3>
+        <p>For many applications, the functionality described here serves no purpose. 
+ &#160;If an application 
+ consists of a single process that exists perpetually, unshared session 
+ states are sufficient. &#160;If 
+ the application supports multiple processes, but the application designer 
+ wants each process to validate (login) separately, unshared session states 
+ are sufficient.</p>
+        <p>However, if </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the application consists of multiple processes each with its 
+ own sessions and </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the application designer wants to require only one login 
+ action by the user and </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>the system uses SafeNet CA3 tokens (where PINs cannot 
+ be cached and used multiple times by the application),</p>
+        <p>then, it is necessary 
+ to share login state between processes.</p>
+        <p>The SafeNet CA3 token provides FIPS 140-1 level 3 security through use 
+ of a separate port for password entry (with the SafeNet CA3 token, PINs take 
+ the form of special data keys). &#160;Use 
+ of these keys prevents an application from caching a password and using 
+ it to log in with multiple sessions. &#160;If 
+ you want to log in once only, and you use separate processes, you must 
+ somehow share login state between processes.</p>
+        <p>[UPDATE: Applies to newer SafeNet HSMs as well, in some integrations, for ease of use particularly against PED-authenticated HSMs.]</p>
+        <h3>Login State Sharing Overview</h3>
+        <p>The simplest form the extra Chrystoki functionality takes is the <b>CA_SetApplicationID</b> 
+ function. This function should be invoked after <b>C_Initialize</b> is invoked, 
+ but before any sessions are opened. &#160;Two 
+ separate applications can use this function to set their application IDs 
+ to the same value, and thus allow them to share login states between their 
+ sessions.</p>
+        <p>Alternately, the <b>AppIdMajor</b> and <b>AppIdMinor</b> fields 
+ in the <b>Misc</b> section of the Chrystoki configuration file can 
+ be set. &#160;This 
+ causes the default application ID of all applications to be set to the 
+ value given in the configuration file, rather than being generated from 
+ the application's process ID. &#160;This 
+ means that unless applications use the <b>CA_SetApplicationID</b> function, all 
+ applications on a host system will share login state between their sessions.</p>
+        <h4>Example</h4>
+        <p>A sample configuration file (<b>crystoki.ini</b> for Windows) using explicit 
+ application IDs is duplicated here:</p><pre xml:space="preserve">[Chrystoki2]</pre><pre xml:space="preserve">LibNT=D:\Program Files\SafeNet\LunaClient\cryptoki.dl</pre><pre xml:space="preserve">[Luna]</pre><pre xml:space="preserve">DefaultTimeOut=500000</pre><pre xml:space="preserve">PEDTimeout1=100000</pre><pre xml:space="preserve">PEDTimeout2=200000</pre><pre xml:space="preserve">[CardReader]</pre><pre xml:space="preserve">RemoteCommand=1</pre><pre xml:space="preserve">[Misc]</pre><pre xml:space="preserve">AppIdMajor=2</pre><pre xml:space="preserve">AppIdMinor=4</pre><pre xml:space="preserve">&#160;</pre>
+        <p>One effect that can still cause problems is that when all sessions of 
+ a particular application ID are closed, that application ID reverts to 
+ a dormant state. &#160;When 
+ another session for that application ID is created, the application ID 
+ is recreated, but always in the logged-out state, regardless of the state 
+ it was in when it went dormant.</p>
+        <p>For example, consider an application where a parent process sets its 
+ application ID, opens a session, logs the session in, then closes the 
+ session and terminates. &#160;Several 
+ child pro-cesses then set their application IDs, open sessions and try 
+ to use them. &#160;However, 
+ since the application ID went dormant when the parent process closed its 
+ session, the child processes find their sessions logged out. &#160;The 
+ logged-in state of the parent process' session was lost when it closed 
+ its session.</p>
+        <p>The CA_OpenApplicationID function can be used to ensure that the login 
+ state of an application ID is maintained, even when no sessions exist 
+ which belong to that application ID. &#160;When 
+ CA_OpenApplicationID is invoked, the application ID is tagged so that 
+ it never goes dormant, even if no open ses-sions exist. </p>
+        <h3>Login State Sharing Functions</h3>
+        <p>Use the following functions to configure and manage login state sharing:</p>
+        <h4>CA_SetApplicationID</h4><pre xml:space="preserve">CK_RV CK_ENTRY CA_SetApplicationID(</pre><pre xml:space="preserve">CK_ULONG ulHigh,</pre><pre xml:space="preserve">CK_ULONG ulLow</pre><pre xml:space="preserve">);</pre><pre xml:space="preserve">&#160;</pre>
+        <p>The <b>CA_SetApplicationID</b> function allows an application to set its own 
+ application ID, rather than letting the application ID be generated automatically 
+ from the application's process ID. &#160;<b>CA_SetApplicationID</b> should be invoked after <b>C_Initialize</b> but before 
+ any session manipulation functions are invoked. &#160;If 
+ <b>CA_SetApplicationID</b> is invoked after sessions have been opened, results 
+ will be unpredictable. </p>
+        <p><b>CA_SetApplicationID</b> always returns CKR_OK.</p>
+        <h4>CA_OpenApplicationID</h4><pre xml:space="preserve">CK_RV CK_ENTRY CA_OpenApplicationID(</pre><pre xml:space="preserve">CK_SLOT_ID slotID,</pre><pre xml:space="preserve">CK_ULONG ulHigh,</pre><pre xml:space="preserve">CK_ULONG ulLow</pre><pre xml:space="preserve">);</pre><pre xml:space="preserve">&#160;</pre>
+        <p>The <b>CA_OpenApplicationID</b> function forces a given application ID on 
+ a given token to remain active, even when all sessions belonging to the 
+ application ID have been closed. Normally an application ID on a token goes dormant when the last session 
+ that belongs to the application ID is closed. &#160;When 
+ an application ID goes dormant login state is lost, so when a new session 
+ is created within the application ID, it starts in the logged-out state. 
+ &#160;However, if <b>CA_OpenApplicationID</b> is used the application ID is prevented 
+ from going dormant, so login state is main-tained even when all sessions 
+ for an application ID are closed.</p>
+        <p><b>CA_OpenApplicationID</b> can return CKR_SLOT_ID_INVALID or CKR_TOKEN_NOT_PRESENT.</p>
+        <h4>CA_CloseApplicationID</h4><pre xml:space="preserve">CK_RV CK_ENTRY CA_CloseApplicationID(</pre><pre xml:space="preserve">CK_SLOT_ID slotID,</pre><pre xml:space="preserve">CK_ULONG ulHigh,</pre><pre xml:space="preserve">CK_ULONG ulLow</pre><pre xml:space="preserve">);</pre><pre xml:space="preserve">&#160;</pre>
+        <p>The <b>CA_CloseApplicationID</b> function removes the property of an application 
+ ID that prevents it from going dormant. &#160;<b>CA_CloseApplicationID</b> also closes any open sessions owned by the given 
+ application ID. &#160;Thus, 
+ when <b>CA_CloseApplicationID</b> returns, all open sessions owned by the given 
+ application ID have been closed and the applica-tion ID has gone dormant.</p>
+        <p><b>CA_CloseApplicationID</b> can return CKR_SLOT_ID_INVALID or CKR_TOKEN_NOT_PRESENT.</p>
+        <h3>Application ID Examples</h3>
+        <p>The following code fragments show how two separate applications might 
+ share a single application ID:</p><pre xml:space="preserve">app 1:        app 2:</pre><pre xml:space="preserve">C_Initialize()</pre><pre xml:space="preserve">CA_SetApplicationID(3,4)</pre><pre xml:space="preserve">C_OpenSession()</pre><pre xml:space="preserve">C_Login() </pre><pre xml:space="preserve">              C_Initialize()</pre><pre xml:space="preserve">              CA_SetApplicationID(3,4)</pre><pre xml:space="preserve">              C_OpenSession()</pre><pre xml:space="preserve">              C_GetSessionInfo()</pre><pre xml:space="preserve">&#160;&#160;            // Session info shows session</pre><pre xml:space="preserve">              // already logged in.         </pre><pre xml:space="preserve">              &lt;perform work, no login </pre><pre xml:space="preserve">              necessary&gt;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">C_Logout()</pre><pre xml:space="preserve">              C_GetSessionInfo()</pre><pre xml:space="preserve">&#160;&#160;            // Session info shows session</pre><pre xml:space="preserve">&#160;&#160;            // logged out.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">C_CloseSession() </pre><pre xml:space="preserve">              C_CloseSession()</pre><pre xml:space="preserve">C_Finalize() </pre><pre xml:space="preserve">              C_Finalize()</pre><pre xml:space="preserve">&#160;</pre>
+        <p>The following code fragments show how one process might login for others:</p>
+        <p>Setup app:</p><pre xml:space="preserve">C_Initialize()</pre><pre xml:space="preserve">CA_SetApplicationID(7,9)</pre><pre xml:space="preserve">CA_OpenApplicationID(slot,7,9)</pre><pre xml:space="preserve">C_OpenSession(slot)</pre><pre xml:space="preserve">C_Login()</pre><pre xml:space="preserve">C_CloseSession()</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Spawn many child applications:</p><pre xml:space="preserve">C_Finalize()</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Terminate each child 
+ app: </p><pre xml:space="preserve">              C_Initialize()</pre><pre xml:space="preserve">              CA_SetApplicationID(7,9)</pre><pre xml:space="preserve">              C_OpenSession(slot)</pre><pre xml:space="preserve">              &lt;perform work, no login necessary&gt;</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Takedown app:</p>
+        <p>Terminate 
+ child applications:</p><pre xml:space="preserve">              C_CloseSession()</pre><pre xml:space="preserve">              C_Finalize()</pre><pre xml:space="preserve">C_Initialize()</pre><pre xml:space="preserve">CA_CloseApplicationID(slot,7,9)</pre><pre xml:space="preserve">C_Finalize()</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

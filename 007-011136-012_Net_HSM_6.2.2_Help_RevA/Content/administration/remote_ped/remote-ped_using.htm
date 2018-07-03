@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Remote PED">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using the Remote PED Feature</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="remote_ped.htm">Remote PED</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Using the Remote PED Feature</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Using the Remote PED Feature</h2>
+        <p>To use Remote PED for the first time, you will need:</p>
+        <p> - a SafeNet PED 2.4.0-3 (or later) with Remote PED feature installed (new Remote PED units are shipped with this sticker on the front) <img src="../../Resources/Images/ped/ped_sticker_remote.png" /></p>
+        <p>- a power adapter for the Remote PED (when the PED&#160;is not connected to a SafeNet Network HSM, via the PED port, it requires the separate power adapter to supply its power - the USB connection is insufficient for that purpose)</p>
+        <p>- a complete set of PED Keys, including an orange Remote PED key (either new/empty or already containing a Remote PED vector)</p>
+        <p>- local access to the SafeNet HSM (for the first session only)</p>
+        <p>- HSM that supports the Remote PED&#160;feature (includes the Remote PED Client)</p>
+        <p>- a workstation/PC with the PEDserver.exe (Remote PED&#160;Server application) running, and with the appropriate PED driver already installed </p>
+        <p>You will need physical access to your SafeNet Network HSM when first setting up Remote PED, because the Remote PED vector must be created by the HSM and imprinted on a blank PED Key, or it must be acquired from a previously imprinted orange PED&#160;Key and stored in the HSM. Thereafter, the orange PED Key is used with the Remote PED from a remote location, and the connection is secured by having the matching Remote PED&#160;vector at both the HSM and the Remote PED server (your remote workstation with Remote PED&#160;attached).</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you encounter timeout problems (possible if you are using MofN with many keys, or if you are reading instructions as you go, or are otherwise not speedy while following prompts), you can adjust timeout values to allow for a more relaxed pace. For PedServer.exe, you can do:<br /><b style="font-family: 'Courier New';">pedserver -mode config set -socketreadrsptimeout &lt;seconds&gt;</b><br />but you would also need to increase the timeout in the crystoki.ini client software configuration file. Moreover, the PEDServer -socketreadrsptimeout must always be larger than the timeout in the configuration file.&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>In general, do not change settings (especially in the crystoki.ini file) unless you have good reason to do so, or are instructed to do so, by Gemalto Customer Support.</p>
+        <p class="caution_note">Use <b>static IP addressing</b> for PED Client / PED Server. PED Client can fail to find a server if a dynamic address is indicated. An example error might look like this:</p><pre xml:space="preserve"><span style="font-family: monospace;">lunash:&gt;hsm ped connect -ip 192.20.11.67 -port 1503</span></pre><pre xml:space="preserve"><span style="font-family: monospace;">Luna PED operation required to connect to Remote PED - use orange PED Key(s).</span></pre><pre xml:space="preserve"><span style="font-family: monospace;">Ped Client Version 1.0.5 (10005)</span></pre><pre xml:space="preserve"><span style="font-family: monospace;">Ped Client launched in startup mode.</span></pre><pre xml:space="preserve"><span style="font-family: monospace;">readIPFromConfigFile() : config file did not contain an IP address.</span></pre><pre xml:space="preserve"><span style="font-family: monospace;">Startup failed. : 0xc0000404 RC_FILE_ERROR</span></pre><pre xml:space="preserve"><span style="font-family: monospace;">Command Result : 65535 (Luna Shell execution)</span></pre><pre xml:space="preserve"><span style="font-family: monospace;">lunash:&gt;</span>  &#160;&#160;</pre>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If the HSM host (a SafeNet Network HSM appliance or a host computer with SafeNet PCIe HSM or SafeNet USB HSM) has more than one SafeNet HSM connected, then you might need to specify the "-serial" option, to identify the desired HSM by its serial number. <br /><br />If "-serial" is not specified in commands <br /> &#160;&#160;hsm ped vector init &#160;&#160;<br /> &#160;&#160;hsm ped vector erase &#160;&#160;<br /> &#160;&#160;hsm ped connect &#160;&#160;&#160;&#160;<br /> &#160;&#160;hsm ped disconnect &#160;&#160;&#160;<br />then the action defaults to the first HSM that is found. &#160;&#160;</p>
+        <h3>Prepare a Remote PED Vector</h3>
+        <p>This section creates or copies a Remote PED Vector (RPV) such that the same RPV exists on the HSM and on an orange PED Key that can accompany the Remote PED, to permit a connection between that Remote PED and that HSM. &#160;</p>
+        <h4>Setup Instructions</h4>
+        <p>The steps to set up Remote PED are:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>&#160;<a href="../../configuration/hsm_init/about_initializing_a_ped-authenticated_hsm.htm">Initialize the HSM</a> [if you have not already done so]- the creation of the orange Remote PED key requires HSM login; HSM login requires an initialized HSM, all of which must be done with a local PED connection the first time. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Have the SafeNet PED connected to the PED port of the HSM, and set to Local PED mode.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Login as SO: <br /><span style="font-family: monospace;">[myluna] lunash:&gt;hsm login
+</span><br style="font-family: monospace;" /><span style="font-family: monospace;">Luna PED operation required to login as HSM Administrator - use blue PED key(s).
+</span><br style="font-family: monospace;" /><span style="font-family: monospace;">'hsm login' successful.
+
+
+</span><br style="font-family: monospace;" /><span style="font-family: monospace;">Command Result : 0 (Success)
+</span><br style="font-family: monospace;" /><span style="font-family: monospace;">[myluna] lunash:&gt;</span> <br /></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Have a blank PED Key, with orange label, ready. Create and imprint the RPV (Remote PED Vector): <br /><span style="font-family: monospace;">[myluna] lunash:&gt;hsm ped vector init
+
+</span><br style="font-family: monospace;" /><span style="font-family: monospace;">WARNING !!  This command will initialize remote PED vector (RPV).
+</span><br style="font-family: monospace;" /><span style="font-family: monospace;">If you are sure that you wish to proceed, then enter 'proceed', otherwise this command will abort.
+&gt; proceed
+</span><br style="font-family: monospace;" />Proceeding... SafeNet <span class="expandtext">PED operation required to initialize remote PED key vector - use orange PED key(s).
+
+</span><br />(At this time, go to the SafeNet PED and respond to the prompts by providing either a "fresh" orange PED key (which prompts creation and imprinting of a new/unique RPV) or an already-imprinted orange PED Key (which prompts the PED to ask you to reuse the existing PED&#160;Key data), along with additional blanks if you intend to make duplicates.)<br style="font-family: monospace;" /><span class="expandtext"><span style="font-family: Verdana;">The PED says:</span><br /><br /><img src="../../Resources/Images/ped/ped-message_set-rpv_like-to-reuse.png" /><br /> <br /><br /><span style="font-family: Verdana;">If this is the first RPV that you are creating, then answer [NO].</span><br style="font-family: Verdana;" /><span style="font-family: Verdana;">If you have an existing RPV on an orange PED Key, then answer [YES] if you want to preserve it and add it to this current HSM, or [No] if you have made a mistake and wish to find a different blank (or outdated) key to imprint.</span><br style="font-family: Verdana;" /><span style="font-family: Verdana;">For this example, we will assume no existing RPV. </span><br style="font-family: Verdana;" /><span style="font-family: Verdana;">The PED says:</span><br /><br /><img src="../../Resources/Images/ped/ped-message_set-rpv_m_val.png" /><br /><br />If you wish to split the RPV secret over several RPKs, for MofN split-knowledge, multi-person access control of the Remote PED function, then input a value for M that is greater than "1". This is the number of persons - each holding an orange key containing a split of the RPV secret - who must come together and present their portions whenever the RPK is required. If you prefer not to invoke MofN, then press [ 1 ], followed by [Enter].<br /><br /><img src="../../Resources/Images/ped/ped-message_set-rpv_n_val.png" /><br /><br />If you have invoked MofN with an M value greater than "1", then you must enter a value for N that is equal to, or greater than, M. N is the total pool of orange keys over which your RPV will be split, from which sub-groups of quantity M will be required for authentication. The simplest scheme is to declare a value for M that gives you the desired security oversight of the Remote PED function, and then specify N slightly larger so that you can always have at least quantity M key-holders available, even when some are absent for vacation, travel, illness or other reasons. Example: M=3, N=5, where any 3 of the total 5 splits can combine to reconstitute the secret.<br /><br /><img src="../../Resources/Images/ped/ped-message_set-rpv_insert-a-rpk-key.png" /><br /><br /><br /><span style="font-family: Verdana;">Do as prompted, inserting an unused PED Key into the PED's key slot (top-right of the PED), and press [ENTER].</span><br style="font-family: Verdana;" /><span style="font-family: Verdana;">For a fresh, new, never-before imprinted PED Key, the PED&#160;says:</span><br /><br /><img src="../../Resources/Images/ped/ped-message_set-rpv_warn_blank_overwrite.png" /><br /><br /><span style="font-family: Verdana;">Answer [YES] so that the HSM can create an RPV and transfer it to the PED, where it is imprinted onto the blank PED Key that you have inserted. If you invoked MofN, then the PED&#160;will prompt you to continue inserting orange PED&#160;Keys for imprinting with portions of the secret until you have imprinted quantity N of them. <br /></span><br /><br /><img src="../../Resources/Images/ped/ped-message_set-rpv_enter_ped-pin.png" /><br /><br />If you need two-part security to protect the Remote PED function, and wish to add a "something you know"&#160;component to the "something you have" (physical PED Key), type a series of digits on the keypad, then type them again to confirm. Now, whenever you are prompted to present the orange RPK, you must also input the code - called a PED&#160;PIN - that you have just added. The secret that unlocks the HSM to perform Remote PED operation is now a combination of a data secret contained in the physical key, and a typed-in numeric code that you must remember.<br /><br />Press [Enter] with no digits, if you do not wish an additional "something you know" secret attached to this PED Key. In future, SafeNet PED&#160;will nevertheless prompt you for a PED PIN whenever you present the RPK, but you will always just press [Enter] (with no digits) at that prompt - no PED PIN required.<br /><br />This completes the imprinting of the key (or keys if you opted for MofN).<br /><br style="font-family: Verdana;" /><span style="font-family: Verdana;">While the imprinted orange PED&#160;Key is still in the PED's slot, SafeNet PED then wants to know if you intend to make some copies of the currently-inserted PED Key (that now carries the RPV for the HSM) or group of PED Keys:</span><br /><br /><img src="../../Resources/Images/ped/ped-message_set-rpv_are-you-duplicating.png" /><br /><br /><br /><span style="font-family: Verdana;">Answer [YES] if you wish to make copies, and follow the instructions to insert keys and press ENTER. Respond to the prompts about overwriting, and PED PIN, etc.</span><br style="font-family: Verdana;" /><span style="font-family: Verdana;">When you have made all the copies that you wish,  respond [NO] to the final prompt.</span><br style="font-family: Verdana;" /><span style="font-family: Verdana;">Control is returned to the lunash command line.</span><br /><br />Ped Client Version 1.0.0 (10000)
+</span><br style="font-family: monospace;" /><span class="expandtext">Ped Client launched in shutdown mode.
+</span><br />Ped Client is not currently running.
+<br />Shutdown passed.
+
+<br />Command Result : 0 (Success)
+<br />[myluna] lunash:&gt;<br /><br />(If you see references to "shutdown mode", that's the shell [lunash] exchanging messages with the Remote PED Client application (also found on your SafeNet appliance), which is called, runs in the background, and shuts down, possibly multiple times, depending upon the task that you have initiated via [lunash:&gt;] commands.) </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Go to either Client-(HSM)-initiated Remote PED (<a href="client-initiated_remote-ped.htm" class="MCXref xref">Client-initiated Remote PED &#160;</a>) or Server-initiated Remote PED (<a href="server-initiated_remote-ped.htm" class="MCXref xref">Server-initiated (Peer-to-Peer) Remote PED Connection</a>). &#160;</p>
+        <p>
+            <br />
+        </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

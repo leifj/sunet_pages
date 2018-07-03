@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Utilities Reference Guide|cklog">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>cklog Utility</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Utilities Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="cklog.htm">cklog</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">CKlog Utility</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>cklog Utility</h2>
+        <p>SafeNet Software Development Kit can record all 
+ interactions between an application and our PKCS#11-compliant library, allowing 
+ a developer to debug an application by viewing what the library receives.</p>
+        <p>The tool is the Cryptoki Logging Facility or cklog. &#160;In 
+ function, cklog is a library that displaces our PKCS#11 library. When it receives a call it does not service the request but, instead,  logs 
+ the call to a file and passes the request to the originally intended library.</p>
+        <p>For cklog to function properly, perform these two steps:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Direct the application to use the cklog library 
+ instead of the regular Chrystoki library.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Instruct the cklog library where to access the 
+ regular library.</p>
+        <p>Achieve the first step  by modifying the configuration files to instruct 
+ CkBridge to load the Cklog library. &#160;This redirection is described in the next sub-section. &#160;The 
+ second step involves different blocks in the configuration file.</p>
+        <p>Here are descriptions of entries that might be applicable:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>LibNT - references to 
+ a Cryptoki library for  Windows 2008 and Windows 2012.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>LibUNIX - references 
+ to a Cryptoki library for UNIX (meaning Solaris, Linus and AIX).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>LibHPUX - references 
+ to a Cryptoki library specific to HP-UX.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Enabled - 0 or 1. Allows 
+ turning the logging facility off or on.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>File - references the 
+ file to which the requests should be logged.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Error - references a 
+ file where the logging facility can record fatal errors.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>NewFormat - 0 or 1 disables/enables 
+ a more compact output format, which is the format preferred by SafeNet 
+ Customer Support.</p>
+        <h3>Windows Example</h3>
+        <p>The following example shows a typical initialization file under Windows 
+ where cklog is in use:</p><pre xml:space="preserve">[Chrystoki2]</pre><pre xml:space="preserve">LibNT=c:\Program Files\SafeNet\LunaClient\cklog201.dll</pre><pre xml:space="preserve">[CkLog2]</pre><pre xml:space="preserve">LibNT=c:\Program Files\SafeNet\LunaClient\cryptoki.dll</pre><pre xml:space="preserve">Enabled=1</pre><pre xml:space="preserve">File=c:\Program Files\SafeNet\LunaClient\cklog2.txt</pre><pre xml:space="preserve">Error=c:\Program Files\SafeNet\LunaClient\error2.txt</pre><pre xml:space="preserve">NewFormat=1</pre><pre xml:space="preserve">LoggingMask=ALL_FUNC</pre>
+        <h3>UNIX Example</h3>
+        <p>The following example shows a typical configuration file under UNIX 
+ where cklog is in use:</p><pre xml:space="preserve">Chrystoki2 = {</pre><pre xml:space="preserve">LibUNIX=/usr/lib/libcklog2.so;</pre><pre xml:space="preserve">}</pre><pre xml:space="preserve">CkLog2 = {</pre><pre xml:space="preserve">LibUNIX=/usr/lib/libCryptoki2.so;</pre><pre xml:space="preserve">Enabled=1;</pre><pre xml:space="preserve">File=/tmp/cklog.txt;</pre><pre xml:space="preserve">Error=/tmp/error.txt;</pre><pre xml:space="preserve">NewFormat=1;</pre><pre xml:space="preserve">LoggingMask=ALL_FUNC;</pre><pre xml:space="preserve">}</pre>
+        <h3>Selective Logging</h3>
+        <p>When logging is turned on, all functions are logged, by default. If 
+ you wish to restrict logging to particular functions of interest only, 
+ you can edit the “LoggingMask=” parameter in the crystoki.ini [Windows] 
+ or Chrystoki.conf [UNIX] file to include flags for the desired logging.</p>
+        <h4>LoggingMask= Flags</h4>
+        <p>Here is the list of possible flags for cklog:</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');border-left-style: Outset;border-left-width: 1px;border-left-color: #c0c0c0;border-right-style: Outset;border-right-width: 1px;border-right-color: #c0c0c0;border-top-style: Outset;border-top-width: 1px;border-top-color: #c0c0c0;border-bottom-style: Outset;border-bottom-width: 1px;border-bottom-color: #c0c0c0;width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col style="width: 197px;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 317px;" class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Flag</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>GEN_FUNCS</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>General Functions</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>SLOT_TOKEN_FUNC</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Slot/Token 
+ related functions</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>SESSION_FUNC</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Session 
+ related functions</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>OBJ_MNGMNT_FUNC</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Object 
+ Management functions</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ENC_DEC_FUNC</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Encrypt/Decrypt 
+ related functions</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>DIGEST_FUNC</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Digest 
+ Related functions</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>SIGN_VERIFY_FUNC</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Signing/Verifying 
+ related functions</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>KEY_MNGMNT_FUNC</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Key 
+ Management related functions</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>MISC_FUNC</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Misc 
+ functions</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>CHRYSALIS_FUNC</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>SafeNet 
+ Extensions functions</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p>ALL_FUNC</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-style: Inset;border-left-color: #808080;border-top-color: #808080;border-top-style: Inset;border-top-width: 1px;border-right-width: 1px;border-right-style: Inset;border-right-color: #808080;border-bottom-color: #808080;border-bottom-style: Inset;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>All 
+ functions logged;</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>You can mix and match any or all of the flags, using the “|” operator. 
+ For example, the following:</p>
+        <p class="code">LoggingMask=GEN_FUNC | SLOT_TOKEN_FUNC | ENC_DEC_FUNC | SIGN_VERIFY_FUNC;</p>
+        <p>would be valid.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You can use the flags in any order. Using the ALL_FUNC flag overrides any other flag.&#160;<br />If you have the “LoggingMask=” parameter, with NO flags set, 
+ then nothing is logged. If logging capability is enabled (cklog), but 
+ there is no “LoggingMask=” line, then default behavior prevails and everything 
+ is logged.</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

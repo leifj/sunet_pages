@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>[Step 9] Set the  Partition Policies for PPSO Partitions</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Configuration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">[Step 9] Set the  Partition Policies for PPSO Partitions</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <div placeholder="" id="header" style="width: 100%;position: relative;"><a name="kanchor45"></a>
+            <p><a name="kanchor46"></a>
+            </p>
+        </div>
+        <h1 class="chapter" data-mc-autonum=" &#160;&#160;"><span class="autonumber"><span> &#160;&#160;</span></span>
+            <br />
+            <MadCap:conditionalText data-mc-conditions="Default.SA">[Step 9] </MadCap:conditionalText>Set the  Partition Policies for PPSO Partitions</h1>
+        <p>At this point, you should have initialized the partition and created the Crypto Officer role and, optionally, the Crypto User role. &#160;Before deploying the partitions, review and set the policies that constrain the use of the HSM Partition 
+ by clients, as described in the following sections:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><a href="#DisplayPPSOpolicies" class="MCXref xref selected">Displaying the Current Partition Policy Settings</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><a href="#ChangePPSOparPolicy" class="MCXref xref selected">Changing the Partition Policy Settings</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><a href="#RSA_bind_mode" class="MCXref xref selected">RSA Blinding Mode</a>
+        </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>This&#160;section applies to application partitions that are owned and administered by the HSM SO. If the application partition was created with its own Partition SO, then you cannot use LunaSH  to administer the partition. All administration of a PPSO partition is carried out by the Partition SO, via LunaCM, from a registered client computer.</p>
+        <h2><a name="DisplayPPSOpolicies"></a>Displaying the Current Partition Policy Settings</h2>
+        <p>First, 
+ display the policies (default) of the created legacy-style application Partition. In order to run the <span style="font-family: 'Courier New';">partition showPolicies</span> command, you do not need 
+ to be logged into the &#160;HSM 
+ Partition. However, to change policies of either the HSM or an individual Partition, 
+ you must log in as HSM SO.</p>
+        <h5>To display the current partition policy settings</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open a LunaCM session.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Enter the following command to display current partition 
+ capability and policy settings. Capabilities are factory settings. Policies 
+ are the means of modifying the adjustable capabilities:</p>
+        <p class="listLevel1"><b>partition showpolicies -partition</b> &lt;partitIon_name&gt;</p>
+        <p class="listLevel1">For example:</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; partition showpolicies</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Partition Capabilities</pre><pre xml:space="preserve" class="listLevel1">0: Enable private key cloning : 0</pre><pre xml:space="preserve" class="listLevel1">1: Enable private key wrapping : 0</pre><pre xml:space="preserve" class="listLevel1">2: Enable private key unwrapping : 1</pre><pre xml:space="preserve" class="listLevel1">3: Enable private key masking : 0</pre><pre xml:space="preserve" class="listLevel1">4: Enable secret key cloning : 0</pre><pre xml:space="preserve" class="listLevel1">5: Enable secret key wrapping : 1</pre><pre xml:space="preserve" class="listLevel1">6: Enable secret key unwrapping : 1</pre><pre xml:space="preserve" class="listLevel1">7: Enable secret key masking : 0</pre><pre xml:space="preserve" class="listLevel1">10: Enable multipurpose keys : 1</pre><pre xml:space="preserve" class="listLevel1">11: Enable changing key attributes : 1</pre><pre xml:space="preserve" class="listLevel1">14: Enable PED use without challenge : 1</pre><pre xml:space="preserve" class="listLevel1">15: Allow failed challenge responses : 1</pre><pre xml:space="preserve" class="listLevel1">16: Enable operation without RSA blinding : 1</pre><pre xml:space="preserve" class="listLevel1">17: Enable signing with non-local keys : 1</pre><pre xml:space="preserve" class="listLevel1">18: Enable raw RSA operations : 1</pre><pre xml:space="preserve" class="listLevel1">19: Max non-volatile storage space : 3</pre><pre xml:space="preserve" class="listLevel1">20: Max failed user logins allowed : 10</pre><pre xml:space="preserve" class="listLevel1">21: Enable high availability recovery : 1</pre><pre xml:space="preserve" class="listLevel1">22: Enable activation : 0</pre><pre xml:space="preserve" class="listLevel1">23: Enable auto-activation : 0</pre><pre xml:space="preserve" class="listLevel1">25: Minimum pin length (inverted: 255 - min) : 248</pre><pre xml:space="preserve" class="listLevel1">26: Maximum pin length : 255</pre><pre xml:space="preserve" class="listLevel1">28: Enable Key Management Functions : 1</pre><pre xml:space="preserve" class="listLevel1">29: Enable RSA signing without confirmation : 1</pre><pre xml:space="preserve" class="listLevel1">30: Enable Remote Authentication : 1</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Partition Policies</pre><pre xml:space="preserve" class="listLevel1">0: Allow private key cloning : 0</pre><pre xml:space="preserve" class="listLevel1">1: Allow private key wrapping : 0</pre><pre xml:space="preserve" class="listLevel1">2: Allow private key unwrapping : 1</pre><pre xml:space="preserve" class="listLevel1">3: Allow private key masking : 0</pre><pre xml:space="preserve" class="listLevel1">4: Allow secret key cloning : 0</pre><pre xml:space="preserve" class="listLevel1">5: Allow secret key wrapping : 1</pre><pre xml:space="preserve" class="listLevel1">6: Allow secret key unwrapping : 1</pre><pre xml:space="preserve" class="listLevel1">7: Allow secret key masking : 0</pre><pre xml:space="preserve" class="listLevel1">10: Allow multipurpose keys : 1</pre><pre xml:space="preserve" class="listLevel1">11: Allow changing key attributes : 1</pre><pre xml:space="preserve" class="listLevel1">14: Challenge for authentication not needed : 1</pre><pre xml:space="preserve" class="listLevel1">15: Ignore failed challenge responses : 1</pre><pre xml:space="preserve" class="listLevel1">16: Operate without RSA blinding : 1</pre><pre xml:space="preserve" class="listLevel1">17: Allow signing with non-local keys : 1</pre><pre xml:space="preserve" class="listLevel1">18: Allow raw RSA operations : 1</pre><pre xml:space="preserve" class="listLevel1">19: Max non-volatile storage space : 3</pre><pre xml:space="preserve" class="listLevel1">20: Max failed user logins allowed : 10</pre><pre xml:space="preserve" class="listLevel1">21: Allow high availability recovery : 1</pre><pre xml:space="preserve" class="listLevel1">22: Allow activation : 0</pre><pre xml:space="preserve" class="listLevel1">23: Allow auto-activation : 0</pre><pre xml:space="preserve" class="listLevel1">25: Minimum pin length (inverted: 255 - min) : 248</pre><pre xml:space="preserve" class="listLevel1">26: Maximum pin length : 255</pre><pre xml:space="preserve" class="listLevel1">28: Allow Key Management Functions : 1</pre><pre xml:space="preserve" class="listLevel1">29: Perform RSA signing without confirmation : 1</pre><pre xml:space="preserve" class="listLevel1">30: Allow Remote Authentication : 0</pre><pre xml:space="preserve" class="listLevel1">Command Result : No Error</pre>
+        <h2><a name="ChangePPSOparPolicy"></a><a name="kanchor47"></a>Changing the Partition Policy Settings</h2>
+        <p>Having viewed the Policy settings, you can now modify 
+ a Partition Policy for a given Partition, if required. </p>
+        <h5>To change a partition policy</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open a LunaCM session.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Enter the following command to change a Partition 
+ Policy:</p>
+        <p class="listLevel1"><b>partition changepolicy -policy</b> &lt;policy_id&gt; <b>-value</b> &lt;policy_value&gt;</p>
+        <h2><a name="RSA_bind_mode"></a>RSA Blinding Mode</h2>
+        <p>Blinding is a technique that introduces random elements into the signature 
+ process to prevent timing attacks on the RSA private key. Use of this 
+ technique may be required by certain security policies, but it does reduce 
+ performance. </p>
+        <p>The Partition Security Officer can turn this feature on or off. </p>
+        <p>If RSA blinding is enabled in Capabilities and allowed in Policies, 
+ the partition will always run in RSA blinding &#160;mode; 
+ performance will be lower than SafeNet published performance figures. 
+ This is because the deliberate introduction of random elements causes 
+ the average signature to take longer to complete.</p>
+        <p>&#160;For maximum 
+ performance, you can switch RSA blinding mode off, at the cost of slight 
+ additional risk of so-called timing attacks on your keys. It is your decision 
+ whether your network and other security measures are sufficiently rigorous 
+ that blinding is not needed.</p>
+        <p>SafeNet HSMs are normally shipped with the Capability set to allow switching 
+ blinding on or off, and with the Policy set to <span style="font-weight: bold;">not</span> 
+ use blinding, by default.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|Configuration without One-step NTLS|[Step 5] Create Application Partitions|Partition with SO">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>HSM  SO Configures PED-authenticated SafeNet Network HSM Partition with SO </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../administration/appendix-a_config/appendix-a_old_config_steps.htm">Configuration without One-step NTLS</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="partition_create.htm">[Step 5] Create Application Partitions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Creating a PED-auth PPSO Partition</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3>HSM  SO Configures PED-authenticated SafeNet Network HSM Partition with SO </h3>
+        <p>An application owner/user has requested an application partition on the HSM, in which applications will run cryptographic operations. These instructions are the actions to be taken by the HSM Security Officer or SO. These instructions assume a PED-authenticated SafeNet HSM supporting the creation of a partition with its own Security Officer. </p>
+        <p>These instructions assume a SafeNet Network HSM. Initially it is accessed via SSH to create the partition using LunaSH (lunash:&gt;), to create the partition. After the PPSO partition is created, administrative access to that partition moves to a host computer where SafeNet HSM Client software is installed, and where administrative actions are carried out through a Network Trust Link (NTL) via the lunacm tool. </p>
+        <p>You will need:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The HSM  has firmware 6.22.0, or newer, and the Per-Partition SO capability installed. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The appliance is configured for network operation and server certificate was created. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>SafeNet Network HSM and your application host computer have exchanged certificates. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The HSM is in initialized state.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>For PED-Authenticated SafeNet HSM only, a SafeNet PED and PED Keys with labels. These instructions assume that you still have local physical access to your SafeNet Network HSM appliance, for local PED connection, or that your SafeNet PED is remotely connected and you have previously imprinted the HSM and an orange PED Key with a common Remote PED&#160;vector. See <a href="../../administration/remote_ped/remote_ped_config.htm" class="MCXref xref">Configuring Remote PED</a> and <a href="../../administration/remote_ped/remote-ped_using.htm" class="MCXref xref">Using the Remote PED Feature</a>. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you have an existing legacy partition that shares the HSM Administrator (SO) as its SO, and you prefer that it have its own SO, it cannot be directly turned into a partition that has its own SO. You will need to back up any contents, delete the partition, and re-create with an application partition SO. <br /><br />You can create either type of partition. They can co-exist without conflict on the HSM.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Updating from pre-6.22.0 firmware to firmware version 6.22.0 or newer is necessary to support the PPSO capability, but does not, itself, confer the capability. To enable creation of application partitions with their own Per-Partition Security Officers, you must acquire and install the PPSO capability upgrade.<br /><br />The PPSO capability Upgrade is destructive. Therefore, you must back up any existing application partition on your HSM, before performing the upgrade, as all partitions and contents are destroyed by the upgrade. After the upgrade is complete, you can create new partitions with Per-Partition SOs, or with legacy-style partitions where the HSM SO retains ownership, or a mix of both, and then restore the pre-existing content to your new partitions from backup.</p>
+        <h3>Preliminary</h3>
+        <p>If you are using a SafeNet PED connected locally to the SafeNet Network HSM, skip to step 4 below.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>If necessary, have a SafeNet PED connected to a host computer (can be the same computer that acts as your SafeNet HSM Client, but can be another host if desired), with the PED set to "Remote PED mode", and an orange PED Key ready, containing the same RPV as your SafeNet Network HSM. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>On the host computer, launch PedServer.exe. </p><pre class="listLevel1" xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;pedserver -mode start -ip 192.20.10.217 -port 1503
+Ped Server Version 1.0.5 (10005)
+
+Failed to load configuration file.  Using default settings.
+
+Ped Server launched in startup mode.
+Starting background process
+Background process started
+Ped Server Process created, exiting this process.
+
+C:\Program Files\SafeNet\LunaClient&gt;pedserver -mode show
+Ped Server Version 1.0.5 (10005)
+
+Failed to load configuration file.  Using default settings.
+
+Ped Server launched in status mode.
+failed to unlock: GetLastError(): 183 0xb7
+
+   Server Information:
+      Hostname:                           MyRPEDhost
+      IP:                                 172.20.10.217
+      Firmware Version:                   2.6.0-2
+      PedII Protocol Version:             1.0.1-0
+      Software Version:                   1.0.5 (10005)
+
+      Ped2 Connection Status:             Connected
+      Ped2 RPK Count                      0
+      Ped2 RPK Serial Numbers             (none)
+
+   Client Information:                    Not Available
+
+   Operating Information:
+      Server Port:                        1503
+      External Server Interface:          Yes
+      Admin Port:                         1502
+      External Admin Interface:           No
+
+      Server Up Time:                     52 (secs)
+      Server Idle Time:                   52 (secs) (100%)
+      Idle Timeout Value:                 1800 (secs)
+
+      Current Connection Time:            0 (secs)
+      Current Connection Idle Time:       0 (secs)
+      Current Connection Total Idle Time: 0 (secs) (100%)
+      Total Connection Time:              0 (secs)
+      Total Connection Idle Time:         0 (secs) (100%)
+
+Show command passed.
+
+C:\Program Files\SafeNet\LunaClient&gt;
+
+</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>On the SafeNet Network HSM, start the PED client service, pointing to the PedServer that you just started.</p><pre class="listLevel1">[mylunasa] lunash:&gt;hsm ped connect -ip 192.20.10.217 -port 1503
+
+Luna PED operation required to connect to Remote PED - use orange PED key(s).
+
+
+Command Result : 0 (Success)
+[mylunasa] lunash:&gt;hsm login
+
+
+Luna PED operation required to login as HSM Administrator - use Security Officer (blue) PED key.
+
+'hsm login' successful.
+
+
+Command Result : 0 (Success)
+[mylunasa] lunash:&gt;</pre>
+        <p>&#160;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Log into the SafeNet Network HSM, if not already logged in.</p><pre class="listLevel1">
+[mylunasa] lunash:&gt;hsm login
+
+
+Luna PED operation required to login as HSM Administrator - use Security Officer (blue) PED key.
+
+'hsm login' successful.
+
+
+Command Result : 0 (Success)
+[mylunasa] lunash:&gt;</pre>
+        <p>&#160;</p>
+        <h3>Create the PPSO Partition</h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Run <b>partition create</b> command, specifying a partition name, and being sure to include the "-haspso" parameter. </p><pre class="listLevel1">[mylunasa] lunash:&gt;partition create -haspso -partition mypsopar1 
+
+
+Please ensure that you have purchased licenses for at least this number of partitions: 1
+
+
+          Type 'proceed' to create the uninitialized partition, or
+          'quit' to quit now.
+          &gt; proceed
+'partition create' successful.
+
+
+Command Result : 0 (Success)
+[mylunasa] lunash:&gt;</pre>
+        <p>&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The command parameters include an option "-label". This is not used when creating PPSO partitions. If you include it, an error message appears, but the "-label" is ignored.<br /><br />The "-partition &lt;name&gt;" parameter is required. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Verify that the partition has been created.</p><pre class="listLevel1">[mylunasa] lunash:&gt;hsm show
+
+
+   Appliance Details:
+   ==================
+   Software Version:                6.0.0-22
+
+   HSM Details:
+   ============
+   HSM Label:                          mysahsm
+   Serial #:                           7000022
+   Firmware:                           6.22.0
+   Hardware Model:                     Luna K6
+   Authentication Method:              PED keys
+   HSM Admin login status:             Logged In
+   HSM Admin login attempts left:      3 before HSM zeroization!
+   RPV Initialized:                    Yes
+   Audit Role Initialized:             No
+   Remote Login Initialized:           No
+   Manually Zeroized:                  No
+
+   Partitions created on HSM (1):
+   ==============================
+   <span style="background-color: #ffff00;">Partition:       16298193222733, Name: mypsopar1</span>
+
+   FIPS 140-2 Operation:
+   =====================
+   The HSM is NOT in FIPS 140-2 approved operation mode.
+
+   HSM Storage Information:
+   ========================
+   Maximum HSM Storage Space (Bytes):   2097152
+   Space In Use (Bytes):                20971
+   Free Space Left (Bytes):             2076181
+
+
+Command Result : 0 (Success)
+[mylunasa] lunash:&gt;</pre>
+        <p>&#160;</p>
+        <p>The PPSO partition now exists, and all future configuration and management of that partition will be handed over to the person who is to become the SO of the new partition. The HSM SO can delete the partition via lunash command, but cannot reach inside the new partition to perform any further administrative actions. This is an important difference from legacy-style partitions, where the HSM SO remains the administrative owner of the application partition and can perform any desired administrative function by means of lunash commands. </p>
+        <p>In a PPSO partition, the partition SO (and any additional roles that are created for the partition) performs all configuration and management actions via a client connection using LunaCM.</p>
+        <p>The next step is <a href="../client_appliance/client_appliance.htm" class="MCXref xref">[Step 7] Create a Network Trust Link Between the Client and the Appliance</a>.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

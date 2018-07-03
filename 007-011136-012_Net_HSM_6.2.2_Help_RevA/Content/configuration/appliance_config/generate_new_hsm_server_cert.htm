@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|Configuration without One-step NTLS|[Step 2] Configure the Appliance for your Network">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Generate a New HSM Server Certificate</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../../administration/appendix-a_config/appendix-a_old_config_steps.htm">Configuration without One-step NTLS</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="gather_hsm_appliance_network_settings.htm">[Step 2] Configure the Appliance for your Network</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Generate a New HSM Server Certificate</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <h2><a name="kanchor25"></a><a name="kanchor26"></a>Generate a New HSM Server Certificate</h2>
+        <p>Although your HSM appliance came with a server certificate, good security 
+ practice dictates that you should generate a new one.</p>
+        <h5>To generate a new server certificate</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Use <span style="font-family: 'Courier New', monospace;">sysconf 
+ regenCert</span> to generate a new Server Certificate:</p>
+        <p class="listLevel1">The command  <span style="font-family: monospace;">sysconf regenCert</span> (with no IP address appended) is suitable if your network is using DNS and, 
+ during &#160;the 
+ execution of the regeneration command, the HSM appliance is able to retrieve 
+ correct DNS information about itself. If DNS is not used, or it does not 
+ know about the HSM appliance, an invalid certificate will be generated 
+ that prevents NTLS running later.</p>
+        <p class="listLevel1">In situations where DNS is not used or contains unreliable information, 
+ use this form of the command "sysconf regenCert &lt;ip_of_hsm_appliance&gt;" 
+ to generate a usable NTLS certificate.</p>
+        <p class="listLevel1">Sysconf regenCert (without the IP argument) populates the CN field of the server's certificate with the unqualified hostname of the appliance. If the appliance is set up correctly for use in a DNS environment, then it will work. The command does not check.</p>
+        <p class="listLevel1">Sysconf regenCert with the IP argument results in a certificate with the appliance's IP address in the CN field.</p>
+        <p class="listLevel1">Using SafeNet Network HSM with the link configured for IP-only speeds the NTLS client connection lookup, and bypasses such potential issues as transient DNS lookup failures and typing errors. &#160;&#160;</p><pre xml:space="preserve" class="listLevel1">lunash:&gt;sysconf regencert
+
+WARNING !!  This command will overwrite the current server certificate and private key.
+            All clients will have to add this server again with this new certificate.
+If you are sure that you wish to proceed, then type 'proceed', otherwise type 'quit'
+
+&gt; proceed
+Proceeding...
+
+ERROR. Partition named "Cryptoki User" not found
+
+'sysconf regenCert' successful. NTLS and STC must be (re)started before clients can connect.
+
+Please use the 'ntls show' command to ensure that NTLS is bound to an appropriate network device or IP address/hostname
+for the network device(s) NTLS should be active on. Use 'ntls bind' to change this binding if necessary.
+
+Command Result : 0 (Success)
+</pre>
+        <p class="listLevel1">&#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>From the factory, the network trust 
+ link service (NTLS) is bound to the loopback device, by default. In order 
+ to use the appliance on your network, you must bind the NTLS to one of 
+ the two Ethernet ports, ETH0 or ETH1, or to a hostname or IP address. 
+ You can use the <span style="font-family: monospace;">ntls show</span> command to see current status. </p>
+        <p class="listLevel1">Use <span style="font-family: monospace;">ntls bind</span> 
+ to bind the service:</p><pre xml:space="preserve" class="listLevel1">
+            <code>[luna23] lunash:&gt;ntls  bind eth0</code>
+            <br style="mc-tag-and-class: code;" />
+            <code>Success: NTLS binding network device eth0 set.</code>
+            <br style="mc-tag-and-class: code;" />
+            <code>NOTICE: The NTLS service must be restarted for new settings to take effect.</code>
+            <br style="mc-tag-and-class: code;" />
+            <code>If you are sure that you wish to restart NTLS, then type 'proceed', otherwise type 'quit'</code>
+            <br style="mc-tag-and-class: code;" />
+            <code>&gt; proceed</code>
+            <br style="mc-tag-and-class: code;" />
+            <code>Proceeding...</code>
+            <br style="mc-tag-and-class: code;" />
+            <code>Restarting NTLS service...</code>
+            <br style="mc-tag-and-class: code;" />
+            <code>Stopping ntls: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;[  &#160;OK &#160;]</code>
+            <br style="mc-tag-and-class: code;" />
+            <code>Starting ntls: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;[  &#160;OK &#160;]</code>
+            <br style="mc-tag-and-class: code;" />
+            <code>Command Result : 0 (Success)</code>
+            <br style="mc-tag-and-class: code;" />
+            <code>[luna23] lunash:&gt;</code>
+        </pre>
+        <p>&#160;</p>
+        <p style="margin-left: 40px;">Or, an example using 
+ an IP address:</p><pre class="listLevel1"><code>[myluna] lunash:&gt;ntls 
+ bind eth0 -bind 192.20.10.96</code><br style="mc-tag-and-class: code;" /><code>Success: NTLS binding hostname or IP Address 192.20.10.96 set.</code><br style="mc-tag-and-class: code;" /><code>NOTICE: The NTLS service must be restarted for new settings to take effect.</code><br style="mc-tag-and-class: code;" /><code>If you are sure that you wish to restart NTLS, then type 'proceed', otherwise type 'quit'</code><br style="mc-tag-and-class: code;" /><code>&gt; proceed</code><br style="mc-tag-and-class: code;" /><code>Proceeding...</code><br style="mc-tag-and-class: code;" /><code>Restarting NTLS service...</code><br style="mc-tag-and-class: code;" /><code>Stopping ntls: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;[  &#160;OK &#160;]</code><br style="mc-tag-and-class: code;" /><code>Starting ntls: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;[  &#160;OK &#160;]</code><br style="mc-tag-and-class: code;" /><code>Command Result : 0 (Success)</code><br style="mc-tag-and-class: code;" /><code>[myluna] lunash:&gt;ntls show</code><br style="mc-tag-and-class: code;" /><code>NTLS bound to network device: eth0 &#160;IP Address: "192.20.10.96" (eth0)</code><br style="mc-tag-and-class: code;" /><code>Command Result : 0 (Success)</code></pre>
+        <p class="NumberedList">&#160;</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The “Stopping ntls” operation might fail in the above example, because NTLS 
+ is not yet running on a new HSM appliance. Just ignore the message. The 
+ service starts again, whether the stop was needed or not.</p>
+        <p>If you have been following the instructions in these pages as part of 
+ setting up a new HSM appliance then the next step is to initialize the 
+ HSM on your SafeNet Network HSM appliance. Choose one of the following links, 
+ according to the type of HSM&#160;appliance that you have:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><a href="../hsm_init/initializing_a_luna_hsm_pw-version.htm" class="MCXref xref">Initializing a Password Authenticated HSM</a>. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><a href="../hsm_init/initializing_a_luna_hsm_ped-version.htm" class="MCXref xref">Initializing a PED-Authenticated HSM</a>. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

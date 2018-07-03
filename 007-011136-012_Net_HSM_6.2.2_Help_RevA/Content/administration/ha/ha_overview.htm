@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|High-Availability (HA) Configuration and Operation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>High Availability (HA) Overview</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha.htm">High-Availability (HA) Configuration and Operation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">High Availability (HA) Overview</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>High Availability (HA) Overview</h2>
+        <p>SafeNet HSM products include availability and scalability capabilities for mission-critical applications that require uninterrupted up-time.  These features allow you to use the SafeNet HSM client to group multiple devices, or partitions, into a single logical group – known as an HA (High Availability) group.  When an HA group is defined, cryptographic services remain available to the  applications that use the client, as long as at least one member in the group remains functional and connected to the application server.  In addition, the client performs load balancing among the group members, allowing many cryptographic commands to be automatically distributed across the HA group, and enabling linear performance gains for many applications. </p>
+        <h3>How HA is Implemented</h3>
+        <p>The SafeNet high-availability (HA) and load-balancing functionality is implemented in the SafeNet HSM client, and uses the <a href="javascript:void(0);" class="MCTextPopup MCTextPopupHotSpot MCTextPopup_Open glossaryTerm MCTextPopupHotSpot_" alt="Closed" data-mc-alt2="Open">cloning<span class="MCTextPopupBody popupBody"><span class="MCTextPopupArrow"></span>The duplication or copying of HSM or application partition contents to other HSMs or application partitions that share the cloning domain secret. Cloning copies objects (certificates, keys, data), in a secure manner, via trusted path, from the user space on one HSM to an equivalent space on a second HSM. The trusted path can be direct connection between HSMs or application partitions on the same host, or can be via Remote Backup Protocol (RBC) between distant HSMs.</span></a> function to replicate/synchronize content across HA-group members. There is no direct connection between the members of an HA group. All communications between the members of an HA&#160;group are managed by the client. The HSMs and appliances are not involved and, except for being instructed to clone objects to certain HSMs during a synchronization operation, are unaware that they might be configured in an HA group.  This allows you to configure HA on a per-application basis.  </p>
+        <p>To create an HA group, you register the client to each HSM you want to include in the HA group, and then use the client-side administration commands to define the HA group and set any desired configuration options.  You can configure several options including: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>setting automatic or manual recovery mode</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>setting some HSMs as standby members</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>performing various manual synchronization and recovery operations   </p>
+        <p>Once defined, the SafeNet HSM client presents the HA group as a virtual slot, which is a consolidation of all the physical HSMs in the HA group.  Any operations that access the slot are automatically distributed between the group members, to provide load balancing, and all key material is automatically replicated and synchronized  between each member of the HA group.</p>
+        <p>
+            <img src="../../Resources/Images/ha/ha_overview_cdunn_1.png" />
+        </p>
+        <h3>Example: Database Encryption</h3>
+        <p>This section walks through a specific sample use case of some of the HA logic with a specific application – namely a transparent database encryption.</p>
+        <h4>Typical Database Encryption Key Architecture</h4>
+        <p>Database engines typically use a two-layered key architecture.  At the top layer is a master encryption key that is the root of data protection.  Losing this key is equivalent to losing the database, so it obviously needs to be highly durable.  At the second layer are table keys used to protect table-spaces and/or columns.  These table keys are stored with the database as blobs encrypted by the master encryption key (MEK).  This architecture maps to the following operations on the HSM:</p>
+        <p>1.	Initial generation of master key for each database.</p>
+        <p>2.	Generation  and encryption of table keys with the master key.</p>
+        <p>3.	Decryption of table keys when the database needs to access encrypted elements.</p>
+        <p>4.	Generation of new master keys during a re-key and then re-encrypting all table keys with it.</p>
+        <p>5.	Generation and encryption of new table keys for storage in the database (often done in a software module).</p>
+        <p>The HSM is not involved in the use of table keys.  Instead it provides the strong protection of the MEK which is used to protect the table keys.  Users must follow backup procedures to ensure their MEK is as durable as the database itself.  Refer to the backup section of this manual for proper backup procedures.</p>
+        <h4>HSM High Availability with Database Encryption</h4>
+        <p>When the HSMs are configured as an HA group, the database’s master key is automatically and transparently replicated to all the members when the key is created or re-keyed.   If an HSM group member was offline or fails during the replication, it does not immediately receive a copy of the key.  Instead the HA group proceeds after replicating to all of the active members.  Once a member is re-joined to the group the HSM client automatically replicates the new master keys to the recovered member.</p>
+        <p>With this in mind, before every re-key event the user should ensure the HA group has sufficient redundancy.  A re-key will succeed so long as one HA group member exists, but proceeding with too few HSMs will result in an availability risk.  For example, proceeding with only one HSM means the new master key will be at risk since it exists only on a single HSM. Even with sufficient redundancy, SafeNet recommends maintaining an offline backup of a database’s master key.</p>
+        <h4>HSM Load Balancing with Database Encryption</h4>
+        <p>While a database is up and running, the master key exists on all members in the HA group.  As such, requests to encrypt or decrypt table keys are distributed across the entire group.  So the load-balancing feature is able to deliver improved performance and scalability when the database requires a large number of accesses to the table keys.  With that said, most deployments will not need much load-balancing as the typical database deployment results in a small number of table keys.</p>
+        <p>While the table keys are re-keyed, new keys are generated in the HSM and encrypted for storage in the database.   Within an HA group, these keys are generated on the primary HSM and then, even though they exist on the HSM for only a moment, they are replicated to the entire HSM group as part of the availability logic.   These events are infrequent enough that this extra replication has minimal impact.</p>
+        <h3>Conclusion</h3>
+        <p>The SafeNet high availability and load balancing features provide an excellent set of tools to scale applications and manage availability of cryptographic services without compromising the integrity of cryptographic keys.  They do not need to be copied out of an HSM and stored in a file to achieve high levels of availability.  Indeed, recovery from many failures is much more rapid with Luna’s keys-in-hardware approach since each HSM maintains its own copy of all keys directly inside it.  A broad range of deployment options are supported that allow solution architects to achieve the availability needed in a manner that optimizes the cost and performance without compromising the assurance of the solution.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

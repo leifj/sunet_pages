@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|PED Key Management">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Updating PED Keys – Example</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ped_keys.htm">PED Key Management</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Updating PED Keys – Example</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Updating PED Keys – Example</h2>
+        <p>The following is just an illustrative example of changing PED Keys (or the authentication secrets on the PED Keys and the corresponding secrets on HSMs). For the purposes of the example, we will ignore additional complicating factors like PED PINs and MofN that might apply to your situation.</p>
+        <p>Say, for example, that you had shared PED Keys among three HSMs, and that you also made three other copies of that SO PED Key, so that you and two other persons could each work with one (or any) of the HSMs, and so that the fourth PED Key could be stored away securely.</p>
+        <h3>Risk of Losing access</h3>
+        <p>If you were to “Change PIN” for your own PED Key (and your HSM), then that PED Key would work for that HSM, but the PED Key would no longer work for any of the other HSMs and none of the other PED Key holders of your group could access your HSM. Your HSM would expect the new PIN, and the other people would be holding PED Keys with the original PIN.</p>
+        <p>Immediately, you see that any time you change passwords (PINs) it must be done for all HSMs (or Partitions) in such a group, and for all PED Key duplicates associated with that group of HSMs (or Partitions if you are changing black User PED Keys).</p>
+        <h3>PIN-change Procedure for Multiple HSMs</h3>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>You must retain at least one old-PIN PED Key until all HSMs have the new PIN, or you will find yourself unable to access old-PIN HSMs.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Choose an HSM and login as SO (with a blue PED Key).</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Request a change of SO PED Key:</p><pre class="listLevel1" xml:space="preserve">lunash:&gt; hsm changePw</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Respond to the PED prompts as follows:</p><pre xml:space="preserve" class="listLevel1">Getting current SO PIN...<br /></pre><pre xml:space="preserve" class="listLevel1">Reading SO PIN...</pre><pre xml:space="preserve" class="listLevel1">Insert a blue Key</pre><pre xml:space="preserve" class="listLevel1">           </pre>
+        <p class="listLevel1">This is where you insert a currently valid SO PED Key to confirm that you are the key holder.</p><pre xml:space="preserve" class="listLevel1">&lt;Press ENT&gt;</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre>
+        <p class="listLevel1">The PED requests the key because an indeterminate amount of time might have elapsed since the last HSM login and confirmation is needed that the person asking for a change of secret is the person who logged in (and not an unauthorized person taking advantage of an unattended login session).</p><pre class="listLevel1">Reading SO PIN</pre><pre class="listLevel1">Please wait..</pre><pre class="listLevel1">Would you like to reuse an existing keyset? (Y/N)</pre><pre class="listLevel1">&#160;</pre>
+        <p class="listLevel1">Here you respond "NO" so that a new SO secret is generated.</p><pre class="listLevel1">M value  (1-16)</pre><pre class="listLevel1">&gt;0</pre><pre class="listLevel1">M value  (1-16)</pre><pre class="listLevel1">&gt;0</pre><pre class="listLevel1">Writing SO PIN...</pre><pre class="listLevel1">Insert an SO Key</pre><pre class="listLevel1">&#160;</pre>
+        <p class="listLevel1">This is where you insert the first SO PED Key to be overwritten; it might be the same one that you just inserted to authenticate as SO</p><pre class="listLevel1" xml:space="preserve">&lt;Press ENT&gt;</pre><pre class="listLevel1">Writing SO PIN...</pre><pre class="listLevel1">PED Key will be overwritten</pre><pre class="listLevel1">&#160;</pre>
+        <p class="listLevel1">The PED detects existing (old) data on the key and warns you that it will be overwritten if you proceed.</p><pre class="listLevel1">&lt;Press ENT&gt;</pre><pre class="listLevel1">Writing SO PIN...</pre><pre class="listLevel1">Enter new PED PIN</pre><pre class="listLevel1">&#160;</pre>
+        <p class="listLevel1">This is a new secret, so you have the opportunity to add a PED PIN to it, if you wish.</p><pre class="listLevel1">Writing PED PIN...</pre><pre class="listLevel1">Confirm new PED PIN</pre><pre class="listLevel1" xml:space="preserve">Are you duplicating this keyset? (Y/N)</pre><pre class="listLevel1">&#160;</pre>
+        <p class="listLevel1">Answer "YES" because you want to overwrite the old secret on two of the remaining three PED Keys (in this example).</p><pre class="listLevel1">Writing SO PIN...</pre><pre class="listLevel1">Insert SO key</pre><pre class="listLevel1">&#160;</pre>
+        <p class="listLevel1">This is where you insert the second SO PED Key</p><pre class="listLevel1">&lt;Press ENT&gt;</pre><pre class="listLevel1">Writing SO PIN...</pre><pre class="listLevel1">PED Key will be overwritten.</pre><pre class="listLevel1">&lt;Press ENT&gt;</pre><pre class="listLevel1">Writing SO PIN...</pre><pre class="listLevel1" xml:space="preserve">Enter new PED PIN</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="listLevel1">You can add a PED PIN to this duplicate key if you wish, or not.                 If you add a PED PIN it does not need to be the same as on the other key.</p><pre class="listLevel1">Writing PED PIN...</pre><pre class="listLevel1">Confirm new PED PIN</pre><pre class="listLevel1">Would you like to </pre><pre class="listLevel1">make another'</pre><pre class="listLevel1" xml:space="preserve">duplicate set? (Y/N)</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="listLevel1">             Respond "YES" and make the change on the third SO key, but leave the fourth key with the old secret for now.</p><pre class="listLevel1">Command Result : 0 (Success)</pre><pre class="listLevel1">[luna22] lunash:&gt;</pre><pre class="listLevel1"> <![CDATA[ ]]></pre>
+        <p class="listLevel1">At this point, you now have ONE HSM and three of your four SO keys imprinted with the new SO authentication secret. Ensure that you keep the keys separate and well identified. One PED key MUST retain the old secret until all HSMs are updated to the new secret.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Go to the second of your SafeNet appliances, login as admin.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Request a change of SO PED Key (this time you will not be changing key contents, you will be logging in with the old secret, then copying the new secret from one of the updated keys onto the second HSM):</p><pre class="listLevel1">lunash:&gt; hsm changePw</pre><pre class="listLevel1"> <![CDATA[ ]]></pre>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Respond to the PED prompts as follows:</p><pre class="listLevel1" xml:space="preserve">SO login...</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="listLevel1">This example step shows that if you had not already logged in prior to requesting "hsm changePw" then a  login is forced.</p><pre class="listLevel1" xml:space="preserve">Insert blue PED Key</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="listLevel1">Insert the old-secret PED Key, to login -- this HSM still has the old secret.</p><pre class="listLevel1">&lt;Press ENT&gt;</pre><pre class="listLevel1">Getting current SO PIN...</pre><pre class="listLevel1">Reading SO PIN...</pre><pre class="listLevel1">Insert a blue PED key</pre><pre class="listLevel1">&#160;</pre>
+        <p class="listLevel1">The system does not track how long ago the login occurred, so before a key change is permitted, it requires you to prove that you are the valid keyholder, by producing the key again.</p><pre class="listLevel1">&lt;Press ENT&gt;</pre><pre class="listLevel1">Reading SO PIN</pre><pre class="listLevel1">Please wait...</pre><pre class="listLevel1">Setting SO PIN</pre><pre class="listLevel1">Would you like to</pre><pre class="listLevel1">reuse an existing</pre><pre class="listLevel1" xml:space="preserve">keyset? (Y/N)</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="listLevel1">Here you respond "YES" so that the new SO secret will be read from the new-secret-containing key that you are about to insert.</p><pre class="listLevel1">Reading SO PIN...</pre><pre class="listLevel1">Insert a blue PED Key</pre><pre class="listLevel1">&#160;</pre>
+        <p class="listLevel1">This is where you insert a new-secret SO PED Key so that its secret can be read and then imprinted on this second HSM.</p><pre class="listLevel1">&lt;Press ENT&gt;</pre><pre class="listLevel1">Would you like to </pre><pre class="listLevel1">make another'</pre><pre class="listLevel1" xml:space="preserve">duplicate set? (Y/N)</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="listLevel1">Respond "NO". This HSM now has the new secret.</p><pre class="listLevel1">Command Result : 0 (Success)</pre><pre class="listLevel1">[luna22] lunash:&gt;</pre><pre class="listLevel1"> <![CDATA[ ]]></pre>
+        <p class="listLevel1">At this point, you now have TWO HSMs and three of your four SO keys imprinted with the new SO authentication secret. Ensure that you keep the keys separate and well identified. One PED key MUST retain the old secret until all HSMs are updated to the new secret.</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Remove the new-secret key from the PED and place it with the other new-secret keys.</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Bring a PED and the remaining old-secret key to the third appliance and login as admin.</p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Request a change of SO PED Key (you will be logging in with the old secret, then copying the new secret from one of the updated keys onto the third HSM, then overwriting the final old-secret key with the new secret, once the old secret is no longer needed).</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You can explicitly login (with "hsm login") before issuing "hsm changePw", or you can wait until you issue the change command and be prompted to login.</p><pre class="listLevel1" xml:space="preserve">lunash:&gt; hsm changePw</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="ol1" data-mc-autonum="10."><span class="autonumber"><span class="ol1Number">10.</span></span>Respond to the PED prompts as follows:</p><pre class="listLevel1">SO login...</pre><pre class="listLevel1">Insert blue PED Key</pre><pre class="listLevel1">&#160;</pre>
+        <p>This prompt appears if the HSM was not already in the login state. Insert the old-secret PED Key, to login -- this HSM still has the old secret.</p><pre class="listLevel1">&lt;Press ENT&gt;</pre><pre class="listLevel1">Getting current SO PIN...</pre><pre class="listLevel1">Reading SO PIN...</pre><pre class="listLevel1">Insert a blue PED Key</pre>
+        <p>Here, the PED wants the same secret that you used to login.</p><pre class="listLevel1">&lt;Press ENT&gt;</pre><pre class="listLevel1">Reading SO PIN</pre><pre class="listLevel1">Please wait...</pre><pre class="listLevel1">Setting SO PIN</pre><pre class="listLevel1">Would you like to</pre><pre class="listLevel1">reuse an existing</pre><pre class="listLevel1" xml:space="preserve">keyset? (Y/N)</pre><pre class="listLevel1">&#160;</pre>
+        <p class="listLevel1">Here you respond "YES" so that the new SO secret will be read from the new-secret-containing key that you are about to insert.</p><pre class="listLevel1">Reading SO PIN...</pre><pre class="listLevel1" xml:space="preserve">Insert a blue PED Key</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="listLevel1">This is where you insert a new-secret SO PED Key so that its secret can be read and then imprinted on this third HSM.</p><pre class="listLevel1">&lt;Press ENT&gt;                              </pre><pre class="listLevel1">Would you like to </pre><pre class="listLevel1">make another'</pre><pre class="listLevel1" xml:space="preserve">duplicate set? (Y/N)</pre><pre class="listLevel1">&#160;</pre>
+        <p class="listLevel1">Respond "YES", and supply the last old-secret PED Key as the "blank".</p><pre class="listLevel1">Command Result : 0 (Success)</pre><pre class="listLevel1">[luna22] lunash:&gt;</pre><pre class="listLevel1"> <![CDATA[ ]]></pre>
+        <p>At this point, you now have all three HSMs and all four SO keys imprinted with the new SO authentication secret.</p>
+        <p>If you prefer to be more cautious, you could have left the final PED Key with the old secret until you verified that all three HSMs are now unlockable by the new secret, and only then invoke the command one more time to imprint the last key with the new secret.</p>
+        <p>Alternatively, on a SafeNet PED 2.x, you can perform iKey PED Key copying or duplication at the PED without invoking commands at the HSM (however you still require a connection between PED and HSM to power the PED).</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>You can perform the same operations with blue SO PED Keys, in similar circumstances, and observing the same precautions. Also, this sort of operation could be scaled up for larger groups of HSMs (if they share a group-User or group-SO PED Key) and for larger numbers of duplicate PED Keys.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>To avoid confusion, it's probably best if you mark each key to identify it, and keep a careful log of which key and which HSM has what operation done to it, at each step.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

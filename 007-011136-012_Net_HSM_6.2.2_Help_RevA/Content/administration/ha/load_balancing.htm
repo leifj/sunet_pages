@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|High-Availability (HA) Configuration and Operation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Load Balancing</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="ha.htm">High-Availability (HA) Configuration and Operation</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Load Balancing</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Load Balancing</h2>
+        <p>The default behavior of the client library is to attempt to load-balance the application’s cryptographic requests across each active member of an HA group. Any standby members in the HA group are not used to perform cryptographic operations, and are therefore not part of the load-balancing scheme (see <a href="standby.htm" class="MCXref xref">Standby Members</a>).</p>
+        <p> The top-level algorithm is a round-robin scheme that is modified to favor the least busy device in the set. As each new command is processed, the SafeNet HSM client looks at how many commands it has scheduled on every device in the group.  If all devices have an equal number of outstanding commands, the new command is scheduled on the next device in the list – creating a round-robin behavior.  However, if the devices have a different number of commands outstanding on them, the new command is scheduled on the device with the fewest commands queued – creating a least-busy behavior. This modified round-robin has the advantage of biasing load away from any device currently performing a lengthy-command.  In addition to this least-busy bias, the type of command also affects the scheduling algorithm, as follows:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Single-part (stateless) cryptographic operations are load-balanced.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Multi-part (stateful) commands are not load-balanced.  Multi-part operations carry cryptographic context across individual commands.  The cost of distributing this context to different HA group members is generally greater than the benefit.  For this reason multi-part commands are all targeted at the primary member. Multi-part operations are typically not used, or are infrequent actions, so most applications are not affected by this restriction.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>  Key management commands are not load balanced. Key management commands affect the state of the keys stored in the HSM.  As such, these commands are targeted at all HSMs in the group. That is, the command is performed on the primary HSM and then the result is replicated to all members in the HA group.    Key management operations are also an infrequent occurrence for most applications .</p>
+        <p>It is important to understand that the least-busy algorithm uses the number of commands outstanding on each device as the indication of its busyness.  When an application performs a repeated command set, this method works very well. When the pattern is interrupted, however, the type of command can have an impact.   For example, when the HSM is performing signing and an atypical asymmetric key generation request is issued, some number of the application’s signing commands are scheduled on the same device (behind the key generation).  Commands queued behind the key generation therefore have a large latency driven by the key generation.  However, the least-busy characteristic  automatically schedules more commands to other devices in the HA group, minimizing the impact of the key generation.</p>
+        <p>It is also important to note that the load-balancing algorithm operates independently in each application process.  Multiple processes on the same client or on different clients do not share their “busyness” information while making their scheduling choice.  In most cases this is reasonable, but some mixed use cases might cause certain applications to hog the HSMs.</p>
+        <p>Finally, when an HA group is shared across many servers, different initial members can be selected while the HA group is being defined on each server.  The member first assigned to each group becomes the primary.  This approach optimizes an HA group to distribute the key management and/or multi-part cryptographic operation load more equally.</p>
+        <p>In summary, the load-balancing scheme used by SafeNet is a combination of round-robin and least-busy for most operations.  However, as required, the algorithm adapts to various conditions and use cases so it might not always emulate a round-robin approach.</p>
+        <h5>Example</h5>
+        <p>There is no "master" HSM appliance in the SafeNet Network HSM HA model. Where you might see or hear mention of a "Primary" member, that refers only to the member that happens to be the first on the configuration list. If you edit the list to place the name of a different SafeNet Network HSM on top, then that becomes the new HA Group "primary" member.</p>
+        <p>When the client makes a request on a virtual HA slot, the request goes to the first member in the HA group, as listed in the <b>Chrystoki.conf</b> file (Linux/UNIX) or <b>Crystoki.ini</b> file (Windows), unless it is busy. A member is busy if it has not yet responded to the most recent request that was sent to it. If the primary member is busy, the client sends the request to the next non-busy member of the HA Group.</p>
+        <p> In practice, that means the primary member gets all the requests until the volume reaches a level that saturates the ability of the primary, or a blocking request from another source prevents acceptance of new requests - except for load-balanced operations. So, multi-part operations, which are not load balanced because of the overhead that would be incurred due to context-tracking, are assigned to the primary by default.  On a 7000 signings/second SafeNet Network HSM doing exclusively 1024-bit RSA signings, your client would need to have approximately 30 simultaneous threads offering a total of nearly 7000 requests per second before the second member would begin seeing any requests. In other words, until the primary is fully occupied, the HA group looks like it is operating as a "hot-standby" arrangement, unless some operations are explicitly redirected by load balancing.</p>
+        <p>The numbers above are ideal, of course. If you add network latency, or if you increase the key-size, or if you interleave other crypto operations, then the numbers must drop for the individual member, and the secondary member becomes part of the overall performance. And a third member, if you have a third active member in your group, and so on.</p>
+        <p>If you have any group members set to "Standby" status, then they do not contribute to group performance, even if the client can saturate the active members.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

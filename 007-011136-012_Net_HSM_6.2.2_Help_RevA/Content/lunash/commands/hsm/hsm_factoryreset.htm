@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|hsm">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>hsm factoryreset</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="hsm.htm">hsm</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">hsm factoryreset</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">hsm factoryreset</h2>
+        <p>Set the HSM back to its factory default settings, deleting the HSM&#160;SO, all users, and all objects. This command can be run via a local serial connection only; it is not accepted via SSH.  </p>
+        <p class="warning" data-mc-autonum="&lt;b&gt;WARNING!&lt;/b&gt; &#160;"><span class="autonumber"><span><b>WARNING!</b> &#160;</span></span>This command deletes all objects and users on the HSM, leaving it in a zeroized state. </p>
+        <p>This&#160;command does not require HSM login. The assumption is that your organization's physical security protocols prevent unauthorized physical access to the HSM. If those protocols failed, an unauthorized person would have no access to the HSM contents, and would be limited to  temporary denial of service by destruction of HSM contents. </p>
+        <p>Because this is a destructive command, you asked 
+ to “proceed” unless the <b>-force</b> switch is provided at the command line.&#160;See <a href="../../../administration/decommission/destroy_scenarios.htm" class="MCXref xref">Comparison of Destruction/Denial Actions</a>&#160;in the <i>Administration Guide</i> to view a table that compares and contrasts various "deny access" events or actions that are sometimes confused.</p>
+        <h5>How the firmware version affects behavior</h5>
+        <p>The behavior of this command differs depending on the HSM firmware, as follows:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>On firmware earlier than version 6.22.0, this  command </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span><b>does not</b> erase the RPV (Remote PED Vector or orange PED Key authentication data), and </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span><b>does not</b> erase the Auditor role, from the HSM, and </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span><b>does not</b> reset HSM policies. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> On firmware 6.22.0, or higher, this  command </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span><b>does</b> erase the RPV (Remote PED Vector or orange PED Key authentication data), and </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span><b>does</b> erase the Auditor role, from the HSM, and </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span><b>does</b> reset HSM policies. <br /></p>
+        <p class="listLevel1">The RPV data is required for Remote PED operations to function, including remote HSM&#160;initialization, if needed, so RPV&#160;must be reinstated after <b>hsm factoryreset</b> if you want to do any remote administration of the HSM. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If the operation erased the RPV as described above, and you previously established a remote PED connection (using <a href="hsm_ped_connect.htm" class="MCXref xref">hsm ped connect</a>), you must tear down the remote PED connection (using <a href="hsm_ped_disconnect.htm" class="MCXref xref">hsm ped disconnect</a>) before you reinitialize the RPV and establish a new remote PED connection.  The <b>hsm factoryReset</b> command operates on the internal HSM only, and not on software processes responsible for the remote PED connection.</p>
+        <h5>Related commands</h5>
+        <p>This command  affects only the HSM, and not the settings for other components of the appliance. The command <a href="../sysconf/sysconf_config_factoryreset.htm" class="MCXref xref">sysconf config factoryreset</a> affects appliance settings external to the HSM. To bring your entire SafeNet Network HSM as close as possible to original configuration, as shipped from the factory, run both commands. &#160;</p>
+        <p>If you wish to zeroize (remove all partitions, roles (except Auditor), and contents) while preserving HSM policies and  the RPV - that is, zeroize before shipping the HSM off to be remotely configured - use the command <a href="hsm_zeroize.htm" class="MCXref xref">hsm zeroize</a> instead. </p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code">hsm factoryreset [<b>-force</b>]</p>
+        <table style="caption-side: top;width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 126px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 149px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p> Parameter</p>
+                    </th>
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Shortcut  </p>
+                    </th>
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Description </p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-force</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-f</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>Force the action without prompting.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3>
+        <p style="font-weight: bold;">Non-local (network connection) attempt:</p><pre xml:space="preserve">lunash:&gt;hsm factoryReset</pre><pre xml:space="preserve">Error: &#160;'hsm 
+ factoryReset' can only be run from the local console. 
+ Login as 'admin' using the serial port on the 
+ SafeNet Network HSM before running this command.</pre><pre xml:space="preserve">Command Result : 0 (Success)<br />lunash:&gt;</pre><pre xml:space="preserve">&#160;</pre>
+        <p style="font-weight: bold;">Local attempt:</p><pre xml:space="preserve">lunash:&gt;hsm factoryReset</pre><pre xml:space="preserve">CAUTION: Are you sure you wish to reset this HSM to factory
+ default settings? All partitions and data will be erased.
+ Partition policies will be reverted to factory settings.
+ HSM level policies will be reverted to factory settings.
+ If you want to erase partitions and data only, use zeroize.
+ Remote PED vector will be erased.
+ Type 'proceed' to return the HSM to factory default, or
+ 'quit' to quit now.</pre><pre xml:space="preserve">&#160;&gt; proceed</pre><pre xml:space="preserve">'hsm factoryReset' successful.</pre><pre xml:space="preserve">Please wait while the HSM is reset to complete the process.</pre><pre xml:space="preserve">The remote PED vector (RPV) has been erased on HSM.</pre><pre xml:space="preserve">Command Result : 0 (success)<br /></pre>
+        <p class="code"><a name="aanchor79"></a>
+            <MadCap:concept term="Declassify" />
+        </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

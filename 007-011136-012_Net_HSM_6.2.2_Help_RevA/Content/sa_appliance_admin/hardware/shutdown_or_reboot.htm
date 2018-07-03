@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|Appliance Hardware Functions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Shutdown or Reboot</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="appliance_hardware.htm">Appliance Hardware Functions</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Shutdown or Reboot</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor179"></a><a name="kanchor180"></a><a name="kanchor181"></a>Shutdown or Reboot</h2>
+        <p><a name="kanchor182"></a><a name="kanchor183"></a>To perform a system restart, you can switch the power off and then on 
+ again using the momentary-contact START/STOP switch on the back panel of the system, or issue the <span style="font-family: 'Courier New', monospace;">sysconf appliance 
+ reboot</span> command.</p>
+        <p>To switch off the system, you can issue the <span style="font-family: 'Courier New', monospace;">sysconf appliance 
+ poweroff</span> command, or use the START/STOP switch on the SafeNet Network HSM back panel. If you issue the poweroff command, the system requests 
+ that you confirm by typing "proceed". After you type "proceed", 
+ the system returns a success message. From that point the orderly shutdown 
+ takes 15 to 20 seconds.</p>
+        <p>After you momentarily press and release the 
+ START/STOP switch, the system performs a graceful shutdown, which takes 
+ 15 to 20 seconds.</p>
+        <p>If the system does not appear to be properly shutting down, then press 
+ and hold the back-panel START/STOP switch, which forces an immediate 
+ shutdown. This should <span style="font-weight: bold;">not</span> normally 
+ be required, and should never be done unless it is required, since it 
+ bypasses the normal, graceful file-system closing and shutdown procedure.</p>
+        <h3>No Physical Access to SafeNet Network HSM Appliance</h3>
+        <p>The commands <code>sysconf appliance reboot</code> and <code>sysconf appliance poweroff</code> are preferred when you have easy physical access to the appliance, because they perform orderly shutdown, but you can access the START/STOP button if the commands fail. </p>
+        <p>For situations where you do not have convenient local access to the START/STOP button on the appliance, the preferred command choice is <code>sysconf appliance hardreboot</code>. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The disadvantage is that the shutdown is abrupt and not orderly - in a constrained and hardened system like SafeNet Network HSM, any risk is minimal, but not zero. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>The advantage of using the hardreboot is that, with many services and file closures being bypassed, there are far fewer opportunities for a shutdown or reboot sequence to hang in an unrecoverable state. You avoid the risk incurred by remotely using one of the other "softer" commands when there is no convenient access to the physical button override in the event that the command fails. </p>
+        <h3>Automatic Restart Following a Power Interruption</h3>
+        <p>If the appliance was deliberately powered down, using the START/STOP switch or the poweroff command, then it should remain off until you press the START/STOP switch. However, if power was removed while the system was on (either a power failure, or the power cables were disconnected - not good practice), then the system should restart without a button press. </p>
+        <p>This behavior allows unattended resumption of activity after power interruption. In most cases, it is assumed that this would never be needed, as you would install the appliance with its two power supplies connected to two completely separate, independent power sources, at least one of which would be battery-backed (uninterruptible power supply) and/or generator-backed.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

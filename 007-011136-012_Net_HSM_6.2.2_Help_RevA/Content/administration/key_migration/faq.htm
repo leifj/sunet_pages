@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Key Migration">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Frequently Asked Questions</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="key_migration.htm">Key Migration</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Frequently Asked Questions</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Frequently Asked Questions</h2>
+        <h3>We want to generate keys on one HSM and copy them to other HSMs.<br />Can they have the same object handles?</h3>
+        <p>No. You can clone keys between HSMs that share a domain, but each HSM assigns its own object handles to incoming - or generated - objects. </p>
+        <p>Good PKCS#11 applications <strong>never</strong> make assumptions about the object handle number.</p>
+        <p>Typically, an application will find an object prior to use; for example, find by CKA_LABEL is the most common.</p>
+        <p>The label either is known to the user or is published somewhere application-specific; for example, Microsoft uses the certstore to store the label (a.k.a. container name). </p>
+        <p>Possible workarounds:</p>
+        <p>If your application already uses handles to access/identify keys, consider identifying keys by fingerprint (and possibly label) and devising your own mapping to the new handles for objects that you import (clone) into the HSM.</p>
+        <p>HOWEVER, that approach might not be feasible if you are not in a position to make API changes - such as, if you are using a third-party application, or if you are locked in by internal compliance/audit or by external compliance/audit. Then, perhaps you could consider using multiple HSMs in an HA group.</p>
+        <p> If you are accessing via an HA group, then the HA group has a single virtual handle for each object that your application would see, regardless of the "real" object handle on each HSM.</p>
+        <h3>We want to migrate from a Microsoft Certificate Authority to a Linux CA while keeping the same private key. Does the SafeNet HSM offer any barriers to doing this?</h3>
+        <p>This is not recommended. It is not an issue of the HSM. Rather it is an issue of the software that you use to run your CA. When you generate a key in the HSM, it is stored internally in a partition. The key can be used by any application that has appropriate access and can successfully authenticate to the partition. That application could be the Microsoft CA, a Linux CA, or both, or other. </p>
+        <p>Most applications expect to generate and control their own key material. If your Linux CA allows you to point at an HSM and say "use that key", then the SafeNet HSM does not prevent it from doing so. However, as an example, when Microsoft CA creates the root key, it embeds a representation of the machine name in the key, to enforce that only that machine can have access to it. In the Microsoft world it is possible to get around this obstacle by using "clusterkey", but it is not clear how the Linux CA would react, as we have not tested such configurations.</p>
+        <p>Generally, the "best practice" that we recommend for switching from one PKI platform to another, or from one HSM vendor to another, is to implement the new PKI with a new root and issuing CA&#160;key, while leaving the original PKI in place. All new certificates are issued from the new PKI, and the original PKI (no longer used to issue certificates) is allowed to phase out over time, as each certificate that was issued from it expires.</p>
+        <h3>We want to migrate from a Microsoft IIS with existing keys stored in software to CSP with keys stored in the SafeNet HSM. We have followed the steps to import using ms2luna utility, but it appears that IIS is still using the keys in software. </h3>
+        <p>The migration from Microsoft CSP to SafeNet CSP does a "copy" of the keys, while a SafeNet KSP migration (for Microsoft CNG) does a "move"&#160;of the keys. So if you migrated to SafeNet CSP, the application might still be looking for keys (and finding them) at the original location; it needs to be told to use the keys that are now on the HSM. </p>
+        <p>Check the value of your key in registry location: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\CertSvc\Configuration\[CA NAME]\CSP\Provider</p>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Administration Guide|Remote PED">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Server-initiated (Peer-to-Peer) Remote PED Connection</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="remote_ped.htm">Remote PED</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Server-initiated Remote PED Connection</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Server-initiated (Peer-to-Peer) Remote PED Connection</h2>
+        <p>By default, when Remote PED is needed, a SafeNet HSM uses a local instance of PEDClient to initiate a connection with a distant instance of PEDServer. In cases where a SafeNet Network HSM resides behind a firewall with rules prohibiting the HSM host from initiating external connections, it is possible to have the PEDServer perform the initial call toward the HSM host in peer-connection mode.</p>
+        <p>The default mode (initiated by PEDClient) and the peer-connection mode (initiated by PEDServer) are mutually exclusive. </p>
+        <p> <![CDATA[ ]]></p>
+        <p>Peer-connection mode is configured by two commands: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>PedServer.exe –appliance register</b>
+ &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>PedServer.exe –appliance delete</b>
+ &#160;&#160;</p>
+        <p>For use with SafeNet Network HSM, the path to the pedServer.ini file and to the PEDserverCAFile.pem must be in the Remote PED server host's crystoki.ini file, and HSM appliance's server certificate must be added to the Remote PED server host's PEDserverCAFile.pem file. The server.pem is secure-copied from the SafeNet Network HSM appliance, and <b>PedServer.exe -appliance register</b> adds it to the PEDserverCAFile.pem file in the cert folder.</p>
+        <p>Peer-connection mode is supported by two commands: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>PedServer.exe –mode connect</b>
+ &#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>PedServer.exe –mode disconnect</b>
+ &#160;&#160;</p>
+        <p>The <b>PEDServer.exe -mode disconnect</b> command is used to terminate any existing peer connection with the intended HSM host, before a new connection can be launched.</p>
+        <p>The PEDClient on the SafeNet Network HSM appliance runs in background and listens on port 9697 for incoming Remote PED peer connection requests. You can specify different ports if needed, at both the pedclient and PedServer ends. </p>
+        <p>Two Lunash commands support peer-connection mode:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>hsm ped select –host</b> &lt;hostname&gt; -serial &lt;serial number&gt;
+ &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span><b>hsm ped deselect –host</b> &lt;hostname&gt;
+ &#160;</p>
+        <p>&#160;</p>
+        <h3>Constraints</h3>
+        <p>The following constraints apply: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>A maximum of twenty connections is supported on the PedClient. 
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>If the connection is terminated abnormally (for example, router switch died), there will be no auto-connection.
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>When running in peer connection mode, the PedServer will have the listening service (the default mode) down for security reasons and to simplify the usability.
+That is, if you have set the PedServer for server-initiated connection, then the PedServer stops listening for a PedClient to attempt a connection. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>Once the PedServer connection to the PedClient is established, the connection remains up until 
+ &#160;</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>disconnect command is executed from the PedServer
+ &#160;</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>–</b></span></span>PedClient terminates the connection
+ &#160;</p>
+        <h3>Configuration Prerequisite</h3>
+        <p>The PedClient (SafeNet Network HSM in this case) and the PedServer must be network accessible to each other. There must be no blocking firewall rules or other impediments to performing a certificate exchange and establishing a secure connection. PedServer has the commands to create a host certificate if necessary and to register a retrieved server cert obtained from the HSM appliance. Upload/download of the certs is done with scp/pscp.</p>
+        <h3>Step by Step Connection Setup</h3>
+        <p>Below is a step by step connection setup between PedServer and PedClient:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>If the PedServer host does not have a certificate, create one with command: </p><pre class="listLevel1" xml:space="preserve">pedServer -regenCert
+
+</pre>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>Use that command in the case where you have not installed LunaClient and have only installed the RemotePED option, OR if you have not already created a certificate for NTLS client connections, as this command  replaces that earlier certificate, breaking any existing NTLS links. &#160;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Secure copy (SCP or PSCP) the host certificate to the admin account on the SafeNet Network HSM appliance.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Secure copy SCP or PSCP) the server.pem from SafeNet Network HSM appliance to the PedServer host. &#160;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Register the server.pem by using the pedServer command.</p><pre class="listLevel1" xml:space="preserve">pedServer –appliance register –name &lt;unique name&gt; -certificate &lt;Network HSM certificate file&gt; -ip &lt;Network HSM address&gt; [-port &lt;port number&gt;]</pre>
+        <p class="listLevel1" xml:space="preserve">&#160;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Connect the PED to the PedServer host. See <a href="../../install/ped_install/remote-ped_qsg.htm" class="MCXref xref">Installing and Configuring a SafeNet Remote PED</a>. &#160;</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Connect to the PedClient with command: &#160;</p><pre class="listLevel1" xml:space="preserve">pedServer –mode connect –name &lt;SafeNet HSM server name&gt;</pre>
+        <p>&#160;</p>
+        <p class="ol2" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>PedClient receives the SSL connection from the PedServer by listening at port 9697 (unless a different port was specified). &#160;</p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>PedClient validates the PedServer client certificate. </p>
+        <p class="ol2" data-mc-autonum="c."><span class="autonumber"><span class="ol2Number">c.</span></span>PedClient sends the client information identity to the PedServer. &#160;</p>
+        <p class="ol2" data-mc-autonum="d."><span class="autonumber"><span class="ol2Number">d.</span></span>PedServer receives the client information identity and sends its own identity to the PedClient. &#160;&#160;</p>
+        <p class="ol2" data-mc-autonum="e."><span class="autonumber"><span class="ol2Number">e.</span></span>PedClient receives the server information identity and adds to the connection table. &#160;&#160;</p>
+        <p class="ol2" data-mc-autonum="f."><span class="autonumber"><span class="ol2Number">f.</span></span>PedClient sends a message back to the PedServer that the SSL connection is initialized and ready to go. &#160;&#160;</p>
+        <p>At this point, the secure network connection is in place between the PedServer and PedClient, which might be one of several PedServers available and connected to that PedClient, but the current PedServer is not selected to perform PED actions for the HSM associated with that PedClient. The PedClient might have another of its connected/available PedServers selected, or it might have none selected. </p>
+        <p>As a user of the HSM (or an application partition on that HSM) wanting to perform an HSM operation that requires a PED operation do the following:</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>From Lunash, run command: </p><pre class="listLevel1" xml:space="preserve">hsm ped select –h &lt;hostname&gt; from Lush. 
+
+
+</pre>
+        <p class="listLevel1">The hostname is the PedServer hostname.</p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>PedClient sends a message to the PedServer with the HSM serial number to notify that the PedServer is now selected for PED operations. &#160;&#160;</p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>PedServer receives the message and updates the processing status from waiting to process commands (read and write commands from and to the PED).</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>A user of the HSM (or an application partition of the HSM) executes an operation that requires authentication via PED.</p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>The behavior is the same as for non-peer mode if the connection was initiated from the HSM side.</p>
+        <p>If you need to deselect the PedServer, do the following: </p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>PedClient sends a message to the PedServer that it is no longer selected. &#160; </p>
+        <p class="ol1" data-mc-autonum="10."><span class="autonumber"><span class="ol1Number">10.</span></span>PedServer acknowledges the message and resets the PED to clear the current session ID and the generated Diffie-Hellman key. </p>
+        <p class="ol1" data-mc-autonum="11."><span class="autonumber"><span class="ol1Number">11.</span></span>PedServer sets the PED to stand-by. Any additional read and write command from PedClient is ignored and is logged for security and debugging purposes.</p>
+        <p>If the user executes the disconnect command in PedServer, the PedClient receives the message and removes that PedServer from the connection table (on SafeNet Network HSM, that appears in the output of the command <b>hsm ped show</b>). PedServer service in Windows is then terminated. If the connection is terminated abnormally, the PedClient simply removes the connection from the connection table. Similarly, the PedServer service in Windows is terminated.</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p> <![CDATA[ ]]></p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

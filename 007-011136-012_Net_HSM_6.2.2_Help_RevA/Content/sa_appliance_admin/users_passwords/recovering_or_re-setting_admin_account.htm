@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|Users and Passwords">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Recover or Reset the Admin Account Password</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix"> </span><span class="MCBreadcrumbsSelf">Appliance Administration Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="managing_appliance_identities.htm">Users and Passwords</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Recover or Reset the Admin Account Password</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor211"></a><a name="kanchor212"></a><a name="kanchor213"></a><a name="kanchor214"></a>Recover or Reset the Admin Account Password</h2>
+        <p><a name="kanchor215"></a><a name="kanchor216"></a><a name="kanchor217"></a>The 'recover' account is a limited-purpose account that has the permanent 
+ (or fixed) password "PASSWORD". The 'recover' account's only 
+ purposes are:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span> to reset the password of the 'admin' user, if the 'admin' 
+ password is <a name="kanchor218"></a><a name="kanchor219"></a>lost/forgotten, or </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>•</b></span></span>to reset the entire SafeNet HSM server 
+ appliance to blank condition (all passwords are reset, any contents [including 
+ any certificates] are erased and any partitions are removed).</p>
+        <p>As a security measure, 'recover' can login <span style="font-weight: bold;">only 
+ via the local serial connection</span>. The 'admin' user's account password can be changed remotely by anyone who already knows it, but the 'admin' user's password cannot be arbitrarily reset unless the person doing so has physical access to the appliance, to make the serial connection. </p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>The exception to the "physical access to the appliance"&#160;statement is where you have your appliances connected to a "terminal server" that aggregates serial links and makes them accessible via telnet or similar. We do that in a test lab, where access control is not critical, and it can be very convenient when we are constantly setting up and tearing down appliances and HSM hosts for various test and verification scenarios. <br /><br />However, connection of your SafeNet appliances to a remotely accessible terminal server could expose an additional avenue of attack, and therefore we suggest that you always avoid allowing such a potential security opening in a production environment. <br /></p>
+        <h5>What to do if you ever forget or lose the admin password</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Have the blue SO PED Key 
+ available, and the SafeNet PED connected, powered on, and "Awaiting 
+ command..", for PED authenticated (FIPS 140-3) HSMs, or have the HSM password available for password authenticated HSMs.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Connect a serial 
+ terminal to the <strong>serial console connector</strong> on the SafeNet HSM server front 
+ panel. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Login as "recover". 
+ <span style="font-family: 'Courier New', monospace;"><br />	myluna login: recover&#160;<br />Password:&#160;<br />Last login: Wed Apr 13 10:21:37 on ttyS0&#160;<br />WARNING !! The recover function will stop the network interface, disable SSH <br />service, reset the admin password to the default and then <br />force you to change admin password from default before restarting the <br />network interface and SSH service. Network interface and SSH service <br />will be re-enabled and restarted only if the recover process is successful.&#160;<br />If you are sure you wish to continue, type ‘proceed’, otherwise hit ENTER to abort.&#160;<br />proceed&#160;<br />Proceeding ...&#160;<br />HSM is zeroized. Will proceed to recover admin password.&#160;<br />Stopping sshd:[  OK  ]&#160;<br />Shutting down interface eth0:  [  OK  ]&#160;<br />Shutting down loopback interface:  [  OK  ]&#160;&#160;<br />Changing password for user admin.&#160;<br />You can now choose the new password.&#160;<br />A valid password should be a mix of upper and lower case letters,&#160;<br />digits, and other characters.  You can use an 8 character long&#160;<br />password with characters from at least 3 of these 4 classes.&#160;<br />An upper case letter that begins the password and a digit that&#160;<br />ends it do not count towards the number of character classes used.&#160;<br />Enter new password:&#160;<br />Re-type new password:&#160;<br />passwd: all authentication tokens updated successfully.&#160;<br />Bringing up lookback interface:  [  OK  ]&#160;<br />Bringing up interface eth0:&#160;<br />Determining IP information for eth0… failed.&#160;<br />[FAILED]&#160;<br />Bringing up interface eth1:&#160;<br />Determining IP information for eth1.. failed; no link present.  Check cable?&#160;<br />[FAILED]&#160;<br />Starting sshd:WARNING: initlog is deprecated and will be removed in a future release&#160;<br />[  OK  ]&#160;<br />Successfully performed admin password recovery. Exiting …</span></p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>If you have already initialized the HSM, then you are prompted 
+ for the appropriate blue PED Key. If you have not initialized the HSM 
+ prior to resetting the admin password, then the default HSM SO authentication 
+ is used, from the SafeNet PED, and no PED Key is required.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Login as 'admin'. 
+ You are prompted to change the 'admin' password for the appliance. </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Change the 'admin' 
+ password.</p>
+        <p class="Bulleted">If you believe that your SafeNet HSM server has not 
+ been compromised, you can resume using it as before (taking care to both 
+ remember and secure the 'admin' password). <br /></p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>During recovery, the network 
+ service is stopped and other services are affected. The minimum-effort 
+ resumption would be to reboot the system, which causes all services to 
+ restart with current configuration. However, for safety, you should consider 
+ manually restarting services from the local (serial) console, until all 
+ passwords have been changed from their default values.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span><b>Do not Cancel out.</b> <br />See the "Warning" text at the beginning of the recover dialog, above. Use of the Recover account sets the password of the 'admin' account back to the factory value, and then forces a password change. <br /><br />Do not attempt to bypass the password change. <br /><br />To prevent the admin account being accessible over the network with a known password during the recover procedure, SSH&#160;is disabled when the recover process begins. We do this to prevent the appliance 'admin' account from being accessible over the network with a known password. The SSH service is re-enabled only after the password is changed. <br /><b>Interrupting the process and avoiding the password change leaves SSH service OFF at boot time</b>.<br /><br />If you  cancel out partway through the process in order to retain the default password, instead of changing it when prompted, you might find that you no longer have SSH access. <br /><br />If you encounter the problem, reconnect a local terminal and log into the Recover account again, this time allowing it to complete the full process, ending with a proper, non-default password. If SSH service is still not available, contact Technical Support.</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>The recover account does <strong>not</strong> have the following:<br />- lockout<br />- password expiry<br />- public key authentication (you cannot access 'recover' via SSH anyway)<br />- SSH access<br />- changeable password</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|hsm|hsm firmware">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>hsm firmware rollback </title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">LunaSH Command Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="../commands.htm">LunaSH Commands</a><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="hsm.htm">hsm</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">hsm firmware rollback</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">hsm firmware rollback </h2>
+        <p>This command rolls back (downgrades) the HSM firmware to the previously installed version. You do not need to obtain the previously installed version - it was automatically saved to a special rollback holding area when you used the command <a href="hsm_firmware_upgrade.htm" class="MCXref xref">hsm firmware upgrade </a>. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>For PED-authenticated HSMs, you must disable SRK before you can update the firmware. Use the <b>hsm srk show</b> command to determine whether SRK is enabled on your HSM. If it is, the first line of the output of the <b>hsm srk show</b> command reads "External split enabled:      &#160;&#160;&#160;&#160;&#160;yes". If this is the case, run the <b>hsm srk disable</b> command to disable SRK on the HSM. You must have the appropriate purple PED Key to disable SRK. If you attempt to update the firmware update while SRK is enabled, the system responds with an error: 0x80000030 (CKR_OPERATION_NOT_ALLOWED).</p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>This command is intended primarily for SafeNet internal use (for example, for automated testing). It is recommended that you use this command only  when instructed to do so by SafeNet technical support. The HSM&#160;capabilities and performance following a firmware rollback are uncertain.</p>
+        <p class="caution" data-mc-autonum="&lt;b&gt;CAUTION:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>CAUTION:</b> &#160;</span></span>This command is considered destructive, because an earlier firmware version can have fewer or older mechanisms and might have security vulnerabilities that a newer version does not. Therefore, the HSM requires that the SO be logged in to perform the <b>hsm firmware rollback</b> operation. </p>
+        <p>After rollback is complete, the command <a href="hsm_show.htm" class="MCXref xref">hsm show</a> indicates that you cannot rollback from the rolled-back firmware. </p>
+        <p>If you wish to reassert the newer firmware that was in the HSM before you rolled back, then use command <a href="hsm_firmware_upgrade.htm" class="MCXref xref">hsm firmware upgrade </a>, to [re-]upgrade to the newer firmware version. That version remains on standby in the appliance, so there is no need to re-upload or to re-install appliance software.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code"><b>hsm firmware rollback [-force]</b>  &#160;</p>
+        <table style="caption-side: top;width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 126px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 149px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p> Parameter</p>
+                    </th>
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Shortcut  </p>
+                    </th>
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Description </p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-force</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-f</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>Force the action </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example </h3>
+        <p>The following example show the HSM configuration before and after the firmware rollback.</p><pre xml:space="preserve">[local_host] lunash:&gt;hsm show
+
+   Appliance Details:
+   ==================
+   Software Version:                6.1.0-1
+
+   HSM Details:
+   ============
+   HSM Label:                          mysa6
+   Serial #:                           7000022
+   Firmware:                           <span style="background-color: #ffff00;">6.22.0</span>
+   HSM Model:                     	K6 Base
+   Authentication Method:              PED keys
+   HSM Admin login status:             Logged In
+   HSM Admin login attempts left:      3 before HSM zeroization!
+   RPV Initialized:                    Yes
+   Audit Role Initialized:             No
+   Remote Login Initialized:           No
+   Manually Zeroized:                  No
+
+   Partitions created on HSM:
+   ========================== &#160;
+
+.... (snip)...
+
+Command Result : 0 (Success)
+
+lunash:&gt;
+[local_host] lunash:&gt;hsm firmware rollback
+
+WARNING: This operation will rollback your HSM to the previous firmware version !!!
+
+         (1) This is a destructive operation.
+         (2) You will lose all your partitions.
+         (3) You might lose some capabilities.
+         (4) You must re-initialize the HSM.
+         (5) If the PED&#160;use is remote, you must re-connect it.
+
+Type 'proceed' to continue, or 'quit' to quit now.
+
+&gt; proceed
+Proceeding...
+
+Rolling back firmware.  This may take several minutes.
+
+
+Command Result : 0 (Success)
+[local_host] lunash:&gt;hsm show
+
+
+   Appliance Details:
+   ==================
+   Software Version:                6.1.0-1
+
+   HSM Details:
+   ============
+   HSM Label:                          mysa6
+   Serial #:                           7000022
+   Firmware:                           <span style="background-color: #ffff00;">6.20.0</span> &#160;&#160;
+   HSM Model:                          K6 Base
+   Authentication Method:              PED keys
+   HSM Admin login status:             Not Logged In
+   HSM Admin login attempts left:      3 before HSM zeroization!
+   RPV Initialized:                    Yes
+   Audit Role Initialized:             No
+   Remote Login Initialized:           No
+   Manually Zeroized:                  No
+
+   Partitions created on HSM:
+   ==========================</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">
+.... (snip)...
+
+Command Result : 0 (Success)
+</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

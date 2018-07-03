@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Utilities Reference Guide|SCP">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using the SCP utility </title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" data-mc-generated="True" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template_Enterprise.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 2px;border-bottom-color: #e6e6e6;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_sa.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="MCBreadcrumbsBox_0"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span><span class="MCBreadcrumbsSelf">Utilities Reference Guide</span><span class="MCBreadcrumbsDivider"> &gt; </span><a class="MCBreadcrumbsLink" href="scp_pscp.htm">SCP</a><span class="MCBreadcrumbsDivider"> &gt; </span><span class="MCBreadcrumbs">Using the ctp Utility</span>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Using the scp and pscp Utilities</h2>
+        <p>Use the <b>scp</b> (Linux/Unix) or <b>pscp</b> (Windows) command to securely move updates and certificates and other 
+ files from a source computer onto the SafeNet appliance, or to move appliance 
+ certificates or log files out to a client computer.</p>
+        <p>All packages from SafeNet are signed and encrypted and come with an 
+ authorization code (authcode) that must be provided to decrypt and use 
+ the package. </p>
+        <p class="note" data-mc-autonum="&lt;b&gt;Note:&lt;/b&gt; &#160;"><span class="autonumber"><span><b>Note:</b> &#160;</span></span>In Windows, use PSCP.exe (provided with SafeNet HSM Client software) to transfer certificates, software updates, capability updates, logs, etc. The command syntax is similar to scp. &#160;PuTTY and PSCP have their own help.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <h4>Client to appliance</h4>
+        <p><b>scp</b> [options] [&lt;user&gt;@]&lt;host&gt;:&lt;source&gt; &lt;target&gt;</p>
+        <h4>Appliance to client</h4>
+        <p><b>scp</b> [options] &lt;source&gt; [&lt;source&gt;...] [&lt;user&gt;@]&lt;host&gt;:&lt;target&gt;</p>
+        <h4>List files on the appliance</h4>
+        <p><b>scp</b> [options] -ls &lt;user&gt;@&lt;host&gt;:&lt;file_path&gt;</p>
+        <h3 class="ntoc">Options</h3>
+        <p><span style="font-weight: bold;">-p</span> &#160;[] 
+ preserve file attributes.</p>
+        <p><span style="font-weight: bold;">-q</span> &#160;[] 
+ quiet, don't show statistics</p>
+        <p><span style="font-weight: bold;">-r</span> &#160;[] 
+ copy directories recursively</p>
+        <p><span style="font-weight: bold;">-S</span> &#160;[&lt;path-to-ssh&gt;] 
+ specify the location of SSH</p>
+        <p><span style="font-weight: bold;">-v</span> &#160;[] 
+ show verbose messages</p>
+        <p><span style="font-weight: bold;">-P port</span> &#160;[] 
+ connect to specified port</p>
+        <p><span style="font-weight: bold;">-pw passw</span> &#160;[] 
+ login with specified password</p>
+        <p><span style="font-weight: bold;">-unsafe</span> &#160;[] 
+ allow server-side wildcards (DANGEROUS)</p>
+        <h3 class="ntoc">Examples</h3>
+        <p>The following examples illustrate how to transfer files from a SafeNet HSM client to a SafeNet Network HSM, and from a SafeNet Network HSM to a SafeNet HSM client.</p>
+        <h4>Transferring a file from a SafeNet HSM client to a SafeNet Network HSM</h4><pre xml:space="preserve">/usr/safenet/lunaclient/&gt;scp test-file.txt admin@myluna:</pre><pre xml:space="preserve">admin@myluna's password: ********</pre><pre xml:space="preserve">test-file.txt &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;| 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0 
+ kB | &#160;&#160;0.1 
+ kB/s | ETA: 00:00:00 | 100%</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">/usr/safenet/lunaclient/&gt;</pre><pre xml:space="preserve">&#160;</pre>
+        <p class="notepad_note">The colon is required. Type nothing after the colon when moving files onto 
+ the SafeNet appliance. All files that are scp’d to the SafeNet appliance go 
+ to a predetermined directory, which you cannot change (for security reasons). 
+ While it is possible to change the filename during scp (by typing a new 
+ filename after the colon in the scp command), this is not recommended 
+ since most operations expect certain filenames and can fail if those are 
+ not found.<br />&#160;</p><pre xml:space="preserve">/usr/safenet/lunaclient/&gt;scp test-file.txt admin@myluna:different-file.txt</pre><pre xml:space="preserve">admin@myluna's password: ********</pre><pre xml:space="preserve">test-file.txt &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;| 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0 
+ kB | &#160;&#160;0.1 
+ kB/s | ETA: 00:00:00 | 100%</pre><pre xml:space="preserve">/usr/safenet/lunaclient/&gt;</pre><pre xml:space="preserve">&#160;</pre>
+        <p class="notepad_note">If the arriving file carries an unexpected 
+ name, it might not be handled correctly by subsequent commands</p>
+        <p class="notepad_note"> If you have SSH located in a non-standard (UNIX) location, launch the scp command with the "-S" option (that's an uppercase "s"), followed by the path to SSH, before supplying the paths to the source and target files, like: &#160;<br /></p><pre xml:space="preserve">scp -S /usr/bin/ssh &lt;source file&gt; &lt;dest file&gt;</pre>
+        <h4>Transferring a file from a SafeNet Network HSM to a SafeNet HSM client</h4><pre xml:space="preserve">bash-2.05# scp admin@myLuna3:server.pem .</pre><pre xml:space="preserve">admin@myLuna3's password: *********</pre><pre xml:space="preserve">server.pem           100%</pre><pre xml:space="preserve">|*******************************************************|   928</pre><pre xml:space="preserve">00:00</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Note the dot (.) at the end of the command, denoting “place the resulting file in the current directory”.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Network HSM</span> <span class="DefaultRelease">6.2.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-011136-012</span> <span class="DefaultRevision">Rev. A</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">01 December 2016</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2016</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>
