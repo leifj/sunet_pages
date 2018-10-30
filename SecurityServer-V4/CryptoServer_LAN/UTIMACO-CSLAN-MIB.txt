@@ -1,0 +1,518 @@
+UTIMACO-CSLAN-MIB DEFINITIONS ::= BEGIN
+
+--
+-- Top-level infrastructure of the Utimaco CSLAN MIB tree
+--
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Integer32  FROM SNMPv2-SMI
+    utimaco       FROM UTIMACO-MIB
+    DisplayString FROM SNMPv2-TC;
+
+cslanMIB MODULE-IDENTITY
+    LAST-UPDATED "201507090000Z"  -- July 09, 2015
+    ORGANIZATION 
+        "Utimaco IS GmbH
+        http://hsm.utimaco.com"
+    CONTACT-INFO    
+        "email: support-cs@utimaco.com"
+    DESCRIPTION
+        "Top-level infrastructure of the Utimaco CSLAN MIB tree"
+    
+    REVISION     "201309250000Z"  -- September 25, 2013
+    DESCRIPTION
+        "Fixed typo in cslFanEntry sequence (clsFanSpeed -> cslFanSpeed)"
+    REVISION     "201211300000Z"  -- November 30, 2012
+    DESCRIPTION
+        "Changed organization and contact information"
+    REVISION     "201209280000Z"  -- September 28, 2012
+    DESCRIPTION
+        "CSLAN MIB with extensions for CSLAN V4"
+    ::= { utimaco 1}
+
+                               
+--
+--  CryptoServer LAN Objects
+--   
+
+cslObjects OBJECT IDENTIFIER ::= { cslanMIB 1 }         
+
+cslVersion OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer LAN version"
+	::= { cslObjects 1 }  
+
+cslSerialNumber OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer LAN serial number"
+	::= { cslObjects 2 }   
+
+cslBatteryState OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer LAN battery state"
+	::= { cslObjects 3 }    
+    
+cslDateTime OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer LAN date and time"
+	::= { cslObjects 4 }
+    
+cslLoad OBJECT-TYPE
+	SYNTAX		Integer32 (0..100)
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer LAN load average in percent"
+	::= { cslObjects 5 } 
+    
+cslClients OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer LAN number of client connections"
+	::= { cslObjects 6 }                                  
+
+cslClientsLoad OBJECT-TYPE
+	SYNTAX		Integer32 (0..100)
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer LAN client connection load in percent"
+	::= { cslObjects 7 }    
+
+--
+--  Additional CryptoServer LAN Objects for CryptoServer LAN >= V4
+--	
+
+cslFanTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF cslFanEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The table holding information about all CryptoServer LAN fans. Only available for CryptoServer LAN >= V4."
+	::= { cslObjects 8 }
+
+cslFanEntry OBJECT-TYPE
+	SYNTAX		cslFanEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"An entry (row) in the cslFanTable. Only available for CryptoServer LAN >= V4."
+	INDEX		{ cslFanIndex }
+	::= { cslFanTable 1 }
+	
+cslFanEntry ::= SEQUENCE {
+	cslFanIndex	    Integer32,
+    cslFanSpeed     Integer32
+}
+
+cslFanIndex OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer LAN fan index for identification. Only available for CryptoServer LAN >= V4."
+	::= { cslFanEntry 1 }
+    
+cslFanSpeed OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer LAN fan speed in rpm. Only available for CryptoServer LAN >= V4."
+	::= { cslFanEntry 2 } 
+    
+cslPowerSupply OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer LAN status of the redundant power supply units (OK or Failed). Only available for CryptoServer LAN >= V4."
+	::= { cslObjects 9 }
+    
+cslCPUTemperature OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer LAN CPU temperature in degree Celsius. Only available for CryptoServer LAN >= V4."
+	::= { cslObjects 10 }
+    
+cslCPUTemperatureAsString OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer LAN CPU temperature in degree Celsius as String. Only available for CryptoServer LAN >= V4."
+	::= { cslObjects 11 }    
+                                  
+--
+--  CryptoServer Table
+--	 
+
+csTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF csEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The table holding information about all CryptoServer within the CryptoServer LAN"
+	::= { cslanMIB 2 }
+    
+csEntry OBJECT-TYPE
+	SYNTAX		csEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"An entry (row) in the csTable"
+	INDEX		{ csIndex }
+	::= { csTable 1 }
+	
+csEntry ::= SEQUENCE {
+	csIndex	                Integer32,
+	csDevice	            DisplayString,
+	csMode                  DisplayString,
+	csState	                DisplayString,
+	csTemperature	        Integer32,
+    csTemperatureAsString   DisplayString,
+    csAlarm                 Integer32,
+    csVersion               DisplayString,
+    csSerialNumber          DisplayString,
+    csBatteryState          DisplayString,
+    csDateTime              DisplayString,
+    csModuleState           DisplayString
+}
+
+csIndex OBJECT-TYPE
+	SYNTAX		Integer32 (1..4)
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer index for identification"
+	::= { csEntry 1 }
+
+csDevice OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"Device to access the CryptoServer"
+	::= { csEntry 2 }
+
+csMode OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer operator mode (e.g. OPERATIONAL, MAINTENANCE, ...)"
+	::= { csEntry 3 }
+    
+csState OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer global state (e.g. INITIALIZED, MANUFACTURED, ...)"
+	::= { csEntry 4 }
+    
+csTemperature OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer temperature in degree Celsius"
+	::= { csEntry 5 } 
+    
+csTemperatureAsString OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer temperature in degree Celsius as String"
+	::= { csEntry 6 } 
+    
+csAlarm OBJECT-TYPE
+	SYNTAX		Integer32 (0..1023)
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"Content of CryptoServer Alarm Register (0 = Alarm OFF)"
+	::= { csEntry 7 } 
+    
+csVersion OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer bootloader version"
+	::= { csEntry 8 }     
+    
+csSerialNumber OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer serial number"
+	::= { csEntry 9 }
+    
+csBatteryState OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer battery state"
+	::= { csEntry 10 }
+    
+csDateTime OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer date and time"
+	::= { csEntry 11 }
+    
+csModuleState OBJECT-TYPE
+	SYNTAX		DisplayString
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"CryptoServer module state (OK or Failed)"
+	::= { csEntry 12 }    
+
+    
+--
+--  Top-level structure of Notifications
+--	
+    
+notifications OBJECT IDENTIFIER ::= { cslanMIB 3 }
+
+notificationPrefix  OBJECT IDENTIFIER
+                                  ::= { notifications 0 }
+								  
+notificationObjects OBJECT IDENTIFIER
+                                  ::= { notifications 1 }	
+    
+    
+--
+--  Notification objects
+--
+
+notObjDevice OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION "CryptoServer device, used for notifications"
+::= { notificationObjects 1 }								  
+
+notObjErrorCode OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION "Error code, used for notifications"
+::= { notificationObjects 2 }	
+								  
+notObjOldMode OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION "CryptoServer old mode, used for notifications"
+::= { notificationObjects 3 }	
+
+notObjNewMode OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION "CryptoServer new mode, used for notifications"
+::= { notificationObjects 4 }	
+
+notObjTemperature OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION "Current temperature in degree Celsius, used for notifications"
+::= { notificationObjects 5 }
+
+notObjTemperatureAsString OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION "Current temperature in degree Celsius as String, used for notifications"
+::= { notificationObjects 6 }			
+
+notObjLoad OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION "Current load average in percent, used for notifications"
+::= { notificationObjects 7 }
+
+notObjClients OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION "Current client connection load in percent, used for notifications"
+::= { notificationObjects 8 }
+
+--
+--  Additional notification objects for CryptoServer LAN >= V4
+--	
+
+notObjFanIndex OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION "CryptoServer LAN fan index, used for notifications. Only available for CryptoServer LAN >= V4."
+::= { notificationObjects 9 }
+
+notObjFanSpeed OBJECT-TYPE
+    SYNTAX      Integer32
+    MAX-ACCESS  accessible-for-notify
+    STATUS      current
+    DESCRIPTION "Current fan speed in rpm, used for notifications. Only available for CryptoServer LAN >= V4."
+::= { notificationObjects 10 }
+
+--
+--  Notifications
+--	
+
+notifyError NOTIFICATION-TYPE
+    OBJECTS     { notObjErrorCode }
+    STATUS      current
+    DESCRIPTION "Error notification"
+::= { notificationPrefix 1 }	
+
+notifyCsModeChange NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice, notObjOldMode, notObjNewMode }
+    STATUS      current
+    DESCRIPTION "CryptoServer mode change notification."
+::= { notificationPrefix 2 }
+
+notifyCsAlarmTemperatureLow NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice }
+    STATUS      current
+    DESCRIPTION "CryptoServer alarm notification that the temperature is too low."
+::= { notificationPrefix 3 }	
+
+notifyCsAlarmTemperatureHigh NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice }
+    STATUS      current
+    DESCRIPTION "CryptoServer alarm notification that the temperature is too high."
+::= { notificationPrefix 4 }
+
+notifyCsAlarmInnerFoil NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice }
+    STATUS	    current
+    DESCRIPTION "CryptoServer alarm notification that the inner foil is broken."
+    ::= { notificationPrefix 5 }
+
+notifyCsAlarmOuterFoil NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice }
+    STATUS	    current
+    DESCRIPTION "CryptoServer alarm notification that the outer foil is broken."
+    ::= { notificationPrefix 6 }	    
+
+notifyCsAlarmPowerFailed NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice }
+    STATUS	    current
+    DESCRIPTION "CryptoServer alarm notification that the power failed."
+    ::= { notificationPrefix 7 }  
+
+notifyCsAlarmPowerLow NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice }
+    STATUS	    current
+    DESCRIPTION "CryptoServer alarm notification that the power is too low."
+    ::= { notificationPrefix 8 }    
+    
+notifyCsAlarmPowerHigh NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice }
+    STATUS	    current
+    DESCRIPTION "CryptoServer alarm notification that the power is too high."
+    ::= { notificationPrefix 9 }  
+   
+notifyCsAlarmInvalidMasterKey NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice }
+    STATUS	    current
+    DESCRIPTION "CryptoServer alarm notification that the Master Key is invalid."
+    ::= { notificationPrefix 10 } 
+    
+notifyCsAlarmExternalErase NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice }
+    STATUS	    current
+    DESCRIPTION "CryptoServer alarm notification that the External Erase is executed."
+    ::= { notificationPrefix 11 } 
+    
+notifyCsTemperatureHigh NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice, notObjTemperature, notObjTemperatureAsString }
+    STATUS      current
+    DESCRIPTION "CryptoServer notification that the temperature rises above threshold temperature."
+::= { notificationPrefix 12 }
+
+notifyCsTemperatureHighBack NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice, notObjTemperature, notObjTemperatureAsString }
+    STATUS      current
+    DESCRIPTION "CryptoServer notification that the temperature falls back to or under threshold temperature."
+::= { notificationPrefix 13 }
+
+notifyCsTemperatureLow NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice, notObjTemperature, notObjTemperatureAsString }
+    STATUS      current
+    DESCRIPTION "CryptoServer notification that the temperature falls under threshold temperature."
+::= { notificationPrefix 14 }
+
+notifyCsTemperatureLowBack NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice, notObjTemperature, notObjTemperatureAsString }
+    STATUS      current
+    DESCRIPTION "CryptoServer notification that the temperature rises back to or above threshold temperature."
+::= { notificationPrefix 15 }
+
+notifyCsBatteryLow NOTIFICATION-TYPE
+    OBJECTS     { notObjDevice }
+    STATUS	    current
+    DESCRIPTION "CryptoServer notification that the CryptoServer onboard battery gets low."
+::= { notificationPrefix 16 } 
+
+notifyCslBatteryLow NOTIFICATION-TYPE
+    STATUS	    current
+    DESCRIPTION "CryptoServer LAN notification that the CryptoServer LAN backup battery gets low."
+::= { notificationPrefix 17 } 
+    
+notifyCslLoadHigh NOTIFICATION-TYPE
+    OBJECTS     { notObjLoad }
+    STATUS      current
+    DESCRIPTION "CryptoServer LAN notification that the load rises above threshold."
+::= { notificationPrefix 18 }
+
+notifyCslLoadHighBack NOTIFICATION-TYPE
+    OBJECTS     { notObjLoad }
+    STATUS      current
+    DESCRIPTION "CryptoServer LAN notification that the load falls back to or under threshold."
+::= { notificationPrefix 19 }   
+
+notifyCslClientsHigh NOTIFICATION-TYPE
+    OBJECTS     { notObjClients }
+    STATUS      current
+    DESCRIPTION "CryptoServer LAN notification that the client connection load rises above threshold."
+::= { notificationPrefix 20 }
+
+notifyCslClientsHighBack NOTIFICATION-TYPE
+    OBJECTS     { notObjClients }
+    STATUS      current
+    DESCRIPTION "CryptoServer LAN notification that the client connection load falls back to or under threshold."
+::= { notificationPrefix 21 } 
+
+notifyCslBoot NOTIFICATION-TYPE
+    STATUS	    current
+    DESCRIPTION "CryptoServer LAN notification that the CryptoServer LAN has booted."
+::= { notificationPrefix 22 } 
+    
+notifyCslShutDown NOTIFICATION-TYPE
+    STATUS	    current
+    DESCRIPTION "CryptoServer LAN notification that the CryptoServer LAN is shutting down."
+::= { notificationPrefix 23 } 
+
+--
+--  Additional notifications for CryptoServer LAN >= V4
+--	
+
+notifyCslFanSpeedLow NOTIFICATION-TYPE
+    OBJECTS     { notObjFanIndex, notObjFanSpeed }
+    STATUS	    current
+    DESCRIPTION "CryptoServer LAN notification that the CryptoServer LAN fan speed falls under threshold. Only available for CryptoServer LAN >= V4."
+::= { notificationPrefix 24 }
+
+notifyCslFanSpeedLowBack NOTIFICATION-TYPE
+    OBJECTS     { notObjFanIndex, notObjFanSpeed }
+    STATUS	    current
+    DESCRIPTION "CryptoServer LAN notification that the CryptoServer LAN fan speed rises back to or above threshold. Only available for CryptoServer LAN >= V4."
+::= { notificationPrefix 25 }
+
+notifyCslPowerSupplyFailure NOTIFICATION-TYPE
+    STATUS	    current
+    DESCRIPTION "CryptoServer LAN notification that the CryptoServer LAN redundant power supply failed. Only available for CryptoServer LAN >= V4."
+::= { notificationPrefix 26 }  
+    
+END
