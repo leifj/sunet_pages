@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Syslog and SNMP Monitoring Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Sub-System Log Reference</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#monitoring/traps/subsystem_logs.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Sub-System Log Reference</h2>
+        <p>An example might help to explain the sub-system log reference object of the appliance MIB. Assume a power supply fails. Via the intelligent platform monitoring interface, the ipmievd process learns of this failure and generates a log message. ipmievd sends the message to the rsyslogd process. In addition to writing a record to the messages log file, rsyslogd writes the record to the named pipe at which lsta is listening. lsta determines that this event is trap-worthy. The agent formats the necessary parameters and uses the net-snmp snmptrap command to send a notification for a SAFENET-APPLIANCE-MIB::powerSupplyAttentionNotify notification with a SAFENET-APPLIANCE-MIB::ssLogReference object to the configured SNMP V3 user.</p>
+        <p>See the following subsections for information on these types of traps:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#FanFailure" class="MCXref xref">Fan Failure</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#PowerSupplyFailure" class="MCXref xref">Power Supply Failure</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#MotherboardFailure" class="MCXref xref">Motherboard Failure</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#DiskDriveFailure" class="MCXref xref">Disk Drive Failure</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#NTLSFailure" class="MCXref xref">NTLS Failure</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#CryptoFailure" class="MCXref xref">Crypto Failure</a>
+        </p>
+        <p>The trap handler receives the notification in a packet that includes the following example segment:</p><pre xml:space="preserve">SAFENET-APPLIANCE-MIB::powerSupplyAttentionNotify, SAFENET-APPLIANCE-MIB::ssLogReference = [myLuna:192.168.0.101 / 2012 Feb 29 12:05:01 / messages / ipmievd[1234] / 1]
+</pre><pre xml:space="preserve">&#160;</pre>
+        <p xml:space="preserve">where</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>myLuna</b> is the hostname of the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>192.168.0.101</b> is the IP address of the first Ethernet interface on the appliance</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>messages</b> is the log file that contains the event leading to the trap notification</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>2012 Feb 29 12:05:01</b> is the date and timestamp recorded in the log file</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>ipmievd[1234]</b> is the process that logged the message.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>1</b> is a boolean that indicates whether the trap is for an assertion (1) or de-assertion (0) event.</p>
+        <p>This information gives you what is needed to identify the specific log entry that led to the trap. If you log into the appliance and look at the messages log file:</p><pre xml:space="preserve">[myLuna] lunash:&gt;syslog tail -logname messages</pre><pre xml:space="preserve">&#160;</pre>
+        <p>you see the following entry:</p><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd[1234]: ***TEST : Power Supply sensor PSU2_Status&#160;&#160;&#160; . - Failure detected Asserted</pre><pre xml:space="preserve">&#160;</pre>
+        <p>From this log message, you know that the second power supply unit has failed and you can dispatch a technician to investigate.</p>
+        <p>Note that the Luna appliance tags log messages generated by lunash:&gt;<b>sysconf snmp trap test</b> with a ***TEST designator. This designator allows you to determine legitimate events from test events.</p>
+        <h3><a name="FanFailure"></a>Fan Failure</h3>
+        <p>lsta generates a trap for a fan failure based on the following conditions for the ipmievd process and with any of { “Fan1A”, “Fan1B”, “Fan2A”, “Fan2B”, “Fan3A”, “Fan3B”} in the body of the message:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Body of log message contains the text “'Lower Critical going low” and the threshold reported represents an assert condition</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Body of log message contains the text “'Lower Non-recoverable going low” and the threshold reported represents an assert condition.</p>
+        <p>Recall from <a href="../open_source/IPMI.htm#ThresholdEvents" class="MCXref xref">Threshold Events</a> that IPMI reports assert and de-assert conditions. A “true” relationship to the <code>(Reading xxxx &lt; Threshold yyyy RPM)</code> segment of the log message represents an assert event. A “false” relationship represents a de-assert event.</p>
+        <p>Fan failures correspond to the fanAttentionNotify NOTIFICATION-TYPE of the SAFENET-APPLIANCE-MIB.</p>
+        <p>Note that the Luna administrative shell prohibits the ‘&lt;’ and ‘&gt;’ characters as parameters. But some traps key off threshold readings that rely on this arithmetic comparator. To enable test log messages of this sort, use a “.lt” or “.gt” string in place of the ‘&lt;’ or ‘&gt;’ character in the formatted LunaSH command.</p>
+        <p>You can cut-and-paste the following examples in a LunaSH session to create test log messages that generate fan traps (the first, second, fourth and fifth examples create assert events; the third and sixth examples, de-assert events):</p><pre>lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Fan sensor Fan3B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Lower Critical going low&#160; (Reading 0 .lt Threshold 2000 RPM)"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Fan sensor Fan3B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Lower Critical going low&#160; (Reading 2000 .lt Threshold 2000 RPM)"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Fan sensor Fan3B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Lower Critical going low&#160; (Reading 21000 .lt Threshold 2000 RPM)"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Fan sensor Fan3B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Lower Non-recoverable going low&#160; (Reading 500 .lt Threshold 1000 RPM)"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Fan sensor Fan3B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Lower Non-recoverable going low&#160; (Reading 1000 .lt Threshold 1000 RPM)"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Fan sensor Fan3B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Lower Non-recoverable going low&#160; (Reading 5100 .lt Threshold 1000 RPM)"</pre>
+        <h3><a name="PowerSupplyFailure"></a>Power Supply Failure</h3>
+        <p>lsta generates a trap for a power supply failure based on the following conditions for the ipmievd process and with any of {” PSU1_Status”, "PSU1_+12V_value", "PSU1 Temp_value", "PSU1 FAN_value", “PSU2_Status”, "PSU2_+12V_value", "PSU2 Temp_value", "PSU2 FAN_value", “Power Supply”} in the body of the message:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Body of log message contains the text “Failure detected Asserted”</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Body of log message contains the text “Failure detected Deasserted”</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Body of log message contains the text “Presence detected Asserted”</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Body of log message contains the text “Presence detected Deasserted”</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Body of log message contains the text “- Transition to Power Off”</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Body of log message contains the text “'Lower Non-recoverable going low” and the threshold reported represents an assert condition</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Body of log message contains the text “'Upper Non-recoverable going high” and the threshold reported represents an assert condition.</p>
+        <p>Power supply failures correspond to the powerSupplyAttentionNotify NOTIFICATION-TYPE of the SAFENET-APPLIANCE-MIB.</p>
+        <p>Here is text you can use to create power supply traps:</p><pre>lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Power Supply sensor PSU2_Status&#160;&#160;&#160; . - Failure detected Asserted"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Power Supply sensor PSU1_Status&#160;&#160;&#160; . - Presence detected Deasserted"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Power Supply sensor - Transition to Power Off"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Voltage sensor PSU2_+12V_value. Upper Non-recoverable going high&#160; (Reading 14.538 .gt Threshold 13.392 Volts)"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Voltage sensor PSU2_+12V_value. Upper Non-recoverable going high&#160; (Reading 12.538 .gt Threshold 13.392 Volts)"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Voltage sensor PSU2_+12V_value. Lower Non-recoverable going low&#160; (Reading 10.548 .lt Threshold 11.232 Volts)"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Voltage sensor PSU2_+12V_value. Lower Non-recoverable going low&#160; (Reading 12.548 .lt Threshold 11.232 Volts)"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "PSU1 Temp_value. Upper Non-recoverable going high&#160; (Reading 117 .gt Threshold 115 Degrees)"</pre>
+        <h3><a name="MotherboardFailure"></a>Motherboard Failure</h3>
+        <p>lsta generates a trap for a motherboard failure based on the following conditions for the ipmievd process and with any of { "CPU", "VRD", "PCH", "Inlet", "CHA DIMM 0", "CHA DIMM 1", "CHA DIMM 2", "CHB DIMM 0", "CHB DIMM 1", "CHB DIMM 2", "RAM TMax", "CPU_VCORE", "VBAT", "3VSB", "3VMain", "+5V", "+12V"} in the body of the message:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Body of log message contains the text “'Lower Critical going low” and the threshold reported represents an assert condition</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Body of log message contains the text “Upper Critical going high” and the threshold reported represents an assert condition</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Body of log message contains the text “Upper Non-recoverable going high” and the threshold reported represents an assert condition.</p>
+        <p>Motherboard failures correspond to the motherboardAttentionNotify NOTIFICATION-TYPE of the SAFENET-APPLIANCE-MIB.</p>
+        <p>Here are examples to generate motherboard traps:</p><pre>lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Voltage sensor VBAT&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Lower Critical going low&#160; (Reading 1.63 .lt Threshold 2.80 Volts)"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Voltage sensor VBAT&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Lower Critical going low&#160; (Reading 3.30 .lt Threshold 2.80 Volts)"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Temperature sensor CPU&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Upper Critical going high&#160; (Reading 75 .gt Threshold 72 Degrees)"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Temperature sensor CPU&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Upper Critical going high&#160; (Reading 70 .gt Threshold 72 Degrees)"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Temperature sensor CPU&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Upper Non-recoverable going high&#160; (Reading 92 .gt Threshold 89 Degrees)"
+lunash:&gt;sysconf snmp trap test -logfacility local4 -loglevel notice -process ipmievd -message "Temperature sensor CPU&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Upper Non-recoverable going high&#160; (Reading 85 .gt Threshold 89 Degrees)"</pre>
+        <h3><a name="DiskDriveFailure"></a>Disk Drive Failure</h3>
+        <p>lsta generates a trap for a disk drive failure based on the following conditions for the smartd process:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Severity of the message is “crit”.</p>
+        <p>Disk drive failures correspond to the diskDriveAttentionNotify NOTIFICATION-TYPE of the SAFENET-APPLIANCE-MIB.</p>
+        <p>Use the following text to create a disk drive trap:</p><pre>lunash:&gt;sysconf snmp trap test -logfacility daemon -loglevel crit -process smartd -message "Device: /dev/sda, Temperature 45 Celsius reached limit of 44 Celsius (Min/Max 31/49)" -pid</pre>
+        <h3><a name="NTLSFailure"></a>NTLS Failure</h3>
+        <p>lsta generates a trap for an NTLS failure based on the following conditions for the NTLS process:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Severity of the message is “err”.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Severity of the message is “crit”.</p>
+        <p>NTLS failures correspond to the ntlsAttentionNotify NOTIFICATION-TYPE of the SAFENET-APPLIANCE-MIB.</p>
+        <p>Here are examples to create NTLS traps:</p><pre>lunash:&gt;sysconf snmp trap test -logfacility local5 -loglevel crit -process NTLS -message "error :&#160; 0xc0000002 : Unable to create a new connection. " -pid
+lunash:&gt;sysconf snmp trap test -logfacility local5 -loglevel crit -process NTLS -message "info : 0 : NTLS CRASH AND BURN! Stack dump saved to /var/log/ntls_bt_2012-02-29_12:05:01" -pid</pre>
+        <h3><a name="CryptoFailure"></a>Crypto Failure</h3>
+        <p>For Luna SA 5/6, lsta generates a trap for a crypto failure – the internal HSM for Luna appliances – based on the following conditions:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>For the kernel process, body of log message contains the text “HSM crashed:”</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>For the sysstatd process, body of log message contains the text “30”</p>
+        <p>For Luna SA 7, lsta generates a trap for a crypto based on the following conditions:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>For the kernel process, body of log message contains the text “ALM”</p>
+        <p>Crypto failures correspond to the cryptoAttentionNotify NOTIFICATION-TYPE of the SAFENET-APPLIANCE-MIB.</p>
+        <p>Use the following examples to simulate a crypto failure on a Luna SA 5/6 appliance:</p><pre xml:space="preserve">lunash:&gt;sysconf snmp trap test -logfacility kern -loglevel info -process kernel -message "NOTE: viper0: hsm log: LOG(CRITICAL)&#160; HSM crashed:"
+lunash:&gt;sysconf snmp trap test -logfacility user -loglevel info -process sysstatd -message "Luna System State Server - OOS Errors: 30,100,60!"</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Use the following examples to simulate a crypto failure on a Luna SA 7 appliance:</p><pre xml:space="preserve">lunash:&gt;sysconf snmp trap test -logfacility kern -loglevel info -process kernel -message "k7pf0: [HSM] ALM2007: HSM zeroized"</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

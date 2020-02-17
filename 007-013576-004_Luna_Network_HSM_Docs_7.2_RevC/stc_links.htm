@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|Enable the Client to Access a Partition">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Creating an STC Link Between a Client and a Partition</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/List2.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/client_partition/stc_links.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Creating an STC Link Between a Client and a Partition</h2>
+        <p>If you require a higher level of security for your network links than is offered by NTLS, such as in cloud environments, or in situations where message integrity is paramount, you can use Secure Trusted Channel (STC) to provide very secure client-partition links. STC offers the following features to ensure the security and integrity of your client-partition communications:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>All data is transmitted using symmetric encryption; only the end-points can decrypt messages</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Message authentication codes prevent an attacker from intercepting and modifying any command or response</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Mutual authentication of the HSM and the end-point ensure that only authorized entities can establish an STC connection</p>
+        <p>See <a href="../../administration/stc/stc.htm" class="MCXref xref">Secure Trusted Channel (STC)</a> in the <i>Administration Guide</i> for more information. You can configure your <span class="DefaultProduct">SafeNet Luna Network HSM</span> so that some partitions use STC and others use NTLS. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The <span class="DefaultProduct">SafeNet Luna Network HSM</span> can create STC and NTLS channels to different clients as required. The client can also support both STC and NTLS links. However, all links from a specific client to a specific <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance must be either STC or NTLS. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>STC links are not supported over an IPv6 network. You must use NTLS to make partition-client connections via IPv6. </p>
+        <p>This section describes how to establish an STC connection between a client and a new partition. The procedure consists of the following major steps:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Prerequisites" class="MCXref xref">Prerequisites</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Step1" class="MCXref xref">Step 1: Create the Client Token and Identity</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Step2" class="MCXref xref">Step 2: Register the Partition Identity Public Key to the Client</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Step3" class="MCXref xref">Step 3: Enable and Verify the STC Link</a>
+        </p>
+        <p>The following optional procedures are also described:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#MultiClient" class="MCXref xref">Registering a Single STC Partition to Multiple Clients</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#NTLtoSTC" class="MCXref xref">Converting an Initialized NTLS Partition-Client Connection to STC</a>
+        </p>
+        <p class="figureCaption" data-mc-autonum="Figure 1: "><span class="autonumber"><span>Figure 1: </span></span>Creating an STC Link Between a Client and a Partition</p>
+        <p>
+            <img src="../../Resources/Images/stc/STC_partition_client.png" style="height: auto;width: 650px;" />
+        </p>
+        <h3 class="ntoc"><a name="Prerequisites"></a>Prerequisites</h3>
+        <p>You must complete these procedures before establishing a partition-client STC connection. The instructions are divided into tasks performed by the HSM SO and the Client Administrator. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#PrereqSO" class="MCXref xref">HSM&#160;SO&#160;Prerequisites</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#AdminSTC" class="MCXref xref">Enabling STC on the Admin Channel (Optional)</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#PrereqClient" class="MCXref xref">Client Administrator Prerequisites</a>
+        </p>
+        <h5><a name="PrereqSO"></a>HSM&#160;SO&#160;Prerequisites</h5>
+        <p>To prepare the HSM to use STC, the HSM SO must complete the following prerequisites. If you have Administrator access to the client workstation, you can use <b>scp</b> or <b>pscp</b> to transfer the server and partition public keys directly from the <span class="DefaultProduct">SafeNet Luna Network HSM</span>. Otherwise, you must provide these keys to the client by other secure means. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Enable HSM&#160;Policy 39: Allow Secure Trusted Channel on the appliance. </p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>Log in as HSM&#160;SO using LunaSH. </p>
+        <p class="listLevel2" xml:space="preserve">lunash:&gt;<b>hsm login</b></p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>Set Policy 39 to <b>1</b> (Enabled).</p>
+        <p class="listLevel2">lunash:&gt;<b>hsm changepolicy -policy 39 -value 1</b></p>
+        <p class="ol2" data-mc-autonum="c."><span class="autonumber"><span class="ol2Number">c.</span></span>Confirm that HSM&#160;Policy 39 is enabled.</p>
+        <p class="listLevel2">lunash:&gt;<b>hsm showpolicies</b></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Create one or more new partitions for the client.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Each client identity registered to a partition uses 2392 bytes of storage on the partition. Ensure that you create partitions large enough to store the identity of every client workstation that will access the partition, in addition to cryptographic objects. </p>
+        <p class="listLevel1">lunash:&gt;<b>partition create -partition</b> &lt;partition_name&gt; [<b>-size</b> &lt;bytes&gt;]</p>
+        <p class="listLevel1">When you create a partition, a partition identity key pair is automatically created.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>For each partition you created, export the partition identity public key to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> file system. The file will be named with the partition's serial number. You can check the key's filename with <b>my file list</b>. </p>
+        <p class="listLevel1" xml:space="preserve">lunash:&gt;<b>stc partition export -partition</b> &lt;partition_name&gt;</p>
+        <p class="listLevel1" xml:space="preserve">lunash:&gt;<b>my file list</b></p><pre class="listLevel1" xml:space="preserve">lunash:&gt;stc partition export -partition app_par1</pre><pre class="listLevel1" xml:space="preserve">Successfully exported partition identity for partition app_par1 to file: 154438865304.pid</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">lunash:&gt;my file list</pre><pre class="listLevel1">515 Mar  6 17:38 154438865304.pid</pre><pre class="listLevel1" xml:space="preserve">4409 Mar  6 10:44 firstboot.log</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>View the partition identity public key hash. It is recommended that you provide it (via separate channel) to the client receiving the partition identity public key, so that the Partition SO can verify the key's integrity as described in <a href="#Step3" class="MCXref xref">Step 3: Enable and Verify the STC Link</a>. </p>
+        <p class="listLevel1">lunash:&gt;<b>stc partition show -partition</b> &lt;partition_name&gt;</p><pre class="listLevel1" xml:space="preserve">lunash:&gt;stc partition show -partition app_par1</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1">Partition Serial Number:                 154438865304</pre><pre class="listLevel1" xml:space="preserve">Partition Identity Public Key SHA1 Hash: 477ad2869ad892ebdd5007aa54fae3745fa175e2</pre>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>The client will require the following files/information to establish the STC connection. The <span class="DefaultProduct">SafeNet Luna Network HSM</span> client software package includes the <b>scp</b> (Linux) and <b>pscp</b> (Windows) tools for securely transferring files (see <a href="../../Utilities/scp_pscp/scp_pscp.htm" class="MCXref xref">SCP and PSCP</a> for syntax). If you do not have access to the client workstation, or a firewall prevents you from using <b>scp</b> or <b>pscp</b>, you must transfer these files from the HSM and provide them to the client by other secure means:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>The HSM Server Certificate (<b>server.pem</b>) from the <span class="DefaultProduct">SafeNet Luna Network HSM</span>. If you have already established an NTLS connection between the appliance and the client, as detailed in <a href="../client_appliance/create_ntl.htm" class="MCXref xref">Create a Network Trust Link Between the Client and the Appliance</a>, you do not need to send this certificate. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>The partition identity public key for each partition to be assigned to the client (<b>154438865304.pid</b> in the example above). </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>The partition identity public key hash for each partition to be assigned to the client. This is recommended so that the client can verify the key's integrity before using the partition. Do not send the hash by the same means as the certificates. </p>
+        <h5><a name="AdminSTC"></a>Enabling STC on the Admin Channel (Optional)</h5>
+        <p>For added security, you can use STC to secure communications between the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance and the HSM Admin partition. This procedure is performed by the HSM SO using LunaSH. You must be logged in as HSM SO to enable or disable this feature. You must restart the STC service after enabling STC on the Admin channel. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Enabling STC on the Admin channel is performance-affecting. For more information, see <a href="../../administration/stc/sa_local_stc.htm" class="MCXref xref">Establishing and Configuring the STC Admin Channel on a SafeNet Luna Network HSM Appliance</a>.</p>
+        <h5>To enable STC on the admin channel:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Enable STC.</p>
+        <p xml:space="preserve" class="listLevel1">lunash:&gt;<b>hsm stc enable</b>
+        </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Restart the STC service on the HSM.</p>
+        <p class="listLevel1">lunash:&gt;<b>service restart stc</b></p>
+        <h5><a name="PrereqClient"></a>Client Administrator Prerequisites</h5>
+        <p>To prepare the client to access a partition on the <span class="DefaultProduct">SafeNet Luna Network HSM</span>, you must first establish a Network Trust Link to the appliance using the HSM Server Certificate (<b>server.pem</b>) you received from the HSM SO. You must have Administrator privileges on the client workstation.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open a command line (as Administrator) on the client and navigate to the Luna HSM Client install directory. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Register the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance with the client.</p>
+        <p class="listLevel1">&gt;<b>vtl addserver -n</b> &lt;IP/hostname&gt; <b>-c</b> &lt;server_certificate_filename&gt;</p>
+        <p class="listLevel1">See <a href="../client_appliance/create_ntl.htm" class="MCXref xref">Create a Network Trust Link Between the Client and the Appliance</a> for more detailed instructions. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>To check that you have successfully registered the appliance with the client, launch LunaCM and view the list of registered servers.</p>
+        <p class="listLevel1">lunacm:&gt;<b>clientconfig listservers</b></p>
+        <h3 class="ntoc"><a name="Step1"></a>Step 1: Create the Client Token and Identity</h3>
+        <p>This procedure is completed by an Administrator on the client workstation, using LunaCM. </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>This step is not required if you have already created a client token and identity. Verify using <b>stc identityshow</b>. If you recreate the client identity, you will have to re-register any existing STC partitions. </p>
+        <h5>To create the client token and identity:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open a SafeNet Luna HSM client session.</p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>Open a command prompt or terminal window.</p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>Launch LunaCM.</p>
+        <table style="width: 92%;mc-table-style: url('../../Resources/TableStyles/List2.css');" class="TableStyle-List2" cellspacing="0">
+            <col class="TableStyle-List2-Column-Column1" />
+            <col class="TableStyle-List2-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List2-Body-Body1">
+                    <td class="TableStyle-List2-BodyE-Column1-Body1" style="font-weight: bold;">Windows</td>
+                    <td class="TableStyle-List2-BodyD-Column1-Body1">
+                        <p style="font-weight: bold;">C:\Program Files\SafeNet\LunaClient\lunacm</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-List2-Body-Body1">
+                    <td class="TableStyle-List2-BodyE-Column1-Body1" style="font-weight: bold;">Linux</td>
+                    <td class="TableStyle-List2-BodyD-Column1-Body1" style="font-weight: bold;">/usr/safenet/lunaclient/data/bin/lunacm</td>
+                </tr>
+                <tr class="TableStyle-List2-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-List2-BodyB-Column1-Body1" style="font-weight: bold;">Solaris/HP-UX</td>
+                    <td class="TableStyle-List2-BodyA-Column1-Body1" style="font-weight: bold;">/opt/safenet/lunaclient/data/bin/lunacm</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Initialize the STC client software token, or insert the STC client hardware token (SafeNet eToken 7300) you have prepared for this client:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you are using an STC client software token, initialize the STC client token. </p>
+        <p class="listLevel2">lunacm:&gt;<b>stc tokeninit -label</b> &lt;token_label&gt;</p><pre class="listLevel2" xml:space="preserve">lunacm:&gt; stc tokeninit -label mySTCclientToken</pre><pre class="listLevel2" xml:space="preserve">&#160;</pre><pre class="listLevel2" xml:space="preserve">Successfully initialized the client token.</pre>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you are using an STC client hardware token (SafeNet eToken 7300), insert the token into an available USB port. Before you can use a hardware token, initialize it using the SafeNet Authentication Client on a Windows workstation, as described in <a href="../../administration/stc/token.htm" class="MCXref xref">Using a Hard Token to Store the STC Client Identity</a> in the <i>Administration Guide</i>.</p>
+        <p class="listLevel2">You must also install the SafeNet Authentication Client software (8.3 or higher) on the client workstation and add the following line to the <b>Secure Trusted Channel</b> section of the <b>crystoki.ini</b> (Windows) or <b>Chrystoki.conf</b> (UNIX/Linux) file, to specify the path to the SafeNet Authentication Client eToken library:</p>
+        <table style="width: 92%;mc-table-style: url('../../Resources/TableStyles/List2.css');" class="TableStyle-List2" cellspacing="0">
+            <col class="TableStyle-List2-Column-Column1" style="width: 92px;" />
+            <col class="TableStyle-List2-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List2-Body-Body1">
+                    <td class="TableStyle-List2-BodyE-Column1-Body1" style="font-weight: bold;">Windows</td>
+                    <td class="TableStyle-List2-BodyD-Column1-Body1"><b>ClientTokenLib=C:\Windows\System32\eToken.dll</b>
+                    </td>
+                </tr>
+                <tr class="TableStyle-List2-Body-Body1">
+                    <td class="TableStyle-List2-BodyB-Column1-Body1" style="font-weight: bold;">Linux</td>
+                    <td class="TableStyle-List2-BodyA-Column1-Body1"><b>ClientTokenLib=&lt;path_to_libeToken.so&gt;</b>
+                        <p>For example, on CentOS, the path is <b>/usr/lib/libeToken.so</b></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Create a client identity on the token. The STC client identity public key is automatically exported to the &lt;luna_client_root_dir&gt;<b>/data/client_identities</b> directory.</p>
+        <p class="listLevel1">lunacm:&gt;<b>stc identitycreate -label</b> &lt;client_identity&gt;</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; stc identitycreate -label mySTCclientID</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Client identity successfully created and exported to file /usr/safenet/lunaclient/data/client_identities/mySTCclientID</pre>
+        <h3 class="ntoc"><a name="Step2"></a>Step 2: Register the Partition Identity Public Key to the Client</h3>
+        <p>This step requires the partition identity public key file created by the HSM SO in <a href="#Prerequisites" class="MCXref xref">Prerequisites</a> (<b>154438865304.pid</b> in the example). </p>
+        <h5>To register the partition identity public key to the client:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Launch LunaCM and register the public key to the client. </p>
+        <p class="listLevel1">lunacm:&gt;<b>stc partitionregister -file</b> &lt;partition_identity&gt; [<b>-label</b> &lt;partition_label&gt;]</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; stc partitionregister -file /usr/safenet/lunaclient/partition_identities/154438865304.pid -label app_par1</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Partition identity 154438865305 successfully registered.</pre>
+        <p class="listLevel1">Repeat this step for each partition identity public key you wish to register to this client. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If you were provided with the partition identity public key hash, verify that the hashes match.</p>
+        <p class="listLevel1">lunacm:&gt;<b>stc identityshow</b></p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; stc identityshow</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Client Identity Name:          mySTCclientID</pre><pre class="listLevel1">Public Key SHA1 Hash:          1b8e783c5cc3bb6a79e5d4a4026258a0f34ef7f6</pre><pre class="listLevel1" xml:space="preserve">List of Registered Partitions:</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve"> Partition Identity   Partition        Partition Public Key SHA1 Hash</pre><pre class="listLevel1" xml:space="preserve"> Label                Serial Number</pre><pre class="listLevel1">________________________________________________________________________________</pre><pre class="listLevel1" xml:space="preserve"> app_par1             154438865304     6916eca3751173f7cf903ab60b9bf1bf35088271</pre>
+        <p class="listLevel1">If the hashes do not match, deregister the partition identity public key, and contact your HSM&#160;SO.</p>
+        <p class="listLevel1">lunacm:&gt;<b>stc partitionderegister -serial</b> &lt;partition_serial_number&gt;</p>
+        <h3 class="ntoc"><a name="Step3"></a>Step 3: Enable and Verify the STC Link</h3>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>When you enable STC on the client, you must specify the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance that hosts the partition you want to link to. This forces the client to use STC for all links to the specified <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance. Any existing NTLS connections to the specified <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance will be terminated. Ensure you have registered the partition identity for each partition on this HSM&#160;before continuing. </p>
+        <h5>To enable and verify the STC link:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Launch LunaCM and view the list of registered servers to find the server ID of the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance that hosts the partition.</p>
+        <p class="listLevel1" style="font-weight: bold;">lunacm:&gt;clientconfig listservers</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Enable the STC link.</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>stc enable -id</b> &lt;server_ID&gt;</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; stc enable -id 0</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        You are about to enable STC to server 192.20.11.78.</pre><pre class="listLevel1" xml:space="preserve">        This will initiate an automatic restart of this application. All sessions</pre><pre class="listLevel1" xml:space="preserve">        logged in through the application will be closed.</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Are you sure you wish to continue?</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Type 'proceed' to continue, or 'quit' to quit now -&gt; proceed</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Successfully enabled STC to connect to server 192.20.11.78.</pre>
+        <p class="listLevel1">LunaCM restarts. If successful, the partition appears in the list of available HSMs. The slot for the partition is easily identified because it does not have a label, since it is not yet initialized. In the following example, the uninitialized <span class="DefaultProduct">SafeNet Luna Network HSM</span> partition is in slot 1:</p><pre class="listLevel1" xml:space="preserve">        Available HSMs:</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Slot Id -&gt;              0</pre><pre class="listLevel1" xml:space="preserve">        Label -&gt;                stc_legacy</pre><pre class="listLevel1" xml:space="preserve">        Serial Number -&gt;        359693009024</pre><pre class="listLevel1" xml:space="preserve">        Model -&gt;                K6 Base</pre><pre class="listLevel1" xml:space="preserve">        Firmware Version -&gt;     6.22.0</pre><pre class="listLevel1" xml:space="preserve">        Configuration -&gt;        Luna User Partition, No SO (PW) Signing With Cloning Mode</pre><pre class="listLevel1" xml:space="preserve">        Slot Description -&gt;     Net Token Slot</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Slot Id -&gt;              1</pre><pre class="listLevel1" xml:space="preserve">        Label -&gt;                </pre><pre class="listLevel1" xml:space="preserve">        Serial Number -&gt;        154438865304</pre><pre class="listLevel1" xml:space="preserve">        Model -&gt;                LunaSA</pre><pre class="listLevel1" xml:space="preserve">        Firmware Version -&gt;     7.0.1</pre><pre class="listLevel1" xml:space="preserve">        Configuration -&gt;        Luna User Partition, No SO (PW) Signing With Cloning Mode</pre><pre class="listLevel1" xml:space="preserve">        Slot Description -&gt;     Net Token Slot</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Set the active slot to the new partition.</p>
+        <p class="listLevel1">lunacm:&gt;<b>slot set -slot</b> &lt;slot&gt;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Verify the link.</p>
+        <p class="listLevel1">lunacm:&gt;<b>stc status</b><br /></p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; stc status</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Enabled:        Yes</pre><pre class="listLevel1" xml:space="preserve">Status:         Connected</pre><pre class="listLevel1" xml:space="preserve">Channel ID:     2</pre><pre class="listLevel1" xml:space="preserve">Cipher Name:    AES 256 Bit with Cipher Block Chaining</pre><pre class="listLevel1" xml:space="preserve">HMAC Name:      HMAC with SHA 512 Bit</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p>The Partition SO can now initialize the partition on the client workstation. See <a href="../ppso_partition_config/ppso_partition_config.htm" class="MCXref xref">Configure Application Partitions</a>. When the partition is initialized, the following actions are performed automatically:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The client identity public key is registered to the partition.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Partition policy 37: Force Secure Trusted Channel is enabled on the partition.</p>
+        <h3 class="ntoc"><a name="MultiClient"></a>Registering a Single STC Partition to Multiple Clients</h3>
+        <p>After the client-partition STC connection is established, you may want other clients to have access to the same partition. This allows the Partition SO, Crypto Officer, and Crypto User to access the partition from their own client workstations. </p>
+        <p>In the following procedure, Client 2 will register the HSM Server Certificate and the partition identity public key(s), and Client 1 will register Client 2's identity public key.</p>
+        <p>This procedure is completed by the Partition SO (Client 1) and the Client 2 Administrator. </p>
+        <p class="figureCaption" data-mc-autonum="Figure 2: "><span class="autonumber"><span>Figure 2: </span></span>Registering Two Clients to a Single Initialized Partition</p>
+        <p>
+            <img src="../../Resources/Images/stc/STC_2nd_client.png" style="height: auto;width: 650px;" />
+        </p>
+        <h5>Partition SO (Client 1) Prerequisites:</h5>
+        <p>You must provide the same files/information to the Client 2 Administrator that you received from the HSM SO. The <span class="DefaultProduct">SafeNet Luna Network HSM</span> client software package includes the <b>scp</b> (Linux) and <b>pscp</b> (Windows) tools for securely transferring files (see <a href="../../Utilities/scp_pscp/scp_pscp.htm" class="MCXref xref">SCP and PSCP</a> for syntax). If you do not have access to the client workstation, or a firewall prevents you from using <b>scp</b> or <b>pscp</b>, you must provide the following to the Client 2 Administrator by other secure means:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The HSM Server Certificate (<b>server.pem</b>) from the <span class="DefaultProduct">SafeNet Luna Network HSM</span>. Alternatively, the Client 2 Administrator can obtain it from the HSM SO. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The partition identity public key for each partition you want to register to Client 2. You can use the original <b>*.pid</b> file supplied by the HSM&#160;SO, or export a copy to the client system using LunaCM:</p>
+        <p class="listLevel1" xml:space="preserve" style="font-weight: normal;">lunacm:&gt;<b>role login -name po</b></p>
+        <p class="listLevel1" xml:space="preserve" style="font-weight: normal;">lunacm:&gt;<b>stcconfig partitionidexport</b></p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; stcconfig partitionidexport</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Successfully exported partition identity for the current slot to /usr/safenet/lunaclient/partition_identities/154438865305.pid</pre>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The partition identity public key hash for each partition to be registered to Client 2. This is recommended so that the Client 2 Administrator can verify the key's integrity before using the partition. You should not send the hash by the same means as the certificates. To view the hash in LunaCM:</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>stc identityshow</b></p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; stc identityshow</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Client Identity Name:          mySTCclientID</pre><pre class="listLevel1">Public Key SHA1 Hash:          1b8e783c5cc3bb6a79e5d4a4026258a0f34ef7f6</pre><pre class="listLevel1" xml:space="preserve">List of Registered Partitions:</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve"> Partition Identity   Partition        Partition Public Key SHA1 Hash</pre><pre class="listLevel1" xml:space="preserve"> Label                Serial Number</pre><pre class="listLevel1">________________________________________________________________________________</pre><pre class="listLevel1" xml:space="preserve"> app_par1             154438865304     6916eca3751173f7cf903ab60b9bf1bf35088271</pre>
+        <h5>Client 2 Prerequisites:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Launch LunaCM and create the client token and identity.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>This step is not required if you have already created a client token and identity. Verify using <b>stc identityshow</b>. If you recreate the client identity, you will have to re-register any existing STC partitions. </p>
+        <p class="listLevel1">lunacm:&gt;<b>stc tokeninit -label</b> &lt;token_label&gt;</p>
+        <p class="listLevel1">lunacm:&gt;<b>stc identitycreate -label</b> &lt;client_identity&gt;</p>
+        <p class="listLevel1">For a more detailed description of this step, see <a href="#Step1" class="MCXref xref">Step 1: Create the Client Token and Identity</a>. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Provide the following files/information to the Partition SO. The <span class="DefaultProduct">SafeNet Luna Network HSM</span> client software package includes the <b>scp</b> (Linux) and <b>pscp</b> (Windows) tools for securely transferring files (see <a href="../../Utilities/scp_pscp/scp_pscp.htm" class="MCXref xref">SCP and PSCP</a> for syntax). If you do not have access to the client workstation, or a firewall prevents you from using <b>scp</b> or <b>pscp</b>, you must provide the client identity to the Partition SO by other secure means. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>The client 2 identity public key</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>The client 2 identity public key hash. This is recommended so that the Partition SO can verify the key's integrity before allowing access to the partition. You should not send the hash by the same means as the client identity public key. To view the hash in LunaCM:</p>
+        <p class="listLevel2" style="font-weight: normal;">lunacm:&gt;<b>stc identityshow</b></p><pre class="listLevel2" xml:space="preserve">lunacm:&gt; stc identityshow</pre><pre class="listLevel2" xml:space="preserve">&#160;</pre><pre class="listLevel2" xml:space="preserve">Client Identity Name:          Client2</pre><pre class="listLevel2">Public Key SHA1 Hash:          cd5ca1c094acfe44803a9ef4b412fc4087a16c32</pre><pre class="listLevel2" xml:space="preserve">List of Registered Partitions: None</pre>
+        <h5>Client 2 Administrator:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that you have the required certificates/information from the Partition SO:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>HSM Server Certificate (<b>*.pem</b>)</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Partition identity public key (<b>*.pid</b>) for each partition to be registered</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Partition identity public key hash for each partition</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Open a command prompt or terminal window and navigate to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> client installation directory. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use the <b>vtl</b> utility to register the HSM Server Certificate (<b>192.20.11.78Cert.pem</b> in the example below) to the client.</p>
+        <p class="listLevel1" style="font-weight: normal;">&gt;<b>vtl addserver -n</b> &lt;HSM_hostname_or_IP&gt; <b>-c</b> &lt;server_certificate&gt;</p><pre class="listLevel1" xml:space="preserve">&gt;vtl addserver -n 192.20.11.78 -c ./cert/server/192.20.11.78Cert.pem</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">New server 192.20.11.78 successfully added to server list.</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Launch LunaCM, register the partition identity public key to Client 2, and view the partition hash.</p>
+        <p class="listLevel1">lunacm:&gt;<b>stc partitionregister -file</b> &lt;partition_identity&gt; [<b>-label</b> &lt;partition_label&gt;]
+</p>
+        <p class="listLevel1">lunacm:&gt;<b>stc identityshow</b></p>
+        <p class="listLevel1">Repeat for each partition you want to register. For a more detailed description of this step, see <a href="#Step2" class="MCXref xref">Step 2: Register the Partition Identity Public Key to the Client</a>. </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Find the correct server ID for the <span class="DefaultProduct">SafeNet Luna Network HSM</span> hosting the partition and enable its STC connection. You will be prompted to restart LunaCM and all current sessions will be closed. </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>This forces the client to use STC for all links to the specified appliance. Any remaining NTLS links from this client to the appliance will be terminated. Ensure you have registered the partition identity for each partition on this HSM&#160;before continuing. </p>
+        <p class="listLevel1" xml:space="preserve">lunacm:&gt;<b>clientconfig listservers</b></p>
+        <p class="listLevel1" xml:space="preserve">lunacm:&gt;<b>stc enable -id</b> &lt;server_ID&gt;</p>
+        <p class="listLevel1">If the partition is not visible as a slot when LunaCM restarts, wait until the Partition SO completes the final procedure and activates Partition Policy 37. For a more detailed version of this step, see <a href="#Step3" class="MCXref xref">Step 3: Enable and Verify the STC Link</a>. </p>
+        <h5>Partition SO (Client 1):</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that you have received the required certificates/information from the Client 2 Administrator:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Client 2 identity public key</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Client 2 identity public key hash</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Launch LunaCM, change the active slot to the partition, and login as Partition SO.</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>slot set -slot</b> &lt;slotnum&gt;</p>
+        <p class="listLevel1" xml:space="preserve" style="font-weight: normal;">lunacm:&gt;<b>role login -name po</b></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Register the Client 2 identity public key (<b>Client2</b> in the example below).</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>stcconfig clientregister -label</b> &lt;client_label&gt; <b>-file</b> &lt;client_identity&gt;</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; stcconfig clientregister -l Client2 -f /usr/safenet/lunaclient/client_identities/Client2</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Successfully registered the client Client2 to the current slot.</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>View the hash for the <b>Client2</b> identity.</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>stcconfig clientlist</b></p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; stcconfig clientlist</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve"> Client Name                    Client Public Key SHA1 Hash</pre><pre class="listLevel1" xml:space="preserve"> ___________________________________________________________________________</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve"> Client2                        cd5ca1c094acfe44803a9ef4b412fc4087a16c32</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve"> Partition SO                   1b8e783c5cc3bb6a79e5d4a4026258a0f34ef7f6</pre>
+        <p class="listLevel1">If the displayed hash does not match the hash you received from the Client 2 Administrator, deregister the client identity and contact the Client 2 Administrator:</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>stcconfig clientdelete -label</b> &lt;client_label&gt;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>You can now initialize the Crypto Officer role (or the CO can initialize the Crypto User role) and provide the password to the Client 2 Administrator by secure means. See <a href="../ppso_partition_config/ppso_partition_config.htm" class="MCXref xref">Configure Application Partitions</a>. </p>
+        <p>The Partition SO can register additional clients to the same partition by repeating the process above. </p>
+        <p class="figureCaption" data-mc-autonum="Figure 3: "><span class="autonumber"><span>Figure 3: </span></span>Registering Multiple Clients to a Single Partition</p>
+        <p>
+            <img src="../../Resources/Images/stc/STC_multiple_clients.png" style="height: auto;width: 650px;" />
+        </p>
+        <h3 class="ntoc"><a name="NTLtoSTC"></a>Converting an Initialized NTLS Partition-Client Connection to STC</h3>
+        <p>If you have initialized partitions already assigned to a client using NTLS, you can use the following procedure to switch to a more secure STC connection. All of the client's assigned partitions on the specified <span class="DefaultProduct">SafeNet Luna Network HSM</span> will be converted. It is not possible for a client to connect to multiple partitions on a single <span class="DefaultProduct">SafeNet Luna Network HSM</span> using a combination of NTLS and STC. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The HSM SO must first enable HSM Policy 39: Allow Secure Trusted Channel on the <span class="DefaultProduct">SafeNet Luna Network HSM</span> (see <a href="#Prerequisites" class="MCXref xref">Prerequisites</a>). </p>
+        <p>The Partition SO must complete this procedure. </p>
+        <h5>To convert an NTLS partition-client connection to STC:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Launch LunaCM and create the client token and identity.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>This step is not required if you have already created a client token and identity. Verify using <b>stc identityshow</b>. If you recreate the client identity, you will have to re-register any existing STC partitions. </p>
+        <p class="listLevel1">lunacm:&gt;<b>stc tokeninit -label</b> &lt;token_label&gt;</p>
+        <p class="listLevel1">lunacm:&gt;<b>stc identitycreate -label</b> &lt;client_identity&gt;</p>
+        <p class="listLevel1">For a more detailed description of this step, see <a href="#Step1" class="MCXref xref">Step 1: Create the Client Token and Identity</a>. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Login as Partition SO and export the existing partition ID.</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>slot set -slot</b> &lt;slotnum&gt;</p>
+        <p class="listLevel1" xml:space="preserve" style="font-weight: normal;">lunacm:&gt;<b>role login -name po</b></p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>stcconfig partitionidexport</b></p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; stcconfig partitionidexport</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Successfully exported partition identity for the current slot to /usr/safenet/lunaclient/partition_identities/1238700701520.pid</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Register the partition's public key with the client identity.</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>stc partitionregister -file</b> &lt;partition_identity&gt; [<b>-label</b> &lt;partition_label&gt;]</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; stc partitionregister -file /usr/safenet/lunaclient/partition_identities/1238700701520.pid</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Partition identity 1238700701520 successfully registered.</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Register the client identity to the partition.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Each client identity registered to a partition uses 2392 bytes of storage on the partition. Ensure that there is enough free space before registering a client identity.</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>stcconfig clientregister -label</b> &lt;client_label&gt; <b>-file</b> &lt;client_identity&gt;</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; stcconfig clientregister -label mySTCclientID -file /usr/safenet/lunaclient/client_identities/mySTCclientID</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Successfully registered the client mySTCclientID to the current slot.</pre>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Enable partition policy 37: Force STM Connection.</p>
+        <p class="listLevel1" xml:space="preserve" style="font-weight: normal;">lunacm:&gt;<b>partition changepolicy -slot</b> &lt;slotnum&gt; <b>-policy 37 -value 1</b></p>
+        <p class="listLevel1">Repeat steps 2-5 for each NTLS partition on the same <span class="DefaultProduct">SafeNet Luna Network HSM</span> you want to register to this client. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>If this command returns an error, ensure that the HSM SO has enabled HSM Policy 39. </p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Find the correct server ID for the <span class="DefaultProduct">SafeNet Luna Network HSM</span> hosting the partition and enable its STC connection. You will be prompted to restart LunaCM and all current sessions will be closed. </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>This forces the client to use STC for all links to the specified appliance. Any remaining NTLS links from this client to the appliance will be terminated. Ensure that you have completed steps 2-5 for each of this client's partitions before continuing. </p>
+        <p class="listLevel1" xml:space="preserve">lunacm:&gt;<b>clientconfig listservers</b></p>
+        <p class="listLevel1" xml:space="preserve">lunacm:&gt;<b>stc enable -id</b> &lt;server_ID&gt;</p>
+        <p class="listLevel1">If a partition is not visible as a slot when LunaCM restarts, disable STC for the server using lunacm:&gt;<b>stc disable -id</b> &lt;server_ID&gt;, and ensure that you have activated Partition Policy 37. For a more detailed version of this step, see <a href="#Step3" class="MCXref xref">Step 3: Enable and Verify the STC Link</a>. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

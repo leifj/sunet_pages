@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA,Default.CV_Exclude" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Troubleshooting</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/users/failed_logins_appliance.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter">Troubleshooting</h1>
+        <p>This section attends to appliance-level problems and their solutions.</p>
+        <h2>Failed Logins and Lockout on Appliance</h2>
+        <p>In addition to the bad login responses at the HSM and partition level, for all SafeNet Luna HSMs (see <a href="failed_logins_hsm.htm" class="MCXref xref">Failed Logins</a>), <span class="DefaultProduct">SafeNet Luna Network HSM</span> also has the appliance-level authentication layer for admin, operator, monitor, auditor, and for any named users you have created. </p>
+        <p>The response pattern for those is all the same, and is limited by default SSH settings: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If you initiate an SSH session against the appliance, and fail to respond to the prompts, the system waits for the 120-second grace period to run out, and expires the session. You must restart or launch a new session in your SSH terminal tool. &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If you initiate an SSH session against the appliance, provide a user name, and then provide an incorrect password, the session prompts you to re-attempt the correct password for that user account. If you fail to provide the correct authentication six times, the session is dropped. You must restart or launch a new session in your SSH terminal tool. &#160;</p>
+        <p>The maximum number of simultaneous sessions per channel is the SSH default of 10.</p>
+        <p>You can configure <span class="DefaultProduct">SafeNet Luna Network HSM</span> to accept administrative connections (SSH)&#160;on only one Ethernet channel, and client (NTLS) connections on the other.</p>
+        <p>Due to the pace at which the appliance SSH service evaluates submitted passwords and then prompts for retry, it generally takes more than 15 seconds to submit six bad attempts in a session to reach the maximum permitted, causing the session to drop.&#160;Then, there is the individual session tear-down and restart time to consider, before new attempts can resume. These factors help to limit the pace of  brute-force attacks, while still allowing timely recovery from mistyping or forgetfulness by an administrative user.</p>
+        <h2>Appliance Hardware Function&#160;Troubleshooting</h2>
+        <p>This section provides additional information by answering questions that are frequently asked by our customers.</p>
+        <h3>We were configuring rack power for several <span class="DefaultProduct">SafeNet Luna Network HSM</span>s - planning peak load, etc. When we re-connected rack power, not all the appliances came on.</h3>
+        <p>Did you verify that they were all on before you removed rack power? </p>
+        <p>SafeNet Luna Network HSM is configured to return to its previous state on application of AC power. If the appliance was running, and power was removed, then when power is re-applied the appliance re-boots. If the appliance was not running when power was removed, then the appliance does not restart when power becomes available again, and you must manually toggle the appliance power switch.</p>
+        <h3>What actions must I take to move a <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance from one datacenter to another?</h3>
+        <p>Each installation will have its own issues and peculiarities. For this discussion we will assume that both the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance and the application server - PKI, web, other - that is the main client of the <span class="DefaultProduct">SafeNet Luna Network HSM</span> are being moved. Here are some common steps to consider:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Change the IP address of the <span class="DefaultProduct">SafeNet Luna Network HSM</span></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Change/update any other IP dependencies that are configured on the <span class="DefaultProduct">SafeNet Luna Network HSM</span>, such as NTP servers, Syslog servers, NTLS binding by IP, etc. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>On the client computer (PKI server, web server, other) change the IP address of the <span class="DefaultProduct">SafeNet Luna Network HSM</span> as found in the client computer's crystoki.ini/chrystoki.conf file</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Regenerate certificates on both the <span class="DefaultProduct">SafeNet Luna Network HSM</span> and the client computer(s), if you used IP addresses rather than hostnames (no name resolution configured)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Delete the client from the SafeNet Luna HSM server</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Exchange the new certificates </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Re-register the client on the SafeNet Luna HSM server </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Re-assign the appropriate HSM partition to the client</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If the application is Windows-based and identical client/server computers (or complete clones) are not used in the new datacenter, then there might be some Windows issues to complete, such as making/updating registry entries, running <b>certutil -repairstore</b>, and so on</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Before you transport the <span class="DefaultProduct">SafeNet Luna Network HSM</span>, place the appliance in Secure Transport Mode</p>
+        <h2>Client Connections Troubleshooting</h2>
+        <p>This section contains information for troubleshooting.</p>
+        <h3 class="ntoc">Messages During an SSH Session</h3>
+        <p>If during an SSH session you see a message similar to the following example, do not be alarmed.  The message originates from the operating system within SafeNet Luna Network HSM and is benign.
+ </p><pre><span style="font-family: monospace;">Message from syslogd@172 at Jun 18 03:14:44 ... kernel: 
+ Disabling IRQ #225</span></pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

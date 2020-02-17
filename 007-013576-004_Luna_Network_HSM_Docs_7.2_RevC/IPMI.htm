@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Syslog and SNMP Monitoring Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>IPMI</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#monitoring/open_source/IPMI.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>IPMI</h2>
+        <p>The intelligent platform monitoring interface (IPMI) is a hardware-level specification for monitoring the operation of a computer system. In the case of the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance, IPMI monitors sensors within the appliance. Broad categories of these sensors are fans, power supplies and the system motherboard. <a href="#LunaApplianceSensors" class="MCXref xref">SafeNet Luna Network HSM Appliance Sensors</a> identifies:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>the specific sensors;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>their locations;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>the specific text string that represents each sensor;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>the thresholds for a sensor;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>threshold values;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>the unit of measure for each threshold.</p>
+        <p>Subsequent subsections of this document delve into each of the columns of the table, and the types of messages received:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#ThresholdEvents" class="MCXref xref">Threshold Events</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Discrete" class="MCXref xref">Discrete Events</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#CPUsensor" class="MCXref xref">CPU Sensor</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#VRDsensors" class="MCXref xref">VRD, PCH, and Inlet Sensors</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#IPMIimplementation" class="MCXref xref">IPMI Implementation</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Significant" class="MCXref xref">Significant Log Messages</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Insignificant" class="MCXref xref">Insignificant Log Messages</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Unlikely" class="MCXref xref">Unlikely Log Messages</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Debug" class="MCXref xref">Debug Messages</a>
+        </p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: solid;border-top-width: 1px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 1px;border-bottom-color: #000000;caption-side: top;" class="TableStyle-Page" cellspacing="0">
+            <caption data-mc-autonum="Table 1: "><span class="autonumber"><span>Table 1: </span></span><a name="LunaApplianceSensors"></a><span class="DefaultProduct">SafeNet Luna Network HSM</span> Appliance Sensors</caption>
+            <col class="TableStyle-Page-Column-Column1" style="width: 28%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 20%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 15%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 12%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 25%;" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Sensor &amp; Location</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Sensor Text</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Threshold</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Threshold Value</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Measure &amp; Hysteresis</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Cooling fan; left-most of three fans, rear-most blade within fan unit.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>Fan1A&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>1000 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Speed RPM</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>2000</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 500</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 500</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Cooling fan; left-most of three fans, front-most blade within fan unit.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>Fan1B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>1000 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Speed RPM</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>2000</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 500</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 500</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Cooling fan; center of three fans, rear-most blade within fan unit.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>Fan2A&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>1000 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Speed RPM</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>2000</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 500</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 500</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Cooling fan; center of three fans, front-most blade within fan unit.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>Fan2B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>1000 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Speed RPM</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>2000</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 500</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 500</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Cooling fan; right-most of three fans, rear-most blade within fan unit.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>Fan3A&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>1000 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Speed RPM</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>2000</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 500</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 500</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Cooling fan; right-most of three fans, front-most blade within fan unit.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>Fan3B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>1000 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Speed RPM</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>2000</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 500</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 500</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>CPU temperature measured at the geometric center of the CPU package; located approximately center of appliance, offset to right-hand side.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>CPU&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>89</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Temperature Degrees C</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>72</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Voltage Regulator Down; located approximately 3cm toward front from CPU.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>VRD&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>100 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Temperature Degrees C</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>90 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Platform Controller Hub; located approximately center of appliance, 10cm from rear.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>PCH&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>100 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Temperature Degrees C</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>90 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Located approximately center of appliance, 20 cm from front.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>Inlet&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>45 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Temperature Degrees C</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>39 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Centered DIMM of six sockets; approximately center of chassis, left of CPU.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>CHA DIMM 0&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>97 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Temperature Degrees C</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>87 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Luna appliances do not have memory installed for this device. “ns” readings result for this sensor.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>CHA DIMM 1&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>97 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Temperature Degrees C</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>87 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Luna appliances do not have memory installed for this device. “ns” readings result for this sensor.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>CHA DIMM 2&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>97 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Temperature Degrees C</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>87 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Left-most DIMM, approximately center of chassis, right of power supplies.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>CHB DIMM 0&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>97 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Temperature Degrees C</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>87 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Luna appliances do not have memory installed for this device. “ns” readings result for this sensor.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>CHB DIMM 1&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>97 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Temperature Degrees C</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>87 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Luna appliances do not have memory installed for this device. “ns” readings result for this sensor.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>CHB DIMM 2&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>97 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Temperature Degrees C</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>87 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>More information on this sensor is forthcoming in a future revision</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>RAM TMax&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>97 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Temperature Degrees C</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>87 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>CPU core voltage.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>CPU_VCORE&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>1.44</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Voltage Volts</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>0.63</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>No hysteresis</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="2">
+                        <p>Motherboard battery.</p>
+                    </td>
+                    <td rowspan="2" class="TableStyle-Page-BodyE-Column1-Body1"><pre>VBAT&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>2.796</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Voltage Volts</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>No hysteresis</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>3V supply used by south bridge chip.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>3VSB&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>3.492</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Voltage Volts</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>3.092</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>No hysteresis</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>+3.3 volt rail.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>3VMain&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>3.492</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Voltage Volts</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>3.092</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>No hysteresis</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>+5 volt rail.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>+5V&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>5.304</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Voltage Volts</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>4.692</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>No hysteresis</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>+12 volt rail.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>+12V&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>12.740</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Voltage Volts</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>11.284</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>No hysteresis</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LC deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>+12 volt monitor of right power supply unit.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>PSU1_+12V_value.</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>13.392</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Voltage Volts</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>11.232</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>No hysteresis</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Temperature of right power supply unit.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>PSU1 Temp_value.</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>115 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Temperature Degrees C</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 1</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 1</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Fan speed of right power supply unit.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>PSU1 FAN_value .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>300 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Speed RPM</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 100</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 100</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>+12 volt monitor of left power supply unit.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>PSU2_+12V_value.</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>13.392</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Voltage Volts</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>11.232</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>No hysteresis</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Temperature of left power supply unit.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>PSU2 Temp_value.</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>115 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Temperature Degrees C</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>UNR deassert </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 1</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 1</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">
+                        <p>Fan speed of left power supply unit.</p>
+                    </td>
+                    <td rowspan="4" class="TableStyle-Page-BodyE-Column1-Body1"><pre>PSU2 FAN_value .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR assert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>300 </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Speed RPM</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LNR deassert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Negative 100</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Positive 100</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Right power supply status – presence detected</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><pre>PSU1_Status&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Left power supply status – presence detected</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><pre>PSU2_Status&#160;&#160;&#160; .</pre>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="5" style="border-bottom-style: none;border-bottom-width: 1px;border-bottom-color: #000000;padding-left: 4pt;padding-right: 4pt;padding-top: 3pt;padding-bottom: 3pt;">&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="5" style="border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-bottom-style: none;border-bottom-width: 1px;border-bottom-color: #000000;padding-left: 4pt;padding-right: 4pt;padding-top: 3pt;padding-bottom: 3pt;">&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="border-left-style: none;border-left-width: 1px;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #000000;padding-left: 4pt;padding-right: 4pt;padding-top: 3pt;padding-bottom: 3pt;">&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="3" style="border-top-style: solid;border-top-width: 1px;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #000000;padding-left: 4pt;padding-right: 4pt;padding-top: 3pt;padding-bottom: 3pt;">
+                        <p style="font-weight: bold;">Key to Threshold</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: right;border-left-style: solid;border-left-width: 1px;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;padding-left: 4pt;padding-right: 4pt;padding-top: 3pt;padding-bottom: 3pt;">
+                        <p>UNR</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="3">
+                        <p>Upper Non-Recoverable Threshold</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: right;border-left-style: solid;border-left-width: 1px;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;padding-left: 4pt;padding-right: 4pt;padding-top: 3pt;padding-bottom: 3pt;">
+                        <p>UC</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="3">
+                        <p>Upper Critical Threshold</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: right;border-left-style: solid;border-left-width: 1px;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;padding-left: 4pt;padding-right: 4pt;padding-top: 3pt;padding-bottom: 3pt;">
+                        <p>LNR</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="3">
+                        <p>Lower Non-Recoverable Threshold</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="text-align: right;border-left-style: solid;border-left-width: 1px;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;border-bottom-style: solid;border-bottom-width: 1px;padding-left: 4pt;padding-right: 4pt;padding-top: 3pt;padding-bottom: 3pt;">
+                        <p>LC</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1" colspan="3" style="border-bottom-style: solid;border-bottom-width: 1px;padding-left: 4pt;padding-right: 4pt;padding-top: 3pt;padding-bottom: 3pt;">
+                        <p>Lower Critical Threshold</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3><a name="ThresholdEvents"></a>Threshold Events</h3>
+        <p>Here is an example sensor log.</p><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: Fan sensor Fan3B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Lower Critical going low&#160; (Reading 0 &lt; Threshold 2000 RPM)</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Most of the sensors monitored by IPMI on the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance generate threshold-based events. Threshold events occur when a sensor reading changes by an amount that crosses a configured boundary defined in the sensor data repository. THE IPMI specification defines six thresholds; the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance generates log messages on four of them. The four thresholds are:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Upper Non-Recoverable (UNR)</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Upper Critical (UC)</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Lower Non-Recoverable (LNC)</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Lower Critical (LC)</p>
+        <p>Upper and lower critical thresholds are ‘fatal’ and mean that the hardware is exceeding above or below a specified rating respectively. Upper and lower non-recoverable thresholds are ‘potential damage’ and mean that the hardware is in jeopardy or damaged.</p>
+        <p>A sensor value can change in one of two ways. It can go to an active state which IPMI calls asserted. The second state is inactive or de-asserted. </p>
+        <p>IPMI also allows for a sensor to have a hysteresis. The importance of having a hysteresis is to reduce the chance of a “flood” of events as the sensor hovers around a threshold. For example, if a fan sensor has a going-low threshold of 1000 RPM and the reading goes slightly above and below this value repeated, IPMI will generate an event for every assertion and de-assertion as the reading crosses the 1000 RPM threshold. With a hysteresis of 100, for example, the event would assert at 1000 RPM but not de-assert until the reading was 1100 RPM or greater.</p>
+        <p>Combining the thresholds, hysteresis and state changes, IPMI has a means to create an event to describe what a sensor is doing. <a href="#EventAssertDesert" class="MCXref xref">Event Assertion/Desertion Thresholds</a> from the IPMI specification illustrates event assertion and desertion at different thresholds.</p>
+        <p class="figureCaption" data-mc-autonum="Figure 2: "><span class="autonumber"><span>Figure 2: </span></span><a name="EventAssertDesert"></a>Event Assertion/Desertion Thresholds</p>
+        <p>
+            <img src="../../Resources/Images/monitoring/IPMI.png" style="visibility: visible;mso-wrap-style: square;height: auto;width: 650px;" />
+        </p>
+        <p>To apply the meaning of thresholds, hysteresis and states, consider a real sensor on the Luna appliance:&#160; a cooling fan. A normal fan speed varies but generally ranges between 4000 RPM and 6000 RPM. The fan speed can fall below a threshold (e.g., when it fails) or rise above a threshold (e.g., when the ambient air temperature rises and more cooling is necessary). By way of an example, assume that someone impedes the propeller of a fan blade to slow it down but not stop it entirely. After ten seconds, our antagonist impedes the fan blade so that it is barely turning. This sequence of events results in two log messages. The first represents a lower critical assertion going low; the second, a lower non-recoverable assertion going low.</p><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: Fan sensor Fan3B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Lower Critical going low&#160; (Reading 1600 &lt; Threshold 2000 RPM)</pre><pre>2012 Feb 29 12:05:11 myLuna&#160; local4 notice&#160; ipmievd: Fan sensor Fan3B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Lower Non-recoverable going low&#160; (Reading 500 &lt; Threshold 1000 RPM)</pre><pre>&#160;</pre>
+        <p>Correlating the information in these two log messages with the data in third, fourth and fifth columns of <a href="#LunaApplianceSensors" class="MCXref xref">SafeNet Luna Network HSM Appliance Sensors</a>, note that the first log message results because the fan speed has dropped below 2000 RPM to a reading of 1600 RPM (LC assert: 2000). The second message results because the fan speed has now crossed the non-recoverable threshold of 1000 RPM (LNR assert: 1000).</p>
+        <p>After some period, with one less fan to cool the appliance, it begins to heat up, leading to the baseboard management controller to command the remaining fans to speed up. At this time, our antagonist discontinues impeding the fan blade. It immediately begins to spin and joins the other five at a higher-than-normal RPM. When the BMC detects the temperature back at a normal value, the BMC commands the fans to return to their normal speeds. The following log message records this event, the sensor de-asserting the last threshold change. Note that several seconds have elapsed after the fan threshold deserted the LNR event and IPMI detected the change and read the sensor. Hence, the reading of 15900 represents a sensor value when the fans are at maximum revolutions.</p><pre xml:space="preserve">2012 Feb 29 12:05:21 myLuna&#160; local4 notice&#160; ipmievd: Fan sensor Fan3B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Lower Non-recoverable going low&#160; (Reading 15900 &lt; Threshold 1000 RPM)
+
+</pre>
+        <p>Upon examining log messages, you might also observe instances where two messages similar to the following examples occur in close proximity:</p><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: Fan sensor Fan3B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Lower Critical going low&#160; (Reading 0 &lt; Threshold 2000 RPM)
+2012 Feb 29 12:05:51 myLuna&#160; local4 notice&#160; ipmievd: Fan sensor Fan3B&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; . Lower Non-recoverable going low&#160; (Reading 15900 &lt; Threshold 1000 RPM)
+
+</pre>
+        <p>The first message is the event of the fan stopping. The second message is the fan speed going from very fast back to a normal range after it has become freed to spin again and join the other five fans to cool the overheating appliance. This second log message represents the de-assert LNR event: by the time IPMI has scanned and read the sensors, the fan has asserted the LNR event and subsequently de-asserted it. IPMI only generates the log message for the more recent of the two events.</p>
+        <h3><a name="Discrete"></a>Discrete Events</h3>
+        <p>The Luna appliance reports three discrete events:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>OEM #0xa1. Because the IPMI specification does not define a power reset function, an OEM sensor serves this purpose. This OEM sensor links to a system reset function. The BMC records an event in the event log for a system reset: by pushing the power button; through a BMC reset; or via an operating system reset.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Power Supply PSU1_Status. This event reports the presence (asserted) or absence (de-asserted) of the right power supply.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Power Supply PSU2_Status. This event reports the presence (asserted) or absence (de-asserted) of the left power supply.</p>
+        <h3><a name="CPUsensor"></a>CPU Sensor</h3>
+        <p>The CPU temperature reflects the use of the platform environment control interface (PECI) specification used for thermal management in the Intel Core 2 Duo microprocessor. PECI reports a negative value that expresses the difference between the current temperature and the thermal throttle point at which the CPU takes action to reduce speed or shut down to prevent damage. In other words, the PECI value is a relative and not an absolute temperature.&#160; The value reported by IPMI is calculated as the measured PECI value + an offset + a margin. As an example, if the PECI value is -89, the offset is 92 and the margin is 0, the IPMI reported temperature is 11 degrees C.&#160; This value is representative of a Luna appliance operating in a climate controlled data center. The important point is to monitor the CPU value in relation to the upper critical threshold of 72 degrees C and not as an absolute measure of the temperature of this sensor.</p>
+        <h3><a name="VRDsensors"></a>VRD, PCH, and Inlet Sensors</h3>
+        <p>The VRD, PCK and Inlet sensor values reported by IPMI reflect real-time temperature values. They differ in readings because of the heat generated at the different locations within the chassis (e.g., inlet near fans, PCH consumes considerable power).</p>
+        <h3><a name="IPMIimplementation"></a>IPMI Implementation</h3>
+        <p>The principal entity responsible for reporting IPMI events within the Luna appliance is a daemon called <b>ipmievd</b>. This daemon listens for events from the baseboard management controller (BMC) sent to the system event log (SEL). ipmievd polls the contents of the SEL for new events. When it receives a new event, the daemon logs it to syslog. ipmievd is a standard Linux component, used unchanged by <span class="DefaultCompanyNameLong">Gemalto</span>. The daemon is based on the <b>ipmitool</b> utility and it shares the same IPMI support and session setup options: some of the potential log messages from ipmievd originate from the ipmitool utility.</p>
+        <p>ipmievd can potentially generate hundreds of different log messages. Of these potential messages, some are sensor-specific. Other messages are unlikely but, because <span class="DefaultCompanyNameLong">Gemalto</span> uses the Linux component unchanged, are possible. The first subsection that follows describes the sensor events of most interest. The succeeding three subsections show insignificant messages, followed by the unlikely ones and debug messages.</p>
+        <h3><a name="Significant"></a>Significant Log Messages</h3>
+        <p>The log messages described in this subsection are the ones that report pertinent sensor events. The IPMI daemon reports on the sensor types shown in <a href="#SensorTypes" class="MCXref xref">SafeNet Luna Network HSM Appliance Sensor Types</a>.</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');width: 50%;caption-side: top;" class="TableStyle-Page" cellspacing="0">
+            <caption data-mc-autonum="Table 3: "><span class="autonumber"><span>Table 3: </span></span><a name="SensorTypes"></a><span class="DefaultProduct">SafeNet Luna Network HSM</span> Appliance Sensor Types</caption>
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Sensor Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Fan</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Temperature</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Voltage</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Power Supply</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">OEM</td>
+                </tr>
+            </tbody>
+        </table>
+        <h4><a name="FullSensor"></a>Full Sensor Record Threshold Reading</h4>
+        <p>
+            <img src="../../Resources/Images/monitoring/IPMI_3.png" style="visibility: visible;mso-wrap-style: square;width: 672px;height: 52px;" alt="threshold.bmp" />
+        </p>
+        <p>A full sensor record threshold reading message consists of the fields shown in the example above. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>This field is the sensor type, one of values from <a href="#SensorTypes" class="MCXref xref">SafeNet Luna Network HSM Appliance Sensor Types</a>.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>This field is the specific sensor from column 2 of <a href="#LunaApplianceSensors" class="MCXref xref">SafeNet Luna Network HSM Appliance Sensors</a>.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>This field is the description, formed from the threshold of column 3 of <a href="#LunaApplianceSensors" class="MCXref xref">SafeNet Luna Network HSM Appliance Sensors</a> combined with the direction of the threshold.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>This field is the trigger reading as reported by the BMC for the sensor.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>This field is the comparison that resulted in the event.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>This field is the threshold value of column 4 of <a href="#LunaApplianceSensors" class="MCXref xref">SafeNet Luna Network HSM Appliance Sensors</a> for the applicable threshold.</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>This field is the unit of measure from column 5 of <a href="#LunaApplianceSensors" class="MCXref xref">SafeNet Luna Network HSM Appliance Sensors</a>.</p>
+        <p>Reproducing all possible threshold messages within this document is impractical. Rather, a more reasonable solution is to provide guidance for how to parse threshold messages.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Parse for <code>ipmievd</code> and <code>Threshold</code> in the log message.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Determine whether the event is an assertion or de-assertion. Use fields <b>4</b>, <b>5</b> and <b>6</b> for this step. The event is an assertion if the logical evaluation of the statement formed from these three fields is true (e.g., <code>Reading 1600 &lt; Threshold 2000 RPM</code>). Otherwise, the event is a de-assertion (e.g., <code>Reading 15900 &lt; Threshold 1000 RPM</code>).</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Parse the remaining fields to obtain the sensor type, specific sensor affected, the trigger reading, the threshold, the threshold value and the unit of measure.</p>
+        <p>With the information of the above list, you have the information available to create custom messages and/or take specific actions for threshold events.</p>
+        <h4>Compact Sensor Record Asserted/Deasserted</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: Power Supply sensor PSU2_Status&#160;&#160;&#160; . - Failure detected Asserted
+2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: Power Supply sensor PSU2_Status&#160;&#160;&#160; . - Failure detected Deasserted
+
+</pre>
+        <p>The first field after <code>ipmievd:</code> is the sensor type: see <a href="#SensorTypes" class="MCXref xref">SafeNet Luna Network HSM Appliance Sensor Types</a>. The text after <code>sensor</code> is the specific sensor from column 2 of <a href="#LunaApplianceSensors" class="MCXref xref">SafeNet Luna Network HSM Appliance Sensors</a>. The text after the dash is the description of the event with a specific indication of either <code>Asserted</code> or <code>De-asserted</code> at the end of the message.</p>
+        <p>You should review these messages within the context of any administrative or maintenance activities carried out on the Luna appliance. The severity and action depends upon what is reported. In the two examples above, the first log message indicates that PSU2 failed (e.g., A/C lost) while the second message indicates that PSU2 once again became operational.</p>
+        <h4>Non-Specific Sensor Record with Description</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: Power Supply sensor - Transition to Power Off
+2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: OEM sensor - OEM Specific
+2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: Power Unit sensor - Failure detected<span style="color: #6c286b; font-weight: bold;">*</span>
+
+</pre>
+        <p><span style="color: #6c286b; font-weight: bold;">*</span> Reported by BMC firmware on older Luna appliances.</p>
+        <p>These messages represent log entries for non-specific sensor records as per the IPMI specification. The first field after <code>ipmievd:</code> is the sensor type: see <a href="#SensorTypes" class="MCXref xref">SafeNet Luna Network HSM Appliance Sensor Types</a>. The text after the dash is the description of the event.</p>
+        <p>Like the compact sensor records, the context of any administrative or maintenance activities carried out on the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance as well as the description affects the action appropriate for the log message.</p>
+        <h3><a name="Insignificant"></a>Insignificant Log Messages</h3>
+        <p>The following log messages represent start up notices for ipmievd. </p>
+        <h4>Reading Sensors</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: Reading sensors...
+
+</pre>
+        <p>This message indicates that the IPMI monitoring daemon successfully started just prior to setting up the event handler.</p>
+        <h4>Waiting For Events</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: Waiting for events...
+
+</pre>
+        <p>This message indicates that the IPMI monitoring daemon successfully established communication with the IPMI device driver to relay events.</p>
+        <h3><a name="Unlikely"></a>Unlikely Log Messages</h3>
+        <p>Under normal circumstances, you should not see any of these log messages. If you do, please contact <span class="DefaultCompanyNameLong">Gemalto</span> Technical Support to report the message and seek guidance on what to do next.</p>
+        <h4>No ipmievd Messages in Log File</h4>
+        <p>If you do not see any ipmievd messages in the messages log file, check to see if rsyslogd is running.</p>
+        <h4>Kernel Panic</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 alert&#160; ipmievd: Linux kernel panic: mod xyz fai
+
+</pre>
+        <p>A “panic” is an unrecoverable system error detected by the Linux kernel. A panic can result from unhandled processor exceptions such as references to invalid memory addresses. In the case of an IPMI-reported panic, the likely cause is a hardware failure such as a failed RAM cell, errors in the arithmetic functions of the processor or an overheating/damaged processor. If you find this message in the log files, review other messages around it for an indication of what might have failed. Power up the appliance again and monitor for similar events. </p>
+        <h4>OEM Record</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: IPMI Event OEM Record 0xa1
+
+</pre>
+        <p><span class="DefaultCompanyNameLong">Gemalto</span> knows of no OEM records for the Luna appliance.</p>
+        <h4>Sensor Record without Description</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: Power Supply sensor 0xa2
+
+</pre>
+        <p>Sensor records with description should be all that the daemon reports. Note that the difference between a sensor record with a description versus one without is the dash after the word <code>sensor</code> in the message. See the subsection <a href="#FullSensor" class="MCXref xref">Full Sensor Record Threshold Reading</a> for a discussion of the records you should be most interested in.</p>
+        <h4>Full Sensor Record for Discrete and OEM Events</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: Power Supply sensor PSU1_Status&#160;&#160;&#160; .
+2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: Power Supply sensor PSU1_Status&#160;&#160;&#160; . some status message
+
+</pre>
+        <p>A “full sensor record” is one formatted as &lt;sensor name&gt; <code>sensor</code> &lt;full sensor name&gt; &lt;description&gt;. This formatting is for discrete and OEM sensor events for which the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance reports none of these types.</p>
+        <h4>Compact Sensor Record With No Event Direction</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: Power Supply sensor PSU2_Status&#160;&#160;&#160; . - Failure detected
+
+</pre>
+        <p>This formatting is for compact sensor records with no direction reported for the threshold change. <span class="DefaultCompanyNameLong">Gemalto</span> is not aware of any events that report a message according to this format.</p>
+        <h4>Sensor Record With Only Sensor Number</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: Fan sensor 16
+
+</pre>
+        <p><span class="DefaultCompanyNameLong">Gemalto</span> is not aware of any events that report a message according to this format.</p>
+        <h4>BMC Event Message Buffer Failure</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Get BMC Global Enables command failed
+2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Get BMC Global Enables command failed: 71
+2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Set BMC Global Enables command failed
+2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Set BMC Global Enables command failed: 23
+
+</pre>
+        <p>Before the IPMI daemon can log messages, it must first open the BMC event message buffer. Under normal circumstances, this operation succeeds.</p>
+        <h4>Unable to Receive IPMI Message</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Unable to receive IPMI message
+
+</pre>
+        <p>The <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance loads the IPMI device drivers before starting the IPMI daemon. This message means that the request to the device driver for an IPMI event message failed.</p>
+        <h4>No Event Data</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: No data in event
+
+</pre>
+        <p>All IPMI messages for the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance have well-formed event data. This message means that the IPMI daemon read an event from the IPMI message buffer but the event had no data associated with it.</p>
+        <h4>Not An Event</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Type 9 is not an event
+
+</pre>
+        <p>Only the asynchronous event receive type should be available in the BMC event message buffer. This message means that the IPMI daemon read an event from the IPMI message buffer that was not the expected asynchronous receive type. </p>
+        <h4>Unable to Read from IPMI Device</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 critical&#160; ipmievd: Unable to read from IPMI device
+
+</pre>
+        <p>This message means that the IPMI daemon failed to read from the event message buffer while polling for events.</p>
+        <h4>Get SEL Info Command Failed</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Get SEL Info command failed
+2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Get SEL Info command failed: 80
+
+</pre>
+        <p>These messages indicate that the IPMI daemon was unable to get the system event log information for the storage network function.</p>
+        <h4>SEL Buffer Use</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 warning&#160; ipmievd: SEL buffer used at 85%, please consider clearing the SEL buffer
+
+</pre>
+        <p>This message means that the sensor event log buffer is filling faster than events can be processed by the IPMI daemon.</p>
+        <h4>SEL Buffer Overflow</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 alert&#160; ipmievd: SEL buffer overflow, no SEL message can be logged until the SEL buffer is cleared
+
+</pre>
+        <p>This message means that the sensor event log buffer is full and no new messages can be queued. </p>
+        <h4>Unable to Retrieve SEL Data</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Unable to retrieve SEL data
+
+</pre>
+        <p>This message means that the IPMI daemon was unable to receive sensor event log data when it should have.</p>
+        <h4>SEL Overflow on Check for Waiting Events</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 notice&#160; ipmievd: SEL overflow is cleared
+2012 Feb 29 12:05:01 myLuna&#160; local4 alert&#160; ipmievd: SEL buffer overflow, no new SEL message will be logged until the SEL buffer is cleared
+2012 Feb 29 12:05:01 myLuna&#160; local4 warning&#160; ipmievd: SEL buffer is 85% full, please consider clearing the SEL buffer
+
+</pre>
+        <p>The IPMI daemon should process sensor event log messages in a timely fashion. These messages mean that the daemon is falling behind in doing so.</p>
+        <h4>PID File Already Exists</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: PID file '/var/run/ipmievd.pid0' already exists.
+2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Perhaps another instance is already running.
+
+</pre>
+        <p>These messages suggest: a failure of the operating system or file structure within the appliance; or a configuration error within a <span class="DefaultCompanyNameLong">Gemalto</span>-provided component.</p>
+        <h4>Failed to Open PID File</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Failed to open PID file '/var/run/ipmievd.pid0' for writing. Check file permission.
+
+</pre>
+        <p>This message suggests a failure of the operating system or file structure within the appliance.</p>
+        <h4>Unable to Open SDR File</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Unable to open SDR for reading
+
+</pre>
+        <p>This message suggests a failure in the IPMI subsystem.</p>
+        <h4>Malloc Failure</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: ipmitool: malloc failure
+
+</pre>
+        <p>This message indicates that the system is low on virtual memory while attempting to create a cache for the sensor data repository.</p>
+        <h4>IPMI Event Setup Failed</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Could not enable event message buffer
+2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Could not enable event receiver
+2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Error setting up Event Interface open
+
+</pre>
+        <p>These messages indicate a failure of the ipmievd daemon to establish the interface via the IPMI device driver to relay events. </p>
+        <h4>Error Waiting For Events</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Error waiting for events!
+
+</pre>
+        <p>This message indicates a failure by the daemon to wait for events relayed via the IPMI device driver.</p>
+        <h4>Unable to Load Event Interface</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Unable to load event interface
+
+</pre>
+        <p>This message indicates a failure by the daemon to establish the IPMI event interface.</p>
+        <h4>Invalid Interface</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 err&#160; ipmievd: Invalid Interface for OpenIPMI Event Handler: &lt;xxxxx&gt;
+
+</pre>
+        <p>This message suggests a corrupted disk system or a configuration error: the only potential value for &lt;xxxxx&gt; is “open.”</p>
+        <h3><a name="Debug"></a>Debug Messages</h3>
+        <p><span class="DefaultCompanyNameLong">Gemalto</span> does not enable logging of debug messages from the IPMI daemon. If in future <span class="DefaultCompanyNameLong">Gemalto</span> does enable this level of log messages, this subsection describes the possible messages you might find in the log files.</p>
+        <h4>BMC Event Message Buffer Opened</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 debug&#160; ipmievd: BMC Event Message Buffer enabled
+
+</pre>
+        <p>This message indicates that the IPMI daemon successfully opened the BMC event message buffer.</p>
+        <h4>BMC Event Message Debug</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 debug&#160; ipmievd: netfn:6 cmd:5 ccode:80
+
+</pre>
+        <p>This message shows the network function code, command and completion code of the raw IPMI message.</p>
+        <h4>SEL Watch Debug</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local4 debug&#160; ipmievd: SEL count is 3
+2012 Feb 29 12:05:01 myLuna&#160; local4 debug&#160; ipmievd: SEL freespace is 1502
+2012 Feb 29 12:05:01 myLuna&#160; local4 debug&#160; ipmievd: SEL Percent Used: 80%
+2012 Feb 29 12:05:01 myLuna&#160; local4 debug&#160; ipmievd: SEL Overflow: false
+2012 Feb 29 12:05:01 myLuna&#160; local4 debug&#160; ipmievd: SEL Next ID: 00da
+2012 Feb 29 12:05:01 myLuna&#160; local4 debug&#160; ipmievd: SEL lastid is 00d9
+2012 Feb 29 12:05:01 myLuna&#160; local4 debug&#160; ipmievd: Current SEL count is 4
+2012 Feb 29 12:05:01 myLuna&#160; local4 debug&#160; ipmievd: Current SEL lastid is 00ac
+2012 Feb 29 12:05:01 myLuna&#160; local4 debug&#160; ipmievd: SEL count is 0 (old=3), resetting lastid to 0
+2012 Feb 29 12:05:01 myLuna&#160; local4 debug&#160; ipmievd: SEL count lowered, new SEL lastid is 0112
+2012 Feb 29 12:05:01 myLuna&#160; local4 debug&#160; ipmievd: SEL Read ID: 023f
+2012 Feb 29 12:05:01 myLuna&#160; local4 debug&#160; ipmievd: New Events
+
+</pre>
+        <p>These messages show details of the sensor event log at various processing points within the daemon.</p>
+        <h4>Sensors Cached</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; ipmievd: Getting 8 bytes from SDR at offset 64
+2012 Feb 29 12:05:01 myLuna&#160; ipmievd: SDR reservation cancelled. Sleeping a bit and retrying...
+2012 Feb 29 12:05:01 myLuna&#160; ipmievd: Sensors cached
+
+</pre>
+        <p>These messages indicate that the IPMI daemon successfully generated a fast lookup cache for the sensor data repository.</p>
+        <h4>IPMI Event Setup</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; ipmievd: Enabling event message buffer
+2012 Feb 29 12:05:01 myLuna&#160; ipmievd: Enabling event receiver
+2012 Feb 29 12:05:01 myLuna&#160; ipmievd: Getting 8 bytes from SDR at offset 64
+
+</pre>
+        <p>These messages log the process to set up the IPMI event interface.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

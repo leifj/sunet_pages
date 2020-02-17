@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|Configure the SafeNet Appliance for Your Network">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Make Your Network Connection</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/List1.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/appliance_config/make_your_network_connection.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Make Your Network Connection</h2>
+        <p>After you have configured at least one of the Ethernet LAN&#160;ports on the appliance using a serial terminal connection, you can connect the configured ports  to your network and begin connecting to the appliance over the network.</p>
+        <h5>To make a network connection to the appliance:</h5>
+        <p class="ol1" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Connect an Ethernet 
+ cable to each Ethernet port you configured on the appliance.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Use SSH, or an SSH application such a s PuTTY, to connect to the appliance via one of the configured ports. For example, if you set the IP address on eth0 to 123.45.67.89, you could connect from a Linux computer using the following command:</p><pre class="listLevel1" xml:space="preserve">ssh admin@123.45.67.89</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>You will be alerted that the server's host key is not cached in the registry. Examine the fingerprint and add the key to your SSH cache to allow the connection to proceed.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Login as admin, using the password you configured in <a href="login_appliance.htm" class="MCXref xref">Logging In to the Appliance</a>.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Verify correctness 
+ of your network setup by pinging another server (with the LunaSH <b>network ping </b>&lt;server_name&gt; command) and having the other server 
+ ping this HSM appliance. Try pinging by IP address, if pinging by host name is not successful. 
+ If you are using DNS name servers, but you are unable to ping by host name, 
+ use the <b>network 
+ show</b> command to verify the DNS name server configuration. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Some networks might be configured to reject 
+ ICMP ping requests, to prevent certain types of network attacks. In such 
+ a case, the ping command will fail, even if the HSM appliance is correctly 
+ configured. Consult with your network administrator.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Verify your client’s 
+network configuration by attempting to ping the HSM appliance by host name 
+ and by IP address, from the client. Repeat for each client where the  client software was installed.</p>
+        <h3>Network LEDs</h3>
+        <p>The network LEDs glow or blink  to indicate the exchange of traffic, as follows. </p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/List1.css');margin-left: 0;margin-right: auto;width: 100%;" class="TableStyle-List1" cellspacing="0">
+            <col class="TableStyle-List1-Column-Column1" style="width: 288px;" />
+            <col class="TableStyle-List1-Column-Column1" style="width: 407px;" />
+            <thead>
+                <tr class="TableStyle-List1-Head-Header1">
+                    <th class="TableStyle-List1-HeadE-Column1-Header1">State Indicated</th>
+                    <th class="TableStyle-List1-HeadD-Column1-Header1">Indication</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyE-Column1-Body1" rowspan="2">Activity status</td>
+                    <td class="TableStyle-List1-BodyD-Column1-Body1"><span style="color: #008000; font-weight: bold;">Green</span> (Blinking): Activity detected</td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyD-Column1-Body1"><strong>Off</strong>: Not active, or LAN cable has no connection</td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyE-Column1-Body1" rowspan="3">Speed range</td>
+                    <td class="TableStyle-List1-BodyD-Column1-Body1"><span style="color: #ffa500; font-weight: bold;">Orange</span>: 1G</td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyD-Column1-Body1"><span style="color: #008000; font-weight: bold;">Green</span>: 100M</td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyA-Column1-Body1"><strong>Off</strong>: 10M/No connection</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>When your connection is working, go to <a href="set_system_date_and_time.htm" class="MCXref xref">Set the System Date and Time</a>.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Installation Guide|SafeNet Luna HSM Client Software Installation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Installing Luna Minimal Client on Linux Using Docker</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#install/software/linux_docker_minimal_extended.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Installing Luna Minimal Client on Linux Using Docker</h2>
+        <p>The following procedure will allow you to install the Luna Minimal Client in a Docker container on Linux. For an overview description of Luna Minimal Client and its prerequisites, see <a href="linux_minimal_install_overview-and-prep.htm" class="MCXref xref">Linux Minimal Luna Client Install - Overview</a>. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>If SELinux is enabled in Enforcing mode, you must assign proper permissions to any container that needs to access the config directory.</p>
+        <h5>To install the SafeNet Luna Minimal Client software on a Linux 64-bit Docker instance:</h5>
+        <p>This example uses NTLS. The use of STC is optional. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Install a full Luna HSM Client software (non-minimal) on your Docker host (see <a href="#Installi" class="MCXref xref">Installing Luna Minimal Client on Linux Using Docker</a>).</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Create a directory. In this example:</p><pre class="listLevel1">$HOME/luna-docker</pre>
+        <p class="listLevel1">The name is not important, only that you use it consistently. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Create the following subdirectories under that first directory:</p><pre class="listLevel1" xml:space="preserve">$HOME/luna-docker/config</pre><pre class="listLevel1" xml:space="preserve">$HOME/luna-docker/config/certs</pre>
+        <p class="listLevel1" xml:space="preserve">additionally, if you are configuring STC:</p><pre class="listLevel1" xml:space="preserve">
+$HOME/luna-docker/config/stc
+$HOME/luna-docker/config/stc/token/001</pre>
+        <p class="listLevel1" xml:space="preserve">and create an empty file</p><pre class="listLevel1" xml:space="preserve">
+$HOME/luna-docker/config/stc/token/001/token.db</pre>
+        <p class="listLevel1"> The contents of the config directory are needed by the Docker containers.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Copy the Luna Minimal Client tarball to <b>$HOME/luna-docker</b>.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Untar the Luna Minimal Client tarball.</p>
+        <p class="listLevel1" style="font-weight: normal;">&gt;<b>tar -xf $HOME/luna-docker/LunaClient-Minimal-</b>&lt;release_version&gt;<b>.x86_64.tar -C $HOME/luna-docker</b></p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Copy the Chrystoki.conf file from the Minimal Client directory to <b>$HOME/luna-docker/config</b>.</p>
+        <p class="listLevel1" xml:space="preserve">&gt;<b>cp LunaClient-Minimal-</b>&lt;release_version&gt;<b>.x86_64/Chrystoki-template.conf  $HOME/luna-docker/config/Chrystoki.conf</b></p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Define the following environment variable:</p>
+        <p class="listLevel1" xml:space="preserve" style="font-weight: normal;">&gt;<b>export ChrystokiConfigurationPath=$HOME/luna-docker/config</b></p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>[Optional] If you choose to use STC, review the <span class="DefaultProduct">SafeNet Luna Network HSM</span> documentation and modify the following instructions. The goal is to have an HSM partition created and registered with the full Luna HSM Client before you create the Docker image and containers.</p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Create a Luna HSM Client certificate for the Docker containers.</p>
+        <p class="listLevel1" style="font-weight: normal;">&gt;<b>/usr/safenet/lunaclient/bin/vtl createCert -n</b> &lt;cert_name&gt;</p>
+        <p class="ol1" data-mc-autonum="10."><span class="autonumber"><span class="ol1Number">10.</span></span>Copy the client certificate to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance.</p>
+        <p class="listLevel1" xml:space="preserve">&gt;<b>scp ./certs/</b>&lt;cert_name&gt;<b>.pem admin@</b>&lt;Network_HSM_IP&gt;<b>:</b></p>
+        <p class="ol1" data-mc-autonum="11."><span class="autonumber"><span class="ol1Number">11.</span></span>Copy the appliance server certificate (<b>server.pem</b>) to <b>$HOME/luna-docker/config/certs</b></p>
+        <p class="listLevel1">&gt;<b>scp admin@</b>&lt;Network_HSM_IP&gt;<b>:server.pem ./certs</b></p>
+        <p class="ol1" data-mc-autonum="12."><span class="autonumber"><span class="ol1Number">12.</span></span>Register the appliance server certificate with the Client.</p>
+        <p class="listLevel1" xml:space="preserve">&gt;<b>/usr/safenet/lunaclient/bin/vtl addServer -c ./certs/server.pem -n</b> &lt;Network_HSM_IP&gt;</p>
+        <p class="ol1" data-mc-autonum="13."><span class="autonumber"><span class="ol1Number">13.</span></span>Connect via SSH to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance and log in to LunaSH.</p>
+        <p class="listLevel1" xml:space="preserve">&gt;<b>ssh admin@</b>&lt;Network_HSM_IP&gt;</p>
+        <p class="ol1" data-mc-autonum="14."><span class="autonumber"><span class="ol1Number">14.</span></span>Create a partition, if one does not already exist on the HSM.</p>
+        <p class="listLevel1" xml:space="preserve">lunash:&gt;<b>partition create -partition</b> &lt;partition_name&gt;</p>
+        <p class="ol1" data-mc-autonum="15."><span class="autonumber"><span class="ol1Number">15.</span></span>Register the full Luna HSM Client with the appliance, and assign the partition to the client (see <a href="../../lunash/commands/client/client_register.htm" class="MCXref xref">client register</a> and <a href="../../lunash/commands/client/client_assignpartition.htm" class="MCXref xref">client assignpartition</a> for full command syntax).</p>
+        <p class="listLevel1">lunash:&gt;<b>client register -client</b> &lt;client_name&gt; {<b>-ip</b> &lt;client_IP&gt; | <b>-hostname</b> &lt;client_hostname&gt;}</p>
+        <p class="listLevel1">lunash:&gt;<b>client assignpartition -client</b> &lt;client_name&gt; <b>-partition</b> &lt;partition_name&gt;</p>
+        <p class="listLevel1">lunash:&gt;<b>ntls ipcheck disable</b></p>
+        <p class="listLevel1">lunash:&gt;<b>exit</b></p>
+        <p class="ol1" data-mc-autonum="16."><span class="autonumber"><span class="ol1Number">16.</span></span>On the Client workstation, run LunaCM, set the active slot to the registered partition, and initialize it (see <a href="../../lunacm/commands/partition/partition_init.htm" class="MCXref xref">partition init</a> for full command syntax).</p>
+        <p class="listLevel1">lunacm:&gt;<b>slot set -slot</b> &lt;slotnum&gt;</p>
+        <p class="listLevel1">lunacm:&gt;<b>partition init -label</b> &lt;partition_label&gt;</p>
+        <p class="ol1" data-mc-autonum="17."><span class="autonumber"><span class="ol1Number">17.</span></span>Change the path of the runtime libraries in <b>config/Chrystoki.conf</b>.</p>
+        <p class="listLevel1">&gt;<b>sed -i -e 's#\./certs#/usr/local/luna/config/certs#g' -e 's#/usr/safenet/lunaclient/lib/libCryptoki2_64.so#/usr/local/luna/libs/64/libCryptoki2.so#g' -e 's#/usr/safenet/lunaclient/lib/libSoftToken.so#/usr/local/luna/libs/64/libSoftToken.so#g'  config/Chrystoki.conf</b></p>
+        <h4>Create a Luna Client Docker image</h4>
+        <p>The minimal client tarball does not include tools or other files not necessary for basic operation; copy any additional files you want to include in the docker image to <b>$HOME/luna-docker/</b>.</p>
+        <p class="ol1" data-mc-autonum="18."><span class="autonumber"><span class="ol1Number">18.</span></span>Create a file named Dockerfile with the following contents:</p><pre class="listLevel1">FROM ubuntu:xenial</pre><pre class="listLevel1">#FROM centos:centos7</pre><pre class="listLevel1">ARG MIN_CLIENT</pre><pre class="listLevel1">COPY $MIN_CLIENT.tar /tmp</pre><pre class="listLevel1">RUN mkdir -p /usr/local/luna</pre><pre class="listLevel1">RUN tar xvf /tmp/$MIN_CLIENT.tar --strip 1 -C /usr/local/luna</pre><pre class="listLevel1">ENV ChrystokiConfigurationPath=/usr/local/luna/config</pre><pre class="listLevel1">COPY lunacm /usr/local/bin</pre><pre class="listLevel1">COPY vtl /usr/local/bin</pre><pre class="listLevel1">COPY multitoken /usr/local/bin</pre><pre class="listLevel1">COPY ckdemo /usr/local/bin</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">ENTRYPOINT  /bin/bash</pre><pre class="listLevel1">#End of the Dockerfile</pre>
+        <p class="ol1" data-mc-autonum="19."><span class="autonumber"><span class="ol1Number">19.</span></span>Build a Docker image.</p>
+        <p class="listLevel1" xml:space="preserve">&gt;<b>docker build . --build-arg MIN_CLIENT=LunaClient-Minimal-&lt;release_version&gt;.x86_64 -t lunaclient-image</b></p>
+        <p class="ol1" data-mc-autonum="20."><span class="autonumber"><span class="ol1Number">20.</span></span>Use the following command to verify the Docker image has been created:</p>
+        <p class="listLevel1">&gt;<b>docker images</b></p>
+        <h4>Run the Docker container</h4>
+        <p class="ol1" data-mc-autonum="21."><span class="autonumber"><span class="ol1Number">21.</span></span>Make the contents of the config directory available to the Containers when you create them, by mounting the config directory as a volume.</p>
+        <p class="listLevel1">&gt;<b>docker run -it --name lunaclient -v $PWD/config:/usr/local/luna/config lunaclient-image</b></p>
+        <p class="ol1" data-mc-autonum="22."><span class="autonumber"><span class="ol1Number">22.</span></span>From the Docker container, verify that the container has a connection to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> partition. </p>
+        <p>.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

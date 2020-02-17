@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.CV_Exclude" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|Configure Application Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Initialize the Crypto User Role on a PED-Authenticated Partition</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/ppso_partition_config/partition-crypto-officer_action_to_config_ped-ppso_partition_3.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Initialize the Crypto User Role on a PED-Authenticated Partition</h2>
+        <p>These instructions assume:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>A PED-authenticated <span class="DefaultProduct">SafeNet Luna Network HSM</span> has been initialized</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>An application partition has been created</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>A Crypto Officer has been created for the partition</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The Crypto Officer PED key has been conveyed to the person responsible for the Crypto Officer role. See <a href="partition-so_action_to_config_ped-ppso_partition_2.htm" class="MCXref xref">Initialize the Partition SO&#160;and Crypto Officer Roles on a PED-Auth Partition</a>. </p>
+        <p>As Crypto Officer, you can:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Create a Crypto User (limited access user) for the application partition. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Create, delete, change and manipulate cryptographic objects on the application partition, either for your own use or for use by the Crypto User. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Activate the partition for use by applications. </p>
+        <p>To create a Crypto User for the partition, you will need:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Luna PED and the black Crypto Officer PED key(s) assigned to you by the SO.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Blank PED key(s) with labels for the Crypto User that you are about to create. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>A local PED connection.</p>
+        <p>These instructions assume that you have already made your decisions whether to use all-new, blank PED keys, or to re-use any existing, imprinted PED keys for any of the steps.</p>
+        <h5>To create the Crypto User role on a PED-authenticated  application partition:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Set the active slot to the desired application partition, where the Crypto Officer was just created.</p>
+        <p class="listLevel1">lunacm:&gt;<b> slot set -slot</b> &lt;slotnum&gt;</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; slot set -slot 0</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">        Current Slot Id:    0     (Luna User Slot 7.0.0 (PED) Signing With Cloning Mode)</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Command Result : No Error</pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Log in as the Crypto Officer. You can also use the shortcut <b>co</b>. </p>
+        <p class="listLevel1">lunacm:&gt;<b>role login -name Crypto Officer</b></p><pre class="listLevel1" xml:space="preserve">lunacm:&gt;role login -name co</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Please attend to the PED. </pre>
+        <p class="listLevel1">Respond to Luna PED prompts...</p><pre class="listLevel1" xml:space="preserve">Command Result : No Error</pre>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The black Crypto Officer PED key is valid for the initial login only. You must change the initial credential on the key using the command <b>role changepw</b> during the initial login session, or a subsequent login. Failing to change the credential will result in a CKR_PIN_EXPIRED error when you perform role-dependent actions.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>If you have not already done so, change the initial credential set by the Partition SO. </p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>role changepw -name Crypto Officer</b></p><pre class="listLevel1" xml:space="preserve">lunacm:&gt;role changepw -name co</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Please attend to the PED.</pre>
+        <p class="listLevel1">Respond to Luna PED prompts. You must first present the black Crypto Officer key and PIN created by the Partition SO. When you are prompted to present a new black CO key, you can create a new key, or overwrite the original PED key by:</p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>Replying <b>No</b> to "Would you like to reuse an existing keyset?"</p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>Pressing <b>Enter</b> (without removing the key) when prompted to present a new black PED key</p>
+        <p class="ol2" data-mc-autonum="c."><span class="autonumber"><span class="ol2Number">c.</span></span>Replying <b>Yes </b> when asked if you want to overwrite the original key. </p><pre class="listLevel2" xml:space="preserve">Command Result : No Error</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Create the Crypto User. You can also use the shortcut <b>cu</b>. Have a gray Crypto User PED&#160;key ready. </p>
+        <p class="listLevel1"><b>role init -name Crypto User</b>
+        </p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; role init -name Crypto User &#160;
+
+        Please attend to the PED. </pre>
+        <p class="listLevel1">Respond to Luna PED prompts...</p><pre xml:space="preserve" class="listLevel1">
+Command Result : No Error
+</pre>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The gray Crypto User PED key is valid for the initial login only. The CU must change the initial credential on the key using the command <b>role changepw</b> during the initial login session, or a subsequent login. Failing to change the credential will result in a CKR_PIN_EXPIRED error when they perform role-dependent actions.</p>
+        <p>The Crypto User can now log in to use applications to perform cryptographic operations using keys and objects created in the partition by the Crypto Officer.</p>
+        <p data-mc-conditions="Default.SA">It is possible for all three of Partition SO, Crypto Officer, and Crypto User to perform their functions against a <span class="DefaultProduct">SafeNet Luna Network HSM</span> partition, from the same SafeNet Luna HSM Client host computer, simply taking turns at the keyboard and the Luna PED. It is also possible to work from different computers, as long as any such computer is a registered user of the partition - that is, a working network trust link (NTL) connection is required for each. </p>
+        <p data-mc-conditions="Default.SA">In addition, if those persons and their respective SafeNet Luna HSM Client host computers are not co-located, then they must arrange to manage their sharing of the Remote PED. Either </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>One person must maintain the single Remote PED setup, and the others must coordinate closely with the PED-keeper when authentication to the HSM is required, </p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">or </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>All three can have their own separate PEDs and PedServer instances, but they must coordinate with the appliance administrator to <b>hsm ped disconnect</b> any current Remote PED channel before <b>hsm ped connect -ip &lt;new-ip&gt; -port &lt;new-port&gt;</b> to establish a Remote PED session with one of the other PedServers.</p>
+        <h3>Crypto Officer or Crypto User Must Remain Logged In</h3>
+        <p>At this point, the Crypto User, or an application using the CU's challenge secret/password can perform cryptographic operations in the partition, as soon as the Crypto User logs in with <b>role login -name cu</b>. However, any event that causes that session to close, including action by the application, requires that the CU must log in again (with the gray PED key) before the application partition can be used again. For an application that maintains an open session, that is not a handicap. For an application that opens a session for each action, performs the cryptographic action, then closes the session, the CU must be constantly logging in and using the PED and PED key.</p>
+        <p>To bypass this limitation, use the Activation feature. See <a href="partition-so-and-co_action_to_activate_ped-ppso_partition_4a.htm" class="MCXref xref">Activate a PED-Authenticated  Partition</a>.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

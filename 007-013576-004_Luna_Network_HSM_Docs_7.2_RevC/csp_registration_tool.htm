@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Microsoft Interfaces">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>The SafeNet CSP Registration Tool and Utilities</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/microsoft/csp_registration_tool.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor346"></a>The SafeNet CSP Registration Tool and Utilities</h2>
+        <p>This section describes how to use the SafeNet CSP&#160;registration tool and related utilities to configure the <span class="DefaultProduct">SafeNet Luna Network HSM</span> client to use a <span class="DefaultProduct">SafeNet Luna Network HSM</span> with Microsoft Certificate Services. You must be the Administrator or a member of the Administrators 
+ group to run the SafeNet CSP tools. </p>
+        <p>The SafeNet CSP can be used by any application that acquires the context of 
+ the SafeNet CSP. <a name="kanchor347"></a>All users who login and use the applications that acquired the context 
+ have access to the SafeNet CSP.&#160;After you register the <span class="DefaultProduct">SafeNet Luna Network HSM</span> partitions with SafeNet CSP, your CSP and KSP code should work in the same manner whether our HSM (crypto provider) is selected, or the default provider is used. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The SafeNet CSP is an optional installation. It is installed by default in &lt;luna_client_install_dir&gt;/<b>CSP</b>.  If the CSP is not installed, re-run the installer.</p>
+        <h3>The Keymap Utility</h3>
+        <p>Use the <b>keymap</b> utility if you have previously been using another provider 
+ (with its keys in the <span class="DefaultProduct">SafeNet Luna Network HSM</span>) and wish to migrate to MS CSP keeping 
+ your established keys. The keymap utility simply creates on the <span class="DefaultProduct">SafeNet Luna Network HSM</span> 
+ the data object that MS CSP expects, which in turn makes your existing 
+ keys available to MS CSP. See &lt;<MadCap:conditionalText data-mc-conditions="Default.CV_Exclude">luna_</MadCap:conditionalText>client_install_dir&gt;/<b>CSP/keymap.exe</b>. </p>
+        <h4>Example</h4><pre xml:space="preserve">C:\artifacts\sa64client_installer&gt;C:\git\crypto\CSP\keymap\output\SA64client\win64-cl-x86-dbg\bin\keymap.exe 
+
+
+LunaCSP Key Association (64-bit) v7.2.0-344. Copyright (c) 2018 SafeNet. All rights reserved.
+
+Initializing the library...Detecting available slots...OK.
+
+List of available slots:
+        Slot# 1.
+        Slot# 2.
+        Slot# 3.
+        Slot# 4.
+        Slot# 5.
+        Slot# 6.
+        Slot# 7.
+        Slot# 8.
+
+Opening a session on one of the available slots.
+Enter slot ID on which to open a session, valid range: [1 to 8] or 0 to quit: 4
+Opening a session on slot 4...
+Enter challenge for partition:*******
+OK
+
+                1       Browse Objects
+                2       Create Key Container
+                3       View Key Container
+                4       Associate Keys With Container
+                5       Do Nothing
+                99      Destroy Key Container
+                0       Exit
+                Choice: 1
+
+
+Available KeyContainer objects on the token.
+
+Available RSA Public Key objects on the token.
+Handle: 180             Label: Multitoken RSA 1024-bit Public Key for Wrap
+
+Available RSA Private Key objects on the token.
+Handle: 181             Label: Multitoken RSA 1024-bit Private Key for Unwrap
+
+
+                1       Browse Objects
+                2       Create Key Container
+                3       View Key Container
+                4       Associate Keys With Container
+                5       Do Nothing
+                99      Destroy Key Container
+                0       Exit
+                Choice: 0
+
+
+OK.
+Application Exiting.
+C:\artifacts\sa64client_installer&gt;</pre>
+        <p>&#160;</p>
+        <h3>The ms2Luna Utility</h3>
+        <p>Use the <b>ms2Luna</b> utility if you already have MS CSP in use with software 
+ key storage and you now wish to continue with your keys held on the <span class="DefaultProduct">SafeNet Luna Network HSM</span>. See &lt;<MadCap:conditionalText data-mc-conditions="Default.CV_Exclude">luna_</MadCap:conditionalText>client_install_dir&gt;/<b>CSP/ms2luna.exe</b>.</p>
+        <h3>The CSP Registration Tool</h3>
+        <p>You can use the CSP&#160;registration tool (&lt;<MadCap:conditionalText data-mc-conditions="Default.CV_Exclude">luna_</MadCap:conditionalText>client_install_dir&gt;/<b>CSP</b>/<b>register.exe</b>) to perform the following functions:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Register HSM&#160;partitions for use with the SafeNet CSP. The password 
+ for each HSM Partition is secured such that only the user for which the password 
+ was secured is able to un-secure it. See <a href="#CSP_register_partiton" class="MCXref xref">Registering Partitions</a></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Register which non-RSA cryptographic algorithms you want performed in software only. See <a href="#CSP_register_sw_algo" class="MCXref xref">Registering the Cryptographic Algorithms to be Performed in Software</a></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Enable key counting in KSP/CSP. See <a href="#CSP_key_counting" class="MCXref xref">Enabling Key Counting</a>.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Register the provider library with the Windows OS to make it available for applications.</p>
+        <h4>Command Syntax<br /></h4>
+        <p class="code"><b>register.exe</b> [<b>/partition</b> | <b>/algorithms</b> | <b>/library</b> | <b>/usagelimit</b>] [<b>/highavailability</b>] [<b>/strongprotect</b>] [<b>/cryptouser</b>] [<b>/?</b>]</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 93px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Parameter</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>/partition </b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>/p</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Register a partition and its encrypted challenge. You are prompted through the required steps 
+ to select and register a <span class="DefaultProduct">SafeNet Luna Network HSM</span> partition.</p>
+                        <p> This is the default option.  If you type <b>register</b> with no additional parameters, 
+ then <b>/partition</b> is assumed. For example, if you type <b>register 
+ /highavail</b> or <b>register 
+ /strongprotect</b>, then <b>/partition</b> 
+ is invoked and the additional option that you selected (i.e., <b>/highavail</b> 
+ or <b>/strongprotect</b>) is run along with 
+ it . That is, typing <b>register /highavail</b> 
+ is the same as typing <b>register 
+ /partition /highavail</b>.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>/highavail</b> <![CDATA[ ]]></td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>/h</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>      Register only high availability (HA) partitions.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>/strongprotect</b> <![CDATA[ ]]></td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>/s</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>               Strongly protect the challenge for registered partition</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>/algorithms</b> <![CDATA[ ]]></td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>/a</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>                                                                            Register the desired software ONLY algorithms</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>/library </b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>/l</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>                                                                                 Register CSP library and signature in the registry</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>/usagelimit</b> <![CDATA[ ]]></td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>/u</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>                                                                                         Register CSP RSA key maximum usage limit</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1"><b>/cryptouser </b>
+                    </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1"><b>/c</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>                                                                                           Use CSP as Crypto User</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Before using the 32-bit CSP provider, it is necessary to register the library with Windows. To do this, complete the 32-bit client setup, then run the 32-bit register.exe with the <b>/library</b> option, as shown:<br /><span style="font-size: 10pt;"><span style="font-family: 'Courier New';"><span style="font-size: 8pt;">C:\Program Files\SafeNet\LunaClient\win32\CSP&gt;register.exe /library</span></span></span><br style="font-family: 'Courier New';font-size: 8pt;" /><span style="font-size: 10pt;"><span style="font-family: 'Courier New';"><span style="font-size: 8pt;">register v7.2.0</span></span></span><br style="font-family: 'Courier New';font-size: 8pt;" /><span style="font-size: 10pt;"><span style="font-family: 'Courier New';"><span style="font-size: 8pt;">Success registering SOFTWARE\Microsoft\Cryptography\Defaults\Provider\Luna enhanced RSA and AES provider for Microsoft Windows !</span></span></span><br style="font-family: 'Courier New';font-size: 8pt;" /><span style="font-size: 10pt;"><span style="font-family: 'Courier New';"><span style="font-size: 8pt;">Success registering SOFTWARE\Microsoft\Cryptography\Defaults\Provider\Luna Cryptographic Services for Microsoft Windows !</span></span></span><br style="font-family: 'Courier New';font-size: 8pt;" /><span style="font-size: 10pt;"><span style="font-family: 'Courier New';"><span style="font-size: 8pt;">Success registering SOFTWARE\Microsoft\Cryptography\Defaults\Provider\Luna SChannel Cryptographic Services for Microsoft Windows !</span></span></span></p>
+        <h4><a name="CSP_register_partiton"></a>Registering Partitions</h4>
+        <p data-mc-conditions="Default.CV_Exclude">The syntax used to register partitions depends on whether the partitions use high availability (HA) or not, as detailed in the following procedures.</p>
+        <h5>To register a standard HSM partition:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>In the install directory for CSP enter the register command and respond to the prompts:</p>
+        <p class="listLevel1">
+            <MadCap:conditionalText data-mc-conditions="Default.CV_Exclude">C:\Program Files\SafeNetLunaClient\CSP&gt; </MadCap:conditionalText><b>register</b>
+        </p>
+        <p class="listLevel1">For example:</p><pre xml:space="preserve" class="listLevel1">*****************************************************************<br />          SafeNet Luna CSP, Partition Registration <br />   Protect the HSM's challenge for the selected partitions. <br />   NOTE:<br />        This is a WEAK protection of the challenge!<br />        After you have configured all applications that will use<br />        the Luna CSP, and run them once, you MUST run: </pre><pre xml:space="preserve" class="listLevel1">            register /partition /strongprotect *</pre><pre xml:space="preserve" class="listLevel1">        to strongly protect the registered challenges! <br />***************************************************************** <br />This procedure is a destructive procedure and will completely replace 
+any previous settings!<br />Do you wish to continue?: [y/n]<br />Do you want to register the partition named 'nes'? [y/n]:<br />Please enter the <span class="DefaultProduct">SafeNet Luna Network HSM</span> challenge for the partition 'nes' :<br />Success registering the ENCRYPTED challenge for partition 'nes'.<br />Only the Luna CSP will be able to use this data!<br />Registered 1 partition(s) for use by the Luna CSP!<br /></pre>
+        <p xml:space="preserve" class="listLevel1">All available Partitions are presented for you to register or not. <br /></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Install and/or 
+ configure your application(s).</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Run each of your 
+ applications once to use SafeNet CSP.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Enter the following command to strongly protect the registered challenges: &#160;</p>
+        <p class="listLevel1"><b>register /partition /strongprotect *</b>
+        </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>You must run <b>register /strongprotect</b> to ensure the 
+ protection of the HSM partition passwords.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Once you 
+ run the <b>/strongprotect</b> option, only those users that existed 
+ previous to the <b>/strongprotect</b> command are allowed to use 
+ the SafeNet CSP. If the <b>/strongprotect</b> option is not used, then 
+ any/all users can use the SafeNet CSP.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span> <MadCap:conditionalText data-mc-conditions="Default.CV_Exclude">If you are using a 64-bit CSP provider, skip this step as it is automatically done for you. </MadCap:conditionalText></p>
+        <p class="listLevel1">Enter the following command to reconnect to the library:</p>
+        <p class="listLevel1"><b>register.exe /library</b>
+        </p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Run all applications 
+ as usual.</p>
+        <h5 data-mc-conditions="Default.CV_Exclude">To register an HA partition:</h5>
+        <p data-mc-conditions="Default.CV_Exclude">When registering an HA Partition for use, follow these steps.</p>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">1.</span></span>Enter the following command and respond to the prompts:</p>
+        <p class="listLevel1" data-mc-conditions="Default.CV_Exclude">C:\Program Files\SafeNet\LunaClient\CSP&gt; <b>register /highavail</b></p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Use the <b>/highavail</b> option only if you have HA set up for your <span class="DefaultProduct">SafeNet Luna Network HSM</span>s. 
+ </p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">2.</span></span>For example:</p><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.CV_Exclude">**************************************************************<br />SafeNet Luna CSP, Partition Registration <br />Protect the HSM's challenge for the selected partitions. <br />NOTE:<br />This is a WEAK protection of the challenge!<br />After you have configured all applications that will use<br />the Luna CSP, and run them once, you MUST run: <br />&#160;register /partition /strongprotect *<br />to strongly protect the registered challenges! <br />************************************************************** <br />This procedure is a destructive procedure and will completely replace 
+any previous settings!<br />Do you wish to continue?: [y/n]<br />Do you want to register the partition named 'nes'? [y/n]:<br />Please enter the <span class="DefaultProduct">SafeNet Luna Network HSM</span> challenge for the partition 'nes' :<br />Success registering the ENCRYPTED challenge for partition 'nes'.<br />Only the Luna CSP will be able to use this data!<br />Registered 1 partition(s) for use by the Luna CSP!</pre>
+        <p class="note" xml:space="preserve" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>If you are using HA, then only the HA virtual partition is presented 
+ for registering.</p>
+        <p class="ol1" data-mc-autonum="3." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">3.</span></span>Install and/or 
+ configure your application(s).</p>
+        <p class="ol1" data-mc-autonum="4." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">4.</span></span>Run each of your 
+ applications once to use SafeNet CSP.</p>
+        <p class="ol1" data-mc-autonum="5." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">5.</span></span>Enter the following command to strongly protect the registered challenges: &#160;</p>
+        <p class="listLevel1" data-mc-conditions="Default.CV_Exclude"><b>register /partition /strongprotect *</b>
+        </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>You must run <b>register /strongprotect</b> to ensure the 
+ protection of the HSM partition passwords.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Once you 
+ run the <b>/strongprotect</b> option, only those users that existed 
+ previous to the <b>/strongprotect</b> command are allowed to use 
+ the SafeNet CSP. If the <b>/strongprotect</b> option is not used, then 
+ any/all users can use the SafeNet CSP.</p>
+        <p class="ol1" data-mc-autonum="6." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">6.</span></span>If you are using a 64-bit CSP provider, skip this step as it is automatically done for you. </p>
+        <p class="listLevel1" data-mc-conditions="Default.CV_Exclude">Enter the following command to reconnect to the library:</p>
+        <p class="listLevel1" data-mc-conditions="Default.CV_Exclude"><b>register.exe /library</b>
+        </p>
+        <p class="ol1" data-mc-autonum="7." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">7.</span></span>Run all applications 
+ as usual.</p>
+        <h4><a name="CSP_register_sw_algo"></a>Registering the Cryptographic Algorithms to be Performed in Software</h4>
+        <p>Certain operations (symmetric), such as the hash operation may be performed 
+ faster in software than on the <span class="DefaultProduct">SafeNet Luna Network HSM</span>. The <b>register /algorithms</b> 
+ command allows you to choose which algorithms to de-register from the <span class="DefaultProduct">SafeNet Luna Network HSM</span>. 
+ The trade-off is a gain in speed, at the cost of some security (exposing 
+ the operation in software).&#160;Signing 
+ and other asymmetric operations are always done on the HSM.</p>
+        <h5>To register algorithms for software-only use:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>In the install directory for CSP enter the register /algorithms command and respond to the prompts:</p>
+        <p class="listLevel1">
+            <MadCap:conditionalText data-mc-conditions="Default.CV_Exclude">C:\Program Files\SafeNet\LunaClient\CSP&gt; </MadCap:conditionalText><b>register /algorithms</b>
+        </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>You are prompted for yes or no responses about which algorithms are 
+ to be registered for software-only use.	For example:</p><pre class="listLevel1" xml:space="preserve">************************************************************************<br />SafeNet Luna CSP, Algorithm Registration <br /><br />Register algorithms to be done in software by the Microsoft CSP(s).<br />BY DEFAULT, ALL ALGORITHMS ARE DONE IN HARDWARE BY THE <span class="DefaultProduct">SafeNet Luna Network HSM</span>. <br />ONLY NON RSA ALGORITHMS MAY BE CONFIGURED FOR SOFTWARE.<br />RSA PUBLIC/PRIVATE ALGORITHMS WILL ALWAYS BE IN HARDWARE.<br />************************************************************************<br />Do you want algorithm 'CALG_RC2', done in software?(y/n): <br />Do you want algorithm 'CALG_RC4', done in software?(y/n): <br />Do you want algorithm 'CALG_RC5', done in software?(y/n): <br />Do you want algorithm 'CALG_DES', done in software?(y/n): <br />Do you want algorithm 'CALG_3DES_112', done in software?(y/n): <br />Do you want algorithm 'CALG_3DES', done in software?(y/n): <br />Do you want algorithm 'CALG_MD2', done in software?(y/n): <br />Do you want algorithm 'CALG_MD5', done in software?(y/n): <br />Do you want algorithm 'CALG_SHA', done in software?(y/n): <br />Do you want algorithm 'CALG_MAC', done in software?(y/n): <br />Do you want algorithm 'CALG_HMAC', done in software?(y/n): <br />Success registering software only algorithms:<br />CALG_RC2,CALG_RC4,CALG_RC5,...!</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="listLevel1">If you chose <b>no</b> for all prompts, then all algorithms revert to hardware 
+ and the following is displayed:</p><pre class="listLevel1" xml:space="preserve">All algorithms have been de-registered and will now only be done in hardware!</pre>
+        <h4><a name="CSP_key_counting"></a>Enabling Key Counting</h4>
+        <p>Key counting allows you to specify the maximum number of times that a key can be used.   It sets the upper limit from 0 to MAX(UInt32). </p>
+        <h5>To enable key counting:</h5>
+        <p>In the install directory for the CSP, enter the following command and respond to the prompts. Enter the key usage limit, or enter 0 to turn off the feature:</p>
+        <p>
+            <MadCap:conditionalText data-mc-conditions="Default.CV_Exclude">C:\Program Files\SafeNet\LunaClient\CSP&gt;</MadCap:conditionalText> <b>register /usagelimit</b></p>
+        <p>For example:</p><pre xml:space="preserve"><MadCap:conditionalText data-mc-conditions="Default.CV_Exclude">C:\Program Files\SafeNet\LunaClient\CSP&gt;</MadCap:conditionalText>register /usagelimit</pre><pre xml:space="preserve">register v1.0.1</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Enter the key usage limit: 2000</pre><pre xml:space="preserve">     </pre><pre xml:space="preserve">Successfully configured the key usage limit to 2000 uses.</pre>
+        <p>&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

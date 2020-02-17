@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.CV_Exclude" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Activation and Auto-Activation on PED-Authenticated Partitions</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/partitions/about_activation_and_auto-activation.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 data-mc-conditions="Default.PED"><a name="kanchor464"></a>Activation and Auto-Activation on PED-Authenticated Partitions</h2>
+        <p data-mc-conditions="Default.PED">By default, PED-authenticated partitions require that a PED key and PED PIN be provided each time a user or application authenticates to the HSM. For some use cases, such as key vaulting, it may be desirable to require a physical key to access the HSM. For most application use cases, however, it is impractical to require this credential every time.</p>
+        <p data-mc-conditions="Default.PED"> To address this limitation, you can enable <b>partition policy 22: Allow activation</b> on PED-authenticated HSM partitions. When partition policy 22 is enabled, the PED key secret for the CO or CU role is cached on the HSM the first time you authenticate. Clients can then connect to the partition without presenting the PED key. All that is required to authenticate is the PED challenge secret (password) for the activated role.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.PED"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Activation requires that a challenge secret is set for the role you want to activate. If the role does not have a challenge secret, you will continue to be prompted for the PED key, regardless of the policy setting. </p>
+        <p>Activation is not a big advantage for clients that connect and remain 
+connected. It is an indispensable advantage in cases where clients repeatedly 
+connect to perform a task and then disconnect or close the cryptographic session following completion of each task.</p>
+        <h4>Tamper events and activation/auto-activation</h4>
+        <p data-mc-conditions="Default.PED">When a tamper event occurs, or if an uncleared tamper event is detected on reboot, the cached PED key data is zeroized, and activation/auto-activation is disabled. See <a href="../tamper/tamper.htm" class="MCXref xref">Tamper Events</a> and <a href="../capabilities_and_policies/partition_capabilities_and_policies.htm" class="MCXref xref">Partition Capabilities and Policies</a> for more information.</p>
+        <h3 class="ntoc"><a name="Enabling"></a>Enabling Activation on a Partition</h3>
+        <p>Activation is controlled by <b>partition policy 22: Allow activation</b>. The Partition SO can set this policy in LunaCM, using the <b>partition changepolicy</b> command. When partition policy 22 is enabled, the HSM&#160;checks for the following conditions each time the Crypto Officer (CO) or Crypto User (CU) perform an action that requires authentication:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.PED"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Is 
+PED key secret for the role cached on the HSM?</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Has a challenge secret been created for the role?</p>
+        <p> The HSM&#160;responds as follows:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.PED"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>   
+  If the PED key secret is not currently cached, you are prompted for the PED key. The PED key secret is cached when you provide the PED key.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.PED"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span> If the PED key secret is already cached, but a challenge secret has not been created for the role, you are prompted for the PED key. </p>
+        <p data-mc-conditions="Default.PED">After the role is activated and a challenge secret is set, the PED key is no longer required for that role to login to the partition, and it can be stored safely. The CO or CU can connect to the partition and perform role-specific operations from any registered client, using only the PED challenge password.</p>
+        <h5>To enable activation on an application partition:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Log in to the partition as the Partition SO. </p>
+        <p class="listLevel1">lunacm:&gt;<b>role login -name Partition SO</b></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Enable <b>partition policy 22: Allow activation</b>.</p>
+        <p class="listLevel1" xml:space="preserve">
+            lunacm:&gt;<b>partition changepolicy -slot</b> &lt;slot number&gt; <b>-policy 22 -value 1</b><br /></p>
+        <h3 class="ntoc">Activating a Role</h3>
+        <p data-mc-conditions="Default.PED">After enabling partition policy 22, activate the CO and/or CU roles on the partition. You must set a PED challenge password for each role you want to activate. The Partition SO must set the initial challenge secret for the Crypto Officer, who must set it for the Crypto User. The role will become activated the first time the role logs in to the partition. </p>
+        <h5>To activate a role (Partition SO):</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that <b>partition policy 22: Allow activation</b> is enabled (set to 1):</p>
+        <p class="listLevel1">lunacm:&gt;<b>partition showpolicies</b></p>
+        <p class="listLevel1">If it is not set, log in as the Partition SO and use the <b>partition changepolicy</b> command to enable the policy, as described in <a href="#Enabling" class="MCXref xref">Enabling Activation on a Partition</a>.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Create an initial challenge secret for the Crypto Officer. </p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>role createchallenge -name co</b></p><pre class="listLevel1" xml:space="preserve">lunacm:&gt;role createchallenge -name co</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Please attend to the PED.</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">        enter new challenge secret: ********</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">        re-enter new challenge secret: ********</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">Command Result : No Error</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Provide the initial challenge secret to the Crypto Officer by secure means. The CO will need to change the challenge secret before using the partition for any crypto operations. </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Log out as Partition SO.</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>role logout</b></p>
+        <h5 data-mc-conditions="Default.PED">To activate a role (Crypto Officer):</h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.PED"><span class="autonumber"><span class="ol1Number">1.</span></span>Login as Crypto Officer (or enter any command that requires authentication).</p>
+        <p class="listLevel1" data-mc-conditions="Default.PED"><b>role login -name co</b>
+        </p><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">lunacm:&gt;role login -n co</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        enter password: ********</pre><pre class="listLevel1" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        Please attend to the PED.</pre><pre class="listLevel1" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">Command Result : No Error</pre>
+        <p class="listLevel1" data-mc-conditions="Default.PED">The Crypto Officer PED secret is cached, and the role is now activated. </p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.PED"><span class="autonumber"><span class="ol1Number">2.</span></span>If you have not already done so on a previous login, change the initial CO PED secret. By default, the PED&#160;secret provided by the Partition SO expires after the initial login. If <b>HSM policy 21: Force user PIN change after set/reset</b> is set to <b>0</b> (off), you can continue to use the PED secret provided. </p>
+        <p class="listLevel1" style="font-weight: normal;" data-mc-conditions="Default.PED">lunacm:&gt;<b>role changepw -name co</b></p><pre xml:space="preserve" class="listLevel1" data-mc-conditions="Default.PED">lunacm:&gt; role changepw -name co
+
+        This role has secondary credentials.
+        You are about to change the primary credentials.
+        Are you sure you wish to continue?
+
+        Type 'proceed' to continue, or 'quit' to quit now -&gt; proceed
+
+
+Command Result : No Error</pre>
+        <p class="ol1" data-mc-autonum="3." data-mc-conditions="Default.PED"><span class="autonumber"><span class="ol1Number">3.</span></span>Change the initial CO challenge secret. You must include the <b>-oldpw</b> option to indicate that you wish to change the challenge secret (referred to as the secondary credential), rather than the black PED key (primary credential). </p>
+        <p class="listLevel1" data-mc-conditions="Default.PED">lunacm:&gt;<b>role changepw -name co -oldpw</b> &lt;initial_challenge&gt; <b>-newpw</b> &lt;new_challenge&gt;</p><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">lunacm:&gt;role changepw -name co -oldpw password -newpw Pa$$w0rd</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        This role has secondary credentials.</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        You are about to change the secondary credentials.</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        Are you sure you wish to continue?</pre><pre class="listLevel1" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        Type 'proceed' to continue, or 'quit' to quit now -&gt;proceed</pre><pre class="listLevel1" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        Please attend to the PED.</pre><pre class="listLevel1" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">Command Result : No Error</pre>
+        <p class="ol1" data-mc-autonum="4." data-mc-conditions="Default.PED"><span class="autonumber"><span class="ol1Number">4.</span></span>[Optional] Create an initial challenge secret for the Crypto User. </p>
+        <p class="listLevel1" style="font-weight: normal;" data-mc-conditions="Default.PED">lunacm:&gt;<b>role createchallenge -name cu</b></p><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">lunacm:&gt;role createchallenge -name cu</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        Please attend to the PED.</pre><pre class="listLevel1" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        enter new challenge secret: ********</pre><pre class="listLevel1" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        re-enter new challenge secret: ********</pre><pre class="listLevel1" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">Command Result : No Error</pre>
+        <p class="ol1" data-mc-autonum="5." data-mc-conditions="Default.PED"><span class="autonumber"><span class="ol1Number">5.</span></span>[Optional] Provide the initial challenge secret to the Crypto User by secure means. The CU will need to change the challenge secret before using the partition for any crypto operations. </p>
+        <p class="ol1" data-mc-autonum="6." data-mc-conditions="Default.PED"><span class="autonumber"><span class="ol1Number">6.</span></span>Log out as Crypto Officer. </p>
+        <p class="listLevel1" style="font-weight: normal;" data-mc-conditions="Default.PED">lunacm:&gt;<b>role logout</b></p>
+        <p data-mc-conditions="Default.PED">With activation in place, you can log in once and put your black CO PED key away in a safe place. The cached credentials will allow your application(s) to open and close sessions and perform their operations within those sessions. </p>
+        <h5 data-mc-conditions="Default.PED">To activate a role (Crypto User):</h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.PED"><span class="autonumber"><span class="ol1Number">1.</span></span>Login to the partition as the Crypto User. When prompted, enter the initial challenge secret. </p>
+        <p class="listLevel1" style="font-weight: normal;" data-mc-conditions="Default.PED">lunacm:&gt;<b>role login -name cu</b></p><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">lunacm:&gt;role login -n cu</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        enter password: ********</pre><pre class="listLevel1" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        Please attend to the PED.</pre><pre class="listLevel1" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">Command Result : No Error</pre>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.PED"><span class="autonumber"><span class="ol1Number">2.</span></span>If you have not already done so on a previous login, change the initial CU PED secret. By default, the PED&#160;secret provided by the Crypto Officer expires after the initial login. If <b>HSM policy 21: Force user PIN change after set/reset</b> is set to <b>0</b> (off), you can continue to use the PED secret provided. </p>
+        <p class="listLevel1" style="font-weight: normal;" data-mc-conditions="Default.PED">lunacm:&gt;<b>role changepw -name cu</b></p><pre xml:space="preserve" class="listLevel1" data-mc-conditions="Default.PED">lunacm:&gt; role changepw -name cu
+
+        This role has secondary credentials.
+        You are about to change the primary credentials.
+        Are you sure you wish to continue?
+
+        Type 'proceed' to continue, or 'quit' to quit now -&gt; proceed
+
+
+Command Result : No Error</pre>
+        <p class="ol1" data-mc-autonum="3." data-mc-conditions="Default.PED"><span class="autonumber"><span class="ol1Number">3.</span></span>Change the initial CU challenge secret. You must include the <b>-oldpw</b> option to indicate that you wish to change the challenge secret (referred to as the secondary credential), rather than the gray PED key (primary credential). </p>
+        <p class="listLevel1" style="font-weight: normal;" data-mc-conditions="Default.PED">lunacm:&gt;<b>role changepw -name cu -oldpw</b> &lt;initial_challenge&gt; <b>-newpw</b> &lt;new_challenge&gt;</p><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">lunacm:&gt;role changepw -name cu -oldpw password -newpw Pa$$w0rd</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        This role has secondary credentials.</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        You are about to change the secondary credentials.</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        Are you sure you wish to continue?</pre><pre class="listLevel1" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        Type 'proceed' to continue, or 'quit' to quit now -&gt;proceed</pre><pre class="listLevel1" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">        Please attend to the PED.</pre><pre class="listLevel1" data-mc-conditions="Default.PED">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">Command Result : No Error</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.PED">&#160;</pre>
+        <p data-mc-conditions="Default.PED">With activation in place, you can log in once and put your gray CO PED key away in a safe place. The cached credentials will allow your application(s) to open and close sessions and perform their operations within those sessions. </p>
+        <h3 class="ntoc">Deactivating a Role on an Activated Partition</h3>
+        <p>An activated role on a partition remains activated until one of the following actions occurs:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>You explicitly deactivate the role using the LunaCM <b>role deactivate</b> command. The role is deactivated until the next time you perform an action (such as <b>role login</b>) that requires authentication for the role, at which time the authentication credential is re-cached.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Power is lost to the 
+HSM. You can use auto-activation to automatically reactivate a partition after a short power loss, if desired. See <a href="#Auto-Act" class="MCXref xref">Auto-Activation</a>.</p>
+        <h5>To deactivate a role on a partition (Partition SO):</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Enter the following command to deactivate an activated role on a partition:</p>
+        <p class="listLevel1" xml:space="preserve">lunacm:&gt;
+            <b>role deactivate -name</b> &lt;role&gt;<br /></p>
+        <p class="listLevel1">This deletes the cached authentication credential for the role. The next time a login or activation is performed, the credential is re-cached. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span> If you wish to disable activation entirely, so that credentials are not re-cached at the next login, the Partition SO can disable <b>partition policy 22: Allow activation</b>.<br /></p>
+        <p class="listLevel1" xml:space="preserve">lunacm:&gt;<b>partition changepolicy -policy 22 -value 0</b>
+        </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>If partition policy 22 is disabled, auto-activation is also disabled (even though <b>partition policy 23: Allow auto-activation</b> is set to <b>1</b>). When partition policy 22 is enabled again, auto-activation resumes. To turn off auto-activation, you must disable partition policy 23. </p>
+        <p class="listLevel1" xml:space="preserve">
+           lunacm:&gt;<b>partition changepolicy -policy 23 -value 0</b></p>
+        <h3><a name="Auto-Act"></a>Auto-Activation</h3>
+        <p data-mc-conditions="Default.PED">Auto-activation enables PED key credentials to be cached even in the 
+event of a restart or a short power outage (up to 2 hours). Clients can re-connect and continue using the application partition without 
+needing to re-authenticate using a PED key. </p>
+        <p>The ability to auto-activate a partition is controlled by <b>partition policy 23: Allow auto-activation</b>. To enable auto-activation, the Partition SO can use the LunaCM <b>partition changepolicy</b> command to set partition policy 
+23 to <b>1</b>.</p>
+        <p data-mc-conditions="Default.PED">When partition policy 23 is enabled, auto-activation is set for the partition the first time an activated role (CO or CU) logs in. If the authentication 
+data requires refreshing, the PED prompts you for the appropriate black or gray PED key and PIN. Once login is complete, the PED credential is cached, and the client can begin using the activated application partition. </p>
+        <h5>To auto-activate an application partition (Partition SO): </h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that <b>partition policy 22: Allow activation</b> is enabled. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Login to the partition as Partition SO.</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>role login -name po</b></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Set <b>partition policy 23: Allow auto-activation</b> to <b>1</b>.<br /></p>
+        <p class="listLevel1" xml:space="preserve">lunacm:&gt;<b>partition changepolicy -policy 23 -value 1</b>
+        </p>
+        <p class="listLevel1">Auto-activation will begin for each affected role (CO or CU) the next time the role is authenticated. </p>
+        <h3 class="ntoc" data-mc-conditions="Default.SA">Other Measures</h3>
+        <p data-mc-conditions="Default.SA">For best reliability and up-time, in conjunction with the auto-activation option, you can also set <a href="../../lunash/commands/sysconf/sysconf_appliance_rebootonpanic_enable.htm" class="MCXref xref">sysconf appliance rebootonpanic enable</a>.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

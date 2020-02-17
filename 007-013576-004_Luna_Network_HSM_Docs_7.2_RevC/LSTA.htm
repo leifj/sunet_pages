@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Syslog and SNMP Monitoring Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Luna SNMP Trap Agent</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#monitoring/components/LSTA.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Luna SNMP Trap Agent</h2>
+        <p>Luna SNMP Trap Agent or <b>lsta</b> looks for significant events within the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance. When it sees a worthy event, lsta formats a trap notification and sends it to the configured user. </p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Facility Keyword</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Software Process</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Log File</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p><code>local5</code>
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p><code>lsta</code>
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p><code>lunalogs</code>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Expected Log Messages</h3>
+        <p>The following log messages are normal and expected entries in the log files when lsta monitoring is enabled and started.</p>
+        <h4>Agent Starting</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; lsta: Starting Luna SNMP Trap Agent
+
+</pre>
+        <p xml:space="preserve">This message indicates that lsta is starting. The agent does not run by default. Rather, an administrator must configure and start it from the Luna administrative shell.</p>
+        <h4>Creating Named Pipe</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; lsta: Created /home/admin/syslog.pipe as a named pipe
+
+</pre>
+        <p xml:space="preserve">This message indicates that lsta created the necessary named pipe for interprocess communication with the syslog facility. This message results the first time lsta is started on a new <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance.</p>
+        <h4>Termination</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; lsta: Luna SNMP Trap Agent terminated: Interrupted system call
+
+</pre>
+        <p xml:space="preserve">This message indicates that lsta caught a SIGINT, SIGABRT or SIGTERM signal and terminated.</p>
+        <h3>Unexpected Log Messages</h3>
+        <p>Under normal circumstances, you should not see any of these log messages. If you do so, please contact <span class="DefaultCompanyNameLong">Gemalto</span> Technical Support to report the message and seek guidance on what to do next.</p>
+        <h4>SNMP Data Logged</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; lsta: fanAttentionNotify for [myLUT:192.168.0.58 / messages / 2012 Feb 29 12:05:00 / ipmievd / 1]
+
+</pre>
+        <p xml:space="preserve">
+When trace level debugging is enabled, this message records the SNMP trap notification data sent by lsta. Trace level debugging is off in Luna SA so this message is unexpected.</p>
+        <h4>Missing SNMP Parameters</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; lsta: Error opening /usr/local/share/snmp/snmp.conf
+
+</pre>
+        <p xml:space="preserve">This message indicates that the SNMP parameters needed by lsta are missing. A likely root cause is that an administrator has not yet set the parameters via the lunash:&gt;<b>sysconf snmp trap set</b> command.</p>
+        <h4>snmptrap Failed</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; lsta: snmptrap failed: 256
+
+</pre>
+        <p xml:space="preserve">This message indicates that lsta was unable to send a formatted trap notification to the intended user. A possible root cause is an out-of-date SAFENET-APPLIANCE-MIB on the appliance or a parameter defined by the lunash:&gt;<b>sysconf snmp trap set</b> command in error (e.g., invalid IP address).</p>
+        <h4>Interprocess Communication Failures</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; lsta: Pipe file disappeared, stopping lsta
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; lsta: Cannot read from pipe /home/admin/syslog.pipe: 5
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; lsta: Will not overwrite /home/admin/syslog.pipe
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; lsta: Cannot mknod /home/admin/syslog.pipe: 13
+
+</pre>
+        <p xml:space="preserve">
+These messages indicate failure with the named pipe used for interprocess communication with the syslog facility. The first two messages represent failures during lsta operation; the last two on start up.</p>
+        <h4>Unknown Sub-system</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; lsta: Unknown/unsupported sub-system: xxx
+
+</pre>
+        <p xml:space="preserve">This message indicates a programming error. lsta should have logic for all sub-systems defined in the SAFENET-APPLIANCE-MIB.</p>
+        <h4>Log Record Parsing</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; lsta: Could not parse log record: &lt;log record&gt;
+
+</pre>
+        <p xml:space="preserve">This message indicates that lsta could not properly parse a log record for the fields expected. <code>&lt;log record&gt;</code> is the log message received by lsta from rsyslogd.</p>
+        <h4>Could Not Close Parameters File</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; lsta: Error closing /usr/local/share/snmp/snmp.conf
+
+</pre>
+        <p xml:space="preserve">
+This message indicates that lsta could not properly close the SNMP parameters file.</p>
+        <h4>Could Not Close Pipe</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; lsta: Error closing /home/admin/syslog.pipe
+
+</pre>
+        <p xml:space="preserve">This message indicates that lsta could not properly close the named pipe used by rsyslog to communicate log records.</p>
+        <h4>chdir Failed</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; lsta: Could not chdir
+
+</pre>
+        <p xml:space="preserve">This message indicates that lsta could not properly change working directories.</p>
+        <h4>umask Failed</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; lsta: Could not umask
+
+</pre>
+        <p xml:space="preserve">This message indicates that lsta could not properly determine the umask file settings.</p>
+        <h4>Could Not Open stdin</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; lsta: Error opening stdin
+
+</pre>
+        <p xml:space="preserve">This message indicates that lsta could not properly open standard input.</p>
+        <h4>Could Not Open stderr</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; lsta: Error opening stderr
+
+</pre>
+        <p xml:space="preserve">This message indicates that lsta could not properly open standard error.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

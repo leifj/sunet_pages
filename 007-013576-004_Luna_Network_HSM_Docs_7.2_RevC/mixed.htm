@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Luna 6/7 Mixed-Version HA Groups</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/ha/mixed.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 data-mc-conditions="Default.ScreenOnly">Luna 6/7 Mixed-Version HA Groups</h2>
+        <p>HA groups containing both <span class="DefaultProduct">SafeNet Luna Network HSM</span> 6 and 7 partitions are supported. This mixed-version configuration is useful for migrating keys to a new <span class="DefaultProduct">SafeNet Luna Network HSM</span> 7, or to gradually upgrade your production environment from Luna 6 to Luna 7. Mixed-version HA groups have all the same requirements of standard HA groups (see <a href="planning.htm" class="MCXref xref">Planning Your HA Group Deployment</a>). Additional guidelines and considerations are described below:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Versions" class="MCXref xref">Supported Software/Firmware Versions</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Policies" class="MCXref xref">Mismatched Partition Policies and FIPS Mode</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#MechAvail" class="MCXref xref">Mismatched Cryptographic Mechanisms</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#SmallKeys" class="MCXref xref">Minimum Key Sizes</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#SafeXcel" class="MCXref xref">SafeXcel 1746 Co-Processor</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Remap" class="MCXref xref">RSA-186 Key Remapping for FIPS Compliance</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Performance" class="MCXref xref">Performance Optimization</a>
+        </p>
+        <h3 class="ntoc" data-mc-conditions="Default.ScreenOnly"><a name="Versions"></a>Supported Software/Firmware Versions</h3>
+        <p><span class="DefaultCompanyNameLong">Gemalto</span> supports HA groups made up of Luna 6 and 7 partitions using combinations of appliance software/firmware as outlined in the table below. </p>
+        <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 33.3%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 33.3%;" data-mc-conditions="" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 33.3%;" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">SafeNet Luna HSM Client Software</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Appliance Software</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">HSM Firmware</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="2">7.2 or higher</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">7.0 or higher</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">7.0.1 or higher</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">6.2.1 or higher</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">6.10.9 or higher</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc" data-mc-conditions="Default.ScreenOnly"><a name="Policies"></a>Mismatched Partition Policies and FIPS Mode</h3>
+        <p>Partitions in an HA group, and the HSMs on which they reside, must be configured with the same policy settings (see <a href="planning.htm#Prereqs" class="MCXref xref">HSM and Partition Prerequisites</a>). Luna 6 HSMs have certain policies that have been removed from Luna 7, and Luna 7 introduces some new policies. </p>
+        <p>Ensure that policies common to Luna 6/7 member partitions have the same settings, according to your deployment requirements (<a href="../../lunacm/commands/partition/partition_showpolicies.htm" class="MCTopicPopup MCTopicPopupHotSpot MCXref xref">partition showpolicies</a>). </p>
+        <p>lunacm:&gt;<b>partition showpolicies</b></p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>In particular, FIPS mode must be consistent across all HA member partitions. </p>
+        <h3 class="ntoc" data-mc-conditions="Default.ScreenOnly"><a name="MechAvail"></a>Mismatched Cryptographic Mechanisms</h3>
+        <p>Mixed-version HA groups are limited to functions that are common to all member partitions. Mechanisms are added to/removed from new <span class="DefaultProduct">SafeNet Luna Network HSM</span> releases, to provide new functionality and fix vulnerabilities. Operations assigned by load-balancing to a partition without the correct mechanism will fail. Keys created on one partition may fail to replicate to the other partitions in the group. </p>
+        <p>Ensure that your applications only use mechanisms that are available on all members of the mixed-version HA group. Use LunaCM to see a list of mechanisms available on each partition (<a href="../../lunacm/commands/partition/partition_showmechanism.htm" class="MCTopicPopup MCTopicPopupHotSpot MCXref xref">partition showmechanism</a>). </p>
+        <p>lunacm:&gt;<b>partitions showmechanism</b></p>
+        <h3 class="ntoc" data-mc-conditions="Default.ScreenOnly"><a name="SmallKeys"></a>Minimum Key Sizes</h3>
+        <p>On both Luna 6 and Luna 7, minimum key sizes are enforced when using certain cryptographic algorithms. These minimum sizes may differ between versions. If a Luna 6 partition creates a key that is smaller than the minimum size required by Luna 7, the key will not be replicated to the Luna 7 partitions in the HA group. To avoid this, always generate keys according to the Luna 7 minimum size requirements. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Minimum key sizes for many mechanisms are larger in FIPS mode. </p>
+        <p>Use LunaCM to check a mechanism's minimum key size (<a href="../../lunacm/commands/partition/partition_showmechanism.htm" class="MCTopicPopup MCTopicPopupHotSpot MCXref xref">partition showmechanism</a>). Always use the minimum for the newest firmware version in your HA group. </p>
+        <p>lunacm:&gt;<b>partition showmechanism -m</b> &lt;mechanism_ID&gt;</p>
+        <h3 class="ntoc" data-mc-conditions="Default.ScreenOnly"><a name="SafeXcel"></a>SafeXcel 1746 Co-Processor</h3>
+        <p>Luna 6 HSMs include the SafeXcel 1746 security co-processor, which is used to offload packet processing and cryptographic computations from the host processor. Applications using this co-processor are not compatible with mixed-version HA groups. </p>
+        <p>The co-processor is not enabled by default. If you have previously enabled it on your Luna 6 HSMs, you can disable it by editing the <b>Chrystoki.conf</b>/<b>crystoki.ini</b> configuration file as follows:</p><pre>[Misc]</pre><pre xml:space="preserve">PE1746Enabled=0</pre>
+        <h3 class="ntoc" data-mc-conditions="Default.ScreenOnly"><a name="Remap"></a>RSA-186 Key Remapping for FIPS Compliance</h3>
+        <p>Under FIPS 186-3/4, the only RSA methods permitted for generating keys are 186-3 with primes and 186-3 with aux primes. RSA PKCS and X9.31 key generation is not approved in a FIPS-compliant HSM. While Luna 6.10.9 firmware allows these older mechanisms, later firmware does not (and keys created using these mechanisms cannot be replicated to Luna 7 HSMs). </p>
+        <p>If you have older applications that use RSA PKCS and X9.31 key generation, you can remap these calls to use the newer, secure mechanisms. Add a line to the <b>Chrystoki.conf</b>/<b>crystoki.ini</b> configuration file as follows:</p><pre>[Misc]</pre><pre>RSAKeyGenMechRemap=1</pre>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>This setting is intended for older applications that call outdated mechanisms, to redirect calls to FIPS-approved mechanisms. The ideal solution is to update your applications to call the approved mechanisms. </p>
+        <h3 class="ntoc" data-mc-conditions="Default.ScreenOnly"><a name="Performance"></a>Performance Optimization</h3>
+        <p><span class="DefaultProduct">SafeNet Luna Network HSM</span> 7 provides significant (10x) performance improvements over Luna 6 HSMs. In a mixed-version HA group, operations assigned to Luna 6 member partitions will take longer than those assigned to Luna 7 members. The HA logic does not compensate for these performance differences, and schedules operations on the partition with the shortest queue. Since Luna 7 partitions complete operations more quickly, they will naturally be assigned more operations, but a mixed-version HA group generally does not perform as well as an HA group made up entirely of Luna 7 partitions. </p>
+        <p><span class="DefaultCompanyNameLong">Gemalto</span> recommends that you set a Luna 7 partition as the primary HA member (the first member specified when creating the HA group). All key generation takes place on the primary HA member, so this allows you to take advantage of the <span class="DefaultProduct">SafeNet Luna Network HSM</span>'s vastly improved performance for:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>key generation</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>random number generation</p>
+        <p>The load-balancing logic is determined by the SafeNet Luna HSM Client software, so the Luna 7 behavior applies to mixed-version HA (see <a href="functionality.htm#LoadBalancing" class="MCXref xref">Load Balancing</a>). </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The primary HA member may not remain the same over time. If the primary member fails, another member takes over all key generation operations. If you notice a significant drop in performance for key generation operations, it could mean that a Luna 6 partition has become the primary member. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

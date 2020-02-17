@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>[Optional] Configure for RADIUS Authentication</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/radius/radius_config.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>[Optional] Configure for RADIUS Authentication</h2>
+        <p>RADIUS (Remote Authentication Dial-In User Service) is a client/server protocol providing authentication, authorization, and accounting service to configured clients. The client passes user information to configured, designated RADIUS servers, and acts on the returned response. A RADIUS server receives user connection requests, authenticates the user if that user's profile exists on the server, and then returns the configuration information according to which the client can deliver service to the user.</p>
+        <p>While a proposal is being considered (by the custodians of the RADIUS standard) to switch to TLS communication protocol, RADIUS interaction currently takes place over UDP (User Datagram Protocol).</p>
+        <h3 class="ntoc">RADIUS Configuration Summary</h3>
+        <p>Configuration and identification must take place at both ends of the RADIUS transaction. These actions include:</p>
+        <p>On the RADIUS Server Side</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Identify the client systems from which this server will accept requests and return service (this is recorded in the RADIUS&#160;server's configuration file). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Identify the users who will be covered by the service.</p>
+        <p>On the RADIUS Client Side (Your SafeNet Luna Network HSM)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Enable RADIUS.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Add a RADIUS&#160;server, specifying its IP address, and  providing the access secret for that server.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Check the status of SafeNet Luna Network HSM appliance users.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Add desired SafeNet Luna Network HSM appliance users to the RADIUS list, enabling RADIUS authentication for those users.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Verify that RADIUS&#160;is enabled for any user on your SafeNet Luna Network HSM that needs to use RADIUS.</p>
+        <h3 class="ntoc">Configuring RADIUS with Your SafeNet Appliance</h3>
+        <h4>Follow these steps on the RADIUS Server:</h4>
+        <p>You can use any standards-compliant RADIUS server, either a commercial server or one of the free/open-source servers, like freeRADIUS or openRADIUS.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Add the client to the RADIUS&#160;server's configuration file, specifying: </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>The address of the SafeNet Luna Network HSM appliance.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>The secret or password that the client will use when connecting.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>A short, user-friendly or business-relevant name for the client. </p>
+        <p class="listLevel1">You can edit the file directly, for some RADIUS implementations, or use the provided interface. </p><pre xml:space="preserve" class="listLevel1">
+/etc/raddb/clients.conf:
+
+client 192.20.17.174 {
+        ipaddr          = 192.20.17.174
+        secret          = testing123
+        nas             = other
+        shortname       = sa174
+}
+client 192.20.22.106 {
+        ipaddr          = 192.20.22.106
+        secret          = testing321
+        nas             = other
+        shortname       = sa22106
+}
+</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>For each client, add the user name and the password for that user to the "users" file of the RADIUS server.</p><pre xml:space="preserve" class="listLevel1">
+/etc/raddb/users:
+
+sauser162       Cleartext-Password := "userpw654"
+sauser171       Cleartext-Password := "userpw987"
+sauser172       Cleartext-Password := "userpw789"
+sauser173       Cleartext-Password := "userpw456"
+sauser174       Cleartext-Password := "userpw321"
+nagios          Cleartext-Password := "nagiospw"
+audit           Cleartext-Password := "userpin"
+someguy         Cleartext-Password := "userpw"
+sauser106       Cleartext-Password := "userpw123"
+
+</pre>
+        <p class="listLevel1">A user can use RADIUS for a SafeNet Luna Network HSM, only if that SafeNet Luna Network HSM is registered as a client, and if that user is registered as a user in the appropriate files on the RADIUS server.</p>
+        <h4>Follow these steps on the SafeNet Luna Network HSM appliance: </h4>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Without RADIUS, use the command <b>user add user somename</b> to add an appliance administrative user on SafeNet Luna Network HSM. <br />With RADIUS, use the command <b>user radiusAdd -u somename</b> to both create the user on the appliance and add that user to the RADIUS list. You cannot use <b>user radiusAdd</b> to convert an existing user from non-RADIUS to RADIUS.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>On the SafeNet Luna Network HSM appliance, enable RADIUS with the command <b>sysconf radius enable</b>.</p>
+        <p xml:space="preserve" class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Add the server (by hostname or IP address), specifying the port to use, and the timeout value in seconds.</p><pre xml:space="preserve" class="listLevel1">
+[1722022106] lunash:&gt;sysconf radius add -s 192.20.15.182 -p 1812 -t 60
+
+Enter the server secret:
+Re-enter the server secret:
+Command Result : 0 (Success)
+
+</pre>
+        <p xml:space="preserve" class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Verify that the desired server has been added.</p><pre xml:space="preserve" class="listLevel1">
+[1722022106] lunash:&gt;sysconf radius show
+
+RADIUS for SSH is enabled with the following deployed servers:
+
+                                                     server:port     timeout
+                                                   -------------  ----------
+                                              192.20.15.182:1812          60
+
+Command Result : 0 (Success)
+
+</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Check the user list to see which users exist, are enabled on the SafeNet appliance, and are RADIUS enabled.</p><pre xml:space="preserve">
+[1722022106] lunash:&gt;user list
+
+                   Users       Roles      Status      RADIUS
+    --------------------    --------    --------    --------
+                   admin       admin     enabled          no
+                   audit       audit     enabled          no
+                 monitor     monitor    disabled          no
+                operator    operator    disabled          no
+
+Command Result : 0 (Success)</pre><pre xml:space="preserve">&#160;</pre>
+        <p xml:space="preserve" class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Add a user, by name, as a RADIUS&#160;user. </p><pre xml:space="preserve" class="listLevel1">
+[1722022106] lunash:&gt;user radiusAdd -u someguy
+
+Creating mailbox file: File exists
+Stopping sshd:                                             [  OK  ]
+Starting sshd:                                             [  OK  ]
+
+Command Result : 0 (Success)</pre><pre xml:space="preserve">&#160;</pre>
+        <p xml:space="preserve" class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Add the user's appliance role (in this example, we are giving him admin-level access).</p><pre xml:space="preserve" class="listLevel1">
+[1722022106] lunash:&gt;user role add -u someguy -r admin
+
+User someguy was successfully modified.
+
+Command Result : 0 (Success)
+</pre><pre xml:space="preserve">
+</pre>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Verify that the user exists, has the correct role on the SafeNet appliance, and is a RADIUS user for this appliance. </p><pre xml:space="preserve" class="listLevel1">
+[1722022106] lunash:&gt;user list
+
+                   Users       Roles      Status      RADIUS
+    --------------------    --------    --------    --------
+                   admin       admin     enabled          no
+                   audit       audit     enabled          no
+                 someguy       admin     enabled         yes
+                 monitor     monitor    disabled          no
+                operator    operator    disabled          no
+
+Command Result : 0 (Success)
+</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

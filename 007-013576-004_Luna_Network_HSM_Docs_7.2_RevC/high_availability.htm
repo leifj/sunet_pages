@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Product Overview|Redundancy and Reliability">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>High Availability</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#Product_Overview/redundancy_and_reliability/high_availability.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>High Availability</h2>
+        <p><span class="DefaultProduct">SafeNet Luna Network HSM</span> products include the capability to group multiple devices into a single logical group – known as an HA (High Availability) group. Applications only see a virtual HSM that is a consolidation of all the HSMs in your HA&#160;group. Operations and key material from those HSMs are automatically synchronized  to the application. </p>
+        <p>When an HA group is defined, cryptographic services remain available to the consuming applications as long as at least one member in the group remains functional and connected to the application server.  In addition, many cryptographic commands are automatically distributed across the HA group to enable performance gains for many applications.</p>
+        <p>HSMs and appliances are unaware that they might be configured in an HA group.  This allows you to configure HA on a per-application basis. The way you group your HSMs depends on your circumstances and desired performance. See <a href="#HA" class="MCXref xref">HA Configuration Overview</a>.</p>
+        <p>    Once you have set up an HA&#160;group, you can configure several options:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Standby" class="MCXref xref">Standby Mode</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Load" class="MCXref xref">Load Balancing</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Failover" class="MCXref xref">Failover</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Recovery" class="MCXref xref">Recovery</a>
+        </p>
+        <p>The requirements for implementing High Availability are outlined in <a href="#Requirem" class="MCXref xref">Requirements</a></p>
+        <h3 class="ntoc"><a name="HA"></a>HA Configuration Overview</h3>
+        <p>As of SafeNet Luna HSM release 6.x, the SafeNet high availability function supports the grouping of up to thirty-two members.  However,  the maximum practical group size for your application is driven by a trade-off between performance and the cost of replicating key material across the entire group.     The number of HSMs per group of application servers varies based on the application use case but, as depicted in <a href="#HA&#160;Sampl" class="MCXref xref">High Availability</a>, groups of three are typical.</p>
+        <p class="figureCaption" data-mc-autonum="Figure 1: "><span class="autonumber"><span>Figure 1: </span></span><a name="HA&#160;Sampl"></a>HA&#160;Sample Configuration</p>
+        <p><a href="../../Resources/Images/ha/ha_overview_config.svg"><img src="../../Resources/Images/overview/ha_config_diagram.svg" /></a>
+        </p>
+        <p>As performance needs grow beyond the performance capacity of three HSMs, it often makes sense to define a second independent HA group of application servers and HSMs to further isolate applications from any single point of failure.  This has the added advantage of facilitating the distribution of HSM and application sets in different data centers.</p>
+        <h4>Key Material Replication</h4>
+        <p>Whenever an application creates key material, the HA functionality transparently replicates the key material to all members of the HA group before reporting back to the application that the new key is ready.   </p>
+        <p>The HA library always starts with what it considers its primary HSM (initially the first member defined in an HA group).  Once the key is created on the primary it is automatically replicated to each member in the group. If a member fails during this process, the key replication to the failed member is aborted after the failover time out.  If any member is unavailable during the replication process (that is, the unit failed before or during the operation), the HA library keeps track of this and  automatically replicates the key when that member rejoins the group. </p>
+        <p> Once the key is replicated on all active members of the HA group, a success code is returned to the application.</p>
+        <h3 class="ntoc"><a name="Load"></a>Load Balancing</h3>
+        <p>The default behavior of the client library is to attempt to load-balance the application’s cryptographic requests across the entire set of devices in the HA group.  The top level algorithm is a round-robin scheme that is modified to favor the least busy device in the set.  As each new command is processed, the <span class="DefaultProduct">SafeNet Luna Network HSM</span> client looks at how many commands it has scheduled on every device in the group.  If all devices have an equal number of outstanding commands the new command is scheduled on the next device in the list.  However, if the devices have a different number of commands outstanding on them, the new command is scheduled on the device with the fewest commands queued. This modified round-robin has the advantage of biasing load away from any device currently performing a lengthy command. </p>
+        <p>The least-busy algorithm uses the number of commands outstanding on each device as the indication of its busyness.</p>
+        <h4>Single-part vs. multi-part operations</h4>
+        <p> In addition to this least-busy bias, the type of command also affects the scheduling algorithm. Single-part (stateless) cryptographic operations are load-balanced.  Multi-part (stateful) commands that involve cryptographic operations are load-balanced. </p>
+        <p>However, key management commands and multi-part (stateful) commands that involve information retrieval are not load-balanced. Key management commands affect the state of the keys stored in the HSM.  As such, these commands are targeted at all HSMs in the group. The command is performed on the primary HSM and then the result is replicated to all members in the HA group.    Key management operations are  infrequent for most applications.  Multi-part operations carry cryptographic context across individual commands.  The cost of distributing this context to different HA group members is generally greater than the benefit.  For this reason multi-part commands are all targeted at the primary member.  Multi-part operations are infrequent actions, so most applications are not affected by this restriction. </p>
+        <h4>HA groups shared across servers</h4>
+        <p>When an HA group is shared across many servers, different initial members can be selected while the HA group is being defined on each server.  The member first assigned to each group becomes the primary.  This approach optimizes an HA group to distribute the key management and/or multi-part cryptographic operation load more equally.</p>
+        <h3 class="ntoc"><a name="Standby"></a>Standby Mode</h3>
+        <p>By default all members in an HA group are treated as active.  They are kept current with key material and used to load-balance cryptographic services.   In some deployment scenarios it makes sense to define some members as standby. In this mode, only the active units  are used for active load-balancing.  However, as key material is created they are automatically replicated to both the active  units and standby  unit.   In the event of a failure of all active members, the standby unit is automatically promoted to active status. </p>
+        <p> The primary reason for using this feature is to reduce costs while improving reliability. This approach allows remote HSMs that have high latency to be avoided when not needed.  However, in the worst case scenario where all the active HSMs fail, the standby member automatically activates itself and keeps the application running. </p>
+        <h3 class="ntoc"><a name="Failover"></a>Failover</h3>
+        <p>A failover event involves dropping a device from the available members in the HA group.  All commands that were pending on the failed device are transparently rescheduled on the remaining members of the group.  When a failure occurs, the application experiences a latency stall on some of the commands in process (on the failing unit) but otherwise sees no impact on the transaction flow.  The least-busy scheduling algorithm automatically minimizes the number of commands that stall on a failing unit during the twenty second timeout.</p>
+        <h4>Lengthy commands</h4>
+        <p>Most commands are completed within milliseconds.  However, some commands can take extended periods to complete – either because the command itself is time-consuming (for example, key generation); or because the device is under extreme load.   To cover these events the HSM automatically sends “heartbeats” every two seconds for all commands that have not completed within the first two seconds.  The twenty second timer is extended every time one of these heartbeats arrives at client, thus preventing false failover events.</p>
+        <h4>Failure of the primary unit</h4>
+        <p>If the primary unit fails, clients automatically select the next member in the group as the new primary.  Any key management or single-part cryptographic operations are transparently restarted on a new group member.  If the primary unit fails, any in-progress, multi-part, cryptographic operations must be restarted by the application.</p>
+        <p>As long as one HA group member remains functional, cryptographic service is maintained to an application no matter how many other group members fail. </p>
+        <h3 class="ntoc"><a name="Recovery"></a>Recovery</h3>
+        <p>After a failure, the recovery process is  straight-forward.  Depending on the deployment, you can employ an automated or manual recovery process.   In either case there is no need to restart an application. </p>
+        <h4>Automatic Recovery</h4>
+        <p>With automatic recovery, the client library automatically performs periodic recovery attempts while a member is failed. The frequency of these checks is adjustable. </p>
+        <p>The application does not restart.</p>
+        <p>Most customers enable auto-recovery in all configurations. </p>
+        <h4>Manual Recovery</h4>
+        <p>  Simply run the client recovery command and the recovery logic inside the client makes a recovery attempt the next time the application uses the HSM.  As part of recovery, any key material created while the member was offline is automatically replicated to the recovered unit.</p>
+        <p>Even if a manual recovery process is selected, the application does not need to be restarted.</p>
+        <h4>Permanent failure</h4>
+        <p>Sometimes a failure of a device is permanent.  In this event, you only need to remove the failed unit and deploy a new member to the group.   The running clients automatically resynchronize keys to the new member and start scheduling operations to it. </p>
+        <h3 class="ntoc"><a name="Requirem"></a>Requirements</h3>
+        <p>The SafeNet HA and load-balancing features work on per-client and per-partition bases.  This provides a lot of flexibility.  For example, it is possible to define a different sub-set of HSMs in each client and even in each client’s partitions (in the event that a single client uses multiple partitions).   SafeNet recommends to avoid these complex configurations and to keep the HA topography uniform for an entire HSM.  That is, treat HSM members at the HSM level as atomic and whole.</p>
+        <h4>Network topography</h4>
+        <p>The network topography of the HA group is generally not important to the proper functioning of the group.  As long as the client has a network path to each member the HA logic will function.   Keep in mind that having a varying range of latencies between the client and each HA member causes a command scheduling bias towards the low-latency members.  It also implies that commands scheduled on the long-latency devices have a larger overall latency associated with each command.  </p>
+        <p>In this case, the command latency is a characteristic of the network. To achieve uniform load distribution, ensure that  latencies to each device in the group are similar (or use standby mode).</p>
+        <h4>Member Configuration and Version</h4>
+        <p>All members in an HA group have the same configuration and version.  Running HA groups with different versions is unsupported. HSMs are configured identically to ensure smooth high availability and load balancing operations. </p>
+        <p>SafeNet Luna HSMs come with various key management configurations: cloning mode, key-export mode, etc.  HA functionality is supported with both cloning and SIM variants – provided all members in the group have the same configuration.  Clients automatically and transparently use the correct secure key replication method based on the group’s configuration.</p>
+        <h4>Physical and Virtual Slots</h4>
+        <p>By default the client library presents both physical slots and virtual slots for the HA group.  Directing applications at the physical slots bypasses the high availability and load balancing functionality.  An application must be directed at the virtual slots to activate the high availability and load balancing functionality.  A configuration setting referred to as HAonly  hides the physical slots.  SafeNet recommends using this setting to prevent incorrect application configurations. Doing so also simplifies the PKCS#11 slot ordering given a dynamic HA group.</p>
+        <p>Application developers should be aware that the PKCS#11 object handle model is fully virtualized with the SafeNet HA logic. The application must not assume fixed handle numbers across instances of an application. A handle’s value remains consistent for the life of a process but it might be a different value the next time the application is executed.</p>
+        <p>For detailed instructions on setting up HA, see the <i>Administration Guide</i>.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

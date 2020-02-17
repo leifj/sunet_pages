@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Troubleshooting</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#administration/upgrade/GLP/Troubleshooting.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Troubleshooting</h2>
+        <p>This section provides some guidance for situations you might encounter.</p>
+        <h3>Applying Upgrade on HSM Appliance</h3>
+        <p>The LunaSH command <b>sysconf license apply</b> installs an upgrade on your HSM appliance. The following table describes potential messages you could see when you run this command.</p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 33.3%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 66.6%;" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Message</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><code style="font-size: 9pt;">Cannot find &lt;filename&gt;</code>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">You provide as a parameter to the <b>sysconf license apply</b> the filename that contains the license string you obtained from the ECP portal. This message means that the filename you provided cannot be found on the HSM appliance. Use <b>my file list</b> to see what files are available.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><code style="font-size: 9pt;">Cannot find lservrc</code>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">You should not encounter this message. If you do, please contact <span class="DefaultCompanyNameLong">Gemalto</span> technical support for assistance.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><code style="font-size: 9pt;">Invalid licensed feature</code>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The license string is corrupted in the feature attribute. Confirm that you saved the license string without modification after activating the upgrade in the ECP portal.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><code style="font-size: 9pt;">Invalid licensed feature version</code>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The license string is corrupted in the feature version attribute. Confirm that you saved the license string without modification after activating the upgrade in the ECP portal.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><code style="font-size: 9pt;">Invalid licensed HSM serial number</code>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The license string is for an HSM with a serial number that is different from the serial number on this HSM appliance.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><code style="font-size: 9pt;">&lt;feature&gt; not licensed for this appliance</code>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The license string is for an HSM with a serial number that is different from the serial number on this HSM appliance.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><code style="font-size: 9pt;">License is already applied</code>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The license string matches an entitlement already applied on this HSM appliance.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><code style="font-size: 9pt;">LUNA_RET_HSM_TAMPERED</code>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The HSM is in a tampered state and must be cleared of the tampered state before the upgrade can be applied.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><code style="font-size: 9pt;">Update Result : 12 (Error detecting HSM)</code>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The HSM administrator is not logged in.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><code style="font-size: 9pt;">License is unknown/not available (feature)</code>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The HSM appliance software needs to be updated to support a newer feature.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><code style="font-size: 9pt;">Upgrades not available for this model of HSM</code>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Only 750 and 790 models of HSM support upgrades.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><code style="font-size: 9pt;">Upgrade to &lt;#&gt; partitions not available for this model of HSM</code>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Applying the upgrade would exceed the upper limit for the maximum number of partitions on the HSM.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1"><code style="font-size: 9pt;">Unable to determine model of HSM</code>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">You should not encounter this message. If you do, please contact <span class="DefaultCompanyNameLong">Gemalto</span> technical support for assistance.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3><a name="Fingerprint"></a>Getting the HSM Fingerprint</h3>
+        <p style="page-break-before: avoid;page-break-after: avoid;">The <b>sysconf fingerprint license</b> command displays the fingerprint for the HSM serial number. You can use this fingerprint – also referred to as a locking code – to correlate a license string to a specific HSM serial number. The command output shows the fingerprint only.</p><pre xml:space="preserve" style="page-break-before: avoid;">lunash:&gt;sysconf fingerprint license
+&#160;
+&#160;
+Fingerprint for Use With Entitlement Management System
+-------------------------------------------------------
+HSM serial #56725 : *1K9CMFJXJBVU6LC
+&#160;</pre>
+        <p>This fingerprint must match the fingerprint in the license string:</p>
+        <p style="page-break-inside: avoid;page-break-before: avoid;"><code style="font-size: 9pt;">16 LUNA_PARTITIONS_5PACK Ni LONG NORMAL STANDALONE ADD 1_KEYS INFINITE_KEYS 27 OCT 2016 21 19 NEVER NiL SLM_CODE CL_ND_LCK NiL <span style="background-color: #ffff00;">*1K9CMFJXJBVU6LC</span>0400 NiL NiL NiL 5_MINS 5_PACK 0 XjOZSSJSKlf39KMyH4qDLdXtwfJ08fFN8kNZ1qDFNiVaG6NF,bRpZH6ha09r17yRLyD1wlzpStLUH72nOHD4103x##AID=2c305d17-eec7-46cb-ad9f-b0ed752692ef</code>
+        </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

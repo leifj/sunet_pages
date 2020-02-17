@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Planning Your HA Group Deployment</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/ha/planning.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Planning Your HA Group Deployment</h2>
+        <p>This section describes important considerations and constraints to keep in mind as you plan your High-Availability (HA) group deployment. The benefits of HA are described in detail in <a href="functionality.htm" class="MCXref xref">How HA Works</a>. There are several sample configurations described in this section that take advantage of different HA features. Depending on your organization's security needs, you might choose one of these configurations, or your own variation. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Prereqs" class="MCXref xref">HSM and Partition Prerequisites</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Sample" class="MCXref xref">Sample Configurations</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="#Performance" class="MCXref xref">Performance and Load Balancing</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="#Redundancy" class="MCXref xref">Redundancy and Failover</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="#Backup" class="MCXref xref">Automatic Remote Backup</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="#sharing" class="MCXref xref">HA Group Sharing</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="mixed.htm" class="MCXref xref">Luna 6/7 Mixed-Version HA Groups</a>
+        </p>
+        <h3><a name="Prereqs"></a>HSM and Partition Prerequisites</h3>
+        <p>The HSM partitions you plan to use in an HA group must meet the following prerequisites before you can use them in an HA group. </p>
+        <h4>Compatible HSM <MadCap:conditionalText data-mc-conditions="Default.SA">Software/</MadCap:conditionalText>Firmware Versions</h4>
+        <p data-mc-conditions="Default.SA">Generally, <span class="DefaultCompanyNameLong">Gemalto</span> recommends using HSMs with the same software/firmware in HA groups; different versions have different capabilities, and a mixed-version HA group is limited to those functions that are common to the versions involved. This means they have access to fewer cryptographic mechanisms, or have different restrictions in FIPS mode. However, mixed-version HA groups containing Luna 6 and 7 member partitions are supported. See <a href="mixed.htm" class="MCXref xref">Luna 6/7 Mixed-Version HA Groups</a> for more information. </p>
+        <h4>Common Cloning Domain</h4>
+        <p>All key replication in an HA group uses the Luna cloning protocol, which provides mutual authentication, confidentiality, and integrity for each object that is
+copied from one partition to another. Therefore, all HA group member partitions must be initialized with the same cloning domain. If you are planning to combine already-existing partitions into an HA group, you must first re-initialize them using the same domain string or red PED key. </p>
+        <h4>Common Crypto Officer Credentials</h4>
+        <p>An HA group essentially allows you to log in to all its member partitions simultaneously, using a single credential. <MadCap:conditionalText data-mc-conditions="Default.Password">Password-authenticated partitions must all be initialized with the same Crypto Officer password. </MadCap:conditionalText><MadCap:conditionalText data-mc-conditions="Default.PED">PED-authenticated partitions must all be initialized with the same black Crypto Officer PED key and activated with the same CO challenge password. </MadCap:conditionalText></p>
+        <p>It is not possible to create an HA group made up of both password- and PED-authenticated partitions. </p>
+        <h4>Common HSM/Partition Policies (FIPS Mode)</h4>
+        <p>Generally, all HSMs/partitions used in an HA group must have the same policy configuration, especially FIPS mode. Do not attempt to use an HA&#160;group combining HSMs with FIPS mode on and others with FIPS mode off.</p>
+        <h3><a name="Sample"></a>Sample Configuration<MadCap:conditionalText data-mc-conditions="Default.SA">s</MadCap:conditionalText></h3>
+        <p>Your ideal HA group configuration depends on the number of HSMs you have available and the purpose of your application(s). <MadCap:conditionalText data-mc-conditions="Default.SA">Sample configurations for different types of deployment are described below. </MadCap:conditionalText></p>
+        <h4><a name="Performance"></a>Performance and Load Balancing</h4>
+        <p>If your application is designed to perform many cryptographic operations as quickly as possible, using keys or other objects that do not change often, you can create a large HA group using partitions on many HSMs. This deployment uses load balancing to provide linear performance gains for each HSM added to the group. </p>
+        <p>For example: your application uses keys stored on the HSM to perform many encrypt/decrypt or sign/verify operations. You want to minimize transaction latency by providing enough HSMs to handle capacity. </p>
+        <p>The SafeNet Luna HSM Client allows HA groups with up to 32 member partitions. The best approach in this example is to add enough group members to handle the usual number of operations, plus enough extra members to handle periods of high demand. </p>
+        <p>
+            <img src="../../Resources/Images/ha/ha_performance_and_load_balancing.svg" data-mc-conditions="Default.SA" />
+        </p>
+        <h4 data-mc-conditions="Default.SA"><a name="Redundancy"></a>Redundancy and Failover</h4>
+        <p data-mc-conditions="Default.SA">If your application requires continuous, uninterruptible uptime, operations assigned to an HA group are reassigned to other group members in the event of a member failure (see <a href="functionality.htm#Failover" class="MCXref xref">Failover</a> for details). Additional group members can be added and set to standby mode for an extra layer of redundancy (see <a href="functionality.htm#Standby" class="MCXref xref">Standby Members</a> for details). </p>
+        <p data-mc-conditions="Default.SA">
+            <img src="../../Resources/Images/ha/ha_redundancy_and_failover.svg" />
+        </p>
+        <p data-mc-conditions="Default.SA">To maximize the use of your HSMs, plan which member partitions you will set to standby mode. Although the configuration above is a straightforward example of an HA group with a single standby member, it is not an ideal production configuration, because the standby member is idle unless all the other members fail. The configuration below is a more useful implementation of two HA groups, each with standby members on the other's HSMs. </p>
+        <p data-mc-conditions="Default.SA">As depicted below, applications can be deployed in geographically dispersed locations. In this scenario, Luna’s standby capability allows you to use the HSMs in Datacenter B to cost-effectively improve availability for the local HA group at Datacenter A, and vice-versa. This approach allows the HA groups to avoid using remote HSMs with high latency, unless they are urgently required. If all local members fail, the standby partitions are automatically promoted to active status.</p>
+        <p data-mc-conditions="Default.SA">
+            <img src="../../Resources/Images/ha/ha_standby-mode.svg" />
+        </p>
+        <h4 data-mc-conditions="Default.SA"><a name="Backup"></a>Automatic Remote Backup</h4>
+        <p data-mc-conditions="Default.SA">Since the contents of member partitions are always kept up-to-date, you can use an HA group to keep an automatic backup of your cryptographic objects. Set the backup member to standby mode so that it does not perform operations. If the regular member(s) fail, the standby member takes over operations. </p>
+        <p data-mc-conditions="Default.SA">
+            <img src="../../Resources/Images/ha/ha_auto-backup.svg" />
+        </p>
+        <h4 data-mc-conditions="Default.SA"><a name="sharing"></a>HA Group Sharing</h4>
+        <p data-mc-conditions="Default.SA">Generally, an HA group is defined on a single client, which runs an application against the virtual HA group. You can share the HA group across multiple clients by assigning all member partitions to both clients and creating the HA group independently on each one.</p>
+        <p class="tip" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;TIP&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>TIP</b> &#160;&#160;</span></span></span>When an HA group is shared across multiple clients, you can select a different partition as the first member on each client. This approach optimizes an HA group to distribute the key management and/or multi-part cryptographic operation load more equally.</p>
+        <p data-mc-conditions="Default.SA">
+            <img src="../../Resources/Images/ha/ha_group_sharing.svg" />
+        </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

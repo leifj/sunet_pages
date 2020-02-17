@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Consequences of Losing PED Keys</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#administration/PED_Auth/key_mgmt/lost_keys.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Consequences of Losing PED Keys</h3>
+        <p>PED keys are the only means of authenticating roles, domains, and RPVs on the PED-authenticated <span class="DefaultProduct">SafeNet Luna Network HSM</span>. Losing a PED keyset effectively locks the user out of that role. Always keep secure backups of your PED keys, including M of N split secrets. Forgetting the PED&#160;PIN associated with a key is equivalent to losing the key entirely. Losing a split-secret key is less serious, unless enough splits are lost so that M cannot be satisfied. </p>
+        <p>If a PED&#160;key is lost or stolen, log in with one of your backup keys and change the existing PED secret immediately, to prevent unauthorized HSM access. </p>
+        <p>The consequences of a lost PED key with no backup vary depending on the type of secret:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#HSMSO" class="MCXref xref">Blue HSM&#160;SO Key</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#HSMDom" class="MCXref xref">Red HSM&#160;Domain Key</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#RPV" class="MCXref xref">Orange Remote PED Key</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#ParSO" class="MCXref xref">Blue Partition SO Key</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#ParDom" class="MCXref xref">Red Partition Domain Key</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#CO" class="MCXref xref">Black Crypto Officer Key</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#CU" class="MCXref xref">Gray Crypto User Key</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Audit" class="MCXref xref">White Audit User Key</a>
+        </p>
+        <h4><a name="HSMSO"></a>Blue HSM&#160;SO Key</h4>
+        <p>If the HSM SO secret is lost, you can no longer perform administrative tasks on the HSM, including partition creation and client assignment. If you use the same blue SO key for your HSM backup partitions, the contents of the <MadCap:conditionalText data-mc-conditions="Default.SA">HSM SO&#160;space</MadCap:conditionalText> are unrecoverable. Take the following steps:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Contact all Crypto Officers and have them immediately make backups of their existing partitions. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>When all important partitions are backed up, execute a factory reset of the HSM.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Initialize the HSM and create a new HSM SO secret. Use the original red HSM cloning domain key. </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Restore the <MadCap:conditionalText data-mc-conditions="Default.SA">HSM SO&#160;space</MadCap:conditionalText> contents from a recent backup, if you have one. </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Recreate the partitions and reassign them to their respective clients. </p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Partition SOs must initialize the new partitions using their original blue and red key(s), and initialize the Crypto Officer role (and Activation secret, if applicable). Supply the new black CO keys to the Crypto Officers. </p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Crypto Officers must change the login credentials from the new black CO key to their original black keys (and reset the Activation secret password, if applicable). </p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Crypto Officers can now restore all partition contents from backup. </p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>If you are using Remote PED, you must recreate the Remote PED Vector (RPV). Reuse the original orange key. </p>
+        <h4><a name="HSMDom"></a>Red HSM&#160;Domain Key</h4>
+        <p>If the HSM Key Cloning Vector is lost, you can no longer perform backup/restore operations on the <MadCap:conditionalText data-mc-conditions="Default.SA">HSM&#160;SO&#160;space(s)</MadCap:conditionalText>. If the HSM is factory-reset, the contents of the <MadCap:conditionalText data-mc-conditions="Default.SA">HSM SO&#160;space</MadCap:conditionalText> are unrecoverable. Follow the same procedure as you would if you lost the blue HSM SO key, but you cannot restore the <MadCap:conditionalText data-mc-conditions="Default.SA">HSM SO&#160;space</MadCap:conditionalText> from backup. </p>
+        <h4><a name="RPV"></a>Orange Remote PED Key</h4>
+        <p>If the Remote PED Vector is lost, create a new one and distribute a copy to the administrator of each Remote PED&#160;server. See <a href="../remote/RPK.htm" class="MCXref xref">Initializing the Remote PED Vector (RPV) and Creating the Orange PED&#160;Key</a>. </p>
+        <h4><a name="ParSO"></a>Blue Partition SO Key</h4>
+        <p>If the Partition SO&#160;secret is lost, you can no longer perform administrative tasks on the partition. Take the following steps:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Have the Crypto Officer immediately make a backup of the partition objects. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Have the HSM&#160;SO&#160;delete the partition, create a new one, and assign it to the same client. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Initialize the new partition with a new blue Partition SO key and the original red cloning domain key(s). </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Initialize the Crypto Officer role (and Activation secret, if applicable). Supply the new black CO key to the Crypto Officer. </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>The Crypto Officer must change the login credentials from the new black CO key to their original black key (and reset the Activation secret password, if applicable). </p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>The Crypto Officer can now restore all partition contents from backup. </p>
+        <h4><a name="ParDom"></a>Red Partition Domain Key</h4>
+        <p>If the Partition Key Cloning Vector is lost, you can no longer perform backup/restore operations on the partition(s), or make changes to HA groups in that cloning domain. You can still perform all other operations on the partition. Take the following steps:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Have the HSM SO&#160;create a new partition (or multiple partitions, to replace the entire HA group) and assign it to the same client(s). </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Initialize the partition(s)with a new cloning domain. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Initialize the Crypto Officer role with the original black Crypto Officer key (and Activation password, if applicable). </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Create objects on the new partition to replace those on the original partition. </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>As soon as possible, change all applications to use the objects on the new partition.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>When objects on the original partition are no longer in production use, the HSM SO can delete the original partition. </p>
+        <h4><a name="CO"></a>Black Crypto Officer Key</h4>
+        <p>If the Crypto Officer secret is lost, you can no longer create objects on the partition, or perform backup/restore operations. You may still be able to use the partition, depending on the following criteria:</p>
+        <p class="ul1" style="font-weight: bold;" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>PIN reset by Partition SO:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If HSM policy <b>15: Enable SO reset of partition PIN</b> is set to <b>1</b>, the Partition SO can reset the Crypto Officer secret and create a new black CO key. </p>
+        <p class="listLevel2">lunacm:&gt;<b>role resetpw -name co</b></p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If this policy is set to <b>0</b> (default), the CO is locked out unless other criteria in this list apply. </p>
+        <p class="ul1" style="font-weight: bold;" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Partition Activation:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If the partition is Activated, you can still access it for production using the CO challenge secret. Change your applications to use objects on a new partition as soon as possible. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If the partition is not Activated, read-only access of essential objects may still be available via the Crypto User role. </p>
+        <p class="ul1" style="font-weight: bold;" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Crypto User</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If the Crypto User is initialized, you can use the CU role for read-only access to essential partition objects while you change your applications to use objects on a new partition.</p>
+        <p>If none of these criteria apply, the contents of the partition are unrecoverable.</p>
+        <h4><a name="CU"></a>Gray Crypto User Key</h4>
+        <p>If the Crypto User secret is lost, the Crypto Officer can reset the CU secret and create a new gray key:</p>
+        <p>lunacm:&gt;<b>role resetpw -name cu</b></p>
+        <h4><a name="Audit"></a>White Audit User Key</h4>
+        <p>If the Audit User secret is lost, you can no longer cryptographically verify existing audit logs. The existing logs can still be viewed. Re-initialize the Audit User role on the affected HSMs, using the same white key for HSMs that will verify each other's logs. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

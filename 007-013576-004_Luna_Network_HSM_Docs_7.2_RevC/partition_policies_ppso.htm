@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Set Partition Policies</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/partition_policies/partition_policies_ppso.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter"><a name="kanchor25"></a><a name="kanchor26"></a>Set Partition Policies</h1>
+        <p>At this point, you should have initialized the partition and created the Crypto Officer role. All administration of an initialized partition is carried out by the Partition SO, via LunaCM, from a registered client computer. Before deploying the partitions, review and set the policies constraining the use of the partition 
+by clients, as described in the following sections:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#DisplayPPSOpolicies" class="MCXref xref">Displaying the Current Partition Policy Settings</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#ChangePPSOparPolicy" class="MCXref xref">Changing the Partition Policy Settings</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#RSA_bind_mode" class="MCXref xref">RSA Blinding Mode</a>
+        </p>
+        <h2><a name="DisplayPPSOpolicies"></a>Displaying the Current Partition Policy Settings</h2>
+        <p>First, 
+display the policies (default) of the application partition. You can run the <b>partition showpolicies</b> command without logging in. The Partition SO must be logged in to change partition policy settings. </p>
+        <h5>To display the current partition policy settings:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open a LunaCM session.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Enter the following command to display current partition 
+capability and policy settings. Capabilities are factory settings. Policies 
+are the means of modifying the adjustable capabilities:</p>
+        <p class="listLevel1">lunacm:&gt;<b>partition showpolicies</b> [<b>-slot</b> &lt;slotnum&gt;]</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; partition showpolicies</pre><pre xml:space="preserve" class="listLevel1">        Partition Capabilities</pre><pre xml:space="preserve" class="listLevel1">                 0: Enable private key cloning : 1</pre><pre xml:space="preserve" class="listLevel1">                 1: Enable private key wrapping : 1</pre><pre xml:space="preserve" class="listLevel1">                 2: Enable private key unwrapping : 1</pre><pre xml:space="preserve" class="listLevel1">                 3: Enable private key masking : 0</pre><pre xml:space="preserve" class="listLevel1">                 4: Enable secret key cloning : 1</pre><pre xml:space="preserve" class="listLevel1">                 5: Enable secret key wrapping : 1</pre><pre xml:space="preserve" class="listLevel1">                 6: Enable secret key unwrapping : 1</pre><pre xml:space="preserve" class="listLevel1">                 7: Enable secret key masking : 0</pre><pre xml:space="preserve" class="listLevel1">                10: Enable multipurpose keys : 1</pre><pre xml:space="preserve" class="listLevel1">                11: Enable changing key attributes : 1</pre><pre xml:space="preserve" class="listLevel1">                15: Allow failed challenge responses : 1</pre><pre xml:space="preserve" class="listLevel1">                16: Enable operation without RSA blinding : 1</pre><pre xml:space="preserve" class="listLevel1">                17: Enable signing with non-local keys : 1</pre><pre xml:space="preserve" class="listLevel1">                18: Enable raw RSA operations : 1</pre><pre xml:space="preserve" class="listLevel1">                20: Max failed user logins allowed : 10</pre><pre xml:space="preserve" class="listLevel1">                21: Enable high availability recovery : 1</pre><pre xml:space="preserve" class="listLevel1">                22: Enable activation : 0</pre><pre xml:space="preserve" class="listLevel1">                23: Enable auto-activation : 0</pre><pre xml:space="preserve" class="listLevel1">                25: Minimum pin length (inverted: 255 - min) : 248</pre><pre xml:space="preserve" class="listLevel1">                26: Maximum pin length : 255</pre><pre xml:space="preserve" class="listLevel1">                28: Enable Key Management Functions : 1</pre><pre xml:space="preserve" class="listLevel1">                29: Enable RSA signing without confirmation : 1</pre><pre xml:space="preserve" class="listLevel1">                31: Enable private key unmasking : 1</pre><pre xml:space="preserve" class="listLevel1">                32: Enable secret key unmasking : 1</pre><pre xml:space="preserve" class="listLevel1">                33: Enable RSA PKCS mechanism : 1</pre><pre xml:space="preserve" class="listLevel1">                34: Enable CBC-PAD (un)wrap keys of any size : 1</pre><pre xml:space="preserve" class="listLevel1">                37: Enable Secure Trusted Channel : 1</pre><pre xml:space="preserve" class="listLevel1">                39: Enable  Start/End Date Attributes : 1</pre><pre class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">        Partition Policies</pre><pre xml:space="preserve" class="listLevel1">                 0: Allow private key cloning : 1</pre><pre xml:space="preserve" class="listLevel1">                 1: Allow private key wrapping : 0</pre><pre xml:space="preserve" class="listLevel1">                 2: Allow private key unwrapping : 1</pre><pre xml:space="preserve" class="listLevel1">                 3: Allow private key masking : 0</pre><pre xml:space="preserve" class="listLevel1">                 4: Allow secret key cloning : 1</pre><pre xml:space="preserve" class="listLevel1">                 5: Allow secret key wrapping : 1</pre><pre xml:space="preserve" class="listLevel1">                 6: Allow secret key unwrapping : 1</pre><pre xml:space="preserve" class="listLevel1">                 7: Allow secret key masking : 0</pre><pre xml:space="preserve" class="listLevel1">                10: Allow multipurpose keys : 1</pre><pre xml:space="preserve" class="listLevel1">                11: Allow changing key attributes : 1</pre><pre xml:space="preserve" class="listLevel1">                15: Ignore failed challenge responses : 1</pre><pre xml:space="preserve" class="listLevel1">                16: Operate without RSA blinding : 1</pre><pre xml:space="preserve" class="listLevel1">                17: Allow signing with non-local keys : 1</pre><pre xml:space="preserve" class="listLevel1">                18: Allow raw RSA operations : 1</pre><pre xml:space="preserve" class="listLevel1">                20: Max failed user logins allowed : 10</pre><pre xml:space="preserve" class="listLevel1">                21: Allow high availability recovery : 1</pre><pre xml:space="preserve" class="listLevel1">                22: Allow activation : 0</pre><pre xml:space="preserve" class="listLevel1">                23: Allow auto-activation : 0</pre><pre xml:space="preserve" class="listLevel1">                25: Minimum pin length (inverted: 255 - min) : 248</pre><pre xml:space="preserve" class="listLevel1">                26: Maximum pin length : 255</pre><pre xml:space="preserve" class="listLevel1">                28: Allow Key Management Functions : 1</pre><pre xml:space="preserve" class="listLevel1">                29: Perform RSA signing without confirmation : 1</pre><pre xml:space="preserve" class="listLevel1">                31: Allow private key unmasking : 1</pre><pre xml:space="preserve" class="listLevel1">                32: Allow secret key unmasking : 1</pre><pre xml:space="preserve" class="listLevel1">                33: Allow RSA PKCS mechanism : 1</pre><pre xml:space="preserve" class="listLevel1">                34: Allow CBC-PAD (un)wrap keys of any size : 1</pre><pre xml:space="preserve" class="listLevel1">                37: Force Secure Trusted Channel : 0</pre><pre xml:space="preserve" class="listLevel1">                39: Allow Start/End Date Attributes : 0</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Command Result : No Error</pre>
+        <h2><a name="ChangePPSOparPolicy"></a><a name="kanchor27"></a>Changing the Partition Policy Settings</h2>
+        <p>Having viewed the Policy settings, you can now modify 
+a Partition Policy for a given partition. </p>
+        <h5>To change a partition policy:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open a LunaCM session, select the partition slot, and login as Partition SO.</p>
+        <p class="listLevel1">lunacm:&gt;<b>slot set slot</b> &lt;slotnum&gt;</p>
+        <p class="listLevel1">lunacm:&gt;<b>role login -name po</b></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Enter the following command to change a Partition 
+Policy:</p>
+        <p class="listLevel1">lunacm&gt;<b>partition changepolicy -policy</b> &lt;policy_ID&gt; <b>-value</b> &lt;policy_value&gt;</p>
+        <h2><a name="RSA_bind_mode"></a>RSA Blinding Mode</h2>
+        <p>Blinding is a technique that introduces random elements into the signature 
+process to prevent timing attacks on the RSA private key. Use of this 
+technique may be required by certain security policies, but it does reduce 
+performance. </p>
+        <p>The Partition Security Officer can turn this feature on or off. </p>
+        <p>If RSA blinding is enabled in Capabilities and allowed in Policies, 
+the partition will always run in RSA blinding mode; 
+ performance will be lower than SafeNet published performance figures. 
+ This is because the deliberate introduction of random elements causes 
+ the average signature to take longer to complete.</p>
+        <p>For maximum 
+performance, you can switch RSA blinding mode off, at the cost of 
+additional risk of timing attacks on your keys. It is your decision 
+whether your network and other security measures are sufficiently rigorous 
+that blinding is not needed.</p>
+        <p>SafeNet Luna HSMs are normally shipped with the Capability set to allow switching 
+blinding on or off, and with the Policy set to not 
+use blinding, by default.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

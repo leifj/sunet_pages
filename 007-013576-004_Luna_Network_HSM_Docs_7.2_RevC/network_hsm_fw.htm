@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Updating the SafeNet Luna HSM Firmware</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/List1.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/upgrade/network_hsm_fw.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 data-mc-conditions="Default.CRN_exclude">Updating the SafeNet Luna HSM Firmware</h2>
+        <p>When you install a software appliance update, the latest firmware version is saved on the appliance as an optional update, replacing any firmware version previously held in reserve. If you wish to use a different HSM firmware version, you can download it from the <span class="DefaultCompanyNameLong">Gemalto</span> Support Portal. </p>
+        <p data-mc-conditions="Default.CRN_exclude">To update the firmware on a SafeNet Luna Backup HSM, see <a href="pcie_backup_fw.htm" class="MCXref xref">Updating the SafeNet Luna Backup HSM Firmware</a>.</p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>Use an uninterruptible power supply (UPS) to power your HSM. There is a small chance that a power failure during an update could leave your HSM in an unrecoverable condition. </p>
+        <h4><a name="FWafterUpdate"></a>Updating the HSM Firmware After an Appliance Software Update</h4>
+        <p>After an appliance software update, the latest firmware version is saved on the appliance and ready to install. </p>
+        <h5>To update the HSM firmware after a software appliance update:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Log in to the appliance as <b>admin</b>.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>At the LunaSH prompt, login as HSM&#160;SO.</p>
+        <p class="listLevel1">lunash:&gt;<b>hsm login</b></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>[Optional Step] Check that the desired firmware version is ready to install.</p>
+        <p class="listLevel1">lunash:&gt;<b>hsm firmware show</b></p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>If you are using STC on the HSM&#160;Admin channel, disable it by running lunash:&gt;<b>hsm stc disable</b> before you update the HSM firmware. </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Upgrade the firmware to the version currently stored on the appliance.</p>
+        <p class="listLevel1">lunash:&gt;<b>hsm firmware upgrade</b></p>
+        <h4>Update the HSM Firmware to a Different Version</h4>
+        <p>If you are not installing the firmware update provided in the appliance software update, download your desired HSM firmware from the <span class="DefaultCompanyNameLong">Gemalto</span> Support Portal. You require:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><span class="DefaultProduct">SafeNet Luna Network HSM</span> firmware update package file (&lt;filename&gt;<b>.spkg</b>)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>the secure package authentication code, provided in a text file accompanying the update package</p>
+        <h5>To update the HSM firmware to a version downloaded from the Support Portal:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Transfer the secure package update file to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> using <b>scp</b> or <b>pscp</b>.</p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col class="TableStyle-List1-Column-Column1" />
+            <col class="TableStyle-List1-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyE-Column1-Body1" style="font-weight: bold;">Linux/UNIX</td>
+                    <td class="TableStyle-List1-BodyD-Column1-Body1"><b>scp</b> &lt;path&gt;/&lt;packagename&gt;<b>.spkg admin@</b>&lt;appliance_host_or_IP&gt;<b>:</b></td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyB-Column1-Body1" style="font-weight: bold;">Windows</td>
+                    <td class="TableStyle-List1-BodyA-Column1-Body1"><b>pscp</b> &lt;path&gt;\&lt;packagename&gt;<b>.spkg admin@</b>&lt;appliance_host_or_IP&gt;<b>:</b></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Stop all client applications to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Using a serial or SSH connection, log in to the appliance as <b>admin</b>. </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>At the LunaSH prompt, login as HSM SO.</p>
+        <p class="listLevel1">lunash:&gt;<b>hsm login</b></p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>[Optional Step] Verify that the secure package file is present on the <span class="DefaultProduct">SafeNet Luna Network HSM</span>.</p>
+        <p class="listLevel1">lunash:&gt;<b>package listfile</b></p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span> [Optional Step] Verify the package file, specifying the authorization code you received from <span class="DefaultCompanyNameLong">Gemalto</span>.</p>
+        <p class="listLevel1">lunash:&gt;<b>package verify</b> &lt;filename&gt;<b>.spkg -authcode</b> &lt;code_string&gt;</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Install the firmware update package, specifying the authorization code you received from <span class="DefaultCompanyNameLong">Gemalto</span>.</p>
+        <p class="listLevel1">lunash:&gt;<b>package update</b> &lt;filename&gt;<b>.spkg -authcode</b> &lt;code_string&gt;</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.CRN_exclude"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>If you are using a service provider model, you can use the <b>-useevp</b> option to specify the OpenSSL EVP (Digital EnVeloPe library) API to validate the update package, rather than invoking the HSM. This allows you to install the update package without logging in as HSM&#160;SO. See <a href="../../lunash/commands/package/package_update.htm" class="MCXref xref">package update</a> in the <i>LunaSH Command Reference Guide</i>.</p>
+        <p class="listLevel1">The package update process takes a few seconds. The firmware package is now stored on the appliance, waiting to be applied to the HSM. </p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>[Optional Step] Check that the desired firmware version is ready to apply.</p>
+        <p class="listLevel1">lunash:&gt;<b>hsm firmware show</b></p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>If you are using STC on the HSM&#160;Admin channel, disable it by running lunash:&gt;<b>hsm stc disable</b> before you update the HSM firmware. </p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Update the firmware to the version currently stored on the appliance.</p>
+        <p class="listLevel1">lunash:&gt;<b>hsm firmware upgrade</b></p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

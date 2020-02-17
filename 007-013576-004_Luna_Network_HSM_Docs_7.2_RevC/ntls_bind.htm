@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|ntls">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>ntls bind</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#lunash/commands/ntls/ntls_bind.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">ntls bind</h2>
+        <p><a name="kanchor42"></a>Binds the network trust link service (NTLS) to a network device. You can bind NTLS to a specific device (eth0, eth1, eth2, or eth3), all devices (eth0, eth1, eth2, and eth3) or to a bonded interface (bond0 or bond1). See <a href="../network/network_interface_bonding.htm" class="MCXref xref">network interface bonding</a> for more information about creating a bonded interface.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>You can bind your NTLS traffic to an IPv4 or IPv6 device, but not to both IPv4 and IPv6 devices simultaneously. If some of the network devices on your <span class="DefaultProduct">SafeNet Luna Network HSM</span> are configured with IPv4 addresses, while others are configured with IPv6 addresses, the <b>ntls bind all</b> command will bind NTLS to all IPv4 devices, while the <b>ntls bind all -ipv6</b> command will bind NTLS to all IPv6 devices.</p>
+        <p>You must restart the NTLS service for the change to take effect (see <a href="../service/service_restart.htm" class="MCXref xref">service restart</a>):</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span> if the device you are binding to is configured and active, the NTLS traffic is bound to the new device immediately after NTLS restarts.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>if the device you are binding to is not configured or is inactive, the NTLS binding configuration is updated, but the NTLS traffic keeps its current binding. The NTLS traffic will begin using the new configuration only after you configure and connect the interface so that it becomes active, and restart the NTLS service.</p>
+        <p>If you wish, client traffic restriction could complement SSH traffic restriction using the command <a href="../sysconf/sysconf_ssh_ip.htm" class="MCXref xref">sysconf ssh ip</a> or <a href="../sysconf/sysconf_ssh_device.htm" class="MCXref xref">sysconf ssh device</a>, which restrict administrative traffic (over SSH) to a specific IP address or device name on your SafeNet Luna Network HSM.</p>
+        <h3 class="ntoc">User Privileges</h3>
+        <p>Users with the following privileges can perform this command:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Admin</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Operator</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code"><b>ntls bind</b> &lt;netdevice&gt; 
+[<b>-force</b>] [<b>-ipv6</b>]</p>
+        <table style="caption-side: top;width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 200px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 90px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th style="text-align: left;" class="TableStyle-Page-HeadE-Column1-Header1">Argument(s)</th>
+                    <th style="text-align: left;" class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th style="text-align: left;" class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-force</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-f</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Force the action without prompting.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-ipv6</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-i</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Use with <b>ntls bind all</b> to bind all IPv6 devices. This parameter is not required when binding to a specific IPv6 device  (eth0, eth1, eth2, or eth3), or a specific bonded device (bond0 or bond1).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;"><span style="font-weight: normal;">&lt;netdevice&gt;</span>
+                    </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">&#160;</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>Specifies the network device you want to bind to the NTLS service. All NTLS traffic to the appliance will use the specified network device. </p>
+                        <p><b>Valid values:</b>
+                        </p>
+                        <p><b>all:</b> Bind to all devices. Use without the <b>-ipv6</b> parameter to bind to all IPv4 devices. Use with the <b>-ipv6</b> parameter to bind to all IPv6 devices.</p>
+                        <p><b>bond0:</b> Bind to the bond0 interface. See <a href="../network/network_interface_bonding.htm" class="MCXref xref">network interface bonding</a>.</p>
+                        <p><b>bond1:</b> Bind to the bond1 interface.</p>
+                        <p><b>eth0:</b> Bind to the eth0 device.</p>
+                        <p><b>eth1:</b> Bind to the eth1 device.</p>
+                        <p><b>eth2</b>: Bind to the eth2 device.</p>
+                        <p><b>eth3</b>: Bind to the eth3 device.</p>
+                        <p><b>Default:</b>
+                        </p>
+                        <p><b>all</b> (0.0.0.0). This will bind to all IPv4 devices.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">lunash:&gt;ntls bind eth0</pre><pre xml:space="preserve">
+ <br />NTLS binding set to network device eth0.</pre><pre xml:space="preserve">You must restart the NTLS service for the new settings to take effect.</pre><pre xml:space="preserve"><br />If you are sure that you wish to restart NTLS, then type 'proceed', otherwise type 'quit'<br /></pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&gt;proceed</pre><pre xml:space="preserve">Proceeding...<br />Restarting NTLS service...<br />Stopping ntls: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;[ OK &#160;]<br /></pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Starting ntls: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;[ OK &#160;]<br /></pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Removing Partitions</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/partitions/removing_partitions.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor310"></a><a name="kanchor311"></a>Removing Partitions</h2>
+        <p><a name="kanchor312"></a>Only the HSM Security Officer can remove HSM partitions. When a partition is removed, it is cleared from the HSM and all of its contents are deleted. </p>
+        <p data-mc-conditions="Default.SA">This is in contrast to revoking a partition from a Client. When a partition's assignment is revoked using the LunaSH command <b>client revokepartition</b>, it still exists, but is no longer available to that Client. The partition and its contents could still be used by other Clients, or reassigned to the original Client. See <a href="../../lunash/commands/client/client_revokepartition.htm" class="MCXref xref">client revokepartition</a> in the <i>LunaSH Command Reference Guide</i> for correct syntax. </p>
+        <h5>To remove a partition from the HSM:</h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">1.</span></span>Login to LunaSH as admin and list the existing HSM partitions. </p>
+        <p class="listLevel1" style="font-weight: normal;" data-mc-conditions="Default.SA">lunash:&gt;<b>partition list</b></p><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">lunash:&gt;partition list</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">                                                      Storage (bytes)</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">                                                ----------------------------</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA"> Partition            Name                   Objects   Total    Used    Free</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA"> ===========================================================================</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA"> 154438865287         myLunapar                    0  325896       0  325896</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA"> 154438865290         myLunapar2                   0  325896       0  325896</pre><pre class="listLevel1" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">Command Result : 0 (Success)</pre>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">2.</span></span>Login to the HSM as HSM SO. </p>
+        <p class="listLevel1" style="font-weight: normal;" data-mc-conditions="Default.SA">lunash:&gt;<b>hsm login</b></p>
+        <p class="ol1" data-mc-autonum="3." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">3.</span></span>Delete the partition by specifying its label. </p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt;<b>partition delete -partition</b> &lt;label&gt;</p><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">lunash:&gt;partition delete -partition myLunapar2</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" data-mc-conditions="Default.SA">CAUTION:  Are you sure you wish to delete the partition named:</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">            myLunapar2</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">          Type 'proceed' to delete the partition, or 'quit'</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">          to quit now.</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">          &gt; proceed</pre><pre class="listLevel1" data-mc-conditions="Default.SA">'partition delete' successful.</pre><pre class="listLevel1" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">Command Result : 0 (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

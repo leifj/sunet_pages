@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Configuration File Summary</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/config/config-file_summary.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter">Configuration File Summary</h1>
+        <p>Many aspects of SafeNet Luna HSM configuration and operation are controlled or adjusted by the Chrystoki.conf file (Linux/UNIX) or Crystoki.ini file (Windows). The examples in the table below are from a Windows Chrystoki.ini file. </p>
+        <p>The configuration file is organized into named sections, under which related configuration-affecting entries might appear. A basic configuration file is always present in the SafeNet Luna Client folder, installed by the SafeNet Luna Client installer, with default values assigned to the populated entries. In addition to the most basic sections and entries, some additional sections and entries can be included at installation time, if you select more than the minimal installation options for your HSM model(s). </p>
+        <p>In addition, new entries can be added, or existing entries can be adjusted by actions that you perform in SafeNet tools like LunaCM and vtl.</p>
+        <p>Finally, some sections or entries can be added or adjusted by manual editing of the Chrystoki.conf /Crystoki.ini file.</p>
+        <p>If you install SafeNet Luna Client where a previous version was installed, then the existing configuration file is saved and the new file adds to the existing content if appropriate. That is, if you have a SafeNet Luna HSM setup, already configured and tweaked to your satisfaction, those settings are preserved when you update to newer SafeNet Luna Client.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>For <span class="DefaultProduct">SafeNet Luna Network HSM</span>, LunaSH commands use onboard default configuration settings. Clients that are sent to the HSM via SafeNet Luna HSM Client, making use of the client library, include the relevant configuration settings from the client-side Chrystoki.conf /Crystoki.ini configuration file.</p>
+        <p>The following table lists sections and settings that you are likely to encounter in normal use of SafeNet products. Not all are applicable to every SafeNet Luna HSM. Each setting is named, with default values, allowed range of values, description of the item/setting, and remarks about any interactions between the current setting and others that you might configure. </p>
+        <p>Where the range is a file path, &lt;luna_client_dir&gt; specifies the path to your SafeNet Luna HSM client installation.</p>
+        <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 25%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 25%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 50%;" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Setting</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Range (Default)</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="3">
+                        <p colspan="3" style="font-weight: bold;">
+                            <br />[Chrystoki2]</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LibNT=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(&lt;luna_client_dir&gt;\cryptoki.dll)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Path to the Chrystoki2 library.<br /></p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LibNT32=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(&lt;luna_client_dir&gt;\win32\libCryptoki2.dll)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Path to the Chrystoki2 library on 32-bit Windows systems only. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="3">
+                        <p colspan="3" style="font-weight: bold;">
+                            <br />[Luna]</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.PED">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>PEDTimeout1=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(100000) ms</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies the PED timeout time 1 - defines how long (in milliseconds) the HSM tries to detect if it can talk to the PED before starting the actual communication with it. If the PED is unreachable the HSM returns to the host a result code for the respective HSM command. The result code indicates that the PED is not connected. This timeout is intended to be small so that the user is informed quickly that the PED is not connected.  
+
+</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.PED">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>PEDTimeout2=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(200000) ms</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies the PED timeout time 2 - defines how long (in milliseconds) the firmware waits for the local PED to respond to PED commands. PED commands should not be confused with PED-related HSM commands. An HSM sends PED commands to the PED when processing PED-related HSM commands, such as LOGIN or PED_CONNECT. One PED-related HSM command can involve many PED commands being sent by the HSM to the PED (for example, the MofN related commands). If a local PED does not respond to the PED commands within the span of PEDTimeout2 the HSM returns an appropriate result code (such as PED_TIMEOUT) for the respective PED-related HSM command.
+
+</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.PED">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>PEDTimeout3=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(20000) ms</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies the PED timeout time 3 - defines additional time (in milliseconds) the firmware must wait for the remote PED to respond to PED commands. That is, the actual time the firmware waits for a remote PED to respond is PEDTimeout2 + PEDTimeout3.
+
+</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>DefaultTimeOut=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(500000) ms</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Sets the default timeout interval - defines how long (in milliseconds) the HSM driver in the host system waits for HSM commands to return a result code. If the result code is not returned in that time, the driver assumes that the HSM is stuck and halts it, with the DEVICE_ERROR returned to all applications that use the HSM. Most HSM commands use this timeout. Very few exceptions exist, when a command's timeout is hard-coded in the Cryptoki library, or separate timeouts are specified in the Chrystoki.conf for certain classes of HSM commands.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>CommandTimeoutPedSet=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(720000) ms</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>This is an exception to DefaultTimeout (above). It defines timeout (in milliseconds) for all PED-related HSM commands. This class of PED-related commands can take more time than the ordinary commands that subscribe to the DefaultTimeOut value. As a rule of thumb, CommandTimeOutPedSet = DefaultTimeOut + PEDTimeout1 + PEDTimeout2 + PEDTimeout3. &#160;<br /></p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>KeypairGenTimeOut=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(2700000) ms</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The amount of time (in milliseconds) the library allows for a Keypair generate operation to return a value. Due to the random component, large key sizes can take an arbitrarily long time to generate, and this setting keeps the attempts within reasonable bounds.The default is calculated as the best balance between the inconvenience of occasional very long waits and the inconvenience of restarting a keygen operation. You can change it to suit your situation.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>CloningCommandTimeout=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(300000) ms</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The amount of time (in milliseconds) the library allows for the HSM to respond to a cloning command. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>DomainParamTimeout=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(5400000) ms</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Timeout for Domain Parameter Generation.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="3">
+                        <p colspan="3">
+                            <br />[CardReader]</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>RemoteCommand=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>0 = false</p>
+                        <p>(1 = true)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>This setting was used when debugging older SafeNet products. For modern products it is ignored.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>LunaG5Slots=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(3)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Number of SafeNet Luna USB HSM slots reserved so that the library will check for connected devices.</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Can be set to zero if you have no SafeNet Luna USB HSMs and wish to get rid of the reserved spaces in your slot list. </p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Can be set to any number, but is effectively limited by the number of external USB devices your host can support. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="3">
+                        <p colspan="3" style="font-weight: bold;">
+                            <br />[RBS]</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>HostName=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>Any hostname or IP address (0.0.0.0)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The hostname or IP address that the RBS server will listen on. Default is 0.0.0.0 (any IP&#160;on the local host).</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>HostPort=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>Any unassigned port(1792)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The port number used by the RBS server. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ClientAuthFile=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(&lt;luna_client_dir&gt;\config\clientauth.dat)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The location of the RBS Client authentication file.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ServerCertFile=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(&lt;luna_client_dir&gt;\cert\server\server.pem)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The location of the RBS Server certificate file.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ServerPrivKeyFile=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(&lt;luna_client_dir&gt;\cert\server\serverkey.pem)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The location of the RBS Server certificate private key file.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ServerSSLConfigFile=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(&lt;luna_client_dir&gt;\openssl.cnf)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The location of the OpenSSL configuration file used by RBS Server or Client.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>CmdProcessor=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(&lt;luna_client_dir&gt;\rbs_processor2.dll)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The location of the RBS library. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>NetServer=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>0 = false</p>
+                        <p>(1 = true)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If true (default), RBS acts as a Server. If false, RBS acts as a Client. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="3">
+                        <p colspan="3" style="font-weight: bold;">
+                            <br />[LunaSA Client]</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>SSLConfigFile=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(&lt;luna_client_dir&gt;\openssl.cnf)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Location of the OpenSSL configuration file.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ReceiveTimeout=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(20000) ms</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Time in milliseconds before a receive timeout</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>TCPKeepAlive=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>0 = false</p>
+                        <p>(1 = true)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>TCPKeepAlive is a TCP stack option, available at the LunaClient, and at the SafeNet Luna Network HSM appliance. For SafeNet purposes, it is controlled via an entry in the Chrystoki.conf /crystoki.ini file on the LunaClient, and in an equivalent file on SafeNet Luna Network HSM. For SafeNet Luna HSM 6.1 and newer, a fresh client software installation includes an entry "TCPKeepAlive=1" in the "LunaSA Client" section of the configuration file Chrystoki.conf (Linux/UNIX) or crystoki.ini (Windows). Config files and certificates are normally preserved through an uninstall, unless you explicitly delete them. </p>
+                        <p>As such, if you update (install) LunaClient software where you previously had an older LunaClient that did not have a TCPKeepAlive entry, one is added and set to "1"  (enabled), by default. In the case of update, if TCPKeepAlive is already defined in the configuration file, then your existing setting (enabled or disabled) is preserved. <br /></p>
+                        <p data-mc-conditions="Default.SA">On the SafeNet Luna Network HSM appliance, where you do not have direct access to the file system, the TCPKeepAlive= setting is controlled by the LunaSH command <b>ntls tcp_keepalive set</b>.<br /></p>
+                        <p>The settings at the appliance and the client are independent. This allows a level of assurance, in case (for example) a firewall setting blocks in one direction.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>NetClient=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>0 = false</p>
+                        <p>(1 = true)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If true, library will search for network slots</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ServerCAFile=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(&lt;luna_client_dir&gt;\cert\server\CAFile.pem)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Location, on the client, of the server certificate file (set by vtl or LunaCM command <b>clientconfig deploy</b>).</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ClientCertFile=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(&lt;luna_client_dir&gt;\cert\client\ClientNameCert.pem)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Location of the Client certificate file that is uploaded to SafeNet Luna Network HSM for NTLS (set by vtl or LunaCM command <b>clientconfig deploy</b>).</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ClientPrivKeyFile=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(&lt;luna_client_dir&gt;\cert\client\ClientNameKey.pem)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Location of the Client private key file (set by vtl or LunaCM command <b>clientconfig deploy</b>).</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ServerName00=192.20.17.200</p>
+                        <p>ServerPort00=1792
+</p>
+                        <p>ServerName01=
+</p>
+                        <p>ServerPort01=
+</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Entries embedded by vtl utility, when you run the command <b>vtl addserver</b> or the LunaCM command <b>clientconfig deploy</b>. Identifies the NTLS-linked SafeNet Luna Network HSM servers, and determines the order in which they are polled to create a slot list.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="3">
+                        <p colspan="3" class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The <b>[Presentation]</b> section is not created automatically. To change any of the following values, you must first create this section in the configuration file.<br /></p>
+                        <p colspan="3" style="font-weight: bold;">[Presentation]</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ShowUserSlots=&lt;slot&gt;(&lt;serialnumber&gt;)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>Comma-delimited list of &lt;slotnumber&gt;(&lt;serialnumber&gt;), like ShowUserSlots=1(351970018022),<br />2(351970018021),3(351970018020),....</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Sets the starting slot for the identified partition. If one partition slot on an HSM is specified, then any that are not listed from that HSM are not displayed.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ShowAdminTokens=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>0/(1)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Admin partitions of local SafeNet Luna PCIe HSMs are not visible/(visible) in a slot listing</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ShowEmptySlots=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(0)/1</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>When the number of partitions on an HSM is not at the limit, unused slots are shown/(not shown).</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>OneBaseSlotId=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(0)/1</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Causes basic slot list to start at slot number 1 instead of (0).</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="3">
+                        <p colspan="3" style="font-weight: bold;">
+                            <br />[HAConfiguration]</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>HAOnly=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(0)/1</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>When set to 1, shows only the HA virtual slot to the client, and hides the physical partitions/slots that are members of the virtual slot. Setting HAOnly helps prevent synchronization problems among member partitions, by forcing all client actions to be directed against the virtual slot, and dealing with synch transparently. HAOnly also prevents the shifting of slot numbers in the slot list that could occur if a visible physical partition were to drop out, which could disrupt an application that identifies its client partitions by slot numbers.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>reconnAtt=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(10)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies how many reconnection attempts will be made, when a member drops from the group. A value of "-1" is infinite retries. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>AutoReconnectInterval=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(60) s</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies the interval (in seconds) at which the library will attempt to reconnect with a missing member, until "reconnAtt" is reached, and attempts cease. The default value of 60 seconds is the lowest that is accepted. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="3">
+                        <p colspan="3" style="font-weight: bold;">
+                            <br />[Misc]</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ToolsDir=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(&lt;luna_client_dir&gt;\)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The location of the LunaClient tools. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>RSAKeyGenMechRemap=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(0)/1</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Controls what happens on newer firmware, when calls are made to specific older mechanisms that are now discouraged due to weakness. </p>
+                        <p>When this item is set to 0, no re-mapping is performed. <br />When the value is set to 1, the following re-mapping occurs if the HSM firmware permits: </p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>PKCS Key Gen -&gt; 186-3 Prime key gen </p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>X9.31 Key Gen -&gt; 186-3 Aux Prime key gen (see <a href="../../sdk/mechanisms/rsa-mechanism-remap.htm" class="MCXref xref">Mechanism Remap for FIPS Compliance</a>) 
+</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">RSAPre1863KeyGen<br />MechRemap=</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">(0)/1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Controls what happens on older firmware, when specific newer mechanisms are called, that are not supported on the older firmware. <br />When this item is set to 0, no re-mapping is performed. </p>
+                        <p>When the value is set to 1, the following re-mapping occurs if the HSM firmware permits: <br /></p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>186-3 Prime key gen  -&gt; PKCS Key Gen <br /></p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>186-3 Aux Prime key gen   -&gt; X9.31 Key Gen </p>
+                        <p>Intended for evaluation purposes, such as with existing integrations that require newer mechanisms, before you update to firmware that actually supports the more secure mechanisms. Be careful with this setting, which makes it appear you are getting a new, secure mechanism, when really you are getting an outdated, insecure mechanism. <br />(see <a href="../../sdk/mechanisms/rsa-mechanism-remap.htm" class="MCXref xref">Mechanism Remap for FIPS Compliance</a>) </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ProtectedAuthenticationPathFlagStatus=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>(0)/1/2</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>This flag specifies which role to check for challenge request status. Possible values include: </p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>0</b> (default): no challenge request</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>1</b>: check for Crypto Officer challenge request</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>2</b>: check for Crypto User challenge request</p>
+                        <p>Edited using the configurator tool. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>CopyRSAPublicValuesFromPrivateTemplate</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>0/(1)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Controls whether the public exponent of an RSA key can be copied from the private key template, if the public key template does not already have a public exponent attribute set. </p>
+                        <p>Possible values include: </p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>0</b>: if no public exponent is provided in the public template, then an error is returned (expected behavior).</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>1</b>(default): if no public exponent is provided in the public template, then the private exponent is copied from the private template to populate the public template.</p>
+                        <p>For PKCS#11 compliance, this should be set to "0". <br /></p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">FunctionBindLevel=</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">[0]/1/2</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>This flag determines what action to take if a function binding fails during a CryptokiConnect() operation. </p>
+                        <p>Possible values include: </p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>0</b>: fail if not all functions can be resolved (default)</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>1</b>: do not fail but issue warning for each function not resolved</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>2</b>: do not fail and do not issue warning (silent mode)<br /></p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="3">
+                        <p colspan="3" style="font-weight: bold;">
+                            <br />[Secure Trusted Channel]</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.SA">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ClientIdentitiesDir=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>&lt;luna_client_dir&gt;\data\client_identities</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies the directory used to store the STC client identity</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.SA">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>PartitionIdentitiesDir=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>&lt;luna_client_dir&gt;\data\partition_identities</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies the directory used to store the STC partition identities exported using the LunaCM <b>stcconfig partitionidexport</b> command</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ClientTokenLib=</p>
+                        <p>(for 64-bit Windows systems)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>For soft token:</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>&lt;luna_client_dir&gt;\softtoken.dll <br /></p>
+                        <p>For hard token:</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>C:\Windows\System32\etoken.dll <br /></p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies the location of the token library on 64-bit Windows systems. This value must be correct in order to use a client token.</p>
+                        <p>For 32-bit systems, see the <b>ClientTokenLib32</b> entry below. </p>
+                        <p>By default, <b>ClientTokenLib</b> points to the location of the soft token library. If you are using a hard token, you must manually change this value to point to the hard token library for your operating system. The exact location of the hard token library may vary depending on your installer. The location provided here is the most common location used. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>ClientTokenLib32=</p>
+                        <p>(for 32-bit Windows systems)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>For soft token:</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>&lt;luna_client_dir&gt;\win32\softtoken.dll <br /></p>
+                        <p>For hard token:</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>C:\Windows\SysWOW64\etoken.dll</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies the location of the token library on 32-bit Windows systems. This entry appears on Windows only. For 64-bit systems, see the <b>ClientTokenLib</b> entry above. </p>
+                        <p>By default, <b>ClientTokenLib32</b> points to the location of the soft token library. If you are using a hard token, you must manually change this value to point to the hard token library for your operating system. The exact location of the hard token library may vary depending on your installer. The location provided here is the most common location used. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.SA">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>SoftTokenDir=</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="text-align: left;">
+                        <p>&lt;luna_client_dir&gt;<b>\softtoken</b></p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies the location where the STC client soft token (<b>token.db</b>) is stored. Each client soft token is stored in its own numbered subdirectory.</p>
+                        <p><b>Note:</b> In this release there is only one client token, which is stored in the <b>001</b> subdirectory.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" style="font-weight: bold;" colspan="3">
+                        <p colspan="3" class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The <b>[Toggles]</b> section is not created automatically. To change any of the following values, you must first create this section in the configuration file.<br /></p>
+                        <p colspan="3">[Toggles]</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: normal;">legacy_memory_rep = </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="text-align: left;">(0)/1</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>Controls the manner in which the HSM  reports the available RAM space. </p>
+                        <p>Possible values include: </p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>0</b> (default): the public and private memory total/free values reported in the CK_TOKEN_INFO structure indicate the available flash memory for permanent (TOKEN) objects that are in either the public or private space respectively; this method is PKCS#11 compliant.</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>1</b>: the public memory values indicate the total/free RAM memory; this non-standard legacy method was used by some customers to determine space available for session based objects, and must be explicitly selected in order to continue using the legacy method. <br /></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|Planning Your Configuration">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Domain Planning</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/initial_setup/domains_planning.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Domain Planning</h2>
+        <p>The cloning domain is a special-purpose secret that is attached to a partition on an HSM. It determines to which, and from which, other partitions (on the same HSM or on other HSMs) the current partition can clone objects. Partitions that send or receive partition objects by means of the cloning protocol must share identical cloning domain secrets. This is important for:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span> Cloning in backup and restore operations, and</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Synchronization in HA groups. </p>
+        <p>There is no provision to clone between an application partition and an HSM administrative partition, but you can apply the same domain secret for ease of administration. Password authenticated application partitions can clone partition contents one to the other, and PED authenticated application partitions can clone partition contents one to the other, but password authenticated HSMs (and their partitions) cannot perform cloning with PED-authenticated HSMs (and their partitions).</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1" rowspan="2">Cloning source</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1" colspan="6">Cloning target</th>
+                </tr>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">HSM Administrator partition A, cloning domain A</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">HSM Administrator partition B, cloning domain B</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">application partition 1, cloning domain A</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">application partition 1, cloning domain B</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">application partition 2, cloning domain A</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">application partition 2, cloning domain B</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;background-color: #e6e6e6;padding-left: 4pt;padding-right: 4pt;padding-top: 4pt;padding-bottom: 4pt;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;">HSM Administrator partition A, cloning domain A</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="background-color: #e6e6e6;padding-left: 4pt;padding-right: 4pt;padding-top: 4pt;padding-bottom: 4pt;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #000000;">&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">cannot clone <br />domains not matched</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">N/A</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;background-color: #e6e6e6;padding-left: 4pt;padding-right: 4pt;padding-top: 4pt;padding-bottom: 4pt;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;">HSM Administrator partition B, cloning domain B</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">cannot clone <br />domains not matched</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="background-color: #e6e6e6;padding-left: 4pt;padding-right: 4pt;padding-top: 4pt;padding-bottom: 4pt;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #000000;">&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">N/A</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;background-color: #e6e6e6;padding-left: 4pt;padding-right: 4pt;padding-top: 4pt;padding-bottom: 4pt;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;">application partition 1, cloning domain A</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="background-color: #e6e6e6;padding-left: 4pt;padding-right: 4pt;padding-top: 4pt;padding-bottom: 4pt;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #000000;">&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">cannot clone <br />domains not matched</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">yes (usually backup and restore)</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">cannot clone <br />domains not matched</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;background-color: #e6e6e6;padding-left: 4pt;padding-right: 4pt;padding-top: 4pt;padding-bottom: 4pt;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;">application partition 1, cloning domain B</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">cannot clone <br />domains not matched</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="background-color: #e6e6e6;padding-left: 4pt;padding-right: 4pt;padding-top: 4pt;padding-bottom: 4pt;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #000000;">&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">cannot clone <br />domains not matched</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">yes (usually backup and restore)</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;background-color: #e6e6e6;padding-left: 4pt;padding-right: 4pt;padding-top: 4pt;padding-bottom: 4pt;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;">application partition 2, cloning domain A</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">yes (usually backup and restore)</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">cannot clone <br />domains not matched</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="background-color: #e6e6e6;padding-left: 4pt;padding-right: 4pt;padding-top: 4pt;padding-bottom: 4pt;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #000000;">&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">cannot clone <br />domains not matched</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;background-color: #e6e6e6;padding-left: 4pt;padding-right: 4pt;padding-top: 4pt;padding-bottom: 4pt;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;">application partition 2, cloning domain B</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">cannot clone <br />domains not matched</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">yes (usually backup and restore)</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">cannot clone <br />domains not matched</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1" style="background-color: #e6e6e6;padding-left: 4pt;padding-right: 4pt;padding-top: 4pt;padding-bottom: 4pt;">&#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Characteristics of Cloning Domains</h3>
+        <p>Password authenticated HSMs have text-string cloning domains for the HSM SO&#160;space and for any partitions that are created on the HSM. HSM and Partition domains are typed at the command line of the host computer, when required. Password authentication cloning domains are created by you. </p>
+        <p>PED authenticated cloning domains are created by a SafeNet Luna HSM, which could be the current HSM, or it could be a previously initialized HSM that you wish to be in a cloning group with the current HSM. PED authenticated HSMs have  cloning domains in the form of encrypted secrets on red PED keys, for the HSM SO&#160;space and for any partitions that are created on the HSM. </p>
+        <p>The following characteristics are common to domains on all SafeNet Luna HSMs.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The unique HSM SO-space domain can be created at the HSM at initialization time, or it can be imported, meaning that it is shared with one-or-more other HSMs. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The application partition domain can be created by the current HSM when the partition is initialized, or it can be imported, meaning that it is shared with one-or-more other HSM partitions. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The application partition domain is distinct from the HSM domain, as they are controlled by different people. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The application partition domain can be the same as the domain of another partition on the same HSM (for HSMs that support multiple partitions).</p>
+        <p>For PED authenticated HSMs, the domain secret for the SO&#160;space or for an application partition can be a single red PED key, or it can be split (by the MofN feature) over several red keys, which are then distributed among trusted personnel such that no single person is able to provide the cloning domain without oversight from other trusted personnel. </p>
+        <p>In scenarios where multiple HSM partitions are in use, it can be useful to segregate those partitions according to department or business unit, or according to function groups within your organization. This ensures that personnel in a given group are able to clone or backup/restore only the contents of partitions sharing the domain for which they are responsible. The segregation is maintained by physical and procedural control of the relevant PED keys that each group is allowed to handle. </p>
+        <p>For Password authenticated HSMs, that sort of segregation is maintained entirely by procedure and by trust, as you rely on personnel not to share the domain text strings, just as you rely on them not to share other passwords. </p>
+        <p>Have your naming conventions and allotments planned out ahead of HSM initialization and partition creation, including a well-thought-out map of who should control cloning domain access for HSM SO spaces and for application partitions. These decisions must be made before you create the partitions.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

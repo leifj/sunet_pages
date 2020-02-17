@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Product Overview|Security">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Layered Encryption</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#Product_Overview/security/layered_encryption.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Layered Encryption</h2>
+        <p>SafeNet Luna HSMs do not keep any objects in the clear. All objects are encrypted by multiple layers, and are fully decrypted in temporary (volatile) memory only when needed. </p>
+        <h3 class="ntoc">Hierarchy of Protection</h3>
+        <p>One general storage key (GSK), for the HSM, protects general storage objects that might be needed by various roles. A separate user storage key (USK), for each role, protects the contents of the partition accessed by that role. The hierarchy of protection, depicted in <a href="#HSM" class="MCXref xref">HSM Layered Encryption</a>, applies to each individual role. The USK for each role on the HSM encrypts objects that are owned by that role, ensuring that each person sees and touches only what belongs to them. Every SafeNet Luna HSM has a master tamper key (MTK) that strongly encrypts each object generated and stored within the HSM. </p>
+        <p>The key encryption key (KEK) further encrypts every key being used to ensure that your keys are never shown in plaintext.</p>
+        <h3 class="ntoc">Three-Layer Authentication Model</h3>
+        <p data-mc-conditions="Default.SA">The SafeNet Luna Network HSM, and access to data stored on the Cryptographic Engine contained within it, is protected by a number of different means to provide in-depth security. The SafeNet Luna Network HSM’s three-layer authentication model includes separate HSM partition authentication, 2-way network authentication, and process level application authentication to respectively control administrative, client, and application access. This three-layer model, coupled with multi-level user authentication policies, integrated FIPS 140-2 Level 3-validated Cryptographic Engine, and secure software and hardware design, allows the SafeNet Luna Network HSM to offer the same high degree of security and performance as traditional HSMs without sacrificing the flexibility of a network-attached device.</p>
+        <p class="figureCaption" data-mc-autonum="Figure 1: "><span class="autonumber"><span>Figure 1: </span></span><a name="HSM"></a>HSM Layered Encryption</p>
+        <p>
+            <img src="../../Resources/Images/overview/HSM_layered_encryption.svg" />
+        </p>
+        <p>When the HSM is powered on, everything is still tightly encrypted.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>KEK is unique to each HSM, and encrypts everything that is encrypted by the PinKey.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>During login, KEK and PinKey decryptions are performed.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>For password-authenticated HSMs, the PinKey is the HSM&#160;SO password (or Partition SO, or CO or CU or Auditor, depending on who is logging in).</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>For PED-authenticated HSMs, the PinKey is the secret retrieved from the correct blue SO PED&#160;key (or black or gray or white, depending on who is logging in).</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>GSK encrypts all general-storage objects, while USK encrypts all security and user objects for the role logged into the HSM. Objects are decrypted individually when needed.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>At the lowest level, MTK encrypts all objects.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Some objects are fully decrypted in volatile memory only when in use. Others, including ECDSA with NIST&#160;Prime curves, AES, DES3, and RSA keys remain MTK-encrypted. Once decrypted and accessible, objects inside the HSM can be used. If power is lost or a tamper occurs, all objects are tightly encrypted once again.</p>
+        <p>The in-depth application of multiple layers of security at all levels of the interface to  SafeNet Luna HSMs and their internal HSMs provides a high degree of confidence that cryptographic material within the HSM will not be compromised. Customers with extremely demanding security requirements can enhance the already strong security of SafeNet Luna HSMs by choosing appropriate installation, HSM configuration, and policy options.</p>
+        <h3 class="ntoc">Cloning Domain</h3>
+        <p>Every HSM or partition is part of a cloning domain, set at initialization time. Multiple HSMs or partitions can be set to be part of the same cloning domain or different ones. Key material cannot leave its cloning domain, so if an attacker were to try to copy your cryptographic material to a device that does not share a cloning domain with your HSM or partition, they would be unsuccessful. Using cloning domains ensures that key material can  travel only between trusted and authorized devices. This adds a strong layer of defense against attackers. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The cloning domain is not the lowest encryption level so a cloning operation does not provide access to Crypto material. <br />Operations that use cloning are limited to backup, restore and synchronizing the HSMs in HA groups ( among HSMs that share the same domain). Only the backup operation imposes a source-partition domain on the target partition within the Backup HSM; the restore operation and the HA synchronization both require that the source and target HSMs or partitions must already have matching domains. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

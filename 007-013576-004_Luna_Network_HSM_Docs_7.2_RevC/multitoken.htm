@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Utilities Reference Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>multitoken</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/List1.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#Utilities/multitoken/multitoken.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter">multitoken</h1>
+        <p><b>multitoken</b> is a simple demonstration tool that allows you to perform basic cryptographic functions on a SafeNet HSM. It allows you to specify 
+an operation, and one or more “slots” or HSM Partitions on which to perform 
+that operation. The <b>multitoken</b> utility runs the operations and returns a summary of the results.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>This is a general-purpose tool intended for use across SafeNet HSM versions. It might reference mechanisms and features that are not available on all SafeNet products.</p>
+        <h3 class="ntoc">Accessing multitoken</h3>
+        <p>The <b>multitoken</b> utility is accessed via the command line.</p>
+        <h5>To access the multitoken utility</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Open a console window.</p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">2.</span></span>Go to the SafeNet Luna HSM Client installation folder/directory:</p>
+        <table style="width: 97%;caption-side: top;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0" data-mc-conditions="Default.CV_Exclude">
+            <col class="TableStyle-List1-Column-Column1" />
+            <col class="TableStyle-List1-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List1-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-List1-BodyE-Column1-Body1" style="font-weight: bold;" data-mc-conditions="Default.CV_Exclude">Windows</td>
+                    <td class="TableStyle-List1-BodyD-Column1-Body1" data-mc-conditions="Default.CV_Exclude">C:\Program Files\SafeNet\LunaClient</td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyB-Column1-Body1" style="font-weight: bold;" data-mc-conditions="Default.CV_Exclude">Linux/Unix</td>
+                    <td class="TableStyle-List1-BodyA-Column1-Body1" data-mc-conditions="Default.CV_Exclude">/usr/safenet/lunaclient/bin</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Launch the <b>multitoken</b> utility:</p>
+        <p class="listLevel1"><b>./multitoken</b>
+        </p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>multitoken</b> <b>-mode</b> &lt;mode&gt; {<b>-slots</b> &lt;slot_list&gt; | <b>-nslots</b> &lt;slot_threads&gt;} [options...]</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');caption-side: top;" class="TableStyle-Page" cellspacing="0">
+            <col style="width: 200px;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 90px;" class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Argument(s)</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-alarm</b> &lt;secs&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-al</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Sound periodic alarm (every &lt;secs&gt; seconds) if error occurs.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-blob</b> &lt;blob_count&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-b</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Number of data blobs to be signed during each multisign operation.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-curve</b> &lt;curve_num&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-crv</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ID number of ECC curve. If user-defined (99), then must specify <b>-parmfile</b>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-delayop</b> &lt;secs&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-do</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Delay the operation performed by each thread by the specified number
+of seconds. Value must be larger than "0".</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-destroyafter</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-da</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Destroys created objects on the HSM only after test completes.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-destroyafterbulk</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-dab</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Destroys created objects on the HSM only after test completes using DestroyMultipleObjects.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-eciesdata</b> &lt;filename&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-ecd</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p><b>ECIES SHIM mode:</b> Specifies the file that contains the plaintext data to use.</p>
+                        <p><b>Non-SHIM ECIES&#160;mode:</b> Specifies the file to receive the plaintext data used.</p>
+                        <p>See <a href="#Notes" class="MCXref xref">Notes</a> for details on using SHIM and non-SHIM ECIES modes.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-eciesenc</b> &lt;filename&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-ece</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p><b>ECIES SHIM mode:</b> Specifies the file that contains the encrypted data.</p>
+                        <p><b>Non-SHIM ECIES&#160;mode:</b> Specifies the file to receive the encrypted data.</p>
+                        <p>See <a href="#Notes" class="MCXref xref">Notes</a> for details on using SHIM and non-SHIM ECIES modes.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-ecieskey</b> &lt;filename&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-eck</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p><b>ECIES SHIM mode:</b> Specifies the file that contains the DER-encoded private key.</p>
+                        <p><b>Non-SHIM ECIES&#160;mode:</b> Specifies the file to receive the DER-encoded private key.</p>
+                        <p>See <a href="#Notes" class="MCXref xref">Notes</a> for details on using SHIM and non-SHIM ECIES modes.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-enddate</b> &lt;YYYYMMDD&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-end</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Validity end date for key, in YYYYMMDD format. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-force</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-f</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Avoid prompts for responses.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-gcmaad</b> &lt;bytes&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-gad</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Specify the length of the AAD data used for GCM/GMAC. The AAD data can not be larger than 1024 bytes.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-gcmiv</b> &lt;bits&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-giv</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specify the length of the IV (in bits) to be used for GCM/GMAC.</p>
+                        <p><b>Valid values:</b> 0,96,128</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-help</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-h</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Display help information only.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-kdfchoice</b> &lt;kdf_index&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-kdf</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Select key derivation function - specify choice list index.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-kdfscnt</b> &lt;counter_index&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-kds</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Select key derivation session counter type - specify choice list index.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-kekreplace</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-kre</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Specifies that a KEK replacement should be requested after the specified number of iterations. This option only works with DES3/AES ECB/CBC tests. It will be ignored for all other test modes.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-key</b> &lt;key_size&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-k</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Size of key: asymmetric in bits (default = 1024 for RSA, 2048 for DSA). Symmetric in bytes (i.e. 16, 24, 32 for AES/ARIA).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-keychoice</b> &lt;key_index&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-kc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Select key type to derive/generate - specify choice list index.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-keyderiv</b> &lt;keysize&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-kde</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Size of key to derive with (ex. 1024 for X9.42 Diffie Hellman).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-kwicv</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-kiv</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Use external ICV for the key wrap mechanism.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-logfile</b> &lt;filename&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-l</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">File for results logging.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-mode</b> &lt;mode&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-m</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Operating mode. See mode values available below.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-multipartsig</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-msig</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Use multipart signatures.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-nodec</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-nod</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Decryption operation will not be performed. Only symmetric and asymmetric encryption will be performed and measured.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-nodestroy</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-n</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Leaves created objects on the HSM after test completes.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-noenc</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-noe</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Perform only one encryption operation. Only symmetric and
+                      asymmetric decryption will be performed and measured.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-nosign</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-nos</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Perform only one sign operation. Only verify will be performed and measured.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-nounwrap</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-nou</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Unwrapping operation will not be performed. Only wrapping will be performed and measured.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-noverify</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-nov</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Verify operation will not be performed. Only sign will be performed and measured.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-noverifyr</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-nvr</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Do not verify decryption results.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-nowrap</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-now</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Perform only one wrapping operation. Only unwrapping will be performed and measured.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><a name="nslots"></a><b>-nslots</b> &lt;slot_threads&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-ns</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Create multiple threads on the same slot(s). Specify &lt;slot&gt;x&lt;number of threads&gt;, with multiple slots separated by commas. The example below creates 5 threads on slot 1 and 20 threads on slot 2:</p>
+                        <p>Example: <b>-nslots 1x5,2x20</b></p>
+                        <p>You must specify either this option or <b>-slots</b>. See <a href="#slots" class="MCXref xref">-slots &lt;slots&gt;</a>.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-objcount</b> &lt;objnum&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-obj</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Interpretation of this parameter depends on test mode. If this is a find objects test, it specifies the number of objects to create. If this parameter is unspecified, a default of <b>1000</b> is used. For symgen operations, this specifies the total number of objects to create. If this parameter is unspecified, a default of <b>0</b> is used, which means 'unlimited'. For rsakeygen operations, this specifies the total number of key pairs to create. Again, if this parameter is unspecified, a default of <b>0</b> is used, which means 'unlimited'.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-packet</b> &lt;packet_size&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-p</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Size of packet used in operation.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-parmfile</b> &lt;param_file&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-prm</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">File for EC curve parameters or OAEP source data (0 = none for OAEP).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-password</b> &lt;password&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-pwd</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Specify password to use for token.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-pbkd2prf</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Specify the type of PRF to use for PBKD2-based key derivation.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude,Default.PED">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-ped</b> &lt;0/1&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-ped</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies the type of PED connection. This applies only to the first HSM slot to be specified using the <b>-slots</b> option.</p>
+                        <p><b>Valid values:</b> <b>0</b>(local),<b>1</b>(remote)</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-prftype</b> &lt;type&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-prf</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Specify the type of PRF to use for PRF based key derivation.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-scroll</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-scr</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Scroll the output instead of overwriting it each time.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-session</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-ses</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Use session objects instead of token objects.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-sharefile</b> &lt;filename&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-shf</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Shared data file used for operation.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-silent</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-sil</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Disables system "beep" that is generated when a error occurs.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><a name="slots"></a><b>-slots</b> &lt;slots&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-s</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>List of slots to use (slot numbers separated by commas). List the same slot multiple times to create multiple threads on that slot. The example below creates 2 threads on slot 1 and 3 threads on slot 2:</p>
+                        <p>Example: <b>-slots 1,1,2,2,2</b></p>
+                        <p>To create many threads on the same slot, use <b>-nslots</b> instead. See <a href="#nslots" class="MCXref xref">-nslots &lt;slot_threads&gt;</a>. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-startdate</b> &lt;YYYYMMDD&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-sta</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Validity start date for key in format &lt;YYYYMMDD&gt;.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-subprime</b> &lt;size&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-sub</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Size of the subprime in bits.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-sym_c_u_d</b> &lt;value&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-scud</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">For each test loop, create the key(s), use the key(s) and then delete the key(s). Only supported for symmetric enc/dec/sig/verifywhen <b>-nosign</b>, <b>-noverify</b>, <b>-noenc</b> and <b>-nodec</b> are NOT used. This argument takes a value that indicates how many times the key(s) should be used before it is deleted and a new key(s) is created. This value must be 1 or larger.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-symm</b> &lt;mechanism&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-sym</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Select symmetric key mechanism for symderive/pbegen or key choice for symgen (can also use <b>-keychoice</b>).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-template</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-tp</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Attaches a generic unwrap template or derive template for the wrapunwrap or symderive mode respectively.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-timed</b> &lt;secs&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-t</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Fixed amount of time to run (seconds).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: normal;"><b>-usage</b> &lt;uses&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-u</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Number of times a key is allowed to be used.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: normal;"><b>-verbose</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-v</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Show all thread performances. Default is only first and last threads.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Operating Modes</h3>
+        <p class="code">The following table lists the available operating modes for the <b>multitoken</b> utility. The operating mode is specified using the <b>-mode</b> parameter.</p>
+        <table style="width: 100%;caption-side: top;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Mode</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aescmac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES CMAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aesenc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES ECB encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aesenccbc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES CBC encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aesenccfb8</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES CFB8 encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aesenccfb128</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES CFB128 encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aesencctr</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES CTR encrypt
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aesencgcm</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES GCM encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aesenckw</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES KW encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aesenckwp</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES KWP encrypt
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aesencofb</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES OFB encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aesgmac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES GMAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aesmac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES MAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aeswrapkw</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES KW wrap</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aeswrapkwp</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES KWP wrap</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">aesxts</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">AES XTS encrypt
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ariacmac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ARIA CMAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ariaenc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ARIA ECB encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ariaenccbc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ARIA CBC encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ariaenccfb8</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ARIA CFB8 encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ariaenccfb128</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ARIA CFB128 encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ariaencctr</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ARIA CTR encrypt
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ariaencofb</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ARIA OFB encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ariamac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ARIA MAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">des3enccfb8</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DES3 CFB8 encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">des3enccfb64</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DES3 CFB64 encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">des3encctr</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DES3 CTR encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">des3encofb</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DES3 OFB encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">descmac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DES3 CMAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">desenc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DES3 ECB encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">desenccbc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DES3 CBC encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">desmac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DES3 MAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">desx919mac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DES3 X919 MAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">dhparamsgen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DH Domain Parameter Generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">dsakeygen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DSA Key Generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">dsaparamsgen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DSA Domain Parameter Generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">dsasigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DSA bare sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">dukptderive</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DUKPT key derivation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecdhcderive</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECDH Cofactor derive key</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecdhderive</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECDH derive key</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecdhderivewrapnew</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECDH derive and wrap new</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecdhderivewrapold</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECDH derive and wrap old</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecdsagbcssha256sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA256 ECDSA-GBCS sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecdsakeygen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECDSA Key Generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecdsakeygenwextrabits</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECDSA Key Gen with Extra Bits</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecdsasha1sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA1 ECDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecdsasha224sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA224 ECDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecdsasha256sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA256 ECDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecdsasha384sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA384 ECDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecdsasha512sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA512 ECDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecdsasigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecedwardskeygen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">EC Edwards Key Generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesaes128hmacsha256</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES AES-128 enc/dec with HMAC SHA256</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesaes128hmacsha256shared</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES AES-128 enc/dec with HMAC SHA256 and shared data&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesaes192hmacsha384</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES AES-192 enc/dec with HMAC SHA384&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesaes192hmacsha384shared</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES AES-192 enc/dec with HMAC SHA384 and shared data&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesaes256hmacsha512</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES AES-256 enc/dec with HMAC SHA512</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesaes256hmacsha512shared</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES AES-256 enc/dec with HMAC SHA512 and shared data&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesdes3hmacsha224</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES DES3 enc/dec with HMAC SHA224&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesdes3hmacsha224shared</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES DES3 enc/dec with HMAC SHA224 and shared data&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesshimaes128hmacsha256</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES AES-128 with HMAC SHA256 decrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesshimaes128hmacsha256shared</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES AES-128 with HMAC SHA256 and shared data decrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesshimaes192hmacsha384</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES AES-192 with HMAC SHA384 decrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesshimaes192hmacsha384shared</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES AES-192 with HMAC SHA384 and shared data decrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesshimaes256hmacsha512</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES AES-256 with HMAC SHA512 decrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesshimaes256hmacsha512shared</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES AES-256 with HMAC SHA512 and shared data decrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesshimdes3hmacsha224</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES DES3 with HMAC SHA224 decrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesshimdes3hmacsha224shared</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES DES3 with HMAC SHA224 and shared data decrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesshimxorhmacsha1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES XOR with HMAC SHA1 decrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesshimxorhmacsha1shared</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES XOR with HMAC SHA1 and shared data decrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesxorhmacsha1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES XOR enc/dec with HMAC SHA1&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eciesxorhmacsha1shared</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">ECIES XOR enc/dec with HMAC SHA1 and shared data&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ecmontkeygen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">EC Montgomery Key Generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eddsanaclsha1sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA1 EDDSA NaCl sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eddsanaclsha224sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA224 EDDSA NaCl sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eddsanaclsha256sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA256 EDDSA NaCl sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eddsanaclsha384sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA384 EDDSA NaCl sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eddsanaclsha512sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA512 EDDSA NaCl sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eddsanaclsigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">EDDSA NaCl sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eddsasha1sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA1 EDDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eddsasha224sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA224 EDDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eddsasha256sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA256 EDDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eddsasha384sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA384 EDDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eddsasha512sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA512 EDDSA sign
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">eddsasigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">EDDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">extractinsert</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Extract Insert masked objects</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">findobject</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Find objects</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">kcdsakeygen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">KCDSA Key Generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">kcdsasha1sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA51 KCDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">kcdsasha1sigvernopad</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA1 KCDSA NO-PAD sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">kcdsasha224sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA224 KCDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">kcdsasha224sigvernopad</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA224 KCDSA NO-PAD sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">kcdsasha256sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA256 KCDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">kcdsasha256sigvernopad</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA256 KCDSA NO-PAD sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">kcdsasha384sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA384 KCDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">kcdsasha384sigvernopad</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA384 KCDSA NO-PAD sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">kcdsasha512sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA512 KCDSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">kcdsasha512sigvernopad</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA512 KCDSA NO-PAD sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">kcdsasigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">HAS160 KCDSA 1024-bit sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">kcdsasigvernopad</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">HAS160 KCDSA NO-PAD 1024-bit sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">md5</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">MD5 Hashing</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">multisignvalue</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Multisign w/ masked key</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">ntlsEcho</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Test NTLS/SSL Throughput</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">objectcreation</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Create/delete object</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">openclosesession</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Open/close session</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">pbegen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">PBE key generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">randgen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Random number generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">rc4enc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">RC4 encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">rsa1863auxprimekeygen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">RSA FIPS 186-3 using Auxiliary Primes key generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">rsa1863primekeygen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">RSA FIPS 186-3 using Primes key generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">rsaenc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">RSA  encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">rsakeygen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">RSA key generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">rsaoaepenc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">RSA OAEP encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">rsasigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">RSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">rsax931keygen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">RSA X9.31 key generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">rsax931sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">X9.31 RSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">seedcmac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SEED CMAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">seedenc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SEED ECB encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">seedenccbc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SEED CBC encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">seedencctr</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SEED CTR encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">seedmac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SEED MAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha1</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA-1 Hashing</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha1dsasigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA1 DSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha1hmac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA1 HMAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha1rsapsssigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA1 RSA PSS sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha1rsasigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA1 with RSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha1rsax931sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA1 X9.31 RSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha224</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA-224 Hashing</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha224dsasigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA224 DSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha224hmac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA224 HMAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha224rsaoaepenc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA224 RSA OAEP encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha224rsapsssigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA224 RSA PSS sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha224rsasigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA224 with RSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha224rsax931sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA224 X9.31 RSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha256</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA-256 Hashing</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha256dsasigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA256 DSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha256hmac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA256 HMAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha256rsaoaepenc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA256 RSA OAEP encrypt
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha256rsapsssigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA256 RSA PSS sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha256rsasigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA256 with RSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha256rsax931sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA256 X9.31 RSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha384</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA-384 Hashing</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha384hmac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA384 HMAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha384rsaoaepenc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA384 RSA OAEP encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha384rsapsssigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA384 RSA PSS sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha384rsasigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA384 with RSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha384rsax931sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA384 X9.31 RSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha512</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA-512 Hashing</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha512hmac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA512 HMAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha512rsaoaepenc</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA512 RSA OAEP encrypt</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha512rsapsssigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA512 RSA PSS sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha512rsasigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA512 with RSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sha512rsax931sigver</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SHA512 X9.31 RSA sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sim3extractinsert</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SIM3 Extract Insert masked objects</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">simextractinsert</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SIMExtract Insert masked objects</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">simmultisign</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SIMMultisign w/ masked key</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sm3</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SM3 Hashing</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">sm3hmac</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SM3 HMAC sign</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">symderive</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Symmetric key derivation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">symgen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Symmetric key generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">wrapunwrap</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Wrap/unwrap operations</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">x942dhderive</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">X9.42 DH Derive</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">x942dhhybridderive</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">X9.42 DH Hybrid Derive</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">x942dhkeygen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">X9.42 DH Key Pair Generation</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">x942dhparamsgen</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">X9.42 DH Domain Parameter Generation</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc"><a name="Notes"></a>Notes</h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>If you are performing RSA operations, you have the option of specifying a key size (512, 1024, 2048, 4096, 8192).  If no key size is specified, the default key size of 1024 will be used. For example:</p><pre class="listLevel1" xml:space="preserve">multitoken -mode rsasigver -key 512 -slots 1</pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If you are performing wrapunwrap operation, it will perform the following operations:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Generate RSA key pair and a symmetric DES key.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Wrap DES key with RSA public key.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Unwrap wrapped key above with RSA private key.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span> Verify the unwrapped key.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>If you are performing a Multisign operation, you have the option of specifying a key size (512, 1024, 2048, 4096, 8192). If no key size is specified, the default key size of 1024 will be used. You must also specify a blob count, indicating the number of data blobs to be signed during each multisign operation. For example:</p><pre class="listLevel1" xml:space="preserve">multitoken -mode multisignvalue -key 512 -blob 10 -s 1,1,2,2,2 <br />multitoken -mode multisignvalue -blob 10 -s 1,1,2,2,2,2</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>A thread will be spawned to perform tests on each slot specified.  A slot can be specified multiple times, in which <br />case multiple threads will be created for the slot.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Options for the following modes can be used with the default 1024 bit key size only: </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>sha256rsasign - SHA256 with RSA</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>sha384rsasign - SHA384 with RSA</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>sha512rsasign - SHA512 with RSA</p>
+        <p class="listLevel1">If you 
+specify a keysize on the command line (any of 1024, 2048 or 4096), the 
+ result is the 1024 bit benchmark speed, and a file called "1024" 
+or "2048" or "4096" is created - that is the keysize 
+ parameter is parsed as a filename to which results are saved.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>There are two types of ECIES modes, regular modes and SHIM modes. The non-SHIM modes perform normal ECIES encryption, decryption, or both. The ECIES SHIM modes (ECIES modes with the word "shim" in them) are designed to test the ECIES SHIM implementation. The ECIES SHIM only supports decryption operations, so it requires all input (private key, encrypted data and plaintext) to be specified as input files using the parameters <b>-ecieskey</b>, <b>-eciesenc</b> and <b>-eciesenc</b>. The input files can be created by running the non-SHIM modes, and specifying the parameters <b>-ecieskey</b>, <b>-eciesdata</b> and <b>-eciesenc</b>, which are optional for the non-SHIM modes.</p>
+        <p class="listLevel1">For non-SHIM ECIES modes:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><b>-ecieskey</b> -- Specifies the file to receive the DER-encoded private key.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><b>-eciesdata</b> -- Specifies the file to receive the plaintext data used.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><b>-eciesece</b> -- Specifies the file to receive the encrypted data.</p>
+        <p class="listLevel1">For ECIES SHIM modes:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><b>-ecieskey</b> -- Specifies the file that contains the DER-encoded private key.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><b>-eciesdata</b> -- Specifies the file that contains the plaintext data to use.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><b>-eciesece</b> -- Specifies the file that contains the encrypted data.</p>
+        <h3>Named and User-defined Curves</h3>
+        <p>The SafeNet Luna HSMs employ named and user-defined curves. <b>Multitoken</b> supports this option, as illustrated in the following example:
+
+ 
+
+</p><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;multitoken -mode ecdsasigver -s 1,1,1,1,1,1,1,1</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Prime field curves:</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">        [0]secp112r1  [1]secp112r2  [2]secp128r1  [3]secp128r2</pre><pre xml:space="preserve">        [4]secp160k1  [5]secp160r1  [6]secp160r2  [7]secp192k1</pre><pre xml:space="preserve">        [8]secp224k1  [9]secp224r1  [10]secp256k1 [11]secp384r1(P-384)</pre><pre xml:space="preserve">        [12]secp521r1(P-521)</pre><pre xml:space="preserve">        [13]X9_62_prime192v1 [14]X9_62_prime192v2 [15]X9_62_prime192v3</pre><pre xml:space="preserve">        [16]X9_62_prime239v1 [17]X9_62_prime239v2 [18]X9_62_prime239v3</pre><pre xml:space="preserve">        [19]X9_62_prime256v1(P-256)</pre><pre>&#160;</pre><pre>Characteristic two field curves:</pre><pre>&#160;</pre><pre xml:space="preserve">        [20]sect113r1 [21]sect113r2 [22]sect131r1 [23]sect131r2</pre><pre xml:space="preserve">        [24]sect163k1 [25]sect163r1 [26]sect163r2 [27]sect193r1</pre><pre xml:space="preserve">        [28]sect193r2 [29]sect233k1 [30]sect233r1 [31]sect239k1</pre><pre xml:space="preserve">        [32]sect283k1 [33]sect283r1 [34]sect409k1 [35]sect409r1</pre><pre xml:space="preserve">        [36]sect571k1 [37]sect571r1</pre><pre xml:space="preserve">        [38]X9_62_c2pnb163v1 [39]X9_62_c2pnb163v2 [40]X9_62_c2pnb163v3</pre><pre xml:space="preserve">        [41]X9_62_c2pnb176v1 [42]X9_62_c2tnb191v1 [43]X9_62_c2tnb191v2</pre><pre xml:space="preserve">        [44]X9_62_c2tnb191v3 [45]X9_62_c2pnb208w1 [46]X9_62_c2tnb239v1</pre><pre xml:space="preserve">        [47]X9_62_c2tnb239v2 [48]X9_62_c2tnb239v3 [49]X9_62_c2pnb272w1</pre><pre xml:space="preserve">        [50]X9_62_c2pnb304w1 [51]X9_62_c2tnb359v1 [52]X9_62_c2pnb368w1</pre><pre xml:space="preserve">        [53]X9_62_c2tnb431r1</pre><pre xml:space="preserve">        [54]Brainpool_P160r1 [55]Brainpool_P160t1 [56]Brainpool_P192r1</pre><pre xml:space="preserve">        [57]Brainpool_P192t1 [58]Brainpool_P224r1 [59]Brainpool_P224t1</pre><pre xml:space="preserve">        [60]Brainpool_P256r1 [61]Brainpool_P256t1 [62]Brainpool_P320r1</pre><pre xml:space="preserve">        [63]Brainpool_P320t1 [64]Brainpool_P384r1 [65]Brainpool_P384t1</pre><pre xml:space="preserve">        [66]Brainpool_P512r1 [67]Brainpool_P512t1</pre><pre>&#160;</pre><pre>User Defined curves:</pre><pre>&#160;</pre><pre xml:space="preserve">        [68]Microsoft PlayReady P-160</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Please pick a curve (0-67) or enter (99) for a user defined curve:99
+
+Please enter the filename for the EC parameters:</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Here, you would provide the filepath to the file specifying the Elliptical Curve parameters. The format and content of the parameter file follow industry standards, and are discussed in more detail in <a href="../../sdk/using/named_curves_and_user-defined_parameters.htm" class="MCXref xref">Named Curves and User-Defined Parameters</a> in the <i>SDK Reference Guide</i>. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

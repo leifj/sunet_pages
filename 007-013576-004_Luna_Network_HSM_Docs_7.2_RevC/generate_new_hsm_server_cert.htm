@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|Configure the SafeNet Appliance for Your Network">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Generating the HSM Server Certificate</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/appliance_config/generate_new_hsm_server_cert.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor281"></a><a name="kanchor282"></a>Generating the HSM Server Certificate</h2>
+        <p>You must generate a new HSM server certificate before placing the HSM in service. Do not use the default certificate generated at the factory. </p>
+        <p> You can also regenerate the server certificate anytime, once the HSM is in service. If you generate a new certificate, you must update your client NTLS links to use the new certificate.</p>
+        <h5>To generate a new server certificate for the <span class="DefaultProduct">SafeNet Luna Network HSM</span>:</h5>
+        <p> Use the following command in LunaSH.</p>
+        <p>lunash:&gt;<b>sysconf regencert</b> [<b>-startdate</b> &lt;YYYYMMDD&gt;] [<b>-days</b> &lt;number_of_days&gt;]</p>
+        <p>If your security policy requires you to change your HSM server certificates periodically, include the <b>-days</b> option to place a time limit on the certificate's validity. By default, <span class="DefaultProduct">SafeNet Luna Network HSM</span> server certificates are valid for 3653 days (10 years). </p>
+        <p>If you want the certificate to become valid on a specific date, include the <b>-startdate</b> option. By default, the date is set to 24 hours earlier, to ensure the certificate is valid in every time zone at the time of creation. </p>
+        <p>See <a href="../../lunash/commands/sysconf/sysconf_regencert.htm" class="MCXref xref">sysconf regencert</a> in the <i>LunaSH Command Reference Guide</i> for complete command syntax. </p>
+        <p>For example:</p><pre xml:space="preserve">lunash:&gt;sysconf regencert</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">WARNING !!  This command will overwrite the current server certificate and private key.</pre><pre xml:space="preserve">            All clients will have to add this server again with this new certificate.</pre><pre xml:space="preserve">If you are sure that you wish to proceed, then type 'proceed', otherwise type 'quit'</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&gt; proceed</pre><pre xml:space="preserve">Proceeding...</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">'sysconf regenCert' successful. The NTLS, STC and CBS services must be (re)started before clients can connect.
+</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Please use the 'ntls show' command to ensure that NTLS is bound to an appropriate network device or IP address/hostname</pre><pre xml:space="preserve">for the network device(s) NTLS should be active on. Use 'ntls bind' to change this binding if necessary.
+</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)
+</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

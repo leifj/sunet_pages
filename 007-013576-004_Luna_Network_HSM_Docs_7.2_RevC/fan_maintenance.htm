@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Power Supply and Fan Maintenance</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sa_appliance_admin/hardware/fan_maintenance.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Power Supply and Fan Maintenance</h2>
+        <p>The two power supplies in the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance are hot-swap capable, meaning that one is sufficient to power the appliance while the other is removed and replaced, with no service interruption. The indicator light (LED) on each power supply shows different behavior, depending upon conditions. </p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col style="width: 312px;" class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Power Supply Condition</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Power Supply LED</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">DC present/only standby output on<br /></td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Flashing green (1Hz)</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Power supply DC output ON and OK<br /></td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Steady green</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Power supply failure<br /></td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Steady RED</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Power supply warning<br /></td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Flashing Blue/Red (1Hz) alternating</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Input power failure (only in n+1 configuration)<br /></td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Flashing Red (1Hz)</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>A power supply controller in the appliance monitors the state of the power supplies. It ensures that a failed power supply still gets sufficient direct current from the remaining power supply to light the indicator LED. The controller also sounds an audible alarm when there is a problem, such as one power supply not being connected to AC main power.</p>
+        <p>If only one power supply is present, the audible alarm is silent. If you wish to operate your <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance with only one power supply, we recommend that you remove the second supply to silence the audible alarm.</p>
+        <h3>Replacing a Power Supply</h3>
+        <p>You may need to replace a power supply in the event of a failure.</p>
+        <h5><a name="kanchor423"></a>To remove a power supply:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>To remove a power supply, face the back of the appliance. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Disconnect/unplug the selected power supply.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Press the lever sideways to release the power supply retaining catch, and simultaneously pull the handle out toward you.</p>
+        <p>
+            <img src="../../Resources/Images/sa/sa7_power_pull_out_625x286.png" style="width: 625;height: 286;" />
+        </p>
+        <p>Withdraw the power supply completely, using your other hand to support the body of the power supply as it emerges.</p>
+        <p>
+            <img src="../../Resources/Images/sa/1u-back_with_ps_out.png" style="width: 657px;height: 323px;" />
+        </p>
+        <h5>To Reinstall a Power Supply:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>To replace a power supply, reverse the steps above. Press firmly to seat the connector. The power supply can be fully inserted only in its proper orientation.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Connect an AC power cord.</p>
+        <h3>The Fans</h3>
+        <p>In normal operation, the fans should require no maintenance. </p>
+        <p>You might need to perform the following tasks:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Clean the filter (occasionally)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Replace a defective fan (rarely)</p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span><b>Opening the fan bay causes a system tamper event</b>
+            <br />We recommend that you use scheduled system maintenance downtime for this activity, as it will temporarily disrupt your client's access to your HSM partitions.&#160;If the system detects a tamper event, the HSM stops responding until you reboot (<b>sysconf appliance reboot</b>), or until you use the Stop/Start switch on the appliance rear panel.</p>
+        <h4>Cleaning the Filter</h4>
+        <p>The ventilation grille, located to the right, on the appliance front panel, is secured in two parts, by two screws - a knurled, captive thumb-screw, and a Torx T8 screw. The knurled screw can be fastened or released without tools. It secures the lattice screen that in turn retains the mesh air filter. </p>
+        <p>While we recommend controlled-atmosphere environments for greatest longevity and reliability of the equipment, we recognize that some environments might include some dust in the air. The mesh <a name="kanchor424"></a>filter traps larger particulate matter before it can be drawn into the interior of the appliance. In less-than-perfect non-clean-room conditions, the mesh might accumulate a buildup of dust, and should be cleaned occasionally for best cooling airflow into the equipment.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Accessing the air filter mesh in front of the fans (using the thumbscrew to open the retaining grille) does not cause a tamper. </p>
+        <h5>To clean the filter:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Twist the knurled knob counter-clockwise until it no longer secures the airflow lattice. The lattice is anchored at its left end by two tabs, and can be easily pulled off the appliance, once the <a name="kanchor425"></a>knurled <a name="kanchor426"></a>retaining screw is loosened. Do so. </p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/sa/new_1u_front_w_mesh_cover_removed_skewed.png" style="width: 481px;height: auto;" />
+        </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>With the air filter exposed, it is easy to grasp the mesh with fingers and tug it free. The mesh is flexible and is held in its cavity only by friction. If it is dusty, handle carefully so as not to dislodge any dirt that could then be sucked in by the fans.</p>
+        <p>
+            <img src="../../Resources/Images/sa/new_1u_front_no_bezel_mesh_out.png" style="width: 604px;height: auto;" />
+        </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>To clean the filter, either blow it out with compressed air (away from the vicinity of the appliance), or rinse with water. If using water, ensure that the mesh is dry before reinstalling.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>To reinstall the mesh, place it in its cavity in front of the fans, and use fingers or a blunt tool to tuck-in the corners. </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Then, replace the lattice in front of the mesh by inserting the tabs first, then swinging the lattice closed like a door, and securing with the knurled screw. </p>
+        <h4>Replacing a <a name="kanchor427"></a>Fan</h4>
+        <p>The three fan modules (each containing two in-line fans) provide <a name="kanchor428"></a>cooling redundancy. If one fan or module fails, it is detected by sensors. View a summary of appliance sensor conditions by running the LunaSH command <b>status sensors</b>. In the <a name="kanchor429"></a>FAN&#160;section of the command output, the fans are listed in the order that they appear, left-to-right, as viewed from the front of the appliance. The example shows a fault with the first fan module:</p><pre>----------- Front Cooling Fans Status --------------</pre><pre>FAN1A 	lnr 	0 RPM 	Unplugged or Failed</pre><pre>FAN1B 	lnr 	0 RPM 	Unplugged or Failed</pre><pre>FAN2A 	OK 	3000 RPM</pre><pre>FAN2B 	OK 	2900 RPM</pre><pre>FAN3A 	OK 	2900 RPM</pre><pre xml:space="preserve">FAN3B 	OK 	3000 RPM</pre><pre xml:space="preserve">&#160;</pre>
+        <p>When the system returns from restarting, the HSM returns to find both splits of the MTK available and it immediately reconstitutes the MTK, allowing you to resume operations. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Partition authentication data is de-cached by the tamper - you must execute <b>partition activate -partition</b> &lt;name_of_partition&gt; each of your HSM partitions before your clients can resume accessing them. Partition activation does not survive a tamper event. In either case, you can examine the log for tamper events: <b>syslog tail -search tamper -entries 200 </b></p>
+        <h5>To replace a fan:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>To open the fan bay, use a Torx number 8 screwdriver to remove the screw that secures the right-side tab of the fan retainer. </p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/sa/new_1u_front_remove_fan-retainer_screw.png" style="width: 266px;height: 110px;" />
+        </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>The fan retainer is anchored at its left by two tabs - swing the retainer out like a door, and remove it. There is no need to separate the filter mesh and its retainer from the larger fan retainer; the assembly can come out as one piece. The illustration below happens to show them separated.</p>
+        <p>&#160;</p>
+        <p>
+            <img src="../../Resources/Images/sa/new_1u_front_remove_fan-retainer_with_mesh.png" style="width: 614px;height: 215px;" />
+        </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>The fan modules are now exposed and are held in place only by the friction of their electrical connectors.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Grasp the handle of the selected fan module and pull straight out toward you.</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/sa/new-1u-front_removing_fan_wide_view.png" style="width: 604px;height: 193px;" />
+        </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>After slight initial resistance, the fan module should easily slide free of the appliance.</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/sa/new-1u-front_fan_removed_close-up_view.png" style="width: 356px;height: 243px;" />
+        </p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>To replace the fan module or install a new one, reverse the above sequence.<br />The index peg on the back of the module, and the matching index hole at the back of the fan bay, ensure that the module can be inserted only in its proper orientation.</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Close up, replace the bezel, reconnect any cables, and return the appliance to service. If the power was left on during the operation, you will nevertheless need to restart (<b>sysconf appliance reboot</b>) in order to clear the <a name="kanchor430"></a>tamper event caused by opening the fan bay.</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>You will also need to re-Activate your HSM Partitions (<b>partition activate -partition</b> &lt;name_of_partition&gt;), so that they once more become available to your registered clients.</p>
+        <h3>Summary</h3>
+        <p>Removing, cleaning, and replacing the fan filter (the black mesh behind the grille) does not cause a tamper, and can be done at any time without disrupting your Clients.</p>
+        <p>Opening the fan bay (behind the filter), by unscrewing that Torx screw, does cause a tamper and therefore some down-time for your Clients. If only one fan module is showing a defect, you can probably leave replacing it until scheduled down-time, during which there would be no unexpected disruption to your Clients.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

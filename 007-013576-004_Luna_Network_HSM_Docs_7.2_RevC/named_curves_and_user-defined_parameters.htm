@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Using the SDK">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Named Curves and User-Defined Parameters</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/using/named_curves_and_user-defined_parameters.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Named Curves and User-Defined Parameters</h2>
+        <p><span class="DefaultProduct">SafeNet Luna Network HSM</span>&#160;is a PKCS#11-oriented device. The HSM&#160;firmware statically defines NIST named curve OIDs and curve parameters by default. You can also define other non-NIST curve OIDS and parameters such as Brainpool. <span class="DefaultProduct">SafeNet Luna Network HSM</span> can decode and use the ecParameters structure for key generation, signing, and verification.</p>
+        <h3>Curve Validation Limitations</h3>
+        <p>The HSM can validate the curve parameters, but domain parameter validation guarantees only the consistency/sanity of the parameters and the most basic, well-known security properties. The HSM has no way of judging the quality of a user-specified curve. </p>
+        <p>It is therefore important that you perform Known Answer Tests to verify the operation of the HSM for any new Domain Parameter.set.
+To maintain NIST-FIPS compatibility the feature is selectively enabled with the feature being disabled by default. Therefore the Administrator must ‘opt-in’ by actively choosing to enable the appropriate HSM policy.
+Among other effects, this causes the HSM to display a shell/console message to the effect that the HSM&#160;is not operating in FIPS mode.</p>
+        <h3>Storing Domain Parameters</h3>
+        <p>Under PKCS#11 v2.20, Domain Parameters are stored in object attribute CKA_EC_PARAMS.
+The value of this parameter is the DER encoding of an ANSI X9.62 Parameters value.
+</p><pre xml:space="preserve">Parameters ::= CHOICE {
+ecParameters ECParameters,
+namedCurve CURVES.&amp;id({CurveNames}),
+implicitlyCA NULL
+}
+</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Because PKCS#11 states that the implicitlyCA is not supported by cryptoki, therefore the CKA_EC_PARAMS attribute must contain the encoding of an ecParameters or a namedCurve.
+
+Cryptoki holds ECC key pairs in separate Private and Public key objects. Each object has its own CKA_EC_PARAMS attribute which must be provided when the object is created and cannot be subsequently changed.
+</p>
+        <p>Cryptoki also supports CKO_DOMAIN_PARAMETERS objects. These store Domain Parameters but perform no cryptographic operations. A Domain Parameters object is really only for storage.  To generate a key pair, you must extract the attributes from the Domain Parameters object and insert them in the CKA_EC_PARAMS attribute of the Public key template.
+
+Cryptoki can create new ECC Public and Private key objects and Domain Parameters objects in the following ways:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Objects can be directly stored using the C_CreateObject command.
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Public and private key objects can be generated internally with the C_GenerateKeyPair command and the CKM_EC_KEY_PAIR_GEN mechanism.
+</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Objects can be imported in encrypted form using C_UnwrapKey command.
+</p>
+        <h3>Using Domain Parameters</h3>
+        <p>ECC keys may be used for Signature Generation and Verification with the CKM_ECDSA and CKM_ECDSA_SHA1 mechanism and Encryption and Decryption with the CKM_ECIES mechanism.
+
+These three mechanism are enhanced so that they fetch the Domain Parameters from the CKA_EC_PARAMS attribute for both ecParameters and namedCurve choice and not just namedCurve choice.
+</p>
+        <h3>User Friendly Encoder</h3>
+        <p>Using ECC with Cryptoki  to create or generate ECC keys requires that the CKA_EC_PARAMS attribute  be specified. This is a DER encoded binary array. Usually in public documents describing ECC curves the Domain Parameters are specified as a series of printable strings so the programmer faces the problem of converting these to the correct format for Cryptoki use.
+
+</p>
+        <p>The cryptoki library is extended to support functions called CA_EncodeECPrimeParams and CA_EncodeECChar2Params which allow an application to specify the parameter details of a new curve. These functions implement DER encoders to build the CKA_EC_PARAMS attribute from large integer presentations of the Domain Parameter values.
+</p>
+        <p>Refer to <a href="#Sample" class="MCXref xref">Sample Domain Parameter Files</a>.</p>
+        <h3>Application Interfaces</h3>
+        <h4>CA_EncodeECPrimeParams
+
+</h4><pre xml:space="preserve">#include “cryptoki.h”
+
+</pre><pre>CK_RV CA_ EncodeECPrimeParams (
+</pre><pre xml:space="preserve">            CK_BYTE_PTR DerECParams,CK_ULONG_PTR DerECParams Len
+</pre><pre xml:space="preserve">            CK_BYTE_PTR prime,CK_USHORT primelen,
+</pre><pre xml:space="preserve">            CK_BYTE_PTR a,CK_USHORT alen,
+</pre><pre xml:space="preserve">            CK_BYTE_PTR b,CK_USHORT blen,</pre><pre xml:space="preserve">            CK_BYTE_PTR seed,CK_USHORT seedlen,
+</pre><pre xml:space="preserve">            CK_BYTE_PTR x,CK_USHORT xlen,
+</pre><pre xml:space="preserve">            CK_BYTE_PTR y,CK_USHORT ylen,
+</pre><pre xml:space="preserve">            CK_BYTE_PTR order,CK_USHORT orderlen,
+</pre><pre xml:space="preserve">            CK_BYTE_PTR cofactor,CK_USHORT cofactorlen,</pre><pre>);
+
+</pre><pre>Do DER enc of ECC Domain Parameters Prime
+</pre>
+        <h4> 
+Parameters</h4>
+        <table style="width: 100%;caption-side: top;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">DerECParams</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Resultant Encoding (length prediction supported if NULL).
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">DerECParamsLen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Buffer len/Length of resultant encoding
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">prime</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Prime modulus</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">primelen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Prime modulus len
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">a</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve coefficient a
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">alen </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">	Elliptic Curve coefficient a length
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">b</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve coefficient b</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">blen	</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve coefficient b length
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">seed</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Seed (optional may be NULL)</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">seedlen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Seed length</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">x</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve point X coord
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">xlen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve point X coord length</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">y</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve point Y coord</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ylen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve point Y coord length</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">order	</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Order n of the Base Point</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">orderlen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Order n of the Base Point length</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">cofactor</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The integer h = #E(Fq)/n (optional)
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">cofactorlen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">	&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;h length</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">Return</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Status of operation. CKR_OK if ok.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>	CA_EncodeECChar2Params
+</h4><pre xml:space="preserve">#include “cryptoki.h”
+</pre><pre>CK_RV CA_EncodeECChar2Params(
+</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE_PTR DerECParams,   CK_ULONG_PTR DerECParams Len
+</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_USHORT m,
+</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_USHORT k1,
+</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_USHORT k2,
+</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_USHORT k3,
+</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE_PTR a,CK_USHORT alen,
+</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE_PTR b,CK_USHORT blen,
+</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE_PTR seed,CK_USHORT seedlen,
+</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE_PTR x,CK_USHORT xlen,
+</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE_PTR y,CK_USHORT ylen,
+</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE_PTR order,CK_USHORT orderlen,
+</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE_PTR cofactor,CK_USHORT cofactorlen,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;);
+
+</pre><pre>Do DER enc of ECC Domain Parameters 2^M
+</pre>
+        <h4>Parameters</h4>
+        <table style="width: 100%;caption-side: top;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">DerECParams</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Resultant Encoding (length prediction supported if NULL).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">DerECParamsLen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Buffer len/Length of resultant encoding
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">M</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Degree of field
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">k1	</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">parameter in trinomial or pentanomial basis polynomial
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">k2</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">	&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;parameter in pentanomial basis polynomial
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">k3 </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">parameter in pentanomial basis polynomial</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">a	&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve coefficient a
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">alen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve coefficient a length
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">b</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve coefficient b
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">blen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve coefficient b length
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">seed	</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Seed (optional may be NULL)
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">seedlen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Seed length</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">x</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve point X coord</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">xlen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve point X coord length
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">y</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve point Y coord
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">ylen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Elliptic Curve point Y coord length
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">order	</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Order n of the Base Point
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">orderlen</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Order n of the Base Point length
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">cofactor</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The integer h = #E(Fq)/n (optional)
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">cofactorlen&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">h length</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">Return&#160;</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Status of operation. CKR_OK if ok.
+</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc"><a name="Sample"></a>Sample Domain Parameter Files</h3>
+        <p>The following examples show some sample domain parameter files.</p>
+        <h4> prime192v1
+</h4><pre xml:space="preserve">#
+#This file describes the domain parameters of an EC curve
+#
+#File contains lines of text. All lines not of the form key=value are ignored.
+#All values must be Hexidecimal numbers except m, k, k1, k2 and k3 which are decimal.
+#Lines starting with '#' are comments.
+#
+#Keys recognised for fieldID values are -
+#p          - only if the Curve is based on a prime field
+#m          - only if the curve is based on a 2^M field
+#k1, k2, k3 - these three only if 2^M field
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#You should have these combinations of fieldID values -
+#p          - if Curve is based on a prime field
+#m,k1,k2,k3 - if curve is based on 2^M
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#These are the values common to prime fields and polynomial fields.
+#a          - field element A
+#b          - field element B
+#s          - this one is optional
+#x          - field element Xg of the point G
+#y          - field element Yg of the point G
+#q          - order n of the point G
+#h          - (optional) cofactor h
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve"># Curve name prime192v1</pre><pre xml:space="preserve">p    = FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFF 
+</pre><pre xml:space="preserve">a    = FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFC
+</pre><pre xml:space="preserve">b    = 64210519E59C80E70FA7E9AB72243049FEB8DEECC146B9B1
+</pre><pre xml:space="preserve">s    = 3045AE6FC8422F64ED579528D38120EAE12196D5
+</pre><pre xml:space="preserve">x    = 188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012
+</pre><pre xml:space="preserve">y    = 07192B95FFC8DA78631011ED6B24CDD573F977A11E794811
+</pre><pre xml:space="preserve">q    = FFFFFFFFFFFFFFFFFFFFFFFF99DEF836146BC9B1B4D22831
+</pre><pre xml:space="preserve">h    = 1
+</pre>
+        <h4> C2tnB191v1
+</h4><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#This file describes the domain parameters of an EC curve
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#File contains lines of text. All lines not of the form key=value are ignored.
+</pre><pre xml:space="preserve">#All values must be Hexidecimal numbers except m, k, k1, k2 and k3 which are decimal.
+</pre><pre xml:space="preserve">#Lines starting with '#' are comments.
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#Keys recognised for fieldID values are -
+</pre><pre xml:space="preserve">#p          - only if the Curve is based on a prime field
+</pre><pre xml:space="preserve">#m          - only if the curve is based on a 2^M field
+</pre><pre xml:space="preserve">#k1, k2, k3 - these three only if 2^M field
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#You should have these combinations of fieldID values -
+</pre><pre xml:space="preserve">#p          - if Curve is based on a prime field
+</pre><pre xml:space="preserve">#m,k1,k2,k3 - if curve is based on 2^M
+</pre><pre xml:space="preserve">#
+#</pre><pre xml:space="preserve">#These are the values common to prime fields and polynomial fields.
+</pre><pre xml:space="preserve">#a          - field element A
+</pre><pre xml:space="preserve">#b          - field element B
+</pre><pre xml:space="preserve">#s          - this one is optional
+</pre><pre xml:space="preserve">#x          - field element Xg of the point G
+</pre><pre xml:space="preserve">#y          - field element Yg of the point G
+</pre><pre xml:space="preserve">#q          - order n of the point G
+</pre><pre xml:space="preserve">#h          - (optional) cofactor h
+</pre><pre xml:space="preserve">#
+#
+# Curve name C2tnB191v1
+</pre><pre xml:space="preserve">m     = 191
+</pre><pre xml:space="preserve">k1    = 9
+</pre><pre xml:space="preserve">k2    = 0
+</pre><pre xml:space="preserve">k3    = 0
+</pre><pre xml:space="preserve">a     = 2866537B676752636A68F56554E12640276B649EF7526267
+</pre><pre xml:space="preserve">b     = 2E45EF571F00786F67B0081B9495A3D95462F5DE0AA185EC
+</pre><pre xml:space="preserve">x     = 36B3DAF8A23206F9C4F299D7B21A9C369137F2C84AE1AA0D
+</pre><pre xml:space="preserve">y     = 765BE73433B3F95E332932E70EA245CA2418EA0EF98018FB
+</pre><pre xml:space="preserve">q     = 40000000000000000000000004A20E90C39067C893BBB9A5
+</pre>
+        <h4>brainpoolP160r1
+</h4><pre xml:space="preserve">#
+#This file describes the domain parameters of an EC curve
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#File contains lines of text. All lines not of the form key=value are ignored.
+</pre><pre xml:space="preserve">#All values must be Hexidecimal numbers except m, k, k1, k2 and k3 which are decimal.
+</pre><pre xml:space="preserve">#Lines starting with '#' are comments.
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#Keys recognised for fieldID values are -
+</pre><pre xml:space="preserve">#p          - only if the Curve is based on a prime field
+</pre><pre xml:space="preserve">#m          - only if the curve is based on a 2^M field
+</pre><pre xml:space="preserve">#k1, k2, k3 - these three only if 2^M field
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#You should have these combinations of fieldID values -
+</pre><pre xml:space="preserve">#p          - if Curve is based on a prime field
+</pre><pre xml:space="preserve">#m,k1,k2,k3 - if curve is based on 2^M
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#These are the values common to prime fields and polynomial fields.
+</pre><pre xml:space="preserve">#a          - field element A
+</pre><pre xml:space="preserve">#b          - field element B
+</pre><pre xml:space="preserve">#s          - this one is optional
+</pre><pre xml:space="preserve">#x          - field element Xg of the point G
+</pre><pre xml:space="preserve">#y          - field element Yg of the point G
+</pre><pre xml:space="preserve">#q          - order n of the point G
+</pre><pre xml:space="preserve">#h          - (optional) cofactor h
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve"># Curve name brainpoolP160r1
+
+</pre><pre xml:space="preserve">p      = E95E4A5F737059DC60DFC7AD95B3D8139515620F
+</pre><pre xml:space="preserve">a      = 340E7BE2A280EB74E2BE61BADA745D97E8F7C300
+</pre><pre xml:space="preserve">b      = 1E589A8595423412134FAA2DBDEC95C8D8675E58</pre><pre xml:space="preserve">x      = BED5AF16EA3F6A4F62938C4631EB5AF7BDBCDBC3
+</pre><pre xml:space="preserve">y      = 1667CB477A1A8EC338F94741669C976316DA6321
+</pre><pre xml:space="preserve">q      = E95E4A5F737059DC60DF5991D45029409E60FC09
+</pre><pre xml:space="preserve">h      = 1
+</pre>
+        <h4> brainpoolP512r1
+</h4><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#This file describes the domain parameters of an EC curve
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#File contains lines of text. All lines not of the form key=value are ignored.
+</pre><pre xml:space="preserve">#All values must be Hexidecimal numbers except m, k, k1, k2 and k3 which are decimal.
+</pre><pre xml:space="preserve">#Lines starting with '#' are comments.
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#Keys recognised for fieldID values are -
+</pre><pre xml:space="preserve">#p          - only if the Curve is based on a prime field</pre><pre xml:space="preserve">#m          - only if the curve is based on a 2^M field
+</pre><pre xml:space="preserve">#k1, k2, k3 - these three only if 2^M field
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#You should have these combinations of fieldID values -
+</pre><pre xml:space="preserve">#p          - if Curve is based on a prime field
+</pre><pre xml:space="preserve">#m,k1,k2,k3 - if curve is based on 2^M
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#These are the values common to prime fields and polynomial fields.
+</pre><pre xml:space="preserve">#a          - field element A
+</pre><pre xml:space="preserve">#b          - field element B
+</pre><pre xml:space="preserve">#s          - this one is optional
+</pre><pre xml:space="preserve">#x          - field element Xg of the point G
+</pre><pre xml:space="preserve">#y          - field element Yg of the point G
+</pre><pre xml:space="preserve">#q          - order n of the point G
+</pre><pre xml:space="preserve">#h          - (optional) cofactor h
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve"># Curve name brainpoolP512r1
+
+</pre><pre xml:space="preserve">p=AADD9DB8DBE9C48B3FD4E6AE33C9FC07CB308DB3B3C9D20ED6639CCA703308717D4D9B009BC66842AECDA12AE6A380E62881FF2F2D82C68528AA6056583A48F3
+</pre><pre xml:space="preserve">a=7830A3318B603B89E2327145AC234CC594CBDD8D3DF91610A83441CAEA9863BC2DED5D5AA8253AA10A2EF1C98B9AC8B57F1117A72BF2C7B9E7C1AC4D77FC94CA
+</pre><pre xml:space="preserve">b=3DF91610A83441CAEA9863BC2DED5D5AA8253AA10A2EF1C98B9AC8B57F1117A72BF2C7B9E7C1AC4D77FC94CADC083E67984050B75EBAE5DD2809BD638016F723
+</pre><pre xml:space="preserve">x=81AEE4BDD82ED9645A21322E9C4C6A9385ED9F70B5D916C1B43B62EEF4D0098EFF3B1F78E2D0D48D50D1687B93B97D5F7C6D5047406A5E688B352209BCB9F822
+</pre><pre xml:space="preserve">y=7DDE385D566332ECC0EABFA9CF7822FDF209F70024A57B1AA000C55B881F8111B2DCDE494A5F485E5BCA4BD88A2763AED1CA2B2FA8F0540678CD1E0F3AD80892
+</pre><pre xml:space="preserve">q=AADD9DB8DBE9C48B3FD4E6AE33C9FC07CB308DB3B3C9D20ED6639CCA70330870553E5C414CA92619418661197FAC10471DB1D381085DDADDB58796829CA90069
+</pre><pre xml:space="preserve">h      = 1
+</pre>
+        <h4>Bad Parameter File
+</h4><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#This file describes the domain parameters of an EC curve
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#File contains lines of text. All lines not of the form key=value are ignored.
+</pre><pre xml:space="preserve">#All values must be Hexidecimal numbers except m, k, k1, k2 and k3 which are decimal.
+#Lines starting with '#' are comments.
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#Keys recognised for fieldID values are -
+</pre><pre xml:space="preserve">#p          - only if the Curve is based on a prime field
+</pre><pre xml:space="preserve">#m          - only if the curve is based on a 2^M field
+</pre><pre xml:space="preserve">#k1, k2, k3 - these three only if 2^M field
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#You should have these combinations of fieldID values -
+</pre><pre xml:space="preserve">#p          - if Curve is based on a prime field
+</pre><pre xml:space="preserve">#m,k1,k2,k3 - if curve is based on 2^M
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve">#These are the values common to prime fields and polynomial fields.
+</pre><pre xml:space="preserve">#a          - field element A
+</pre><pre xml:space="preserve">#b          - field element B
+</pre><pre xml:space="preserve">#s          - this one is optional
+</pre><pre xml:space="preserve">#x          - field element Xg of the point G
+</pre><pre xml:space="preserve">#y          - field element Yg of the point G
+</pre><pre xml:space="preserve">#q          - order n of the point G
+</pre><pre xml:space="preserve">#h          - (optional) cofactor h
+</pre><pre xml:space="preserve">#
+</pre><pre xml:space="preserve"># Curve name prime192vx
+
+</pre><pre xml:space="preserve">p    = FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFF 
+</pre><pre xml:space="preserve">a    = FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFC
+</pre><pre xml:space="preserve">b    = 64210519E59C80E70FA7E9AB72243049FEB8DEECC146B9B13
+</pre><pre xml:space="preserve">s    = 34545567685743523457
+</pre><pre xml:space="preserve">x    = 188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012
+</pre><pre xml:space="preserve">y    = 07192B95FFC8DA78631011ED6B24CDD573F977A11E794811
+</pre><pre xml:space="preserve">q    = FFFFFFFFFFFFFFFFFFFFFFFF99DEF836146BC9B1B4D22831
+</pre><pre xml:space="preserve">h    = 12323435765786
+</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

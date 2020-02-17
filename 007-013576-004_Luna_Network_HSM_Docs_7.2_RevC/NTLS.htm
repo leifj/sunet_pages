@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Syslog and SNMP Monitoring Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Network Trust Link Service</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#monitoring/components/NTLS.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Network Trust Link Service</h2>
+        <p>The network trust link service (NTLS) is the cryptographic services dispatcher of the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance. On system startup, NTLS runs as a daemon and listens for incoming connection requests on TCP/IP sockets. Using Secure Sockets Layer, NTLS secures communication between the appliance and a client, each party authenticating the other with certificates and encrypting data exchanged.</p>
+        <p><span class="DefaultCompanyNameLong">Gemalto</span> has arranged NTLS into two principal components and the organization of NTLS log messages in this document reflects this architecture. A generic datapath engine manages the socket communications. This engine is common across Luna appliances (e.g., Luna SA, Luna SP and Luna IS use the same engine). A product-specific command processor parses and responds to the messages NTLS receives from and sends back to the client. This document makes explicit note for older messages; otherwise, assume that the descriptions apply for more current product releases.</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Facility Keyword</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Software Process</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Log File</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p><code>Local5</code>
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p><code>NTLS</code> [pid]</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p><code>lunalogs</code>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#DatapathExpected" class="MCXref xref">Datapath: Expected Log Messages</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#DatapathUnexpected" class="MCXref xref">Datapath: Unexpected Log Messages</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#LunaSAExpected" class="MCXref xref">Luna SA Command Processor: Expected Log Messages</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#LunaSAUnexpected" class="MCXref xref">Luna SA Command Processor: Unexpected Log Messages</a>
+        </p>
+        <h3><a name="DatapathExpected"></a>Datapath: Expected Log Messages</h3>
+        <p>The following log messages are normal and expected entries in the log files from the datapath engine of NTLS.</p>
+        <h4>Startup</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : Starting up NTLS........
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : luna_engine_preload: SUCCESSFULLY&#160; loaded
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : 1 = ENGINE_ctrl_cmd_string(...SO_PATH...
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : 1 = ENGINE_ctrl_cmd_string(...ID...) 
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : 1 = ENGINE_ctrl_cmd_string(...LOAD...
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : luna_engine_load: SUCCESSFULLY&#160; enabled for ALL ops
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : HSM crypto support for data path<b style="color: #6c286b;">*</b> SSL operations enabled<b style="color: #6c286b;">**</b>
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : "Luna SA 5.0 Command Processor" module version 1.0 loaded
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : NTLS data path configured with 5 inbound worker threads and 5 outbound worker threads
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : NTLS is online and operational.
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : Data path TCP keep alive is configured as : TCP_KEEPIDLE = 10 sec : TCP_KEEPINTVL = 10 sec : TCP_KEEPCNT = 2 retries
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : Data path TCP keep alive is configured as : TCP_KEEPIDLE = 10 sec : SSL cipher list set to AES256-GCM-SHA384
+
+</pre>
+        <p>The first message indicates that NTLS is starting up. The next five messages trace the progress of the SSL start up sequence. The remaining messages show the progress through to a successful startup.</p>
+        <p><b style="color: #6c286b;">*</b> "NTLS” in older implementations</p>
+        <p><b style="color: #6c286b;">**</b> Or “disabled” or “NOT enabled” if the keys-in-hardware option is enabled but the SSL engine failed to load (“luna_engine_load: failed to ENGINE_set_default for ALL ops”).</p>
+        <h4>Failed to Enable SSL Engine for All Operations</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : luna_engine_load: failed to ENGINE_set_default for ALL ops
+
+</pre>
+        <p>This message indicates that the SSL engine was unable to initialize properly.</p>
+        <h4>Client Connections</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : Incoming connection request... : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Connection accepted from: 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Handshake result from: 192.168.0.100/40847, result: Success
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : NTLS Client "192.168.0.100" connected and authenticated : 192.168.0.100/40847.
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Connection terminating:&#160; 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : NTLA client "192.168.0.100" has disconnected: 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : Receive timer expired for client "192.168.0.100". Terminate client connection: 192.168.0.100/40847<b style="color: #6c286b;">*</b>
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : Receive timer expired for client "192.168.0.100" : 192.168.0.100/40847<b style="color: #6c286b;">**</b>
+
+</pre>
+        <p>These messages indicate connect establishment and termination by NTLS. You should find pairs of connection accepted and disconnected messages in the logs. The last two messages result when a client connects but is inactive for a period configured for NTLS.</p>
+        <p><b style="color: #6c286b;">*</b> This message results if the timeout is for a scheduled cleanup.</p>
+        <p><b style="color: #6c286b;">**</b> This message results if the timeout is not for a scheduled cleanup.</p>
+        <h4>Client Credentials Cannot be Verified</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Client credentials cannot be verified. Connection terminated : 192.168.0.100/40847
+
+</pre>
+        <p>This message indicates that the client connection request could not be completed. A possible root cause is that the client’s certificate is invalid (e.g., has a wrong IP address or hostname).</p>
+        <h4>Cache Monitor</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0 : Client certificate verify location monitor started
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0 : Detected client certificate removed from verify location.&#160; Flush verify location cache
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0 : Client certificate verify location monitor terminated
+
+</pre>
+        <p>These messages indicate that NTLS has started to monitor client certificates registered with the process. </p>
+        <h4>Connection Instance Added and Removed</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0 : NTLA Client "192.168.0.100" Connection instance removed : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0 : NTLA Client "192.168.0.100" connected and authenticated : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0 : NTLA Client "192.168.0.100" has disconnected: 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0 : NTLA Client "192.168.0.100" has disconnected: 192.168.0.100/40847
+
+</pre>
+        <p>These messages indicate NTLS’s action to add and remove connection instances.</p>
+        <h4>Client Credentials Cannot be Verified</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0 : Client credentials cannot be verified. Connection terminated : 192.168.0.100/40847
+
+</pre>
+        <p>This message indicates that an application connected to NTLS but did not provide the SSL credentials to complete authentication.</p>
+        <h4>Handshake Failed</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000711 : Fail to establish a secure channel with client : 192.168.0.100/40847 : RC_SSL_FAILED_HANDSHAKE
+
+</pre>
+        <p>This message indicates that an application attempted to connect with SSL credentials that did not conform to the algorithms and/or cryptographic strength expected by NTLS.</p>
+        <h4>Unable to Initialize Server Socket</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical : 0xc0000500 : NTLS listening port could not Bind : RC_SOCKET_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000500 : Unable to initialize data path<span style="color: #6c286b;">*</span> server socket : RC_SOCKET_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000500 : NTLS initialization failed : RC_SOCKET_ERROR
+
+</pre>
+        <p>These messages indicate that NTLS was unable to initialize the server socket. A possible root cause is that the network interface is not properly configured.</p>
+        <p><span style="color: #6c286b;">*</span> “NTLS” in older implementations.</p>
+        <h4>Connected to Server</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : 192.168.0.100 connected to server : 192.168.0.100/40847
+
+</pre>
+        <p>This message indicates that NTLS has successfully established an outgoing connection with a peer or remote server.</p>
+        <h4>Shutting Down</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : Shutting down NTLS....
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0 : Intiating [sic] dispatch termination.
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0 : Dispatching has been terminated.
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0 : Terminating.
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : "Luna SA 5.0 Command Processor" shut downed
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : NTLS terminated
+
+</pre>
+        <p>These messages show the progression of steps as NTLS terminates.</p>
+        <h3><a name="DatapathUnexpected"></a>Datapath: Unexpected Log Messages</h3>
+        <p>Under normal circumstances, you should not see any of these log messages. If you do so, please consult the user documentation for guidance on how to correct the problem.</p>
+        <h4>NTLS Terminating</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000102 : Terminating.
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000102 : Failed to start as daemon. Terminating.
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000102 : Failed to initialize application. Terminating.
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000102 : Failed to create server. Terminating.
+
+</pre>
+        <p>These messages indicate that NTLS failed at startup. Possible root causes for the first message are a failure to create internal data structures needed by NTLS or a failure to generate the private key and certificate needed by NTLS.</p>
+        <h4>Failed to Load SSL Engine</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : luna_engine_load: failed to ENGINE_by_id
+
+</pre>
+        <p>This message indicates that OpenSSL was unable to load the specified engine. A possible root cause is the wrong engine identifier specified in the OpenSSL configuration file.</p>
+        <h4>Skip C_Initialize</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : 1 = ENGINE_ctrl_cmd_string(...SKIP_C_INITIALIZE...)
+
+</pre>
+        <p>This message indicates that the OpenSSL engine for LunaCA3 skipped the call the C_Initialize. Luna appliances do not use the LunaCA3 engine.</p>
+        <h4>Configured for RSA Operations</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : luna_engine_load: SUCCESSFULLY&#160; enabled for RSA ops
+
+</pre>
+        <p>This message indicates that the SSL engine used by NTLS is configured only for RSA operations.</p>
+        <h4>Failed to Pre-Load SSL Engine</h4><pre xml:space="preserve">Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : luna_engine_preload: failed to load
+
+</pre>
+        <p>This message indicates that the SSL engine was unable to preload. A possible root cause is the wrong engine identifier configured on the Luna appliance.</p>
+        <h4>Failed to Enable SSL Engine for RSA Operations</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : luna_engine_load: failed to ENGINE_set_default for RSA ops
+
+</pre>
+        <p>This message indicates that the SSL engine was unable to initialize properly for RSA operations.</p>
+        <h4>Failed to Initialize</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0 : Missing command processor library for NTLS.
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000102 : Command processor module not found : "Luna SA 5.0 Command Processor" : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical : 0xc0000105 : cp_get_supported_versions function not found in command processor "Luna SA 5.0 Command Processor" : RC_FUNCTION_NOT_SUPPORTED
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical : 0xc0000105 : cp_initialize_p function not found in command processor "Luna SA 5.0 Command Processor" : RC_FUNCTION_NOT_SUPPORTED
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical : 0xc0000105 : cp_get_processor_name_p function not found in command processor "Luna SA 5.0 Command Processor" : RC_FUNCTION_NOT_SUPPORTED
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical : 0xc0000105 : cp_shutdown function not found in command processor "Luna SA 5.0 Command Processor" : RC_FUNCTION_NOT_SUPPORTED
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000105 : cp_client_registration_observer function not found in command processor "Luna SA 5.0 Command Processor" : RC_FUNCTION_NOT_SUPPORTED
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000105 : cp_configure function not found in command processor "Luna SA 5.0 Command Processor" : RC_FUNCTION_NOT_SUPPORTED
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Failed to initialize "Luna SA 5.0 Command Processor" module version 1.0 for data path module version 1.0 : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5&#160; err&#160; NTLS [1234]: error :&#160; 0xc0000102 : Failed to initialize "Luna SA 5.0 Command Processor" module version 1.0 : RC_GENERAL_ERROR<span style="color: #6c286b;">*</span>
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000105 : "Luna SA 5.0 Command Processor" module version 1.0 is incompatable [sic] with data path : RC_FUNCTION_NOT_SUPPORTED
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000500 : Unable to initialize openssl library : RC_SOCKET_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000500 : Unable to initialize openssl server context : RC_SOCKET_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000102 : Application specific initialization failed for NTLS.
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000102 : Unable to initialize dispatcher.
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000402 : Chrystoki configuration client certificate file name invalid: RC_FILE_NAME_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000402 : Chrystoki configuration client private key file name invalid: RC_FILE_NAME_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000402 : Chrystoki configuration ssl configuration file name invalid: RC_FILE_NAME_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000102 : Failed to create private key/certificate: RC_GENERAL_ERROR, error: -1
+
+</pre>
+        <p>These messages indicate a failure of the datapath component to initialize itself at NTLS startup.</p>
+        <p><span style="color: #6c286b;">*</span> For older implementations.</p>
+        <h4>No Command Processor Module Configured</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : Data path is not configured with a command processor module.&#160; Use default command processor setting
+
+</pre>
+        <p>This message indicates an error in how NTLS is configured.</p>
+        <h4>Fail to Accept Connections</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5&#160; err&#160; NTLS [1234]: error :&#160; 0xc0000002 : Unable to create a new connection.
+2012 Feb 29 12:05:01 myLuna&#160; local5&#160; err&#160; NTLS [1234]: error :&#160; 0xc0000002 : Accept failed. Reason: RC_GENERAL_ERROR
+
+</pre>
+        <p>These messages indicate an NTLS failure to establish the TCP/IP socket necessary to listen for and accept connections from clients.</p>
+        <h4>Fail to Create Client Connection</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000500 : Fail to create connection instance : 192.168.0.100/40847 : RC_SOCKET_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 warn&#160; NTLS [1234]: warning : 0xc0000500 : Fail to accept a client TCP connection : RC_SOCKET_ERROR
+
+</pre>
+        <p>These messages indicate a failure to create a client connection on an incoming request.</p>
+        <h4>Cache Monitor Failed</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error :&#160; 0xc0000002 : CA cache monitor fail to initialize : RC_GENERAL_ERROR
+
+</pre>
+        <p>This message indicates that the thread spawned to monitor client certificates failed to initialize.</p>
+        <h4>Connection Instance Failures</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error :&#160; 0xc0000002 : Fail to create timer object for connection instance : 192.168.0.100/40847 : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error :&#160; 0xc0000004 : Fail to create ssl object for connection instance : 192.168.0.100/40847 : RC_UNEXPECTED
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000102 : Client request header malformed : 192.168.0.100/40847 : RC_DATA_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000001 : Fail to allocate command buffer : 192.168.0.100/40847 : RC_MEMORY_ALLOCATION
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error :&#160; 0xc0000002 : Fail to forward client request to command processor module : 192.168.0.100/40847 : RC_GENERAL_ERROR
+
+</pre>
+        <p>These messages indicate a failure of NTLS to add or remove a client connection instance.</p>
+        <h4>Non-Luna Client Connect Attempt</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000004 : Connection attempt from non-Luna client : 192.168.0.100/40847 : RC_UNEXPECTED
+
+</pre>
+        <p>This message indicates that an application attempted to connect to the Luna appliance via NTLS but did not provide the proper SSL message exchange expected.</p>
+        <h4>Command Process Unloaded</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : Command Processor module unloaded
+
+</pre>
+        <p>This message indicates that NTLS unloaded its command processor module (a shared object library).</p>
+        <h4>SSL Certificates Problems</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000701 : Bad SSL handle while determining hostname: RC_SSL_CTX_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc000070a : Failed to get current certificate while determining hostname: RC_SSL_INVALID_CERT_STRUCTURE
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc000070a : Failed to get certificate text while determining hostname: RC_SSL_INVALID_CERT_STRUCTURE
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc000070a : Invalid client certificate while determining hostname: RC_SSL_INVALID_CERT_STRUCTURE
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000701 : Unable to retrieve native SSL CTX handle: RC_SSL_CTX_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000702 : SSL error setting cipher list: RC_SSL_CIPHER_LIST_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000402 : Chrystoki configuration client certificate path invalid: RC_FILE_NAME_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000703 : Load verify locations failed for: CACert.pem, RC_SSL_CERT_VERIFICATION_LOCATION_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000703 : Load verify locations failed for single client: CACert.pem, RC_SSL_CERT_VERIFICATION_LOCATION_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000402 : Chrystoki configuration server certificate filename invalid: RC_FILE_NAME_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000704 : Chrystoki using server certificate failed: /usr/lunasa/vts/server/server.pem, RC_SSL_LOAD_SERVER_CERT_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000402 : Chrystoki configuration server private key filename invalid: RC_FILE_NAME_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000705 : Error loading the server private key: RC_SSL_LOAD_SERVER_PRIVATE_KEY_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000706 : Error checking the server private key: RC_SSL_VALIDATE_SERVER_PRIVATE_KEY_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000406 : Fail to retrieve host IP Address : RC_SOCKET_ADDRESS_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000406 : Fail to retrieve host port : RC_SOCKET_ADDRESS_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000406 : Unable to create context. : RC_SOCKET_ADDRESS_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000002 : Failed to initialize server for address 192.168.0.100/40847 : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000002 : Chrystoki configuration client certificate filename invalid: RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000708 : Chrystoki using client certificate failed: CACert.pem, RC_SSL_LOAD_CLIENT_CERT_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000402 : Chrystoki configuration client private key filename invalid: RC_FILE_NAME_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc000070b : Error loading the client private key: RC_SSL_LOAD_CLIENT_PRIVATE_KEY_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000402 : Chrystoki configuration server certificate authority filename invalid: RC_FILE_NAME_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000703 : Error loading server certificate authorities: RC_SSL_CERT_VERIFICATION_LOCATION_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000002 : Unable to update context. : RC_GENERAL_ERROR
+
+</pre>
+        <p>These messages indicate a failure of the underlying communication mechanism NTLS uses to exchange messages between a client application and the Luna appliance.</p>
+        <h4>Client Authentication Failures</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Failed writing identity string. Reason: RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Failed connect. Reason: RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Failed handshake. Reason: RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Identify result from: 192.168.0.100/40847, result: RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Failed reading identity string. Reason: RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5&#160; err&#160; NTLS [1234]: error :&#160; 0xc0000002 : Fail to forward dataless client request to command processor module : 192.168.0.100/40847 : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000102 : Client request header malformed : 192.168.0.100/40847 : RC_DATA_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000001 : Fail to allocate command buffer : 192.168.0.100/40847 : RC_MEMORY_ALLOCATION
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Failed reading command buffer. Reason: RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5&#160; err&#160; NTLS [1234]: error :&#160; 0xc0000002 : Fail to forward client request to command processor module : 192.168.0.100/40847 : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Failed writing to client Reason: RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Last write before reinitializing failed. Reason: RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Expected cancelled operation, actual: RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Reinitializing connection for: 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5&#160; err&#160; NTLS [1234]: error :&#160; 0xc0000002 : Fail to get response buffer: 192.168.0.100/40847 : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5&#160; err&#160; NTLS [1234]: error :&#160; 0xc0000002 : Expecting client certificate. None received.
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : Unable to retrieve client certificate.: 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0xc0000002 : cp_server_connected failed : 192.168.0.100/40847
+
+</pre>
+        <p>These messages indicate a failure of NTLS to verify the client requesting to connect to the Luna appliance.</p>
+        <h4>Port Monitoring Failures</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000406 : Fail to retrieve host IP Address : RC_SOCKET_ADDRESS_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000406 : Fail to retrieve host port : RC_SOCKET_ADDRESS_INVALID
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000500 : Fail to set socket linger option : RC_SOCKET_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000500 : Fail to set socket reuse option : RC_SOCKET_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000500 : Data path listening port could not Bind : RC_SOCKET_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000500 : Fail to set socket non-blocking option : RC_SOCKET_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical :&#160; 0xc0000002 : Data path listening port not listening
+
+</pre>
+        <p>These messages indicate a failure of NTLS to set up the port upon which the process will listen for incoming connection requests.</p>
+        <h4>Could Not Initialize Command Processor</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error :&#160; 0xc0000002 : Failed to initialize "Luna SA 5.0 Command Processor"&#160; module version 1.0 : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error :&#160; 0xc0000002 : Failed to initialize command processor cleanup mechanism.
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Failed to create Appliance Handler for NTLS: RC_GENERAL_ERROR.
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Failed to initialize Appliance Handler for NTLS: RC_GENERAL_ERROR.
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Failed to create server for NTLS: RC_GENERAL_ERROR.
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Failed to create thread pool for NTLS: RC_GENERAL_ERROR.
+
+</pre>
+        <p>These messages indicate a failure to initialize the command processor, a shared library module within the Luna appliance.</p>
+        <h4>Datapath Debug Messages</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Data path is using OpenSSL 0.9.5a 1 Apr 2000
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0xc0000002&#160;&#160;&#160;&#160; Unexpected connect response in &lt;state string&gt;
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0xc0000002&#160;&#160;&#160;&#160; Unexpected client response in &lt;state string&gt;
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0xc0000002&#160;&#160;&#160;&#160; Unexpected handshake response in &lt;state string&gt;
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0xc0000002&#160;&#160;&#160;&#160; Unexpected read response in &lt;state string&gt;
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0xc0000002&#160;&#160;&#160;&#160; Unexpected write response in &lt;state string&gt;
+
+</pre>
+        <p><span class="DefaultCompanyNameLong">Gemalto</span> does not enable logging of debug messages for NTLS. If in future <span class="DefaultCompanyNameLong">Gemalto</span> does enable this level of log messages, the messages above show examples of what you might find in the log files. In the examples above, &lt;state string&gt; is one of the following set: [IDENTITY STATE | HANDSHAKE STATE | PROCESSING STATE | HEADER STATE | COMMAND STATE | CONNECTING STATE | IDENTIFYING STATE | OUT OF SERVICE STATE | REINITIALIZING STATE].</p>
+        <h4>NTLS Crash and Burn</h4><pre>2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: info : 0 : NTLS CRASH AND BURN! Stack dump saved to /var/log/ntls_bt_2012-02-29_12:05:01</pre><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: info : 0 : NTLS CRASH AND BURN and unable to dump the stack!
+
+</pre>
+        <p>These messages indicate a programming error. The first message indicates that NTLS terminated abnormally (on one of SIGSEGV, SIGILL or SIGBUS signals), generating a stack trace file in the process. An example stack trace file is: ntls_bt_2012-02-29_12:05:01 found in the logs directory. Forwarding this file to <span class="DefaultCompanyNameLong">Gemalto</span> product engineering may assist a developer to isolate the reason for the abnormal termination.&#160; The second message indicates an abnormal termination but with no resulting stack trace created. </p>
+        <h3><a name="LunaSAExpected"></a>Luna SA Command Processor: Expected Log Messages</h3>
+        <p>The following log messages are normal and expected entries in the log files from the Luna SA command processor of NTLS.</p>
+        <h4>Configured with Worker Threads</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : SA command processor configured with 50 worker threads
+
+</pre>
+        <p>This message indicates that NTLS has successfully started its command processor.</p>
+        <h4>HTL Configured</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0 : Listening for HTL kill requests
+
+</pre>
+        <p>This message indicates that host trust link (HTL) is configured and started.</p>
+        <h4>USB Backup and PKI Bundle Device</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: USB token: Backup1 with serial number: 123456 has been undeployed!
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: Re-deployed the&#160; USB token: Backup1 with serial number: 123456 to Virtual token list
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: Added USB token: Backup1 with serial number: 123456 at slot: 4 and container id: 8 to Virtual token list
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: Deployed token Backup1 with Serial Number 123456 inserted into slot 4!
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: NON Deployed token Backup1 with Serial Number 123456 inserted into slot 4!
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: NON Deployed token with no label and Serial Number 123456 inserted into slot 4!
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: Deployed token Backup1 with Serial Number 123456 ejected from slot 4!
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: NON Deployed token Backup1 with Serial Number 123456 ejected from slot 4!
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: NON Deployed token with no label and Serial Number 123456 ejected from slot 4!
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : Waited to find PKI token: PKIToken with serial number: 123456 at slot: 4
+
+</pre>
+        <p>These messages indicate actions associated with devices connected to the USB port on the Luna appliance. Luna SA supports secure backup from the internal HSM to a USB-attached backup device. Luna SA also supports a “PKI bundle” feature for root keys stored and accessed on a USB-attached device (e.g., Luna G5). The examples above show “Backup1” for the label name of the USB-attached device but this label could be PKI bundle-centric (e.g., “RootCA1”) – the messages are common for both use cases.</p>
+        <h4>Command Processor Instance Removed</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: Command processor instance for client 192.168.0.100 removed : 192.168.0.100/40847
+
+</pre>
+        <p>This message indicates that a client connection terminated and NTLS removed the command processor instance allocated for this client.</p>
+        <h4>HTL Kill Request</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info :&#160; 0 : Received NTLS kill request from HTL for client 192.168.0.100
+
+</pre>
+        <p>This message indicates that the host trust link was forcibly terminated for the specified client.</p>
+        <h4>Shutdown</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : "Luna SA 5.0 Command Processor" shut downed
+
+</pre>
+        <p>This message indicates an orderly shutdown of the Luna SA command processor.</p>
+        <h3><a name="LunaSAUnexpected"></a>Luna SA Command Processor: Unexpected Log Messages</h3>
+        <p>Under normal circumstances, you should not see any of these log messages.&#160; If you do so, please consult the user documentation to seek guidance on how to correct the problem.</p>
+        <h4>Keep-alive Timer Failures</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 warn&#160; NTLS [1234]: warning : 0xc0000002 : Fail to create client command keepalive timer : 192.168.0.100/40847 : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 warn&#160; NTLS [1234]: warning : 0 : Client command keepalive function is disabled : 192.168.0.100/40847
+
+</pre>
+        <p>These messages indicate a failure to start the keep-alive timer that monitors for inactive client connections.</p>
+        <h4>Startup and Operational Failures</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Fail to allocate connection request response buffer [size = 100] : 192.168.0.100/40847 :RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Fail to allocate connection request response buffer [size = 100] : 192.168.0.100/40847 :RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Fail to allocate termination response buffer [size = 100] : 192.168.0.100/40847 :RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Fail to allocate slot state response buffer [size = 100] : 192.168.0.100/40847 :RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Fail to allocate response message buffer [type = 7] [size = 100] : 192.168.0.100/40847 :RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Fail to allocate response message buffer [type = 7] [size = 100] : 192.168.0.100/40847 :RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Fail to allocate a keep alive message buffer [size = 100] : 192.168.0.100/40847 :RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 Fail to initialize token interface : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 Fail to initialize App ID mapping object : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 Failed to initialize remote PED support.
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 Fail to initialize client registration database : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 Fail to populate client registration database : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 Fail to reset client registration entries flags : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 Fail to create token manager object : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 Fail to Initialize VToken Manager : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000105 Version 5.0 is not supported by command processor version 1.0 : RC_FUNCTION_NOT_SUPPORTED
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Connection count is not incremented for APP ID [b43 : 0 : 1] : [5 : 1] 192.168.0.100/40847 :RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Out of Memory Error in ConnectionClass::AttachResponseBuffer SetResponseBuffer : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000001 Fail to create command processor instance for client 192.168.0.100 : 192.168.0.100/40847 : RC_MEMORY_ALLOCATION
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 Invalid client registration observer.
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 Invalid client registration observer operation: 9.
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 Fail to return a command response to 192.168.0.100 : 192.168.0.100/40847 : RC_GENERAL_ERROR
+
+</pre>
+        <p>These messages indicate a failure of NTLS to start the component responsible for managing connection queues and for processing HSM-specific requests for service from clients.</p>
+        <h4>Fail to Initialize Appliance Statistics</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 warn&#160; NTLS [1234]: warning : 0xc0000002 : Fail to initialize appliance statistic object : RC_GENERAL_ERROR
+
+</pre>
+        <p>This message indicates a failure of the Luna SA command processor to initialize data structures necessary to compile operational statistics.&#160; NTLS continues to operate.</p>
+        <h4>HTL Required</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : Client 192.168.0.100 requires HTL; HTL status is 5
+
+</pre>
+        <p>This message indicates that the client is configured to use HTL but the host trust link is not up.</p>
+        <h4>HTL Failure</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5&#160; err&#160; NTLS [1234]: error :&#160; 0 : Exception in HTL kill listener: &lt;exception string&gt;
+
+</pre>
+        <p>This message indicates a failure of the HTL component of the Luna SA 5 command processor.</p>
+        <h4>Client Credentials Cannot be Verified</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : Client credentials cannot be verified : 192.168.0.100/40847
+
+</pre>
+        <p>This message indicates that the client credentials cannot be verified.&#160; A possible root cause is an inconsistent entry in the client certificate for IP address or host name.</p>
+        <h4>Client Terminating</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: info : 0 : Client 192.168.0.100 requested termination : 192.168.0.100/40847
+
+</pre>
+        <p>This message indicates that the client is terminating under normal (i.e., graceful) circumstances.</p>
+        <h4>Unsupported Command</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; NTLS [1234]: Client attempted unsupported command 0x00000000.
+
+</pre>
+        <p>This message indicates that the command request received by NTLS is unexpected. A possible root cause is from an application that calls a PKCS#11 function that NTLS is not programmed to either accept or ignore.</p>
+        <h4>Failure to Retrieve Container List</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0x300000 : Fail to retrieve container list : LUNA_RET_DEVICE_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; NTLS [1234]: critical : 0x300000 : Unable to load system containers! : LUNA_RET_DEVICE_ERROR
+
+</pre>
+        <p>These messages indicate that NTLS was unable to retrieve from the internal HSM its representation of how cryptographic objects are segregated from one another. A possible root cause is a loss of communication between the internal HSM and its associated device driver.</p>
+        <h4>Luna SA Command Processor Debug Messages</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Transient APP ID Mapping [5 / 5 : 1] removed :192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Open session : [1 / 0 : 1 : 20]&#160; : [5 : 1] : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Open session APP ID major [b43] doesn't have 0x80000000 set : [5 : 1] : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Create transient APP ID mapping for open session : [b43 : 0 : 1] : [5 : 1] : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : APP ID mapping already exist : [b43 : 0 : 1] : [5 : 1] : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Open session get APP ID : [b43 : 0 : 1] : [5 : 1] : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Close all sessions : [b43 : 0 : 1] : [5 : 1] : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Open Access : b43 : 0 : 1] :192.168.0.100/40847 1] : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Create persistent APP ID mapping for [b43 : 0 : 1] : [5 : 1] : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Change existing APP ID mapping for [5 : 1] to persistent state : [80000005 : 1] : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Closing Access for [b43 : 0 : 1] : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Close Access APP ID major [b43] doesn't have 0x80000000 set : [5 : 1] : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : APP ID Mapping [b43 : 0 : 1] : [5 : 1] removed :192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Bypassed LUNA_SEED_RANDOM command : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Closed Session : [5 : 1 : 266]
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Closed All Sessions : [5 / 5 : 1]
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Removed All Sessions : [5 / 5 : 1 : 20]
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Opened Session : [5 / 5 : 1 : 20 : 266]
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Created VToken for 4/8.
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : viper slot = 1
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Found 20 partitions on HSM.
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Looking for index for token with S/N 123456 amount 4 tokens.
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Token 4 has S/N 123456.
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Token 4 is dirty.
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Entering USBSlotHandler::MonitorSlot for slot 4
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Leaving USBSlotHandler::MonitorSlot for slot 4
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Entering USBSlotHandler::MonitorConfig for slot 4
+2012 Feb 29 12:05:01 myLuna&#160; local5 debug&#160; NTLS [1234]: debug : 0 : Leaving USBSlotHandler::MonitorConfig for slot 4
+
+</pre>
+        <p><span class="DefaultCompanyNameLong">Gemalto</span> does not enable logging of debug messages for NTLS. If in future <span class="DefaultCompanyNameLong">Gemalto</span> does enable this level of log messages, the messages above show examples of what you might find in the log files. These messages are for developer testing and hence are undocumented.</p>
+        <h4>Virtual Token Create and Add Failures</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Unable to add VToken 4/8 to table : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Unable to start VToken 4/8 : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; NTLS [1234]: error : 0xc0000002 : Unable to initialize VToken 4/8 : RC_GENERAL_ERROR
+
+</pre>
+        <p>These messages indicate a failure to complete an intended operation on a virtual token within NTLS.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

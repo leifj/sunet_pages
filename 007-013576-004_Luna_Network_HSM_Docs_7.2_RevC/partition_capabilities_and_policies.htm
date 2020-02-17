@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Partition Capabilities and Policies</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/capabilities_and_policies/partition_capabilities_and_policies.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor52"></a>Partition Capabilities and Policies</h2>
+        <p data-mc-conditions="Default.CV_Exclude">Partitions inherit the capabilities and policy settings of the HSM. Partitions also have policies that can be set to customize the partition functions. Partition policies can never be modified to be less secure than the corresponding HSM capability/policy. For example, if the HSM's cloning policy is disallowed (see HSM policy <b>7</b>), partition policies <b>0</b> and <b>4</b>, which allow cloning of private or secret keys, cannot be set. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>If you are running more than one LunaCM session against the same partition, and change a partition policy in one LunaCM session, the policy change will be reflected in that session only. You must exit and restart the other LunaCM sessions to display the changed policy settings.</p>
+        <p data-mc-conditions="Default.CV_Exclude">To view the partition capabilities and policy settings, use the LunaCM command <b>partition showpolicies</b>. Include the <b>-exporttemplate</b> option to create a template based on the current partition policy settings. See <a href="policy_templates.htm" class="MCXref xref">Policy Templates</a>.</p>
+        <p data-mc-conditions="Default.CV_Exclude">To modify partition policies, login as Partition SO and use the LunaCM command <b>partition changepolicy -policy</b> &lt;policy#&gt; <b>-value</b> &lt;0/1/value&gt;. See <a href="../../lunacm/commands/partition/partition_changepolicy.htm" class="MCXref xref">partition changepolicy</a> in the <i>LunaCM Command Reference Guide</i> for command syntax. </p>
+        <h3 class="ntoc">Destructiveness</h3>
+        <p>In some cases, changing a partition policy forces deletion of all cryptographic objects on the partition as a security measure. These policies are listed as <b>destructive</b> in the table below. Destructive policies are typically those that change the security level of the objects stored in the partition. </p>
+        <p>Use the LunaCM&#160;command <b>partition showpolicies -verbose</b> to check whether the policy you want to enable/disable is destructive. </p>
+        <h3 class="ntoc">Partition Capabilities and Policies List</h3>
+        <p>The table below summarizes the relationships and provides a brief description of the purpose and operation of each capability and policy. </p>
+        <table style="width: 100%;border-spacing: 0px;border-spacing: 0px;mc-table-style: url('../../Resources/TableStyles/Page.css');" cellspacing="0" width="100%" class="TableStyle-Page">
+            <col class="TableStyle-Page-Column-Column1" style="width: 3%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 16%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 16%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 65%;" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>#</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1"><a name="kanchor53"></a>Partition Capability</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1"><a name="kanchor54"></a>Partition Policy</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>0</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable private key cloning</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow private key cloning</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">If enabled, the partition is capable of cloning private keys to another partition. This policy must be enabled to backup partitions or create HA groups. Public keys/objects can always be cloned. </p>
+                        <p data-mc-conditions="Default.CV_Exclude">Partition policies <b>0</b> and <b>1</b> may not be set to <b>1</b> (ON)&#160;at the same time.</p>
+                        <p style="font-weight: normal;" data-mc-conditions="Default.CV_Exclude">Default: <b>ON</b></p>
+                        <p style="font-weight: bold;" data-mc-conditions="Default.CV_Exclude">Destructive: OFF-to-ON</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>1</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable private key wrapping</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow private key wrapping</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If enabled, private keys may be wrapped and saved to an encrypted file off the partition. Public keys/objects can always be wrapped off. </p>
+                        <p>Partition policies <b>0</b> and <b>1</b> may not be set to <b>1</b> (ON)&#160;at the same time.</p>
+                        <p style="font-weight: normal;">Default: <b>OFF</b></p>
+                        <p style="font-weight: bold;">Destructive: OFF-to-ON</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>2</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable private key unwrapping</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow private key unwrapping</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If enabled, private keys may be unwrapped onto the partition. The Partition SO can turn this feature on or off. </p>
+                        <p>If disabled, private 
+	key unwrapping is not available, and the Partition SO&#160;cannot change this.</p>
+                        <p>Default: <b>ON</b></p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>3</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable private key masking</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow private key masking</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Always disabled. SIM has been deprecated on all current <span class="DefaultProduct">SafeNet Luna Network HSM</span>s. The Partition SO cannot change this policy. </p>
+                        <p>Default: always <b>OFF</b></p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>4</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable secret key cloning</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow secret key cloning</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If enabled, secret keys on the partition can be backed up. The Partition SO can turn this feature on or off. </p>
+                        <p>If disabled, secret keys cannot be backed up, and the Partition SO&#160;cannot change this. Partition backup or partition network replication is allowed 
+	for the SafeNet high availability feature.</p>
+                        <p>Default:&#160;<b>ON</b></p>
+                        <p style="font-weight: bold;">Destructive: OFF-to-ON</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>5</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable secret key wrapping</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow secret key wrapping</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If enabled, secret keys can be wrapped off the partition. The Partition SO can turn this feature on or off. The Partition SO can turn this policy off to disallow secret key wrapping </p>
+                        <p>If disabled, the partition 
+	does not support secret key wrapping, and the Partition SO&#160;cannot change this.</p>
+                        <p>Default: <b>ON</b></p>
+                        <p style="font-weight: bold;">Destructive: OFF-to-ON</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>6</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable secret key unwrapping</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow secret key unwrapping</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If enabled, secret keys can be unwrapped onto the partition. The Partition SO can turn this feature on or off. </p>
+                        <p>If disabled, 
+	the partition does not support secret key unwrapping, and the Partition SO&#160;cannot change this.</p>
+                        <p>Default: <b>ON</b></p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>7</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable secret key masking</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow secret key masking</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Always disabled. SIM has been deprecated on all current <span class="DefaultProduct">SafeNet Luna Network HSM</span>s. The Partition SO cannot change this policy. </p>
+                        <p>Default: always <b>OFF</b></p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>10</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable multipurpose keys</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow multipurpose keys</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If enabled, keys for multiple purposes, such as signing and decrypting, may be created on the partition. The Partition SO can turn this feature on or off. </p>
+                        <p>If disabled, keys created on (or unwrapped onto) the 
+	partition must specify only a single function 
+	in the attribute template.</p>
+                        <p>Default: <b>ON</b></p>
+                        <p style="font-weight: bold;">Destructive: OFF-to-ON</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>11</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable changing key attributes</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow changing key attributes</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If enabled, non-sensitive attributes of the keys on the partition 
+	are modifiable (the user can change the functions that the key can 
+	use). </p>
+                        <p>
+	If disabled, keys created on the partition cannot be modified.</p>
+                        <p>This policy affects the following "key function attributes":</p>
+                        <p>CKA_ENCRYPT<br />CKA_DECRYPT<br />CKA_WRAP<br />CKA_UNWRAP<br />CKA_SIGN<br />CKA_SIGN_RECOVER<br />CKA_VERIFY<br />CKA_VERIFY_RECOVER<br />CKA_DERIVE<br />CKA_EXTRACTABLE</p>
+                        <p>Default: <b>ON</b></p>
+                        <p style="font-weight: bold;">Destructive: OFF-to-ON<br /></p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude,Default.PED">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>15</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow failed challenge responses</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Ignore failed challenge responses</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">This policy applies to PED-authenticated SafeNet Luna HSMs only. The Partition SO can turn the feature on or off. </p>
+                        <p data-mc-conditions="Default.CV_Exclude">If enabled, failed challenge secret login attempts on an activated partition are not counted towards a partition lockout. Only failed PED key authentication attempts will increment the counter. </p>
+                        <p data-mc-conditions="Default.CV_Exclude">If disabled, failed login attempts using either a PED&#160;key or a challenge secret will count towards a partition lockout. </p>
+                        <p data-mc-conditions="Default.CV_Exclude">See <a href="../partitions/about_activation_and_auto-activation.htm" class="MCXref xref">Activation and Auto-Activation on PED-Authenticated Partitions</a> and <a href="../users/failed_logins_hsm.htm" class="MCXref xref">Failed Logins</a> for more information. </p>
+                        <p data-mc-conditions="Default.CV_Exclude">Default: <b>ON</b></p>
+                        <p style="font-weight: bold;" data-mc-conditions="Default.CV_Exclude">Destructive: OFF-to-ON</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>16</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable operation without RSA blinding</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Operate without RSA blinding</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If enabled, the partition may run in a mode that does not use 
+	RSA blinding (a technique that introduces random elements 
+	into the signature process to prevent timing attacks on the RSA private key. Use of this technique may be required by certain security policies, 
+	but it does reduce performance). The Partition SO can turn this feature on or off. </p>
+                        <p>If disabled, the partition will always run in RSA blinding 
+	mode; performance will be affected. </p>
+                        <p>If the policy 
+	is set to <b>1</b> (ON), RSA blinding is not used.</p>
+                        <p>Default: <b>ON</b></p>
+                        <p style="font-weight: bold;">Destructive: OFF-to-ON</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>17</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable signing with non-local keys</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow signing with non-local keys</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If a key was generated on an HSM, CKA_LOCAL is set to 1. With this policy turned off, only keys with CKA_LOCAL=1 can be used to sign data on the HSM. </p>
+                        <p> Keys that are imported (unwrapped) to the HSM have CKA_LOCAL explicitly set to 0, so they may not be used for signing. Cloning and SIM maintain the value of CKA_LOCAL.</p>
+                        <p>With this policy turned on, keys that did not originate on the HSM (CKA_LOCAL=0) may be used for signing, and their trust history is not assured. </p>
+                        <p>Default: <b>ON</b></p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>18</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable raw RSA operations</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow raw RSA operations</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If enabled, the partition may allow raw RSA operations (mechanism 
+	CKM_RSA_X_509). This allows weak signatures and weak encryption. The Partition SO can turn this feature on or off. </p>
+                        <p>If disabled, the partition will not support raw RSA operations.</p>
+                        <p>Default: <b>ON</b></p>
+                        <p style="font-weight: bold;">Destructive: OFF-to-ON</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>20</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Max failed user logins allowed</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Max failed user logins allowed</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Displays the maximum number of failed partition login attempts before the partition is locked out (see <a href="../users/failed_logins_hsm.htm" class="MCXref xref">Failed Logins</a>). </p>
+                        <p>The Partition SO can change the number of failed logins to a value lower than the maximum if desired. </p>
+                        <p>Default: <b>10</b></p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>21</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable high availability recovery</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow high availability recovery</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">If enabled, partitions in the same HA group may be used to restore the login state of this partition after power outage or other deactivation. RecoveryLogin must be configured in advance (see <a href="../../lunacm/commands/role/role_recoveryinit.htm" class="MCXref xref">role recoveryinit</a> and <a href="../../lunacm/commands/role/role_recoverylogin.htm" class="MCXref xref">role recoverylogin</a> in the <i>LunaCM Command Reference Guide</i> for details. The Partition SO can turn this feature on or off. </p>
+                        <p data-mc-conditions="Default.CV_Exclude">Default: <b>ON</b></p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.PED">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>22</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable activation</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow activation</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">Applies only to PED-authenticated HSMs. </p>
+                        <p data-mc-conditions="Default.CV_Exclude">If enabled, the black and/or gray PED key secrets may be cached, so that the CO or CU only needs the challenge secret to login. The Partition SO can turn this feature on or off. </p>
+                        <p data-mc-conditions="Default.CV_Exclude">If disabled (or the policy is turned off), PED keys must be presented at each login, whether the call is local or from a client application. </p>
+                        <p data-mc-conditions="Default.CV_Exclude">This policy setting is overridden and activation is disabled if  a tamper event occurs, or if an uncleared tamper event is detected on reboot. See <a href="../tamper/tamper.htm" class="MCXref xref">Tamper Events</a>, and <a href="../partitions/about_activation_and_auto-activation.htm" class="MCXref xref">Activation and Auto-Activation on PED-Authenticated Partitions</a> for more information.</p>
+                        <p data-mc-conditions="Default.CV_Exclude">Default: <b>OFF</b></p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.PED">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>23</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable auto-activation</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow auto-activation</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">See Capability 22 above for a description of activation. </p>
+                        <p data-mc-conditions="Default.CV_Exclude">If enabled, the black or gray PED key secrets may be encrypted and semi-permanently cached to hard disk, so that the partition's activation status can be maintained after a power loss of up to two hours. The Partition SO can turn this feature on or off. </p>
+                        <p data-mc-conditions="Default.CV_Exclude">If disabled, this partition does not support auto-activation.</p>
+                        <p data-mc-conditions="Default.CV_Exclude">This policy setting is overidden and auto-activation is disabled if  a tamper event occurs, or if an uncleared tamper event is detected on reboot. See <a href="../tamper/tamper.htm" class="MCXref xref">Tamper Events</a>, and <a href="../partitions/about_activation_and_auto-activation.htm" class="MCXref xref">Activation and Auto-Activation on PED-Authenticated Partitions</a> for more information.</p>
+                        <p data-mc-conditions="Default.CV_Exclude">Default: <b>OFF</b></p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>25</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Minimum PIN length (inverted: 255 - min)</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Minimum PIN length (inverted: 255 - min)</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The absolute minimum length for a partition login PIN is 8 characters. This is displayed as a value subtracted from 256. The policy value is determined as follows: </p>
+                        <p>Subtract the desired minimum PIN length from 256 (the absolute maximum length), and set policy 25 to that value. </p>
+                        <p style="font-weight: bold;">256 - (min PIN) = (policy value)</p>
+                        <p style="font-weight: normal;">For example, to set the minimum PIN&#160;length to 10 characters, the Partition SO should set the value of this policy to 246:</p>
+                        <p style="font-weight: bold;">256 - 10 = 246</p>
+                        <p>The reason for this inversion is that a policy can only be set to a value equal to or lower than the value set by its capability. If the absolute minimum PIN length was set to 8, the Partition SO&#160;would be able to set the preferred minimum to 2, a less-secure policy. The Partition SO may only change the minimum PIN length to increase security by forcing stronger passwords. </p>
+                        <p>Default: <b>248</b></p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>26</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Maximum PIN length</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Maximum PIN length</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The absolute maximum length for a partition login PIN is 255 characters. The effective maximum may be changed by the Partition SO, and must always be greater than the value of the minimum PIN length, determined by the formula in the description of policy 25 (above). </p>
+                        <p>Default: <b>255</b></p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>28</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable Key Management Functions</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow Key Management Functions</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The Partition SO can disable access to any key management 
+	 functions by the user - all users become Crypto Users (the 
+	restricted-capability user) even if logged in as Crypto Officer.</p>
+                        <p>Default: <b>ON</b></p>
+                        <p style="font-weight: bold;">Destructive: OFF-to-ON</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>29</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable RSA signing without confirmation</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Perform RSA signing without confirmation</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The HSM can perform an internal verification (confirmation) of a signing 
+	operation to validate the signature. This confirmation 
+	is disabled by default because it has a performance impact on signature operations.</p>
+                        <p>Default: <b>ON</b></p>
+                        <p style="font-weight: bold;">Destructive: OFF-to-ON</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>31</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable private key unmasking</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow private key unmasking</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Remove encryption with AES 256-bit key from private key</p>
+                        <p>Default:&#160;<b>ON</b></p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>32</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable secret key unmasking</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow secret key unmasking</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Remove encryption with AES 256-bit key from secret key</p>
+                        <p>Default: <b>ON</b></p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>33</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p> Enable RSA PKCS mechanism</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow RSA PKCS mechanism</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Default: <b>ON</b></p>
+                        <p style="font-weight: bold;">Destructive: OFF-to-ON</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>34</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable CBC-PAD (un)wrap keys of any size</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow CBC-PAD (un)wrap keys of any size</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Default: <b>ON</b></p>
+                        <p style="font-weight: bold;">Destructive: OFF-to-ON</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>37</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable Secure Trusted Channel</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Force Secure Trusted Channel</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude,Default.SA">If enabled, the Partition SO can turn this policy on to require Secure Trusted Channel (STC) for partition access. </p>
+                        <p data-mc-conditions="Default.CV_Exclude,Default.SA">If disabled, the Client will use NTLS to access the partition. </p>
+                        <p data-mc-conditions="Default.CV_Exclude,Default.SA"><b>NOTE:</b> It is not possible for a single Client to access some partitions on an appliance using STC and others on the same appliance using NTLS. All connections between a single client and a single <span class="DefaultProduct">SafeNet Luna Network HSM</span> must be either STC or NTLS. See <a href="../stc/stc.htm" class="MCXref xref">Secure Trusted Channel (STC)</a> in the <i>Administration Guide</i> for more information. </p>
+                        <p data-mc-conditions="Default.CV_Exclude">Default:&#160;<b>OFF</b></p>
+                        <p style="font-weight: bold;" data-mc-conditions="Default.CV_Exclude">Destructive: ON-to-OFF</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">
+                        <p>39</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p>Enable Start/End Date Attributes</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p>Allow Start/End Date Attributes</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>If enabled, the Partition SO can turn this policy on to enforce CKA_START_DATE/CKA_END_DATE attributes for the partition. With the policy turned off, these attributes can be set, but their values will be ignored. </p>
+                        <p>Default: <b>OFF</b></p>
+                        <p style="font-weight: bold;">Destructive: ON-to-OFF</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>HSM Capabilities and Policies</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/capabilities_and_policies/hsm_capabilities_and_policies.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor364"></a>HSM Capabilities and Policies</h2>
+        <p>The <span class="DefaultProduct">SafeNet Luna Network HSM</span>'s configuration is based on HSM capabilities. They are set at manufacture according to the model you selected at time of purchase. Capabilities can only be modified by purchase and application of capability updates. </p>
+        <p>A subset of HSM capabilities have corresponding HSM policies that allow you to customize the HSM configuration. Policies can be modified based on your specific needs. They can never be modified to be less secure than the corresponding capability. </p>
+        <p data-mc-conditions="Default.SA">To view the HSM capability and policy settings, use the LunaSH command <b>hsm showpolicies</b>. Include the <b>-exporttemplate</b> option to create a template based on the current HSM policy settings. See <a href="policy_templates.htm" class="MCXref xref">Policy Templates</a>.</p>
+        <p data-mc-conditions="Default.SA">To&#160;modify HSM policies, login as HSM&#160;SO and use the LunaSH command <b>hsm changepolicy</b> <b>-policy</b> &lt;policy#&gt; <b>-value</b> &lt;0/1&gt;. See <a href="../../lunash/commands/hsm/hsm_changepolicy.htm" class="MCXref xref">hsm changepolicy</a> in the <i>LunaSH Command Reference Guide</i> for command syntax. </p>
+        <p data-mc-conditions="Default.SA">To zeroize the HSM&#160;and reset the policies to their default values, use <b>hsm factoryreset</b>. See <a href="../../lunash/commands/hsm/hsm_factoryreset.htm" class="MCXref xref">hsm factoryreset</a> in the <i>LunaSH Command Reference Guide</i> for command syntax. </p>
+        <p data-mc-conditions="Default.SA">To zeroize the HSM and keep the current policy settings, use <b>hsm zeroize</b>. See <a href="../../lunash/commands/hsm/hsm_zeroize.htm" class="MCXref xref">hsm zeroize</a> in the <i>LunaSH Command Reference Guide</i> for command syntax. </p>
+        <h3 class="ntoc">Destructiveness</h3>
+        <p>In some cases, changing an HSM policy zeroizes all application partitions or the entire HSM as a security measure. These policies are listed as <b>destructive</b> in the table below.</p>
+        <h3 class="ntoc">HSM&#160;Capability and Policy Descriptions</h3>
+        <p>The table below summarizes the relationships and provides a brief description of the purpose and operation of each capability and policy.</p>
+        <table style="width: 100%;border-spacing: 0px;border-spacing: 0px;mc-table-style: url('../../Resources/TableStyles/Page.css');margin-left: 0;margin-right: auto;" cellspacing="0" width="100%" class="TableStyle-Page">
+            <col class="TableStyle-Page-Column-Column1" style="width: 3%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 16%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 16%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 65%;" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>#</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">HSM Capability</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">HSM Policy</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>0</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable PIN-based authentication</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If allowed, the HSM authenticates all users with keyboard-entered passwords. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>1</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable PED-based authentication</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If allowed, the HSM authenticates users with secrets stored on physical PED keys, read by a SafeNet Luna PED. The Crypto Officer and Crypto User roles may also be configured with a secondary, keyboard-entered challenge secret. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>2</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Performance level</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Numerical value indicates the performance level of this HSM, determined by the model you selected at time of purchase: </p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>4: Standard</b> performance</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>8: Enterprise</b> performance</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>15: Maximum</b> performance</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>4</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable domestic mechanisms &amp; key sizes</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Always allowed. All SafeNet Luna HSMs are capable of full-strength cryptography with no US export restrictions. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>6</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable masking</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Always disallowed. SIM has been deprecated on all current <span class="DefaultProduct">SafeNet Luna Network HSM</span>s. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>7</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable cloning</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow cloning</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If allowed, the HSM is capable of cloning cryptographic objects from one partition to another. This policy must be enabled to backup partitions over a network or create HA groups. Partition Security Officers may then enable/disable cloning on individual partitions. </p>
+                        <p><b>Destructive: OFF-to-ON</b>
+                        </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>9</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable full (non-backup) functionality</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If allowed, the HSM is capable of full cryptographic functions. </p>
+                        <p>This capability is only disallowed on SafeNet Luna Backup HSMs. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>12</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable non-FIPS algorithms</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow non-FIPS algorithms</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If allowed, the HSM can use all available cryptographic algorithms. </p>
+                        <p>If disallowed, only algorithms sanctioned by the FIPS 140-2 standard are permitted. The following is displayed in the output from <MadCap:conditionalText data-mc-conditions="Default.SA"><b>hsm show</b> in LunaSH</MadCap:conditionalText>: </p><pre data-mc-conditions="Default.SA">FIPS 140-2 Operation:</pre><pre data-mc-conditions="Default.SA">=====================</pre><pre xml:space="preserve" data-mc-conditions="Default.SA">The HSM is in FIPS 140-2 approved operation mode.</pre><pre xml:space="preserve">&#160;</pre>
+                        <p><b>Destructive: OFF-to-ON</b>
+                        </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.PED">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>15</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable SO reset of partition PIN</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>SO can reset partition PIN</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If allowed, a Partition SO can reset the password or PED secret of a Crypto Officer who has been locked out after too many bad login attempts. </p>
+                        <p>If disallowed, the lockout is permanent and the partition contents are no longer accessible. The partition must be re-initialized, and key material restored from a backup device. </p>
+                        <p>See <a href="../users/failed_logins_hsm.htm" class="MCXref xref">Failed Logins</a> for more information. </p>
+                        <p><b>Destructive: OFF-to-ON, ON-to-OFF</b>
+                        </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>16</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable network replication</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow network replication</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If allowed, cryptographic object cloning is permitted over a network. This is required for HA groups, and for partition backup to a remote or client-connected SafeNet Luna Backup HSM. </p>
+                        <p>If disallowed, cloning over a network is not permitted. Partition backup is possible to a locally-connected SafeNet Luna Backup HSM only. Setting this policy to <b>0</b> means that only the HSM SO can backup partitions. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>17</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable Korean Algorithms</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow Korean algorithms</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If allowed, the <span class="DefaultProduct">SafeNet Luna Network HSM</span> can use the Korean algorithm set. This capability may be purchased as an upgrade. See <a href="../upgrade/capabilities_sa.htm" class="MCXref xref" data-mc-conditions="Default.SA">Upgrading HSM Capabilities and Partitions</a>. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>18</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>FIPS evaluated</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td colspan="1" rowspan="1" style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Always disallowed - deprecated policy. All <span class="DefaultProduct">SafeNet Luna Network HSM</span>s are capable of operating in FIPS Mode. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>19</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Manufacturing Token</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">&#160;</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">N/A (SafeNet internal use only)</td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>21</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable forcing user PIN change<br /></p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Force user PIN change after set/reset</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If allowed, when a Partition SO initializes the Crypto Officer role (or resets the password/PED secret), the CO must change the credential with <b>role changepw</b> before any other actions are permitted. The same is true when the CO initializes/resets the Crypto User role. This policy is intended to enforce the separation of roles on the partition. </p>
+                        <p>If disallowed, the CO/CU may continue to use the credential assigned by the Partition SO. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>22</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable offboard storage</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow off-board storage</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>On previous HSMs, this policy allowed or disallowed the use of the portable SIM key. SIM is not supported on this version of SafeNet Luna HSM. </p>
+                        <p><b>Destructive: OFF-to-ON</b>
+                        </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>23</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable partition groups</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Always disallowed - deprecated policy.</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>25</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable Remote PED usage</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow Remote PED usage</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Always enabled on PED-authenticated <span class="DefaultProduct">SafeNet Luna Network HSM</span>s. All PED-authenticated HSMs are capable of connecting to a local PED or a remotely-located PED server. The HSM SO may turn this feature on or off. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>27</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">HSM non-volatile storage space</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">&#160;</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Displays the non-volatile maximum storage space (in bytes) on the HSM. This is determined by the model of <span class="DefaultProduct">SafeNet Luna Network HSM</span> you selected at time of purchase. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>30</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Enable Unmasking</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Allow unmasking</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If allowed, cryptographic material can be migrated from legacy SafeNet appliances that used SIM. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>33</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Maximum number of partitions</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Current maximum number of partitions</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Displays the maximum number of application partitions that can be created on the HSM. This number is determined by the model of <span class="DefaultProduct">SafeNet Luna Network HSM</span> you selected at time of purchase. On some models, the number of allowable partitions can be upgraded with a separate purchase. See "Upgrading HSM Capabilities and Partition Capacity"&#160;on page&#160;1 for more information. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>35</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Enable Single Domain</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">&#160;</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">Not applicable to <span class="DefaultProduct">SafeNet Luna Network HSM</span>s. </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>36</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Enable Unified PED Key</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">&#160;</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">Not applicable to <span class="DefaultProduct">SafeNet Luna Network HSM</span>s. </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.PED">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>37</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Enable MofN</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Allow MofN</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If allowed on PED-authenticated <span class="DefaultProduct">SafeNet Luna Network HSM</span>s, this policy enables you to split a PED secret among multiple PED keys (see <a href="../PED_Auth/PED_Auth.htm#MofN" class="MCXref xref">M of N Split Secrets</a>). </p>
+                        <p>If disallowed, users will no longer be asked to split a PED secret (M and N automatically set to 1). </p>
+                        <p>Always disallowed on password-authenticated HSMs. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>38</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Enable small form factor backup/restore</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">&#160;</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">Not available in this release.</td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>39</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="">Enable Secure Trusted Channel</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="">Allow Secure Trusted Channel</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1" data-mc-conditions="">
+                        <p data-mc-conditions="Default.SA">If allowed, this policy enables the use of Secure Trusted Channel for partition-client connections (see <a href="../stc/stc.htm" class="MCXref xref">Secure Trusted Channel (STC)</a>). </p>
+                        <p data-mc-conditions="Default.SA">If disallowed, all partition-client connections must use NTLS. </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>40</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Enable decommission on tamper</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Decommission on tamper</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If allowed, the HSM&#160;will be decommissioned if a tamper event occurs. Decommissioning deletes all partitions and their contents, the audit role, and the audit configuration. The HSM policy settings are retained. </p>
+                        <p>See <a href="../tamper/tamper.htm" class="MCXref xref">Tamper Events</a> for more information.</p>
+                        <p><b>Destructive: ON-to-OFF</b>
+                        </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>42</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Enable partition re-initialize</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">&#160;</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">Not available in this release.</td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>43</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1"> Enable low level math acceleration</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Allow low-level math acceleration</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>This is enabled by default, and must be enabled to provide maximum performance. Do not disable unless instructed to do so by <span class="DefaultCompanyNameLong">Gemalto</span> Technical Support.</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.SA">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>45</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1"> Enable Fast-Path</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">&#160;</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">Not available in this release.</td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>46</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Allow Disabling Decommission</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p> Disable Decommission</p>
+                    </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If enabled, the decommission <MadCap:conditionalText data-mc-conditions="Default.SA">button</MadCap:conditionalText> is disabled, preventing decommissioning of the HSM.</p>
+                        <p><b>CAUTION:</b> Changing this policy will destroy partitions on the HSM, and they must be recreated. If HSM policy 40: Decommission on Tamper is enabled, you cannot enable this policy (fails with error: CKR_CONFIG_FAILS_DEPENDENCIES). However, attempting to enable it will still destroy HSM partitions. </p>
+                        <p><b>Destructive: OFF-to-ON, ON-to-OFF</b>
+                        </p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>47</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1"> Enable Tunnel Slot</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">&#160;</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Not available in this release.</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">
+                        <p>48</p>
+                    </td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1"> Enable Controlled Tamper Recovery</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Do Controlled Tamper Recovery</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>If allowed, the HSM&#160;SO&#160;must explicitly clear the tamper before the HSM can resume normal operations. This is the default behavior.</p>
+                        <p>If disallowed, the HSM must be restarted before it can resume normal operations.</p>
+                        <p>See <a href="../tamper/tamper.htm" class="MCXref xref">Tamper Events</a> for more information.</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">49</td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Enable Partition Utilization Metrics</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Allow Partition Utilization Metrics</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">If this policy is allowed, Quality of Service metrics can be viewed for each partition and for the whole HSM.</td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">50</td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Enable Functionality Modules</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Allow Functionality Modules</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">If this policy is allowed, Functionality Modules can be loaded to the HSM, permitting custom cryptographic operations to be run. Allows use of the <b>hsm showUtilization</b> and <b>hsm resetUtilization</b> commands in LunaCM and the <b>hsm qos metrics</b> commands in LunaSH. </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">51</td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Enable SMFS Auto Activation</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Allow SMFS Auto Activation </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">If this policy is allowed, the Secure Memory File System is automatically activated on startup, providing a secure location in the HSM, to which Functionality Modules can be loaded and run. </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">52</td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Enable Disabling FM Privilege Level</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyE-Column1-Body1">Allow Disabling FM Privilege Level</td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyD-Column1-Body1">&#160;</td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">53</td>
+                    <td style="border-left-width: 1px;border-left-color: #000000;border-left-style: Solid;border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyB-Column1-Body1">Enable FM Cipher Engine Key ENcryption </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyB-Column1-Body1">Do FM Cipher Engine Key ENcryption </td>
+                    <td style="border-right-width: 1px;border-right-color: #000000;border-right-style: Solid;border-bottom-style: Solid;border-bottom-color: #000000;border-bottom-width: 1px;padding-right: 10px;padding-left: 10px;" class="TableStyle-Page-BodyA-Column1-Body1">&#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

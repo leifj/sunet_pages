@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Utilities Reference Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>SCP and PSCP</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#Utilities/scp_pscp/scp_pscp.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter">SCP and PSCP</h1>
+        <p>Use the <b>scp</b> (Linux/Unix) or <b>pscp</b> (Windows) command to securely move updates and certificates and other 
+files from a source computer onto the SafeNet appliance, or to move appliance 
+ certificates or log files out to a client computer.</p>
+        <p>All packages from SafeNet are signed and encrypted and come with an 
+authorization code (authcode) that must be provided to decrypt and use 
+the package. </p>
+        <h3 class="ntoc">Syntax</h3>
+        <h4>Client to appliance</h4>
+        <p><b>scp</b> [options] [&lt;user&gt;@]&lt;host&gt;:&lt;source&gt; &lt;target&gt;</p>
+        <h4>Appliance to client</h4>
+        <p><b>scp</b> [options] &lt;source&gt; [&lt;source&gt;...] [&lt;user&gt;@]&lt;host&gt;:&lt;target&gt;</p>
+        <h4>List files on the appliance</h4>
+        <p><b>scp</b> [options] <b>-ls</b> &lt;user&gt;@&lt;host&gt;:&lt;file_path&gt;</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>When using <b>scp</b> or <b>pscp</b> over an IPv6 network, enclose addresses in square brackets. <br /></p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 200px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Argument(s)</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p style="font-weight: bold;">-p</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Preserve file attributes. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p style="font-weight: bold;">-q</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Quiet -- do not show statistics. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p style="font-weight: bold;">-r</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Copy directories recursively. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p><b>-S</b> &lt;path_to_SSH&gt;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Specify the location of SSH. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p style="font-weight: bold;">-v</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Show verbose messages. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p><b>-P</b> &lt;port&gt;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Connect to the specified port. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p><b>-pw</b> &lt;password&gt;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Login with specified password. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p style="font-weight: bold;">-unsafe</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Allow server-side wildcards (dangerous). </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Examples</h3>
+        <p>The following examples illustrate how to transfer files from a SafeNet Luna HSM client to a SafeNet Luna Network HSM, and from a SafeNet Luna Network HSM to a SafeNet Luna HSM client.</p>
+        <h4>Transferring a file from a SafeNet Luna HSM client to a SafeNet Luna Network HSM</h4><pre xml:space="preserve">/usr/safenet/lunaclient/&gt;scp test-file.txt admin@myluna:</pre><pre xml:space="preserve">admin@myluna's password: ********</pre><pre xml:space="preserve">test-file.txt &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;|  &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0  kB | &#160;&#160;0.1  kB/s | ETA: 00:00:00 | 100%</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">/usr/safenet/lunaclient/&gt;</pre><pre xml:space="preserve">&#160;</pre>
+        <p class="notepad_note">The colon is required. Type nothing after the colon when moving files onto 
+ the SafeNet appliance. All files that are scp’d to the SafeNet appliance go 
+ to a predetermined directory, which you cannot change (for security reasons). 
+ While it is possible to change the filename during scp (by typing a new 
+ filename after the colon in the scp command), this is not recommended 
+ since most operations expect certain filenames and can fail if those are 
+ not found.<br />&#160;</p><pre xml:space="preserve">/usr/safenet/lunaclient/&gt;scp test-file.txt admin@myluna:different-file.txt</pre><pre xml:space="preserve">admin@myluna's password: ********</pre><pre xml:space="preserve">test-file.txt &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;|  &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;0  kB | &#160;&#160;0.1  kB/s | ETA: 00:00:00 | 100%</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">/usr/safenet/lunaclient/&gt;</pre><pre xml:space="preserve">&#160;</pre>
+        <p class="notepad_note">If the arriving file carries an unexpected 
+ name, it might not be handled correctly by subsequent commands</p>
+        <p class="notepad_note"> If you have SSH located in a non-standard (UNIX) location, launch the scp command with the "-S" option (that's an uppercase "s"), followed by the path to SSH, before supplying the paths to the source and target files, like: &#160;<br /></p><pre xml:space="preserve">scp -S /usr/bin/ssh &lt;source file&gt; &lt;dest file&gt;</pre>
+        <h4>Transferring a file from a SafeNet Luna Network HSM to a SafeNet Luna HSM client</h4><pre xml:space="preserve">bash-2.05# scp admin@myLuna3:server.pem .</pre><pre xml:space="preserve">admin@myLuna3's password: *********</pre><pre xml:space="preserve">server.pem           100%</pre><pre xml:space="preserve">|*******************************************************|   928</pre><pre xml:space="preserve">00:00</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Note the dot (.) at the end of the command, denoting “place the resulting file in the current directory”.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Java Interfaces">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>The JCPROV PKCS#11 Java Wrapper</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/java/jcprov.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>The JCPROV PKCS#11 Java Wrapper</h2>
+        <p>This section describes how to install and use the JCPROV Java wrapper for the PKCS#11 API.  It contains the following topics:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#JCPROV" class="MCXref xref">JCPROV Overview</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Installi" class="MCXref xref">Installing JCPROV</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#JCPROV2" class="MCXref xref">JCPROV Sample Programs</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#JCPROV3" class="MCXref xref">JCPROV Sample Classes</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#JCPROV4" class="MCXref xref">JCPROV API Documentation</a>
+        </p>
+        <h3><a name="JCPROV"></a>JCPROV Overview</h3>
+        <p>JCPROV is a Java wrapper for the PKCS#11 API. JCPROV is designed to be as similar to the PKCS#11 API as the Java language allows, allowing developers who are familiar with the PKCS#11 API to rapidly develop Java-based programs that exercise the PKCS#11 API.</p>
+        <p>AES-GMAC&#160;and AES-GCM are supported in JCPROV. Use CK_AES_CMAC_PARAMS.java to define the GMAC operation. Implementation is the same as for PKCS#11.</p>
+        <h4>JDK compatibility</h4>
+        <p>The JCPROV Java API is compatible with JDK 1.5.0 or higher.</p>
+        <h4>The JCPROV library</h4>
+        <p>The JCPROV library is implemented in <b>jcprov.jar</b>, under the namespace <b>com.safenetinc.jcprov</b>. It is accompanied by a shared library that provides the native methods used to access the appropriate PKCS#11 library. The name of the shared library is platform dependent, as follows:</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Operating system</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Shared library</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Windows (32 and 64 bit)</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">jcprov.dll</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Linux</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">libjcprov.so</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Solaris</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">libjcprov.so</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">AIX</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">libjcprov.so</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3><a name="Installi"></a>Installing JCPROV</h3>
+        <p>
+            <MadCap:conditionalText data-mc-conditions="Default.CV_Exclude">Use the SafeNet Luna Client Installer to install the JCPROV software (runtime and SDK packages).</MadCap:conditionalText> The software is installed in the location specified in the following table:</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Operating system</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Installation location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Windows</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">C:\Program Files\safenet\lunaclient\jcprov</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Linux</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">/usr/safenet/lunaclient/jcprov</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Solaris</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">/opt/safenet/lunaclient/jcprov</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">AIX</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">/usr/safenet/lunaclient/jcprov</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The installation includes a <b>samples</b> subdirectory ( ) and a <b>javadocs</b> subdirectory ( ).</p>
+        <h4 data-mc-conditions="Default.CV_Exclude">Changing the Java JNI libraries (AIX only)</h4>
+        <p data-mc-conditions="Default.CV_Exclude">The Java VM on AIX does not support mixed mode JNI libraries. Mixed mode libraries are shared libraries that provide both 32-bit and 64-bit interfaces. It is therefore essential that you select the correct JNI library to use with your Java VM.</p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>When JCPROV is installed, links are automatically created to use the 32-bit versions of the JNI libraries. You need to update the links if you are using a 64-bit operating system.</p>
+        <h5 data-mc-conditions="Default.CV_Exclude">To configure the JNI library for use with a 32-bit Java VM:</h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that the <b>/usr/safenet/lunaclient/jcprov/lib/libjcprov.a</b> symbolic link points to a 32-bit version of the library (<b>libjcprov_32.a</b>), for example <b>/usr/safenet/lunaclient/jcprov/lib/libjcprov_32.a</b>.</p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">2.</span></span>Ensure that the <b>/usr/safenet/lunaclient/jcprov/lib/libjcryptoki.a</b> symbolic link points to a 32-bit version of the library(<b>libjcryptoki_32.a</b>), for example <b>/usr/safenet/lunaclient/jcprov/lib/libjcryptoki_32.a</b>.</p>
+        <h5 data-mc-conditions="Default.CV_Exclude">To configure the JNI library for use with a 64-bit Java VM:</h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that the <b>/usr/safenet/lunaclient/jcprov/lib/libjcprov.a</b> symbolic link points to a 64-bit version of the library (<b>libjcprov_64.a</b>), for example <b>/usr/safenet/lunaclient/jcprov/lib/libjcprov_64.a</b>.</p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">2.</span></span>Ensure that the <b>/usr/safenet/lunaclient/jcprov/lib/libjcryptoki.a</b> symbolic link points to a 64-bit version of the library (<b>libjcryptoki_64.a</b>), for example <b>/usr/safenet/lunaclient/jcprov/lib/libjcryptoki_64.a</b>.</p>
+        <h3 data-mc-conditions="Default.CV_Exclude"><a name="JCPROV2"></a>JCPROV Sample Programs</h3>
+        <p data-mc-conditions="Default.CV_Exclude">Several sample programs are included to help you become familiar with JCPROV. The binaries for the sample programs are included in the <b>jcprovsamples.jar</b> file. You must compile the binaries before you can use the sources provided.</p>
+        <h4 data-mc-conditions="Default.CV_Exclude">Compiling and running the JCPROV sample programs</h4>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>You require JDK 1.5.0 or newer to compile the JCPROV sample programs.</p>
+        <p data-mc-conditions="Default.CV_Exclude">It is recommended that you compile the samples in their installed locations, so that the path leading to the samples directory in the installation location will allow them to be executed as documented below.</p>
+        <h4 data-mc-conditions="Default.CV_Exclude">Prerequisites</h4>
+        <p data-mc-conditions="Default.CV_Exclude">For best results, perform the following actions before attempting to compile the sample programs:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Add <b>jcprov.jar</b> to your <b>CLASSPATH</b> environment variable</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Add a path to the <b>CLASSPATH</b> environment variable that allows JCPROV to use the  <b>com.safenetinc.jcprov.sample</b> namespace. This is required since all of the applications are registered under this namespace.</p>
+        <h5 data-mc-conditions="Default.CV_Exclude">To compile the JCPROV sample programs on UNIX/Linux:</h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">1.</span></span>Set the <b>CLASSPATH</b> environment variable to point to <b>jcprov.jar</b> and the root path for the sample programs.<br /><b>export CLASSPATH</b>=&lt;jcprov_installation_directory&gt;<b>/*</b></p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">2.</span></span>	Change directory to the sample programs path.<br /><b>cd /usr/safenet/lunaclient/jcprov/samples/com/safenetinc/jcprov/sample</b></p>
+        <p class="ol1" data-mc-autonum="3." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">3.</span></span>Use the <b>javac</b> program to compile the examples.<br /><b>javac GetInfo.java</b></p>
+        <p class="ol1" data-mc-autonum="4." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">4.</span></span>Use the <b>java</b> program to run the samples.<br /><b>java com.safenetinc.jcprov.sample.GetInfo -slot 0 -info</b></p>
+        <h5 data-mc-conditions="Default.CV_Exclude">To compile the JCPROV sample programs on Windows:</h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">1.</span></span>Set the <b>CLASSPATH</b> environment variable to point to <b>jcprov.jar</b> and the root path for the sample programs:<br />C:\&gt; <b>set “CLASSPATH= C:\Program Files\safenet\lunaclient\jcprov\jcprov.jar; C:\program files\safenet\jcprov\samples”</b></p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">2.</span></span>	Use the <b>javac</b> program to compile the examples:<br />C:\Program Files\safenet\lunaclient\jcprov\samples&gt; <b>javac GetInfo.java</b></p>
+        <p class="ol1" data-mc-autonum="3." data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ol1Number">3.</span></span>Use the <b>java</b> program to run the samples:<br />C:\Program Files\safenet\lunaclient\jcprov\samples&gt; <b>java com.safenetinc.jcprov.sample.GetInfo -info -slot 0</b></p>
+        <h3 data-mc-conditions="Default.CV_Exclude"><a name="JCPROV3"></a>JCPROV Sample Classes</h3>
+        <p data-mc-conditions="Default.CV_Exclude">JCPROV provides  sample classes in the &lt;jcprov_installation_directory&gt;/<b>samples</b> directory. These include:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#DeleteKe" class="MCXref xref">DeleteKey</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#EncDec" class="MCXref xref">EncDec</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Generate" class="MCXref xref">GenerateKey</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#GetInfo" class="MCXref xref">GetInfo</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Threadin" class="MCXref xref">Threading</a>
+        </p>
+        <p data-mc-conditions="Default.CV_Exclude">Other samples contained in the <b>samples</b> directory may be more or less useful to you depending on what you need. Each relevant sample has a description of both its purpose and its parameters in the header section of its file.</p>
+        <h3 class="ntoc" data-mc-conditions="Default.CV_Exclude"><a name="DeleteKe"></a>DeleteKey</h3>
+        <p data-mc-conditions="Default.CV_Exclude">Demonstrates the deletion of keys.</p>
+        <p data-mc-conditions="Default.CV_Exclude">A generated key is required to use this script. To generate a key, use <a href="#Generate" class="MCXref xref">GenerateKey</a> or refer to <a href="java_keytool_with_luna_hsm.htm" class="MCXref xref">Using Java Keytool with SafeNet Luna Network HSM</a></p>
+        <h4 data-mc-conditions="Default.CV_Exclude">Usage</h4>
+        <p data-mc-conditions="Default.CV_Exclude"><b>java com.safenetinc.jcprov.sample.DeleteKey -keyType</b> &lt;keytype&gt; <b>-keyName</b> &lt;keyname&gt; [<b>-slot</b> &lt;slotId&gt;] [<b>-password</b> &lt;password&gt;]</p>
+        <h4 data-mc-conditions="Default.CV_Exclude">Parameters</h4>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 98px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1" data-mc-conditions="Default.CV_Exclude">Parameter</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1" data-mc-conditions="Default.CV_Exclude">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-keytype</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">Specifies the type of key you want to delete. Enter this parameter followed by one of the following supported key types:</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>des</b> - single DES key</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>des2</b> - double-length, triple-DES key</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>des3</b> - triple-length, triple-DES key</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>rsa</b> - RSA key pair</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-keyName</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Specifies the name (label) of the key you want to delete. Enter this parameter followed by the name (label) of the key you want to delete.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-slot</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Specifies the slot for the HSM or partition that contains the key you want to delete. Optionally enter this parameter followed by the slot identifier for the HSM or partition that contains the key you want to delete. If this parameter is not specified, the default slot is used.<br /><b>Default:</b> 1</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-password</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Specifies the password for the slot. Optionally enter this parameter followed by the slot password to delete a private key.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc" data-mc-conditions="Default.CV_Exclude"><a name="EncDec"></a>EncDec</h3>
+        <p data-mc-conditions="Default.CV_Exclude">Demonstrates encryption and decryption operations by encrypting and decrypting a string.</p>
+        <p data-mc-conditions="Default.CV_Exclude">A generated key is required to use this script. To generate a key, use <a href="#Generate" class="MCXref xref">GenerateKey</a> or refer to <a href="java_keytool_with_luna_hsm.htm" class="MCXref xref">Using Java Keytool with SafeNet Luna Network HSM</a></p>
+        <h4 data-mc-conditions="Default.CV_Exclude">Usage</h4>
+        <p data-mc-conditions="Default.CV_Exclude"><b>java com.safenetinc.jcprov.sample.EncDec -keyType</b> &lt;keytype&gt; <b>-keyName</b> &lt;keyname&gt; [<b>-slot</b> &lt;slotId&gt;] [<b>-password</b> &lt;password&gt;]</p>
+        <h4 data-mc-conditions="Default.CV_Exclude">Parameters</h4>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 96px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1" data-mc-conditions="Default.CV_Exclude">Parameter</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1" data-mc-conditions="Default.CV_Exclude">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-keytype</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">Specifies the type of key you want to use to perform the encryption/decryption operation. Enter this parameter followed by one of the following supported key types:</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>des</b> - single DES key</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>des2</b> - double-length, triple-DES key</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>des3</b> - triple-length, triple-DES key</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>rsa</b> - RSA key pair</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-keyName</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Specifies the name (label) of the key you want to use to perform the encryption/decryption operation. Enter this parameter followed by the name (label) of the key you want to use to perform the encryption/decryption operation.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-slot</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Specifies the slot for the HSM or partition that contains the key you want to use to perform the encryption/decryption operation. Optionally enter this parameter followed by the slot identifier for the HSM or partition that contains the key you want to use to perform the encryption/decryption operation. If this parameter is not specified, the default slot is used.<br /><b>Default:</b> 1</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-password</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Specifies the password for the slot. Optionally enter this parameter followed by the slot password to encrypt/decrypt a private key.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc" data-mc-conditions="Default.CV_Exclude"><a name="Generate"></a>GenerateKey</h3>
+        <p data-mc-conditions="Default.CV_Exclude">Demonstrates the generation of keys.</p>
+        <h4 data-mc-conditions="Default.CV_Exclude">Usage</h4>
+        <p data-mc-conditions="Default.CV_Exclude"><b>java com.safenetinc.jcprov.sample.GenerateKey -keyType</b> &lt;keytype&gt; <b>-keyName</b> &lt;keyname&gt; [<b>-slot</b> &lt;slotId&gt;] [<b>-password</b> &lt;password&gt;]</p>
+        <h4 data-mc-conditions="Default.CV_Exclude">Parameters</h4>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 99px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1" data-mc-conditions="Default.CV_Exclude">Parameter</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1" data-mc-conditions="Default.CV_Exclude">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-keytype</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">Specifies the type of key you want to generate. Enter this parameter followed by one of the following supported key types:</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>des</b> - single DES key</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>des2</b> - double-length, triple-DES key</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>des3</b> - triple-length, triple-DES key</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>rsa</b> - RSA key pair</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-keyName</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Specifies the name (label) of the key you want to generate. Enter this parameter followed by the name (label) of the key you want to generate.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-slot</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Specifies the slot for the HSM or partition where you want to generate the key. Optionally enter this parameter followed by the slot identifier for the HSM or partition where you want to generate the key. If this parameter is not specified, the default slot is used.<br /><b>Default:</b> 1</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-password</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Specifies the password for the slot. Optionally enter this parameter followed by the slot password to generate a private key.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc" data-mc-conditions="Default.CV_Exclude"><a name="GetInfo"></a>GetInfo</h3>
+        <p data-mc-conditions="Default.CV_Exclude">Demonstrates the retrieval of slot and token information.</p>
+        <h4 data-mc-conditions="Default.CV_Exclude">Usage</h4>
+        <p data-mc-conditions="Default.CV_Exclude"><b>java com.safenetinc.jcprov.sample.GetInfo</b> {<b>-info</b> | <b>-slot</b> [&lt;slotId&gt;] | <b>-token</b> [&lt;slotId&gt;]}</p>
+        <h4 data-mc-conditions="Default.CV_Exclude">Parameters</h4>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1" data-mc-conditions="Default.CV_Exclude">Parameter</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1" data-mc-conditions="Default.CV_Exclude">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-info</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Retrieve general information.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-slot</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Retrieve slot information for the specified slot. Enter this parameter followed by the slot identifier for the slot  you want to retrieve information from. If &lt;slotId&gt; is not specified, information is retrieved for all available slots.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-token</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Retrieve token information for the HSM or partition in the specified slot. Enter this parameter followed by the slot identifier for the HSM or partition  you want to retrieve information from. If &lt;slotId&gt; is not specified, information is retrieved for all available slots.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc" data-mc-conditions="Default.CV_Exclude"><a name="Threadin"></a>Threading</h3>
+        <p data-mc-conditions="Default.CV_Exclude">This sample program demonstrates different ways to handle multi-threading.</p>
+        <p data-mc-conditions="Default.CV_Exclude">This program initializes the Cryptoki library according to the specified locking model. Then a shared handle to the specified key is created. The specified number of threads is started, where each thread opens a session and then enters a loop which does a triple DES encryption operation using the shared key handle.</p>
+        <p data-mc-conditions="Default.CV_Exclude">It is assumed that the key exists in slot 1, and is a Public Token object.</p>
+        <p data-mc-conditions="Default.CV_Exclude">A generated key is required to use this script. To generate a key, use <a href="#Generate" class="MCXref xref">GenerateKey</a> or refer to <a href="java_keytool_with_luna_hsm.htm" class="MCXref xref">Using Java Keytool with SafeNet Luna Network HSM</a></p>
+        <h4 data-mc-conditions="Default.CV_Exclude">Usage</h4>
+        <p data-mc-conditions="Default.CV_Exclude"><b>java com.safenetinc.jcprov.sample.Threading -numThreads</b> &lt;numthreads&gt; <b>-keyName</b> &lt;keyname&gt; <b>-locking</b> { <b>none</b> | <b>os</b> | <b>functions</b> } [<b>-v</b>]</p>
+        <h4 data-mc-conditions="Default.CV_Exclude">Parameters</h4>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 116px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1" data-mc-conditions="Default.CV_Exclude">Parameter</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1" data-mc-conditions="Default.CV_Exclude">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-numthreads</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Specifies the number of threads you want to start. Enter this parameter followed by an integer that specifies the number of threads you want to start.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-keyName</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Specifies the triple-DES key to use for the encryption operation. Enter this parameter followed by the name (label) of the key to use for the encryption operation.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-locking</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">Specifies the locking model used when initializing the Cryptoki library. Enter this parameter followed by one of the following locking models:</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>none</b> - do not use locking when initializing the Cryptoki library. If you choose this option, some threads should report failures.</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>os</b> - use the native operating system mechanisms to perform locking.</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.CV_Exclude"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>functions</b> - use Java functions to perform locking<br /></p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" data-mc-conditions="Default.CV_Exclude"><b>-v</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1" data-mc-conditions="Default.CV_Exclude">Specifies the password for the slot. Optionally enter this parameter followed by the slot password to generate a private key.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3><a name="JCPROV4"></a>JCPROV API Documentation</h3>
+        <p>The JCPROV API is documented in a series of javadocs. The documentation is located in the &lt;jcprov_installation_directory&gt;<b>/javadocs</b> directory.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="REST API User Guide|The REST&#160;API Sample Clients|Using the Web Client">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>HSM</title>
+        <link href="../../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../../index.html#REST_API/REST_API_User_Guide/Client/Web_Client/HSM.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>HSM</h2>
+        <p>The <b>HSM</b> tab contains commands related to the HSM or partition you want to work with. Depending on how you want to authenticate, and to which element, there are different drop-down menus for each method and machine. The <b>HSM</b> and <b>Partition</b> menu <b>Login</b> buttons are used for password-based or local PED-based authentication, while the <b>PED</b> menu is specifically for connecting a remote PED. Login to the HSM or partition you want to use is required before you can use any other functions from the menus.</p>
+        <p class="figureCaption" data-mc-autonum="Figure 1: "><span class="autonumber"><span>Figure 1: </span></span>HSM&#160;Tab</p>
+        <p>
+            <img src="../../graphics/web_hsm.png" />
+        </p>
+        <p>The tables below list each command button you see on the <b>HSM</b> tab in the client. Each command has a short description of what it does as well as its corresponding resource. The resources can be input into the <b>Custom IO</b> tab manually if you become very familiar with them.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>There are some commands that are not included as buttons on the client. They must be input manually in the <b>Custom IO</b> tab. A complete repository of resources you can query with REST&#160;API can be found in the <i>REST&#160;API Command Reference</i> documentation.</p>
+        <p>Commands are grouped by the element with which you are communicating. </p>
+        <p><a href="#HSM" class="MCXref xref">HSM</a>
+        </p>
+        <p><a href="#Partitio" class="MCXref xref">Partition</a>
+        </p>
+        <p><a href="#PED" class="MCXref xref">PED</a>
+        </p>
+        <h3 class="ntoc"><a name="HSM"></a>HSM</h3>
+        <p>There are a few different ways to login depending on how you typically access your HSM.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If you have direct access to your HSM and are using password-based authentication, click <b>Login</b> and input your HSM serial number and password. Click <b>submit</b>.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If you have indirect access to your HSM via  PED, click <b>Login</b> and input your user role and PED identifier number. Use 0 if you are using local PED; 1 or greater for  remote PED. Click <b>submit</b>. Use the PED to complete your login.</p>
+        <p>When you are finished using REST&#160;API, or if you need to login to a different server or as a different user, click <b>Login</b> and change the HSM serial number, role, and/or password values.</p>
+        <p>The table below defines each command available under the <b>HSM</b> menu and references its corresponding resource.</p>
+        <table style="width: 100%;mc-table-style: url('../../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 780px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Command</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Function</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Resource</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Login</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Opens a dialog box through which you can login to your HSM.</p>
+                        <p>Login can be done through an HSM Serial number and password, or through a role and PED depending on the type of authentication set for your device.</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">POST /api/lunasa/hsms/{HsmSerial}/login</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">List Hsms</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Lists all HSMs associated with appliance.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">GET /api/lunasa/hsms</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Get HSM</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Gets information associated with specific HSM.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">GET /api/lunasa/hsms/{hsmid}</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Get App</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Gets information associated with the appliance .</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">	POST /api/lunasa/hsms/{hsmid}/firmware/actions/upgrade</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Upgrade Firmware</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Updates HSM firmware to most recent version.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">	POST /api/lunasa/hsms/{hsmid}/firmware/actions/rollback</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Rollback Firmware</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Downgrades HSM firmware to previously installed version.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">PUT /api/lunasa/hsms/{hsmid}/policies/{policyid}</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Set Policy</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Sets a specific HSM policy.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">POST /api/lunasa/hsms/{hsmid}/updates/{updateid}</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Apply Update</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Applies a specific HSM&#160;update.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">PUT /api/lunasa/hsms/{hsmid}/</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Initialize</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Initializes the HSM.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">POST /api/lunasa/hsms/{hsmid}/actions/zeroize</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Zeroize</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Removes all partitions and keys from the HSM.</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Does not reset HSM policies, erase RPV, or delete Auditor role.</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">GET /api/lunasa/hsms/{hsmid}/roles</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">List Roles</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Lists all roles associated with the HSM.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">GET /api/lunasa/hsms/{hsmid}/roles/{roleid}</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Get Role</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Gets the information associated with a specific HSM role.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">PATCH /api/lunasa/hsms/{hsmid}/roles/{roleid}</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Set Password</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Opens a dialog box in which you can set a new HSM password.</p>
+                        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Appropriately complete the form with your new password and old password.</p>
+                        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Optionally change secret and/or challenge secret associated with a particular HSM or role by changing <b>false</b> to <b>true</b> and specifying HSM serial number and role.</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">POST /api/lunasa/hsms/{hsmid}/actions/factoryReset</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Factory Reset</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Sets the HSM back to its factory default settings, deleting the HSM SO, all users, and all objects. </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">GET /api/lunasa/hsms</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc"><a name="Partitio"></a>Partition</h3>
+        <p>There are a few different ways to login depending on how you typically access your partition.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If you have direct access to your partition on an HSM and are using password-based authentication, click <b>Login</b> and input your partition&#160;serial number and password. Click <b>submit</b>. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If you have indirect access to your partition via PED, click <b>Login</b> and input your user role and PED&#160;identifier number. Use 0 if you are using local PED; 1 or greater for  remote PED. Click <b>submit</b>. Use the PED to complete your login.</p>
+        <p>When you are finished using REST&#160;API, or if you need to login to a different server or as a different user, click <b>Login</b> and change the partition serial number, role, and/or password values.</p>
+        <p>The table below defines each command available under the <b>Partition</b> menu and references its corresponding resource.</p>
+        <table style="width: 100%;mc-table-style: url('../../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 109px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 345px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Command</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Function</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Resource</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Login</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Opens a dialog box through which you can login to your HSM partition.</p>
+                        <p>Login can be done through a partition serial number and password, or through a role and PED depending on the type of authentication set for your device.</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">POST /api/lunasa/hsms/{PartSerial}/partitions/{role}/login</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">List</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Lists all partitions associated with the HSM.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">	GET /api/lunasa/hsms/{hsmid}/partitions</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Info</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Gets information associated with a specific partition.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">GET /api/lunasa/hsms/{hsmid}/partitions/{partitionid}</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Create</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Creates a partition.<b style="color: #6c286b;">*</b></td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">POST /api/lunasa/hsms/{hsmid}/partitions</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Delete</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Removes a specific partition from the HSM.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">	DELETE /api/lunasa/hsms/{hsmid}/partitions/{partitionid}</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Set Policy</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Sets a specific partition policy.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">PUT /api/lunasa/hsms/{hsmid}/partitions/{partitionid}/policies/{policyid}</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Delete All</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Removes all partitions from the HSM.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">DELETE /api/lunasa/hsms/{hsmid}/partitions</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Initialize</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Initializes the partition.<b style="color: #6c286b;">*</b></p>
+                        <p>(Applicable to PPSO partitions)</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">PUT /api/lunasa/hsms/{hsmid}/partitions/{partitionid}</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Initialize Role</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Initializes the partition role.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">PUT /api/lunasa/hsms/{hsmid}/partitions/{partitionid}/roles/{roleid}</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">List Roles</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Lists all roles associated with the partition.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">GET /api/lunasa/hsms/{hsmid}/partitions/{partitionid}/roles</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Get Role</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Gets information associated with a specific partition role.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">GET /api/lunasa/hsms/{hsmid}/partitions/{partitionid}/roles/{roleid}</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Set Password</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p>Opens a dialog box in which you can set a new partition password.</p>
+                        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Appropriately complete the form with your new password and old password</p>
+                        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Optionally change secret and/or challenge secret associated with a particular HSM, partition, and/or role by changing <b>false</b> to <b>true</b> and specifying HSM serial number,&#160;partition serial number, and role.</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">PATCH /api/lunasa/hsms/{hsmid}/partitions/{partitionid}/roles/{roleid}</td>
+                </tr>
+            </tbody>
+        </table>
+        <p><b style="color: #6c286b;">*</b> If you only plan to use REST API to manage partitions, you can name them as you prefer. If you plan to use a combination of REST API and LunaSH, partition names/labels must conform to LunaSH naming conventions. In this case, name partitions using only the following characters:</p><pre xml:space="preserve">!#$%'()*+,-./0123456789:=@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{}~</pre>
+        <h3 class="ntoc"><a name="PED"></a>PED</h3>
+        <p>To use a remote PED for executing any tasks, you must connect to a remote PED before trying to use any of its commands.</p>
+        <p>The table below defines each command available under the <b>PED</b> menu and its corresponding resource.</p>
+        <table style="width: 100%;mc-table-style: url('../../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Command</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Function</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Resource</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Connect</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Connects to a Remote PED.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">POST /api/lunasa/hsms/{hsmid}/peds/{pedid}/actions/connect</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Disconnect</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Disconnects the currently active Remote PED.</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">POST /api/lunasa/hsms/{hsmid}/peds/{pedid}/actions/disconnect</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Vector Init</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Initializes a Remote PED Vector (RPV).</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Creates a new Remote PED&#160;Key (RPK).</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Imprints RPV onto HSM and RPK.</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">POST /api/lunasa/hsms/{hsmid}/peds/{pedid}/actions/vectorInitialize</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Vector Erase</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Erases the Remote PED vector (RPV) from the current HSM.</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">	POST /api/lunasa/hsms/{hsmid}/peds/{pedid}/actions/vectorErase</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>SSH Public-Key Authentication</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sa_appliance_admin/client_connections/using_public-key_authentication.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor104"></a>SSH Public-Key Authentication</h2>
+        <p><a name="kanchor105"></a>In its default configuration, the SafeNet appliance Administrator account 
+ (userid admin) uses standard password authentication (userid/password). 
+ &#160;You can 
+ also choose to use Public Key-based Authentication for SSH access. &#160;The 
+ relevant commands to manage Public Key Authentication are described <a target="_blank">here</a>.</p>
+        <h3>Public Key Authentication to a SafeNet Appliance Using 
+ UNIX SSH Clients</h3>
+        <p>The following is an example exercise to illustrate the use of Public-Key 
+ Authentication.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>From any UNIX 
+ client, generate a public key identity to be used for authentication to 
+ the SafeNet appliance:</p><pre class="listLevel1" xml:space="preserve">[root@mypc /]# ssh-keygen -b 2048 -t rsa<br />Generating public/private rsa key pair.<br />Enter file in which to save the key (/root/.ssh/id_rsa):<br />Enter passphrase (empty for no passphrase):<br />Enter same passphrase again:<br />Your identification has been saved in /root/.ssh/id_rsa.<br />Your public key has been saved in /root/.ssh/id_rsa.pub.<br />The key fingerprint is:<br />6e:7a:7e:e1:2a:54:8f:99:3e:6a:56:f8:38:22:fb:a6 root@pinky</pre>
+        <p xml:space="preserve" class="listLevel1">Two files are created, a private key file 
+ (which stays on the client) and a public key file that we&#160;now 
+securely copy (<b>scp</b>) to the SafeNet appliance.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>SSH to the SafeNet appliance and verify that the default functionality is a password prompt:</p><pre class="listLevel1">[root@mypc /]# ssh admin@myLuna<br />admin@myLuna's password:<br /></pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Now, <b>scp</b> the 
+ client’s public key to the appliance:</p><pre class="listLevel1" xml:space="preserve">[root@mypc /]# scp /root/.ssh/id_rsa.pub  admin@myluna:<br />admin@myluna's password:<br />id_rsa.pub &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;100% 
+ |*****************************| &#160;&#160;220  &#160;&#160;&#160;&#160;&#160;&#160;00:00<br /></pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>On the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance, verify 
+ the default settings of the Public Key Authentication service:</p><pre xml:space="preserve" class="listLevel1">[myLuna] lunash:&gt;sysconf ssh show
+<br />&#160;SSHD configuration: 
+&#160;
+&#160;SSHD Listen Port: 22 (Default) 
+
+&#160;SSH is unrestricted.
+ &#160;<br />&#160;Password &#160;&#160;authentication is enabled<br />&#160;Public key authentication is enabled<br /><br />Command Result : 0 (Success)
+</pre>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Verify that there 
+ are no public key entries by default:</p><pre class="listLevel1" xml:space="preserve">[myLuna] lunash:&gt;my public-key list
+<br />SSH Public Keys for user 'admin':<br />Name &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Type  &#160;&#160;&#160;&#160;Bits  Fingerprint<br />------------------------------------------------------------------------------
+<br />Command Result : 0 (Success)
+</pre>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Add the public 
+ key that you sent over earlier (from server mypc in our example):</p><pre class="listLevel1" xml:space="preserve">[myLuna] lunash:&gt;my public-key add id_rsa.pub<br />&#160;<br />Command Result : 0 (Success)<br /></pre>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Check the list 
+ again:</p><pre class="listLevel1" xml:space="preserve">[myLuna] lunash:&gt;my public-key  list
+<br />SSH Public Keys for user 'admin':<br />Name &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Type  &#160;&#160;&#160;&#160;Bits  Fingerprint<br />------------------------------------------------------------------------------<br />id_rsa.pub &#160;&#160;&#160;&#160;&#160;&#160;ssh-rsa  &#160;1024 6e:7a:7e:e1:2a:54:8f:99:3e:6a:56:f8:38:22:fb:a6<br /><br />Command Result : 0 (Success)<br /></pre>
+        <p class="listLevel1">Notice that the fingerprint reported is the 
+ same as was generated back on mypc.</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>From mypc, SSH
+ into myLuna; you should not be password prompted:</p><pre class="listLevel1" xml:space="preserve">[root@mypc /]# ssh admin@myluna<br />SafeNet Luna Network HSM 7.0 Command Line Shell - Copyright (c) 2001-2017 Gemalto, Inc. All rights reserved.<br /></pre>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>Verify that you 
+ are still password prompted if you ssh from other clients:</p><pre class="listLevel1" xml:space="preserve">bash-2.05b# ./ssh admin@myLuna<br />admin@myLuna's password:</pre>
+        <p class="ol1" data-mc-autonum="10."><span class="autonumber"><span class="ol1Number">10.</span></span>Disable public 
+ key authentication on myLuna, and verify the current status of the service:</p><pre class="listLevel1" xml:space="preserve">[myLuna] lunash:&gt;sysconf ssh publickey disable
+<br />&#160;Public key authentication disabled<br /><br />&#160;Command Result : 0 (Success)<br /><br />[myLuna] lunash:&gt;sysconf ssh show
+<br />&#160;SSHD configuration: 
+&#160;
+&#160;SSHD Listen Port: 22 (Default) 
+
+&#160;SSH is unrestricted.<br />&#160;Password &#160;&#160;authentication is enabled<br />&#160;Public key authentication is disabled
+<br />Command Result : 0 (Success)
+</pre>
+        <p class="ol1" data-mc-autonum="11."><span class="autonumber"><span class="ol1Number">11.</span></span>SSH in again 
+ from mypc, and verify that you are password prompted:</p><pre class="listLevel1">[root@mypc /]# ssh admin@myLuna<br />admin@myLuna's password:</pre>
+        <h4>Summary</h4>
+        <p>The above example illustrates enabling and disabling Public-Key Authentication 
+ for SSH connections to your SafeNet appliance.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Console (serial port) access still requires 
+ the userid and password.</p>
+        <p class="caution_note">Once you enable public key authentication for an administration computer, the private SSH key (/root/.ssh/id_rsa) must be protected, and access to that computer must be restricted and password-protected. Anyone who can log into that computer can log into the SafeNet Luna Network HSM appliance without knowing the LunaSH admin password!</p>
+        <p>To further explore/confirm the Public-Key Authentication functions, 
+ you could SSH in again from Windows and other UNIX clients, and verify 
+ that you are still password prompted as normal for those clients.</p>
+        <p>Verify that the client list is always accurate. &#160;</p>
+        <p>Delete one or two of your public key clients.&#160;Verify 
+ that those clients are password prompted again.</p>
+        <p>Clear all public key clients with the -clear sub-command. Verify 
+ that all clients are password prompted again.</p>
+        <p>Obviously, most of the above has been an extended example, to show various 
+ aspects of the function, and you do not need to go through all those steps 
+ just to set up Public-Key Authentication for a client/admin computer.</p>
+        <h3>Set up Public-Key SSH access for other <span class="DefaultProduct">SafeNet Luna Network HSM</span> users</h3>
+        <p>Here are the high level steps to set up SSH pubkey access for a non admin user:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>As admin, create the user and assign the desired role to that new user. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Log on to <span class="DefaultProduct">SafeNet Luna Network HSM</span>&#160;as the new user. You are prompted to change the default password. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Transfer (<b>scp</b>) the SSH pubkey to the SafeNet appliance using the new user account (example $ scp id_rsa_pub op-number1@lunasa6:). &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Log in with the new account. &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Add your SSH key  (lunash:&gt;my public-key add …)</p>
+        <p>Here is an example session:</p><pre xml:space="preserve">operator@mypc:~/.ssh$ scp id_rsa.pub op-number1@lunasa6:</pre><pre xml:space="preserve">op-number1@lunasa7's password:</pre><pre xml:space="preserve">id_rsa.pub                                     100%  392     0.4KB/s   00:00</pre><pre xml:space="preserve">operator@mypc:~$ ssh op-number1@lunasa7</pre><pre xml:space="preserve">op-number1@lunasa7's password:</pre><pre xml:space="preserve">Last login: Wed Mar  11 08:51:46 2015 from 192.168.10.18</pre><pre xml:space="preserve">SafeNet Luna Network HSM 7.0 Command Line Shell - Copyright (c) 2001-2017 Gemalto, Inc. All rights reserved.</pre><pre xml:space="preserve">[lunasa7] lunash:&gt;my publickey add id_rsa.pub
+
+</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

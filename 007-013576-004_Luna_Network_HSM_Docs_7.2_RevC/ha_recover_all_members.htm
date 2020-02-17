@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.CV_Exclude" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Java Interfaces">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Recovering From the Loss of All HA Members</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/java/ha_recover_all_members.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Recovering From the Loss of All HA Members</h2>
+        <p>The reinitialize method of the <b>LunaSlotManager</b> class takes the role of the PKCS#11 functions <b>C_Finalize</b> and <b>C_Initialize</b>.  It is intended to be used when a complete loss of communication happens with all the members of your High Availability (HA) group.</p>
+        <p>This section describes the situations in which you should use this method, the effect this method has on a running application, and how to use this method safely. It is assumed that the auto-recovery features of the HA group are enabled.</p>
+        <p>You should read this section if you are developing an application that uses the LunaProvider in an environment that leverages an HA group of <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliances, so that you can safely recover an entire HA group.</p>
+        <h3>When to Use the reinitialize Method</h3>
+        <p>When using the high-availability (HA) features of <span class="DefaultProduct">SafeNet Luna Network HSM</span>, the auto-recovery feature will resolve situations where connectivity is lost to a subset of members for a brief time. However, if you lose connection to all members then the connection cannot be automatically recovered. Finalizing the library and initializing it again is the only way to recover other than restarting the application.</p>
+        <h3>Why the Method Must Be Used</h3>
+        <p>In an HA group, we rely on having at least one member present in order to maintain state.  If all of the members have been lost, then we cannot make any determination of which member has a known good state. Also, when a connection to a member is lost, the authenticated state is lost. When an individual member returns, we can use the authenticated state from another member to authenticate to the one that has returned.  When all members are lost, then the authenticated state is lost on all members.</p>
+        <h3>What Happens on the HSM</h3>
+        <p>The Network Trust Link Service (NTLS)  on the HSM appliance is responsible for cleaning up any cryptographic resources, such as session objects, and cryptographic operation contexts when a connection to the client is lost. This happens when the socket closes.</p>
+        <h4>Effect on Running Applications</h4>
+        <p>All resources created within the LunaProvider must be treated as junk after the library is finalized. Sessions will no longer be valid, session objects will point to non-existent objects or worse to a wrong object, and <b>Signature/Cipher/Mac/etc</b> objects will have invalid data.</p>
+        <p>Even <b>LunaKey</b> objects, which represent persistent objects, may contain invalid data. When the virtual slot is constructed in the library, the virtual object table is built from the objects present on each individual member. There is no guarantee that objects will have the same handle from one initialization to the next. This is true from the moment the connection to the group is severed. All these resources must be released before calling the reinitialize method. Beyond causing undesirable behavior when used, if these objects are garbage collected after cryptographic operations resume, they can result in the deletion of new objects or sessions.</p>
+        <h4>Using the Method Safely</h4>
+        <p>The first indication that all communications may have been lost with the group is a <b>LunaException</b> reporting an error code of <b>0x30</b> (Device Error).  Other possible error codes that can indicate this status are <b>0xE0</b> (Token not present) and <b>0xB3</b> (Session Handle invalid). The <b>LunaException</b> class does not provide the error code as a discrete value and you will have to parse the message string to determine this value.</p>
+        <p>At this point, you should validate that the group has been lost. The <b>com.safenetinc.luna.LunaHAStatus</b> object is best suited for this. Your application should know the slot number of the HA slot that you are using because it may not be able to query this information from the label when the slot is missing.</p>
+        <h4>Example</h4><pre xml:space="preserve">LunaHAStatus status = new LunaHAStatus(haSlotNumber);</pre><pre xml:space="preserve">&#160;</pre>
+        <p>You can query the object for detailed information or just use the <b>isOK()</b> method to determine if the group has been lost. The <b>isOK()</b> method will return true if all members are still present.  If all members are gone, an exception will be thrown.</p>
+        <p>If no application is thrown, the application should be able to proceed operating, and any individual members of the HA group that have been lost will be recovered by the library.  Further details on failed members can be queried through the LunaHAStatus object.</p>
+        <p>In many highly threaded applications, such as web applications, it is desirable to have a singleton, which is responsible for keeping track of the health of the HSM connection. This can be done by having worker threads report information to this singleton, by having a specific health check thread, or through a combination of the two.</p>
+        <p>Once the error state is discovered, all worker threads should be stopped or allowed to return an error. It may take up to 40 seconds from the time the group was lost for all threads to discover that there is an error. It can take 20 seconds for any given command to time out as a result of network failure. Once this happens, new commands will not be sent to that HSM, but a command may have just been sent and that command will have its own 20-second timeout. As mentioned above, in the section on application effects, all of the objects created or managed by the LunaProvider must be considered at this point to contain junk data. Operating after recovery with this junk data can cause undesired effects. This means all keys, signature, cipher, Mac, KeyGenerator, KeyPairGenerator, X509Certificate, and similar objects must be released to the garbage collector. Instances of most non-SPI (LunaAPI, LunaSlotManager, LunaTokenManager, etc.) objects do not pose a problem, but any instances of LunaSession held in the application during the course of the reinitialize can cause problems if they are returned to the session pool after the reinitialization takes place.</p>
+        <p>Cryptographic processing in the application should be halted until connection with the HSMs is back to a known good state. It may be appropriate to hold operations in a queue for processing later or to return an Out of Service message.</p>
+        <p>Once the objects have been released and no further processing will occur, the application should attempt recovery of the connection. This is done through the <b>com.safenetinc.luna.LunaSlotManager.reinitialize</b> method. This method will first clear session objects held within the provider before finalizing the library.  After the library is finalized, it will initialize it again by invoking the <b>C_Initialize</b> method. This method will establish a connection with all the HSMs if possible. The same <b>isOK()</b> method of <b>LunaHAStatus</b> can be used to determine if the group has been recovered successfully.</p>
+        <p>It is also important to only have a single thread call the <b>reinitialize</b> method. When multiple threads try to unload or load the library at the same time, errors can occur.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

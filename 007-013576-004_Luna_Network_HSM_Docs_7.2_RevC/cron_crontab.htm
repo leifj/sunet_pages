@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Syslog and SNMP Monitoring Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>cron &amp; crontab</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#monitoring/components/cron_crontab.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>cron &amp; crontab</h2>
+        <p>The Luna appliance relies upon the cron process to perform regular operations.</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Facility Keyword</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Software Process</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Log File</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p><code>syslog</code>
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p><code>crontab</code>
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p><code>messages</code>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Facility Keyword</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Software Process</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Log File</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p><code>cron</code>
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p><code>anacron</code>[pid]</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p><code>cron-yyyy-mm-dd</code>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Facility Keyword</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Software Process</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Log File</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p><code>auth</code>
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p><code>crond(pam_unix)</code>[pid]</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p><code>secure</code>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Expected Log Messages</h3>
+        <p>The following log messages are normal and expected entries in the log files from cron activities.</p>
+        <h4>Updated Timestamp</h4><pre xml:space="preserve">2012 Feb 29 04:02:01 myLuna&#160; cron notice&#160; anacron[1234]: Updated timestamp for job `cron.monthly'<b style="color: #6c286b;">*</b> to 2012-02-29
+
+</pre>
+        <p>This message indicates that the cron process ran the scheduled monthly (or daily or weekly) cron job. </p>
+        <p><b style="color: #6c286b;">*</b> Or `cron.daily' or `cron.weekly'.</p>
+        <h4>Login and Logout</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; auth info&#160; crond(pam_unix)[1234]: session opened for user root by (uid=0)
+2012 Feb 29 12:05:01 myLuna&#160; auth info&#160; crond(pam_unix)[1234]: session closed for user root
+
+</pre>
+        <p>These messages record that cron opened a session to complete any scheduled activities and closed the session when done.</p>
+        <h3>Unexpected Log Messages</h3>
+        <p>Under normal circumstances, you should not see any of these log messages. If you do, please contact <span class="DefaultCompanyNameLong">Gemalto</span> Technical Support to report the message and seek guidance on what to do next.</p>
+        <h4>Disk Filling</h4>
+        <p>75% - 89%</p><pre xml:space="preserve">2012 Feb 29 12:00:00 myLuna&#160; syslog warn&#160; crontab: DISK FULL: WARNING! First log threshold reached 75%. Please clean up the logs using the "syslog cleanup" command
+
+</pre>
+        <p>90% - 94%</p><pre xml:space="preserve">2012 Feb 29 12:00:00 myLuna&#160; syslog alert&#160; crontab: DISK FULL:&#160; 90%. All log files except hsm.log deleted.
+2012 Feb 29 12:00:00 myLuna&#160; syslog alert&#160; crontab: DISK FULL: Second log threshold reached 90%. Created logs_diskFull_20120229_1234.tgz  and deleted all log files.<b style="color: #6c286b;">*</b>
+2012 Feb 29 12:00:00 myLuna&#160; syslog alert&#160; crontab: DISK FULL: WARNING! Second log threshold reached 90% policy: tarlogs_cleanup.<b style="color: #6c286b;">**</b>
+2012 Feb 29 12:00:00 myLuna&#160; syslog alert&#160; crontab: DISK FULL: Second log threshold reached 90%. Created logs_diskFull_20120229_1234.tgz and deleted all log files.<b style="color: #6c286b;">***</b>
+2012 Feb 29 12:00:00 myLuna&#160; syslog alert&#160; crontab: DISK FULL: The tar file containing logs is now available via scp as filename "logs_diskFull_20120229_1234.tgz<b style="color: #6c286b;">****</b>
+2012 Feb 29 12:00:00 myLuna&#160; syslog alert&#160; crontab: DISK FULL: Second log threshold reached $percent%. Failed to create "logs_diskFull_20120229_1234.tgz<b style="color: #6c286b;">*****</b>
+
+</pre>
+        <p>95% &amp; &gt;</p><pre xml:space="preserve">2012 Feb 29 12:00:00 myLuna&#160;  syslog emerg&#160; crontab: DISK FULL: EMERGENCY! Third log threshold reached 95%. Please clean up the logs using the "syslog cleanup" command
+2012 Feb 29 12:00:00 myLuna&#160;  syslog emerg&#160; crontab: DISK FULL: EMERGENCY! Third log threshold reached 95%. Stopping NTLS
+2012 Feb 29 12:00:15 myLuna&#160; syslog emerg&#160; crontab: DISK FULL: EMERGENCY! Third log threshold reached 95%. Stopping syslog soon
+
+</pre>
+        <p>These messages indicate that disk use is reaching thresholds that require intervention to remove files. </p>
+        <p><b style="color: #6c286b;">*</b> Message written before syslog rotates logs.</p>
+        <p><b style="color: #6c286b;">**</b> Message written before syslog rotates logs.</p>
+        <p><b style="color: #6c286b;">***</b> Message written after syslog rotates logs.</p>
+        <p><b style="color: #6c286b;">****</b> Message written before and after syslog rotates logs.</p>
+        <p><b style="color: #6c286b;">*****</b> Message written if tar command failed to create file.</p>
+        <h4>Read-Only File System</h4><pre xml:space="preserve">2012 Feb 29 04:02:01 myLuna&#160; cron err&#160; anacron[1234]: Cannot exclusively create /var/run/anacron.pid: Read-only file system
+2012 Feb 29 04:02:01 myLuna&#160; cron err&#160; anacron[1234]: Cannot run in daemon mode - anacron already running.: Resource deadlock avoided
+2012 Feb 29 04:02:01 myLuna&#160; cron err&#160; anacron[1234]: Aborted
+
+</pre>
+        <p>These messages indicate that the file system is read-only. A possible root cause is a Linux journaling error or a failing hard drive.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

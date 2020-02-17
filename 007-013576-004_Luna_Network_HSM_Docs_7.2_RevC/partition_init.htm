@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaCM Command Reference Guide|LunaCM Commands|partition">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>partition init</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#lunacm/commands/partition/partition_init.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">partition init</h2>
+        <p>Initialize an application partition. This command is used within the partition being initialized.</p>
+        <p>For password-authenticated HSMs, if the password is not provided via the command line, the user is interactively prompted for it. Input is echoed as asterisks, and user is asked for password confirmation. This creates the Crypto Officer role.</p>
+        <p data-mc-conditions="Default.CV_Exclude">For PED-authenticated HSMs, PED action is required, and a partition Crypto Officer PED key (black) is imprinted. Any password provided at the command line is ignored.</p>
+        <div class="caution">
+            <p data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>When labeling HSMs or partitions, <i>never</i> use a numeral as the first, or only, character in the name/label. Token backup commands allow a slot-number OR a label as identifier, which can lead to confusion if the label is a string version of a slot number. </p>
+            <p>For example, if the token is initialized with the label "<code>1</code>", the user cannot use the label to identify the target for backup purposes, because VTL parses "<code>1</code>" as the numeric ID of the first slot rather than as a text label for the target in the actual occupied slot.</p>
+        </div>
+        <h4>Domain matching and the default domain</h4>
+        <p>If you do not specify a domain in the command line, you are prompted for it.</p>
+        <p>If you type a character string at the prompt, that string becomes the domain for the partition.</p>
+        <p>When you run the <b>partition backup</b> command, you are again prompted for a domain for the target partition on the backup HSM. You can specify a string at the command line, or omit the parameter at the command line and specify a string when prompted. Otherwise press <b>Enter</b> with no string at the prompt to apply the default domain. The domain that you apply to a backup HSM must match the domain on your source HSM partition.</p>
+        <h4>Partition name rules</h4>
+        <p>A partition <b>name</b> or a partition <b>label</b> can include any of the following characters: </p>
+        <p>!#$%'()*+,-./0123456789:=@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{}~</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>No spaces, unless you wish to surround the name or label in double quotation marks every time it is used. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>No question marks, no double quotation marks within the string. &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Minimum name or label length is 1 character. Maximum is 32 characters.</p>
+        <h4>Partition password and domain rules</h4>
+        <p>Valid characters that can be used in a <b>password</b> or in  a cloning <b>domain</b> are:</p>
+        <p>&#160;  !#$%'*+,-./0123456789:=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_abcdefghijklmnopqrstuvwxyz{}~</p>
+        <p>(the first character in that list is the space character)
+</p>
+        <p>Invalid or problematic characters, not to be used in passwords or cloning domains are "&amp;';&lt;&gt;\`|() </p>
+        <p>Minimum password length is 7 characters; maximum is 255 characters. &#160;</p>
+        <p>Minimum domain string length is 1 character; maximum domain length is 128 characters. &#160;</p>
+        <p> Names and labels have an additional restriction, in that you should avoid a leading space.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>partition init</b> <b>-label</b> &lt;string&gt; [<b>-password</b>&lt;string&gt;] [<b>-domain</b>&lt;string&gt;] [<b>-applytemplate</b> &lt;filepath/filename&gt;] [<b>-defaultdomain</b>]&#160;[<b>-auth</b>]  [<b>-force</b>] </p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 200px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 90px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Argument(s)</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-applytemplate</b> &lt;filepath/filename&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-at</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Apply a policy template located in the specified directory. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-auth</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-a</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Log in after the initialization.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-defaultdomain</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-def</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Default cloning domain name. <i>Deprecated.</i> Used only on password-authenticated HSMs, and not recommended. Kept for compatibility with previous, existing configurations; will be discontinued in a future release.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.PED">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-domain</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-d</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Partition domain name. Used only on password-authenticated HSMs; ignored for PED-authenticated.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-force</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-f</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Force the action (useful for scripting).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-label</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-l</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Label for the partition.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.PED">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-password</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-p</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Partition Security Officer Password. <MadCap:conditionalText data-mc-conditions="Default.CV_Exclude">Used only on password-authenticated HSMs; ignored for PED-authenticated.</MadCap:conditionalText></td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">lunacm:&gt; partition init -label par2</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">        You are about to initialize the partition.</pre><pre xml:space="preserve">        All contents of the partition will be destroyed.</pre><pre>&#160;</pre><pre xml:space="preserve">        Are you sure you wish to continue?</pre><pre>&#160;</pre><pre xml:space="preserve">        Type 'proceed' to continue, or 'quit' to quit now -&gt; proceed</pre><pre>&#160;</pre><pre xml:space="preserve">        Enter password for Partition SO: ********</pre><pre>&#160;</pre><pre xml:space="preserve">        Re-enter password for Partition SO: ********</pre><pre>&#160;</pre><pre xml:space="preserve">        Option -domain was not specified.  It is required.</pre><pre>&#160;</pre><pre xml:space="preserve">        Enter the domain name: ********</pre><pre>&#160;</pre><pre xml:space="preserve">        Re-enter the domain name: ********</pre><pre>&#160;</pre><pre>Command Result : No Error</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

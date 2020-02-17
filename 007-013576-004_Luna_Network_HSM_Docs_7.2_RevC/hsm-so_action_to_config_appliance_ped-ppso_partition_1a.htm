@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|Create Application Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Creating a PED-Authenticated Partition</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/partition_create/hsm-so_action_to_config_appliance_ped-ppso_partition_1a.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Creating a PED-Authenticated Partition</h2>
+        <p>An application owner/user has requested an application partition on the HSM, in which applications will run cryptographic operations. These instructions are the actions to be taken by the HSM Security Officer or SO. These instructions assume you are using a PED-authenticated <span class="DefaultProduct">SafeNet Luna Network HSM</span>. </p>
+        <p> The <span class="DefaultProduct">SafeNet Luna Network HSM</span> is initially accessed via SSH, and LunaSH is used to create the partition. After the partition is created, administrative access to that partition moves to a host computer where SafeNet Luna HSM Client software is installed, and where administrative actions are carried out through a Network Trust Link (NTL) or Secure Trusted Channel (STC) via the LunaCM tool. </p>
+        <h3 class="ntoc">Requirements</h3>
+        <p>You will need: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The appliance configured for network operation and server certificate created. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><span class="DefaultProduct">SafeNet Luna Network HSM</span> and your application host computer having exchanged certificates. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The HSM in initialized state.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>A Luna PED and PED keys with labels. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Local physical access to your <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance for local PED connection, an already-imprinted RPK (orange PED key) with your Luna PED remotely connected. See <a href="../../administration/PED_Auth/remote/about_remote.htm" class="MCXref xref">About Remote PED</a> and <a href="../../administration/PED_Auth/remote/remote_setup.htm" class="MCXref xref">Remote PED Setup</a>. </p>
+        <h3>Preparation</h3>
+        <p>If you are using a Luna PED connected locally to the <span class="DefaultProduct">SafeNet Luna Network HSM</span>, skip to <a href="#CreatePar" class="MCXref xref">Create the Partition</a> below.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>If necessary, have a Luna PED connected to a host computer (can be the same computer that acts as your SafeNet Luna HSM Client, but can be another host if desired), with the PED set to "Remote PED mode," and an orange PED key ready containing the same RPV as your <span class="DefaultProduct">SafeNet Luna Network HSM</span>. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>On the host computer, launch <b>PedServer.exe</b>. </p><pre class="listLevel1" xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;pedserver -mode start -ip 192.20.10.217 -port 1503
+Ped Server Version 1.0.6 (10006)
+
+Failed to load configuration file.  Using default settings.
+
+Ped Server launched in startup mode.
+Starting background process
+Background process started
+Ped Server Process created, exiting this process.
+
+C:\Program Files\SafeNet\LunaClient&gt;pedserver -mode show
+Ped Server Version 1.0.6 (10006)
+
+Failed to load configuration file.  Using default settings.
+
+Ped Server launched in status mode.
+failed to unlock: GetLastError(): 183 0xb7
+
+   Server Information:
+      Hostname:                           MyRPEDhost
+      IP:                                 192.20.10.217
+      Firmware Version:                   2.7.1-0
+      PedII Protocol Version:             1.0.1-0
+      Software Version:                   1.0.6 (10006)
+
+      Ped2 Connection Status:             Connected
+      Ped2 RPK Count                      0
+      Ped2 RPK Serial Numbers             (none)
+
+   Client Information:                    Not Available
+
+   Operating Information:
+      Server Port:                        1503
+      External Server Interface:          Yes
+      Admin Port:                         1502
+      External Admin Interface:           No
+
+      Server Up Time:                     52 (secs)
+      Server Idle Time:                   52 (secs) (100%)
+      Idle Timeout Value:                 1800 (secs)
+
+      Current Connection Time:            0 (secs)
+      Current Connection Idle Time:       0 (secs)
+      Current Connection Total Idle Time: 0 (secs) (100%)
+      Total Connection Time:              0 (secs)
+      Total Connection Idle Time:         0 (secs) (100%)
+
+Show command passed.
+</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>On the <span class="DefaultProduct">SafeNet Luna Network HSM</span>, start the PED Client service, pointing to the PedServer that you just started.</p><pre class="listLevel1" xml:space="preserve">[mynethsm] lunash:&gt;hsm ped connect -ip 192.20.10.217 -port 1503
+
+Luna PED operation required to connect to Remote PED - use orange PED key(s).
+
+Command Result : 0 (Success)
+</pre>
+        <h3><a name="CreatePar"></a>Create the Partition</h3>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Login to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> as HSM SO.</p><pre class="listLevel1" xml:space="preserve">lunash:&gt;hsm login</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Luna PED operation required to login as HSM Administrator - use Security Officer (blue) PED key.</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">'hsm login' successful.</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Command Result : 0 (Success)</pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Use the <b>partition create</b> command to create a new partition, specifying at least a partition name. Other command parameters are available. See <a href="../../lunash/commands/partition/partition_create.htm" class="MCXref xref">partition create</a> in the <i>LunaSH Command Reference Guide</i> for details.</p><pre class="listLevel1" xml:space="preserve">lunash:&gt;partition create -partition LunaPar1</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Type 'proceed' to create the partition, or</pre><pre class="listLevel1" xml:space="preserve">        'quit' to quit now.</pre><pre class="listLevel1" xml:space="preserve">        &gt; proceed</pre><pre class="listLevel1">'partition create' successful.</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Command Result : 0 (Success)</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Verify that the partition has been created.</p><pre class="listLevel1" xml:space="preserve">lunash:&gt;hsm show</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">   Appliance Details:</pre><pre class="listLevel1" xml:space="preserve">   ==================</pre><pre class="listLevel1" xml:space="preserve">   Software Version:                7.0.0</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">   HSM Details:</pre><pre class="listLevel1" xml:space="preserve">   ============</pre><pre class="listLevel1" xml:space="preserve">   HSM Label:                          myLunaHSM</pre><pre class="listLevel1" xml:space="preserve">   Serial #:                           532018</pre><pre class="listLevel1" xml:space="preserve">   Firmware:                           7.0.1</pre><pre class="listLevel1" xml:space="preserve">   HSM Model:                          Luna K7</pre><pre class="listLevel1" xml:space="preserve">   HSM Part Number:                    808-000048-002</pre><pre class="listLevel1" xml:space="preserve">   Authentication Method:              PED keys</pre><pre class="listLevel1" xml:space="preserve">   HSM Admin login status:             Logged In</pre><pre class="listLevel1" xml:space="preserve">   HSM Admin login attempts left:      3 before HSM zeroization!</pre><pre class="listLevel1" xml:space="preserve">   RPV Initialized:                    No</pre><pre class="listLevel1" xml:space="preserve">   Audit Role Initialized:             No</pre><pre class="listLevel1" xml:space="preserve">   Remote Login Initialized:           No</pre><pre class="listLevel1" xml:space="preserve">   Manually Zeroized:                  No</pre><pre class="listLevel1" xml:space="preserve">   Secure Transport Mode:              No</pre><pre class="listLevel1" xml:space="preserve">   HSM Tamper State:                   No tamper(s)</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">   Partitions created on HSM:</pre><pre class="listLevel1" xml:space="preserve">   ==============================</pre><pre class="listLevel1" xml:space="preserve">   <span style="background-color: #ffff00;">Partition:         154438865287, Name: LunaPar1</span></pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">   Number of partitions allowed:        100</pre><pre class="listLevel1" xml:space="preserve">   Number of partitions created:        1</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">   FIPS 140-2 Operation:</pre><pre class="listLevel1" xml:space="preserve">   =====================</pre><pre class="listLevel1" xml:space="preserve">   The HSM is NOT in FIPS 140-2 approved operation mode.</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">   HSM Storage Information:</pre><pre class="listLevel1" xml:space="preserve">   ========================</pre><pre class="listLevel1" xml:space="preserve">   Maximum HSM Storage Space (Bytes):   33554432</pre><pre class="listLevel1" xml:space="preserve">   Space In Use (Bytes):                335544</pre><pre class="listLevel1" xml:space="preserve">   Free Space Left (Bytes):             33218888</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">   Environmental Information on HSM:</pre><pre class="listLevel1" xml:space="preserve">   =================================</pre><pre class="listLevel1" xml:space="preserve">   Battery Voltage:                     3.093 V</pre><pre class="listLevel1" xml:space="preserve">   Battery Warning Threshold Voltage:   2.750 V</pre><pre class="listLevel1" xml:space="preserve">   System Temp:                         40 deg. C</pre><pre class="listLevel1" xml:space="preserve">   System Temp Warning Threshold:       75 deg. C</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Command Result : 0 (Success)</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p>The partition now exists, and all future configuration and management of that partition will be handed over to the person who is to become the Partition SO. Once the partition is initialized, the HSM SO's administrative access is limited to the following actions: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>resizing the partition</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>deleting the partition</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>backing up the partition contents</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>restoring the contents of the partition from backup</p>
+        <p>The Partition SO (and any additional roles that are created for the partition) performs all configuration and management actions on the partition, using LunaCM via a client connection.</p>
+        <p>The next step, depending on your configuration, is one of the following: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="../client_appliance/multi-step_ntl_setup.htm" class="MCXref xref">Create a Network Trust Link - Multi-step setup</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="../client_appliance/one-step_ntl_setup.htm" class="MCXref xref">Create a Network Trust Link - One-Step Setup</a>
+        </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

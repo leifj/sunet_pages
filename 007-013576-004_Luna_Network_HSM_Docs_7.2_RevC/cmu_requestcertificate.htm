@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Utilities Reference Guide|Certificate Management Utility (CMU)">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>cmu requestcertificate</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#Utilities/cmu/cmu_requestcertificate.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="kanchor74"></a>cmu requestcertificate</h2>
+        <p>This function creates a PKCS #10 certificate request for an RSA/DSA/ECDSA key 
+ pair on the token or HSM. It must be provided with the handle either to
+ the public key or to the corresponding private key (all of the public 
+ key components are contained within the private key). The private key must have Signing capability because it is used to sign the certificate 
+request structure. The signature is done using any of the mechanisms listed below. 
+The subject name is defined by a series of optional RDN components.</p>
+        <p> If 
+none of these components are provided on the command line, the CKA_SUBJECT 
+of the private key is used as the subject of the certificate request. 
+If the private key does not have its CKA_SUBJECT attribute set, the user 
+will be queried for each of the RDN components. The Subject DN should 
+contain at least the country, organization and common name components.</p>
+        <p>The signed certificate request is output to the specified file.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p><b>cmu requestCertificate</b> <b>-publichandle</b>=&lt;pubkeyhandle#&gt; <b>-privatehandle</b>=&lt;privkeyhandle#&gt; <span style="font-weight: bold;">-outputFile</span>=&lt;filename&gt; [<span style="font-weight: bold;">-sha1WithRsa</span>] [<b>-sha224withrsa</b>] [<b>-sha256withrsa</b>] [<b>-sha384withrsa</b>] [<b>-sha512withrsa</b>] [<b>-sha1withdsa</b>] [<b>-sha1withecdsa</b>] [<b>-sha224withecdsa</b>] [<b>-sha256withecdsa</b>] [<b>-sha384withecdsa</b>] [<b>-sha512withecdsa</b>] [<span style="font-weight: bold;">-C</span>=&lt;country&gt;] [<span style="font-weight: bold;">-S</span>=&lt;state&gt;] [<span style="font-weight: bold;">-L</span>=&lt;locality&gt;] [<span style="font-weight: bold;">-O</span>=&lt;organization&gt;] [<span style="font-weight: bold;">-OU</span>=&lt;org_unit&gt;] [<span style="font-weight: bold;">-CN</span>=&lt;common_name&gt;] [<b>-e</b>=&lt;e-mail_address&gt;] [<span style="font-weight: bold;">-binary</span>]  [<b>-password</b>=&lt;password&gt;] [<b>-slot</b>=&lt;slot#&gt;] [</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 200px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Argument(s)</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-binary</span>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines the certificate request format to 
+be raw binary instead of the default PEM (base64) encoding.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-C</span> &lt;country&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the two-letter country name for the subject 
+distinguished name (DN) of the certificate request. This parameter should 
+be present in the subject DN.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-CN</span> &lt;common_name&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines the common name for the subject distinguished 
+ name (DN) of the certificate request. This parameter should be present 
+in the subject DN.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-e=</b> &lt;e-mail_address&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Official or contact e-mail address of certificate authority. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-L</span> &lt;locality&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the locality (typically the city) for the subject 
+ distinguished name of the certificate request. This parameter may be present 
+in the Subject DN.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-multiorg</b> <![CDATA[ ]]></td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-O</span> &lt;organization&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines the organization name for the subject distinguished 
+name (DN) of the certificate request. This parameter should be present 
+in the subject DN.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-OU</span> &lt;org_unit&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines the organization unit name for the subject 
+ distinguished name (DN) of the certificate request. This parameter may 
+be present in the subject DN.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-outputFile</span> &lt;filename&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines the file that receives the certificate request.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-privatehandle</b>=&lt;privkeyhandle#&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> 
+ &#160;Defines the handle to the private key from 
+an RSA key pair to be certified. If this parameter is omitted and there 
+ is only one private signing key on the HSM, that key is automatically 
+selected. If this parameter is omitted and there are multiple private 
+signing keys on the HSM, the user is asked to select the private signing 
+key.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-publichandle=</b>&lt;pubkeyhandle#&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> 
+ &#160;Defines the handle to the public key from an 
+RSA key pair to be certified. If this parameter is omitted and there is 
+only one public signing key on the HSM, that key is automatically selected. 
+If this parameter is omitted and there are multiple public signing keys 
+on the HSM, the user is asked to select the public signing key.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-S</span> &lt;state&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the state or province name for the subject 
+ distinguished name of the certificate request. This parameter may be present 
+ in the Subject DN.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha1withdsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the signature algorithm for the certificate request to be pkcs-1-sha1withDSAEncryption. The default is to use sha1WithRsa.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha1withecdsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the signature algorithm for the certificate request to be pkcs-1-sha1withECDSAEncryption. The default is to use sha1WithRsa.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-sha1WithRsa</span>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the signature algorithm for the 
+ certificate request to be pkcs-1-SHA1withRSAEncryption. The default is 
+ to use sha1WithRsa.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha224withecdsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">  Defines the signature algorithm for the certificate request to be pkcs-1-sha224withECDSAEncryption. The default is to use sha1WithRsa.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha224withrsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">  Defines the signature algorithm for the certificate request to be pkcs-1-sha224withRSAEncryption. The default is to use sha1WithRsa.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha256withecdsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">  Defines the signature algorithm for the certificate request to be pkcs-1-sha256withECDSAEncryption. The default is to use sha1WithRsa.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha256withrsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">  Defines the signature algorithm for the certificate request to be pkcs-1-sha256withRSAEncryption. The default is to use sha1WithRsa.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha384withecdsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the signature algorithm for the certificate request to be pkcs-1-sha384withECDSAEncryption. The default is to use sha1WithRsa.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha384withrsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">  Defines the signature algorithm for the certificate request to be pkcs-1-sha384withRSAEncryption. The default is to use sha1WithRsa.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha512withecdsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">  Defines the signature algorithm for the certificate request to be pkcs-1-sha512withECDSAEncryption. The default is to use sha1WithRsa.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-sha512withrsa</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">  Defines the signature algorithm for the certificate request to be pkcs-1-sha512withRSAEncryption. The default is to use sha1WithRsa. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="2">Common</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-password</b>=&lt;password&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The password for the role accessing the current slot, with the current command. &#160;If this is not specified, it is prompted. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1"><b>-slot</b>=&lt;slote#&gt;</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">The slot to be acted upon, by the current command. &#160;If this is not specified, it is prompted. &#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3>
+        <p>The following example creates a PEM encoded PKCS #10 certificate request for key 6:</p><pre xml:space="preserve">cmu requestCert -publichandle=6 –privatehandle=7 -C=CA -L=Ottawa -O="Rainbow-Chrysalis" -CN="Test Certificate" -outputFile=testCert.req</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

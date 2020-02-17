@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Syslog and SNMP Monitoring Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Other Appliance Logging</title>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../index.html#monitoring/other_logging.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter">Other Appliance Logging</h1>
+        <h3>hsm information show</h3>
+        <p>Output from the lunash:&gt;<b>hsm information show</b> command includes additional log data as shown in the following example.</p><pre>[local_host] lunash:&gt;hsm information show
+&#160;
+&#160;
+HSM Event Counters:
+&#160;
+Operation Requests:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 21998
+Operation Errors:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 1707
+Crypto Operation Requests:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 0
+Crypto Operation Errors:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 0
+Critical Events:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 0
+Non-Critical Events:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 34
+&#160;
+&#160;
+Command Result : 0 (Success)
+&#160;</pre>
+        <p><b>sysstatd</b>, <b>snmp</b> and <b>ntls</b> periodically make calls to the HSM and these calls result in incremented counters for Operation Requests and Operation Errors. <b>luna-snmp</b> polls the HSM every minute and increments these two counters by 49 and 1 respectively. <b>sysstatd</b> polls the HSM with each rotation of the LCD messages (~15 to 20 seconds) and increments these two counters by 25 and 3 respectively. <b>ntls</b> polls the HSM repeatedly and increments the Operation Requests counter by more than 600 per minute.</p>
+        <p>Crypto Operation Requests and Crypto Operation Errors reflect counts from client application requests to the HSM.</p>
+        <p>Critical Events are catastrophic failure of the HSM firmware as reported by the HSM itself. An increment in this counter also results in a crash log file and a syslog message (messages) similar to the following example:</p><pre xml:space="preserve">2012 Feb 22 03:15:13 LunaSA5&#160; local6 crit&#160; oamp[2318]: CRIT: Fatal error 0x00300203
+2012 Feb 22 03:15:13 LunaSA5&#160; local6 info&#160; oamp[2318]: info : 0 : HSM critical event detected.&#160; Dual port dump generated : hsm_dump_20120222031513</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Non-Critical Events are either ERR or INFO messages. A count the INFO and ERR messages in the following excerpt reflects the 34 reported in the example above.</p><pre>2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: ----- HSM Logging started
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; Warm boot
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; FW Rev 6.2.1-10
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; File: SOURCE/LUNA2/MAIN_MOD/main.c
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; Date: Jul 29 2011, Time: 16:53:13
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; POWER-UP LOG DUMP START
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; Power-up log created
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; Appending power-up log...
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; HSM is powered-up
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; HSM time: 0 min (YYYY:MM:DD:hh:mm:ss = 0000:01:01:00:00:05.04)
+2014 Aug 21 07:18:14 local_host&#160; local6 err&#160; oamp[2100]: ERR:&#160;&#160;&#160; RTC: lost all power
+2014 Aug 21 07:18:14 local_host&#160; local6 err&#160; oamp[2100]: ERR:&#160;&#160;&#160; RTC: zeroized on power loss
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; RTC: re-configuring...passed. Clock restarted.
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; Zeroizing HSM after decommission...LOG(INFO):&#160;&#160;&#160;&#160; POWER-UP LOG DUMP END
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; Erasing power-up log
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; HSM time: 0 min (YYYY:MM:DD:hh:mm:ss = 0000:01:01:00:00:53.21)
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; MM_Init OK
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; PM_Init OK
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; I2C_Init OK
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; RTC_Init OK
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; NVRAM_Init OK
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; CGX Ver: 0xC0020802 HA Mode: 0x00000000 KeyStatus: 0x10000000 0x0000006D ES Flags: 0x00000002
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; CGX_Init OK
+2014 Aug 21 07:18:14 local_host&#160; local6 err&#160; oamp[2100]: ERR:&#160;&#160;&#160; MTK: security function was zeroized for unknown reason
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; MTK_Init OK
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; sxl_init OK
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; PE1746_Init OK
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; RN_Init OK
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; OH_Init OK
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; CA_AlgorithmSelfTest(): HW disabled, skipping all self tests
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; CA_Init OK
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; UM_Init OK
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; SM_Init OK
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160;&#160;&#160; Supported callback I/O v.1
+2014 Aug 21 07:18:14 local_host&#160; local6 info&#160; oamp[2100]: INFO:&#160;&#160; &#160;&#160;Supported callback protocol v.1</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

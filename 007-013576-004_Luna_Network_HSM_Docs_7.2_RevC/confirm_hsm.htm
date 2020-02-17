@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Confirm the HSM's Authenticity</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/confirm/confirm_hsm.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter">Confirm the HSM's Authenticity</h1>
+        <p>Hardware Security Modules have traditionally been deployed in the corporate data center’s most secure zone. Establishing trust with the HSM is, in part, achieved by physical access control. In cases of remote client usage (such as cloud cryptography), the client needs a way to verify the authenticity of the device protecting their most valued cryptographic keys. </p>
+        <h3 class="ntoc" style="color: #6c286b;">Public Key Confirmations</h3>
+        <p><span class="DefaultCompanyNameLong">Gemalto</span>'s SafeNet Luna HSMs include factory-issued device identities certified by a <span class="DefaultCompanyNameLong">Gemalto</span> authority. The root of this authority is maintained by <span class="DefaultCompanyNameLong">Gemalto</span> in HSMs locked in a vault with layered physical and logical access controls. These certificates are used as the root of trust for the issuance of “public key confirmations” (PKCs), certificates issued by the HSM attesting to the life cycle of a specific private key. A Luna HSM will issue confirmations only for private keys that were created by the HSM and that can never exist outside of the HSM. A valid confirmation is cryptographic proof that a specific key is inside the identified HSM. The confirmation is also proof that that the identified HSM is real. </p>
+        <p>The key pair within the HSM that signs the confirmation is called a Hardware Origin Key (HOK). It is protected inside the HSM’s FIPS 140-2 Level 3 security boundary. Each HOK is unique and there is no way to extract or replace it. The HOK is created in the HSM at the time of manufacture and certified by <span class="DefaultCompanyNameLong">Gemalto</span>’s secure manufacturing authority, which is certified by <span class="DefaultCompanyNameLong">Gemalto</span>’s root authority.</p>
+        <p>Public key confirmations are automatically generated for RSA key pairs in the HSM. A user can get a confirmation through the PKCS #11 API or the Luna <b>cmu</b> tool, and use it to verify that any RSA key is protected and has always been protected by a Luna HSM. A PKC bundle contains the following certificates: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>MIC:</b> Manufacturing Integrity Certificate; corresponds to the Manufacturing Integrity Private Key (MIK), signed by the SafeNet Root. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>HOC:</b> Hardware Origin Certificate; corresponds to the Hardware Origin Private Key (HOK). Unique to each HSM. Signed by MIK.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>DAC:</b> Device Authentication Certificate; corresponds to the Device Authentication Private Key (DAK). Unique to each HSM. Signed by HOK.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>PKC:</b> Public Key Confirmation Certificate; certificate for a private key on the HSM. Signed by DAK.</p>
+        <p>Public key confirmations are delivered as PKCS #7 files containing a certificate chain. The PKCS #7 files can be viewed using tools like OpenSSL and Microsoft’s Certificates snap-in for MMC. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>While third-party tools are capable of cryptographically validating the certificate signature chain, they may display some certificate errors, since they do not recognize some SafeNet-specific key usage attributes included in the certificates.</p>
+        <h4>Chains of Trust</h4>
+        <p>There are two chains of trust: Chrysalis-ITS and TC-TrustCenter. Chrysalis-ITS is built in by default, and originates from <span class="DefaultCompanyName">Gemalto</span>'s root certificate authority. It uses the MIC, HOC, DAC, and the PKC. TC-TrustCenter originates from the MAC (Manufacturer's Authentication Certificate), and uses the DAC and PKC. If you choose to use the TC-TrustCenter chain of trust, it will take the place of Chrysalis-ITS.</p>
+        <h3 class="ntoc">Confirming the HSM's Authenticity</h3>
+        <p>The <b>cmu</b> also includes a command that tests an HSM’s authenticity by creating and verifying a confirmation on a temporary key created in the HSM (see <a href="../../Utilities/cmu/cmu_verifyhsm.htm" class="MCXref xref">cmu verifyhsm</a> in the <i>Utilities Guide</i>). The test includes a proof of possession that asks the HSM to sign a user-entered string as proof the associated private key is present within the target HSM.</p>
+        <p>The test requires the SafeNet root certificate, provided below: </p>
+        <p><a href="safenet-root.pem"><img src="../../Resources/Images/icons/safenet-root.svg" style="height: auto;width: 120px;" /></a>
+        </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The current certificate is valid until 2031-12-31, but it may change before this date at <span class="DefaultCompanyNameLong">Gemalto</span>'s discretion. Ensure that you have the most recent version of this documentation. </p>
+        <h5>To confirm the HSM's authenticity:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Right-click the link above and save the root certificate to the LunaClient directory.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Open a command line and navigate to the LunaClient directory. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use the <b>cmu</b> utility to authenticate the HSM. You must specify a challenge string for the HSM to sign, and the root certificate file:</p>
+        <p class="listLevel1">&gt;<b>cmu verifyhsm -challenge</b> &lt;string&gt; <b>-rootcert safenet-root.pem</b></p>
+        <p class="listLevel1">When prompted, specify the partition you wish to use and the Crypto Officer credential for that partition.</p><pre class="listLevel1">&gt;cmu verifyhsm -challenge "1234567890" -rootcert safenet-root.pem</pre><pre class="listLevel1">Select token</pre><pre class="listLevel1" xml:space="preserve"> [0] Token Label: mypartition-1</pre><pre class="listLevel1" xml:space="preserve"> [1] Token Label: mypartition-2</pre><pre class="listLevel1" xml:space="preserve"> Enter choice: 0</pre><pre class="listLevel1">Please enter password for token in slot 0 : ********</pre><pre class="listLevel1">Reading rootcert from file "safenet-root.pem"... ok.</pre><pre class="listLevel1">Generating temporary RSA keypair in HSM... ok.</pre><pre class="listLevel1">Extracting PKC bundle from HSM... ok.</pre><pre class="listLevel1">Verifying PKC certificate... ok.</pre><pre class="listLevel1">Verifying DAC certificate... ok.</pre><pre class="listLevel1">Verifying HOC certificate... ok.</pre><pre class="listLevel1">Verifying MIC certificate... ok.</pre><pre class="listLevel1">Verifying MIC against rootcert... ok.</pre><pre class="listLevel1">Signing and verifying challenge... ok.</pre><pre class="listLevel1">Verifying HSM serial number... ok.</pre><pre class="listLevel1" xml:space="preserve">Overall status: Success.</pre>
+        <p class="listLevel1">If this test fails, contact the HSM SO. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

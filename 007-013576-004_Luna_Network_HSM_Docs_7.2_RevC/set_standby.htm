@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Setting an HA Group Member to Standby</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#administration/ha/setup/set_standby.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 data-mc-conditions="Default.ScreenOnly">Setting an HA Group Member to Standby</h2>
+        <p>Some HA group members can be designated as standby members. Standby members do not perform any cryptographic operations unless all active members have failed (see <a href="../functionality.htm#Standby" class="MCXref xref">Standby Members</a> for details). They are useful as a last resort against loss of application service. </p>
+        <h4>Prerequisites</h4>
+        <p>The partition you want to designate as a standby member must already be a member of the HA group (see <a href="../manage/add_remove.htm" class="MCXref xref">Adding/Removing an HA Group Member</a>). The Crypto Officer must perform this procedure. </p>
+        <h5>To set an HA group member to standby</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>[Optional] Check the serial number of the member you wish to set to standby mode (see <a href="../../../lunacm/commands/hagroup/hagroup_listgroups.htm" class="MCTopicPopup MCTopicPopupHotSpot MCXref xref">hagroup listgroups</a>).</p>
+        <p class="listLevel1">lunacm:&gt; <b>hagroup listgroups</b></p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; hagroup listgroups</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        If you would like to see synchronization data for group myHAgroup,</pre><pre class="listLevel1" xml:space="preserve">        please enter the password for the group members. Sync info</pre><pre class="listLevel1" xml:space="preserve">        not available in HA Only mode.</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Enter the password: ********</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">              HA auto recovery:  disabled</pre><pre class="listLevel1" xml:space="preserve">              HA recovery mode:  activeBasic</pre><pre class="listLevel1" xml:space="preserve">   Maximum auto recovery retry:  0</pre><pre class="listLevel1" xml:space="preserve">   Auto recovery poll interval:  60 seconds</pre><pre class="listLevel1" xml:space="preserve">                    HA logging:  disabled</pre><pre class="listLevel1" xml:space="preserve">            Only Show HA Slots:  no</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">                HA Group Label:  myHAgroup</pre><pre class="listLevel1" xml:space="preserve">               HA Group Number:  11238700701509</pre><pre class="listLevel1" xml:space="preserve">              HA Group Slot ID:  5</pre><pre class="listLevel1" xml:space="preserve">               Synchronization:  enabled</pre><pre class="listLevel1" xml:space="preserve">                 Group Members:  154438865287, 1238700701509</pre><pre class="listLevel1" xml:space="preserve">                    Needs sync:  no</pre><pre class="listLevel1" xml:space="preserve">               Standby Members:  &lt;none&gt;</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Slot #    Member S/N                      Member Label    Status</pre><pre class="listLevel1">======    ==========                      ============    ======</pre><pre class="listLevel1" xml:space="preserve">     0  154438865287                              par0     alive</pre><pre class="listLevel1" xml:space="preserve">     1  1238700701509                             par1     alive</pre><pre class="listLevel1" xml:space="preserve">     2  2855496365544                             par2     alive</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Command Result : No Error</pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Set the desired member to standby mode by specifying the serial number (see <a href="../../../lunacm/commands/hagroup/hagroup_addstandby.htm" class="MCTopicPopup MCTopicPopupHotSpot MCXref xref">hagroup addstandby</a>). </p>
+        <p class="listLevel1">lunacm:&gt; <b>hagroup addstandby -group</b> &lt;label&gt; <b>-serialnumber</b> &lt;member_serialnum&gt;</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; hagroup addstandby -group myHAgroup -serialnumber 2855496365544</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        The member 2855496365544 was successfully added to the standby list for the HA Group myHAgroup.</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">Command Result : No Error</pre>
+        <h5>To remove an HA group member from standby</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>[Optional] Check the serial number of the standby member (see <a href="../../../lunacm/commands/hagroup/hagroup_listgroups.htm" class="MCTopicPopup MCTopicPopupHotSpot MCXref xref">hagroup listgroups</a>).</p>
+        <p class="listLevel1">lunacm:&gt; <b>hagroup listgroups</b></p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; hagroup listgroups</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        If you would like to see synchronization data for group myHAgroup,</pre><pre class="listLevel1" xml:space="preserve">        please enter the password for the group members. Sync info</pre><pre class="listLevel1" xml:space="preserve">        not available in HA Only mode.</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Enter the password: ********</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">              HA auto recovery:  disabled</pre><pre class="listLevel1" xml:space="preserve">              HA recovery mode:  activeBasic</pre><pre class="listLevel1" xml:space="preserve">   Maximum auto recovery retry:  0</pre><pre class="listLevel1" xml:space="preserve">   Auto recovery poll interval:  60 seconds</pre><pre class="listLevel1" xml:space="preserve">                    HA logging:  disabled</pre><pre class="listLevel1" xml:space="preserve">            Only Show HA Slots:  no</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">                HA Group Label:  myHAgroup</pre><pre class="listLevel1" xml:space="preserve">               HA Group Number:  11238700701509</pre><pre class="listLevel1" xml:space="preserve">              HA Group Slot ID:  5</pre><pre class="listLevel1" xml:space="preserve">               Synchronization:  enabled</pre><pre class="listLevel1" xml:space="preserve">                 Group Members:  154438865287, 1238700701509</pre><pre class="listLevel1" xml:space="preserve">                    Needs sync:  no</pre><pre class="listLevel1" xml:space="preserve">              <span style="background-color: #ffff00;">Standby Members:  2855496365544</span></pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Slot #    Member S/N                      Member Label    Status</pre><pre class="listLevel1">======    ==========                      ============    ======</pre><pre class="listLevel1" xml:space="preserve">     0  154438865287                              par0     alive</pre><pre class="listLevel1" xml:space="preserve">     1  1238700701509                             par1     alive</pre><pre class="listLevel1" xml:space="preserve">     2  2855496365544                             par2     alive</pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Remove the member from standby and return it to active HA use (see <a href="../../../lunacm/commands/hagroup/hagroup_removestandby.htm" class="MCTopicPopup MCTopicPopupHotSpot MCXref xref">hagroup removestandby</a>). </p>
+        <p class="listLevel1">lunacm:&gt; <b>hagroup removestandby -group</b> &lt;label&gt; <b>-serialnumber</b> &lt;member_serialnum&gt;</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt; hagroup removestandby -group myHAgroup -serialnumber 2855496365544</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        The member 2855496365544 was successfully removed from the standby list for the HA Group myHAgroup.</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Command Result : No Error</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

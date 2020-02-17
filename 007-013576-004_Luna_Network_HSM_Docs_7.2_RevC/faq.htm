@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.CV_Exclude" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Overview">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Frequently Asked Questions</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/overview/faq.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Frequently Asked Questions</h2>
+        <p>This section provides additional information by answering questions that are frequently asked by our customers.</p>
+        <h4>How can we use a <span class="DefaultProduct">SafeNet Luna Network HSM</span> with a Key Manager? </h4>
+        <p>A <span class="DefaultProduct">SafeNet Luna Network HSM</span> could be a Certificate Authority (CA) within your organization, and would operate in parallel with a Key Manager. It is normally the Key Manager that requests service from a CA, and not the other way around. For example, the Key Manager might generate an RSA key pair for an endpoint to use for authentication.  The KM would then go to its associated CA and request a certificate for the public key. </p>
+        <p> The other typical use case for a KM looking to a CA for service is for confirming certificate validity, either through CRLs or OCSP.
+
+</p>
+        <p>In general, the HSM keeps keys safe within its confines, and exports only metadata about the contained objects. The metadata allows the KM or an integrated application to refer to the keys and objects within the HSM, when invoking cryptographic operations by the HSM, but not to touch the actual keys or objects themselves. </p>
+        <p>A CA's private key(s) are extremely valuable and often are used only by a CA application operating on a stand-alone server or one on a very minimally-connected subnet. Backup is normally done to a Safenet Luna Backup HSM that can then be locked away in a safe.  </p>
+        <h4>We need to encrypt PANs on MS SQL Server 2008 (Extensible Key Management). We have a problem with the encrypted PAN, as the length is greater than the original PAN (16 digits). </h4>
+        <p>The issue is a common one and it arises because the CBC padding scheme requires an extra padding block (8 bytes), with all bytes having the hex value 8, to be appended if the length of the original plaintext is a multiple of the cipher’s block length.  Another format issue often comes up as well since encrypted data does not generally represent well as decimal digits.</p>
+        <p>We suggest one of two options:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>You can set up a shadow table to hold the encrypted PANs.  The shadow table schema can then be set up for a sufficient number of hex numerals to hold the padded data or just make that field a binary blob.  This takes some coding on your part, and the plaintext PANs would be retrieved into a dynamic view, rather than back into the “real” table, to protect their confidentiality. You should do this only if there is a hard requirement to use <span class="DefaultProduct">SafeNet Luna Network HSM</span>, such as certification.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Alternatively, you can switch to DataSecure.  It has tokenization support and is, in general, designed for DB security.</p>
+        <h4>"Makecert" fails when using <span class="DefaultProduct">SafeNet Luna Network HSM</span> with MS Authenticode, because the MD5 algorithm is not available when the HSM is in FIPS&#160;mode. <br />Error: CryptHashPublicKeyInfo failed =&gt; 0x80090005 (-2146893819) Failed, and FINIDigest_Init ***CKR_MECHANISM_INVALID***(296ms) {}</h4>
+        <p>The certificate always has an MD5 hash in it. Configure LunaCSP algorithm registration such that MD5 hashing is performed in software. For example:&#160;</p>
+        <p># register.exe  /algorithms</p>
+        <h4>We are developing our application(s) in C#, and we want to integrate with <span class="DefaultProduct">SafeNet Luna Network HSM</span>s</h4>
+        <p>If you want to integrate your C# application with <span class="DefaultProduct">SafeNet Luna Network HSM</span> 6.x using PKCS#11 calls, rather than using Microsoft CAPI or CNG, then you might consider using "ncryptoki". At the time this note is being written, we have not created anything formal, but we have worked with some customers who are successfully using "ncryptoki" for that purpose. </p>
+        <p>Keep an eye on the Safenet C3 website, or ask your SafeNet technical representatives if anything new has been added. Or, you could engage SafeNet Professional Services for formal assistance with your project. </p>
+        <h4>We intend to use PKCS#11 data objects - is this supported in the API for your HSMs?</h4>
+        <p>Yes, it's a basic requirement. <br />If you have concerns, you might wish to verify if <span class="DefaultProduct">SafeNet Luna Network HSM</span>s' (and our API's) handling of data objects are conducive to the operation of your intended application(s). SafeNet API generally places no restrictions on whether data objects can be private or not. We understand that, in the past, some competitors' modules might have allowed only public data objects, if that was the basis of your question. </p>
+        <p>However, one concern that might arise is Java. <br />Java offers no support for data objects, and so we do not support them with the LunaProvider. Unexpected results can occur with SafeNet JCA if a data object is present in a partition. This might be the case if you attempt to use an application that uses the CSP, and then the JSP accesses the same partition. CSP inherently creates a data object for its own purposes. </p>
+        <p>Therefore, keep CSP and JSP clients tied to separate partitions. Generally do not allow JSP to connect to a partition that contains a data object, regardless of the source - Java (and therefore JSP) doesn't know what to do with it.</p>
+        <p>If your application scenario really does demand the use of both the Microsoft Cryptographic Provider and Java against a common partition, then consider upgrading/updating to Microsoft CNG and use our KSP, which does not inherently create a data object, and so would not cause conflict of that sort.</p>
+        <h4>In our application, both for PKCS#11 and for the JCA/JCE SafeNet Provider, we need to use CKM_SHAxxx_RSA_PKCS mechanism for Signing. Does Hashing occur at the Client or in the HSM?</h4>
+        <p>CKM_SHAxxx_RSA_PKCS is a PKCS#11 mechanism, not a Java method. </p>
+        <p>For PKCS#11 the digest operation is done within the HSM if that mechanism is called. <br />For Java, digests are done in software. </p>
+        <h4>We were using another vendor's HSM - or are evaluating HSM products - to host an online sub- or issuing CA with MSCA. With the other vendor we must check  "Allow administrator interaction when the private key is accessed by the CA" in the "Configure Cryptography" setup dialog. <span class="DefaultProduct">SafeNet Luna Network HSM</span>s seem to work regardless of whether that selection is checked or not.</h4>
+        <p>So, for that other vendor's product, you need to enter the additional credentials every time you need to issue a certificate? That seems a bit restrictive. </p>
+        <p>"Allow administrator interaction..." actually means "Allow administrator interaction if the underlying KSP requires it".</p>
+        <p>The Windows operating system passes a Windows handle that the KSP can use to render any GUI designed by a vendor (SafeNet or some other vendor).</p>
+        <p>Somewhere in the process a KSP reports that it can (or cannot) interact with the GUI so the application will (or will not) request GUI interaction; that is, pass a window handle to the KSP.</p>
+        <p>So, the &lt;competitor product&gt; KSP expects a window handle - implying hands-on action by an administrator, each time - whereas SafeNetKsp ignores the handle (if one was provided). </p>
+        <p>SafeNet's KSP was designed to register partitions ahead of time. <span class="DefaultProduct">SafeNet Luna Network HSM</span>s can be Activated, which caches the administrative and enabling credentials, such that only the partition challenge (text string) is needed, which can be passed by your application without need for GUI interaction. Furthermore, <span class="DefaultProduct">SafeNet Luna Network HSM</span> can "AutoActivate" partitions, which allows cached ("Activated") partition credentials to be retained through power interruptions as long as 2 hours in duration. </p>
+        <p>For <span class="DefaultProduct">SafeNet Luna Network HSM</span>s, as long as the user is registered in the KSP utility, and the partition is activated, the "Allow administrator interaction..." check box (checked or not checked ) does not impose any additional, ongoing, authentication requirements -- no additional prompts for credentials from the GUI. After initial setup and Activation, the <span class="DefaultProduct">SafeNet Luna Network HSM</span> knows what to do, and doesn't need to pester you.</p>
+        <p data-mc-conditions="Default.PED">For root CAs, on the other hand, you always have the option of not activating the partition, so PED interaction would always be required to ensure close supervision for each use of the private key.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|Planning Your Configuration">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>PED-authenticated HSM Planning</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/initial_setup/ped_planning.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>PED-authenticated HSM Planning</h2>
+        <p>Planning for configuration of a PED-authenticated SafeNet Luna HSM involves a number of layered, interlocking considerations that should be carefully thought through, in advance. You must determine:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Whether the HSM authentication secrets should fall under your organization's rules for password change cycles. For example, it could be a major undertaking to change passwords for all PED keys and their backup copies every couple of months. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Your backup policy for PED keys:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>How many copies of each PED key should exist</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>How they should be stored (on-site and off-site)</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Who has control of the backup copies of your HSM authentication</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>HSM&#160;and partition text labels, in keeping with your organization's requirements.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Whether it is necessary or desirable to have split-secret, multi-person access control (MofN) for any or all of the roles and secrets of the HSM.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Whether it is necessary or desirable to invoke "something you know"&#160;secrets (PED PINs) in addition to the "something you have" PED key for any or all of the roles and secrets of the HSM.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If PED PINs are used, how your organization's security policy deals with the departure or replacement of personnel who know the PED PINs.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Which person or role within your organization will hold the PED key(s) and passwords for each role:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>SO of the HSM</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>SO of each application partition</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Crypto Officer and Crypto User</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Auditor (optional)</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Cloning Domain(s), </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>RPK (for optional Remote PED operation)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>How PED keys should be physically identified (which one is which copy), especially if you have invoked MofN.</p>
+        <h3>PED Key Planning</h3>
+        <p>Plan your PED key options and choices before you begin the actions that will invoke PED keys. </p>
+        <p>The various PED keys contain secrets that are created by an HSM, and are imprinted on the PED key at the time that a triggering action is called - for example, both the HSM and a blue SO PED key are imprinted with the HSM SO secret at the time the HSM is initialized. </p>
+        <p>Optionally, the PED dialog allows you to present a key with an existing secret (of the appropriate type for the current action) that was previously created by this HSM or by some other HSM. In that second case, the secret from the key is imprinted on the HSM, and that key can now unlock its function on both the previous HSM and the current HSM. This can be repeated for any number of HSMs that you wish accessible by the one secret.</p>
+        <h3 class="ntoc">PED Prompts</h3>
+        <p>Some questions/prompts from the PED when any key/access secret is first invoked are:</p>
+        <h4>Reuse</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>No</b>: You wish to have the current HSM generate a new secret and imprint it on the PED&#160;key</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>Yes</b>: You wish to accept an old secret from the currently inserted PED&#160;key, and imprint that secret onto the HSM</p>
+        <p>If you want this HSM to be accessed by the same secret that accesses this function/role on one or more other HSMs, reuse the PED&#160;key secret. Sometimes, it is advantageous to have a single secret for a group of HSMs managed by a single person. </p>
+        <p>Sometimes, security or operational rules require that each HSM must have a different secret (for the role being configured). </p>
+        <p>The option to reuse an existing secret applies only within the same type of secret. For example, you cannot tell a partition to accept a secret from a black (Crypto User) PED&#160;key if you are setting up domain.</p>
+        <h4>MofN</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>M=1, N=1: refuse MofN</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>N &gt; M &gt; 1: invoke MofN</p>
+        <p>Invoking MofN splits the current secret over quantity N same-color PED keys, such that quantity M of them will always be needed to assemble the full secret and authenticate that role. You invoke MofN by providing the M value and the N value using the PED keypad, when prompted.  MofN is the more secure choice, when you require multiple persons to be present (with their splits of the role secret) in order to access that role and perform its functions.</p>
+        <h4>Overwrite</h4>
+        <p>During create/initialize/imprint events, when the PED has received answers to its preliminary questions, it prompts you to insert a key and press <b>Enter</b> on the keypad. This is the first point at which it actually looks at the inserted key. The PED then tells you what is on the inserted key (could be blank, could be any of several authentication secrets) and asks if you wish to overwrite. This is an opportunity to reconsider the key that you have inserted, before something irreversible happens. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>No</b>: Do not overwrite what was found. Remove the key and go back to the PED prompt.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>Yes</b>: Overwrite the secret on the inserted PED&#160;key. </p>
+        <p>If you say <b>Yes</b>, the PED gives you one more chance to reconsider with the prompt, "WARNING*** Are you sure...". The PED&#160;is very thorough about making sure that you do not accidentally overwrite a useful authentication secret. &#160;</p>
+        <h4>PED PIN</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>No: Press <b>Enter</b> on the PED keypad without entering any digits.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Yes: Type a minimum of four digits on the PED keypad and press <b>Enter</b>.</p>
+        <p>If you type any digits, then the typed digits (the new PED PIN) are XOR'd with the secret from the HSM, before the combined secret goes onto the PED key. This means that the secret on the PED key is not identical to the secret from the HSM, so in future you must always type those PED PIN digits to reverse the XOR and present the HSM with the secret it is expecting. </p>
+        <p>With a PED PIN&#160;applied, the secret for that role is now two-factor - "something you have" (the version of the secret that is imprinted on the key) and "something you know" (the secret that you type in, to be XOR'd with the contained secret).</p>
+        <h4>Duplicate</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>Yes</b>: Duplicate the secret imprinted on the current PED&#160;key onto another PED&#160;key.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>No</b>: Do not duplicate the secret.</p>
+        <p>You should always have duplicate keys for each role (or duplicate MofN sets, per role, if you chose to invoke the MofN split), so that you can have at least one off-site backup, and  an on-site standby or backup set as well. Your security and operational policies will dictate how many sets you need. </p>
+        <h3>HSM Initialization and the Blue SO&#160;PED Key</h3>
+        <p>The first action that invokes Luna PED is HSM initialization. </p>
+        <p>When you initialize, you are creating an SO (security officer) identity and space on the HSM. In most cases, this is an administrative position and the only keys or objects that are ever stored there are system keys, not user keys. The SO sets policies for the overall HSM, and creates partitions. </p>
+        <p>When creating an access secret for the SO, you are creating a secret for an administrator who sets up the HSM and is rarely needed thereafter. You might have a single person who has the job of overseeing several HSMs, in which case, only the first HSM creates a secret to imprint on a blue PED key. The second, and all future HSMs to be administered by that person (or role/job in your organization) would accept that secret from a provided blue PED key, rather than creating their own unique SO PED keys. In that situation, you would choose to "Reuse an existing keyset" when initializing every HSM after the first one. </p>
+        <p>Alternatively, you might have a very compartmentalized organization where a separate individual must have administrative authority over each HSM, so in that case you would use blank blue keys each time you initialized a new HSM, and each HSM would imprint its own uniquely generated SO secret onto a unique blue key. As well, you would have the opportunity to apply PED PINs to any or all of the unique SO PED keys. </p>
+        <p>If your organization enforces a policy of password changes at certain intervals, or at events like firings and personnel turnover, then you have options and requirements - you might need to change the secret on the PED key (<b>hsm changepw</b> command) or you might satisfy the password-changing requirement by simply changing the PED&#160;PIN. </p>
+        <p>Furthermore, when you initialize an HSM with a new secret, you have the opportunity to split that secret using the MofN feature. Consider how complicated your administration and key-handling/key-update procedures should be. </p>
+        <p>Before you begin the HSM init process, have your blue PED&#160;keys ready, either with an existing SO secret to reuse, or blank (or outdated secret) to be overwritten by a unique new SO secret generated by the HSM. At the same time, you must also have appropriate red PED keys ready, because assigning/creating a cloning domain for the HSM is part of the HSM init process. See <a href="#HSM" class="MCXref xref">HSM Cloning Domain and the Red Domain PED Key</a>.</p>
+        <h3><a name="HSM"></a>HSM Cloning Domain and the Red Domain PED Key</h3>
+        <p>All the points, options, decisions listed above for the SO key apply equally to the Cloning domain key, with two exceptions. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>You must apply the same cloning domain secret to each HSM that is to backup and restore HSM configuration data to one another. By maintaining close control of the red PED key, you control which HSMs the current HSM can clone to.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>There is no provision to reset or change a cloning domain. An HSM domain is part of an HSM until it is reinitialized. An HSM partition domain is part of an HSM partition for the life of that partition. </p>
+        <p>Before you begin the HSM initialization process, have your red PED&#160;keys ready, either with an existing cloning domain secret to reuse, or blank (or outdated secret) to be overwritten by a unique cloning domain secret generated by the HSM. See <a href="domains_planning.htm" class="MCXref xref">Domain Planning</a>. </p>
+        <h3>Partition Security Officer Blue PED Key</h3>
+        <p>The Partition SO also has a blue PED key. Once the partition is initialized, the Partition SO administers all partition policies, and initializes the Crypto Officer role. The blue PED key for a partition (or group of partitions):</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Allows the holder to log in as the Partition SO to perform administrative tasks on the partition</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Allows the holder to Activate the partition - applications can then present the partition challenge secret and make use of the partition.</p>
+        <p>When a partition is initialized and a blue PED key imprinted, you are prompted to provide a domain for the new partition. At your option, your partition can:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Take on the same cloning domain (red PED key) as&#160;the HSM in which it resides.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Take on a new, unique cloning domain, generated by the HSM at partition creation.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Take on a cloning domain from an existing, imprinted red PED key that already holds the domain secret for another partition - this is how you allow the new partition to accept objects from a Backup HSM or to be part of an HA group.</p>
+        <p>Regardless of whether the HSM (SO space) and the partition share a domain, it is not possible to copy/clone objects between the two. A shared domain between partitions allows you to clone between/among those partitions, and to make such partitions members of a High Availability group. All members of an HA&#160;group must share a common cloning domain. </p>
+        <p>Before you begin the partition initialization process, have your blue PED&#160;keys ready, either with an existing Partition SO secret to reuse, or blank (or outdated secret) to be overwritten by a new Partition SO secret generated by the HSM. At the same time, you must also have appropriate red PED keys ready, because assigning/creating a cloning domain for the partition is part of the partition creation process. See <a href="#HSM" class="MCXref xref">HSM Cloning Domain and the Red Domain PED Key</a>.</p>
+        <h3>Crypto Officer Black PED Key</h3>
+        <p>The Crypto Officer secret on the black PED key allows Read-Write access to the contents of the partition, for performing cryptographic operations. If the partition is Activated, the black PED key secret is cached, and applications can access the partition by providing a partition challenge secret set by the Partition SO (and subsequently changed by the CO). </p>
+        <h3>Crypto User Gray PED Key</h3>
+        <p>The Crypto User secret on the gray PED key allows Read-Only access to the contents of the partition, for performing cryptographic operations. If the partition is Activated, the gray PED key secret is cached, and applications can access the partition by providing a partition challenge secret set by the Crypto Officer (and subsequently changed by the CU). </p>
+        <h3>Remote PED Orange PED Key (RPK)</h3>
+        <p>This key is not tied to a fundamental activity like initializing an HSM or creating a partition. Instead, if you don't expect to use the Remote PED option, you never need to create an orange PED&#160;key. </p>
+        <p>If you do have a SafeNet PED, and want to use it for remote authentication,  then the HSM and the PED that is remotely hosted must share a Remote PED Vector (RPV). The RPV is generated by the HSM when you instruct it to set a PED&#160;vector and imprinted onto an orange PED&#160;key, or it is accepted from an existing Remote PED key and imprinted onto the HSM. </p>
+        <p>When you invoke <MadCap:conditionalText data-mc-conditions="Default.SA">lunash:&gt;<b>hsm ped vector init</b></MadCap:conditionalText> to create a Remote PED Vector, the PED prompt sequence is similar to the sequence for the blue or black PED keys, with the same questions about reuse, MofN, duplicates, etc. </p>
+        <p>Before you begin the PED vector initialization process, have your orange PED&#160;keys ready, either with an existing RPV secret to reuse, or blank (or outdated secret) to be overwritten by a unique RPV secret generated by the HSM. The RPV can be initialized with a locally connected PED, or remotely, using a one-time numeric PIN for authentication. After that, you can take the orange PED&#160;key (and your other PED keys for that HSM) to any host anywhere that has PEDserver running and has a SafeNet PED attached. See <a href="../../administration/PED_Auth/remote/about_remote.htm" class="MCXref xref">About Remote PED</a> in the <i>Administration Guide</i> for directions.</p>
+        <h3>Auditor White PED Key</h3>
+        <p>The Audit role is completely separate from other roles on the HSM. It is optional for operation of the HSM, but might be mandatory according to your security regime. The Audit role can be initialized at any time, and does not require that the HSM already be initialized. </p>
+        <p>When you invoke <b>audit init</b>, to create/imprint an Audit role secret, the PED prompt sequence is similar to the sequence for the blue, black, or gray PED keys, with the same questions about reuse, MofN, duplicates, etc. </p>
+        <p>Before you begin the Audit init process, have your white PED&#160;keys ready, either with an existing Auditor secret to reuse, or blank (or outdated secret) to be overwritten by a unique new Auditor secret generated by the HSM.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

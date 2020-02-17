@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Syslog and SNMP Monitoring Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>SMART</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#monitoring/open_source/SMART.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>SMART</h2>
+        <p>Self-Monitoring, Analysis and Reporting Technology (SMART) is a technology built into modern hard drives to monitor the health of the drive and anticipate failures. The two classes of failures are: predictable and unpredictable. Examples of predicable failures are increased number of bad sectors and increased temperature from wear; they typically occur from slow processes. Unpredictable failures occur without warning and suddenly; for example, a hard drive dropped may report more than a normalized number of read errors.</p>
+        <p>The hard drives within <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliances implements SMART. A background process called the SMART control daemon (<b>smartd</b>) starts automatically at power up and is responsible for monitoring the hard drive via the SMART technology in it. The daemon records its findings via syslog.</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 33.3%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 33.3%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 33.3%;" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Facility Keyword</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Software Process</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Log File</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p><code>daemon</code>
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p><code>smartd[pid]</code>
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p><code>messages</code>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>SMART Attributes</h3>
+        <p>From LunaSH, you can query the SMART attributes (Luna SA/SP: status disk; Luna IS: system disk). The example below shows the SMART attributes reported from the shell command lunash:&gt;<b>status disk</b>:</p><pre xml:space="preserve">ID# ATTRIBUTE_NAME&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; FLAG&#160;&#160;&#160;&#160; VALUE WORST THRESH TYPE&#160;&#160;&#160;&#160;&#160; UPDATED&#160; WHEN_FAILED RAW_VALUE
+&#160; 1 Raw_Read_Error_Rate&#160;&#160;&#160;&#160; 0x002f&#160;&#160; 200&#160;&#160; 200&#160;&#160; 051&#160;&#160;&#160; Pre-fail&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 0
+&#160; 3 Spin_Up_Time&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 0x0027&#160;&#160; 154&#160;&#160; 152&#160;&#160; 021&#160;&#160;&#160; Pre-fail&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 1300
+&#160; 4 Start_Stop_Count&#160;&#160;&#160;&#160;&#160;&#160;&#160; 0x0032&#160;&#160; 100&#160;&#160; 100&#160;&#160; 000&#160;&#160;&#160; Old_age&#160;&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 601
+&#160; 5 Reallocated_Sector_Ct&#160;&#160; 0x0033&#160;&#160; 200&#160;&#160; 200&#160;&#160; 140&#160;&#160;&#160; Pre-fail&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 0
+&#160; 7 Seek_Error_Rate&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 0x002e&#160;&#160; 200&#160;&#160; 200&#160;&#160; 000&#160;&#160;&#160; Old_age&#160;&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 0
+&#160; 9 Power_On_Hours&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 0x0032&#160;&#160; 099&#160;&#160; 099&#160;&#160; 000&#160;&#160;&#160; Old_age&#160;&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 1383
+ 10 Spin_Retry_Count&#160;&#160;&#160;&#160;&#160;&#160;&#160; 0x0032&#160;&#160; 100&#160;&#160; 100&#160;&#160; 000&#160;&#160;&#160; Old_age&#160;&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 0
+ 11 Calibration_Retry_Count 0x0032&#160;&#160; 100&#160;&#160; 100&#160;&#160; 000&#160;&#160;&#160; Old_age&#160;&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 0
+ 12 Power_Cycle_Count&#160;&#160;&#160;&#160;&#160;&#160; 0x0032&#160;&#160; 100&#160;&#160; 100&#160;&#160; 000&#160;&#160;&#160; Old_age&#160;&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 601
+192 Power-Off_Retract_Count 0x0032&#160;&#160; 200&#160;&#160; 200&#160;&#160; 000&#160;&#160;&#160; Old_age&#160;&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 138
+193 Load_Cycle_Count&#160;&#160;&#160;&#160;&#160;&#160;&#160; 0x0032&#160;&#160; 200&#160;&#160; 200&#160;&#160; 000&#160;&#160;&#160; Old_age&#160;&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 462
+194 Temperature_Celsius&#160;&#160;&#160;&#160; 0x0022&#160;&#160; 115&#160;&#160; 092&#160;&#160; 000&#160;&#160;&#160; Old_age&#160;&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 28
+196 Reallocated_Event_Count 0x0032&#160;&#160; 200&#160;&#160; 200&#160;&#160; 000&#160;&#160;&#160; Old_age&#160;&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 0
+197 Current_Pending_Sector&#160; 0x0032&#160;&#160; 200&#160;&#160; 200&#160;&#160; 000&#160;&#160;&#160; Old_age&#160;&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 0
+198 Offline_Uncorrectable&#160;&#160; 0x0030&#160;&#160; 200&#160;&#160; 200&#160;&#160; 000&#160;&#160;&#160; Old_age&#160;&#160; Offline&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 0
+199 UDMA_CRC_Error_Count&#160;&#160;&#160; 0x0032&#160;&#160; 200&#160;&#160; 200&#160;&#160; 000&#160;&#160;&#160; Old_age&#160;&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 1
+200 Multi_Zone_Error_Rate&#160;&#160; 0x0008&#160;&#160; 200&#160;&#160; 200&#160;&#160; 000&#160;&#160;&#160; Old_age&#160;&#160; Offline&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 0
+
+</pre>
+        <p>The ID# and ATTRIBUTE NAME columns are the SMART attribute defined by the drive vendor. Note that vendors have generally standardized on the attributes and their meaning. The FLAG column indicates the main purpose of each attribute; correlating to the text in the TYPE and UPDATED columns. Only the last two bits are of any significance. Bit 0 identifies whether the attribute is an advisory (0) or a pre-fail notification (1). An advisory means that the disk has exceeded its intended design life while a pre-fail notification means that the disk is predicated to fail within 24 hours. Bit 1 indicates whether attribute monitoring occurs strictly offline (0) or during offline and normal operations (1).</p>
+        <p>The RAW_VALUE, VALUE, WORST and THRESH columns report on the specific attribute. The drive controller reports the RAW_VALUE. VALUE is normalized where a higher value is better. As VALUE drops (i.e., becomes worse), it approaches a threshold. THRESH is the value at which SMART reports a ‘threshold exceeded’ event. WORST is the most extreme reading recorded for the attribute. A VALUE of 100 is an initial default value. Consider attribute #174 (Temperature) as an example to put these four values in context. The example shows the current temperature reading of the drive as 28 degrees Celsius. Normalized, this reading is 115. A value of 100 therefore is 43 degrees Celsius. The worst reading recorded is a normalized value of 092 which translates to 51 degrees Celsius. This attribute has no threshold as it represents an advisory.</p>
+        <p>Assume that the SMART control daemon generated the following log message:</p><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, SMART Prefailure Attribute: 1 Raw_Read_Error_Rate changed from 200 to 92
+
+</pre>
+        <p>The next query of the SMART attributes might report the following information for attribute #1:</p><pre xml:space="preserve">ID# ATTRIBUTE_NAME&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; FLAG&#160;&#160;&#160;&#160; VALUE WORST THRESH TYPE&#160;&#160;&#160;&#160;&#160; UPDATED&#160; WHEN_FAILED RAW_VALUE
+&#160; 1 Raw_Read_Error_Rate&#160;&#160;&#160;&#160; 0x002f&#160;&#160; 092&#160;&#160; 092&#160;&#160; 051&#160;&#160;&#160; Pre-fail&#160; Always&#160;&#160;&#160;&#160;&#160;&#160; -&#160;&#160;&#160;&#160;&#160;&#160; 37767785
+
+</pre>
+        <p>If the drive controller reads a value that, once normalized, is less than or equal to the THRESH value, the daemon generates a critical log message and a query of the SMART attributes reports a VALUE less than or equal to THRESH as the following example shows.</p><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, SMART Prefailure Attribute: 1 Raw_Read_Error_Rate changed from 92 to 51
+&#160;
+ID# ATTRIBUTE_NAME&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; FLAG&#160;&#160;&#160;&#160; VALUE WORST THRESH TYPE&#160;&#160;&#160;&#160;&#160; UPDATED&#160; WHEN_FAILED RAW_VALUE
+&#160; 1 Raw_Read_Error_Rate&#160;&#160;&#160;&#160; 0x002f&#160;&#160; 051&#160;&#160; 051&#160;&#160; 051&#160;&#160;&#160; Pre-fail&#160; Always&#160;&#160; FAILING_NOW 4528445
+
+</pre>
+        <p>The WHEN_FAILED column indicates that the attribute has reached the THRESH value.</p>
+        <h3>Significant Expected Log Messages</h3>
+        <h4>Banner at Start Up</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: smartd version 5.38 [i686-redhat-linux-gnu] Copyright (C) 2002-8 Bruce Allen
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Home page is http://smartmontools.sourceforge.net/#012
+
+</pre>
+        <p>These two messages are the first log entries written by the smart control daemon. When <span class="DefaultCompanyNameLong">Gemalto</span> updates the SMART control daemon to a more recent version, the following messages more closely resemble the startup banner.</p><pre>2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: 1411:smartd 6.2 2013-07-26 r3841 [i686-linux-2.6.18-164.el5] (local build)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Copyright (C) 2002-13, Bruce Allen, Christian Franke, www.smartmontools.org</pre>
+        <h4>Read Configuration File</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Opened configuration file /etc/smartd.conf
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Configuration file /etc/smartd.conf parsed.
+
+</pre>
+        <p>These messages indicate that the SMART control daemon successfully opened and read the contents of the configuration file that contains the directives for how the daemon is to operate. When <span class="DefaultCompanyNameLong">Gemalto</span> updates the daemon to a newer release, the location of the configuration file will change as represented in the follow examples.</p><pre>2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Opened configuration file /usr/local/etc/smartd.conf
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Configuration file /usr/local/etc/smartd.conf parsed.</pre>
+        <h4>Monitoring Devices at Start Up</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, opened
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device /dev/sda: using '-d sat' for ATA disk behind SAT layer.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, opened
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, not found in smartd database.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, enabled SMART Attribute Autosave.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, enabled SMART Automatic Offline Testing.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, is SMART capable. Adding to "monitor" list.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Monitoring 0 ATA and 1 SCSI devices
+
+</pre>
+        <p>These messages indicate that the SMART control daemon was successful in starting up and identifies the type and number of each device the daemon is monitoring. For <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliances, only one serial ATA device applies. The daemon opens the device to query its capabilities [the first message in the examples above]. The daemon uses SCSI/ATA Translation (SAT) to enable communication with the drive [the second message]. In SAT mode, the daemon reopens the device [third message] and looks for it in an internal database [fourth message] but does not find an entry for the device. The smart.conf file sets the directives for the daemon and these directives include attribute autosave (<b>-S</b> on) and automatic offline testing (<b>-o</b> on) [fifth and sixth messages]. Turning on attribute autosave instructs the disk drive to use non-volatile storage for attributes such as error counters, power-up hours and other useful data so that these values do not get reset to zero the next time the device is power-cycled. Turning on automatic offline testing instructs the drive to update certain SMART attributes every four hours. The disk used in the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance is SMART-capable [seventh message] so the daemon monitors it [eighth message].</p>
+        <p>In preparing this document, <span class="DefaultCompanyNameLong">Gemalto</span> reviewed the source code of a newer version of the smart control daemon. <span class="DefaultCompanyNameLong">Gemalto</span> plans to update the daemon at some future date. The next set of messages show the messages this new daemon outputs at start up.</p><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, type changed from 'scsi' to 'sat'
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda [SAT], opened
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda [SAT], WDC WD2500BHTZ-04JCPV0, S/N:WD-WX11EC1TE568, WWN:5-0014ee-058a177e6, FW:04.06A00, 250 GB
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda [SAT], not found in smartd database.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda [SAT], enabled SMART Attribute Autosave.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda [SAT], enabled SMART Automatic Offline Testing.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda [SAT], is SMART capable. Adding to "monitor" list.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Monitoring 1 ATA and 0 SCSI devices
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda [SAT], initial Temperature is 28 Celsius (Min/Max ??/28)
+
+</pre>
+        <p>The SMART control daemon opens the device [third message] and successfully queries it for device-specific information [fourth message]. Similar messages follow in the output. The newer daemon reports the initial temperature reading from a sensor built into the disk [tenth message].</p>
+        <h4>Fork Into Background Process</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: smartd has fork()ed into background mode. New PID=23509.
+
+</pre>
+        <p>This message indicates that the startup sequence for the smart control daemon completed successfully, leading to the daemon to fork into a background mode process as exhibited if you query the process list.</p><pre>root&#160;&#160;&#160;&#160; 23509&#160;&#160;&#160;&#160; 1&#160; 0 11:04 ?&#160;&#160;&#160;&#160;&#160;&#160;&#160; 00:00:00 /usr/sbin/smartd -q never</pre>
+        <h4>Self Tests</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, starting scheduled Short Self-Test.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, starting scheduled Long Self-Test.
+
+</pre>
+        <p>These messages record that the smart-enabled drive ran a short and/or long self-test. The short self-test runs daily; the long self-test runs weekly, an hour after the short test. These tests usually run early in the morning.</p>
+        <h4>Attribute Change</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, SMART Usage Attribute: 7 Seek_Error_Rate changed from 100 to 200
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, SMART Usage Attribute: 9 Power_On_Hours changed from 100 to 99
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, SMART Usage Attribute: 200 Multi_Zone_Error_Rate changed from 100 to 200
+
+</pre>
+        <p>These messages show changes in SMART attributes. The log severity of <code>info</code> means that the new values are still within acceptable ranges.</p>
+        <h4>Prefailure Change</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, SMART Prefailure Attribute: 1 Raw_Read_Error_Rate changed from 100 to 200
+
+</pre>
+        <p>Messages such as this example show changes in SMART pre-failure attributes. </p>
+        <h4>Temperature Change</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, Temperature changed +5 Celsius to 37 Celsius (Min/Max 26/37)
+
+</pre>
+        <p>This message is common in the log file and indicates a change in temperature measured at the hard disk sensor. The SMART control daemon monitors the sensor once every 30 minutes and logs the temperature if it has changed from the last reading.</p>
+        <h4>Temperature Limit Reached</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, Temperature 45 Celsius reached limit of 44 Celsius (Min/Max 31/49)
+
+</pre>
+        <p>This message indicates that the temperature measured at the hard disk drive reached an upper limit for normally expected readings. </p>
+        <h4>Critical Temperature Change</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, Temperature 49 Celsius reached critical limit of 48 Celsius (Min/Max 31/49)
+
+</pre>
+        <p>This message indicates that the temperature measured at the hard disk drive exceeds the critical upper limit. </p>
+        <h4>Received Exit Signal</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: smartd received signal 15: Terminated
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: smartd received signal 3: Quit
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: smartd received signal &lt;#&gt;: &lt;Xxxxxxx&gt;
+
+</pre>
+        <p>These messages indicate that the SMART control daemon received an exit signal. <code>info</code> severity messages are normal and expected; <code>crit</code> severity messages are not. In the latter case, the signal number is &lt;#&gt; and the text translation of this signal is <code>&lt;Xxxxxx&gt;</code>.</p>
+        <h3>Unexpected Log Messages</h3>
+        <p>Under normal circumstances, you should not see any of these log messages. If you do so, please contact <span class="DefaultCompanyNameLong">Gemalto</span> Technical Support to report the message and seek guidance on what to do next.</p>
+        <h4>Configuration File not in Expected Location</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: No configuration file /usr/local/etc/smartd.conf found, scanning devices
+
+</pre>
+        <p>At start up, the SMART control daemon expects to find the configuration file for its directives in the <b>/usr/local/etc</b> directory.</p>
+        <h4>Cannot Open Configuration File</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: &lt;error message&gt;: Unable to open configuration file /usr/local/etc/smartd.conf
+
+</pre>
+        <p>This message indicates that although the SMART control daemon located the configuration file, the daemon was unable to open it for the reason cited by &lt;error message&gt; in the log message.</p>
+        <h4>Configuration File Format Errors</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Error: line 14 of file /usr/local/etc/smartd.conf is more than MAXLINELEN=256 characters.
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Error: continued line 44 (actual line 14) of file /usr/local/etc/smartd.conf is more than MAXCONTLINE=1023 characters.
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: File /usr/local/etc/smartd.conf line 1 (drive DEVICESCAN): unknown Directive: /dev/sd4
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Run smartd –D to print a list of valid Directives.
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: File /usr/local/etc/smartd.conf line 15 (drive /dev/sda): -s argument "(" is INVALID extended regular expression. Unmatched ( or \(.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: File /usr/local/etc/smartd.conf line 15 (drive /dev/sda): ignoring previous Test Directive -s (S/../.././02)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: File /usr/local/etc/smartd.conf line 15 (drive /dev/sda): warning, character 4 (x) looks odd in extended regular expression (S/x./.././02)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: File /usr/local/etc/smartd.conf line 15 (drive /dev/sda): ignoring previous Address Directive -m john@email.com
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Configuration file /usr/local/etc/smartd.conf has fatal syntax errors.
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Configuration file /usr/local/etc/smartd.conf parsed but has no entries (like /dev/hda)
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: File /usr/local/etc/smartd.conf line 16 (drive /dev/sda): Directive -M 'exec' argument: missing closing quote
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: File /usr/local/etc/smartd.conf line 16 (drive /dev/sda): Directive -M 'exec' argument must be followed by executable path.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: File /usr/local/etc/smartd.conf line 16 (drive /dev/sda): ignoring previous mail Directive -M exec /usr/local/smtp
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: File /usr/local/etc/smartd.conf line %18 (drive /dev/sda): unknown Directive: -b
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: File /usr/local/etc/smartd.conf line %19 (drive /dev/sda): Missing argument to -W Directive
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: File /usr/local/etc/smartd.conf line %20 (drive /dev/sda): Invalid argument to -M Directive: yearly
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Valid arguments to -n Directive are:&#160; never[,N][,q], sleep[,N][,q], standby[,N][,q], idle[,N][,q] <span style="color: #6c286b;">*</span>
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Drive: /dev/sda, implied '-a' Directive on line 21 of file /usr/local/etc/smartd.conf
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Drive: /dev/sda, -M Directive(s) on line 22 of file /usr/local/etc/smartd.conf need -m ADDRESS Directive
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Drive: /dev/sda, -m &lt;nomailer&gt; Directive on line 23 of file /usr/local/etc/smartd.conf needs -M exec Directive
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: File /usr/local/etc/smartd.conf line 35 (drive /dev/sda): Directive: -i takes integer argument from 1 to 255.
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: File /usr/local/etc/smartd.conf line 36 (drive /dev/sda): Directive: -I has argument: on; needs integer from 1 to 255.
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: File /usr/local/etc/smartd.conf line 37 (drive /dev/sda): Directive: -W takes 1-3 integer argument(s) from 0 to 255.
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: File /usr/local/etc/smartd.conf line 38 (drive /dev/sda): Directive: -W has argument: off; needs 1-3 integer(s) from 0 to 255.
+
+</pre>
+        <p>These messages indicate format errors in the <b>smartd.conf</b> file. Depending upon the version of the smart control daemon, the configuration file might be <b>/etc/smartd.conf</b> or <b>/usr/local/etc/smartd.conf</b>. </p>
+        <p><span style="color: #6c286b; font-weight: bold;">*</span> This text is an example. See <b>man smartd.conf</b> for a complete list and description of directives and arguments.</p>
+        <h4>Cannot Register Device</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Unable to register scsi device /dev/sda at line 17 of file /usr/local/etc/smartd.conf
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Unable to register scsi device /dev/sda
+
+</pre>
+        <p>These messages indicate that the smart control daemon was unable to register the device specified in the <b>smartd.conf</b> file.</p>
+        <h4>Force Scan For Devices</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Configuration file /usr/local/etc/smartd.conf was parsed, found DEVICESCAN, scanning devices
+
+</pre>
+        <p>This message indicates that the configuration file specified that the SMART control daemon was to scan for devices rather than rely on entries in the file.</p>
+        <h4>Could Not Scan For Devices or No Devices To Scan</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Problem creating device name scan list
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: In the system's table of devices NO devices found to scan
+
+</pre>
+        <p>The first message indicates that the configuration file specified that the SMART control daemon was to scan for devices but that the scan failed. The second message indicates that daemon has no SMART-enabled devices to scan.</p>
+        <h4>Out of Memory</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Smartd: Out of memory
+
+</pre>
+        <p>This message indicates that the SMART control daemon did not have sufficient memory on startup.</p>
+        <h4>Exception</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Smartd: Exception: &lt;xxxxxx&gt;
+
+</pre>
+        <p>This message indicates that the SMART control daemon encountered an exception <code>&lt;xxxxxx&gt;</code> on startup and exited.</p>
+        <h4>Received Hang Up or Interrupt Signal</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Signal HUP - rereading configuration file /etc/smartd.conf
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Signal INT - rereading configuration file /etc/smartd.conf ("SIGQUIT_KEYNAME" quits)
+
+</pre>
+        <p>These messages indicate that the SMART control daemon was instructed via a signal to reread the configuration file normally read on startup.</p>
+        <h4>Continue on Error</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Reusing previous configuration
+
+</pre>
+        <p>This message indicates that while rereading the configuration file, the daemon encountered an error and reverted to the previously-read configuration settings instead.</p>
+        <h4>Unable to Monitor Devices</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Unable to monitor any SMART enabled devices. Try debug (-d) option. Exiting...
+
+</pre>
+        <p>This message indicates that the SMART control daemon did not find any SMART-enabled devices to monitor.</p>
+        <h4>Mail-Related Messages</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Mail can't be enabled together with --capabilities. All mail will be suppressed.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Sending a mail was suppressed.&#160; Mails can't be send when capabilites [sic] are enabled
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: internal error in MailWarning(): cfg.mailwarn-&gt;emailfreq=0
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Contact smartmontools-support@lists.sourceforge.net; internal error in MailWarning(): which=-1, size=88
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Sending warning via &lt;mail&gt; to &lt;nomailer&gt; ...
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Executing test of &lt;mail&gt; to &lt;nomailer&gt; ...
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Warning via &lt;mail&gt; to &lt;nomailer&gt;: failed (fork or pipe failed, or no memory) &lt;error string&gt;
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Warning via &lt;mail&gt; to &lt;nomailer&gt; produced unexpected output (here truncated to 1024 bytes) to STDOUT/STDERR:
+&lt;unexpected output&gt;
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Warning via &lt;mail&gt; to &lt;nomailer&gt;: flushed remaining STDOUT/STDERR
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Warning via &lt;mail&gt; to &lt;nomailer&gt;: more than 1 MB STDOUT/STDERR flushed, breaking pipe
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Warning via &lt;mail&gt; to &lt;nomailer&gt;: pclose(3) failed &lt;error string&gt;
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Warning via &lt;mail&gt; to &lt;nomailer&gt;:&#160; failed (32-bit/8-bit exit status: 255/133) perhaps caught signal 5 [Trace/breakpoint trap]
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Warning via &lt;mail&gt; to &lt;nomailer&gt;: failed (32-bit/8-bit exit status: 255/133)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Warning via &lt;mail&gt; to &lt;nomailer&gt;: successful
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Warning via &lt;mail&gt; to &lt;nomailer&gt;: exited because of uncaught signal 5 [Trace/breakpoint trap]
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Warning via &lt;mail&gt; to &lt;nomailer&gt;: process STOPPED because it caught signal 5 [Trace/breakpoint trap]
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, Read SMART Self-Test Log worked again, warning condition reset after 16 emails
+
+</pre>
+        <p><span class="DefaultCompanyNameLong">Gemalto</span> does not compile the SMART control daemon with libcap-ng enabled to send mail. The first two messages indicate that the daemon is compiled this way and that the settings in the configuration file are incompatible with libcap-ng settings. The latter messages indicate problems with how mail is configured to be sent and/or status of sending mail.</p>
+        <h4>One Check</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Started with '-q onecheck' option. All devices successfully [sic] checked once.
+smartd is exiting (exit status 0)
+
+</pre>
+        <p>The message indicates that the <b>smartd.conf</b> file contains a directive for the SMART control daemon to start and terminate with only a check of any SMART-enabled devices.</p>
+        <h4>Ignore Device or Duplicate Device</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda[auto], ignored
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, duplicate, ignored
+
+</pre>
+        <p>The first message indicates that the <b>smartd.conf</b> file identifies a device but directs the SMART control daemon to ignore the device for monitoring. The second message indicates that the device is specified more than once in the <b>smartd.conf</b> file.</p>
+        <h4>Could Not Detect Device, Unsupported Device, Not a ATA/SCSI Device or Device Cannot be Registered</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, unable to autodetect device type
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, unsupported device type 'auto'
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, neither ATA nor SCSI device
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, not available
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Unable to register device /dev/sda (no Directive -d removable). Exiting.
+
+</pre>
+        <p>The first message indicates that the SMART control daemon was unable to interrogate the device specified in the <b>smartd.conf</b> file. The second message indicates that the device is not SMART-enabled. The third message indicates that the device is not ATA or SCSI. The fourth message is a warning that the daemon could not detect the device but is continuing, while the fifth message indicates that the daemon is stopping because it could not detect the device and the <b>smartd.conf</b> file contains a directive to do so under this circumstance.</p>
+        <h4>Could Not Open Device</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, open() failed: &lt;xxxxxx&gt;
+
+</pre>
+        <p>If debug is enabled or scanning is not, this message indicates that the SMART control daemon was unable to open the device for monitoring: <code>&lt;xxxxxx&gt;</code> is the reason why.</p>
+        <h4>Could Not Fork Into Background Process</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: smartd unable to fork daemon process!
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: PID file /var/run/smartd.pid0 didn't show up!
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: unable to write PID file /var/run/smartd.pid0 - exiting.
+
+</pre>
+        <p>These messages indicate that the startup sequence for the SMART control daemon was unable to complete successfully because the daemon could not properly fork a new process.</p>
+        <h4>Writing PID File</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: file /var/run/smartd.pid0 written containing PID 1729
+
+</pre>
+        <p>This message identifies the process identifier and process identifier file for the background smart control daemon process.</p>
+        <h4>Help for Configuration File Directives</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:Configuration file (/usr/local/etc/smartd.conf) Directives (after device name):
+&#160; -d TYPE Set the device type: auto, ignore, removable
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; ...
+&#160; -T TYPE Set the tolerance to one of: normal, permissive
+&#160; -o VAL&#160; Enable/disable automatic offline tests (on/off)
+&#160; -S VAL&#160; Enable/disable attribute autosave (on/off)
+&#160; -n MODE No check if: never, sleep[,N][,q], standby[,N][,q], idle[,N][,q]
+&#160; -H&#160;&#160;&#160;&#160;&#160; Monitor SMART Health Status, report if failed
+&#160; -s REG&#160; Do Self-Test at time(s) given by regular expression REG
+&#160; -l TYPE Monitor SMART log or self-test status:
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; error, selftest, xerror, offlinests[,ns], selfteststs[,ns]
+&#160; -l scterc,R,W&#160; Set SCT Error Recovery Control
+&#160; -e&#160;&#160;&#160;&#160;&#160; Change device setting: aam,[N|off], apm,[N|off], lookahead,[on|off],
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; security-freeze, standby,[N|off], wcache,[on|off]
+&#160; -f&#160;&#160;&#160;&#160;&#160; Monitor 'Usage' Attributes, report failures
+&#160; -m ADD&#160; Send email warning to address ADD
+&#160; -M TYPE Modify email warning behavior (see man page)
+&#160; -p&#160;&#160;&#160;&#160;&#160; Report changes in 'Prefailure' Attributes
+&#160; -u&#160;&#160;&#160;&#160;&#160; Report changes in 'Usage' Attributes
+&#160; -t&#160;&#160;&#160;&#160;&#160; Equivalent to -p and -u Directives
+&#160; -r ID&#160;&#160; Also report Raw values of Attribute ID with -p, -u or -t
+&#160; -R ID&#160;&#160; Track changes in Attribute ID Raw value with -p, -u or -t
+&#160; -i ID&#160;&#160; Ignore Attribute ID for -f Directive
+&#160; -I ID&#160;&#160; Ignore Attribute ID for -p, -u or -t Directive
+&#160; -C ID[+] Monitor [increases of] Current Pending Sectors in Attribute ID
+&#160; -U ID[+] Monitor [increases of] Offline Uncorrectable Sectors in Attribute ID
+&#160; -W D,I,C Monitor Temperature D)ifference, I)nformal limit, C)ritical limit
+&#160; -v N,ST Modifies labeling of Attribute N (see man page)&#160; 
+&#160; -P TYPE Drive-specific presets: use, ignore, show, showall
+&#160; -a&#160;&#160;&#160;&#160;&#160; Default: -H -f -t -l error -l selftest -l selfteststs -C 197 -U 198
+&#160; -F TYPE Use firmware bug workaround:
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; ...
+Attribute ID is a decimal integer 1 &lt;= ID &lt;= 255
+Use ID = 0 to turn off -C and/or -U Directives
+Example: /dev/sda -a
+
+</pre>
+        <p>This text is the help information for configuring the <b>smartd.conf</b> file.</p>
+        <h4>Write State File</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, state written to /var/log/devstate
+
+</pre>
+        <p>This message indicates that the SMART control daemon wrote the state(s) of monitored device(s) to a file.</p>
+        <h4>Cannot Unlink PID File</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Can't unlink PID file /var/run/smartd.pid0 (&lt;error string&gt;).
+
+</pre>
+        <p>This message indicates that the SMART control daemon was unable to delete a process identifier file because of the error reported: &lt;error string&gt;.</p>
+        <h4>Close Failed</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, &lt;error string&gt;, close() failed
+
+</pre>
+        <p>This message indicates that the SMART control daemon was unable to close a monitored device because of the error reported: &lt;error string&gt;.</p>
+        <h4>Code Bug</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Please inform smartmontools-support@lists.sourceforge.net, including output of smartd -V.
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; smartd is exiting (exit status 10)
+
+</pre>
+        <p>These messages indicate a coding error in the SMART control daemon.</p>
+        <h4>ATA Error Log Read Failure</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, Read Summary SMART Error Log failed
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, Read Extended Comprehensive SMART Error Log failed
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, Read SMART Self Test Log Failed
+
+</pre>
+        <p>These messages indicate a failure to read the error log(s) of ATA devices.</p>
+        <h4>ATA Device Scan Messages</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, not ATA, no IDENTIFY DEVICE Structure
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/sda, packet devices [this device CD/DVD] not SMART capable
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, smartd database not searched (Directive: -P ignore).
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]: Device: /dev/ada, found in smartd database.
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]: Device: /dev/sda, WARNING: &lt;warning text&gt;<span style="color: #ffa500;">*</span>
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, presets are: ...
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, lacks SMART capability
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, ATA IDENTIFY DEVICE words 82-83 don't specify if SMART capable.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, proceeding since '-T permissive' Directive given.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, to proceed anyway, use '-T permissive' Directive.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, could not enable SMART capability
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, could not disable SMART Attribute Autosave.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, disabled SMART Attribute Autosave.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, could not enable SMART Attribute Autosave.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, not capable of SMART Health Status check
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, Read SMART Values failed
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, Read SMART Thresholds failed, ignoring -f Directive
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, can't monitor Temperature, ignoring -W 3,44,48
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, no Attribute 279, ignoring -r 279!
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, not monitoring Prefailure Attributes, ignoring -r 196!
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, could not disable SMART Automatic Offline Testing.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, SMART Automatic Offline Testing unsupported...
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, enable SMART Automatic Offline Testing failed.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, no SMART Self-test Log, ignoring -l selftest (override with -T permissive)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, no SMART Self-test Log, ignoring -l selftest
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, no SMART Error Log, ignoring -l error (override with -T permissive)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, no SMART Error Log, ignoring -l error
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, no Extended Comprehensive SMART Error Log, ignoring -l xerror (override with -T permissive)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, no Extended Comprehensive SMART Error Log, ignoring -l xerror
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, SMART Error Logs report different error counts: 12 != 143
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, no SMART Offline Data Collection capability, ignoring -l offlinests (override with -T permissive)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, no SMART Self-test capability, ignoring -l selfteststs (override with -T permissive)
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, no ATA CHECK POWER STATUS support, ignoring -n Directive
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, CHECK POWER STATUS returned 17, not ATA compliant, ignoring -n Directive
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, ATA settings applied: &lt;settings string&gt;
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, no SCT Error Recovery Control support, ignoring -l scterc
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, set of SCT Error Recovery Control failed
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, SCT Error Recovery Control set to: Read: 7, Write: 7
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, state read from /var/lib/smartmontools/smartd.ST3500620AS-5QM2644Q.ata.state
+
+</pre>
+        <p style="color: #000000;"><span style="color: #ffa500;">*</span> Example: ATA error count 9 inconsistent with error log pointer 5</p>
+        <p>These messages indicate the status or a failure of a scan of an ATA device. The <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance does not use ATA devices.</p>
+        <h4>SCSI Device Scan Messages</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, Both 36 and 64 byte INQUIRY failed; skip device
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, INQUIRY response less than 36 bytes; skip device
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, not a disk like device [PDT=0x7], skip
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, WDC WD2500JS-60NCB1
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, NOT READY (e.g. spun down); skip device
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, NO MEDIUM present; skip device
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, BECOMING (but not yet) READY; skip device
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, failed Test Unit Ready [err=-22]
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, Bad IEC (SMART) mode page, err=-5, skip device
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, IE (SMART) not enabled, skip device
+Try 'smartctl -s on /dev/sda' to turn on SMART features
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, unexpectedly failed to read SMART values
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, can't monitor Temperature, ignoring -W 3,44,48
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, does not support SMART Self-Test Log.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, could not disable autosave (set GLTSD bit).
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, disabled autosave (set GLTSD bit).
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, could not enable autosave (clear GLTSD bit).
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, enabled autosave (cleared GLTSD bit).
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, state read from /var/lib/smartmontools/smartd.ST3500620AS-5QM2644Q.ata.state
+
+</pre>
+        <p>These messages indicate the status or a failure of a scan of a SCSI or SCSI-like device. The <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance uses a serial ATA device which SMART considers SCSI-like. However, the messages in this section are unexpected in the logs.</p>
+        <h4>Log Self-Test Progress &amp; Errors</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, previous self-test completed without error
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, previous self-test was aborted by the host
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, previous self-test was interrupted by the host with a reset
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, previous self-test could not complete due to a fatal or unknown error
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, previous self-test completed with error (unknown test element)
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, previous self-test completed with error (electrical test element)
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, previous self-test completed with error (servo/seek test element)
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, previous self-test completed with error (read test element)
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, previous self-test completed with error (handling damage?)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, self-test in progress, 80% remaining
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, unknown self-test status 0x1f
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, Self-Test Log error count increased from 12 to 13
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, new Self-Test Log error at hour timestamp 7202
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, Self-Test Log error count decreased from 27 to 26
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, does not support Self-Tests
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, skip since Self-Test already in progress
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, not capable of L Self-Test
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, not capable of Long Self-Test
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, execute Long Self-Test failed (err: -1)
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, not capable of Offline or Self-Testing.
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, not capable of Offline or Self-Testing.
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, not capable of Offline Immediate Test
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, not capable of Conveyance Self-Test
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, not capable of Short Self-Test
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, not capable of Long Self-Test
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, not capable of Selective Self-Test
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, will not skip scheduled Offline Immediate Test despite unclear Self-Test byte (SAMSUNG Firmware bug).
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, skip scheduled Offline Immediate Test; 20% remaining of current Self-Test.
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, prepare Offline Immediate Test failed
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, next test span at LBA 1256500 - 1460000 2500000 sectors, 50% - 58% of disk).
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, execute Offline Immediate Test failed.
+
+</pre>
+        <p>These messages indicate the status of an in-progress self-test, a failure to log self-tests or a self-test error.</p>
+        <h4>Test Schedule</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, old test of type S not run at Wed Feb 29 02:00:00 2012 GMT, starting now.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Next scheduled self tests (at most 5 of each type per device):
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, will do test 1 of type S at Wed Feb 29 02:00:00 2012 GMT
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Totals [Wed Feb 29 12:05:00 2012 GMT - Wed Feb 29 02:00:00 2012 GMT]:
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, will do 050 tests of type S
+
+</pre>
+        <p>These messages indicate status of scheduled tests.</p>
+        <h4>Check Pending Sector Count Identifier</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, can't monitor Current Pending Sector count - no Attribute 197
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, ignoring Current Pending Sector count - bogus Attribute 197 value 3442 (0xd72)
+
+</pre>
+        <p>These messages indicate an error on the sector count identifier for a SMART attribute.</p>
+        <h4>Critical Attribute Change</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, SMART Usage Attribute: 7 Seek_Error_Rate changed from 10000 to 20000
+
+</pre>
+        <p>Messages such as this example, show critical changes in SMART attributes, possibly indicating impending disk failure.</p>
+        <h4>Critical Prefailure Change</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, SMART Prefailure Attribute: 1 Raw_Read_Error_Rate changed from 92 to 51
+
+</pre>
+        <p>Messages such as this example, show critical changes in SMART pre-failure attributes, possibly indicating impending disk failure.</p>
+        <h4>Sector Count Change</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, 1237505 Currently unreadable (pending) sectors
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, 1237505 Total unreadable (pending) sectors
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, 1237505 Offline uncorrectable sectors
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, 1237505 Total offline uncorrectable sectors
+
+</pre>
+        <p>These messages indicate sector attribute changes. Any one of these messages may include additional information at the end of the message to indicate the change from the last measure, [e.g., <code>(changed 57500)</code>].</p>
+        <h4>Temperature Change</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, failed to read Temperature
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; [trip Temperature is 65 Celsius]
+
+</pre>
+        <p>The first message indicates that the SMART control daemon was unable to obtain a measure of the temperature attribute. The second message indicates the temperature at which the drive shuts down if it measures this value.</p>
+        <h4>Attribute Error</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, Failed SMART usage Attribute: 185 Head Stability.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, same Attribute has different ID numbers: 185 = 200
+
+</pre>
+        <p>These messages indicate errors by the SMART control daemon to interpret SMART attributes.</p>
+        <h4>Check ATA Device Health</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, open() failed: No such device or address
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, opened ATA device
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, CHECK POWER STATUS spins up disk (0x00 -&gt; 0xff)
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, CHECK POWER STATUS returned 1, not ATA compliant, ignoring -n Directive
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, is in STANDBY mode, suspending checks
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, IDLE mode ignored due to reached limit of skipped checks (15 checks skipped)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/ada, is back in ACTIVE or IDLE mode, resuming checks (1 check skipped)
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, not capable of SMART self-check
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, FAILED SMART self-check. BACK UP DATA NOW!
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, failed to read SMART Attribute Data
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/ada, ATA error count increased from 15 to 16
+
+</pre>
+        <p>These messages provide health status of ATA device attributes.</p>
+        <h4>Check SCSI Device Health</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, open() failed: No such device or address
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, opened SCSI device
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, failed to read SMART values
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, SMART Failure: &lt;failure string&gt;
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, self-test in progress
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, non-SMART asc,ascq: 4,26
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, SMART health: passed<span style="color: #ffa500;">*</span>
+
+</pre>
+        <p><span style="color: #ffa500;">*</span> if debug mode enabled.</p>
+        <p>These messages provide health status of SCSI device attributes. </p>
+        <h4>Auto Standby Feature</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, System auto standby enable failed: &lt;failure string&gt;
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, Disable auto standby not supported, ignoring ',ns' from -l offlinests,ns and -l selfteststs,ns
+2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; Device: /dev/sda, Self-test(s) completed, system auto standby enable failed: &lt;failure string&gt;
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, Self-test(s) completed, system auto standby enabled
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, Self-test(s) in progress, system auto standby disable rejected: &lt;failure string&gt;
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, Self-test(s) in progress, system auto standby disabled
+
+</pre>
+        <p>These messages indicate failures of the auto standby feature of the hard disk.</p>
+        <h4>Sleep and Wakeup</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon crit&#160; smartd[1234]:&#160; System clock time adjusted to the past. Resetting next wakeup time.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Sleep time was 10 seconds too long, assuming wakeup from standby mode.
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Signal USR1 - checking devices now rather than in 30 seconds.
+
+</pre>
+        <p>These messages indicate failures in the mechanism to sleep and wake up the SMART control daemon at prescribed intervals to query and report on SMART attributes.</p>
+        <h4>Offline Log Collection Status</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, offline data collection was never started (auto:on)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, offline data collection was completed without error (auto:on)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, offline data collection is in progress (auto:on)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, offline data collection was suspended by an interrupting command from host (auto:on)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, offline data collection was aborted by an interrupting command from host (auto:on)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, offline data collection was aborted by the device with a fatal error (auto:on)
+2012 Feb 29 12:05:01 myLuna&#160; daemon info&#160; smartd[1234]:&#160; Device: /dev/sda, unknown offline data collection status 0x78
+
+</pre>
+        <p>These messages indicate failures to perform offline data collection. Depending upon the status, the SMART control daemon logs these messages as either <code>crit</code> or <code>info</code>; the examples above show <code>info</code> only.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

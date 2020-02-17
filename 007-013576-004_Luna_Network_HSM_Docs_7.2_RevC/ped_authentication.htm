@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Product Overview|Authentication">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>PED Authentication</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#Product_Overview/authentication/ped_authentication.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>PED Authentication</h2>
+        <p>The connection between the Luna PED and the SafeNet Luna HSM is a secure trusted path. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>For the SafeNet Luna Network HSM, the PED connection is on the appliance rear panel. </p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/sa/sa7_back_drawing_ped.png" alt="" title="" />
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>For the SafeNet Luna PCIe HSM, the PED connection is a slot-edge connector, directly on the HSM card, accessible at the exterior of a tower or server computer (not through the host computer).</p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/pci/PCIe_localPED_connect.svg" />
+        </p>
+        <p>For Local PED, the connection is a secure physical link, directly to the HSM, bypassing the computer memory and bus. </p>
+        <p>For Remote PED, the PED Key information is made available from the PED location by a PedServer instance, and is received at the HSM location by a PedClient instance there. Two connection options are available: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>standard, or client-initiated Remote PED involves the PedClient reaching out to a PedServer; while the path is clear, the PED Key data is encrypted and secured at both ends by the Remote PED Vector (on an orange PED Key and in the HSM) &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>peer-to-peer, or server-initiated Remote PED involves the PedServer instance reaching out to the PedClient instance, in order to satisfy HSM location behind a firewall that forbids outgoing initiation of connections;  the PED Key data is secured at both ends by the Remote PED Vector (on an orange PED Key and in the HSM), and the network connection is secured by a TLS link, using previously exchanged certificates.</p>
+        <p>At no time does an authentication secret exist in-clear, anywhere in computer memory or on any computer bus. </p>
+        <p>In general, there are three paths to access the SafeNet Luna HSM:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The administrative path, 
+via SSH or via local serial link, which uses the LunaSH 
+ command-line interface</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The Client path, via 
+TLS (our implementation is called NTLS), by which client applications use the SafeNet Luna HSM API to perform cryptographic 
+ functions within pre-assigned virtual HSMs (called Partitions) on the 
+  HSM</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The Trusted Path, used 
+ for authentication data passed from the PED and PED keys - this path 
+ ensures that HSM authentication data does not pass unencrypted through a host or terminal 
+ computer, where it might be subject to attack</p>
+        <p>For SafeNet Luna HSMs with PED Authentication, 
+ the various layered roles are protected by a combination of PED keys 
+ and passwords. &#160;&#160;</p>
+        <h4>HSM&#160;Admin (Security Officer)</h4>
+        <p>To access the HSM to perform HSM-specific administration tasks (set HSM-wide policies, update firmware and capabilities, backup and restore the HSM, create and remove HSM Partitions, etc.), you must first be  authenticated as SO (Security Officer) or HSM Admin (of which there can be only one per SafeNet Luna HSM). The authentication data for SO/HSM Admin is  a secret carried on a blue PED key. For the SO to login and issue HSM commands, someone must be present at the connected local Luna PED, or at the configured Remote Luna PED, to insert the required blue PED key when prompted. Otherwise, HSM commands cannot be used.  </p>
+        <h4>Partition User (Crypto Officer)</h4>
+        <p>To access HSM Partitions to perform partition-specific administration tasks, such as setting partition policies, assigning partitions to clients, or revoking clients, you must be authenticated as Partition User. There can only be one Partition User per HSM&#160;on the SafeNet Luna PCIe HSM, or there can be several on the SafeNet Luna Network HSM - one for each partition. The authentication data for the CO&#160;(Crypto Officer) or Partition User  is both a password and a secret carried on a black PED key. As the Partition User/CO, you can connect locally, via a serial terminal, or remotely via SSH. To perform partition administration on SafeNet Luna Network HSM, you must first be logged in as admin to have access to LunaSH commands. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>For the SafeNet Luna PCIe HSM, you simply need access to the host computer, where you can use LunaCM commands. For the Partition User/CO to login and issue partition administration commands, someone must be present at the connected Luna PED&#160;(or the configured and validated Remote PED) to insert the required&#160;black PED key when prompted, or the partition must have been left in Activated state.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>For the SafeNet Luna Network HSM, good security practices suggest that the Partition Password be different than the appliance admin password, and different from other Partition Passwords.</p>
+        <p>If you have invoked the Crypto Officer/Crypto User distinction, there are two Partition Passwords, but only the Crypto Officer password allows you to run LunaSH or LunaCM commands to administer the partition. It is also recommended that the passwords for each of these roles differ.</p>
+        <h4>Client (Crypto User)</h4>
+        <p>To access HSM Partitions with an application to perform cryptographic operations on data, you must pass a User-type (this is done invisibly by your client application), and present the Partition Password (also done automatically by your application).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>For a standard "Client", the password is the same Partition Password that is used by the Partition User for the particular partition. What limits the scope of operations that a registered, authenticated Client can perform on a partition on a SafeNet Luna Network HSM is the fact that partition administrative commands can be issued only via LunaSH. Thus, for security, Clients should not be allowed to learn the appliance admin password  that gives access to LunaSH command line. For SafeNet Luna PCIe HSM, the password or other authentication that gives access to the client application is often the same authentication that gives access to LunaCM for partition administration, so the ability to keep roles separate is more dependent on control of PED keys.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>For a Crypto User client, the password is different from the Crypto Officer password, offering another layer of protection for the partition and its contents.</p>
+        <h4>Auditor</h4>
+        <p>This role combines a special, limited-access appliance account and a special HSM role authenticated by the white PED&#160;key, for the purpose of managing HSM audit logs. The auditor is distinct and separate from other role on the appliance and the HSM, conforming to the requirements of auditing standards.</p>
+        <h3>Remote PED</h3>
+        <p>By default, Luna PED is connected directly to the HSM via a USB cable, and powered by the included power block. However, Luna PED can also be used remotely from the HSM(s)  for which it manages access control. When it is not convenient to be physically near the host computer that contains a SafeNet Luna HSM you can operate remotely and securely.</p>
+        <p>The PED-Authenticated SafeNet Luna HSM, and one or more orange PED keys are imprinted with a Remote PED Vector (RPV). This can occur at any time before the HSM is deployed, and requires a locally connected PED. All future PED and PED key interactions can then be accomplished  distantly from the HSM, as follows: </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>One computer, running a supported OS, hosts the HSM. This could be:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>A server or tower containing a SafeNet Luna PCIe HSM. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>A SafeNet Luna Network HSM appliance.</p>
+        <p class="listLevel1">The HSM host computer must be network attached. HSM administration commands can be input locally, or via remote connection, but the network connection is essential for Remote PED operation.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>A second computer (laptop, workstation, server running a supported Windows version) has a Luna PED (Remote Capable) attached via USB, and powered via its included power block. The Remote PED host computer must be network attached. The administration of the distant HSM host does not have to come from this Remote PED host computer, but it is usually done that way, since the person handling the PED must coordinate with the person giving commands to the HSM.The Remote PED host computer and PED must have the  orange Remote PED Key (RPK) available, along with:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span> Either blue, black and red (optionally, white) PED&#160;keys that were imprinted with the HSM previously </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Or blank blue, black, and red (optionally, white) PED&#160;keys that are about to be imprinted along with the HSM  </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>The HSM is told to look to a remote PED for its authentication requests.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>The PED host computer has the LunaPED driver installed, and runs the pedserver utility.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>The HSM host computer runs the pedclient utility, and the HSM is told to connect to the Remote PED.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>The Remote PED (via the pedserver) receives the request and prompts for the orange PED Key.</p>
+        <p class="listLevel1">The Remote PED and the HSM (via the pedclient/pedserver connection) must agree that the provided orange PED key contains the same Remote PED&#160;Vector as the one imprinted on the HSM, and only then is the secure Remote PED link is established. </p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>The HSM SO runs commands on the HSM (on the host computer) via  remote desktop or SSH connection.</p>
+        <p>All future authentication for the HSM can be performed at the Remote PED, with no need for personnel to visit the HSM host, which could be locked away in a lights-off facility on the other side of the world.</p>
+        <h3 class="ntoc">Authentication</h3>
+        <p style="margin-left: 0px;">Objects on the HSM are encrypted by the owner of the HSM Admin space (rarely) or of the User space (partition), and can be decrypted and accessed only by means of the specific secret injected from the blue PED key (HSM Admin) or the black PED key (User) respectively.</p>
+        <p style="margin-left: 0px;">If you cannot present the secret (the PED key) that encrypted the objects, then the HSM is just a secure storage device to which you have no access, and those objects might as well not exist.</p>
+        <h4>Challenge Secrets</h4>
+        <p>When the HSM is PED-authenticated:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span> The administrative role secret contained on a black or gray PED key is one secret, used only by administrative personnel.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span> The challenge-secret or password is a second secret (plain text, initially presented on the PED screen, but you can change it), which is the application-authentication secret, that allows the HSM verify that the presenting application is entitled to perform cryptographic operations on the particular application partition.</p>
+        <p>The application can submit its own authentication (that second secret) only after the PED key secret has "opened" the HSM partition for operation (by Activating it). That is, there are two levels of protection: one administrative, and the other operational, where the operational level is gated by the administrative level.</p>
+        <h4>Activation</h4>
+        <p>By default, PED-authenticated partitions require that a PED key and challenge password be provided each time a user or application authenticates to the HSM. For some use cases, such as key vaulting, the need to provide a physical key to access the HSM may be desirable. For most application use cases, however, requiring a physical key each time the application accesses the HSM is impractical.</p>
+        <p>Activation allows registered users and applications to authenticate to the HSM without a PED&#160;key, using only a challenge secret. The PED&#160;key secret for the CO or CU role is copied the first time you perform an action that requires authentication, and it is cached on the HSM. </p>
+        <p>The ability to use activation is determined by  its corresponding policy. Enabling this policy will allow you to use activation.</p>
+        <h4>Auto-Activation</h4>
+        <p>In the event of a restart or short power outage, activated roles are deactivated and must re-authenticate with a PED key and challenge secret.</p>
+        <p>Auto-activation enables automatic re-activation of an activated role, so that users or applications do not have to provide a PED key again to reactivate their role. </p>
+        <p>The ability to use auto-activation is determined by  its corresponding policy. Enabling this policy will allow you to use auto-activation.</p>
+        <h3 class="ntoc">Advantages</h3>
+        <p>Using PED authentication, as opposed to password authentication, has the following advantages:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Security: no written record of the secret or password exists, so it cannot be compromised</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Tracking: access and handling of physical devices (PED keys) can be tracked and controlled</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Duplication restrictions: duplication and promulgation can be prevented by physical security measures</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Physical device: using the PED to input passwords and PEN&#160;PINs prevents key-logging exploits that typed passwords are vulnerable to</p>
+        <h3 class="ntoc">Disadvantages</h3>
+        <p>PED keys are physical items that can be lost or misplaced, unlike passwords, and thus have the following disadvantages:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Password change policies: scheduled or mandated password-change cycles in an organization can be logistically intensive when HSMs share PED key secrets</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Inconvenience: handling of secrets requires hands-on, physical action by personnel to perform changes of authentication secrets in case of compromise</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

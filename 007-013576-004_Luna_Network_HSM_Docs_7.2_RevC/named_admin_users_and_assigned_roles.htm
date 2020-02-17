@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Roles</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/List1.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sa_appliance_admin/users_passwords/named_admin_users_and_assigned_roles.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="top"></a>Roles</h2>
+        <p>SafeNet Luna HSM products offer multiple identities, some mandatory, some optional, that you can invoke in different ways to map to roles and functions in your organization. </p>
+        <p>The following topics offer some aspects that you might wish to consider before committing to an HSM configuration: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Named" class="MCXref xref">Named Administrative Users and Their Assigned Roles</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Custom" class="MCXref xref">Custom User Roles</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Register" class="MCXref xref">Custom NTLS Registration Role</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Implicat" class="MCXref xref">Implications of Backup and Restore of User Profiles</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Security" class="MCXref xref">Security of Shell User Accounts</a>
+        </p>
+        <h3><a name="Named"></a>Named Administrative Users and Their Assigned Roles</h3>
+        <h4>Default Users</h4>
+        <p>By default, the appliance has: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span> One 'admin' user, with role "admin", always enabled, default password "PASSWORD"</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>One 'operator' user, with role "operator", disabled until you enable, default password "PASSWORD"</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>One 'monitor' user, with role "monitor", disabled until you enable, default password "PASSWORD"</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>One 'audit' user, with role "audit", disabled until you enable, default password "PASSWORD"</p>
+        <p>Those four built-in accounts can be neither created nor destroyed, but 'admin' can enable or disable the others as needed. For a list of commands accessible to the default user roles, see <a href="../../lunash/commands/command_summary.htm" class="MCXref xref">LunaSH Command Summary</a> in the <i>LunaSH Command Reference Guide</i>.</p>
+        <h4>Additional Users</h4>
+        <p>You can leave the default arrangement as-is, or you can create additional users with names of your own choice, and assign them any of the roles (and the powers that go with those roles).  The default password of any created user is "PASSWORD" (all uppercase).</p>
+        <p>Thus, you could choose to have: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Multiple admin-level users, each with a different name, that can perform most actions that the original admin can perform.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Multiple operator-level users (or none, if you prefer),  each with a different name, that have access to a reduced set of administrative commands.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Multiple monitor-level users (or none, if you prefer), each with a different name, that are restricted to using commands that view, list or show.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Multiple audit-level users (or none, if you prefer), each with a different name, that are restricted to  HSM audit logging functions. See <a href="../../administration/audit/audit.htm" class="MCXref xref">Audit Logging</a> for more information on this specialized role.</p>
+        <h4>User Naming Guidelines</h4>
+        <p>Administrative users' names can be 1-32 characters, chosen from letters a-z, or A-Z, numbers 0-9, the dash, the dot, or the underscore. </p>
+        <p>No spaces are allowed. User names cannot start with a dot, dash, or number. </p>
+        <p>As with any secure system, no two users (regardless of role) can have the same name.</p>
+        <h4>Why Create Extra Administrative Users?</h4>
+        <p>One reason for creating multiple named users would be for the purpose of distinguishing individual persons' activities in the logs. </p>
+        <p>For example, a user named 'john' running the LunaSH <b>syslog tail</b> command would show in the April 13 log as:</p><pre xml:space="preserve">Apr 13 14:17:15 172 -lunash: Command: syslog tail  : john : 192.20.10.133/3107
+<br />Command Result : 0 (Success)</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Perhaps you have people performing similar functions at physically separate locations, or you might have staff assigned to teams or shifts for 24-hour coverage. It could be valuable (or required by your security auditors) to know and be able to show which specific person performed which actions on the system.</p>
+        <h3><a name="Custom"></a>Custom User Roles</h3>
+        <p>Named roles can be customized to have access to a specific subset of commands, allowing unique task delegation that suits organizational needs.</p>
+        <p>The custom role is defined by a list of the LunaSH commands that it can run. The role can be applied to and removed from any existing user to give them access to only the commands they require for a particular operation. This ensures that a given user does not obtain access beyond their security clearance. See <a href="../../lunash/commands/command_summary.htm" class="MCXref xref">LunaSH Command Summary</a> in the <i>LunaSH Command Reference Guide</i> for a list of commands. </p>
+        <p>To import, add, or remove a custom user role to your HSM and its users, see the following commands in the <i>LunaSH&#160;Command Reference Guide</i>:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="../../lunash/commands/user/user_role_import.htm" class="MCXref xref">user role import</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="../../lunash/commands/user/user_role_add.htm" class="MCXref xref">user role add</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="../../lunash/commands/user/user_role_delete.htm" class="MCXref xref">user role delete</a>
+        </p>
+        <h4>Role Naming Guidelines</h4>
+        <p>Role names can be 1-64 characters, chosen from letters a-z, or A-Z, numbers 0-9, the dash, the dot, or the underscore. </p>
+        <p>No spaces are allowed. User names cannot start with a dot or dash. Creating a role name that begins with a number is not recommended. </p>
+        <p>As with any secure system, no two roles can have the same name.</p>
+        <h5>To create a custom role and assign it to a user</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Create a text file on your local workstation that lists each command that you want the role to be able to access (the role definition file). </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>All lines must end with a UNIX-style linefeed (lf) character. If you create your file in Windows, be sure to convert it to use UNIX line endings before transferring it to an HSM appliance.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span> Transfer the role definition file to the appliance using <b>pscp</b> (Windows) or <b>scp</b> (Linux/UNIX). You require the SafeNet Luna Network HSM appliance admin password to complete this step. The file is automatically placed in the 
+appropriate directory on the appliance. Do not specify a target directory.</p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col class="TableStyle-List1-Column-Column1" />
+            <col class="TableStyle-List1-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td style="font-weight: bold;" class="TableStyle-List1-BodyE-Column1-Body1">Windows</td>
+                    <td class="TableStyle-List1-BodyD-Column1-Body1">
+                        <p><b>Syntax: pscp</b> [options] &lt;source_filename&gt; &lt;user&gt;@&lt;host&gt;<b>:</b>[&lt;target_filename&gt;]</p>
+                        <p><b>Example:</b>To copy the role definitionfile (<b>myrole.txt</b>) to the myLuna appliance, keeping the same name:</p><pre xml:space="preserve">pscp myrole.txt admin@myLuna: <br />admin@myLuna's password: ********&#160;&#160;<br />myrole.txt   | 1 kB |   1.1 kB/s | ETA: 00:00:00 | 100%</pre>
+                    </td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td style="font-weight: bold;" class="TableStyle-List1-BodyB-Column1-Body1">Linux/UNIX</td>
+                    <td class="TableStyle-List1-BodyA-Column1-Body1">
+                        <p><b>Syntax:</b><b>scp</b> [options] &lt;source_filename&gt; &lt;user&gt;@&lt;host&gt;<b>:</b>[&lt;target_filename&gt;]</p>
+                        <p><b>Example:</b> To copy the role definition file (<b>myrole.txt</b>) to the  appliance with IP 192.168.0.123, keeping the same name: </p><pre xml:space="preserve">scp myrole.txt admin@192.168.0.123: <br />admin@192.168.0.123's password: ********&#160;&#160;<br />myrole.txt   | 1 kB |   1.1 kB/s | ETA: 00:00:00 | 100%</pre>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Log into the appliance as the <b>admin</b> user.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Import the role definition file to create the role able to access the commands it lists:</p>
+        <p class="listLevel1">lunash:&gt; <b>user role import -file</b> &lt;filename&gt; <b>-role</b> &lt;rolename&gt;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Create the user account that you want to assign the role to, if it does not already exist:</p>
+        <p class="listLevel1">lunash:&gt; <b>user add -username</b> &lt;username&gt; </p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Assign the role to a user:</p>
+        <p class="listLevel1">lunash:&gt; <b>user role add -username</b> &lt;username&gt; <b>-role</b> &lt;rolename&gt;</p>
+        <h4>Example</h4>
+        <p>For example, if you wanted the user "Alex" to be able to perform backup operations on your HSM but not restore operations, you would create a role definition file including backup commands and not including restore commands. Then you would import the file to your HSM:</p><pre xml:space="preserve">lunash:&gt;user role import -file backuprolefile -role backup</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">"backuprolefile" was successfully imported.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result&#160;: 0 (Success)</pre><pre xml:space="preserve">&#160;</pre>
+        <p>After your file has been successfully imported, you can assign the role it defines to the user "Alex":</p><pre xml:space="preserve">lunash:&gt;user role add -username Alex -role backup</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">User Alex was successfully modified.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+        <h3 xml:space="preserve"><a name="Register"></a>Custom NTLS Registration Role</h3>
+        <p>Creating NTLS links between a client and partition using the one-step method (see <a href="../../configuration/client_appliance/one-step_ntl_setup.htm" class="MCXref xref">Create a Network Trust Link - One-Step Setup</a> in the <i>Configuration Guide</i>) usually requires administrative access to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance. You can set up a custom role that allows a third party to use only the commands necessary for one-step NTLS. </p>
+        <h5>To create a custom NTLS registration role:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Create a role definition .txt file on your local workstation, listing the following commands:</p><pre class="listLevel1">scp</pre><pre class="listLevel1">partition list</pre><pre class="listLevel1">client list</pre><pre class="listLevel1">client register</pre><pre class="listLevel1" xml:space="preserve">client assignPartition</pre>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>All lines must end with a UNIX-style linefeed (lf) character. If you create your file in Windows, be sure to convert it to use UNIX line endings before transferring it to an HSM appliance.</p>
+        <p class="listLevel1">These are the commands necessary for creating one-step NTLS links. You can include any other commands for your registration purposes. See <a href="../../lunash/commands/client/client.htm" class="MCXref xref">client</a> in the <i>LunaSH Command Reference Guide</i> for the complete set of <b>client</b> commands. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Transfer the role definition file (registerclient.txt in the example below) to the appliance using <b>pscp</b> (Windows) or <b>scp</b> (Linux/UNIX). </p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col class="TableStyle-List1-Column-Column1" />
+            <col class="TableStyle-List1-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyE-Column1-Body1" style="font-weight: bold;">Windows</td>
+                    <td class="TableStyle-List1-BodyD-Column1-Body1">
+                        <p style="font-weight: normal;"><b>pscp registerclient.txt admin@</b>&lt;server_host/IP&gt;<b>:</b></p><pre xml:space="preserve">pscp registerclient.txt admin@192.168.0.123: <br />admin@192.168.0.123's password: ********&#160;&#160;<br />registerclient.txt                | 1 kB |   1.1 kB/s | ETA: 00:00:00 | 100%</pre>
+                    </td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyB-Column1-Body1" style="font-weight: bold;">Linux/UNIX</td>
+                    <td class="TableStyle-List1-BodyA-Column1-Body1">
+                        <p><b>scp registerclient.txt admin@</b>&lt;server_host/IP&gt;<b>:</b></p><pre xml:space="preserve">scp registerclient.txt admin@192.168.0.123: <br />admin@192.168.0.123's password: ********&#160;&#160;<br />registerclient.txt                | 1 kB |   1.1 kB/s | ETA: 00:00:00 | 100%</pre>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Log into the appliance by SSH as the <b>admin</b> user.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Import the role definition file to create the "registerclient" role:</p>
+        <p class="listLevel1">lunash:&gt; <b>user role import -file registerclient.txt -role registerclient</b></p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Create the "register" user account:</p>
+        <p class="listLevel1">lunash:&gt; <b>user add -username register</b></p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Assign the role to the "register" user:</p>
+        <p class="listLevel1">lunash:&gt; <b>user role add -username register -role registerclient</b></p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Open a new SSH connection to the appliance and login as "register" with the default password of PASSWORD:</p><pre class="listLevel1">login as: register</pre><pre class="listLevel1" xml:space="preserve">register@192.168.0.123's password:</pre>
+        <p class="listLevel1">You will be prompted to set a new password for the "register" user. This will be the password you provide to the third-party client. Ensure it is both secure and distinct from the "admin" user password. </p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Provide the "register" password and the partition name to the client operator. The client can now establish a one-step NTLS connection by specifying the "register" user and password in LunaCM:</p>
+        <p class="listLevel1">lunacm:&gt; <b>clientconfig deploy -server</b> &lt;server_host/IP&gt; <b>-client</b> &lt;client_host/IP&gt; <b>-partition</b> &lt;name&gt; <b>-user register</b></p>
+        <p class="listLevel1">See <a href="../../lunacm/commands/clientconfig/clientconfig_deploy.htm" class="MCXref xref">clientconfig deploy</a> for full command syntax. </p>
+        <h3><a name="Implicat"></a>Implications of Backup and Restore of User Profiles</h3>
+        <p>The commands <b>sysconf config backup</b> and <b>sysconf config restore</b> allow you to store a snapshot of the administrative user database (the names and status of all named LunaSH users) that can later be restored if desired. </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>Restoring from backup restores the database of user profiles that existed before the backup was made. This includes the set of users that existed when the backup was made,  the passwords that users had at the time of the backup, and the enabled/disabled status of users at the time of the backup. You will lose any user accounts created since the backup;  passwords of existing users could be reverted without their knowledge; enabled users might be disabled (therefore unable to perform their tasks);  disabled users might be enabled (therefore re-granted access that was suspended); any user accounts removed since that backup will be restored. </p>
+        <p>Your records should indicate when user-profile changes were made, and what those changes were. Any time you restore a backup, be sure to reconcile the changed statuses and inform anyone who is affected. For example, users need to know to use their previous password, and to change it immediately.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>While the built-in 'admin', 'operator', and 'monitor' accounts are not deleted or added by a restore operation (those accounts are permanent), both their enabled/disabled status and their passwords are changed to whatever prevailed at the time the backup was originally taken.</p>
+        <h3><a name="Security"></a>Security of Shell User Accounts</h3>
+        <p>Both the SafeNet Luna Network HSM appliance and any computers that make network connections for administrative purposes should reside inside your organization's secure premises, behind well-maintained firewalls. Site-to-site connections should be undertaken via VPN, and attacks on the shell account(s) is not normally an issue.</p>
+        <p>However, if your application requires placing the SafeNet appliance in an exposed position (e.g., the DMZ and beyond), your shell account(s) may be vulnerable to attackers. It is your responsibility to ensure that you  protect your sensitive data. </p>
+        <p>Some recommendations for enhancing your security include using strong passwords, changing the SSH port number from its default to something unconventional, or using certificate-based authentication.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

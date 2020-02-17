@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Configuring System Logging</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sa_appliance_admin/logging/config_logging.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Configuring System Logging</h2>
+        <p>Logs are managed in LunaSH with the <b>syslog</b> commands (see <a href="../../lunash/commands/syslog/syslog.htm" class="MCXref xref">syslog</a>). You can set rotation and other parameters to suit your own monitoring and management schedule. You can also configure flexible logs to gather only information you consider relevant, or to send different logs to different remote syslog hosts. Check the current logging configuration in LunaSH with <b>syslog show</b>. </p>
+        <p>This section contains the following system logging procedures:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Rotation" class="MCXref xref">Rotating System Logs</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Customiz" class="MCXref xref">Customizing Severity Levels</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Reading" class="MCXref xref">Reading System Logs</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Transfer" class="MCXref xref">Exporting System Logs</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Deleting" class="MCXref xref">Deleting System Logs</a>
+        </p>
+        <h3><a name="Rotation"></a>Rotating System Logs</h3>
+        <p>System logs are gathered in a current log file that is periodically rotated and saved on the appliance. This allows you to easily search for logs from a specific relevant time period. You can customize the frequency of log rotation and how many rotated log files are saved. You can also rotate logs manually. </p>
+        <p>The syslog directory on the appliance will fill up over time, depending on how many old logs you choose to keep. LunaSH displays warnings when the system reaches 50%, 75%, and 90% of log capacity. If you see one of these warnings, export your old logs to a client workstation to clear space in the syslog directory. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>NTP logs are not included in the periodic log rotations. They accumulate in one continuous file over a long period of time (<b>ntp.log</b>). Events are infrequent enough that the NTP log file is unlikely to fill the entire log directory. </p>
+        <h5>To change the frequency of log rotation:</h5>
+        <p>Use <b>syslog period</b> (see <a href="../../lunash/commands/syslog/syslog_period.htm" class="MCXref xref">syslog period</a>). You can configure the logs to rotate daily, weekly, or monthly. </p>
+        <p>lunash:&gt;<b>syslog period</b> &lt;syslogperiod&gt;</p><pre xml:space="preserve">lunash:&gt;syslog period daily</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Log period set to daily.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+        <h5>To change the number of rotated log files saved on the appliance:</h5>
+        <p>Use <b>syslog rotations</b> (see <a href="../../lunash/commands/syslog/syslog_rotations.htm" class="MCXref xref">syslog rotations</a>). You can save up to 100 rotated log files on the appliance. This command allows you to define how long to keep old logs on the appliance (maximum: 100 logs, rotated monthly). </p>
+        <p>lunash:&gt;<b>syslog rotations</b> &lt;#_of_rotations&gt;</p><pre xml:space="preserve">lunash:&gt; syslog rotations 5</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Log rotations set to 5.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+        <h5>To manually rotate the current log file:</h5>
+        <p>Use <b>syslog rotate</b> (see <a href="../../lunash/commands/syslog/syslog_rotate.htm" class="MCXref xref">syslog rotate</a>). This command ensures that the most recent logs are included when exporting them off the appliance. </p>
+        <p>lunash:&gt;<b>syslog rotate</b></p><pre xml:space="preserve">lunash:&gt;syslog rotate</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+        <h3><a name="Customiz"></a>Customizing Severity Levels</h3>
+        <p>You can customize the logs stored on the appliance by setting the log severity level (see <a href="logging.htm#Severity" class="MCXref xref">Log Severity Levels</a> for a description of the different levels). If you are concerned about the log directory filling up, you can configure the appliance to store only the most severe events (<b>emergency</b>) and send the rest of the logs to a remote syslog server (see <a href="remote_logging.htm" class="MCXref xref">Remote System Logging</a>). </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>This feature has software and/or firmware dependencies. See <a href="../../administration/upgrade/version_dependencies.htm" class="MCXref xref">Version Dependencies by Feature</a> for more information.</p>
+        <h5>To customize severity levels:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Set the severity level for the desired log type (lunalogs,messages,cron,secure,boot). See <a href="../../lunash/commands/syslog/syslog_severity_set.htm" class="MCXref xref">syslog severity set</a>. </p>
+        <p class="listLevel1">lunash:&gt;<b>syslog severity set -logname</b> &lt;logname&gt; <b>-loglevel</b> &lt;loglevel&gt;</p><pre class="listLevel1" xml:space="preserve">lunash:&gt;syslog severity set -logname lunalogs -loglevel emergency</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1">This command sets the severity level of lunalogs local log messages.</pre><pre class="listLevel1">Only messages with the severity equal to or higher than the new</pre><pre class="listLevel1" xml:space="preserve">log level: "emergency" will be logged.</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Stopping syslog:                                           [  OK  ]</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Starting syslog:                                           [  OK  ]</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1">Command Result : 0 (Success)</pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Optionally, confirm the new setting (see <a href="../../lunash/commands/syslog/syslog_show.htm" class="MCXref xref">syslog show</a>). </p>
+        <p class="listLevel1">lunash:&gt;<b>syslog show</b></p><pre class="listLevel1">Local Configured Log Levels:</pre><pre class="listLevel1">----------------------------</pre><pre class="listLevel1">lunalogs       emergency</pre><pre class="listLevel1">messages       *</pre><pre class="listLevel1">cron           notice</pre><pre class="listLevel1">secure         *</pre><pre class="listLevel1" xml:space="preserve">boot           *</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Note: '*' means all log levels.</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Repeat Step 1, specifying the severity level of each log type you wish to customize (lunalogs,messages,cron,secure,boot). </p>
+        <h3><a name="Reading"></a>Reading System Logs</h3>
+        <p>You can search the current log rotation for recent events without exporting log files. Rotated logs must be exported to a client workstation to be read. For a detailed guide to reading and interpreting system log messages, see <a href="../../monitoring/Preface/Preface.htm" class="MCXref xref">About the Syslog and SNMP Monitoring Guide</a> in the <i>Syslog and SNMP Monitoring Guide</i>. Syslog format is in accordance with RFC 5424. </p>
+        <h5>To search the current rotation of system logs:</h5>
+        <p>Use <b>syslog tail</b> (see <a href="../../lunash/commands/syslog/syslog_tail.htm" class="MCXref xref">syslog tail</a>). You can search the entire current log file, specify the number of recent entries you want to see, or search for specific types of entries. </p>
+        <p>lunash:&gt;<b>syslog tail -logname</b> &lt;logname&gt; <b>-entries</b> &lt;#entries&gt;</p><pre xml:space="preserve">lunash:&gt;syslog tail -logname lunalogs -entries 8</pre><pre xml:space="preserve">&#160;</pre><pre>2017 Mar  1 14:27:54 local_host  local5 info  hsm[32081]: STC policy is set to "OFF" on partition 66331 : Unknown ResultCode value</pre><pre>2017 Mar  1 14:27:55 local_host  local5 info  hsm[32120]: STC policy is set to "OFF" on partition 66331 : Unknown ResultCode value</pre><pre>2017 Mar  1 14:29:53 local_host  local5 info  hsm[3948]: STC policy is set to "OFF" on partition 66331 : Unknown ResultCode value</pre><pre>2017 Mar  1 14:29:59 local_host  local5 info  lunash [29529]: info : 0 : Command: syslog remotehost add  : admin : 10.124.0.87/61470</pre><pre>2017 Mar  1 14:30:37 local_host  local5 info  hsm[5511]: STC policy is set to "OFF" on partition 66331 : Unknown ResultCode value</pre><pre>2017 Mar  1 14:30:48 local_host  local5 info  lunash [29529]: info : 0 : Command: syslog remotehost list  : admin : 10.124.0.87/61470</pre><pre>2017 Mar  1 14:33:10 local_host  local5 info  lunash [29529]: info : 0 : Command: syslog severity set  : admin : 10.124.0.87/61470</pre><pre>2017 Mar  1 14:33:47 local_host  local5 info  lunash [29529]: info : 0 : Command: syslog severity set -logname lunalogs -loglevel crit : admin : 10.124.0.87/61470</pre><pre>&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+        <h4>HSM Alarm Logging</h4>
+        <p>The HSM card produces logs pertaining to the card status, including alarm messages for events such as zeroization, tamper events, and changes to Secure Transport Mode. The <b>syslog tail</b> command allows you to search for this type of message in the logs.</p>
+        <h5>To search the system logs for HSM alarm messages:</h5>
+        <p>Search for log messages containing the string "ALM" (see <a href="../../lunash/commands/syslog/syslog_tail.htm" class="MCXref xref">syslog tail</a>). </p>
+        <p>lunash:&gt;<b>syslog tail -logname messages -entries</b> &lt;#entries&gt; <b>-search ALM</b></p>
+        <p>For example, this command will display all alarm messages from the last 200000 log entries:</p><pre xml:space="preserve">lunash:&gt;syslog tail -logname messages -entries 200000 -search ALM</pre><pre xml:space="preserve">&#160;</pre><pre>2017 Apr 17 11:00:45 local_host kern info kernel: k7pf0: [HSM] ALM2006: HSM decommissioned by FW</pre><pre>2017 Apr 17 11:00:48 local_host kern info kernel: k7pf0: [HSM] ALM2014: Auto-activation data invalid - HSM deactivated</pre><pre>2017 Apr 17 11:01:12 local_host kern info kernel: k7pf0: [HSM] ALM2006: HSM decommissioned by FW</pre><pre>2017 Apr 17 11:01:14 local_host kern info kernel: k7pf0: [HSM] ALM2011: HSM unlocked - tamper clear done</pre><pre>2017 Apr 17 11:02:47 local_host kern info kernel: k7pf0: [HSM] ALM2007: HSM zeroized</pre><pre>2017 Apr 17 11:02:47 local_host kern info kernel: k7pf0: [HSM] ALM2005: HSM deactivated</pre><pre xml:space="preserve">2017 Apr 17 11:15:32 local_host kern info kernel: k7pf0: [HSM] ALM2013: HSM recovered from secure transport mode</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+        <h3><a name="Transfer"></a>Exporting System Logs</h3>
+        <p>If you are managing the logs locally, you must transfer them to a client workstation in order to read them. After you have exported the log records, you can clear them from the syslog directory on the appliance. </p>
+        <h5>To transfer system logs from the appliance to a client:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Create the log archive file (see <a href="../../lunash/commands/syslog/syslog_tarlogs.htm" class="MCXref xref">syslog tarlogs</a>). </p>
+        <p class="listLevel1">lunash:&gt;<b>syslog tarlogs</b></p><pre class="listLevel1" xml:space="preserve">lunash:&gt;syslog tarlogs</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">The tar file containing logs is now available via scp as filename 'logs.tgz'.</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1">Command Result : 0 (Success)</pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Transfer <b>logs.tgz</b> from the appliance to a client using <b>scp</b>/<b>pscp</b> (see <a href="../../Utilities/scp_pscp/scp_pscp.htm" class="MCXref xref">SCP and PSCP</a>). </p>
+        <p class="listLevel1">&gt;<b>scp admin@</b>&lt;applianceIP&gt;<b>:logs.tgz .</b></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>If you have configured NTP, transfer the <b>ntp.log</b> file from the appliance to a client. </p>
+        <p class="listLevel1">&gt;<b>scp admin@</b>&lt;applianceIP&gt;<b>:ntp.log .</b></p>
+        <h3><a name="Deleting"></a>Deleting System Logs</h3>
+        <p>Once you have exported the log files to a client, you can clear the appliance's syslog directory. This process creates an archive of all the stored logs before deleting the original files. </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>Ensure that you have retrieved a copy of <b>ntp.log</b> before you run <b>syslog cleanup</b>. It is not archived with the rest of the logs. </p>
+        <h5>To delete the stored system logs:</h5>
+        <p>Use <b>syslog cleanup</b> (see <a href="../../lunash/commands/syslog/syslog_cleanup.htm" class="MCXref xref">syslog cleanup</a>). </p>
+        <p>lunash:&gt;<b>syslog cleanup</b></p><pre xml:space="preserve">lunash:&gt;syslog cleanup</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&#160;</pre><pre>WARNING !!  This command creates an archive of the current logs then deletes ALL THE LOG FILES.</pre><pre>If you are sure that you wish to proceed, then type 'proceed', otherwise type 'quit'.</pre><pre>&#160;</pre><pre>&gt; proceed</pre><pre>Proceeding...</pre><pre>Creating tarlogs then deleting all log files...</pre><pre>&#160;</pre><pre>The tar file containing logs is now available via scp as filename "logs_cleanup_20170301_1443.tgz".</pre><pre>Please copy "logs_cleanup_20170301_1443.tgz" to a client machine with scp.</pre><pre>&#160;</pre><pre>Deleting log files ...</pre><pre>restart the rsyslogd service if it's running</pre><pre>Stopping syslog:                                           [  OK  ]</pre><pre>&#160;</pre><pre>Starting syslog:                                           [  OK  ]</pre><pre>&#160;</pre><pre>&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

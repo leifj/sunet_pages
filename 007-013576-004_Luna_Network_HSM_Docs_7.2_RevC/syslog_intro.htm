@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Syslog and SNMP Monitoring Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Syslog Introduction</title>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../index.html#monitoring/syslog_intro.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter">Syslog Introduction</h1>
+        <p>Syslog is a standard logging facility, standardized within the Syslog working group of the IETF. Software processes use an API to generate messages that the syslog facility writes to organized log files. If configured, syslog can also send messages to remote syslog servers.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Luna appliances use <b>rsyslog</b>. This facility provides the same features as syslog with the addition of reliable transport using TCP. Unless relevant to the accuracy of a point being made, this document uses the term <b>syslog</b> rather than <b>rsyslog</b>.</p>
+        <p>This chapter contains the following sections:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#syslogStruc" class="MCXref xref">Structure of a syslog Message</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#lunalogs" class="MCXref xref">lunalogs</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Audit" class="MCXref xref">Audit Logs</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Interpreting" class="MCXref xref">Interpreting Logs</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#syslogConfig" class="MCXref xref">Configuring syslog</a>
+        </p>
+        <h3><a name="syslogStruc"></a>Structure of a syslog Message</h3>
+        <p>The following image shows an example of a syslog message.</p>
+        <p>
+            <img src="../Resources/Images/monitoring/Syslog Introduction.png" style="visibility: visible;mso-wrap-style: square;height: auto;width: 650px;" alt="syslog-msg.PNG" />
+        </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>This field is the date and time. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>This field is the system host name.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>This field is the facility keyword, explained below.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>This field is the log severity level, explained below.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>This field is the software process that generated the log message.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>This field is a process-specific log message.</p>
+        <p><a href="#TableFacilityKeywords" class="MCXref xref">syslog Facility Keywords</a> summarizes the facility keywords applicable for the Luna appliance.</p>
+        <table style="width: 100%;mc-table-style: url('../Resources/TableStyles/Page.css');caption-side: top;" class="TableStyle-Page" cellspacing="0">
+            <caption data-mc-autonum="Table 1: "><span class="autonumber"><span>Table 1: </span></span><a name="TableFacilityKeywords"></a>syslog Facility Keywords</caption>
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Facility Keyword</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Facility Description</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>kern</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p> kernel messages </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>user</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>user-level messages </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>daemon</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>system daemons </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>auth</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>security/authorization messages </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>syslog</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p> messages generated internally by syslogd </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>authpriv</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>security/authorization messages </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>cron</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>clock daemon </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p>local#</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>local use #, where # is 0 to 7</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p><a href="#TableSeverity" class="MCXref xref">syslog Severity Levels</a> summarizes the log severity levels.</p>
+        <table style="width: 100%;mc-table-style: url('../Resources/TableStyles/Page.css');caption-side: top;" class="TableStyle-Page" cellspacing="0">
+            <caption data-mc-autonum="Table 2: "><span class="autonumber"><span>Table 2: </span></span><a name="TableSeverity"></a>syslog Severity Levels</caption>
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Severity Keyword</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Severity Description</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>emerg/panic</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>System is unusable</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>alert</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Action must be taken immediately</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>critical</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Critical condition</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>err/error</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Error condition</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>warn/warn</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Warning condition</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>notice</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Normal but significant condition</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>info</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Informational message</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p>debug</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>Debug-level message</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The primary log file is <b>messages</b>, but the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance also creates <b>lunalogs</b>.</p>
+        <h3><a name="lunalogs"></a>lunalogs</h3>
+        <p><b>lunalogs</b> log messages follow a similar format as standard syslog messages with some slight differences. The following image shows an example segment of a lunalogs message. The format up to the second field is identical to that for a syslog message.</p>
+        <p>
+            <img src="../Resources/Images/monitoring/Syslog Introduction_1.png" style="visibility: visible;mso-wrap-style: square;height: auto;width: 650px;" alt="lunalogs-msg.bmp" />
+        </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>The facility keyword for lunalogs varies. A table in relevant sections identifies the facility keyword for the component that writes log messages to lunalogs.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>This field is the application string, itemized below.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>This field is the process identifier, if available.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>lunalogs has a subsidiary severity level, itemized below.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>This field is the Luna-specific error code associated with the lunalog entry.</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>This field is the description, the format and contents determined by the application identifier of the lunalogs message. In most cases, the description is a concise statement of the issue that led to the log entry (e.g., oamp – “Cobra SQL service online.”). In other cases, the description comprises multiple fields of information, described below in <a href="#AppSpecificDesc" class="MCXref xref">Application-Specific Description</a>.</p>
+        <p><a href="#TableAppID" class="MCXref xref">lunalogs Application Identifiers</a> summarizes the application identifiers available in a lunalogs message.</p>
+        <table style="mc-table-style: url('../Resources/TableStyles/Page.css');caption-side: top;width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <caption data-mc-autonum="Table 3: "><span class="autonumber"><span>Table 3: </span></span><a name="TableAppID"></a>lunalogs Application Identifiers</caption>
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Application Identifier</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>oamp</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Recover</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>NTLS</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>lunash</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>cluster</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Luna PED Client</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>hsm_login</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>certmonitord</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>pam_swift</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>sysstatd</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>AdminAPI</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p><a href="#lunalogsSeverityLevels" class="MCXref xref">lunalogs Severity Levels</a> summarizes the subsidiary log severity levels of lunalogs.</p>
+        <table style="mc-table-style: url('../Resources/TableStyles/Page.css');caption-side: top;width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <caption data-mc-autonum="Table 4: "><span class="autonumber"><span>Table 4: </span></span><a name="lunalogsSeverityLevels"></a>lunalogs Severity Levels</caption>
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Severity Keyword</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>critical</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>error</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>warning</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>audit</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>info</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>debug</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p><a href="#AppSpecificDesc" class="MCXref xref">Application-Specific Description</a> shows the application-specific description for the more comprehensive lunalogs messages.</p>
+        <table style="width: 100%;mc-table-style: url('../Resources/TableStyles/Page.css');caption-side: top;" class="TableStyle-Page" cellspacing="0">
+            <caption data-mc-autonum="Table 5: "><span class="autonumber"><span>Table 5: </span></span><a name="AppSpecificDesc"></a>Application-Specific Description</caption>
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Application</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Description Field</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>NTLS</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&lt;message&gt; : &lt;IP address of client&gt; / &lt;application identifier of client&gt;</p>
+                        <p>Example #1:</p><pre>Client opened session 18478 : HSM1:Part171 : 192.168.0.100/40847</pre>
+                        <p>Example #2:</p><pre>Received a command LUNA_DESTROY_OBJECT and object handle 20262 : 192.168.0.100/40847</pre>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p>lunash</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>&lt;command&gt; : &lt;account&gt; : &lt;IP address&gt; / &lt;application identifier&gt;</p>
+                        <p>Example #1:</p><pre>Lush user login : monitor : 192.168.0.100/40847</pre>
+                        <p>Example #2:</p><pre>Command: log show&#160; : monitor : 192.168.0.100/40847</pre>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3><a name="Audit"></a>Audit Logs</h3>
+        <p>See <a href="../administration/audit/audit.htm" class="MCXref xref">Audit Logging</a> in the <i>Administration Guide</i> for a description of audit logs.</p>
+        <h3><a name="Interpreting"></a>Interpreting Logs</h3>
+        <p>No hard and fast rules exist for how to parse and interpret logs for significant events. For example, a “notice” severity from the IPMI daemon could be significant (e.g., PSU failed) or simply status information (e.g., reading sensors). The following bullets provide some guidance on how to parse log messages.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Scan for “critical” severity log entries. These logs represent significant events.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Scan for “error” severity log entries. In most cases, these logs represent significant events. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Scan for “notify” severity log entries from the ipmievd process and look for “Failure detected asserted”, “Lower Critical going low”, “Upper Critical going high”, “Lower Non-Recoverable going low” and “Upper Non-Recoverable going high.” </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Scan for “crit” severity logs entries for smartd. Look for "Temperature changed" to track internal appliance temperature measured at the hard drive. Look for excessive conditions with the string "reached critical limit" (e.g., temperature).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Scan for “CRASH AND BURN” in the logs. An instance of this string indicates a programming or logic error.</p>
+        <h3><a name="syslogConfig"></a>Configuring syslog</h3>
+        <p>See <a href="../sa_appliance_admin/logging/logging.htm" class="MCXref xref">System Logging</a> in the <i>Appliance Administration Guide</i> for details on how to configure syslog messages in the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

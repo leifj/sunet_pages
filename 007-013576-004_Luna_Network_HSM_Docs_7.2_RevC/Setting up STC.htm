@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="REST API User Guide|Using the REST API">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Setting up STC</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#REST_API/REST_API_User_Guide/Using the REST API/Setting up STC.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Setting up STC</h2>
+        <p>This recipe will describe how to set up STC. It is assumed that you have already exchanged certs with the appliance. For a recipe on how to exchange certificates with the appliance see <a href="Setting up NTLS.htm" class="MCXref xref">Setting up NTLS</a>.</p>
+        <p>This Recipe requires both Admin API authentication and HSM API authentication.</p>
+        <p>&#160;</p>
+        <p><a href="#Step" class="MCXref xref">Step 1: Initialize client token and create identity</a>
+        </p>
+        <p><a href="#Step2" class="MCXref xref">Step 2: Set HSM policy</a>
+        </p>
+        <p><a href="#Step3" class="MCXref xref">Step 3: Register client</a>
+        </p>
+        <p><a href="#Step4" class="MCXref xref">Step 4: Export and register partition</a>
+        </p>
+        <p><a href="#Step5" class="MCXref xref">Step 5: Set partition policy</a>
+        </p>
+        <p><a href="#Step6" class="MCXref xref">Step 6: Enable</a>
+        </p>
+        <p>&#160;</p>
+        <h3 class="ntoc"><a name="Step"></a>Step 1: Initialize client token and create identity</h3>
+        <p>To initialize the client token, run <b>lunacm -q stc tki -l &lt;clientName&gt; -f</b>, where &lt;clientName&gt; is the name of the client you wish to use.</p>
+        <h5>Example:</h5><pre>lunacm:&gt; stc tki -l myClient -f</pre><pre>Successfully initialized the client token.</pre><pre xml:space="preserve">Command Result : No Error</pre><pre xml:space="preserve">&#160;</pre>
+        <p>To create the client identiy we run 'lunacm -q stc idc -l &lt;clientName&gt; -f', replace clientName with the one used above.</p>
+        <h5>Example:</h5><pre>lunacm:&gt; stc idc -l myClient -f</pre><pre>Client identity myClient successfully created and exported to file C:\Program Files\SafeNet\LunaClient\data\client_identities\myClient</pre><pre>Command Result : No Error</pre>
+        <p>&#160;</p>
+        <h3 class="ntoc"><a name="Step2"></a>Step 2: Set HSM policy</h3>
+        <p>To set the HSM policy, <b>PUT</b> to <b>/api/lunasa/hsms/&lt;HSM_Serial&gt;/policies/39</b> with the value of 1.</p>
+        <h5>Example:</h5><pre>----------------Request----------------</pre><pre>URL:</pre><pre>PUT:/api/lunasa/hsms/155532/policies/39</pre><pre>Headers:</pre><pre>{'Content-Type': 'application/vnd.safenetinc.lunasa+json;version=3'}</pre><pre>Payload:</pre><pre>{"value": 1}</pre><pre>----------------Result----------------</pre><pre>Headers:</pre><pre>{'access-control-allow-origin': '*', 'content-type': 'application/json', 'location': '/api/lunasa/hsms/155532/policies/39', 'content-length': '0', 'access-control-allow-credentials': 'true'}</pre><pre>Data:</pre><pre>""</pre>
+        <p>&#160;</p>
+        <h3 class="ntoc"><a name="Step3"></a>Step 3: Register client</h3>
+        <p>To register a client, the identity file created in Step 1 must be encoded using base64. Once complete, it may be uploaded using a <b>POST</b> to <b>/api/lunasa/hsms/&lt;HSM_Serial&gt;/partitions/&lt;Partition_Serial&gt;/stc/clients</b> including the base64 identity and label.</p>
+        <h5>Example:</h5><pre>----------------Request----------------</pre><pre>URL:</pre><pre>POST:/api/lunasa/hsms/155532/partitions/362126088871/stc/clients</pre><pre>Headers:</pre><pre>{'Content-Type': 'application/vnd.safenetinc.lunasa+json;version=3'}</pre><pre>Payload:</pre><pre>{"identity": "U2FmZU5ldFN0Y0NsaWVudElkZW&lt;.............&gt;FVCTElDIEtFWS0tLS0tCg==", "label": "testClient"}</pre><pre>----------------Result----------------</pre><pre>Headers:</pre><pre>{'access-control-allow-origin': '*', 'content-type': 'application/json', 'location': '/api/lunasa/hsms/155532/partitions/362126088871/stc/clients/testClient', 'content-length': '23', 'access-control-allow-credentials': 'true'}</pre><pre>Data:</pre><pre>{"client": "testClient"}</pre>
+        <p>&#160;</p>
+        <h3 class="ntoc"><a name="Step4"></a>Step 4: Export and register partition</h3>
+        <p>To export the partition, <b>GET</b> on <b>/api/lunasa/hsms/&lt;HSM_Serial&gt;/partitions/&lt;Partition_Serial&gt;/stc</b>, decode the public key and save to a file, i.e. "myPartition"</p>
+        <h5>Example:</h5><pre>----------------Request----------------</pre><pre>URL:</pre><pre>GET:/api/lunasa/hsms/155532/partitions/362126088871/stc</pre><pre>Headers:</pre><pre>{'Content-Type': 'application/vnd.safenetinc.lunasa+json;version=3'}</pre><pre>Payload:</pre><pre>{}</pre><pre>----------------Result----------------</pre><pre>Headers:</pre><pre>{'access-control-allow-origin': '*', 'content-type': 'application/json', 'content-length': '1037', 'access-control-allow-credentials': 'true'}</pre><pre>Data:</pre><pre xml:space="preserve">{"activationTimeout": 120, "clients": "/api/lunasa/hsms/155532/partitions/362126088871/stc/clients", "ciphers": "/api/lunasa/hsms/155532/partitions/362126088871/stc/ciphers", "publicKey": "U2FmZU5ldFN0&lt;...................................&gt;tLS0tLQo=","fingerprint": "81f23180aad8d29b66d8a9285ceb5638ea923984", "replayWindow": 120, "hmacs": "/api/lunasa/hsms/155532/partitions/362126088871/stc/hmacs", "rekeyThreshold": 400}</pre><pre xml:space="preserve">&#160;</pre>
+        <p>The next step in the process is to register the partition, run <b>lunacm -q stc parr -f &lt;fileCreatedInLastStep&gt; -l &lt;anyName&gt;</b></p>
+        <h5>Example:</h5><pre>lunacm:&gt; stc parr -f 362126088871 -l myPartition</pre><pre>Partition identity 362126088871 successfully registered.</pre><pre>Command Result : No Error</pre>
+        <p>&#160;</p>
+        <h3 class="ntoc"><a name="Step5"></a>Step 5: Set partition policy</h3>
+        <p>To set the partition policy, <b>PUT</b> on <b>/api/lunasa/hsms/&lt;HSM_Serial&gt;/partitions/&lt;Partition_Serial&gt;/policies/37</b></p>
+        <h5>Example:</h5><pre>----------------Request----------------</pre><pre>URL:</pre><pre>PUT:/api/lunasa/hsms/155532/partitions/362126088871/policies/37</pre><pre>Headers:</pre><pre>{'Content-Type': 'application/vnd.safenetinc.lunasa+json;version=3'}</pre><pre>Payload:</pre><pre>{"value": 1}</pre><pre>----------------Result----------------</pre><pre>Headers:</pre><pre>{'access-control-allow-origin': '*', 'content-type': 'application/json', 'location': '/api/lunasa/hsms/155532/partitions/362126088871/policies/37', 'content-length': '0', 'access-control-allow-credentials': 'true'}</pre><pre>Data:</pre><pre>""</pre>
+        <p>&#160;</p>
+        <h3 class="ntoc"><a name="Step6"></a>Step 6: Enable</h3>
+        <p>Run <b>lunacm -q stc e -i 0 -f</b></p>
+        <h5>Example:</h5><pre>lunacm:&gt; stc e -i 0</pre><pre>You are about to enable STC to server 172.20.9.22.</pre><pre>This will initiate an automatic restart of this application. All sessions</pre><pre>logged in through the application will be closed.</pre><pre>Are you sure you wish to continue?</pre><pre>Type 'proceed' to continue, or 'quit' to quit now -&gt; proceed</pre><pre>Successfully enabled STC to connect to server 172.20.9.22.</pre><pre xml:space="preserve">Command Result : No Error</pre><pre xml:space="preserve">&#160;</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

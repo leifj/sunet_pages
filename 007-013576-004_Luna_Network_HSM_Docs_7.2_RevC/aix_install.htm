@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Primary.LunaIS,Primary.Default" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Installation Guide|SafeNet Luna HSM Client Software Installation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>AIX SafeNet Luna HSM Client Installation</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#install/software/aix_install.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">AIX SafeNet Luna HSM Client Installation</h2>
+        <p>These instructions assume that you have already acquired the SafeNet Luna HSM Client software, usually in the form of a downloaded .tar archive. </p>
+        <p>You must install the SafeNet Luna HSM client software on each client workstation you will use to access a SafeNet Luna HSM. This section describes how to install the client  on a workstation running AIX, and contains the following topics:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Prerequisites" class="MCXref xref">Prerequisites</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Installing" class="MCXref xref">Installing the Client Software</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Controlling" class="MCXref xref">Controlling User Access to Your Attached HSMs and Partitions</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Uninstalling" class="MCXref xref">AIX SafeNet Luna HSM Client Installation</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Java" class="MCXref xref">Installing Java Components</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Scripted" class="MCXref xref">Scripted or Unattended Installation</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Interrupting" class="MCXref xref">AIX SafeNet Luna HSM Client Installation</a>
+        </p>
+        <p>Applicability to specific versions of AIX is summarized in the Customer Release Notes for the current release.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Before 
+installing a SafeNet system, you should confirm that the product you have received is in factory 
+ condition and has not been tampered with in transit. Refer 
+to the Content Sheet included with your product shipment. &#160;If 
+ you have any questions about the condition of the product that you have 
+received, please contact <span class="DefaultCompanyNameLong">Gemalto</span> Technical Support. &#160;</p>
+        <h3><a name="Prerequisites"></a>Prerequisites</h3>
+        <p data-mc-conditions="Default.SA">Each computer that connects to the SafeNet Luna Network HSM appliance as a Client must have the 
+ cryptoki library, the vtl client shell and other utilities and supporting 
+ files installed. &#160;Each computer that  is connected to a SafeNet Luna Remote Backup HSM  must have the cryptoki library and other utilities and supporting files installed - in this case, that would be a Windows or Linux computer with the "Luna Backup HSM" option chosen when Luna Client software is installed. &#160;</p>
+        <h3><a name="Installing"></a>Installing the Client Software</h3>
+        <p>Check the SafeNet Luna HSM Customer Release Notes for any installation-related issues or instructions before you begin the following software installation process. </p>
+        <h5>To install the SafeNet Luna Client software on AIX:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Log on to the 
+ client system, open a console or terminal window, and use <b>su</b> or <b>sudo</b> to gain administrative permissions for the installation. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If you downloaded the software, copy or move the .tar archive (which usually has a name like "LunaClient_7.x.y-nn_AIX.tar") to a suitable directory where you can untar the archive and launch the installation script.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Enter the following command to extract the contents from the archive:</p>
+        <p class="listLevel1"><b>tar xvf</b> &lt;filename&gt;<b>.tar</b></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Change directory to the software version suitable for your system (for example, under the "aix" subdirectory, choose 32-bit or 64-bit according to your system requirement).<br /></p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Install the client software as follows:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>To see the 'help', or a list of available installer options, type:</p>
+        <p class="listLevel2"><b>sh install.sh -?</b> or <b>./sh install.sh --help</b></p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>To install all available products and optional components, type:</p>
+        <p class="listLevel2"><b>sh install.sh all</b>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>To selectively install individual products and optional components, type the command without arguments:</p>
+        <p class="listLevel2"><b>sh install.sh</b>
+        </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Do not interrupt the installation script in progress. An uninterruptible power supply (UPS) is recommended. See <a href="#Interrup" class="MCXref xref">Interrupting the Installation</a> for more information. </p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Type <b>y</b> 
+if you agree to be bound by the license agreement:</p><pre class="listLevel1" xml:space="preserve">[mylunaclient-1 32]$ sh install.sh
+<br />IMPORTANT:  The terms and conditions of use outlined in the software<br />license agreement (Document #008-010005-001_EULA_HSM_SW_revN) shipped with the product<br />("License") constitute a legal agreement between you and SafeNet. 
+Please read the License contained in the packaging of this
+product in its entirety before installing this product.
+
+Do you agree to the License contained in the product packaging? 
+
+If you select 'yes' or 'y' you agree to be bound by all the terms
+and conditions set out in the License.
+<br />If you select 'no' or 'n', this product will not be installed.
+<br />(y/n) 
+</pre>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>A list of installable SafeNet products appears (might be different, depending on your platform). Select as many as you require, by typing the number of each (in any order) and pressing Enter. As each item is selected, the list updates, with a "*" in front of any item that has been selected. This example shows item 1 has been  selected.</p><pre class="listLevel1" xml:space="preserve">Products &#160;
+Choose Luna Products to be installed &#160;
+&#160;&#160;&#160;&#160;*[1]: Luna Network HSM &#160;
+&#160;&#160;&#160;&#160;&#160;[N|n]: Next &#160;
+&#160;&#160;&#160;&#160;&#160;[Q|q]: Quit &#160;
+
+Enter selection: 1</pre>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>When the above was captured, the AIX client supported only SafeNet Luna Network HSM. To install the SafeNet Luna Backup HSM, you will need one of the other supported host platforms.</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>When selection is complete, type <b>N</b> or <b>n</b> for "Next", and press  <b>Enter</b>. If you wish to make a change, simply type a number again and press <b>Enter</b> to de-select a single item.</p>
+        <p class="ol1" data-mc-autonum="9."><span class="autonumber"><span class="ol1Number">9.</span></span>The next list is called "Advanced" and includes additional items to install. Some items might be pre-selected to provide the optimum SafeNet Luna HSM experience for the majority of customers, but you can change any selection in the   list.</p><pre class="listLevel1" xml:space="preserve">Products &#160;
+Choose Luna Products to be installed &#160;
+&#160;&#160;&#160;&#160; [1]: Luna Network HSM &#160;
+&#160;&#160;&#160;&#160;&#160;[N|n]: Next &#160;
+&#160;&#160;&#160;&#160;&#160;[Q|q]: Quit &#160;
+
+Enter selection: 1
+
+Advanced
+Choose Luna Components to be installed
+
+  [1]: Luna SDK
+
+ *[2]: Luna JSP (Java)
+
+ *[3]: Luna JCProv (Java)
+
+  [B|b]: Back to Products selection
+
+  [I|i]: Install
+
+  [Q|q]: Quit
+
+ Enter selection:
+</pre>
+        <p class="listLevel1" xml:space="preserve">
+
+If you wish to make a change, simply type a number again and press <b>Enter</b> to select or de-select a single item. &#160;&#160;</p>
+        <p class="listLevel1">If the script detects an existing cryptoki library, it stops and suggests that you uninstall your previous SafeNet software before starting the SafeNet Luna Client installation again. </p>
+        <p class="ol1" data-mc-autonum="10."><span class="autonumber"><span class="ol1Number">10.</span></span>The system installs all packages related to the products and any optional components that you selected. By default, the Client programs are installed in the <b>/usr/safenet/lunaclient</b>  directory. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>When installing, ensure that the full path of a package does not contain any space characters. (The IBM examples do not show any spaces, implying that this might be a system requirement.)</p>
+        <p class="caution_note">As a general rule, do not modify the Chrystoki.conf/crystoki.ini 
+file, unless directed to do so by Gemalto Technical Support. If you do modify the file, never insert TAB characters - use individual 
+ space characters. Avoid modifying the PED timeout settings. These are now hardcoded in the appliance, 
+but the numbers in the Chrystoki.conf file must match.</p>
+        <h3 data-mc-conditions=""><a name="Controlling"></a>Controlling User Access to Your Attached HSMs and Partitions</h3>
+        <p data-mc-conditions="">By default, only the root user has access to your attached HSMs and partitions. You can specify a set of non-root users that are permitted to access your attached HSMs and partitions, by adding them to the <b>hsmusers</b> group.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions=""><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The client software installation automatically creates the hsmusers group if one does not already exist on your system. The hsmusers group is retained when you uninstall the client software, allowing you to upgrade your client software while retaining your hsmusers group configuration.</p>
+        <h4 data-mc-conditions="">Adding users to hsmusers group</h4>
+        <p data-mc-conditions="">To allow non-root users or applications access your attached HSMs and partitions, assign the users to the <b>hsmusers</b> group. The users you assign to the hsmusers group must exist on the client workstation. Users you add to the hsmusers group are able to access your attached HSMs and partitions. Users who are not part of the hsmusers group are not able to access your attached HSMs and partitions.</p>
+        <h5 data-mc-conditions="">To add a user to hsmusers group</h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions=""><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that you have <b>sudo</b> privileges on the client workstation.</p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions=""><span class="autonumber"><span class="ol1Number">2.</span></span>Add a user to the hsmusers group:</p>
+        <p class="listLevel1" data-mc-conditions=""><b>sudo gpasswd --add</b> &lt;username&gt; <b>hsmusers</b></p>
+        <p class="listLevel1" data-mc-conditions="">where &lt;username&gt; is the name of the user you want to add to the hsmusers group.</p>
+        <h4 data-mc-conditions=""><a name="hsmusers_delete"></a>Removing users from hsmusers group</h4>
+        <p data-mc-conditions="">Should you wish to  rescind a user's access to your attached HSMs and partitions, you can  remove them from the hsmusers group.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions=""><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The user you delete will continue to have access to the HSM until you reboot the client workstation.</p>
+        <h5 data-mc-conditions="">To remove a user from hsmusers group</h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions=""><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that you have <b>sudo</b> privileges on the client workstation.</p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions=""><span class="autonumber"><span class="ol1Number">2.</span></span>Remove a user from the hsmusers group:</p>
+        <p class="listLevel1" style="font-weight: normal;" data-mc-conditions=""><b>sudo gpasswd -d</b> &lt;username&gt; <b>hsmusers</b></p>
+        <p class="listLevel1" style="font-weight: normal;" data-mc-conditions="">where &lt;username&gt; is the name of the user you want to remove from the hsmusers group. You must log in again to see the change.</p>
+        <h3><a name="Uninstal"></a>Uninstalling the SafeNet Luna Client Software</h3>
+        <p>You may need to uninstall the SafeNet Luna Client software prior to upgrading to a new release, or if the software is no longer required. </p>
+        <h5>To uninstall the SafeNet Luna HSM client software:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Log in as root. (use sudo instead)</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Go to the client installation directory:</p>
+        <p class="listLevel1"><b>cd /usr/safenet/lunaclient/bin</b>
+        </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Run the uninstall script:<br /></p>
+        <p class="listLevel1"><b>sudo</b> <b>sh uninstall.sh</b></p>
+        <h3>Installing <a name="Java"></a>Java Components</h3>
+        <p>During the installation, the script provides the opportunity to install SafeNet Java components. If you select Java components, the SafeNet Java files are installed in the <b>/usr/safenet/lunaclient/jsp/</b> directory. In order to use Java, you must have separately installed Java (JDK&#160;or run-time environment from the vendor of your choice) onto your system. </p>
+        <h5>To install JSP:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Copy the SafeNet Java library and .jar files from their default location under <b>/usr/safenet/lunaclient/jsp/lib</b> to the Java environment directory, for example <b>/usr/jre/lib/ext</b>.</p>
+        <p>The exact directory might differ depending on where you obtained your Java system, the version, and any choices that you made while installing and configuring it. &#160;</p>
+        <h5>To install JCPROV:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Copy the SafeNet JCPROV files from their default location under <b>/usr/safenet/lunaclient/jcprov/lib</b> to the Java environment directory, for example <b>/usr/jre/lib/ext</b>.</p>
+        <p>For additional Java-related information, see <a href="../../sdk/java/java.htm" class="MCXref xref">Java Interfaces</a> in the <i>SDK Reference Guide</i>.</p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>Copy libLunaAPI.so to system lib (/usr/lib) in order to make Java 7/8/9 work on AIX 7.1 64-bit client.<br /></p>
+        <p>For additional Java-related information, see <a href="../../sdk/java/java.htm" class="MCXref xref">Java Interfaces</a> in the <i>SDK Reference Guide</i>.</p>
+        <h4>JSP Static Registration</h4>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>This section applies to JSP, not to JCPROV. &#160;</p>
+        <p>You would choose static registration of providers if you want all applications to default to the SafeNet provider.</p>
+        <p>Once your client has externally logged in using <b>salogin</b> or your own HSM-aware utility, any application would be able to use SafeNet product without being designed to log in to the HSM Partition.</p>
+        <p>Edit the <b>java.security</b> file located in the <b>/jre/lib/security</b> directory of your Java SDK/JRE installation to read as follows:</p>
+        <p><code>security.provider.1=sun.security.provider.Sun</code>
+        </p>
+        <p><code>security.provider.2=com.sun.net.ssl.internal.ssl.Provider</code>
+        </p>
+        <p><code>security.provider.3=com.safenetinc.luna.provider.LunaProvider</code>
+        </p>
+        <p><code>security.provider.4=com.sun.rsajca.Provider</code>
+        </p>
+        <p><code>security.provider.5=com.sun.crypto.provider.SunJCE</code>
+        </p>
+        <p><code>security.provider.6=sun.security.jgss.SunProvider</code>
+        </p>
+        <p>You can set our provider in first position for  efficiency if SafeNet Luna HSM operations are your primary mode. However, if your application needs to perform operations not supported by the LunaProvider (secure random generation or random publickey verification, for example) then it would receive error messages from the HSM and would need to handle those gracefully before resorting to providers further down the list. We have found that having our provider in third position works well for most applications.</p>
+        <p>The modifications in the <b>java.security</b> file are global, and they might result in the breaking of another application that uses the default KeyPairGenerator without logging into the SafeNet Luna Network HSM first. This consideration might argue for using dynamic registration, instead.</p>
+        <h4>JSP Dynamic Registration</h4>
+        <p>For your situation, you may prefer to employ dynamic registration of Providers, in order to avoid possible negative impacts on other applications running on the same machine. As well, the use of dynamic registration allows you to keep installation as straightforward as possible for your customers.</p>
+        <h4>Removing components</h4>
+        <p>To uninstall the JSP component or the JCPROV component, you must uninstall SafeNet Luna Client completely (see <a href="#Uninstal" class="MCXref xref">Uninstalling the SafeNet Luna Client Software</a>, then re-run the installation script without selecting the unwanted component(s). </p>
+        <h3><a name="Scripted"></a>Scripted or Unattended Installation</h3>
+        <p>If you prefer to run the installation from a script, rather than interactively, run the command with the options <b>-p&#160;</b>&lt;list of SafeNet products&gt; and <b>-c&#160;</b>&lt;list of SafeNet components&gt;. To see the syntax, run the command with <b>help</b> like this:</p><pre xml:space="preserve">[myhost]$ sudo sh install.sh help</pre><pre xml:space="preserve">[sudo] password for fred</pre><pre xml:space="preserve">
+
+At least one product should be specified.
+
+usage:
+        install.sh      - Luna Client install through menu
+        install.sh help - Display scriptable install options
+        install.sh all  - Complete Luna Client install
+
+        install.sh -p [sa|pci|g5|rb] [-c sdk|jsp|jcprov|ldpc|snmp]
+
+        -p &lt;list of Luna products&gt;
+        -c &lt;list of Luna components&gt;  - Optional. All components are installed if not provided
+
+Luna products options
+   sa     - SafeNet Luna Network HSM
+   pci    - SafeNet Luna PCIe HSM
+   g5     - SafeNet Luna USB HSM
+   rb     - SafeNet Luna Backup HSM
+
+Luna components options
+   sdk    - Luna SDK
+   jsp    - Luna JSP (Java)
+   jcprov - Luna JCPROV (Java)
+   snmp   - Luna SNMP subagent
+
+
+[myhost]$
+</pre><pre xml:space="preserve">&#160;</pre>
+        <p>For scripted/automated installation, your script will need to capture and respond to the License Agreement prompt, and to the confirmation prompt. For example:</p><pre xml:space="preserve">
+[myhost]$ sudo sh install.sh all 
+
+IMPORTANT: The terms and conditions of use outlined in the software 
+license agreement (Document #008-010005-001_053110) shipped with the product 
+("License") constitute a legal agreement between you and SafeNet Inc.
+Please read the License contained in the packaging of this 
+product in its entirety before installing this product.
+
+Do you agree to the License contained in the product packaging?
+
+If you select 'yes' or 'y' you agree to be bound by all the terms 
+and conditions se out in the License.
+
+If you select 'no' or 'n', this product will not be installed. 
+
+(y/n) <b>y</b>
+
+Complete Luna Client will be installed. This includes SafeNet Luna Network HSM,
+SafeNet Luna PCIe HSM, SafeNet Luna USB HSM AND SafeNet Luna Backup HSM.
+
+Select 'yes' or 'y' to proceed with the install.
+
+Select 'no' or 'n', to cancel this install. 
+
+Continue (y/n)? &#160;<b>y</b>  </pre>
+        <h3><a name="Interrup"></a>Interrupting the Installation</h3>
+        <p>Do not interrupt the installation script in progress, and ensure that your host computer is served by an uninterruptible power supply (UPS). If you press [Ctrl] [C], or otherwise interrupt the installation (OS problem, power outage, other), some components will not be installed. It is not possible to resume an interrupted install process. The result of an interruption depends on where, in the process, the interruption occurred (what remained to install before the process was stopped).</p>
+        <p>As long as the cryptoki RPM package is installed, any subsequent installation attempt results in refusal with the message "A version of Luna Client is already installed."</p>
+        <p>If components are missing or are not working properly after an interrupted installation, or if you wish to install any additional components at a later date (following an interrupted installation, as described), you would need to uninstall everything first. If <b>sh uninstall.sh</b> is unable to do it, then you must uninstall all packages manually.</p>
+        <p>Because interruption of the install.sh script is not recommended, and mitigation is possible, this is considered a low-likelihood corner case, fully addressed by these comments.</p>
+        <h3>After Installation</h3>
+        <p class="NumberedList">When you have installed the software onto a Client, 
+the next task is to configure the SafeNet Luna HSM, as described in the <i>Configuration Guide</i>.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

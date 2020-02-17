@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>PED Authentication</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/PED_Auth/PED_Auth.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter">PED Authentication</h1>
+        <p>The SafeNet Luna PIN Entry Device (Luna PED) provides PIN entry and secret authentication to a SafeNet Luna HSM that requires Trusted Path Authentication. The requirement for PED or password authentication is configured at the factory, according to the HSM model you selected at time of purchase. </p>
+        <p>The Luna PED and PED keys are the only means of accessing the PED-authenticated HSM's administrative functions. They represent the first part of the <span class="DefaultProduct">SafeNet Luna Network HSM</span> with Trusted Path Authentication's two-part, FIPS 140-2 level 3-compliant Client authentication. They prevent key-logging exploits on workstations connected to the host HSM, because authentication is delivered directly from the hand-held PED to the HSM via the independent, trusted-path interface. No password is entered via computer keyboard. </p>
+        <p><span class="DefaultProduct">SafeNet Luna Network HSM</span> release 7.x requires Luna PED software version 2.7.1 or higher. This software is backward-compatible with legacy <span class="DefaultProduct">SafeNet Luna Network HSM</span> 6.x.</p>
+        <p>This chapter contains the following sections about PED authentication:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Architecture" class="MCXref xref">PED Authentication Architecture</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#PEDkeys" class="MCXref xref">PED Keys</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="#Shared" class="MCXref xref">Shared PED Key Secrets</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="#PEDPINs" class="MCXref xref">PED PINs</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="#MofN" class="MCXref xref">M of N Split Secrets</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="PED_hardware.htm" class="MCXref xref">SafeNet Luna PED Hardware Functions</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="local.htm" class="MCXref xref">Local PED Setup</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="remote/about_remote.htm" class="MCXref xref">About Remote PED</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="remote/remote_setup.htm" class="MCXref xref">Remote PED Setup</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="remote/RPK.htm" class="MCXref xref">Initializing the Remote PED Vector (RPV) and Creating the Orange PED&#160;Key</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="remote/PEDserver_install.htm" class="MCXref xref">Installing PEDserver and Setting Up the Remote Luna PED</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="remote/remote_connect.htm" class="MCXref xref">Opening a Remote PED Connection</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="remote/disconnect_PED.htm" class="MCXref xref">Ending or Switching the Remote PED Connection</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="remote/troubleshooting.htm" class="MCXref xref">Remote PED Troubleshooting</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="key_mgmt/key_mgmt.htm" class="MCXref xref">PED Key Management</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="key_mgmt/create.htm#Create" class="MCXref xref">Creating PED Keys</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="key_mgmt/authenticate.htm" class="MCXref xref">Performing PED Authentication</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="key_mgmt/lost_keys.htm" class="MCXref xref">Consequences of Losing PED Keys</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="key_mgmt/identify.htm" class="MCXref xref">Identifying a PED Key Secret</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="key_mgmt/duplicate.htm" class="MCXref xref">Duplicating Existing PED Keys</a>
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><a href="key_mgmt/change_secret.htm" class="MCXref xref">Changing a PED Key Secret</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="ped_utils/overview.htm" class="MCXref xref">PEDserver and PEDclient</a>
+        </p>
+        <h2><a name="Architecture"></a>PED Authentication Architecture</h2>
+        <p>The PED Authentication architecture consists of the following components:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>SafeNet Luna PED:</b> a PIN Entry Device with a local or remote connection to the HSM. The PED reads authentication secrets from PED keys on behalf of an HSM or partition (see <a href="PED_hardware.htm" class="MCXref xref">SafeNet Luna PED Hardware Functions</a>). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>Authentication secrets:</b> Cryptographic secrets generated by the HSM and stored on PED keys. These secrets serve as login credentials for the various roles on the HSM. They can be shared among roles, HSMs, and partitions according to your security scheme. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>PED Keys:</b> physical USB-connected devices that contain authentication secrets, created by the HSM (see <a href="#PEDkeys" class="MCXref xref">PED Keys</a>). PED&#160;Keys have the following custom authentication features:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><b>Shared Secrets:</b> PED keys of the same type can be reused or shared among HSMs or partitions, allowing domain sharing (necessary for HA and backup configurations), legacy-style Security Officer authentication, and other custom configurations. See <a href="#Shared" class="MCXref xref">Shared PED Key Secrets</a>.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><b>PED PINs:</b> optional PINs associated with specific PED keys, set by the owner of the PED key at the time of creation. PED PINs offer an extra layer of security for PED keys which could be lost or stolen. See <a href="#PEDPINs" class="MCXref xref">PED PINs</a>.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><b>M of N Split Key Scheme:</b> optional configuration which allows a role to split its authentication secret across multiple PED keys, and require a minimum number of those keys for authentication. This scheme can be customized to be as simple or complex as your organization's security policy dictates. See <a href="#MofN" class="MCXref xref">M of N Split Secrets</a>. </p>
+        <h3><a name="Comparing"></a>Comparing Password and PED Authentication</h3>
+        <p>The following table describes key differences between password- and PED-authenticated HSMs.</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>&#160;</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Password-authentication</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>PED-authentication</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>Ability to restrict access to cryptographic keys</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Knowledge of role password is sufficient</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>For backup/restore, knowledge of partition domain password is sufficient</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Ownership of the black Crypto Officer PED key is mandatory</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>For backup/restore, ownership of both black CO and red domain PED keys is mandatory</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The Crypto User role is available to restrict access to read-only, with no key management authority</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Option to associate a PED PIN with any PED key, imposing a two-factor authentication requirement on any role</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>Dual Control</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Not available</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>MofN (split-knowledge secret sharing) requires "M" different holders of portions of the role secret in order to authenticate to an HSM role - can be applied to any, all, or none of the administrative and management operations required on the HSM</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>Key-custodian responsibility</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Password knowledge only</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Linked to partition password knowledge</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Linked to black PED key(s) ownership and optional PED PIN knowledge</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1"><b>Two-factor authentication for remote access</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Not available</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Remote PED and orange (Remote PED&#160;Vector) PED key deliver highly secure remote management of HSM, including remote backup</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="PEDkeys"></a>PED Keys</h2>
+        <p>A PED key is a USB authentication device, embedded in a molded plastic body. It contains a secret, generated by the HSM, that authenticates a role, cloning domain, or remote PED server. This secret is retained until deliberately changed by an authorized user.</p>
+        <p>
+            <img src="../../Resources/Images/ped_labels/006_ped_key.png" />
+        </p>
+        <p>The Luna PED does not hold the authentication secrets. They reside only on the portable PED keys.</p>
+        <p>PED keys are created when an HSM, partition, role, or Remote PED vector is initialized. A PED key can contain only one authentication secret at a time, but it can be overwritten with a new authentication secret. See <a href="key_mgmt/key_mgmt.htm" class="MCXref xref">PED Key Management</a>. </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>Do not subject PED keys to extremes of temperature, humidity, dust, or vibration. Use the included key cap to protect the USB connector. </p>
+        <h3><a name="KeyTypes"></a>PED Key Types and Roles</h3>
+        <p>The PED uses PED keys for all credentials. You can apply the appropriate labels included with your PED keys, according to the table below, as you create them.</p>
+        <p>The PED key colors correspond with the HSM roles<MadCap:conditionalText data-mc-conditions="Default.SA"> described in <a href="../../configuration/planning/hsm_roles.htm" class="MCXref xref">HSM Roles and Secrets</a> in the <i>Configuration Guide</i></MadCap:conditionalText>. The following table describes the keys associated with the various roles: </p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 110px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 93px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 135px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Lifecycle</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">PED&#160;Key</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">PED Secret</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Function</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="3">HSM&#160;Administration</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p style="font-weight: bold;">Blue</p>
+                        <p>
+                            <img src="../../Resources/Images/ped_labels/007_blue_so.png" style="mc-float: outside-frame-left;float: left;left: 0px;top: 1961px;height: auto;width: 80px;padding-left: 0px;padding-right: 0px;padding-top: 0px;padding-bottom: 0px;" />
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>HSM Security Officer (HSM SO) secret</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Authenticates the HSM&#160;SO role. The HSM SO manages provisioning activities and security policies for the HSM:</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>HSM initialization</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Partition creation and assignment to clients</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>HSM policy management</p>
+                        <p style="font-weight: bold;">Mandatory</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p style="font-weight: bold;">Red</p>
+                        <p>
+                            <img src="../../Resources/Images/ped_labels/010_red_domain.png" style="height: auto;width: 80px;padding-left: 0px;padding-right: 0px;padding-top: 0px;padding-bottom: 0px;" />
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>HSM Domain or Key Cloning Vector</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Cryptographically defines the set of HSMs that can participate in cloning for backup. See <a href="#Domain" class="MCXref xref">Domain PED Keys</a>.</p>
+                        <p style="font-weight: bold;">Mandatory</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p style="font-weight: bold;">Orange</p>
+                        <p>
+                            <img src="../../Resources/Images/ped_labels/011_orange_remote.png" style="height: auto;width: 80px;padding-left: 0px;padding-right: 0px;padding-top: 0px;padding-bottom: 0px;" />
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Remote PED Vector</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Establishes a connection to a Remote PED server. </p>
+                        <p style="font-weight: bold;">Optional</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="2">Partition Administration</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p style="font-weight: bold;">Blue</p>
+                        <p>
+                            <img src="../../Resources/Images/ped_labels/007_blue_so.png" style="mc-float: outside-frame-left;float: left;left: 0px;top: 1961px;height: auto;width: 80px;padding-left: 0px;padding-right: 0px;padding-top: 0px;padding-bottom: 0px;" />
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Partition Security Officer (PO) secret</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Authenticates the Partition SO role. The PO manages provisioning activities and security policies for the partition:</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Partition initialization</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Crypto Officer/Crypto User role setting</p>
+                        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Partition policy management</p>
+                        <p><b>NOTE:</b> If you want the HSM SO to also perform Partition SO duties, you can use the same blue key to initialize both roles. </p>
+                        <p style="font-weight: bold;">Mandatory</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p style="font-weight: bold;">Red</p>
+                        <p>
+                            <img src="../../Resources/Images/ped_labels/010_red_domain.png" style="height: auto;width: 80px;padding-left: 0px;padding-right: 0px;padding-top: 0px;padding-bottom: 0px;" />
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Partition Domain or Key Cloning Vector</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Cryptographically defines the set of partitions that can participate in cloning for backup or high-availability. See <a href="#Domain" class="MCXref xref">Domain PED Keys</a>. </p>
+                        <p style="font-weight: bold;">Mandatory</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="2">Partition Operation</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p style="font-weight: bold;">Black</p>
+                        <p>
+                            <img src="../../Resources/Images/ped_labels/008_black_co.png" style="height: auto;width: 80px;padding-left: 0px;padding-right: 0px;padding-top: 0px;padding-bottom: 0px;" />
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Crypto Officer (CO) secret</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Authenticates the Crypto Officer role. The CO can perform both cryptographic services and key management functions on keys within the partition.</p>
+                        <p style="font-weight: bold;">Mandatory</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p style="font-weight: bold;">Gray</p>
+                        <p>
+                            <img src="../../Resources/Images/ped_labels/009_grey_cu.png" style="height: auto;width: 80px;padding-left: 0px;padding-right: 0px;padding-top: 0px;padding-bottom: 0px;" />
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Crypto User (CU) secret</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Authenticates the Crypto User role. The CU is a read-only role that can perform cryptographic services using keys already existing within the partition.</p>
+                        <p><b>NOTE:</b> If administrative separation is not important, you can use a single black key to initialize the Crypto Officer and Crypto User roles and still have two separate challenge secrets to distinguish read-write and read-only role privileges.</p>
+                        <p style="font-weight: bold;">Optional</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">HSM Auditing</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p style="font-weight: bold;">White</p>
+                        <p>
+                            <img src="../../Resources/Images/ped_labels/012_white_audit.png" style="height: auto;width: 80px;padding-left: 0px;padding-right: 0px;padding-top: 0px;padding-bottom: 0px;" />
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Audit User (AU) secret</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>Authenticates the Audit User role, responsible for audit log management. This role has no access to other HSM services.</p>
+                        <p style="font-weight: bold;">Optional</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3><a name="Shared"></a>Shared PED Key Secrets</h3>
+        <p>The Luna PED identifies the type of authentication secret on an inserted PED key, and secrets of the same type (color designation) can be used interchangeably. During the key creation process, you have the option of reusing an authentication secret from an existing key rather than have the HSM create a new one. This means that you can use the same PED key(s) to authenticate multiple HSMs or partitions. This is useful for:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>legacy-style authentication schemes, where the HSM SO also functions as the owner of application partitions. This is achieved by using the same blue PED key to initialize the HSM and some or all of the partitions on the HSM. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>allowing a single HSM SO to manage multiple HSMs, or a single Partition SO to manage multiple partitions</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>ensuring that HSMs/partitions share a cloning domain (see <a href="#Domain" class="MCXref xref">Domain PED Keys</a>)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>allowing a read-write Crypto Officer role and a read-only Crypto User role to be managed by the same user</p>
+        <p>It is not necessary for partitions in an HA group to share the same blue Partition SO&#160;key. Only the red cloning domain key must be identical between HA group members. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Using a single PED key secret to authenticate multiple roles, HSMs, or partitions is less secure than giving each its own PED key. Refer to your organization's security policy for guidance. </p>
+        <h4><a name="Domain"></a>Domain PED Keys</h4>
+        <p>A red domain PED key holds the key-cloning vector (the domain identifier) that allows key cloning between HSMs and partitions, and is therefore the PED key most commonly shared between HSMs or partitions. Cloning is a secure method of copying cryptographic objects between HSMs and partitions, required for backup/restore and within HA groups. It ensures that keys copied between HSMs or partitions are:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>strongly encrypted</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>copied only between HSMs and partitions that share a cloning domain.</p>
+        <p data-mc-conditions="Default.SA">For more information about cloning domains, see <a href="../../configuration/initial_setup/domains_planning.htm" class="MCXref xref">Domain Planning</a> in the <i>Configuration Guide</i>. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>An HSM or partition can be a member of only one domain, decided at initialization. A domain can only be changed by re-initializing the HSM. Partition domains may not be changed after initialization. </p>
+        <h3 class="ntoc"><a name="PEDPINs"></a>PED PINs</h3>
+        <p>The Luna PED allows the holder of a PED key to set a numeric PIN, 4-48 characters long, to be associated with that PED key. This PIN must then be entered on the PED keypad for all future authentication. The PED PIN provides two-factor authentication and ensures security in case a key is lost or stolen. If you forget your PED PIN, it is the same as losing the PED&#160;key entirely; you cannot authenticate the role. </p>
+        <p>PED PINs can be set only at the time of key creation, and can be changed only by changing the secret on the PED key. Duplicate keys made at the time of creation can have different PED PINs, allowing multiple people access to the role (see <a href="key_mgmt/create.htm" class="MCXref xref">Creating PED Keys</a>). Copies made later are true copies with the same PED PIN, intended as backups for one person (see <a href="key_mgmt/duplicate.htm" class="MCXref xref">Duplicating Existing PED Keys</a>). Duplicates of the PED key all have the same PED PIN. </p>
+        <p>If you are using an M of N configuration, each member of the M of N keyset may set a different PED PIN. </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>Forgetting a PED&#160;PIN is equivalent to losing the key entirely; you can no longer authenticate the role, domain, or RPV. See <a href="#Consequences" class="MCXref xref">PED Authentication</a>. </p>
+        <h3><a name="MofN"></a>M of N Split Secrets</h3>
+        <p>The Luna PED can split an authentication secret among multiple PED keys (up to 16), and require a minimum number of the split keys to authenticate the role. This provides a customizable layer of security by requiring multiple trusted people to be present for authentication. </p>
+        <p>For example, you could decide (or your security policy could dictate) that at least three trusted people must be present for changes to the HSM policies or for client partition assignments. To accommodate illness, vacations, business travel, or any other reasons that a key-holder might not be present at the HSM site, it is advisable to split the authentication secret between more than three people. If you decide on a five-key split, you would specify M of N for the HSM SO role to be 3 of 5. </p>
+        <p>In this scenario, the HSM SO authentication secret is split among five blue PED keys, and at least three of those keys must be presented to the Luna PED to log in as HSM SO. </p>
+        <p>This feature can be used to customize the level of security and oversight for all actions requiring PED authentication. You can elect to apply an M of N split-secret scheme to all roles and secrets, some of them, or none of them. If you do choose to use M of N, you can set different M and N values for each role or secret. Please note the following recommendations:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>M = N is not recommended; if one of the key holders is unavailable, you cannot authenticate the role. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>M = 1 is not recommended; it is no more secure than if there were no splits of the secret - a single person can unlock the role without oversight. If you want multiple people to have access to the role, it is simpler to create multiple copies of the PED key.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Using an M of N split secret can greatly increase the number of PED keys you require. Ensure that you have enough blank or rewritable PED keys on hand before you begin backing up your M of N scheme.</p>
+        <h4>Activated Partitions and M of N</h4>
+        <p>For security reasons, the HSM and its servers are often kept in a locked facility, and accessed under specific circumstances, directly or by secure remote channel. To accommodate these security requirements, the Crypto Officer and Crypto User roles can be Activated (to use a secondary, alpha-numeric login credential to authenticate), allowing applications to perform cryptographic functions without having to present a black or gray PED key (see <a href="../partitions/about_activation_and_auto-activation.htm" class="MCXref xref">Activation and Auto-Activation on PED-Authenticated Partitions</a>). In this case, if the HSM is rebooted for maintenance or loses power due to an outage, the cached PED secret is erased and the role must be reactivated (by logging in the role via LunaCM and presenting the requisite M number of PED&#160;keys) before normal operations can resume. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

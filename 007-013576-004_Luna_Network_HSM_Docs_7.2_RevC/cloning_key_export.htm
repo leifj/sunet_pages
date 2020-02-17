@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Keys In Hardware vs. Private Key Export</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/CKE/cloning_key_export.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter">Keys In Hardware vs. Private Key Export</h1>
+        <p>By default, the <span class="DefaultProduct">SafeNet Luna Network HSM</span> stores all keys in hardware, allowing private keys to be copied only to another SafeNet Luna HSM (cloning). Cloning allows you to move or copy key material from the HSM to a backup HSM or to another HSM in the same HA group. You might, however, want to export private keys to an encrypted file for off-board storage or use. Individual partitions can be configured in one of three modes for handling private keys. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>This feature has software and/or firmware dependencies. See <a href="../upgrade/version_dependencies.htm" class="MCXref xref">Version Dependencies by Feature</a> for more information.</p>
+        <p>The Partition SO can set the mode by changing the following policies (see <a href="../capabilities_and_policies/partition_capabilities_and_policies.htm" class="MCXref xref">Partition Capabilities and Policies</a> for more information):</p>
+        <p class="ul1" style="font-weight: normal;" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>Partition policy 0: Allow private key cloning</b> (default: <b>1</b>)</p>
+        <p class="ul1" style="font-weight: normal;" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>Partition policy 1: Allow private key wrapping</b> (default: <b>0</b>)</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>These partition policies can never be set to <b>1</b> (ON) at the same time. An error will result (CKR_CONFIG_FAILS_DEPENDENCIES). </p>
+        <p>The policies can be set at the time of initialization, using a policy template (see <a href="../capabilities_and_policies/policy_templates.htm" class="MCXref xref">Policy Templates</a>) or by following the procedures described below:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Cloning" class="MCXref xref">Cloning Mode</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#KeyExport" class="MCXref xref">Key Export Mode</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#NoBackup" class="MCXref xref">No Backup Mode</a>
+        </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Partition configurations are listed in LunaCM as "Key Export With Cloning Mode". This indicates that the partition is capable of being configured for either Key Export or Cloning, with the mode of operation defined by the policies listed above. You can never configure a partition to allow both export and cloning of private keys at once. </p>
+        <h2><a name="Cloning"></a>Cloning Mode</h2>
+        <p>A partition in Cloning mode has the following capabilities and restrictions:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>All keys/objects can be cloned to another partition or SafeNet Luna Backup HSM in the same cloning domain.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>All keys/objects are replicated within the partition's HA group. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Private keys cannot be wrapped off the HSM (cannot be exported to a file encrypted with a wrapping key). </p>
+        <p>In this mode, private keys are never allowed to exist outside of a trusted SafeNet Luna HSM in the designated cloning domain. Cloning mode is the default setting for new partitions. </p>
+        <h3 class="ntoc">Setting Cloning Mode on a Partition</h3>
+        <p>Cloning mode is the default setting on new partitions. If another mode was set previously, the Partition SO can use the following procedure to set Cloning mode. Use <b>partition showpolicies</b> to see the current policy settings. </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span><b>Partition policy 0: Allow private key cloning</b> is Off-to-On destructive by default. Back up any important cryptographic material on the partition before continuing. This destructiveness setting can be customized by initializing the partition with a policy template (see <a href="../capabilities_and_policies/policy_templates.htm#EditPT" class="MCXref xref">Editing a Policy Template</a>). </p>
+        <h5>To manually set Cloning mode on a partition:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Log in to the partition as Partition SO. </p>
+        <p class="listLevel1">lunacm:&gt;<b>slot set slot</b> &lt;slotnum&gt;</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>role login -name po</b></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Set <b>partition policy 1: Allow private key wrapping</b> to <b>0</b> (OFF).</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>partition changepolicy -policy 1 -value 0</b></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Set <b>partition policy 0: Allow private key cloning</b> to <b>1</b> (ON). </p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>partition changepolicy -policy 0 -value 1</b></p>
+        <h5>To initialize a partition in Cloning mode using a policy template:</h5>
+        <p>Use a standard text editor to include the following lines in the policy template file (see <a href="../capabilities_and_policies/policy_templates.htm#EditPT" class="MCXref xref">Editing a Policy Template</a>):</p><pre>0:"Allow private key cloning":<span style="color: #ff0000;">1</span>:1:0</pre><pre xml:space="preserve">1:"Allow private key wrapping":<span style="color: #ff0000;">0</span>:1:0</pre>
+        <h2><a name="KeyExport"></a>Key Export Mode</h2>
+        <p>A partition in Key Export mode has the following capabilities and restrictions:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Private keys cannot be cloned to other partitions nor to a SafeNet Luna Backup HSM. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The partition cannot be part of an HA group (private keys will not be replicated). </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>All keys/objects, including private keys, can be wrapped off the HSM (can be exported to a file encrypted with a wrapping key). </p>
+        <p>This mode is useful when generating key pairs for identity issuance, where transient key-pairs are generated, wrapped off, and embedded on a device. They are not used on the HSM, but generated and issued securely, and then deleted from the HSM. </p>
+        <h3 class="ntoc">Setting Key Export Mode on a Partition</h3>
+        <p>The Partition SO can use the following procedure to set Key Export mode. Use <b>partition showpolicies</b> to see the current policy settings. </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span><b>Partition policy 1: Allow private key wrapping</b> is always Off-to-On destructive. Back up any important cryptographic material on the partition before continuing. This destructiveness setting cannot be changed with a policy template (see <a href="../capabilities_and_policies/policy_templates.htm#Guide" class="MCXref xref">Guidelines and Restrictions</a>). </p>
+        <h5>To manually set Key Export mode on a partition:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Launch LunaCM and log in to the partition as Partition SO. </p>
+        <p class="listLevel1">lunacm:&gt;<b>slot set slot</b> &lt;slotnum&gt;</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>role login -name po</b></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Set <b>partition policy 0: Allow private key cloning</b> to <b>0</b> (OFF).</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>partition changepolicy -policy 0 -value 0</b></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Set <b>partition policy 1: Allow private key wrapping</b> to <b>1</b> (ON). </p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>partition changepolicy -policy 1 -value 1</b></p>
+        <h5>To initialize a partition in Key Export mode using a policy template:</h5>
+        <p>Use a standard text editor to include the following lines in the policy template file (see <a href="../capabilities_and_policies/policy_templates.htm#EditPT" class="MCXref xref">Editing a Policy Template</a>):</p><pre>0:"Allow private key cloning":<span style="color: #ff0000;">0</span>:1:0</pre><pre xml:space="preserve">1:"Allow private key wrapping":<span style="color: #ff0000;">1</span>:1:0</pre>
+        <h2><a name="NoBackup"></a>No Backup Mode</h2>
+        <p>A partition in No Backup mode has the following restrictions:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Private keys cannot be cloned to other partitions or to a SafeNet Luna Backup HSM. All other objects can still be cloned. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Private keys cannot be wrapped off the HSM (exported to a file encrypted with a wrapping key). All other objects can still be wrapped off. </p>
+        <p>Without backup capability, private keys can never leave the HSM. This mode is useful when keys are intended to have short lifespans, and are easily replaced.</p>
+        <h3 class="ntoc">Setting No Backup Mode on a Partition</h3>
+        <p>The Partition SO can use the following procedure to set No Backup mode. Use <b>partition showpolicies</b> to see the current policy settings. </p>
+        <h5>To manually set No Backup mode on a partition:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Launch LunaCM and log in to the partition as Partition SO. </p>
+        <p class="listLevel1">lunacm:&gt;<b>slot set slot</b> &lt;slotnum&gt;</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>role login -name po</b></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If <b>partition policy 0: Allow private key cloning</b> is set to <b>1</b> (ON), set it to <b>0</b> (OFF). </p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>partition changepolicy -policy 0 -value 0</b></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>If <b>partition policy 1: Allow private key wrapping</b> is set to <b>1</b> (ON), set it to <b>0</b> (OFF). </p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>partition changepolicy -policy 1 -value 0</b></p>
+        <h5>To initialize a partition in No Backup mode using a policy template:</h5>
+        <p>Use a standard text editor to include the following lines in the policy template file (see <a href="../capabilities_and_policies/policy_templates.htm#EditPT" class="MCXref xref">Editing a Policy Template</a>):</p><pre>0:"Allow private key cloning":<span style="color: #ff0000;">0</span>:1:0</pre><pre xml:space="preserve">1:"Allow private key wrapping":<span style="color: #ff0000;">0</span>:1:0</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

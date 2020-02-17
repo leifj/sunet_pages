@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Configuring and Using Audit Logging</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/List1.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/audit/audit-logging_configuring_and_using.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Configuring and Using Audit Logging</h2>
+        <p>This section describes the procedures required to enable audit logging, configure it to specify what is logged and how often the logs are rotated, and how to copy, verify and read the audit logs. It contains the following information:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Configur" class="MCXref xref">Configuring Audit Logging</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Copying" class="MCXref xref">Copying Log Files Off the Appliance</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Exportin" class="MCXref xref">Exporting the Audit Logging Secret and Importing to a Verifying HSM</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Decipher" class="MCXref xref">Deciphering the Audit Log Records</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Audit" class="MCXref xref">Audit Role Authentication Considerations</a>
+        </p>
+        <h3 data-mc-conditions="Default.SA"><a name="Configur"></a>Configuring Audit Logging</h3>
+        <p data-mc-conditions="Default.SA">Configure audit logging using the LunaSH audit commands. See <a href="../../lunash/commands/audit/audit.htm" class="MCXref xref">audit</a> in the <i>LunaSH Command Reference Guide</i>.</p>
+        <h5 data-mc-conditions="Default.SA">Prerequisites (HSM SO)</h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">1.</span></span>Configure the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance to use the network time protocol (NTP). See <a href="../../sa_appliance_admin/ntp_time/ntp_time.htm" class="MCXref xref">Timestamping – NTP and Clock Drift</a> in the <i>Appliance Administration Guide</i>.</p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">2.</span></span>Log in to LunaSH as an admin-level user, and enable the audit user. The audit user is necessary to access and work with logs through the LunaSH interface. It is restricted from administrative functions:</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt; <b>user enable -username audit</b></p>
+        <h5 data-mc-conditions="Default.SA">To configure audit logging (Auditor)</h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">1.</span></span>Using an SSH connection (or a local serial connection), login to LunaSH on the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance as <b>audit</b> (not as <b>admin</b>), using the password "PASSWORD".</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">The first time you login as <b>audit</b>, you are prompted to change the password to something more secure. To fulfill the purpose of the Audit role, keep the <b>audit</b>&#160;user's password separate from, and unknown to, the HSM Security Officer: </p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">The audit user sees a reduced subset of commands suitable to the audit role, only, as follows:</p><pre class="listLevel1" data-mc-conditions="Default.SA">Name                 (short)    Description</pre><pre class="listLevel1" data-mc-conditions="Default.SA">--------------------------------------------------------------------------------</pre><pre class="listLevel1" data-mc-conditions="Default.SA">init                 i          Initialize the Audit role</pre><pre class="listLevel1" data-mc-conditions="Default.SA">changePwd            ch         Change Audit User Password or PED Key</pre><pre class="listLevel1" data-mc-conditions="Default.SA">login                logi       Login as the Audit user</pre><pre class="listLevel1" data-mc-conditions="Default.SA">logout               logo       Logout the Audit user</pre><pre class="listLevel1" data-mc-conditions="Default.SA">config               co         Set Audit Parameters</pre><pre class="listLevel1" data-mc-conditions="Default.SA">sync                 sy         Synchronize HSM Time to Host Time</pre><pre class="listLevel1" data-mc-conditions="Default.SA">show                 sh         Display the Audit logging info</pre><pre class="listLevel1" data-mc-conditions="Default.SA">log                  l          &gt; Manage Audit Log Files</pre><pre class="listLevel1" data-mc-conditions="Default.SA">secret               se         &gt; Export/Import Audit Logging Secret</pre><pre class="listLevel1" data-mc-conditions="Default.SA">remotehost           r          &gt; Configure Audit Logging Remote Hosts</pre>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The audit user's commands are not available to the admin user. The audit user has no administrative control over the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance. This is a first layer in the separation of roles. This separation allows a user with no administrative control of the appliance and HSM to have oversight of the HSM logs, while also ensuring that an administrator cannot clear those logs.</p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">2.</span></span>Initialize the <b>audit</b> role on the HSM. This enables logging for all subsequent actions performed by the SO and partition user(s):</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt; <b>audit init</b></p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>On password-authenticated HSMs, you are prompted for the password and cloning domain.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>On PED-authenticated HSMs, you are referred to Luna PED, which prompts you for the domain (red PED key) and Audit authentication (white PED key).</p>
+        <p class="ol1" data-mc-autonum="3." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">3.</span></span>Now that the audit role exists on the HSM, you can configure the auditing function. However, before you can configure audit logging you must log into the HSM as the <b>audit</b> role:</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt; <b>audit login</b></p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>On password-authenticated HSMs, you are prompted to enter the password for the audit role.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>On PED-authenticated HSMs, you are referred to Luna PED, which prompts for the white PED key for the audit role.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>You are now logged into the appliance as the <b>audit</b> user and into the HSM (within the appliance) as the <b>audit</b> role. Both are required. The <b>audit</b> commands, including HSM login as the <b>audit</b> role do not appear if you are logged in as any other named appliance-level user.</p>
+        <p class="ol1" data-mc-autonum="4." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">4.</span></span>Synchronize the HSM’s clock with the host time (which should also be synchronized with the NTP server) so that all subsequent log records will have a valid and accurate timestamp:</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt; <b>audit sync</b></p>
+        <p class="ol1" data-mc-autonum="5." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">5.</span></span>Configure audit logging to specify what you want to log. You can specify the level of audit appropriate for needs of the organization’s policy and the nature of the application(s) using the HSM:</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt; <b>audit config -parameter event -value</b> &lt;event_value&gt;</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The first time you configure audit logging, we suggest using only the <b>?</b> option, to see all the available options in the configuration process. See also <a href="../../lunash/commands/audit/audit_config.htm" class="MCXref xref">audit config</a> in the <i>LunaSH Command Reference Guide</i>.</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">Security audits can generate a very large amount of data, which consumes HSM processing resources, host storage resources, and makes the job of the Audit Officer quite difficult when it comes time to review the logs. For this reason, ensure that you configure audit logging such that you capture only relevant data, and no more. </p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">For example, the <b>First Symmetric Key Usage Only</b> or <b>First Asymmetric Key Usage Only</b> category is intended to assist Audit Officers to capture the relevant data in a space-efficient manner for high processing volume applications. On the other hand, a top-level Certificate Authority would likely be required, by policy, to capture all operations performed on the HSM but, since it is typically not an application that would see high volumes, configuring the HSM to audit all events would not impose a significant space and/or performance premium in that situation.</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA"> As a further example, the command <b>audit config -parameter event -value all</b> will log everything the HSM does. This might be useful in some circumstances, but will quickly fill up log files. </p>
+        <p class="ol1" data-mc-autonum="6." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">6.</span></span>Configure audit logging to specify how often you want to rotate the logs: </p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt; <b>audit config -parameter rotation -value</b> &lt;value&gt;</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA"> For example, the command <b>audit config -parameter rotate -value hourly</b> would rotate the logs every hour, cutting down the size of individual log files, even in a situation of high-volume event recording, but would increase the number of files to be handled.</p>
+        <h4 data-mc-conditions="Default.SA">Log Entries</h4>
+        <p data-mc-conditions="Default.SA">Log entries are made within the HSM, and are written to the currently active log file on the appliance file system. When a log file reaches the rotation trigger, it is closed, and a new file gets the next log entry. The number of log files on the appliance grows according to the logging settings and the rotation schedule that you configured. At any time, you can copy files to a remote computer and then clear the originals from the HSM, if you wish to free the space. </p>
+        <p data-mc-conditions="Default.SA">For <span class="DefaultProduct">SafeNet Luna Network HSM</span>, to simplify configuration within its closed and hardened environment, the&#160;following rules apply:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The maximum log file size is capped at 4 MB.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The log path is internal to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The rotation offset is set at 0. </p>
+        <h3 data-mc-conditions="Default.SA"><a name="Copying"></a>Copying Log Files Off the Appliance</h3>
+        <p data-mc-conditions="Default.SA">You can copy the log files off of the appliance for viewing and verification.</p>
+        <h5 data-mc-conditions="Default.SA">To copy files off the appliance</h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">1.</span></span>Create an archive of the logs that are ready to archive:</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt; <b>audit log list</b></p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt; <b>audit log tarlogs</b></p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">2.</span></span>View a list of the log files currently saved on the appliance:</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt;<b>my file list</b></p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">For this example, assume that the list includes a file named <b>audit.tgz</b>.</p>
+        <p class="ol1" data-mc-autonum="3." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">3.</span></span>On the computer where you wish to capture and store the log files, use <b>scp</b> (Linux) or <b>pscp</b> (Windows) to transfer the file from the appliance:</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">/usr/safenet/lunaclient/logs :&gt; <b>scp audit@myLunaHSM1:audit.tgz mylunsa1_audit_2014-02-28.tgz</b></p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">Provide the audit user's credentials when prompted. This copies the identified file from the remote <span class="DefaultProduct">SafeNet Luna Network HSM</span>'s file system (in the <b>audit</b> account) and stores the copy on your local computer file system with a useful name.<br /></p>
+        <p class="ol1" data-mc-autonum="4." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">4.</span></span>You can view and parse the plain-text portion of the file.</p>
+        <p class="ol1" data-mc-autonum="5." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">5.</span></span>You can verify the authenticity of the retrieved file using a connected HSM to which you have imported the Audit logging secret from the originating <span class="DefaultProduct">SafeNet Luna Network HSM</span>.</p>
+        <h3><a name="Exportin"></a>Exporting the Audit Logging Secret and Importing to a Verifying HSM</h3>
+        <p data-mc-conditions="Default.PED">You can export the audit log secret from one HSM&#160;and import it to another to allow the first HSM's logs to be viewed and verified on the second. The HSMs must share the same authentication method and Audit cloning domain (password string or red PED key). You can verify logs from a SafeNet Luna PCIe HSM using a SafeNet Luna Network HSM, and vice-versa. </p>
+        <h5>To export the Audit Logging secret from the HSM and import to the verifying HSM:</h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">1.</span></span>On the <span class="DefaultProduct">SafeNet Luna Network HSM</span> where HSM audit log files are being created, export the audit logging secret:</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt; <b>audit secret export</b></p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">The filename is displayed when the secret is exported. You can check the filename with <b>my file list</b>. </p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">2.</span></span>On a computer connected to both HSMs, use <b>scp</b> or <b>pscp</b> to transfer the logging secret from the appliance. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you are planning to verify logs with a SafeNet Luna PCIe HSM, you can use the PCIe HSM's host computer. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you are planning to verify logs with a second <span class="DefaultProduct">SafeNet Luna Network HSM</span>, you must transfer the logging secret to a client computer, and then to the second appliance. </p>
+        <table style="width: 97%;caption-side: top;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0" data-mc-conditions="Default.SA">
+            <col class="TableStyle-List1-Column-Column1" />
+            <col class="TableStyle-List1-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyE-Column1-Body1" style="font-weight: bold;" data-mc-conditions="">Linux</td>
+                    <td class="TableStyle-List1-BodyD-Column1-Body1" data-mc-conditions="">
+                        <p>&lt;client_install_dir&gt;:&gt; <b>scp audit@</b>&lt;hostname_or_IP&gt;<b>:</b>&lt;log_secret_file&gt;<b> .</b></p>
+                        <p>Then, if transferring to a second <span class="DefaultProduct">SafeNet Luna Network HSM</span>:</p>
+                        <p>&lt;client_install_dir&gt;:&gt; <b>scp</b> &lt;log_secret_file&gt; <b>audit@</b>&lt;hostname_or_IP&gt;<b>:</b></p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyB-Column1-Body1" style="font-weight: bold;" data-mc-conditions="">Windows</td>
+                    <td class="TableStyle-List1-BodyA-Column1-Body1" data-mc-conditions="">
+                        <p data-mc-conditions="">&lt;client_install_dir&gt;:&gt; <b>pscp audit@</b> &lt;hostname_or_IP&gt;<b>:</b>&lt;log_secret_file&gt;<b> .</b></p>
+                        <p data-mc-conditions="">Then, if transferring to a second <span class="DefaultProduct">SafeNet Luna Network HSM</span>:</p>
+                        <p data-mc-conditions="">&lt;client_install_dir&gt;:&gt; <b>pscp</b> &lt;log_secret_file&gt; <b>audit@</b>&lt;hostname_or_IP&gt;<b>:</b></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="listLevel1" data-mc-conditions="Default.SA">This copies the identified file from the remote <span class="DefaultProduct">SafeNet Luna Network HSM</span>'s file system (in the "audit" account) and stores the copy on your local computer file system in the directory from which you issued the command. Provide the audit user's credentials when prompted. </p>
+        <p class="ol1" data-mc-autonum="3." data-mc-conditions=""><span class="autonumber"><span class="ol1Number">3.</span></span>Login to the verifying HSM as the audit user. For this example, we will assume that you have already initialized the HSM audit user role, using the same domain/secret as is associated with the source HSM. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions=""><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you are using a <span class="DefaultProduct">SafeNet Luna Network HSM</span>, connect via SSH and login to LunaSH as the audit user:</p>
+        <p class="listLevel2" data-mc-conditions="">lunash:&gt;<b>audit login</b></p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions=""><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you are using a SafeNet Luna PCIe HSM, open LunaCM and login using the Auditor role:</p>
+        <p class="listLevel2" data-mc-conditions="">lunacm:&gt;<b>role login -name au</b></p>
+        <p class="ol1" data-mc-autonum="4." data-mc-conditions=""><span class="autonumber"><span class="ol1Number">4.</span></span>Import the audit logging secret to the HSM.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions=""><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><span class="DefaultProduct">SafeNet Luna Network HSM</span> (LunaSH):</p>
+        <p class="listLevel2" data-mc-conditions="">lunash:&gt;<b>audit secret import -serialtarget</b> &lt;target_HSM_SN&gt; <b>-serialsource</b> &lt;source_HSM_SN&gt; <b>-file</b> &lt;log_secret_file&gt;</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;" data-mc-conditions=""><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>SafeNet Luna PCIe HSM (LunaCM):</p>
+        <p class="listLevel2" data-mc-conditions="">lunacm:&gt; <b>audit import file </b>&lt;log_secret_file&gt;<br /></p>
+        <p class="ol1" data-mc-autonum="5." data-mc-conditions=""><span class="autonumber"><span class="ol1Number">5.</span></span>You can now verify audit log files from the source HSM. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><span class="DefaultProduct">SafeNet Luna Network HSM</span> (LunaSH):</p>
+        <p class="listLevel2">lunash:&gt;<b>audit log verify -file</b> &lt;audit_log_filename&gt;<b>.log</b></p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>SafeNet Luna PCIe HSM (LunaCM):</p>
+        <p class="listLevel2">lunacm:&gt; <b>audit verify file </b>&lt;audit_log_filename&gt;<b>.log</b></p>
+        <p class="listLevel2">You might need to provide the full path to the file, depending upon your current environment settings.</p>
+        <h3><a name="Decipher"></a>Deciphering the Audit Log Records</h3>
+        <p>In general, the audit logs are self-explanatory. Due to limitations in the firmware, however, some audit log records required further explanation, as detailed in the following sections:</p>
+        <h4>Determining the serial number of a created partition from the audit log</h4>
+        <p>An audit log entry similar to the following is generated when a partition is created on the HSM:</p><pre xml:space="preserve">5,12/12/17 16:14:14,S/N 150718 session 1 Access 2147483651:2669 SO container operation LUNA_CREATE_CONTAINER
+returned RC_OK(0x00000000) container=20 (using PIN (entry=LUNA_ENTRY_DATA_AREA))
+
+</pre>
+        <p>It is not obvious from this entry what the serial number is for the created partition. This information, however, can be derived from the log entry, since the partition serial number is simply a concatenation of the HSM serial number and the partition container number, which are specified in the log entry, as highlighted below:</p><pre xml:space="preserve">5,12/12/17 16:14:14,S/N <b>150718</b> session 1 Access 2147483651:2669 SO container operation LUNA_CREATE_CONTAINER
+returned RC_OK(0x00000000) container=<b>20</b> (using PIN (entry=LUNA_ENTRY_DATA_AREA))
+
+</pre>
+        <p>In the example above, the HSM serial number is 150718 and the partition container number is 20. Note that the partition container number is a three-digit number with leading zeros suppressed, so that the actual partition container number is 020. To determine the partition serial number  concatenate the two numbers as follows:</p><pre xml:space="preserve">150718020
+
+</pre>
+        <p>Use this number to identify the partition in subsequent audit log entries.</p>
+        <h3><a name="Audit"></a>Audit Role Authentication Considerations</h3>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.PED"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The audit role PED key or password is a critical property to manage the audit logs. If that authentication secret is lost, the HSM must be factory reset (that is, zeroize the HSM) in order to initialize the audit role again. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Multiple bad logins produce different results for the SO and for the audit role, as follows:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span> &#160;&#160;After 3 bad SO logins, the LUNA_RET_SO_LOGIN_FAILURE_THRESHOLD error is returned and the HSM is zeroized.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span> &#160;&#160;After 3 bad audit logins, the LUNA_RET_AUDIT_LOGIN_FAILURE_THRESHOLD error is returned, but the HSM is unaffected. If a subsequent login attempt is executed within 30 seconds, the LUNA_RET_AUDIT_LOGIN_TIMEOUT_IN_PROGRESS error is returned. If you wait for more than 30 seconds and try login again with the correct password, the login is successful. &#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

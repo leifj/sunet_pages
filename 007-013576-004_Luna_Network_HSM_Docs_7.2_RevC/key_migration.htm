@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Design Considerations">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Migrating Keys From Software to a SafeNet Luna Network HSM</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/design/key_migration.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Migrating Keys From Software to a <span class="DefaultProduct">SafeNet Luna Network HSM</span></h2>
+        <p><span class="DefaultProduct">SafeNet Luna Network HSM</span>s expect key material to be in PKCS#8 format. PKCS#8 
+ format follows BER (Basic encoding rules)/DER (distinguished encoding 
+ rules) encoding. An 
+ example of this format can be found in the document "Some examples 
+ of PKCS standards" produced by RSA, and available on their web site 
+ (http://www.rsasecurity.com/rsalabs/pkcs/index.html at the bottom of the 
+ page, under “Related Documents”). </p>
+        <p>Here is an example of a formatted key:</p><pre xml:space="preserve">&#160;0x30, 
+ 0x82, 0x04, 0xbc, 0x02, 0x01, 0x00, 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 
+ 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, 0x01, 0x05, 0x00, 0x04, 0x82, 0x04, 
+ 0xa6, 0x30, 0x82, 0x04, 0xa2, 0x02, 0x01, 0x00, 0x02, 0x82, 0x01, 0x01, 
+ 0x00, 0xb8, 0xb5, 0x0f, 0x49, 0x46, 0xb5, 0x5d, 0x58, 0x04, 0x8e, 0x52, 
+ 0x59, 0x39, 0xdf, 0xd6, 0x29, 0x45, 0x6b, 0x6c, 0x96, 0xbb, 0xab, 0xa5, 
+ 0x6f, 0x72, 0x1b, 0x16, 0x96, 0x74, 0xd5, 0xf9, 0xb4, 0x41, 0xa3, 0x7c, 
+ 0xe1, 0x94, 0x73, 0x4b, 0xa7, 0x23, 0xff, 0x61, 0xeb, 0xce, 0x5a, 0xe7, 
+ 0x7f, 0xe3, 0x74, 0xe8, 0x52, 0x5b, 0xd6, 0x5d, 0x5c, 0xdc, 0x98, 0x49, 
+ 0xfe, 0x51, 0xc2, 0x7e, 0x8f, 0x3b, 0x37, 0x5c, 0xb3, 0x11, 0xed, 0x85, 
+ 0x91, 0x15, 0x92, 0x24, 0xd8, 0xf1, 0x7b, 0x3d, 0x2f, 0x8b, 0xcd, 0x1b, 
+ 0x30, 0x14, 0xa3, 0x6b, 0x1b, 0x4d, 0x27, 0xff, 0x6a, 0x58, 0x84, 0x9e, 
+ 0x79, 0x94, 0xca, 0x78, 0x64, 0x01, 0x33, 0xc3, 0x58, 0xfc, 0xd3, 0x83, 
+ 0xeb, 0x2f, 0xab, 0x6f, 0x85, 0x5a, 0x38, 0x41, 0x3d, 0x73, 0x20, 0x1b, 
+ 0x82, 0xbc, 0x7e, 0x76, 0xde, 0x5c, 0xfe, 0x42, 0xd6, 0x7b, 0x86, 0x4f, 
+ 0x79, 0x78, 0x29, 0x82, 0x87, 0xa6, 0x24, 0x43, 0x39, 0x74, 0xfe, 0xf2, 
+ 0x0c, 0x08, 0xbe, 0xfa, 0x1e, 0x0a, 0x48, 0x6f, 0x14, 0x86, 0xc5, 0xcd, 
+ 0x9a, 0x98, 0x09, 0x2d, 0xf3, 0xf3, 0x5a, 0x7a, 0xa4, 0xe6, 0x8a, 0x2e, 
+ 0x49, 0x8a, &#160;0xde, 
+ 0x73, 0xe9, 0x37, 0xa0, 0x5b, 0xef, 0xd0, 0xe0, 0x13, 0xac, 0x88, 0x5f, 
+ 0x59, 0x47, 0x96, 0x7f, 0x78, 0x18, 0x0e, 0x44, 0x6a, 0x5d, &#160;0xec, 
+ 0x6e, 0xed, 0x4f, 0xf6, 0x6a, 0x7a, 0x58, 0x6b, 0xfe, 0x6c, 0x5a, 0xb9, 
+ 0xd2, 0x22, 0x3a, 0x1f, 0xdf, 0xc3, 0x09, 0x3f, 0x6b, 0x2e, 0xf1, 0x6d, 
+ 0xc3, 0xfb, 0x4e, 0xd4, 0xf2, 0xa3, 0x94, 0x13, 0xb0, 0xbf, 0x1e, 0x06, 
+ 0x2e, 0x29, 0x55, 0x00, 0xaa, 0x98, 0xd9, 0xe8, 0x77, 0x84, 0x8b, 0x3f, 
+ 0x5f, 0x5e, 0xf7, 0xf8, 0xa7, 0xe6, 0x02, 0xd2, 0x18, 0xb0, 0x52, 0xd0, 
+ 0x37, 0x2e, 0x53, 0x02, 0x03, 0x01, 0x00, 0x01, 0x02, 0x82, 0x01, 0x00, 
+ 0x0c, 0xdf, 0xd1, 0xe8, 0xf1, 0x9c, 0xc2, 0x9c, 0xd7, 0xf4, 0x73, 0x98, 
+ 0xf4, 0x87, 0xbd, 0x8d, 0xb2, 0xe1, 0x01, 0xf8, 0x9f, 0xac, 0x1f, 0x23, 
+ 0xdd, 0x78, 0x35, 0xe2, 0xd6, 0xd1, 0xf3, 0x4d, 0xb5, 0x25, 0x88, 0x16, 
+ 0xd1, 0x1a, 0x18, 0x33, 0xd6, 0x36, 0x7e, 0xc4, 0xc8, 0xe5, 0x5d, 0x2d, 
+ 0x74, 0xd5, 0x39, 0x3c, 0x44, 0x5a, 0x74, 0xb7, 0x7c, 0x48, 0xc1, 0x1f, 
+ 0x90, 0xe3, 0x55, 0x9e, 0xf6, 0x29, 0xad, 0xb4, 0x6d, 0x93, 0x78, 0xb3, 
+ 0xdc, 0x25, 0x0b, 0x9c, 0x73, 0x78, 0x7b, 0x93, 0x4c, 0xd3, 0x47, 0x09, 
+ 0xda, 0xe6, 0x69, 0x18, 0xc6, 0x0f, 0xfb, 0xa5, 0x95, 0xf5, 0xe8, 0x75, 
+ 0xe1, 0x01, 0x1b, 0xd3, 0x1c, 0xa2, 0x57, 0x03, 0x64, 0xdb, 0xf9, 0x5d, 
+ 0xf3, 0x3c, 0xa7, 0xd1, 0x4b, 0xb0, 0x90, 0x1b, 0x90, 0x62, 0xb4, 0x88, 
+ 0x30, 0x4b, 0x40, 0x4d, 0xcf, 0x7d, 0x89, 0x7a, 0xfb, 0x29, 0xc9, 0x64, 
+ 0x34, 0x0a, 0x52, 0xf6, 0x70, 0x7c, 0x76, 0x5a, 0x2e, 0x8f, 0x50, 0xd4, 
+ 0x92, 0x15, 0x97, 0xed, 0x4c, 0x2e, 0xf2, 0x3a, 0xd0, 0x58, 0x7e, 0xdb, 
+ 0xf1, 0xf4, 0xdd, 0x07, 0x76, 0x04, 0xf0, 0x55, 0x8b, 0x72, 0x2b, 0xa7, 
+ 0xa8, 0x78, 0x78, 0x67, 0xe6, 0xd8, 0xa5, 0xde, 0xe7, 0xc9, 0x1f, 0x5a, 
+ 0xa0, 0x89, 0xc7, 0x24, 0xa2, 0x71, 0xb6, 0x7b, 0x3b, 0xe6, 0x92, 0x69, 
+ 0x22, 0xaa, 0xe2, 0x47, 0x4b, 0x80, 0x3f, 0x6a, 0xab, 0xce, 0x4e, 0xcd, 
+ 0xe8, 0x94, 0x6c, 0xf7, 0x84, 0x73, 0x85, 0xfd, 0x85, 0x1d, 0xae, 0x81, 
+ 0xf7, 0xec, 0x12, 0x31, 0x7d, 0xc1, 0x99, 0xc0, 0x3c, 0x51, 0xb0, 0xdc, 
+ 0xb0, 0xba, 0x9c, 0x84, 0xb8, 0x70, 0xc2, 0x09, 0x7f, 0x96, 0x3d, 0xa1, 
+ 0xe2, 0x64, 0x27, 0x7a, 0x22, 0xb8, 0x75, 0xb9, 0xd1, 0x5f, 0xa5, 0x23, 
+ 0xf9, 0x62, 0xe0, 0x41, 0x02, 0x81, 0x81, 0x00, 0xf4, 0xf3, 0x08, 0xcf, 
+ 0x83, 0xb0, 0xab, 0xf2, 0x0f, 0x1a, 0x08, 0xaf, 0xc2, 0x42, 0x29, 0xa7, 
+ 0x9c, 0x5e, 0x52, 0x19, 0x69, 0x8d, 0x5b, 0x52, 0x29, 0x9c, 0x06, 0x6a, 
+ 0x5a, 0x32, 0x8f, 0x08, 0x45, 0x6c, 0x43, 0xb5, 0xac, 0xc3, 0xbb, 0x90, 
+ 0x7b, 0xec, 0xbb, 0x5d, 0x71, 0x25, 0x82, 0xf8, 0x40, 0xbf, 0x38, 0x00, 
+ 0x20, 0xf3, 0x8a, 0x38, 0x43, 0xde, 0x04, 0x41, 0x19, 0x5f, 0xeb, 0xb0, 
+ 0x50, 0x59, 0x10, 0xe1, 0x54, 0x62, 0x5c, 0x93, 0xd9, 0xdc, 0x63, 0x24, 
+ 0xd0, 0x17, 0x00, 0xc0, 0x44, 0x3e, 0xfc, 0xd1, 0xda, 0x4b, 0x24, 0xf7, 
+ 0xcb, 0x16, 0x35, 0xe6, 0x9f, 0x67, 0x96, 0x5f, 0xb0, 0x94, 0xde, 0xfa, 
+ 0xa1, 0xfd, 0x8c, 0x8a, 0xd1, 0x5c, 0x02, 0x8d, 0xe0, 0xa0, 0xa0, &#160;0x02, 
+ 0x1d, 0x56, 0xaf, 0x13, 0x3a, 0x65, 0x5e, 0x8e, 0xde, 0xd1, 0xa8, 0x28, 
+ 0x8b, 0x71, 0xc9, 0x65, 0x02, 0x81, 0x81, 0x00, 0xc1, 0x0a, &#160;0x47, 
+ 0x39, 0x91, 0x06, 0x1e, 0xb9, 0x43, 0x7c, 0x9e, 0x97, 0xc5, 0x09, 0x08, 
+ 0xbc, 0x22, 0x47, 0xe2, 0x96, 0x8e, 0x1c, 0x74, 0x80, 0x50, 0x6c, 0x9f, 
+ 0xef, 0x2f, 0xe5, 0x06, 0x3e, 0x73, 0x66, 0x76, 0x02, 0xbd, 0x9a, 0x1c, 
+ 0xfc, 0xf9, 0x6a, 0xb8, 0xf9, 0x36, 0x15, 0xb5, 0x20, 0x0b, 0x6b, 0x54, 
+ 0x83, 0x9c, 0x86, 0xba, 0x13, 0xb7, 0x99, 0x54, 0xa0, 0x93, 0x0d, 0xd6, 
+ 0x1e, 0xc1, 0x12, 0x72, 0x0d, 0xea, 0xb0, 0x14, 0x30, 0x70, 0x73, 0xef, 
+ 0x6b, 0x4c, 0xae, 0xb6, 0xff, 0xd4, 0xbb, 0x89, 0xa1, 0xec, 0xca, 0xa6, 
+ 0xe9, 0x95, 0x56, 0xac, 0xe2, 0x9b, 0x97, 0x2f, 0x2c, 0xdf, 0xa3, 0x6e, 
+ 0x59, 0xff, 0xcd, 0x3c, 0x6f, 0x57, 0xcc, 0x6e, 0x44, 0xc4, 0x27, 0xbf, 
+ 0xc3, 0xdd, 0x19, 0x9e, 0x81, 0x16, 0xe2, 0x8f, 0x65, 0x34, 0xa7, 0x0f, 
+ 0x22, 0xba, 0xbf, 0x79, 0x57, 0x02, 0x81, 0x80, 0x2e, 0x21, 0x0e, 0xc9, 
+ 0xb5, 0xad, 0x31, 0xd4, 0x76, 0x0f, 0x9b, 0x0f, 0x2e, 0x70, 0x33, 0x54, 
+ 0x03, 0x58, 0xa7, 0xf1, 0x6d, 0x35, 0x57, 0xbb, 0x53, 0x66, 0xb4, 0xb6, 
+ 0x96, 0xa1, 0xea, 0xd9, 0xcd, 0xe9, 0x23, 0x9f, 0x35, 0x17, 0xef, 0x5c, 
+ 0xb8, 0x59, 0xce, 0xb7, 0x3c, 0x35, 0xaa, 0x42, 0x82, 0x3f, 0x00, 0x96, 
+ 0xd5, 0x9d, 0xc7, 0xab, 0xec, 0xec, 0x04, 0xb5, 0x15, 0xc8, 0x40, 0xa4, 
+ 0x85, 0x9d, 0x20, 0x56, 0xaf, 0x03, 0x8f, 0x17, 0xb0, 0xf1, 0x96, 0x22, 
+ 0x3a, 0xa5, 0xfa, 0x58, 0x3b, 0x01, 0xf9, 0xae, 0xb3, 0x83, 0x6f, 0x44, 
+ 0xd3, 0x14, 0x2d, 0xb6, 0x6e, 0xd2, 0x9d, 0x39, 0x0c, 0x12, 0x1d, 0x23, 
+ 0xea, 0x19, 0xcb, 0xbb, 0xe0, 0xcd, 0x89, 0x15, 0x9a, 0xf5, 0xe4, 0xec, 
+ 0x41, 0x06, 0x30, 0x16, 0x58, 0xea, 0xfa, 0x31, 0xc1, 0xb8, 0x8e, 0x08, 
+ 0x84, 0xaa, 0x3b, 0x19, 0x02, 0x81, 0x80, 0x70, 0x4c, 0xf8, 0x6e, 0x86, 
+ 0xed, 0xd6, 0x85, 0xd4, 0xba, 0xf4, 0xd0, 0x3a, 0x32, 0x2d, 0x40, 0xb5, 
+ 0x78, 0xb8, 0x5a, 0xf9, 0xc5, 0x98, 0x08, 0xe5, 0xc0, 0xab, 0xb2, 0x4c, 
+ 0x5c, 0xa2, 0x2b, 0x46, 0x9b, 0x3e, 0xe0, 0x0d, 0x49, 0x50, 0xbf, 0xe2, 
+ 0xa1, 0xb1, 0x86, 0x59, 0x6e, 0x7b, 0x76, 0x6e, 0xee, 0x3b, 0xb6, 0x6d, 
+ 0x22, 0xfb, 0xb1, 0x68, 0xc7, 0xec, 0xb1, 0x95, 0x9b, 0x21, 0x0b, 0xb7, 
+ 0x2a, 0x71, 0xeb, 0xa2, 0xb2, 0x58, 0xac, 0x6d, 0x5f, 0x24, 0xd3, 0x79, 
+ 0x42, 0xd2, 0xf7, 0x35, 0xdc, 0xfc, 0x0e, 0x95, 0x60, 0xb7, 0x85, 0x7f, 
+ 0xf9, 0x72, 0x8e, 0x4a, 0x11, 0xc3, 0xc2, 0x09, 0x40, 0x5c, 0x7c, 0x43, 
+ 0x12, 0x34, 0xac, 0x59, 0x99, 0x76, 0x34, &#160;0xcf, 
+ 0x20, 0x88, 0xb0, 0xfb, 0x39, 0x62, 0x3a, 0x9b, 0x03, 0xa6, 0x84, 0x2c, 
+ 0x03, 0x5c, 0x0c, 0xca, 0x33, 0x85, 0xf5, 0x02, 0x81, 0x80, &#160;0x56, 
+ 0x99, 0xe9, 0x17, 0xdc, 0x33, 0xe1, 0x33, 0x8d, 0x5c, 0xba, 0x17, 0x32, 
+ 0xb7, 0x8c, 0xbd, 0x4b, 0x7f, 0x42, 0x3a, 0x79, 0x90, 0xe3, &#160;0x70, 
+ 0xe3, 0x27, 0xce, 0x22, 0x59, 0x02, 0xc0, 0xb1, 0x0e, 0x57, 0xf5, 0xdf, 
+ 0x07, 0xbf, 0xf8, 0x4e, 0x10, 0xef, 0x2a, 0x62, 0x30, 0x03, &#160;0xd4, 
+ 0x80, 0xcf, 0x20, 0x84, 0x25, 0x66, 0x3f, 0xc7, 0x4f, 0x56, 0x8c, 0x1e, 
+ 0xe1, 0x18, 0x91, 0xc1, 0xfd, 0x71, 0x5f, 0x65, 0x9b, 0xe4, &#160;0x4f, 
+ 0xe0, 0x1a, 0x3a, 0xf8, 0xc1, 0x69, 0xdb, 0xd3, 0xbb, 0x8d, 0x91, 0xd1, 
+ 0x11, 0x4f, 0x7e, 0x91, 0x1b, 0xb4, 0x27, 0xa5, 0xab, 0x7c, &#160;0x7b, 
+ 0x76, 0xd4, 0x78, 0xfe, 0x63, 0x44, 0x63, 0x7e, 0xe3, 0xa6, 0x60, 0x4f, 
+ 0xb9, 0x55, 0x28, 0xba, 0xba, 0x83, 0x1a, 0x2d, 0x43, 0xd5, &#160;0xf7, 
+ 0x2e, 0xe0, 0xfc, 0xa8, 0x14, 0x9b, 0x91, 0x2a, 0x36, 0xbf, 0xc7, 0x14</pre><pre xml:space="preserve">&#160;</pre>
+        <p>The example above contains the exponent, the modulus, and private key 
+ material.</p>
+        <h3>Other Formats of Key Material</h3>
+        <p>The format of key material depends on the application, and is therefore 
+ unpredictable.&#160;Key 
+ material commonly exists in any of the following formats; ASN1, PEM, P12, 
+ PFX, etc.&#160;Key 
+ material in those formats, or in another format, can likely be re-formatted 
+ to be acceptable for moving onto the <span class="DefaultProduct">SafeNet Luna Network HSM</span>. </p>
+        <h3>Sample Program</h3>
+        <p>The sample program below encrypts a known RSA private key, then unwraps 
+ the key pair onto the <span class="DefaultProduct">SafeNet Luna Network HSM</span> Partition.</p><pre>/****************************************************************************\</pre><pre>*</pre><pre>* File: UnwrapKey.cpp*</pre><pre>* Encrypts a PrivateKeyInfo structure with a generated DES 
+ key and then</pre><pre>* unwraps the RSA key onto a token. </pre><pre>*</pre><pre>* This file is provided as an example only.</pre><pre>* </pre><pre>*</pre><pre xml:space="preserve">* Copyright (C) 2017, Gemalto, Inc.</pre><pre>*</pre><pre>* All rights reserved. This file contains information that 
+ is</pre><pre>* proprietary to SafeNet, Inc. and may not be </pre><pre>* distributed or copied without written consent from </pre><pre>* SafeNet, Inc.</pre><pre>*</pre><pre>\**************************************************************/</pre><pre>#ifdef UNIX</pre><pre>#define _POSIX_SOURCE 1</pre><pre>#endif</pre><pre>#ifdef USING_STATIC_CHRYSTOKI</pre><pre># define STATIC &#160;ckdemo_cpp</pre><pre>#endif</pre><pre>#include &lt;assert.h&gt;</pre><pre>#include &lt;iostream.h&gt;</pre><pre>#include &lt;stdio.h&gt;</pre><pre>#include &lt;stdlib.h&gt;</pre><pre>#include &lt;string.h&gt;</pre><pre>#include &lt;fcntl.h&gt;</pre><pre>#include &lt;sys/stat.h&gt;</pre><pre>#include &lt;time.h&gt;</pre><pre>#ifdef _WINDOWS</pre><pre>#include &lt;conio.h&gt;</pre><pre>#include &lt;io.h&gt;</pre><pre>#include &lt;windows.h&gt;</pre><pre>#endif</pre><pre>#ifdef UNIX</pre><pre>#include &lt;unistd.h&gt;</pre><pre>#endif</pre><pre>#include "source/cryptoki.h"</pre><pre>#include "source/Ckbridge.h"</pre><pre>#define DIM(a) &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;(sizeof(a)/sizeof(a[0]))</pre><pre>CK_BBOOL no = FALSE;</pre><pre>CK_BBOOL yes = TRUE;</pre><pre>const int MAX =100;</pre><pre>// Function Prototypes</pre><pre>CK_RV &#160;Pinlogin(CK_SESSION_HANDLE 
+ hSession);</pre><pre>int getPinString(CK_CHAR_PTR pw);</pre><pre>// Main</pre><pre>int main( void )</pre><pre>{</pre><pre>&#160;&#160;&#160;int 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;error 
+ = 0;</pre><pre>&#160;&#160;&#160;CK_RV 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;retCode 
+ = CKR_OK;</pre><pre>&#160;&#160;&#160;CK_SESSION_HANDLE 
+ hSessionHandle;</pre><pre>&#160;&#160;&#160;CK_CHAR_PTR 
+ &#160;&#160;&#160;&#160;&#160;&#160;userPIN 
+ = (CK_CHAR_PTR)"default";</pre><pre>&#160;&#160;&#160;CK_USHORT 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;lenuserPIN 
+ &#160;= 7;</pre><pre>&#160;&#160;&#160;CK_CHAR_PTR 
+ &#160;&#160;&#160;&#160;&#160;&#160;soPIN 
+ = (CK_CHAR_PTR)"default";</pre><pre>&#160;&#160;&#160;CK_USHORT 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;lensoPIN 
+ = 7;</pre><pre>&#160;&#160;&#160;CK_USHORT 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usNumberOfSlots;</pre><pre>&#160;&#160;&#160;CK_SLOT_ID_PTR 
+ &#160;&#160;&#160;pSlotList;</pre><pre>&#160;&#160;&#160;CK_OBJECT_HANDLE 
+ hKey;</pre><pre>&#160;&#160;&#160;CK_MECHANISM 
+ mech;</pre><pre>&#160;&#160;&#160;CK_VERSION 
+ version;</pre><pre>&#160;&#160;&#160;struct</pre><pre>&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_INFO 
+ info;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;char 
+ reserved[100]; // This is in case the library that we are</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ talking to requires a larger info structure</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ then the one defined.</pre><pre>&#160;&#160;&#160;} 
+ protectedInfo;</pre><pre>//Disclaimer</pre><pre>&#160;&#160;&#160;cout 
+ &lt;&lt; "\n\n\n\n";</pre><pre>cout &lt;&lt; "THE SOFTWARE IS PROVIDED BY SAFENET INCORPORATED 
+ (SAFENET) ON AN 'AS IS' BASIS, \n";</pre><pre>cout &lt;&lt; "WITHOUT ANY OTHER WARRANTIES OR CONDITIONS, 
+ EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED \n";</pre><pre>cout &lt;&lt; "TO, WARRANTIES OF MERCHANTABLE QUALITY, 
+ SATISFACTORY QUALITY, MERCHANTABILITY OR FITNESS FOR\n";</pre><pre>cout &lt;&lt; "A PARTICULAR PURPOSE, OR THOSE ARISING 
+ BY LAW, STATUTE, USAGE OF TRADE, COURSE OF DEALING OR\n";</pre><pre>cout &lt;&lt; "OTHERWISE. &#160;SAFENET 
+ DOES NOT WARRANT THAT THE SOFTWARE WILL MEET YOUR REQUIREMENTS OR \n";</pre><pre>cout &lt;&lt; "THAT OPERATION OF THE SOFTWARE WILL BE 
+ UNINTERRUPTED OR THAT THE SOFTWARE WILL BE ERROR-FREE.\n";</pre><pre>cout &lt;&lt; "YOU ASSUME THE ENTIRE RISK AS TO THE 
+ RESULTS AND PERFORMANCE OF THE SOFTWARE. &#160;NEITHER 
+ \n";</pre><pre>cout &lt;&lt; "SAFENET NOR OUR LICENSORS, DEALERS OR 
+ SUPPLIERS SHALL HAVE ANY LIABILITY TO YOU OR ANY\n";</pre><pre>cout &lt;&lt; "OTHER PERSON OR ENTITY FOR ANY INDIRECT, 
+ INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, \n";</pre><pre>cout &lt;&lt; "EXEMPLARY OR AY OTHER DAMAGES WHATSOEVER, 
+ INCLUDING, BUT NOT LIMITED TO, LOSS OF REVENUE OR \n";</pre><pre>cout &lt;&lt; "PROFIT, LOST OR DAMAGED DATA, LOSS OF 
+ USE OR OTHER COMMERCIAL OR ECONOMIC LOSS, EVEN IF \n";</pre><pre>cout &lt;&lt; "SAFENET HAS BEEN ADVISED OF THE POSSIBILITY 
+ OF SUCH DAMAGES, OR THEY ARE FORESEEABLE. \n";</pre><pre>cout &lt;&lt; "SAFENET IS ALSO NOT RESPONSIBLE FOR CLAIMS 
+ BY A THIRD PARTY. &#160;THE 
+ MAXIMUM AGGREGATE \n";</pre><pre>cout &lt;&lt; "LIABILITY OF SAFENET TO YOU AND THAT 
+ OF SAFENET’S LICENSORS, DEALERS AND SUPPLIERS \n";</pre><pre>cout &lt;&lt; "SHALL NOT EXCEED FORTY DOLLARS ($40.00CDN). 
+ &#160;THE LIMITATIONS 
+ IN THIS SECTION SHALL APPLY \n";</pre><pre>cout &lt;&lt; "WHETHER OR NOT THE ALLEGED BREACH OR 
+ DEFAULT IS A BREACH OF A FUNDAMENTAL CONDITION OR TERM \n";</pre><pre>cout &lt;&lt; "OR A FUNDAMENTAL BREACH. &#160;SOME 
+ STATES/COUNTRIES DO NOT ALLOW THE EXCLUSION OR LIMITATION OF\n";</pre><pre>cout &lt;&lt; "LIABILITY FOR CONSEQUENTIAL OR INCIDENTAL 
+ DAMAGES, SO THE ABOVE LIMITATION MAY NOT APPLY TO \n";</pre><pre>cout &lt;&lt; "YOU.\n";</pre><pre>cout &lt;&lt; "THE LIMITED WARRANTY, EXCLUSIVE REMEDIES 
+ AND LIMITED LIABILITY SET OUT HEREIN ARE FUNDAMENTAL \n";</pre><pre>cout &lt;&lt; "ELEMENTS OF THE BASIS OF THE BARGAIN 
+ BETWEEN YOU AND SAFENET. &#160;\n";</pre><pre>cout &lt;&lt; "NO SUPPORT. &#160;YOU 
+ ACKNOWLEDGE AND AGREE THAT THERE ARE NO SUPPORT SERVICES PROVIDED BY SAFENET\n";</pre><pre>cout &lt;&lt; "INCORPORATED FOR THIS SOFTWARE\n" 
+ &lt;&lt; endl;</pre><pre>&#160;&#160;&#160;// 
+ Display Generic Warning</pre><pre>&#160;&#160;&#160;cout 
+ &lt;&lt; "\nInsert a token for the test...";</pre><pre>&#160;&#160;&#160;cout 
+ &lt;&lt; "\n\nWARNING!!! This test initializes the first ";</pre><pre>&#160;&#160;&#160;cout 
+ &lt;&lt; " token detected in the card reader.";</pre><pre>&#160;&#160;&#160;cout 
+ &lt;&lt; "\nDo not use a token that you don't want erased.";</pre><pre>&#160;&#160;&#160;cout 
+ &lt;&lt; "\nYou can use CTRL-C to abort now...Otherwise...";</pre><pre>&#160;&#160;&#160;cout 
+ &lt;&lt; "\n\n... press &lt;Enter&gt; key to continue ...\n";</pre><pre>&#160;&#160;&#160;cout.flush();</pre><pre>&#160;&#160;&#160;getchar(); 
+ // Wait for keyboard hit</pre><pre>#ifndef STATIC &#160;&#160;</pre><pre>&#160;&#160;&#160;// 
+ Connect to Chrystoki</pre><pre>if(!CrystokiConnect())</pre><pre>{</pre><pre>cout &lt;&lt; "\n" "Unable to connect to Chrystoki. 
+ &#160;Error = 
+ " &lt;&lt; LibError() &lt;&lt; "\n";</pre><pre>error = -1;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_1;</pre><pre>}</pre><pre>#endif</pre><pre>&#160;&#160;&#160;// 
+ Verify this is the version of the library required</pre><pre>&#160;&#160;&#160;retCode 
+ = C_GetInfo(&amp;protectedInfo.info);</pre><pre>&#160;&#160;&#160;if( 
+ retCode != CKR_OK )</pre><pre>&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; endl &lt;&lt; "Unable to call C_GetInfo() before C_Initialize()\n";</pre><pre>error = -2;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_2;</pre><pre>&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;else</pre><pre>&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE 
+ majorVersion = protectedInfo.info.version.major;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE 
+ expectedVersion;</pre><pre>#ifndef PKCS11_2_0</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;expectedVersion 
+ = 1;</pre><pre>#else</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;expectedVersion 
+ = 2;</pre><pre>#endif</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ expectedVersion != majorVersion )</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; endl &lt;&lt; "This version of the program was built for 
+ Cryptoki version "</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&lt;&lt; 
+ (int)expectedVersion &lt;&lt; ".\n"</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&lt;&lt; 
+ "The loaded Cryptoki library reports its version to be "</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&lt;&lt; 
+ (int)majorVersion &lt;&lt; ".\n"</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&lt;&lt; 
+ "Program will terminate.\n";</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Wait to exit until user read message and acknowledges</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; endl &lt;&lt; "Press &lt;Enter&gt; key to end.";</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;getchar(); 
+ // Wait for keyboard hit</pre><pre>&#160;&#160;&#160;error 
+ = -3;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_2;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;// 
+ Initialize the Library</pre><pre>retCode = C_Initialize(NULL);</pre><pre>if(retCode != CKR_OK)</pre><pre>{</pre><pre>cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode &lt;&lt; " initializing cryptoki.\n";</pre><pre>error = -4;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_3;</pre><pre>}</pre><pre>// Get the number of tokens possibly available</pre><pre>retCode = C_GetSlotList(TRUE, NULL, &amp;usNumberOfSlots);</pre><pre>if(retCode != CKR_OK)</pre><pre>{</pre><pre>cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode &lt;&lt; " getting slot list.\n";</pre><pre>error = -5;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_3;</pre><pre>}</pre><pre>// Are any tokens present?</pre><pre>if(usNumberOfSlots == 0)</pre><pre>{</pre><pre>cout &lt;&lt; "\n" "No tokens found\n";</pre><pre>error = -6;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_3;</pre><pre>&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;// 
+ Get a list of slots</pre><pre>pSlotList = new CK_SLOT_ID[usNumberOfSlots];</pre><pre>retCode = C_GetSlotList(TRUE, pSlotList, &amp;usNumberOfSlots);</pre><pre>if(retCode != CKR_OK)</pre><pre>{</pre><pre>cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode &lt;&lt; " getting slot list.\n";</pre><pre>error = -7;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_4;</pre><pre>}</pre><pre>&#160;&#160;&#160;// 
+ Open a session</pre><pre>retCode = C_OpenSession(pSlotList[0], CKF_RW_SESSION | CKF_SERIAL_SESSION, 
+ </pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;NULL, 
+ NULL, &amp;hSessionHandle);</pre><pre>if(retCode != CKR_OK)</pre><pre>{</pre><pre>cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode &lt;&lt; " opening session.\n";</pre><pre>error = -9;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_4;</pre><pre>}</pre><pre>Pinlogin(hSessionHandle);</pre><pre>if(retCode != CKR_OK)</pre><pre>{</pre><pre>cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode &lt;&lt; " Calling PinLogin fn";</pre><pre>exit(hSessionHandle);</pre><pre>}</pre><pre>&#160;&#160;// 
+ Encrypt an RSA Key and then unwrap it onto the token</pre><pre>&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;// 
+ The following is an RSA Key that is formatted as a PrivateKeyInfo structure</pre><pre>&#160;&#160;&#160;//BER 
+ encoded format</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;const 
+ CK_BYTE pRsaKey[] = {</pre><pre>&#160;0x30, 
+ 0x82, 0x04, 0xbc, 0x02, 0x01, 0x00, 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 
+ 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, </pre><pre>0x01, 0x05, 0x00, 0x04,</pre><pre>&#160;0x82, 
+ 0x04, 0xa6, 0x30, 0x82, 0x04, 0xa2, 0x02, 0x01, 0x00, 0x02, 0x82, 0x01, 
+ 0x01, 0x00, 0xb8, 0xb5, 0x0f, 0x49, </pre><pre>0x46, 0xb5, 0x5d, 0x58,</pre><pre>&#160;0x04, 
+ 0x8e, 0x52, 0x59, 0x39, 0xdf, 0xd6, 0x29, 0x45, 0x6b, 0x6c, 0x96, 0xbb, 
+ 0xab, 0xa5, 0x6f, 0x72, 0x1b, 0x16, </pre><pre>0x96, 0x74, 0xd5, 0xf9,</pre><pre>&#160;0xb4, 
+ 0x41, 0xa3, 0x7c, 0xe1, 0x94, 0x73, 0x4b, 0xa7, 0x23, 0xff, 0x61, 0xeb, 
+ 0xce, 0x5a, 0xe7, 0x7f, 0xe3, 0x74, </pre><pre>0xe8, 0x52, 0x5b, 0xd6,</pre><pre>&#160;0x5d, 
+ 0x5c, 0xdc, 0x98, 0x49, 0xfe, 0x51, 0xc2, 0x7e, 0x8f, 0x3b, 0x37, 0x5c, 
+ 0xb3, 0x11, 0xed, 0x85, 0x91, 0x15, </pre><pre>0x92, 0x24, 0xd8, 0xf1,</pre><pre>&#160;0x7b, 
+ 0x3d, 0x2f, 0x8b, 0xcd, 0x1b, 0x30, 0x14, 0xa3, 0x6b, 0x1b, 0x4d, 0x27, 
+ 0xff, 0x6a, 0x58, 0x84, 0x9e, 0x79, </pre><pre>0x94, 0xca, 0x78, 0x64,</pre><pre>&#160;0x01, 
+ 0x33, 0xc3, 0x58, 0xfc, 0xd3, 0x83, 0xeb, 0x2f, 0xab, 0x6f, 0x85, 0x5a, 
+ 0x38, 0x41, 0x3d, 0x73, 0x20, 0x1b, </pre><pre>0x82, 0xbc, 0x7e, 0x76,</pre><pre>&#160;0xde, 
+ 0x5c, 0xfe, 0x42, 0xd6, 0x7b, 0x86, 0x4f, 0x79, 0x78, 0x29, 0x82, 0x87, 
+ 0xa6, 0x24, 0x43, 0x39, 0x74, 0xfe, </pre><pre>0xf2, 0x0c, 0x08, 0xbe,</pre><pre>&#160;0xfa, 
+ 0x1e, 0x0a, 0x48, 0x6f, 0x14, 0x86, 0xc5, 0xcd, 0x9a, 0x98, 0x09, 0x2d, 
+ 0xf3, 0xf3, 0x5a, 0x7a, 0xa4, 0xe6, </pre><pre>0x8a, 0x2e, 0x49, 0x8a, 0xde, 0x73, 0xe9, 0x37, 0xa0, 0x5b, 
+ 0xef,</pre><pre>&#160;0xd0, 
+ 0xe0, 0x13, 0xac, 0x88, 0x5f, 0x59, 0x47, 0x96, 0x7f, 0x78, 0x18, 0x0e, 
+ 0x44, 0x6a, 0x5d, 0xec, 0x6e, 0xed, </pre><pre>0x4f, 0xf6, 0x6a, 0x7a,</pre><pre>&#160;0x58, 
+ 0x6b, 0xfe, 0x6c, 0x5a, 0xb9, 0xd2, 0x22, 0x3a, 0x1f, 0xdf, 0xc3, 0x09, 
+ 0x3f, 0x6b, 0x2e, 0xf1, 0x6d, 0xc3, </pre><pre>0xfb, 0x4e, 0xd4, 0xf2,</pre><pre>&#160;0xa3, 
+ 0x94, 0x13, 0xb0, 0xbf, 0x1e, 0x06, 0x2e, 0x29, 0x55, 0x00, 0xaa, 0x98, 
+ 0xd9, 0xe8, 0x77, 0x84, 0x8b, 0x3f, </pre><pre>0x5f, 0x5e, 0xf7, 0xf8,</pre><pre>&#160;0xa7, 
+ 0xe6, 0x02, 0xd2, 0x18, 0xb0, 0x52, 0xd0, 0x37, 0x2e, 0x53, 0x02, 0x03, 
+ 0x01, 0x00, 0x01, 0x02, 0x82, 0x01, </pre><pre>0x00, 0x0c, 0xdf, 0xd1,</pre><pre>&#160;0xe8, 
+ 0xf1, 0x9c, 0xc2, 0x9c, 0xd7, 0xf4, 0x73, 0x98, 0xf4, 0x87, 0xbd, 0x8d, 
+ 0xb2, 0xe1, 0x01, 0xf8, 0x9f, 0xac, </pre><pre>0x1f, 0x23, 0xdd, 0x78,</pre><pre>&#160;0x35, 
+ 0xe2, 0xd6, 0xd1, 0xf3, 0x4d, 0xb5, 0x25, 0x88, 0x16, 0xd1, 0x1a, 0x18, 
+ 0x33, 0xd6, 0x36, 0x7e, 0xc4, 0xc8, </pre><pre>0xe5, 0x5d, 0x2d, 0x74,</pre><pre>&#160;0xd5, 
+ 0x39, 0x3c, 0x44, 0x5a, 0x74, 0xb7, 0x7c, 0x48, 0xc1, 0x1f, 0x90, 0xe3, 
+ 0x55, 0x9e, 0xf6, 0x29, 0xad, 0xb4, </pre><pre>0x6d, 0x93, 0x78, 0xb3,</pre><pre>&#160;0xdc, 
+ 0x25, 0x0b, 0x9c, 0x73, 0x78, 0x7b, 0x93, 0x4c, 0xd3, 0x47, 0x09, 0xda, 
+ 0xe6, 0x69, 0x18, 0xc6, 0x0f, 0xfb, </pre><pre>0xa5, 0x95, 0xf5, 0xe8,</pre><pre>&#160;0x75, 
+ 0xe1, 0x01, 0x1b, 0xd3, 0x1c, 0xa2, 0x57, 0x03, 0x64, 0xdb, 0xf9, 0x5d, 
+ 0xf3, 0x3c, 0xa7, 0xd1, 0x4b, 0xb0, </pre><pre>0x90, 0x1b, 0x90, 0x62,</pre><pre>&#160;0xb4, 
+ 0x88, 0x30, 0x4b, 0x40, 0x4d, 0xcf, 0x7d, 0x89, 0x7a, 0xfb, 0x29, 0xc9, 
+ 0x64, 0x34, 0x0a, 0x52, 0xf6, 0x70, </pre><pre>0x7c, 0x76, 0x5a, 0x2e,</pre><pre>&#160;0x8f, 
+ 0x50, 0xd4, 0x92, 0x15, 0x97, 0xed, 0x4c, 0x2e, 0xf2, 0x3a, 0xd0, 0x58, 
+ 0x7e, 0xdb, 0xf1, 0xf4, 0xdd, 0x07, </pre><pre>0x76, 0x04, 0xf0, 0x55,</pre><pre>&#160;0x8b, 
+ 0x72, 0x2b, 0xa7, 0xa8, 0x78, 0x78, 0x67, 0xe6, 0xd8, 0xa5, 0xde, 0xe7, 
+ 0xc9, 0x1f, 0x5a, 0xa0, 0x89, 0xc7, </pre><pre>0x24, 0xa2, 0x71, 0xb6,</pre><pre>&#160;0x7b, 
+ 0x3b, 0xe6, 0x92, 0x69, 0x22, 0xaa, 0xe2, 0x47, 0x4b, 0x80, 0x3f, 0x6a, 
+ 0xab, 0xce, 0x4e, 0xcd, 0xe8, 0x94, </pre><pre>0x6c, 0xf7, 0x84, 0x73,</pre><pre>&#160;0x85, 
+ 0xfd, 0x85, 0x1d, 0xae, 0x81, 0xf7, 0xec, 0x12, 0x31, 0x7d, 0xc1, 0x99, 
+ 0xc0, 0x3c, 0x51, 0xb0, 0xdc, 0xb0, </pre><pre>0xba, 0x9c, 0x84, 0xb8,</pre><pre>&#160;0x70, 
+ 0xc2, 0x09, 0x7f, 0x96, 0x3d, 0xa1, 0xe2, 0x64, 0x27, 0x7a, 0x22, 0xb8, 
+ 0x75, 0xb9, 0xd1, 0x5f, 0xa5, 0x23, </pre><pre>0xf9, 0x62, 0xe0, 0x41,</pre><pre>&#160;0x02, 
+ 0x81, 0x81, 0x00, 0xf4, 0xf3, 0x08, 0xcf, 0x83, 0xb0, 0xab, 0xf2, 0x0f, 
+ 0x1a, 0x08, 0xaf, 0xc2, 0x42, 0x29, </pre><pre>0xa7, 0x9c, 0x5e, 0x52,</pre><pre>&#160;0x19, 
+ 0x69, 0x8d, 0x5b, 0x52, 0x29, 0x9c, 0x06, 0x6a, 0x5a, 0x32, 0x8f, 0x08, 
+ 0x45, 0x6c, 0x43, 0xb5, 0xac, 0xc3, </pre><pre>0xbb, 0x90, 0x7b, 0xec,</pre><pre>&#160;0xbb, 
+ 0x5d, 0x71, 0x25, 0x82, 0xf8, 0x40, 0xbf, 0x38, 0x00, 0x20, 0xf3, 0x8a, 
+ 0x38, 0x43, 0xde, 0x04, 0x41, 0x19, </pre><pre>0x5f, 0xeb, 0xb0, 0x50,</pre><pre>&#160;0x59, 
+ 0x10, 0xe1, 0x54, 0x62, 0x5c, 0x93, 0xd9, 0xdc, 0x63, 0x24, 0xd0, 0x17, 
+ 0x00, 0xc0, 0x44, 0x3e, 0xfc, 0xd1, </pre><pre>0xda, 0x4b, 0x24, 0xf7,</pre><pre>&#160;0xcb, 
+ 0x16, 0x35, 0xe6, 0x9f, 0x67, 0x96, 0x5f, 0xb0, 0x94, 0xde, 0xfa, 0xa1, 
+ 0xfd, 0x8c, 0x8a, 0xd1, 0x5c, 0x02, </pre><pre>0x8d, 0xe0, 0xa0, 0xa0, </pre><pre>&#160;0x02, 
+ 0x1d, 0x56, 0xaf, 0x13, 0x3a, 0x65, 0x5e, 0x8e, 0xde, 0xd1, 0xa8, 0x28, 
+ 0x8b, 0x71, 0xc9, 0x65, 0x02, 0x81, </pre><pre>0x81, 0x00, 0xc1, 0x0a, </pre><pre>&#160;0x47, 
+ 0x39, 0x91, 0x06, 0x1e, 0xb9, 0x43, 0x7c, 0x9e, 0x97, 0xc5, 0x09, 0x08, 
+ 0xbc, 0x22, 0x47, 0xe2, 0x96, 0x8e, </pre><pre>0x1c, 0x74, 0x80, 0x50,</pre><pre>&#160;0x6c, 
+ 0x9f, 0xef, 0x2f, 0xe5, 0x06, 0x3e, 0x73, 0x66, 0x76, 0x02, 0xbd, 0x9a, 
+ 0x1c, 0xfc, 0xf9, 0x6a, 0xb8, 0xf9, </pre><pre>0x36, 0x15, 0xb5, 0x20,</pre><pre>&#160;0x0b, 
+ 0x6b, 0x54, 0x83, 0x9c, 0x86, 0xba, 0x13, 0xb7, 0x99, 0x54, 0xa0, 0x93, 
+ 0x0d, 0xd6, 0x1e, 0xc1, 0x12, 0x72, </pre><pre>0x0d, 0xea, 0xb0, 0x14,</pre><pre>&#160;0x30, 
+ 0x70, 0x73, 0xef, 0x6b, 0x4c, 0xae, 0xb6, 0xff, 0xd4, 0xbb, 0x89, 0xa1, 
+ 0xec, 0xca, 0xa6, 0xe9, 0x95, 0x56, </pre><pre>0xac, 0xe2, 0x9b, 0x97,</pre><pre>&#160;0x2f, 
+ 0x2c, 0xdf, 0xa3, 0x6e, 0x59, 0xff, 0xcd, 0x3c, 0x6f, 0x57, 0xcc, 0x6e, 
+ 0x44, 0xc4, 0x27, 0xbf, 0xc3, 0xdd, </pre><pre>0x19, 0x9e, 0x81, 0x16,</pre><pre>&#160;0xe2, 
+ 0x8f, 0x65, 0x34, 0xa7, 0x0f, 0x22, 0xba, 0xbf, 0x79, 0x57, 0x02, 0x81, 
+ 0x80, 0x2e, 0x21, 0x0e, 0xc9, 0xb5, </pre><pre>0xad, 0x31, 0xd4, 0x76,</pre><pre>&#160;0x0f, 
+ 0x9b, 0x0f, 0x2e, 0x70, 0x33, 0x54, 0x03, 0x58, 0xa7, 0xf1, 0x6d, 0x35, 
+ 0x57, 0xbb, 0x53, 0x66, 0xb4, 0xb6, </pre><pre>0x96, 0xa1, 0xea, 0xd9,</pre><pre>&#160;0xcd, 
+ 0xe9, 0x23, 0x9f, 0x35, 0x17, 0xef, 0x5c, 0xb8, 0x59, 0xce, 0xb7, 0x3c, 
+ 0x35, 0xaa, 0x42, 0x82, 0x3f, 0x00, </pre><pre>0x96, 0xd5, 0x9d, 0xc7,</pre><pre>&#160;0xab, 
+ 0xec, 0xec, 0x04, 0xb5, 0x15, 0xc8, 0x40, 0xa4, 0x85, 0x9d, 0x20, 0x56, 
+ 0xaf, 0x03, 0x8f, 0x17, 0xb0, 0xf1, </pre><pre>0x96, 0x22, 0x3a, 0xa5,</pre><pre>&#160;0xfa, 
+ 0x58, 0x3b, 0x01, 0xf9, 0xae, 0xb3, 0x83, 0x6f, 0x44, 0xd3, 0x14, 0x2d, 
+ 0xb6, 0x6e, 0xd2, 0x9d, 0x39, 0x0c, </pre><pre>0x12, 0x1d, 0x23, 0xea,</pre><pre>&#160;0x19, 
+ 0xcb, 0xbb, 0xe0, 0xcd, 0x89, 0x15, 0x9a, 0xf5, 0xe4, 0xec, 0x41, 0x06, 
+ 0x30, 0x16, 0x58, 0xea, 0xfa, 0x31, </pre><pre>0xc1, 0xb8, 0x8e, 0x08,</pre><pre>&#160;0x84, 
+ 0xaa, 0x3b, 0x19, 0x02, 0x81, 0x80, 0x70, 0x4c, 0xf8, 0x6e, 0x86, 0xed, 
+ 0xd6, 0x85, 0xd4, 0xba, 0xf4, 0xd0, </pre><pre>0x3a, 0x32, 0x2d, 0x40,</pre><pre>&#160;0xb5, 
+ 0x78, 0xb8, 0x5a, 0xf9, 0xc5, 0x98, 0x08, 0xe5, 0xc0, 0xab, 0xb2, 0x4c, 
+ 0x5c, 0xa2, 0x2b, 0x46, 0x9b, 0x3e, </pre><pre>0xe0, 0x0d, 0x49, 0x50,</pre><pre>&#160;0xbf, 
+ 0xe2, 0xa1, 0xb1, 0x86, 0x59, 0x6e, 0x7b, 0x76, 0x6e, 0xee, 0x3b, 0xb6, 
+ 0x6d, 0x22, 0xfb, 0xb1, 0x68, 0xc7, </pre><pre>0xec, 0xb1, 0x95, 0x9b,</pre><pre>&#160;0x21, 
+ 0x0b, 0xb7, 0x2a, 0x71, 0xeb, 0xa2, 0xb2, 0x58, 0xac, 0x6d, 0x5f, 0x24, 
+ 0xd3, 0x79, 0x42, 0xd2, 0xf7, 0x35, </pre><pre>0xdc, 0xfc, 0x0e, 0x95,</pre><pre>&#160;0x60, 
+ 0xb7, 0x85, 0x7f, 0xf9, 0x72, 0x8e, 0x4a, 0x11, 0xc3, 0xc2, 0x09, 0x40, 
+ 0x5c, 0x7c, 0x43, 0x12, 0x34, 0xac, </pre><pre>0x59, 0x99, 0x76, 0x34, </pre><pre>&#160;0xcf, 
+ 0x20, 0x88, 0xb0, 0xfb, 0x39, 0x62, 0x3a, 0x9b, 0x03, 0xa6, 0x84, 0x2c, 
+ 0x03, 0x5c, 0x0c, 0xca, 0x33, 0x85, </pre><pre>0xf5, 0x02, 0x81, 0x80, </pre><pre>&#160;0x56, 
+ 0x99, 0xe9, 0x17, 0xdc, 0x33, 0xe1, 0x33, 0x8d, 0x5c, 0xba, 0x17, 0x32, 
+ 0xb7, 0x8c, 0xbd, 0x4b, 0x7f, 0x42, </pre><pre>0x3a, 0x79, 0x90, 0xe3, </pre><pre>&#160;0x70, 
+ 0xe3, 0x27, 0xce, 0x22, 0x59, 0x02, 0xc0, 0xb1, 0x0e, 0x57, 0xf5, 0xdf, 
+ 0x07, 0xbf, 0xf8, 0x4e, 0x10, 0xef, </pre><pre>0x2a, 0x62, 0x30, 0x03, </pre><pre>&#160;0xd4, 
+ 0x80, 0xcf, 0x20, 0x84, 0x25, 0x66, 0x3f, 0xc7, 0x4f, 0x56, 0x8c, 0x1e, 
+ 0xe1, 0x18, 0x91, 0xc1, 0xfd, 0x71, </pre><pre>0x5f, 0x65, 0x9b, 0xe4, </pre><pre>&#160;0x4f, 
+ 0xe0, 0x1a, 0x3a, 0xf8, 0xc1, 0x69, 0xdb, 0xd3, 0xbb, 0x8d, 0x91, 0xd1, 
+ 0x11, 0x4f, 0x7e, 0x91, 0x1b, 0xb4, </pre><pre>0x27, 0xa5, 0xab, 0x7c, </pre><pre>&#160;0x7b, 
+ 0x76, 0xd4, 0x78, 0xfe, 0x63, 0x44, 0x63, 0x7e, 0xe3, 0xa6, 0x60, 0x4f, 
+ 0xb9, 0x55, 0x28, 0xba, 0xba, 0x83, </pre><pre>0x1a, 0x2d, 0x43, 0xd5, </pre><pre>&#160;0xf7, 
+ 0x2e, 0xe0, 0xfc, 0xa8, 0x14, 0x9b, 0x91, 0x2a, 0x36, 0xbf, 0xc7, 0x14</pre><pre>&#160;&#160;};</pre><pre>CK_BYTE </pre><pre>&#160;&#160;knownRSA1Modulus[] 
+ = {</pre><pre>0xb8, 0xb5, 0x0f, 0x49, 0x46, 0xb5, 0x5d, 0x58, 0x04, 0x8e, 
+ 0x52, 0x59, 0x39, 0xdf, 0xd6, </pre><pre>0x29, </pre><pre>0x45, 0x6b, 0x6c, 0x96, 0xbb, 0xab, 0xa5, 0x6f, 0x72, 0x1b, 
+ 0x16, 0x96, 0x74, 0xd5, 0xf9, </pre><pre>0xb4, </pre><pre>0x41, 0xa3, 0x7c, 0xe1, 0x94, 0x73, 0x4b, 0xa7, 0x23, 0xff, 
+ 0x61, 0xeb, 0xce, 0x5a, 0xe7, </pre><pre>0x7f, </pre><pre>0xe3, 0x74, 0xe8, 0x52, 0x5b, 0xd6, 0x5d, 0x5c, 0xdc, 0x98, 
+ 0x49, 0xfe, 0x51, 0xc2, 0x7e, </pre><pre>0x8f, </pre><pre>0x3b, 0x37, 0x5c, 0xb3, 0x11, 0xed, 0x85, 0x91, 0x15, 0x92, 
+ 0x24, 0xd8, 0xf1, 0x7b, 0x3d, </pre><pre>0x2f, </pre><pre>0x8b, 0xcd, 0x1b, 0x30, 0x14, 0xa3, 0x6b, 0x1b, 0x4d, 0x27, 
+ 0xff, 0x6a, 0x58, 0x84, 0x9e, </pre><pre>0x79, </pre><pre>0x94, 0xca, 0x78, 0x64, 0x01, 0x33, 0xc3, 0x58, 0xfc, 0xd3, 
+ 0x83, 0xeb, 0x2f, 0xab, 0x6f, </pre><pre>0x85, </pre><pre>0x5a, 0x38, 0x41, 0x3d, 0x73, 0x20, 0x1b, 0x82, 0xbc, 0x7e, 
+ 0x76, 0xde, 0x5c, 0xfe, 0x42, </pre><pre>0xd6, </pre><pre>0x7b, 0x86, 0x4f, 0x79, 0x78, 0x29, 0x82, 0x87, 0xa6, 0x24, 
+ 0x43, 0x39, 0x74, 0xfe, 0xf2, </pre><pre>0x0c, </pre><pre>0x08, 0xbe, 0xfa, 0x1e, 0x0a, 0x48, 0x6f, 0x14, 0x86, 0xc5, 
+ 0xcd, 0x9a, 0x98, 0x09, 0x2d, </pre><pre>0xf3, </pre><pre>0xf3, 0x5a, 0x7a, 0xa4, 0xe6, 0x8a, 0x2e, 0x49, 0x8a, 0xde, 
+ 0x73, 0xe9, 0x37, 0xa0, 0x5b, </pre><pre>0xef, </pre><pre>0xd0, 0xe0, 0x13, 0xac, 0x88, 0x5f, 0x59, 0x47, 0x96, 0x7f, 
+ 0x78, 0x18, 0x0e, 0x44, 0x6a, </pre><pre>0x5d, </pre><pre>0xec, 0x6e, 0xed, 0x4f, 0xf6, 0x6a, 0x7a, 0x58, 0x6b, 0xfe, 
+ 0x6c, 0x5a, 0xb9, 0xd2, 0x22, </pre><pre>0x3a, </pre><pre>0x1f, 0xdf, 0xc3, 0x09, 0x3f, 0x6b, 0x2e, 0xf1, 0x6d, 0xc3, 
+ 0xfb, 0x4e, 0xd4, 0xf2, 0xa3, </pre><pre>0x94, </pre><pre>0x13, 0xb0, 0xbf, 0x1e, 0x06, 0x2e, 0x29, 0x55, 0x00, 0xaa, 
+ 0x98, 0xd9, 0xe8, 0x77, 0x84, </pre><pre>0x8b, </pre><pre>0x3f, 0x5f, 0x5e, 0xf7, 0xf8, 0xa7, 0xe6, 0x02, 0xd2, 0x18, 
+ 0xb0, 0x52, 0xd0, 0x37, 0x2e, </pre><pre>0x53, </pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;knownRSA1PubExponent[] 
+ = { 0x01, 0x00, 0x01 };</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;char 
+ *pPlainData = 0;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;unsigned 
+ long ulPlainDataLength;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;char 
+ *pEncryptedData = 0;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;unsigned 
+ long ulEncryptedDataLength = 0;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_MECHANISM 
+ mech;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_USHORT 
+ &#160;&#160;usStatus=0,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usKeyLength;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_OBJECT_HANDLE 
+ hKey;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_OBJECT_CLASS 
+ &#160;&#160;&#160;SymKeyClass 
+ &#160;= CKO_SECRET_KEY;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_BBOOL 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bTrue 
+ = 1,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bFalse 
+ = 0,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bToken 
+ = bTrue,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bSensitive 
+ = bTrue,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bPrivate 
+ = bTrue,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bEncrypt 
+ = bTrue,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bDecrypt 
+ = bTrue,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bSign 
+ = bFalse, // "..."</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bVerify 
+ = bFalse, //Will not allow sign/verify operation.</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bWrap 
+ = bTrue,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bUnwrap 
+ = bTrue,</pre><pre>#ifdef EXTRACTABLE</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bExtract 
+ = bTrue,</pre><pre>#endif //EXTRACTABLE</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;bDerive 
+ = bTrue;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_KEY_TYPE 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;keyType;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_USHORT 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usValueBits;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;char 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pbPublicKeyLabel[128];</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_ATTRIBUTE_PTR 
+ pPublicTemplate;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_USHORT 
+ usPublicTemplateSize = 0;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;char 
+ iv[8] = { '1', '2', '3', '4', '5', '6', '7', '8' };</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_ATTRIBUTE 
+ SymKeyTemplate[] = {</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_CLASS, 
+ 0, sizeof(SymKeyClass)},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_KEY_TYPE, 
+ 0, sizeof(keyType)},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_TOKEN, 
+ 0, sizeof(bToken)},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_SENSITIVE, 
+ 0, sizeof(bSensitive)},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_PRIVATE, 
+ 0, sizeof(bPrivate)},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_ENCRYPT, 
+ 0, sizeof(bEncrypt)},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_DECRYPT, 
+ 0, sizeof(bDecrypt)},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_SIGN, 
+ 0, sizeof(bSign)},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_VERIFY, 
+ 0, sizeof(bVerify)},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_WRAP, 
+ 0, sizeof(bWrap)},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_UNWRAP, 
+ 0, sizeof(bUnwrap)},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_DERIVE, 
+ 0, sizeof(bDerive)},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_VALUE_LEN,0, 
+ &#160;sizeof(usKeyLength) 
+ },</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_LABEL, 
+ 0, 0} &#160;// 
+ Always keep last!!!</pre><pre>#ifdef EXTRACTABLE &#160;&#160;&#160;&#160;&#160;//Conditional 
+ stuff must be at the end!!!!!</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_EXTRACTABLE, 
+ 0, sizeof(bExtract)},</pre><pre>#endif //EXTRACTABLE</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;};</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_OBJECT_HANDLE 
+ hUnWrappedKey, hPublicRSAKey;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;char 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;*pbWrappedKey;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;unsigned 
+ long &#160;&#160;&#160;ulWrappedKeySize;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_OBJECT_CLASS 
+ &#160;privateKey 
+ = CKO_PRIVATE_KEY,</pre><pre>publicKey = CKO_PUBLIC_KEY;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_KEY_TYPE 
+ &#160;&#160;&#160;&#160;&#160;rsaType 
+ &#160;&#160;= 
+ CKK_RSA;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pLabel[] 
+ &#160;= "RSA 
+ private Key",</pre><pre>pbPublicRSAKeyLabel[] = "RSA Public Key";</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_ATTRIBUTE 
+ *pTemplate;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_ULONG 
+ &#160;&#160;&#160;&#160;usTemplateSize,</pre><pre>ulPublicRSAKeyTemplateSize;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_ATTRIBUTE 
+ pPublicRSAKeyTemplate[] = {</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_CLASS, 
+ &#160;&#160;&#160;0, 
+ sizeof(publicKey) },</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_KEY_TYPE, 
+ 0, &#160;&#160;&#160;sizeof(rsaType) 
+ &#160;&#160;&#160;},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_TOKEN, 
+ &#160;&#160;&#160;0, 
+ &#160;&#160;&#160;&#160;sizeof(bToken) 
+ &#160;&#160;&#160;&#160;},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_PRIVATE, 
+ &#160;0, &#160;&#160;sizeof(bPrivate) 
+ &#160;&#160;},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_ENCRYPT, 
+ &#160;0, &#160;&#160;sizeof(bEncrypt) 
+ &#160;&#160;},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_VERIFY, 
+ &#160;&#160;0, 
+ &#160;&#160;&#160;&#160;&#160;sizeof(bSign) 
+ &#160;&#160;&#160;&#160;&#160;},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_WRAP, 
+ &#160;&#160;&#160;&#160;0, 
+ &#160;&#160;&#160;&#160;&#160;sizeof(bWrap) 
+ &#160;&#160;&#160;&#160;&#160;},</pre><pre>&#160;{CKA_MODULUS, 
+ 0, sizeof(knownRSA1Modulus) },</pre><pre>&#160;{CKA_PUBLIC_EXPONENT, 
+ 0, sizeof(knownRSA1PubExponent) },</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_LABEL, 
+ &#160;&#160;&#160;0, 
+ &#160;&#160;&#160;&#160;&#160;sizeof(pbPublicRSAKeyLabel) 
+ &#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;};</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;CK_ATTRIBUTE 
+ pPrivateKeyTemplate[] = {</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_CLASS, 
+ &#160;&#160;&#160;&amp;privateKey, 
+ sizeof(privateKey) },</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_KEY_TYPE, 
+ &amp;rsaType, &#160;&#160;&#160;sizeof(rsaType) 
+ &#160;&#160;&#160;},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_TOKEN, 
+ &#160;&#160;&#160;&amp;bToken, 
+ &#160;&#160;&#160;&#160;sizeof(bToken) 
+ &#160;&#160;&#160;&#160;},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_SENSITIVE,&amp;bSensitive, 
+ sizeof(bSensitive) },</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_PRIVATE, 
+ &#160;&amp;bPrivate, 
+ &#160;&#160;sizeof(bPrivate) 
+ &#160;&#160;},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_DECRYPT, 
+ &#160;&amp;bEncrypt, 
+ &#160;&#160;sizeof(bEncrypt) 
+ &#160;&#160;},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_SIGN, 
+ &#160;&#160;&#160;&#160;&amp;bSign, 
+ &#160;&#160;&#160;&#160;&#160;sizeof(bSign) 
+ &#160;&#160;&#160;&#160;&#160;},</pre><pre>&#160;//{CKA_SIGN_RECOVER, 
+ &amp;bTrue, sizeof(bTrue) &#160;&#160;&#160;&#160;},</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{CKA_UNWRAP, 
+ &#160;&#160;&amp;bWrap, 
+ &#160;&#160;&#160;&#160;&#160;sizeof(bWrap) 
+ &#160;&#160;&#160;&#160;&#160;},</pre><pre>{CKA_EXTRACTABLE, &amp;bFalse, sizeof(bFalse) &#160;&#160;&#160;&#160;&#160;},</pre><pre>{CKA_LABEL, &#160;&#160;&#160;&#160;&#160;&#160;pLabel, 
+ &#160;sizeof(pLabel) 
+ &#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;};</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Generate a DES3 Key</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[0].pValue 
+ = &amp;SymKeyClass;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[1].pValue 
+ = &amp;keyType;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[2].pValue 
+ = &amp;bToken;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[3].pValue 
+ = &amp;bSensitive;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[4].pValue 
+ = &amp;bPrivate;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[5].pValue 
+ = &amp;bEncrypt; &#160;&#160;&#160;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[6].pValue 
+ = &amp;bDecrypt;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[7].pValue 
+ = &amp;bSign;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[8].pValue 
+ = &amp;bVerify;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[9].pValue 
+ = &amp;bWrap;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[10].pValue 
+ = &amp;bUnwrap;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[11].pValue 
+ = &amp;bDerive;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[12].pValue 
+ = &#160;&amp;usKeyLength;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[13].pValue 
+ = pbPublicKeyLabel;</pre><pre>#ifdef EXTRACTABLE &#160;&#160;&#160;&#160;&#160;&#160;&#160;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;SymKeyTemplate[14].pValue 
+ = &amp;bExtract;</pre><pre>#endif //EXTRACTABLE</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;mech.mechanism 
+ = CKM_DES3_KEY_GEN;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;mech.pParameter 
+ = 0;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;mech.usParameterLen 
+ = 0;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;keyType 
+ = CKK_DES3;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;usKeyLength 
+ = 24;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;strcpy( 
+ pbPublicKeyLabel, "Generated DES3 Key" );</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;pPublicTemplate 
+ = SymKeyTemplate;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;usPublicTemplateSize 
+ = DIM(SymKeyTemplate);</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Adjust size of label (ALWAYS LAST ENTRY IN ARRAY)</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;pPublicTemplate[usPublicTemplateSize-1].usValueLen 
+ = strlen( </pre><pre>pbPublicKeyLabel );</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;retCode 
+ = C_GenerateKey( &#160;&#160;hSessionHandle,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;(CK_MECHANISM_PTR)&amp;mech,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pPublicTemplate,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usPublicTemplateSize,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&amp;hKey);</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;if(retCode 
+ == CKR_OK)</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; pbPublicKeyLabel &lt;&lt; ": " &lt;&lt; hKey &lt;&lt; 
+ endl;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;else</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;cout 
+ &lt;&lt; "\n" "Error 0x" &lt;&lt; hex &lt;&lt; retCode;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; " generating the DES3 Key.\n";</pre><pre>&#160;&#160;&#160;error 
+ = -11;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_6;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Encrypt the RSA Key</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;mech.mechanism 
+ = CKM_DES3_CBC;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;mech.pParameter 
+ = iv;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;mech.usParameterLen 
+ = sizeof(iv);</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;pPlainData 
+ = (char *)(pRsaKey);</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;ulPlainDataLength 
+ = sizeof(pRsaKey);</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Allocate memory for output buffer</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ retCode == CKR_OK )</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pEncryptedData 
+ = new char [ulPlainDataLength + 2048]; // Leave</pre><pre>// extra room for </pre><pre>// RSA Operations</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ !pEncryptedData )</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;retCode 
+ = CKR_DEVICE_ERROR;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Start encrypting</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ retCode == CKR_OK )</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;retCode 
+ = C_EncryptInit(hSessionHandle, &amp;mech, hKey);</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Continue encrypting</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ retCode == CKR_OK )</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_USHORT 
+ usInDataLen,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usOutDataLen 
+ = (CK_USHORT) (ulPlainDataLength + 2048);</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_ULONG 
+ &#160;ulBytesRemaining 
+ = ulPlainDataLength;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;char 
+ * &#160;&#160;&#160;pPlainTextPointer 
+ = pPlainData;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;char 
+ * &#160;&#160;&#160;pEncryptedDataPointer 
+ = pEncryptedData; </pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;while 
+ (ulBytesRemaining &gt; 0)</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if 
+ (ulBytesRemaining &gt; 0xfff0) // We are longer than a USHORT can handle</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usInDataLen 
+ = 0xfff0;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;ulBytesRemaining 
+ -= usInDataLen;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;else</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usInDataLen 
+ = (CK_USHORT) ulBytesRemaining;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;ulBytesRemaining 
+ -= usInDataLen;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;retCode 
+ = C_EncryptUpdate( hSessionHandle,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;(CK_BYTE_PTR)pPlainTextPointer,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usInDataLen,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;(CK_BYTE_PTR)pEncryptedDataPointer,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&amp;usOutDataLen 
+ );</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pPlainTextPointer 
+ += usInDataLen;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pEncryptedDataPointer 
+ += usOutDataLen;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;ulEncryptedDataLength 
+ += usOutDataLen;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;} 
+ &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</pre><pre>&#160;&#160;&#160;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Finish encrypting</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ retCode == CKR_OK )</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_USHORT 
+ usOutDataLen;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;CK_BYTE_PTR 
+ pOutData = (CK_BYTE_PTR)pEncryptedData;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pOutData 
+ += ulEncryptedDataLength;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;retCode 
+ = C_EncryptFinal(hSessionHandle, pOutData, &amp;usOutDataLen);</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;ulEncryptedDataLength 
+ += usOutDataLen;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;else</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;cout 
+ &lt;&lt; "\n" "Error 0x" &lt;&lt; hex &lt;&lt; retCode;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; " somewhere in the encrypting.\n";</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ pEncryptedData )</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;delete 
+ pEncryptedData;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;error 
+ = -12;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_6;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;mech.mechanism 
+ &#160;&#160;&#160;&#160;&#160;= 
+ CKM_DES3_CBC;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;mech.pParameter 
+ &#160;&#160;&#160;&#160;= 
+ (void*) "12345678"; // 8 byte IV</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;mech.usParameterLen 
+ = 8;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;pTemplate 
+ = pPrivateKeyTemplate;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;usTemplateSize 
+ = DIM(pPrivateKeyTemplate);</pre><pre>&#160;&#160;&#160;&#160;&#160;pbWrappedKey 
+ = pEncryptedData;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;ulWrappedKeySize 
+ = ulEncryptedDataLength;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ retCode == CKR_OK )</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;retCode 
+ = C_UnwrapKey( hSessionHandle,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&amp;mech,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;hKey,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;(CK_BYTE_PTR)pbWrappedKey,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;(CK_USHORT)ulWrappedKeySize,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pTemplate,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;usTemplateSize,</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&amp;hUnWrappedKey);</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Report unwrapped key handle</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ retCode == CKR_OK )</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; "\n Private key Unwrapped key is:" &lt;&lt; hUnWrappedKey 
+ &lt;&lt;"\n\n";</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;else</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;cout 
+ &lt;&lt; "\n" "Error 0x" &lt;&lt; hex &lt;&lt; retCode;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; " unwrapping.\n";</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ pEncryptedData )</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;delete 
+ pEncryptedData;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;error 
+ = -13;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;goto 
+ exit_routine_6;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Release temporary memory</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;if( 
+ pEncryptedData )</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;{</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;delete 
+ pEncryptedData;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;// 
+ Create the Public Key that goes with the Private Key</pre><pre>&#160;&#160;&#160;if( 
+ retCode == CKR_OK )</pre><pre>&#160;&#160;&#160;{</pre><pre>&#160;&#160;// 
+ Unwrap it onto the token</pre><pre>&#160;&#160;pPublicRSAKeyTemplate[0].pValue 
+ = &amp;publicKey;</pre><pre>&#160;&#160;pPublicRSAKeyTemplate[1].pValue 
+ = &amp;rsaType;</pre><pre>&#160;&#160;pPublicRSAKeyTemplate[2].pValue 
+ = &amp;bToken;</pre><pre>&#160;&#160;pPublicRSAKeyTemplate[3].pValue 
+ = &amp;bPrivate;</pre><pre>&#160;&#160;pPublicRSAKeyTemplate[4].pValue 
+ = &amp;bEncrypt; &#160;&#160;&#160;</pre><pre>&#160;&#160;pPublicRSAKeyTemplate[5].pValue 
+ = &amp;bSign;</pre><pre>&#160;&#160;pPublicRSAKeyTemplate[6].pValue 
+ = &amp;bWrap;</pre><pre>&#160;&#160;pPublicRSAKeyTemplate[7].pValue 
+ = knownRSA1Modulus;</pre><pre>&#160;&#160;pPublicRSAKeyTemplate[8].pValue 
+ = knownRSA1PubExponent;</pre><pre>&#160;&#160;pPublicRSAKeyTemplate[9].pValue 
+ = pbPublicRSAKeyLabel;</pre><pre>&#160;&#160;pTemplate 
+ = pPublicRSAKeyTemplate;</pre><pre>&#160;&#160;usTemplateSize 
+ = DIM(pPublicRSAKeyTemplate);</pre><pre>&#160;&#160;retCode 
+ = C_CreateObject( &#160;hSessionHandle,</pre><pre>pTemplate,</pre><pre>&#160;usTemplateSize,</pre><pre>&#160;&amp;hPublicRSAKey);</pre><pre>&#160;&#160;if(retCode 
+ == CKR_OK)</pre><pre>&#160;&#160;{</pre><pre>&#160;cout 
+ &lt;&lt; pbPublicRSAKeyLabel &lt;&lt; ": " &lt;&lt; hPublicRSAKey 
+ &lt;&lt; endl;</pre><pre>&#160;&#160;}</pre><pre>&#160;&#160;else</pre><pre>&#160;&#160;{</pre><pre>&#160;cout 
+ &lt;&lt; "\n" "Error 0x" &lt;&lt; hex &lt;&lt; retCode;</pre><pre>&#160;cout 
+ &lt;&lt; " creating the RSA Public Key.\n";</pre><pre>&#160;error 
+ = -14;</pre><pre>&#160;goto 
+ exit_routine_6;</pre><pre>&#160;&#160;}</pre><pre>&#160;&#160;&#160;}</pre><pre>if( retCode == CKR_OK )</pre><pre>&#160;&#160;&#160;{</pre><pre>CK_CHAR label[] = "RSA Key";</pre><pre>CK_ATTRIBUTE RSAFindPriTemplate[] = </pre><pre>{</pre><pre>CKA_LABEL, label, sizeof(label)</pre><pre>};</pre><pre>CK_ULONG numHandles;</pre><pre>CK_OBJECT_HANDLE handles[1000];</pre><pre>retCode = C_FindObjectsInit( hSessionHandle, RSAFindPriTemplate, 
+ 1 );</pre><pre>if(retCode != CKR_OK)</pre><pre>{</pre><pre>cout &lt;&lt; "C_FindObjectsInit not returning OK (" 
+ &lt;&lt; hex &lt;&lt; retCode &lt;&lt; ")\n\n";</pre><pre>goto exit_routine_6;</pre><pre>}</pre><pre>retCode =C_FindObjects( hSessionHandle , handles, 90, </pre><pre>&amp;numHandles );</pre><pre>if(retCode != CKR_OK)</pre><pre>{</pre><pre>cout &lt;&lt; "C_FindObjects not returning OK (" 
+ &lt;&lt; hex &lt;&lt; </pre><pre>retCode &lt;&lt; ")\n\n";</pre><pre>goto exit_routine_6;</pre><pre>}</pre><pre>cout &lt;&lt; "Everything's GOOD\n\n";</pre><pre>for(int i=0; i &lt; numHandles; i++)</pre><pre>{</pre><pre>cout &lt;&lt; handles[i] &lt;&lt; "\n";</pre><pre>}</pre><pre>}</pre><pre>}</pre><pre>//CJM-&gt; END OF TEST CODE</pre><pre>&#160;&#160;&#160;// 
+ Beginning of exit routines</pre><pre>exit_routine_6:</pre><pre>&#160;&#160;&#160;// 
+ Logout</pre><pre>&#160;&#160;&#160;retCode 
+ = C_Logout(hSessionHandle);</pre><pre>&#160;&#160;&#160;if(retCode 
+ != CKR_OK)</pre><pre>{</pre><pre>cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode &lt;&lt; " logging out.";</pre><pre>}</pre><pre>exit_routine_5:</pre><pre>// Close the session</pre><pre>&#160;&#160;&#160;retCode 
+ = C_CloseSession(hSessionHandle); </pre><pre>if(retCode != CKR_OK)</pre><pre>{</pre><pre>cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode &lt;&lt; " closing session.";</pre><pre>}</pre><pre>exit_routine_4:</pre><pre>&#160;&#160;&#160;delete 
+ pSlotList;</pre><pre>exit_routine_3:</pre><pre>#ifdef PKCS11_2_0</pre><pre>&#160;&#160;&#160;C_Finalize(0);</pre><pre>#else</pre><pre>&#160;&#160;&#160;C_Terminate();</pre><pre>#endif</pre><pre>exit_routine_2:</pre><pre>#ifndef STATIC</pre><pre>&#160;&#160;&#160;// 
+ No longer need Chrystoki</pre><pre>&#160;&#160;&#160;CrystokiDisconnect();</pre><pre>#endif</pre><pre>exit_routine_1:</pre><pre>&#160;&#160;&#160;cout 
+ &lt;&lt; "\nDone. (" &lt;&lt; dec &lt;&lt; error &lt;&lt; ")\n";</pre><pre>&#160;&#160;&#160;cout.flush();</pre><pre>&#160;&#160;&#160;return 
+ error;</pre><pre>}</pre><pre>CK_RV &#160;Pinlogin(CK_SESSION_HANDLE 
+ hSession)</pre><pre>{</pre><pre>&#160;</pre><pre>CK_RV retCode; </pre><pre>unsigned char buffer[MAX];</pre><pre>int count =0;</pre><pre>cout &lt;&lt; "Please enter the USER password : " 
+ &lt;&lt; endl;</pre><pre>//calling get PinString to mask input, variable "count" 
+ </pre><pre>//holds length of "buffer"(password) </pre><pre>//needed for Login call </pre><pre>count = getPinString(buffer);</pre><pre>//Login as user on &#160;token 
+ in slot</pre><pre>retCode = C_Login(hSession, CKU_USER, buffer, count);</pre><pre>if(retCode != CKR_OK)</pre><pre>{</pre><pre>cout &lt;&lt; "\n" "Error 0x" &lt;&lt; 
+ hex &lt;&lt; retCode;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;cout 
+ &lt;&lt; " logging in as user.";</pre><pre>&#160;&#160;exit(hSession);</pre><pre>&#160;&#160;return 
+ -3;</pre><pre>} </pre><pre>cout &lt;&lt; "logging into the token....";</pre><pre>cout &lt;&lt; "\nlogged into token " &lt;&lt; endl;</pre><pre>return retCode;</pre><pre>}</pre><pre>///////////////////////////////////////////////////////////////////////</pre><pre>// getPinString()</pre><pre>// ==============</pre><pre>//</pre><pre>// This function retrieves a pin string from the user. &#160;It 
+ modifies the</pre><pre>// console mode before starting so that the characters the 
+ user types are</pre><pre>// not echoed, and a '*' character is displayed for each 
+ typed character</pre><pre>// instead.</pre><pre>//</pre><pre>// Backspace is supported, but we don't get any fancier than 
+ that.</pre><pre>////////////////////////////////////////////////////////////////////////</pre><pre>int getPinString(CK_CHAR_PTR pw) </pre><pre>{</pre><pre>&#160;&#160;&#160;&#160;int 
+ len=0;</pre><pre>&#160;&#160;&#160;&#160;char 
+ c=0;</pre><pre>&#160;&#160;&#160;&#160;// 
+ Unfortunately, the method of turning off character echo is </pre><pre>// different for Windows and Unix platforms. &#160;So 
+ we have to </pre><pre>// conditionally compile the appropriate section. &#160;Even 
+ the basic</pre><pre>// password retrieval is slightly different, since</pre><pre>&#160;&#160;&#160;&#160;// 
+ Windows and Unix use different character codes for the return key.</pre><pre>#ifdef WIN32</pre><pre>&#160;&#160;&#160;&#160;DWORD 
+ mode;</pre><pre>&#160;&#160;&#160;&#160;// 
+ This console mode stuff only applies to windows. &#160;We'll 
+ have to </pre><pre>// do something else when it comes to unix.</pre><pre>&#160;&#160;&#160;&#160;if 
+ (GetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), &amp;mode)) {</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if 
+ (SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), mode &amp; (!ENABLE_ECHO_INPUT))) 
+ {</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;while 
+ (c &#160;!= '\r') 
+ {</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ wait for a character to be hit</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;while 
+ (!_kbhit()) {</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Sleep(100);</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ get it</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;c 
+ = _getch();</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ check for carriage return</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if 
+ (c != '\r') {</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ check for backspace</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if 
+ (c!='\b') {</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ neither CR nor BS -- add it to the password string</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;printf("*");</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;*pw++ 
+ = c;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;len++;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;} 
+ else {</pre><pre>// handle backspace -- delete the last character &amp; </pre><pre>// erase it from the screen</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;if 
+ (len &gt; 0) {</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pw--;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;len--;</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;printf("\b 
+ \b");</pre><pre>}</pre><pre>}</pre><pre>}</pre><pre>}</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;// 
+ Add the zero-termination</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;*pw 
+ = '\0';</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), 
+ mode);</pre><pre>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;printf("\n");</pre><pre>}</pre><pre>&#160;&#160;&#160;&#160;}</pre><pre>#endif</pre><pre>&#160;&#160;&#160;&#160;return 
+ len;</pre><pre>}</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

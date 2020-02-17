@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|Configure the SafeNet Appliance for Your Network">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Network Configuration</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/List2.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/appliance_config/configure_ip_and_network_parameters.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor381"></a>Network Configuration</h2>
+        <p>The <span class="DefaultProduct">SafeNet Luna Network HSM</span> is a network device that is intended to be installed in a data center and accessed remotely over a network. Network access to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> is provided by four 1 Gb/s Ethernet LAN ports. The <span class="DefaultProduct">SafeNet Luna Network HSM</span> is also equipped with an RJ-45 serial port, used to provide serial access to the appliance for initial network configuration.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Always employ network security best practices. Place the <span class="DefaultProduct">SafeNet Luna Network HSM</span> behind a firewall. </p>
+        <p>The network device interfaces (eth0, eth1, eth2, and eth3) and serial port are located on the rear of the appliance, as illustrated below:</p>
+        <p>
+            <img src="../../Resources/Images/sa/sa7_rear_ports.png" />
+        </p>
+        <h4>Serial port</h4>
+        <p>Use the serial port to connect a serial device to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> for access to LunaSH to perform initial network configuration. You will need to use the serial port to configure at least one of the network interfaces. Once you have configured an interface, you can connect the appliance to the network and access LunaSH to complete the network configuration.</p>
+        <h4>Appliance network configuration</h4>
+        <p>The following network parameters are configured at the appliance level:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Appliance hostname. A hostname is optional, unless you are using DNS.</p>
+        <h4><a name="Ethernet"></a>Ethernet LAN device configuration</h4>
+        <p>The <span class="DefaultProduct">SafeNet Luna Network HSM</span> is equipped with four individually-configurable 1 GB/s auto-sensing Ethernet LAN network devices. You can configure the following network settings for each device:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span> IPv4 or IPv6 address. You can configure the addresses using static or DHCP addressing. If you are using IPv6 addressing, you can also use Stateless Autoconfiguration (SLAAC) to have a SLAAC-enabled router in your network automatically configure an IPv6 address on a device.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Network gateway. IPv4 devices must use an IPv4 gateway. IPv6 devices must use an IPv6 gateway. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Network mask. IPv4 devices must use dotted-quad format (for example, 255.255.255.0). IPv6 devices can use full or shorthand syntax.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Static network route.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>DNS configuration. Although you configure DNS at the device level, the settings you configure for a device are available to all devices on the appliance if the configured device is connected to the network. To ensure DNS access, it is recommended that you configure each device. You can configure the following settings:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>DNS nameservers. You can add up to three DNS nameservers. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>DNS search domains. </p>
+        <p class="listLevel1">These settings apply to static network configurations only. If you are using DHCP, the DNS search domains and DNS nameservers configured on the DHCP server are used.</p>
+        <h4>Port bonding: Bond two ports into a single virtual redundant interface</h4>
+        <p>The <span class="DefaultProduct">SafeNet Luna Network HSM</span> supports port bonding. Port bonding allows you to create a bond between two interfaces (eth0 and eth1, or eth2 and eth3) into a single bonded interface (bond0 or bond1). In a bonded interface, both ports are bound to a virtual interface with a single IP&#160;address, with one port active and one port standby. See <a href="../../sa_appliance_admin/client_connections/port_bonding.htm" class="MCXref xref">SafeNet Luna Network HSM Appliance Port Bonding</a> for more information.</p>
+        <h4>NTLS binding: Bind NTLS traffic to a specific device</h4>
+        <p>You can bind the NTLS traffic (used to securely transport cryptographic messages exchanged between a client and the HSM&#160;across the network) to a specific Ethernet device (eth0, eth1, eth2, eth3, bond0, bond1, all) on the appliance. This allows you to divide the traffic going to the appliance into cryptographic (destined for the HSM) and administrative (LunaSH)&#160;streams, for enhanced security and performance. See <a href="ntls_ssh_binding.htm" class="MCXref xref">Binding Your NTLS or SSH Traffic to a Device</a> for more information.</p>
+        <h4>SSH binding: Bind SSH&#160;traffic to a specific device, hostname, or IP address</h4>
+        <p>You can optionally bind/restrict the SSH traffic (used to securely transport administrative messages across the network) to a specific Ethernet device (eth0, eth1, eth2, eth3, bond0, bond1, all) on the appliance, to the appliance hostname, or to a specific IP address. This allows you to divide the traffic going to the appliance into cryptographic (destined for the HSM) and administrative (LunaSH)&#160;streams, for enhanced security and performance. By default, SSH traffic is unrestricted. See <a href="ntls_ssh_binding.htm" class="MCXref xref">Binding Your NTLS or SSH Traffic to a Device</a> for more information.</p>
+        <h3><a name="kanchor382"></a>Gathering Appliance Network Information</h3>
+        <p>Before you begin, obtain the following information (see your network administrator for most of these items):</p>
+        <h4>HSM Appliance Network Parameters</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>IP address and subnet mask for each LAN port you want to use (if you are using static IP addressing)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Hostname for the HSM 
+appliance (registered with network DNS)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Domain name (per port)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Default gateway IP address (per port)
+ </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>DNS Name Server IP address(es) (per port)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Search Domain name(s) (per port)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Device subnet mask (per port)</p>
+        <h4>DNS Entries</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Ensure that you have 
+configured your DNS Server(s) with the correct entries for the appliance 
+and the client. The Network HSM appliance expects fully qualified hostnames. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If you are using DHCP, then all references 
+to the Client and the HSM appliance (as in Certificates) should use hostnames.</p>
+        <h4>Other Considerations</h4>
+        <p>Clients need to be able to route directly to each HSM appliance they need to talk to, with no load balancing in place. The <span class="DefaultProduct">SafeNet Luna Network HSM</span> does not work with off-the-shelf load balancers and service discovery techniques. You can NAT or forward the traffic so long as it always goes to the same place so the TLS tunnel isn’t terminated by outside forces.</p>
+        <h3>Configuring the Network Parameters</h3>
+        <p>You can use the serial connection to configure all of your network parameters now, or you can perform a minimal configuration now, where you only configure a single port, and then use the configured port to access the appliance over the network and complete the configuration.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Use a locally connected serial terminal when changing the appliance IP address, to avoid SSH admin console disconnection due to the change.</p>
+        <h5>To configure the appliance and port network parameters:</h5>
+        <p>You can configure all of the ports now, using the serial connection, or you can configure only one port now, and then use a network connection to that port to configure the remaining ports. It is recommended that you configure and test each device. You need to know the IP address of at least one network interface to establish a SSH connection to the appliance.</p>
+        <p>Once configured, you can find the interface IP addresses on the appliance's front-panel LCD screen. If there is no IP address shown on the LCD, you must use a serial port connection to connect to the appliance.</p>
+        <p class="ol1" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Configure the IP address, network mask, and gateway (optional) on at least one of the Ethernet LAN ports, using the <b>network interface</b> command. You can configure the ports to use an IPv4 or IPv6 address. A mix of IPv4 and IPv6 ports is supported. </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>Clients connecting to the appliance must use the same IP version that is configured on the port they are connecting to, so that certificates resolve. That is, all clients connecting to an IPv4 port must have an IPv4 address, and all clients connecting to an IPv6 port must have an IPv6 address.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you are configuring an IPv4 address, you can configure a static address, or use DHCP.</p>
+        <table style="width: 92%;caption-side: top;mc-table-style: url('../../Resources/TableStyles/List2.css');" class="TableStyle-List2" cellspacing="0">
+            <col class="TableStyle-List2-Column-Column1" />
+            <col class="TableStyle-List2-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List2-Body-Body1">
+                    <td class="TableStyle-List2-BodyE-Column1-Body1" style="font-weight: bold;">Static</td>
+                    <td class="TableStyle-List2-BodyD-Column1-Body1">lunash:&gt; <b>network interface static -device</b> &lt;netdevice&gt; <b>-ip</b> &lt;IP_address&gt; <b>-netmask</b> &lt;netmask&gt; [<b>-gateway</b> &lt;IP_address&gt;]</td>
+                </tr>
+                <tr class="TableStyle-List2-Body-Body1">
+                    <td class="TableStyle-List2-BodyB-Column1-Body1" style="font-weight: bold;">DHCP</td>
+                    <td class="TableStyle-List2-BodyA-Column1-Body1">lunash:&gt; <b>network interface dhcp -device</b> &lt;netdevice&gt;</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you are configuring an IPv6 address, you can configure a static address, configure the port to obtain an IPv6 address using the Stateless Address Autoconfiguration (SLAAC) protocol, or use DHCP. To use SLAAC, you must have a SLAAC-enabled router in your network.</p>
+        <table style="width: 92%;caption-side: top;mc-table-style: url('../../Resources/TableStyles/List2.css');" class="TableStyle-List2" cellspacing="0">
+            <col class="TableStyle-List2-Column-Column1" />
+            <col class="TableStyle-List2-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List2-Body-Body1">
+                    <td class="TableStyle-List2-BodyE-Column1-Body1" style="font-weight: bold;">Static</td>
+                    <td class="TableStyle-List2-BodyD-Column1-Body1">lunash:&gt; <b>network interface static -device</b> &lt;netdevice&gt; <b>-ip</b> &lt;IP_address&gt; <b>-netmask</b> &lt;netmask&gt; [<b>-gateway</b> &lt;IP_address&gt;] <b>-ipv6</b></td>
+                </tr>
+                <tr class="TableStyle-List2-Body-Body1">
+                    <td class="TableStyle-List2-BodyE-Column1-Body1" style="font-weight: bold;">SLAAC</td>
+                    <td class="TableStyle-List2-BodyD-Column1-Body1">lunash:&gt; <b>network interface slaac -device</b> &lt;netdevice&gt;</td>
+                </tr>
+                <tr class="TableStyle-List2-Body-Body1">
+                    <td class="TableStyle-List2-BodyB-Column1-Body1" style="font-weight: bold;">DHCP</td>
+                    <td class="TableStyle-List2-BodyA-Column1-Body1">lunash:&gt; <b>network interface dhcp -device</b> &lt;netdevice&gt; <b>-ipv6</b></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="listLevel1">You are prompted to confirm the action. If no network cable is attached to the port you configured, the following message is displayed:</p><pre class="listLevel1" xml:space="preserve">Warning. Unable to activate interface &lt;netdevice&gt; Ensure that the network cable is connected.</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="listLevel1">This message is informational. The interface will automatically activate when you connect a network cable to the port.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Optional: If you wish to use the Port Bonding feature described above to configure bond0 and/or bond1 interface, use the <b>network interface bonding config</b> and <b>network interface bonding enable</b> commands. See <a href="../../sa_appliance_admin/client_connections/port_bonding.htm" class="MCXref xref">SafeNet Luna Network HSM Appliance Port Bonding</a> for more information.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Optional: If desired, set the appliance hostname and domain name using the <b>network 
+hostname</b> command. You can specify a simple hostname or a Fully Qualified Domain Name (FQDN) using the format &lt;hostname.domainname&gt;. If you supply a hostname that includes a space, all text after 
+ the space is ignored. For example, if you typed  <b>network hostname my hsm</b> the system would assign a hostname of “my”. Therefore, 
+if you want "my hsm", use "my_hsm", "my-hsm", or similar.</p>
+        <p class="listLevel1">lunash:&gt; <b>network hostname</b> &lt;hostname&gt;</p>
+        <p class="listLevel1">You must configure your DNS server to resolve the hostname to the IP address configured on the Ethernet port of the appliance. Do this for each Ethernet port you are configuring. See your network administrator for assistance.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Optional: If you wish to use the NTLS or SSH binding features described above to restrict NTLS or SSH messages to an interface (eth0, eth1, eth2, eth3, bond0, bond1, all),use the <b>ntls bind</b> or <b>sysconf ssh</b> commands. See <a href="ntls_ssh_binding.htm" class="MCXref xref">Binding Your NTLS or SSH Traffic to a Device</a> for more information.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Optional: If desired, add a domain name server to the network configuration for the appliance using the <b>network 
+dns add nameserver</b> command. The name server is added to the appliance DNS table. You can add up to three different DNS name servers to the appliance DNS table. There is one DNS table that applies to all network devices (ports) on the appliance.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>  The domain name settings apply to static network configurations only. If you are using DHCP, the DNS name servers configured on the DHCP server are used.</p>
+        <p class="listLevel1">When you add a DNS server, you add it to a specific network device on the appliance (eth0, eth1, eth2, eth3, bond0, bond1). When you add a DNS server to a device, it is added to the DNS table for the appliance and becomes available to all devices on the appliance, provided the device you added it to is connected to the network. For example, if you add a DNS server to eth0, all devices will be able to access the DNS server if eth0 is connected to the network. If eth0 is disconnected from the network, access to the DNS server is lost for any devices to which you did not add the DNS server. To ensure that any DNS server you add is available in the event of a network or port failure, it is recommended that you add it to all devices you will use to connect the appliance to the network.</p>
+        <p class="listLevel1">lunash:&gt; <b>network dns add nameserver</b> &lt;ip_address&gt; <b>-device</b> &lt;net_device&gt;</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Optional: If desired, add a search domain to the network configuration for the appliance using the <b>net dns add searchdomain</b> command. Search domains allow you to avoid typing the complete address of frequently used Internet domains by automatically appending the search domain to an internet address you specify in LunaSH. For example, if you add the search domain <b>mycompany.com</b>, entering the command <b>network ping hsm1</b> would search for the domain <b>hsm1.mycompany.com</b>. If the domain resolves, it would ping the device with that hostname.</p>
+        <p class="listLevel1">The search domain is added to the appliance DNS table. You can add a maximum of six search domains totaling no more than 256 characters.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>  The search domain settings apply to static network configurations only. If you are using DHCP, the DNS search domains configured on the DHCP server are used.</p>
+        <p class="listLevel1">When you add a DNS search domain, you add it to a specific network device on the appliance (eth0, eth1, eth2, eth3, bond0, bond1). When you add a search domain to a device, it is added to the DNS table for the appliance and becomes available to all devices on the appliance, provided the device you added it to is connected to the network. For example, if you add a search domain to eth0, all devices will use the search domain if eth0 is connected to the network. If eth0 is disconnected from the network, the search domain is not used by any devices to which you did not add the search domain. To ensure that any search domain you add is available in the event of a network or port failure, it is recommended that you add it to all devices you will use to connect the appliance to the network.</p>
+        <p class="listLevel1" xml:space="preserve">lunash:&gt; <b>network dns add searchdomain</b> &lt;domain&gt; <b>-device</b> &lt;net_device&gt;</p>
+        <p class="listLevel1">If you have chosen to perform 
+setup via SSH, rather than via the direct (serial) administrative connection, 
+ then you will likely lose your network connection at this point, as you 
+ confirm the change of IP address from the default setting. &#160;</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>View the new network settings with <b>network show</b>. </p>
+        <p class="listLevel1">The <b>network show</b> 
+command displays the current settings, so you can 
+ verify that they are now correct for your environment before attempting 
+to use them.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

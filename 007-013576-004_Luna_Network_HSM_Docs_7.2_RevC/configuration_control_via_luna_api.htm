@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Using the SDK">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Capability and Policy Configuration Control Using the SafeNet API</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/using/configuration_control_via_luna_api.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Capability and Policy Configuration Control Using the SafeNet API</h2>
+        <p>The configuration and control of the <span class="DefaultProduct">SafeNet Luna Network HSM</span> is provided by a set of capabilities and policies which you can query and set using the SafeNet API. See  for more information. </p>
+        <h3>HSM Capabilities and Policies</h3>
+        <p>Each HSM has a set of capabilities. An HSM's capability set defines 
+ and controls the behavior of the HSM.</p>
+        <p> HSM behavior can be further modified through changing policies. The 
+ HSM Admin can refine the behavior of an HSM by changing the policy settings.</p>
+        <h3>HSM Partition Capabilities and Policies</h3>
+        <p>Each HSM can support one-or-more virtual HSMs called HSM Partitions 
+ (may also be called “containers” in some areas of the API), which are 
+ used by properly authenticated remote clients to perform cryptographic 
+ operations.</p>
+        <p>Each HSM Partition has a set of capabilities. An HSM Partition's capability 
+ set defines and controls the behavior of the HSM partition.</p>
+        <p>HSM Partition behavior can be further modified through changing policies. 
+ The HSM Admin can refine the behavior of an HSM Partition by changing 
+ the policy settings. Different partitions can have different values for 
+ the configuration elements which apply to specific HSM Partitions – in 
+ other words, if a policy is set to a given value for one HSM Partition, 
+ the policy can be set to a different value for another HSM Partition 
+ on the same HSM.</p>
+        <p>In some cases, a partition policy change is destructive.</p>
+        <h3>Policy Refinement</h3>
+        <p>For every policy set element, there is a corresponding capability set 
+ element (the reverse is not true – there can be some capability set elements 
+ that do not have corresponding policy set elements). The value of a policy 
+ set element can be modified by the HSM Admin, but only within the limitations 
+ imposed by the corresponding capability set element.</p>
+        <p>For example, there is a policy set element which determines how many 
+ failed login attempts may be made before a Partition is deleted or locked 
+ out. There is also a corresponding capability set element for the same 
+ purpose. The policy element may be modified by the HSM Admin, but may 
+ only be set to a value less than or equal to that of the capability set 
+ element. So if the capability set element has a value of 10, the HSM Admin 
+ can set the policy to a value less than or equal to 10.</p>
+        <p>In general, the HSM Admin may modify policy set elements to make the 
+ HSM or partition policy more restrictive than that imposed by the capability 
+ set elements. The HSM Admin can not make the HSM or HSM Partition 
+ policy less restrictive or enable functionality that is disabled through 
+ capability settings.</p>
+        <h3>Policy Types</h3>
+        <p>There are three types of policy elements, as follows:</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">Normal policy elements</span>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>May be 
+ set at any time by the HSM Admin. The values which may be set are limited 
+ only by the corresponding capability element as described in the previous 
+ section (i.e. the policy element can be set only to a value less than 
+ or equal to the capability set element).</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">Destructive policy elements</span>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p> 
+ May be set at any time, but setting them results in the erasure of any 
+ partitions and their contents. Policy elements are destructive if changing 
+ them significantly affects the security policy of the HSM.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1"><span style="font-weight: bold;">Write-restricted policy elements</span>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>Cannot be modified directly, but instead are affected by other actions 
+ that can be taken.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Querying and Modifying HSM Configuration</h3>
+        <p>The following are the relevant functions (found in <b>sfnt_extensions.h</b>):</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_RV CK_ENTRY CA_GetConfigurationElementDescription( </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_SLOT_ID slotID, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulIsContainerElement,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulIsCapabilityElement,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulElementId,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulElementBitLength,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulElementDestructive,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulElementWriteRestricted,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_CHAR_PTR pDescription);</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_RV CK_ENTRY CA_GetHSMCapabilitySet( </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_SLOT_ID uPhysicalSlot, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulCapIdArray,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulCapIdSize,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulCapValArray,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulCapValSize );</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_RV CK_ENTRY CA_GetHSMCapabilitySetting (</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_SLOT_ID slotID, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulPolicyId,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulPolicyValue); </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_RV CK_ENTRY CA_GetHSMPolicySet( </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_SLOT_ID uPhysicalSlot,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulPolicyIdArray,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulPolicyIdSize,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulPolicyValArray,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulPolicyValSize );</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_RV CK_ENTRY CA_GetHSMPolicySetting (</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_SLOT_ID slotID, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulPolicyId,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulPolicyValue); </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_RV CK_ENTRY CA_GetContainerCapabilitySet( </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_SLOT_ID uPhysicalSlot, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulContainerNumber,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulCapIdArray,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulCapIdSize,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulCapValArray,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulCapValSize );</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_RV CK_ENTRY CA_GetContainerCapabilitySetting (</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_SLOT_ID slotID, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulContainerNumber,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulPolicyId,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulPolicyValue); </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_RV CK_ENTRY CA_GetContainerPolicySet( </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_SLOT_ID uPhysicalSlot,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulContainerNumber,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulPolicyIdArray,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulPolicyIdSize,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulPolicyValArray,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulPolicyValSize );</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_RV CK_ENTRY CA_GetContainerPolicySetting( </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_SLOT_ID uPhysicalSlot, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulContainerNumber,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulPolicyId,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG_PTR pulPolicyValue); </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_RV CK_ENTRY CA_SetHSMPolicy (</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_SESSION_HANDLE hSession, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulPolicyId,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulPolicyValue);</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_RV CK_ENTRY CA_SetDestructiveHSMPolicy (</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_SESSION_HANDLE hSession, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulPolicyId,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulPolicyValue);</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_RV CK_ENTRY CA_SetContainerPolicy (</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_SESSION_HANDLE hSession, </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulContainer,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulPolicyId,</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CK_ULONG ulPolicyValue);</p>
+        <h4>The CA_GetConfigurationElementDescription() Function</h4>
+        <p>The <b>CA_GetConfigurationElementDescription()</b> function requires that you 
+ pass in a zero or one value to indicate whether the element you are querying 
+ is an HSM Partition (container) element or an HSM element, and another 
+ zero/one value to define whether it is a capability or policy that you 
+ are interested in. You also pass in the id of the element and a character 
+ buffer of at least 60 characters. The function then returns the size of 
+ the element value (in bits), an indication of whether the element is destructive, 
+ an indication of whether the policy (if it is a policy) is write-restricted, 
+ and it also writes the description string into the buffer that you provided.</p>
+        <h4>The CA_Get{HSM|Container}{Capability|Policy}Set() Functions</h4>
+        <p>The various <b>CA_Get{HSM|Container}{Capability|Policy}Set()</b> functions 
+ all return (in the word arrays provided) a complete list of element id/value 
+ pairs for the set specified. For example, <b>CA_GetHSMCapabilitySet()</b> returns 
+ a list of all HSM capability elements and their values. The parameters 
+ for these functions include a list pointer and length pointer for each 
+ of the element ids and element values. On calling the function, you should 
+ provide a buffer or a null pointer for each of the lists, and the length 
+ value should be initialized to the size of the buffer. On return, the 
+ buffer (if given) is populated, and the length is updated to the real 
+ length of the list. If the buffer is given but is not large enough, an 
+ error results. </p>
+        <p>Typically you would invoke the function twice: call the function the 
+ first time with null buffer pointers so that the real length necessary 
+ is returned, then allocate the necessary buffers and call the function 
+ a second time, giving the real buffers.</p>
+        <p>The various <b>CA_Get{HSM|Container}{Capability|Policy}Setting()</b> functions 
+ allow you to query a specific element value. Provide the element id and 
+ the function returns the value.</p>
+        <h4>The CA_Set...() Functions</h4>
+        <p>The various <b>CA_Set...()</b> functions allow you to set individual HSM and 
+ HSM Partition policies. There are two varieties for setting HSM policies, 
+ because changing the value of a destructive HSM policy results in the 
+ HSM being cleared of any Partitions and their contents. To make it clear 
+ when this is going to happen, the appropriate set function must be called 
+ based on whether the HSM policy is destructive or not (which you can determine 
+ with the <b>CA_GetConfigurationElementDescription()</b> function).</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

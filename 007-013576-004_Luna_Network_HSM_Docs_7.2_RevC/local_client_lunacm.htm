@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Backup and Restore From the Client to a Local Backup HSM (LunaCM)</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#administration/backup/backup_network/local_client_lunacm.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Backup and Restore From the Client to a Local Backup HSM (LunaCM)</h2>
+        <p>This section describes how to use LunaCM to backup and restore a partition from the client to a locally connected SafeNet Luna Backup HSM&#160;(Backup HSM). To perform a local backup, you connect the SafeNet Luna Backup HSM&#160;to a USB&#160;port on the SafeNet Luna HSM client workstation and use LunaCM to log in as the Crytpo Officer (CO) and backup any SafeNet Luna Network HSM or SafeNet Luna PCIe HSM partitions that are visible as slots. </p>
+        <p>The backup operation can go from a source partition (on a SafeNet Luna Network HSM) to an existing partition on the Backup HSM, or if one does not exist, a new partition can be created during the backup. The restore operation, however, cannot create a target partition on a SafeNet Luna Network HSM; it must already exist.</p>
+        <p>You can restore a partition backup to the source HSM or to a different SafeNet Luna Network HSM. The HSM you restore to must already have a suitable partition created for the restored objects. The partition can have any name - it does not need to match the name of the source partition on the backup HSM.</p>
+        <p>You can connect the Backup HSM&#160;to a SafeNet Luna HSM client workstation to backup any SafeNet Luna Network HSM or SafeNet Luna PCIe HSM partitions that are visible as slots in LunaCM, as illustrated in the following figure:</p>
+        <p class="figureCaption" data-mc-autonum="Figure 1: "><span class="autonumber"><span>Figure 1: </span></span>Configuration for SafeNet Luna Network HSM/PCIe partition backup/restore using a Backup HSM connected to a local client workstation</p>
+        <p>
+            <img src="../../../Resources/Images/backup/local_backup_connect_client.svg" />
+        </p>
+        <p>In this configuration, you connect the Backup HSM and SafeNet Remote PED, via USB, to your SafeNet Luna HSM client workstation. The SafeNet Luna Network HSM appliance is remote to the SafeNet Luna HSM client workstation and is connected using NTLS. Any installed PCIe devices communicate with the SafeNet Luna HSM client over the PCI bus. </p>
+        <p>Any partitions you want to backup must be registered with the SafeNet Luna HSM client workstation, and be visible as slots in LunaCM. The Backup HSM most also be visible as a slot.</p>
+        <p>If you are backing up PED-authenticated partitions, you require a PED.  If you want to backup SafeNet Luna Network HSM partitions, the PED must have remote capability (Remote PED). Remote PED uses the pedserver/pedclient processes running on the SafeNet Luna HSM client workstation and on the SafeNet Luna Network HSM appliance to provide remote PED services for the network-attached SafeNet Luna Network HSM appliance. The PED provides authentication for all of the attached HSMs (the USB-connected SafeNet Luna Backup HSM,  the NTLS-connected SafeNet Luna Network HSM, and the PCI bus-connected SafeNet Luna PCIe HSM). Every slot on the backup must have same domain (red PED key) as the matching slot on the source HSMs.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>If you have Private Key Cloning switched 
+ off for the current partition, then the backup operation proceeds, but 
+ skips over any private keys, and clones only the permitted objects onto 
+ the Backup HSM. Similarly, if you restore from a token that includes 
+ private keys, but the target partition has Private Key Cloning disallowed, 
+ then all other objects are recovered to the partition, but the private 
+ keys are skipped during the operation.</p>
+        <h3>Backing Up a Partition to a Locally Connected Backup HSM</h3>
+        <p>You can backup any slots you can see on the client workstation. You must log in as the Crypto Officer to the partition you want to backup.</p>
+        <h5>To backup an application partition to a Backup HSM connected to a SafeNet Luna HSM client workstation:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Configure the remote PED, as described in <a href="../../PED_Auth/remote/remote_setup.htm"><a href="../../PED_Auth/remote/remote_setup.htm" class="MCXref xref">Remote PED Setup</a></a>.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Start the LunaCM utility on the SafeNet Luna HSM client workstation.</p><pre xml:space="preserve" class="listLevel1">C:\Program Files\SafeNet\LunaClient&gt;lunacm.exe
+
+LunaCM V7.0 - Copyright (c) 2006-2017 Gemalto, Inc.
+
+        Available HSM's:
+
+        Slot Id -&gt;              1
+        HSM Label -&gt;            SA52_P1
+        HSM Serial Number -&gt;    500409014
+        HSM Model -&gt;            LunaSA
+        HSM Firmware Version -&gt; 7.0.1
+        HSM Configuration -&gt;    Luna User Partition With SO (PED) Signing With Cloning Mode
+        HSM Status -&gt;           OK
+     
+        Slot Id -&gt;              2
+        HSM Label -&gt;            BackupHSM Serial Number -&gt;    700101
+        HSM Model -&gt;            G5Backup
+        HSM Firmware Version -&gt; 6.26.0
+        HSM Configuration -&gt;    Remote Backup HSM (PED) Backup Device
+        HSM Status -&gt;           OK
+
+        Current Slot Id: 1
+</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use the <b>slot set</b> command to go to the slot you want to back up:</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; slot set slot 1
+
+        Current Slot Id: 1     (Luna User Slot 7.0.1 (PED) Signing With Cloning Mode)
+
+Command Result : No Error</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Establish that the HSM is listening for a SafeNet Remote PED: </p><pre xml:space="preserve" class="listLevel1">lunacm:&gt;ped get
+
+        HSM slot 1 listening to local PED (PED id=0).
+
+Command Result : No Error
+
+lunacm:&gt; ped connect ip 192.20.10.190
+
+Command Result : No Error
+
+lunacm:&gt; ped get
+
+        HSM slot 1 listening to remote PED (PED id=100).
+
+Command Result : No Error
+</pre><pre xml:space="preserve" class="listLevel1">   </pre>
+        <p class="listLevel1">The SafeNet Luna Network HSM&#160;is now listening for PED interaction via the  link between PedClient on the SafeNet Luna Network HSM appliance and PedServer on the workstation, and is not expecting a PED connected directly at the location of the SafeNet Luna Network HSM.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Log in as the Crypto Officer (CO) to the partition in the  current slot. This is the partition that you want to back up:</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; role login -name Crypto Officer
+
+        Option -password was not supplied.  It is required.
+
+        Enter the password: *******
+
+        User is activated, PED is not required.
+
+Command Result : No Error
+</pre>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Disconnect the PED&#160;from your source HSM (slot 1 in this example), and connect to the Backup HSM (slot 2 in this example). The PED remains physically connected by USB cable to the SafeNet Luna HSM client workstation, and remains in Remote mode - you are merely changing slots that are in conversation with that PED. </p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>First, tell the SafeNet Luna Network HSM to disconnect from Remote PED with the command <b>ped disconnect</b>. 
+
+</p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>Tell the Backup HSM to connect to Remote PED (it makes no difference that the PED and the Remote Backup HSM are USB-connected to the same workstation/laptop; when use of Remote PED&#160;is invoked by command <b>ped connect</b> and verified by <b>ped get</b>, all HSM-PED&#160;interaction takes place between PedClient running on that workstation and PedServer, also running on that workstation).</p><pre xml:space="preserve" class="listLevel2">
+lunacm:&gt; ped connect ip 192.20.10.189 -slot 2
+
+Command Result : No Error
+
+lunacm:&gt; ped get -slot 2
+
+        HSM slot 2 listening to remote PED (PED id=100).
+
+Command Result : No Error
+</pre>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Use the <b>partition archive backup</b> command to perform the backup from the current slot (slot 1 in the example, see above) to the partition that you designate on the Backup HSM. Now that the Backup HSM is listening correctly for a PED, the target partition can be created, with PED action for the authentication.</p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; partition archive backup -slot 2 -par SAbck1
+
+        Logging in as the SO on slot 2.
+        Please attend to the PED.
+
+        Creating partition SAbck1 on slot 2.
+        Please attend to the PED.
+
+        Logging into the container SAbck1 on slot 2 as the user.
+        Please attend to the PED.
+
+        Creating Domain for the partition SAbck1 on slot 2.
+        Please attend to the PED.
+
+        Verifying that all objects can be backed up...
+        85 objects will be backed up.
+
+        Backing up objects...
+        Cloned object 99 to partition SAbck1 (new handle 19).
+        Cloned object 33 to partition SAbck1 (new handle 20).
+        Cloned object 108 to partition SAbck1 (new handle 23).
+        Cloned object 134 to partition SAbck1 (new handle 24).
+        Cloned object 83 to partition SAbck1 (new handle 25).
+        Cloned object 117 to partition SAbck1 (new handle 26).
+        Cloned object 126 to partition SAbck1 (new handle 27).
+        Cloned object 65 to partition SAbck1 (new handle 28).
+        Cloned object 140 to partition SAbck1 (new handle 29).
+        Cloned object 131 to partition SAbck1 (new handle 30).
+        Cloned object 94 to partition SAbck1 (new handle 31).
+        Cloned object 109 to partition SAbck1 (new handle 35).
+        Cloned object 66 to partition SAbck1 (new handle 36).
+        Cloned object 123 to partition SAbck1 (new handle 39).
+        Cloned object 74 to partition SAbck1 (new handle 40).
+        Cloned object 50 to partition SAbck1 (new handle 44).
+        Cloned object 43 to partition SAbck1 (new handle 45).
+        Cloned object 52 to partition SAbck1 (new handle 46).
+        Cloned object 124 to partition SAbck1 (new handle 47).
+        Cloned object 115 to partition SAbck1 (new handle 48).
+        
+        Backup Complete.
+
+        20 objects have been backed up to partition SAbck1
+        on slot 2.
+
+Command Result : No Error</pre>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Backup is complete, and can be verified if you like.</p>
+        <h3>Restoring a Partition from a Locally Connected Backup HSM</h3>
+        <p>You can restore a backup to any slot you can see on the client workstation. You must log in as the Crypto Officer to the partition you want to restore to. </p>
+        <h5>To restore an application partition from a Backup HSM connected to a SafeNet Luna HSM client workstation:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Create a target partition for the restore operation on the HSM&#160;you are restoring to, if it does not already exist, and register the partition with the SafeNet Luna HSM client workstation so that it is visible as a slot in LunaCM.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Start the LunaCM utility on the SafeNet Luna HSM client workstation.</p><pre class="listLevel1" xml:space="preserve">LunaCM v7.0.0. Copyright (c) 2006-2017 SafeNet.</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Available HSMs:</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Slot Id -&gt;              0</pre><pre class="listLevel1" xml:space="preserve">        Label -&gt;                par1</pre><pre class="listLevel1" xml:space="preserve">        Serial Number -&gt;        154438865288</pre><pre class="listLevel1" xml:space="preserve">        Model -&gt;                LunaSA 7.0.0</pre><pre class="listLevel1" xml:space="preserve">        Firmware Version -&gt;     7.0.1</pre><pre class="listLevel1" xml:space="preserve">        Configuration -&gt;        Luna User Partition With SO (PED) Signing With Cloning Mode</pre><pre class="listLevel1" xml:space="preserve">        Slot Description -&gt;     Net Token Slot</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Slot Id -&gt;              21</pre><pre class="listLevel1" xml:space="preserve">        Label -&gt;                lunabackup</pre><pre class="listLevel1" xml:space="preserve">        Serial Number -&gt;        496771</pre><pre class="listLevel1" xml:space="preserve">        Model -&gt;                G5Backup</pre><pre class="listLevel1" xml:space="preserve">        Firmware Version -&gt;     6.26.0</pre><pre class="listLevel1" xml:space="preserve">        HSM Configuration -&gt;    Remote Backup HSM (PED) Backup Device</pre><pre class="listLevel1" xml:space="preserve">        HSM Status -&gt;           OK</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Current Slot Id: 0</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use the <b>slot set</b> command to go to the slot you want to restore to.</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; slot set slot 0</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">        Current Slot Id: 0     (Luna User Slot 7.0.1 (PED) Signing With Cloning Mode)</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Command Result : No Error
+</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Open a remote PED session to the SafeNet Luna Network HSM you are restoring to: </p><pre xml:space="preserve" class="listLevel1">
+lunacm:&gt; ped connect ip 192.20.10.190</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Command Result : No Error</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">lunacm:&gt; ped get</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">        HSM slot 1 listening to remote PED (PED id=100).</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Command Result : No Error
+</pre>
+        <p class="listLevel1">The SafeNet Luna Network HSM&#160;is now listening for PED interaction via the  link between PEDclient on the SafeNet Luna Network HSM appliance and PEDserver on the workstation, and is not expecting a PED connected directly at the location of the SafeNet Luna Network HSM.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Log into the partition in the current slot. This is the partition that you want to restore to.</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; role login -name Crypto Officer</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">        Option -password was not supplied.  It is required.</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">        Enter the password: *******</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">        User is activated, PED is not required.</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Command Result : No Error
+</pre>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Use the <b>partition archive restore</b> command restore the partition from the Backup HSM&#160;to the current slot, adding to, or replacing, the current partition contents:</p><pre class="listLevel1" xml:space="preserve">partition archive restore -slot &lt;backup-hsm-slotnumber&gt; -partition LunaSAPartitionname -password ClientPassword -replace
+</pre>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>In the command above, you can&#160;use <b>-add</b> instead of <b>-replace</b>. Adding might result in unwanted behaviors, such as having two keys 
+ with the same label, if one existed in the HSM Partition and one on the 
+ backup token. The two would be assigned different handles, however.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Creating PED Keys</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#administration/PED_Auth/key_mgmt/create.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Creating PED Keys</h3>
+        <p>When you initialize an HSM, partition, or role, the SafeNet Luna PED issues a series of prompts for you to follow to create your PED keys. PED key actions have a timeout setting (default: 200 seconds); ensure that you have everything you need before issuing an initialization command. The requirements for the operation depend on the PED key scheme you have chosen in advance, based on your organization's security policy. Consider these guidelines before you begin:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If you are reusing an existing PED key or keyset, the owners of those keys must be present with their keys and PED PINs ready. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If you plan to use an M of N authentication scheme, all the parties involved must be present and ready to create their authentication split. It is advisable for each key holder to create backup duplicates, so you must have a sufficient number of blank or rewritable PED keys ready before you begin. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If you plan to make backup duplicates of PED keys, you must have a sufficient number of blank or rewritable PED keys ready. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If you plan to use PED PINs, ensure that they can be privately entered on the Luna PED and memorized, or written down and securely stored. </p>
+        <p>Whenever the Luna PED prompts you to insert a PED key, use the USB port on the top of the PED:</p>
+        <p>
+            <img src="../../../Resources/Images/ped_labels/016_top_of_ped_usb.png" style="width: 250px;height: 106px;" />
+        </p>
+        <h5>To initiate PED key creation:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Issue one of the following <MadCap:conditionalText data-mc-conditions="Default.SA">LunaSH or </MadCap:conditionalText>LunaCM commands to initialize the applicable role, domain, or vector. </p>
+        <p class="ul2" style="font-weight: bold;" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Blue HSM&#160;SO and Red HSM&#160;Domain Keys:</p>
+        <p class="listLevel2" data-mc-conditions="Default.SA">lunash:&gt;<b>hsm init</b></p>
+        <p class="ul2" style="font-weight: bold;" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Orange Remote PED Key:</p>
+        <p class="listLevel2" data-mc-conditions="Default.SA">lunash:&gt;<b>hsm ped vector init</b></p>
+        <p class="listLevel2">lunacm:&gt;<b>ped vector init</b></p>
+        <p class="ul2" style="font-weight: bold;" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Blue Partition SO and Red Partition Domain Keys:</p>
+        <p class="listLevel2">lunacm:&gt;<b>partition init</b></p>
+        <p class="ul2" style="font-weight: bold;" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Black Crypto Officer Key:</p>
+        <p class="listLevel2">lunacm:&gt;<b>role init -name co</b></p>
+        <p class="ul2" style="font-weight: bold;" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Gray Crypto User Key:</p>
+        <p class="listLevel2">lunacm:&gt;<b>role init -name cu</b></p>
+        <p class="ul2" style="font-weight: bold;" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>White Audit User Key:</p>
+        <p class="listLevel2" data-mc-conditions="Default.SA">lunash:&gt;<b>audit init</b></p>
+        <p class="listLevel1">The Luna PED responds, displaying:</p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_token_found.svg" />
+        </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Follow the PED prompts in the following four stages. </p>
+        <h4><a name="Stg1Reuse"></a>Stage 1: Reusing Existing PED Keys</h4>
+        <p>If you want to use a PED key with an existing authentication secret, have the key ready to present to the PED. Reasons for reusing keys may include: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>You want to use the same blue SO key to authenticate multiple HSMs/partitions</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>You want to initialize a partition in an already-existing cloning domain (to be part of an HA group)</p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>The initialization procedure is the only opportunity to set the HSM/partition's cloning domain. It cannot be changed later without reinitializing the HSM, or deleting and recreating the partition. Ensure that you have the correct red key(s) ready. </p>
+        <p>See <a href="../PED_Auth.htm#Shared" class="MCXref xref">Shared PED Key Secrets</a> and <a href="../PED_Auth.htm#Domain" class="MCXref xref">Domain PED Keys</a> for more information. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>The first PED prompt asks if you want to reuse an existing PED key. Press <b>Yes</b> or <b>No</b> on the keypad to continue. </p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_reuse.svg" />
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you select <b>No</b>, skip to <a href="#Stg2MofN" class="MCXref xref">Stage 2: Defining M of N</a>. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you select <b>Yes</b>, the PED prompts you for a key. Insert the key you want to reuse and press <b>Enter</b>. </p>
+        <p class="listLevel2">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_create.svg" />
+        </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If the key has a PED PIN, the PED prompts you to enter it now. Enter the PIN&#160;on the keypad and press <b>Enter</b>. </p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_enterPIN.svg" />
+        </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>If the key is part of an M of N scheme, the PED prompts you for the next key. You must present enough key splits (M) to reconstitute the entire authentication secret. </p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_reuse_MofN.svg" />
+        </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>The PED asks if you want to create a duplicate set of keys. If you are duplicating an M of N keyset, you need a number of blank or rewritable keys equal to N. </p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_duplicate_MofN.svg" />
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you select <b>No</b>, the process is complete. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you select <b>Yes</b>, complete <a href="#Stg3PINs" class="MCXref xref">Stage 3: Setting a PED PIN</a> for all the duplicate keys you want. </p>
+        <h4><a name="Stg2MofN"></a>Stage 2: Defining M of N</h4>
+        <p>If you chose to create a new keyset, the Luna PED prompts you to define the M of N scheme for the role, domain, or vector. See <a href="../PED_Auth.htm#MofN" class="MCXref xref">M of N Split Secrets</a> for more information. If you do not want to use M of N (authentication by one PED key), enter a value of <b>1</b> for both M and N. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>The PED prompts you to enter a value for M (the minimum number of split-secret keys required to authenticate the role, domain, or vector). Set a value for M by entering it on the keypad and pressing <b>Enter</b>. If you are not using an M of N scheme, enter "<b>1</b>".</p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_Mvalue3.svg" />
+        </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span> The PED prompts you to enter a value for N -- the total number of split-secret keys you want to create. Set a value for N by entering it on the keypad and pressing <b>Enter</b>. If you are not using an M of N scheme, enter "<b>1</b>".</p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_Nvalue5.svg" />
+        </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Continue to <a href="#Stg3PINs" class="MCXref xref">Stage 3: Setting a PED PIN</a>. You must complete stage 3 for each key in the M of N scheme. </p>
+        <h4><a name="Stg3PINs"></a>Stage 3: Setting a PED PIN</h4>
+        <p>If you are creating a new key or M of N split, you have the option of setting a PED PIN that must be entered by the key owner during authentication. PED PINs must be 4-48 digits long. Do not use 0 for the first digit. See <a href="../PED_Auth.htm#PEDPINs" class="MCXref xref">PED PINs</a> for more information. </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>If you forget your PED PIN, it is the same as losing the PED&#160;key entirely; you cannot authenticate the role. See <a href="lost_keys.htm" class="MCXref xref">Consequences of Losing PED Keys</a>. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>The PED prompts you to insert a blank or reusable PED key. If you are creating an M of N split, the number of already-created splits is displayed. </p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_create.svg" /> <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_create_MofN.svg" /></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Insert the PED key and press <b>Enter</b>. The PED prompts for confirmation.</p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_blank_overwrite.svg" />
+        </p>
+        <p class="listLevel1">If the PED key you inserted is not blank, you must confirm twice that you want to overwrite it. </p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_domain_overwrite1.svg" /> <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_domain_overwrite2.svg" /></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>The PED prompts you for a PIN. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you want to set a PED PIN, enter it on the keypad and press <b>Enter</b>. Enter the PIN again to confirm it. </p>
+        <p class="listLevel2">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_PIN.svg" />
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you do not want to set a PED PIN, press <b>Enter</b> twice without entering anything on the keypad. You will not be asked to enter a PIN for this key in the future. </p>
+        <p class="listLevel2">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_noPIN.svg" />
+        </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>If there are more keys in the M of N scheme, repeat this stage. Otherwise, continue to <a href="#Stg4Duplicate" class="MCXref xref">Stage 4: Duplicating New PED Keys</a>. </p>
+        <h4><a name="Stg4Duplicate"></a>Stage 4: Duplicating New PED Keys</h4>
+        <p>You now have the option to create duplicates of your newly-created PED key(s). There are two reasons to do this now:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If you want more than one person to be able to authenticate a role, you can create multiple keys for that role now, with each person being able to set their own PED PIN. Duplicates you create later are intended as backups, and will have the same PED PIN (or none) as the key they are copied from. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>In case of key loss or theft. </p>
+        <p>You can make backups now or later. See also <a href="duplicate.htm" class="MCXref xref">Duplicating Existing PED Keys</a>. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>The next PED prompt asks if you want to create a duplicate keyset (or another duplicate). Press <b>Yes</b> or <b>No</b> on the keypad to continue. </p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_duplicate1.svg" /> <img src="../../../Resources/Images/ped_screens/PEDscrn_blue_duplicate2.svg" /></p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you select <b>No</b>, the key creation process is complete. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you select <b>Yes</b>, complete <a href="#Stg3PINs" class="MCXref xref">Stage 3: Setting a PED PIN</a> for the duplicate keyset. You can set the same PED PIN to create a true copy, or set a different PED PIN for each duplicate. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If you specified an M of N scheme, you are prompted to repeat <a href="#Stg3PINs" class="MCXref xref">Stage 3: Setting a PED PIN</a> for each M of N split. Otherwise, the key creation process is complete. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

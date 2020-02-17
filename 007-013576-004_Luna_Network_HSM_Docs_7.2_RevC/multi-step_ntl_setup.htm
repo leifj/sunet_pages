@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|Create a Network Trust Link Between the Client and the Appliance">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Multi-step NTLS Setup</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/List1.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/List2.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/client_appliance/multi-step_ntl_setup.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Create a Network Trust Link - Multi-step setup</h2>
+        <p>To create a Network Trust Link (NTL), the Client and HSM appliance must first exchange 
+certificates. Once the certificates have been exchanged, the Client registers 
+ the SafeNet Luna Network HSM’s certificate in a trust list, and the SafeNet Luna Network HSM appliance, in 
+turn, registers the Client’s certificate in its list of clients. When the certificates have been exchanged and registered at each end, 
+the NTL is ready to use. </p>
+        <p>"Ready to use" means that an application at the client host (such as LunaCM or your crypto-using application) can see the registered SafeNet Luna Network HSM application partitions as slots in the client slot list, can select such registered partitions by slot number, and can then perform cryptographic operations in those slots after providing appropriate partition authentication (Crypto Officer, Crypto User).</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Administration 
+commands can take a few seconds to be noted by NTLS. If you have added 
+or deleted a client, wait a few seconds before connecting.</p>
+        <p class="note" style="font-style: normal;" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Secure Trusted Channel (STC) offers enhanced HSM-client message integrity, and an additional layer of protection for client-to-HSM communications, even over unsecured networks. To take advantage of this feature, see <a href="../client_partition/stc_links.htm" class="MCXref xref">Creating an STC Link Between a Client and a Partition</a> in the <i>Configuration Guide</i>. For more on the differences between NTLS and STC connections, see <a href="../../administration/stc/overview.htm" class="MCXref xref">STC Overview</a> in the <i>Administration Guide</i>. </p>
+        <h5><a name="NTL_procedure"></a>To create a network trust link:</h5>
+        <p>You must have administrator access to perform this procedure. Read/write access to the SafeNet Luna HSM client installation directory is required for the certificate exchange. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Prepare the client workstation:</p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>Install the SafeNet Luna HSM client software. See <a href="../../install/software/software.htm" class="MCXref xref">SafeNet Luna HSM Client Software Installation</a> in the <i>Installation Guide</i> for details.</p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>Install an SSH client to provide secure shell access to the SafeNet appliance  for certificate exchange and registration. The PuTTY SSH client (putty.exe) is included in the SafeNet Luna HSM client for Windows.</p>
+        <p class="ol2" data-mc-autonum="c."><span class="autonumber"><span class="ol2Number">c.</span></span>Ensure that the client workstation has network access to the SafeNet Luna Network HSM appliance. The appliance auto-negotiates network bandwidth up to Gigabit Ethernet speeds. See <a href="../appliance_config/recommended_network_characteristics.htm" class="MCXref xref">Recommended Network Characteristics</a> for more information.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Open a SafeNet Luna HSM client session:</p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>Open a command prompt or terminal window.</p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>Go to the SafeNet Luna HSM client installation directory:</p>
+        <table style="width: 92%;mc-table-style: url('../../Resources/TableStyles/List2.css');" class="TableStyle-List2" cellspacing="0">
+            <col class="TableStyle-List2-Column-Column1" />
+            <col class="TableStyle-List2-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List2-Body-Body1">
+                    <td class="TableStyle-List2-BodyE-Column1-Body1" style="font-weight: bold;">Windows</td>
+                    <td class="TableStyle-List2-BodyD-Column1-Body1">C:\Program Files\SafeNet\LunaClient</td>
+                </tr>
+                <tr class="TableStyle-List2-Body-Body1">
+                    <td class="TableStyle-List2-BodyE-Column1-Body1" style="font-weight: bold;">Linux/AIX</td>
+                    <td class="TableStyle-List2-BodyD-Column1-Body1">/usr/safenet/lunaclient/bin</td>
+                </tr>
+                <tr class="TableStyle-List2-Body-Body1">
+                    <td class="TableStyle-List2-BodyB-Column1-Body1" style="font-weight: bold;">Solaris</td>
+                    <td class="TableStyle-List2-BodyA-Column1-Body1">/opt/safenet/lunaclient/bin</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use <b>pscp</b> (Windows) or <b>scp</b> (Linux/UNIX) to import the HSM Appliance Server Certificate (<b>server.pem</b>) from the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance to the SafeNet Luna HSM client workstation. See <a href="../../Utilities/scp_pscp/scp_pscp.htm" class="MCXref xref">SCP and PSCP</a> for details. You require the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance admin password to complete this step.</p>
+        <p class="listLevel1">If you are importing multiple <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliances' certificates to a client, we suggest that you import the certificates and process each one as it arrives. The <b>vtl addServer</b> command (just ahead) copies, moves and renames the current server.pem certificate to reflect the originating appliance's hostname or IP address, as appropriate, and you are always assured that the certificates that are registered in the .\cert\server folder are unique. In this method, each appliance server cert arrives in the SafeNet Luna HSM Client folder as (the default) "server.pem" and is safely registered uniquely (in the server cert folder) before the next server.pem arrives and overwrites any earlier version. </p>
+        <p class="listLevel1">If you prefer to import server.pem certificates from multiple appliances, before registering them, then you must rename them as they arrive, to avoid overwriting and losing certificates that all arrive in the same folder with the same default filename.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>When using <b>scp</b> or <b>pscp</b> over an IPv6 network, enclose addresses in square brackets. <br /></p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col class="TableStyle-List1-Column-Column1" />
+            <col class="TableStyle-List1-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyE-Column1-Body1" style="font-weight: bold;">Windows</td>
+                    <td class="TableStyle-List1-BodyD-Column1-Body1">
+                        <p><b>Syntax: pscp</b> [options] &lt;user&gt;@&lt;host&gt;:&lt;source_filename&gt; &lt;target_filename&gt;</p>
+                        <p><b>Example:</b>To copy the server certificate from host myHSM to the current (.) directory, keeping the same name:</p><pre xml:space="preserve">pscp admin@myHSM:server.pem . <br />admin@myHSM's password: &#160;</pre><pre xml:space="preserve">server.pem     | 1 kB |   1.1 kB/s | ETA: 00:00:00 | 100%</pre>
+                    </td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyB-Column1-Body1" style="font-weight: bold;">Linux/UNIX</td>
+                    <td class="TableStyle-List1-BodyA-Column1-Body1">
+                        <p><b>Syntax:</b><b>scp</b>  [options] &lt;user&gt;@&lt;host&gt;:&lt;source_filename&gt; &lt;target_filename&gt;</p>
+                        <p><b>Example:</b> To copy the server certificate from host IP 192.168.0.123 to the current (.) directory, keeping the same name: </p><pre xml:space="preserve"><span style="font-family: 'Courier New', monospace;">scp admin@192.168.0.123:server.pem . <br />admin@192.168.0.123's password: &#160;&#160;<br />server.pem      | 1 kB |   1.1 kB/s | ETA: 00:00:00 | 100%</span></pre>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="listLevel1"> You must accept the SSH certificate the first time you open an scp or 
+SSH link. You can use the LunaSH command <b>sysconf fingerprint ssh</b> to check the certificate fingerprint.</p>
+        <p class="listLevel1">  If the HSM appliance IP or hostname is changed,&#160;SSH will 
+detect a mismatch in the HSM appliance's server certification information 
+ and warn you of a potential security breach. To resolve this issue, delete the server's certificate information 
+ from the client’s known host file at: /&lt;user home dir&gt;<b>/.ssh/known_hosts2</b>, and re-import the server certificate.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>On Windows, if the certificate fails to copy (but no error message appears), ensure the client machine is running with Administrator privileges. Alternatively, open the <b>cmd</b> prompt by right-clicking and selecting "Run as Administrator".</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Register the HSM Server Certificate with the client, using the <b>vtl addserver</b> command. See <a href="../../Utilities/vtl/vtl.htm" class="MCXref xref">VTL</a> in the <i>Utilities Reference Guide</i> for full command syntax. The <b>vtl</b> command is not interactive. It is called from the command 
+line or a shell prompt, completes its current task, and exits back 
+to the shell:</p>
+        <p class="listLevel1">&gt;<b>vtl addServer -n</b> &lt;Network_HSM_hostname_or_IP&gt; <b>-c</b> &lt;server_certificate&gt;</p>
+        <p class="listLevel1">If using a host name, ensure that the name you use is reachable over the network (<b>ping</b> &lt;hostname&gt;). To avoid network issues, it is recommended that you specify an IP address.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Create a certificate and private key for the client, using the <b>vtl createcert</b> command. See <a href="../../Utilities/vtl/vtl.htm" class="MCXref xref">VTL</a> in the <i>Utilities Reference Guide</i> for full command syntax:</p>
+        <p class="listLevel1">&gt;<b>vtl createcert -n</b> &lt;SafeNet_HSM_client_hostname_or_IP&gt;</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The client hostname or IP address must be an exact match for the client hostname, as reported using the <b>hostname</b> command. </p>
+        <p class="listLevel1">The certificate and private key are saved to the &lt;client_install_dir&gt;<b>/cert/client</b> directory and are named &lt;client_hostname_or_IP&gt;<b>.pem</b> and &lt;client_hostname_or_IP&gt;<b>Key.pem</b>, respectively. The <b>vtl createcert</b> command displays the full path-name to the key and certificate files that were generated. </p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Export the client certificate to the HSM appliance, using <b>pscp</b> (Windows) or <b>scp</b> (Linux/UNIX). You require the SafeNet Luna Network HSM appliance admin password to complete this step. You must <b>scp</b> to the admin account on the HSM appliance, or the client 
+certificate will not register correctly. The file arriving at the HSM is automatically placed in the 
+ appropriate directory. Do not specify a target directory.</p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col class="TableStyle-List1-Column-Column1" />
+            <col class="TableStyle-List1-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyE-Column1-Body1" style="font-weight: bold;">Windows</td>
+                    <td class="TableStyle-List1-BodyD-Column1-Body1">
+                        <p><b>Syntax: pscp</b>  [options] &lt;source_filename&gt; &lt;user&gt;@&lt;host&gt;<b>:</b>[&lt;target_filename&gt;]</p>
+                        <p><b>Example:</b>To copy the client certificate (<b>myLunaClient.pem</b>) to the myLunaSA appliance, keeping the same name:</p><pre xml:space="preserve">pscp myLunaClient.pem admin@myLunaSA: <br />admin@myLunaSA's password: ********&#160;&#160;<br />myLunaClient.pem   | 1 kB |   1.1 kB/s | ETA: 00:00:00 | 100%</pre>
+                    </td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyB-Column1-Body1" style="font-weight: bold;">Linux/UNIX</td>
+                    <td class="TableStyle-List1-BodyA-Column1-Body1">
+                        <p><b>Syntax:</b><b>scp</b>  [options] &lt;source_filename&gt; &lt;user&gt;@&lt;host&gt;<b>:</b>[&lt;target_filename&gt;]</p>
+                        <p><b>Example:</b> To copy the  client certificate (<b>myLunaClient.pem</b>) to the SafeNet Luna Network HSM appliance with IP 192.168.0.123, keeping the same name: </p><pre xml:space="preserve">scp myLunaClient.pem admin@192.168.0.123: <br />admin@192.168.0.123's password: ********&#160;&#160;<br />myLunaClient.pem   | 1 kB |   1.1 kB/s | ETA: 00:00:00 | 100%</pre>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Register the client certificate with the HSM appliance using the LunaSH <b>client register</b> command. You need an admin or operator-level account on the SafeNet Luna Network HSM appliance to complete this step.</p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>Use an SSH client to connect to the SafeNet Luna Network HSM appliance and login using an admin or operator-level account.</p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>Use the LunaSH <b>client register</b> command to register the client. See <a href="../../lunash/commands/client/client_register.htm" class="MCXref xref">client register</a> in the <i>LunaSH Reference Guide</i> for details.</p>
+        <table style="width: 92%;mc-table-style: url('../../Resources/TableStyles/List2.css');" class="TableStyle-List2" cellspacing="0">
+            <col class="TableStyle-List2-Column-Column1" />
+            <col class="TableStyle-List2-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List2-Body-Body1">
+                    <td class="TableStyle-List2-BodyE-Column1-Body1" style="font-weight: bold;">By hostname</td>
+                    <td class="TableStyle-List2-BodyD-Column1-Body1">
+                        <p><b>client register -client</b> &lt;client_name&gt; 
+ <b>-hostname</b> &lt;client_hostname&gt;<br /></p>
+                        <p>Use this syntax if the client certificate was created using the client's hostname. You will then need to run <b>client hostip</b> command to map the hostname to an IP address.  See <a href="../client_partition/ntl_links.htm" class="MCXref xref">Creating a Network Trust Link Between a Client and a Partition</a> step 4 under sub-section "Assigning a Client to a Partition".)</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-List2-Body-Body1">
+                    <td class="TableStyle-List2-BodyB-Column1-Body1" style="font-weight: bold;">By IP address</td>
+                    <td class="TableStyle-List2-BodyA-Column1-Body1">
+                        <p><b>client register -client</b> &lt;client_name&gt; 
+ <b>-ip</b> &lt;client_IP_address&gt; <br /></p>
+                        <p>Use this syntax if the client certificate was created using the client's IP address as the certificate name.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="listLevel1">The &lt;client_name&gt; can be any string that allows you to 
+ easily identify this client. Many people use the hostname, but the &lt;client_name&gt; 
+can be any string that you find convenient. This becomes especially useful if you are not using DNS - in that case, a well-considered &lt;client_name&gt; is likely going to be easier to remember or recognize than the client's IP address.</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Restart the Network Trust Link service. After registering a client, with a hostname certificate, or after registering a client with an IP certificate and then mapping the client hostname to its IP, stop and start the NTL service, to ensure that the new client is included. </p>
+        <p class="listLevel1">lunash:&gt;<b>service restart ntls</b></p>
+        <p class="listLevel1">You can use the LunaSH <b>client list</b> command to verify the client registration.</p>
+        <h5>De-registering and Re-registering Clients</h5>
+        <p>If you have multiple HSM appliances connected and registered with a client 
+ and you de-register that client from one of the HSM appliances, then 
+ you must also de-register that HSM appliance on the client side. Failure to do so will result in a “Broken pipe” error, which indicates 
+ an incomplete registration.</p>
+        <p>If you wish to de-register a client and then re-register with a new certificate, 
+ on the same HSM appliance, then you must copy the certificate to the HSM appliance (HSM server) and stop and re-start the service called NTLS (see <a href="../../lunash/commands/service/service_list.htm" class="MCXref xref">service list</a> and <a href="../../lunash/commands/service/service_restart.htm" class="MCXref xref">service restart</a>). 
+ Before such a restart, any connection attempts  fail, and “Error on 
+SSL accept” is logged.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

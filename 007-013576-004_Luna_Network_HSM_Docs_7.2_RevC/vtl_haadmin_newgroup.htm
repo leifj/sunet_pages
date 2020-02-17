@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Utilities Reference Guide|VTL">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>vtl haAdmin newGroup</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#Utilities/vtl/vtl_haadmin_newgroup.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">vtl haAdmin newGroup</h2>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>This command is disabled. See lunacm command <a href="../../lunacm/commands/hagroup/hagroup_creategroup.htm" class="MCXref xref">hagroup creategroup</a></p>
+        <h3 class="ntoc">Name</h3>
+        <p>vtl haAdmin 
+ newGroup &#160;- create a new HA&#160;group.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code">vtl haAdmin newGroup -serialNum &lt;serialnumber&gt; -label 
+ &lt;label&gt; -password &lt;password&gt; </p>
+        <h3 class="ntoc">Description</h3>
+        <p><a name="kanchor127"></a><a name="kanchor128"></a>Creates a new High Availability (HA) group. The user selects a label 
+ for the new group, and provides a primary partition and it's password. 
+ Using these, the HA group is set up and is ready for new partitions to 
+ be added to it. Note that the user must be assigned the partition in question, 
+ and the NTLA must be correctly established.</p>
+        <p>The new HA group will be assigned an HA group number that is used for 
+ all other commands associated with this HA group.</p>
+        <p>The new HA group will appear as an additional slot in the client machine's 
+ slot list. The slot will be denoted as an HA Virtual Card Slot slot-type 
+ when using C_GetSlotInfo call</p>
+        <p>If there are any existing objects on the partition, the user is asked 
+ if he would like to keep them, remove them, or quit to further examine 
+ them. </p>
+        <p>If this new HA group is a copy of a group on another client, the user 
+ will be warned that there is an existing HA key on the partition. If the 
+ user's intention is to have both clients able to talk to the same set 
+ of partitions in HA groups, the user must type 'copy' to keep and use 
+ the existing HA key. (If the user removes it, the partition will no longer 
+ be a working member of the other HA group(s) to which it belongs.)</p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>VTL manages the HA groups that you create, and must therefore remember each group and each member (serial number) that is used. You might wish to create a group, then create additional groups based on the configuration of the first one, by "re-using" the primary member - deleting that primary member from the first group and using it to start another group [a SafeNet Luna Network HSM can be a member of just one HA group at one time]. <br /><br />This can work for a second and a third HA group, but cannot be done for any additional HA groups (fourth, fifth, etc.) unless you remove an existing group before you attempt to create any new group. <br /><br />The maximum concurrent HA groups administered by one vtl and re-using the same primary member is three.<br /><br />To administer many HA groups, all started by the same SafeNet Luna Network HSM, from one administrative workstation, run Virtual Machine environments on that workstation with a separate instance of vtl in each VM.</p>
+        <p>&#160;</p>
+        <h3 class="ntoc">Options</h3>
+        <p><span style="font-weight: bold;">-serialNum &lt;serialnumber&gt;</span> 
+ &#160;[mandatory] 
+ The serial number of the primary partition for the group. The partition's 
+ serial number can be obtained using 'partition -show' from the lunash, 
+ or by using C_GetTokenInfo via a PKCS#11 application such as ckdemo. All 
+ partitions have unique serial numbers.</p>
+        <p><span style="font-weight: bold;">-label &lt;label&gt;</span> &#160;[mandatory] 
+ Provide a label for the new HA group. This is the value that will be returned 
+ to the PKCS#11 call C_GetTokenInfo for the HA slot.</p>
+        <p><span style="font-weight: bold;">-password &lt;password&gt;</span> &#160;[mandatory] 
+ The text password for the primary partition. Note that for SafeNet Luna Network HSM with 
+ Trusted Path Authentication partitions, all partitions that will be added 
+ to the HA group must share this password. You may wish to use the lunash 
+ command 'partition -changePw' to set the password before completing this 
+ step.</p>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">vtl haAdmin -newGroup -label testgroup -serial 65010001 -password testpassword <br /><br /></pre><pre xml:space="preserve">Warning: &#160;There are 2 objects currently on the new member.<br /> &#160;&#160;&#160;Do you wish to propagate these objects within the HA<br /> &#160;&#160;&#160;group, or remove them?<br /> &#160;&#160;&#160;Type 'copy' to keep and propagate the existing<br /> &#160;&#160;&#160;objects, 'remove' to remove them before continuing,<br /> &#160;&#160;&#160;or 'quit' to stop adding this new group member.<br /> &#160;&#160;&#160;&gt;  copy</pre><pre xml:space="preserve">New group with label “testgroup” created at group number 165010001.<br />Group configuration is:<br />HA Group Label:  testgroup <br />HA Group Number:  1150520008 <br />HA Group Slot #:  unknown <br />Synchronization:  enabled <br />Group Members:  150520008 <br />Standby members:  &lt;none&gt; <br />In Sync:  yes</pre>
+        <h3 class="ntoc">Error When Attempting More than Three Groups</h3>
+        <p>The following is an example of what happens if you are re-using a primary SafeNet Luna Network HSM to attempt to create a fourth HA&#160;group, without deleting any of the earlier groups. VTL on your administrative computer must keep track of all HA&#160;groups that it is managing, and it allows a maximum of three:</p><pre xml:space="preserve">hbash-3.2# ./vtl haadmin -new -l ha4 -s 951357004  </pre><pre xml:space="preserve">Please enter the password for the partition: </pre><pre xml:space="preserve">&gt; ******* </pre><pre xml:space="preserve"> Warning: There are 119 objects currently on the new member. &#160;&#160;<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; &#160;Do you wish to propagate these objects within the HA &#160;&#160; &#160; &#160; &#160; &#160;<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;group, or remove them? </pre><pre xml:space="preserve"> &#160;&#160; &#160; &#160; &#160; Type 'copy' to keep and propagate the existing &#160;&#160; &#160; &#160; &#160; &#160;<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;objects, 'remove' to remove them before continuing, &#160;&#160;<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; &#160;or 'quit' to stop adding this new group member. &#160;&#160;<br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&gt; copy </pre><pre xml:space="preserve">Can not generate a unique serial number for the HA group. <br />You may want to delete any un-used HA group and try again. </pre><pre xml:space="preserve"> 'vtl haAdmin -newGroup' aborted. </pre><pre xml:space="preserve"> bash-3.2# ./vtl</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Design Considerations">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>High Availability (HA) Implementations</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/design/ha.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>High Availability (HA) Implementations</h2>
+        <p>If you use the <span class="DefaultProduct">SafeNet Luna Network HSM</span> HA feature then the calls to the <span class="DefaultProduct">SafeNet Luna Network HSM</span>s are 
+ load-balanced. The session handle that the application receives when it 
+ opens a session is a virtual one and is managed by the HA code in the 
+ library. The actual sessions with the HSM are established by the HA code 
+ in the library and hidden from the application and will come and go as 
+ necessary to fulfill application level requests.</p>
+        <p>Before the introduction of HA AutoRecovery, bringing a failed/lost group member back into the group (recovery) was a manual procedure. </p>
+        <p>The Administration &amp; Maintenance section contains a general description of the how the HA AutoRecovery function works, in practice.</p>
+        <p>For every PKCS#11 call, the HA recover logic will check to see if we need to perform auto recovery to a disconnected appliance. If there is a disconnected appliance then it will try to reconnect to that appliance before it proceeds with the current PKCS#11 call.
+
+ 
+
+</p>
+        <p>The HA recovery logic is designed in such a way that it will try to reconnect to an appliance only every X secs and N number of times where X is pre-set to one minute, and N is configurable via the VTL utility.  </p>
+        <p>For HA recovery attempts: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The default retry interval is 60 seconds.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The default number of retries is effectively infinite.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The HA configuration section in the <b>Chrystoki.conf/crystoki.ini</b> file is created and populated when either the interval or the number of retries is specified in the LunaCM commands <a href="../../lunacm/commands/hagroup/hagroup_retry.htm" class="MCXref xref">hagroup retry</a> and <a href="../../lunacm/commands/hagroup/hagroup_interval.htm" class="MCXref xref">hagroup interval</a>.</p>
+        <p>The following is the pseudo code of the HA logic
+
+ 
+
+ 
+
+</p><pre xml:space="preserve">if (disconnected_member &gt; 0  and recover_attempt_count &lt; N and time_now - last_recover_attempt &gt; X) then </pre><pre xml:space="preserve">&#160;&#160;&#160;performance auto recovery
+</pre><pre xml:space="preserve">&#160;&#160;&#160;set last_recover_attempt  equal to time_now
+</pre><pre xml:space="preserve">&#160;&#160;&#160;if  (recovery failed)  then
+</pre><pre xml:space="preserve">&#160;&#160;&#160;&#160;&#160;&#160;increment recover_attempt_count  by 1 </pre><pre xml:space="preserve">&#160;&#160;&#160;else    </pre><pre xml:space="preserve">&#160;&#160;&#160;&#160;&#160;&#160;decrement disconnected_member by 1
+</pre><pre xml:space="preserve">&#160;&#160;&#160;&#160;&#160;&#160;reset recover_attempt_count to 0
+</pre><pre xml:space="preserve">&#160;&#160;&#160;end if
+</pre><pre xml:space="preserve">end if
+
+</pre>
+        <p>The HA auto recovery design runs <a name="kanchor321"></a>within a PKCS#11 call.  The responsiveness of recovering a disconnected member is greatly influenced by the frequency of PKCS#11 calls from the user application. Although the logic shows that it will attempt to recover a disconnected client in X secs, in reality, it will not run until the user application makes the next PKCS#11 call.</p>
+        <h3>Detecting the Failure of an HA Member</h3>
+        <p>When an HA Group member first fails, the HA status for the group <a name="kanchor322"></a>shows "device error" for the failed member. All subsequent calls return "token not <a name="kanchor323"></a>present", until the member (HSM Partition or PKI token) is returned to service.</p>
+        <p>Here is an example of two such calls using CKDemo:</p><pre xml:space="preserve">Enter your choice : 52  </pre><pre xml:space="preserve">Slots available:<br /> &#160;&#160;slot#1 - LunaNet Slot  &#160;&#160; &#160; &#160; &#160;</pre><pre xml:space="preserve">&#160;&#160;&#160;slot#2 - LunaNet Slot  &#160;&#160; &#160; &#160; &#160;</pre><pre xml:space="preserve">&#160;&#160;&#160;slot#3 - HA Virtual Card Slot</pre><pre xml:space="preserve">  </pre><pre xml:space="preserve">Select a slot: 3  </pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">HA group 1599447001 status:  &#160;&#160; &#160; </pre><pre xml:space="preserve">&#160;&#160;&#160;HSM 599447001 &#160; &#160; &#160;- CKR_DEVICE_ERROR &#160;&#160; &#160; <br />&#160;&#160;&#160;HSM 78665001 &#160; &#160; &#160; - CKR_OK <br />Status: Doing great, no errors (CKR_OK)</pre><pre xml:space="preserve">  </pre><pre xml:space="preserve">TOKEN FUNCTIONS <br />( 1) Open Session &#160;( 2) Close Session &#160;( 3) Login <br />( 4) Logout &#160; &#160; &#160; &#160;( 5) Change PIN &#160; &#160; ( 6) Init Token <br />( 7) Init Pin &#160; &#160; &#160;( 8) Mechanism List ( 9) Mechanism Info <br />(10) Get Info &#160; &#160; &#160;(11) Slot Info &#160; &#160; &#160;(12) Token Info <br />(13) Session Info &#160;(14) Get Slot List &#160;(15) Wait for Slot Event <br />(16) InitToken(ind)(17) InitPin (ind) &#160;(18) Login (ind) <br />(19) CloneMofN </pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">OBJECT MANAGEMENT FUNCTIONS <br />(20) Create object (21) Copy object &#160; &#160;(22) Destroy object <br />(23) Object size &#160; (24) Get attribute &#160;(25) Set attribute <br />(26) Find object &#160; (27) Display Object </pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">SECURITY FUNCTIONS <br />(40) &#160;Encrypt file (41) Decrypt file &#160; (42) &#160;Sign <br />(43) &#160;Verify &#160; &#160; &#160; (44) Hash file &#160; &#160; &#160;(45) &#160;Simple Generate Key <br />(46) &#160;Digest Key </pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">HIGH AVAILABILITY RECOVERY FUNCTIONS <br />(50) HA Init &#160; &#160; &#160; (51) HA Login &#160; &#160; &#160; (52) HA Status </pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">KEY FUNCTIONS <br />(60) Wrap key &#160; &#160; &#160;(61) Unwrap key &#160; &#160; (62) Generate random number <br />(63) Derive Key &#160; &#160;(64) PBE Key Gen &#160; &#160;(65) Create known keys <br />(66) Seed RNG &#160; &#160; &#160;(67) EC User Defined Curves</pre><pre xml:space="preserve">   </pre><pre xml:space="preserve">CA FUNCTIONS <br />(70) Set Domain &#160; &#160;(71) Clone Key &#160; &#160; &#160;(72) Set MofN <br />(73) Generate MofN (74) Activate MofN &#160;(75) Generate Token Keys <br />(76) Get Token Cert(77) Sign Token Cert(78) Generate CertCo Cert <br />(79) Modify MofN &#160; (86) Dup. MofN Keys (87) Deactivate MofN</pre><pre xml:space="preserve">   </pre><pre xml:space="preserve">CCM FUNCTIONS <br />(80) Module List &#160; (81) Module Info &#160; &#160;(82) Load Module <br />(83) Load Enc Mod &#160;(84) Unload Module &#160;(85) Module function Call</pre><pre xml:space="preserve">   </pre><pre xml:space="preserve">OTHERS <br />(90) Self Test &#160; &#160; (94) Open Access &#160; &#160;(95) Close Access <br />(97) Set App ID &#160; &#160;(98) Options</pre><pre xml:space="preserve">   </pre><pre xml:space="preserve">OFFBOARD KEY STORAGE: <br />(101) Extract Masked Object &#160; &#160;(102) Insert Masked Object <br />(103) Multisign With Value &#160; &#160; (104) Clone Object <br />(105) SIMExtract &#160; &#160; &#160; &#160; &#160; &#160; &#160; (106) SIMInsert <br />(107) SimMultiSign</pre><pre xml:space="preserve">   </pre><pre xml:space="preserve">SCRIPT EXECUTION: <br />(108) Execute Script <br />(109) Execute Asynchronous Script <br />(110) Execute Single Part Script  </pre><pre xml:space="preserve">(0) Quit demo  </pre><pre xml:space="preserve">Enter your choice : 52</pre><pre xml:space="preserve">  </pre><pre xml:space="preserve">Slots available:<br /> &#160;&#160;slot#1 - LunaNet Slot  &#160;&#160; &#160; &#160; &#160;<br />&#160;&#160;&#160;slot#2 - LunaNet Slot  &#160;&#160; &#160; &#160; &#160;<br /> &#160;&#160;slot#3 - HA Virtual Card Slot</pre><pre xml:space="preserve">  </pre><pre xml:space="preserve">Select a slot: 3</pre><pre xml:space="preserve">  </pre><pre xml:space="preserve">HA group 1599447001 status:  &#160;&#160; &#160; </pre><pre xml:space="preserve">&#160;&#160;&#160;HSM 599447001 &#160; &#160; &#160;- CKR_TOKEN_NOT_PRESENT &#160;&#160; &#160; <br />&#160;&#160;&#160;HSM 78665001 &#160; &#160; &#160; - CKR_OK <br />Status: Doing great, no errors (CKR_OK)</pre><pre xml:space="preserve">--- end ---</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

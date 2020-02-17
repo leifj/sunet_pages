@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Product Overview">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Flexible Backups</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#Product_Overview/flexible_backups/flexible_backups.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter">Flexible Backups</h1>
+        <p>While some applications might deal in ephemeral objects that are erased after their use, in many SafeNet Luna HSM applications the keys and objects within the HSM and partition have value and are meant to persist. For such valuable data, any security regime requires that the data be backed up in secure fashion, and stored securely.</p>
+        <p>Backup and restore operations require access to the objects in your partition in order to copy them. As such, backup and restore operations are restricted to HSMs that share a cloning domain and partitions whose administrators allow access to.</p>
+        <h3 class="ntoc">Backup</h3>
+        <p>Backup operations copy the secure material on your HSM and store it on a separate Backup HSM. Backup is not performed continuously. The frequency of backup is dependent on your backup plan or strategy. </p>
+        <p>The SafeNet Luna Backup HSM can be connected directly to the  HSM to perform backup or restore operations on the spot. It is not able to perform cryptographic operations; it functions only in its secure backup/restore role. The  Backup HSM takes on the authentication type of the primary HSM with which it is paired for backup - so it becomes a password-authenticated Backup HSM  when backing up a password-authenticated primary HSM, and  a PED-authenticated Backup HSM when backing up a PED-authenticated primary HSM.</p>
+        <p>The Backup HSM can also be connected to a host computer, located at a distance from the source HSM, and can perform backup and restore operations over secure network connection. This is normally the case when the source HSM is kept in a secure server room or a lights-out facility. </p>
+        <p>There are several ways to do backup with SafeNet Luna HSMs. Depending on the type and number of HSMs and partitions you have, and how they are organized, different methods may be more suitable for your situation. The following sections describe these methods in more detail:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Local" class="MCXref xref">Local Backup</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Remote" class="MCXref xref">Remote Backup</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Local2" class="MCXref xref">Comparing Local Versus Remote Backup</a>
+        </p>
+        <h3 class="ntoc">Restore</h3>
+        <p>Restore operations are only necessary if there is no hope of recovering your data on your HSM, and using your backup to restore the content is the only solution. The restore operation is identical to the backup operation, only in the opposite direction.</p>
+        <h3 class="ntoc"><a name="Local"></a>Local Backup</h3>
+        <p>Local backup requires a direct connection to the HSM to be successful. Backup can be done directly from the secure appliance housing the HSM or from a client workstation connected to the HSM.</p>
+        <h4>Centralized Local Backup</h4>
+        <p>Centralized backup uses a direct connection between the HSM you wish to back up and the Backup HSM. <a href="#Centrali" class="MCXref xref">Centralized Local Backup</a> outlines the basic setup required for simple local backup.</p>
+        <p class="figureCaption" data-mc-autonum="Figure 1: "><span class="autonumber"><span>Figure 1: </span></span><a name="Centrali"></a>Centralized Local Backup</p>
+        <p>
+            <img src="../../Resources/Images/backup/centralized_backup_diagram.svg" />
+        </p>
+        <p>Connecting your Backup HSM directly to the HSM or secure appliance housing the HSM you wish to back up is a highly secure method of copying your keys. It requires you to have physical access to the HSM in addition to the HSM SO and Partition SO credentials for every partition needing backup. The backup operation is initiated from the LunaSH command line.</p>
+        <h4>Client-side Local Backup</h4>
+        <p style="font-weight: normal;">Client-side backup connects to the HSM you wish to back up via your client workstation. The Backup HSM connects directly to the client workstation to perform backup. <a href="#Client-s" class="MCXref xref">Client-side Local Backup</a> outlines the basic setup required for local backup via client workstation.</p>
+        <p class="figureCaption" data-mc-autonum="Figure 2: "><span class="autonumber"><span>Figure 2: </span></span><a name="Client-s"></a>Client-side Local Backup</p>
+        <p style="font-weight: normal;">
+            <img src="../../Resources/Images/backup/ClientSideBackup1.svg" />
+        </p>
+        <p>The backup operation in this case is still local, and thus requires a direct wired connection between your Backup HSM and client workstation. This method is highly secure, and allows for some flexibility in case the HSM you wish to back up is not easily available for direct connection. A&#160;PC running Luna Client and LunaCM can connect to the HSM and, with the appropriate  Partition SO credentials for every partition needing backup, can access and securely copy your cryptographic keys.</p>
+        <h3 class="ntoc"><a name="Remote"></a>Remote Backup</h3>
+        <p>Remote backup allows you to securely back up your HSM from any location that is convenient. A secure network connection facilitated by RBS enables you to access your HSM or partition without needing to be physically near it. <a href="#Remote2" class="MCXref xref">Remote Backup</a> outlines the basic setup required for remote backup.</p>
+        <p class="figureCaption" data-mc-autonum="Figure 3: "><span class="autonumber"><span>Figure 3: </span></span><a name="Remote2"></a>Remote Backup</p>
+        <p>
+            <img src="../../Resources/Images/backup/RemoteBackup.svg" />
+        </p>
+        <p>Remote Backup Service (RBS) runs on a system hosting a SafeNet Luna Backup HSM, making the Backup HSM available to distant  HSMs. This allows backup and restore operations to run from any location most convenient for the administrator. In this configuration, backup and restore operations are performed over secure network connection.</p>
+        <h3 class="ntoc"><a name="Local2"></a>Comparing Local Versus Remote Backup</h3>
+        <p>Regardless of whether you use a local connection to backup and restore your HSM, or whether you use a remote one, backup and restore operations always require a Backup HSM. How you decide to connect it and organize your backup/restore infrastructure depends on what your organization needs. </p>
+        <p>Local backup is easier and faster to configure than remote, but the remote option allows more secure storage of your cryptographic material in case the entire environment in which your HSM resides collapses.</p>
+        <p>For detailed instructions on carrying out backup and restore operations, see the <i>Administration Guide</i>.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

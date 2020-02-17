@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Remote System Logging</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sa_appliance_admin/logging/remote_logging.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Remote System Logging</h2>
+        <p>Remote system logging allows you to send logs from your <span class="DefaultProduct">SafeNet Luna Network HSM</span> to a central syslog server on the network. </p>
+        <p>You can use the LunaSH <b>syslog remotehost</b> commands to specify the central syslog server (see <a href="../../lunash/commands/syslog/syslog_remotehost.htm" class="MCXref xref">syslog remotehost</a>).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Sending" class="MCXref xref">Configuring a Remote Syslog Server</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Customiz" class="MCXref xref">Customizing Remote Logging Severity Levels</a>
+        </p>
+        <h3 class="ntoc"><a name="Sending"></a>Configuring a Remote Syslog Server</h3>
+        <p>Use the following procedure to configure remote system logging. Most Linux distributions include rsyslog as the standard syslog daemon. Refer to your Linux documentation for instructions that describe how to configure rsyslog on Linux.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The remote server must have the appropriate port open to receive the logs (UDP port 514 by default). Refer to your operating system and firewall documentation for more information. If you need to use a different port or TCP protocol, specify it when you add the remote server's IP or hostname. </p>
+        <h5>To send logs to a remote syslog server:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Add the remote server's IP or hostname to the remote logging configuration (see <a href="../../lunash/commands/syslog/syslog_remotehost_add.htm" class="MCXref xref">syslog remotehost add</a>).</p>
+        <p class="listLevel1">lunash:&gt;<b>syslog remotehost add -host</b> &lt;hostname/IP&gt; [<b>-protocol</b> &lt;protocol&gt;] [<b>-port</b> &lt;port&gt;]</p><pre class="listLevel1" xml:space="preserve">lunash:&gt;syslog remotehost add -host 192.10.10.101</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Stopping syslog:                                           [  OK  ]</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Starting syslog:                                           [  OK  ]</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">192.10.10.101 added successfully</pre><pre class="listLevel1" xml:space="preserve">Make sure the rsyslog service on 192.10.10.101 is properly configured to receive the logs</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Command Result : 0 (Success)</pre>
+        <p class="listLevel1">By default, the remote server will now receive lunalogs, messages, secure, and boot logs at the <b>info</b> level and above, and cron logs at the <b>notice</b> level and above. See <a href="#Customiz" class="MCXref xref">Customizing Remote Logging Severity Levels</a> to specify which logs to send to which remote server.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span> On the receiving or target system, start the syslog daemon or service to allow it to receive logs from your <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance(s).</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Optionally, confirm the remote logging settings (see <a href="../../lunash/commands/syslog/syslog_show.htm" class="MCXref xref">syslog show</a>).</p>
+        <p class="listLevel1">lunash:&gt;<b>syslog show</b></p><pre class="listLevel1">Remote Configured Log Levels:</pre><pre class="listLevel1">-----------------------------</pre><pre class="listLevel1">lunalogs:</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.100       info</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.101       info</pre><pre class="listLevel1">messages:</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.100       info</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.101       info</pre><pre class="listLevel1">cron:</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.100       notice</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.101       notice</pre><pre class="listLevel1">secure:</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.100       info</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.101       info</pre><pre class="listLevel1">boot:</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.100       info</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.101       info</pre>
+        <h3 class="ntoc"><a name="Customiz"></a>Customizing Remote Logging Severity Levels</h3>
+        <p>There is no limit on the number of remote logging servers you can add, and you can configure the severity level for each server and log type independently (see <a href="logging.htm#Severity" class="MCXref xref">Log Severity Levels</a> for a description of the different levels). For example, you could send all log entries produced by the appliance to one remote server, and only entries marked <b>critical</b> or higher to another server.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>This feature has software and/or firmware dependencies. See <a href="../../administration/upgrade/version_dependencies.htm" class="MCXref xref">Version Dependencies by Feature</a> for more information.</p>
+        <h5>To customize remote logging severity:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Set the severity level for the desired log type (lunalogs,messages,cron,secure,boot), specifying a remote server you already added to the configuration (see <a href="../../lunash/commands/syslog/syslog_severity_set.htm" class="MCXref xref">syslog severity set</a>).</p>
+        <p class="listLevel1">lunash:&gt;<b>syslog severity set -logname</b> &lt;logname&gt; <b>-loglevel</b> &lt;loglevel&gt; <b>-host</b> &lt;hostname/IP&gt;</p><pre class="listLevel1" xml:space="preserve">lunash:&gt;syslog severity set -logname lunalogs -loglevel critical -host 192.10.10.101</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1">This command sets the severity level of lunalogs remote log messages.</pre><pre class="listLevel1">Only messages with the severity equal to or higher than the new</pre><pre class="listLevel1" xml:space="preserve">log level: "critical" will be sent to 192.10.10.101.</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Stopping syslog:                                           [  OK  ]</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Starting syslog:                                           [  OK  ]</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1">Command Result : 0 (Success)</pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Optionally, confirm the new settings (see <a href="../../lunash/commands/syslog/syslog_show.htm" class="MCXref xref">syslog show</a>).</p>
+        <p class="listLevel1">lunash:&gt;<b>syslog show</b></p><pre class="listLevel1">Remote Configured Log Levels:</pre><pre class="listLevel1">-----------------------------</pre><pre class="listLevel1">lunalogs:</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.100       info</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.101       critical</pre><pre class="listLevel1">messages:</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.100       info</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.101       info</pre><pre class="listLevel1">cron:</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.100       notice</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.101       notice</pre><pre class="listLevel1">secure:</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.100       info</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.101       info</pre><pre class="listLevel1">boot:</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.100       info</pre><pre class="listLevel1" xml:space="preserve">  192.10.10.101       info</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Repeat step 1, specifying each log type severity level you wish to customize (lunalogs,messages,cron,secure,boot). </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

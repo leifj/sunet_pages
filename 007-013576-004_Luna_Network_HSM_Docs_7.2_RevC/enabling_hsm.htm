@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Enabling or Disabling STC on the HSM</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/stc/enabling_hsm.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Enabling or Disabling STC on the HSM</h2>
+        <p>The STC functionality is enabled or disabled by setting HSM&#160;policy 39: Allow Secure Trusted Channel (see <a href="../capabilities_and_policies/hsm_capabilities_and_policies.htm" class="MCXref xref">HSM Capabilities and Policies</a>). The following instructions are for the HSM SO. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Enabling <b>HSM&#160;policy 39: Allow Secure Trusted Channel</b> allows the appliance to use STC or NTLS links between the appliance and its registered partitions. It does not enable STC on the link between the appliance and the HSM&#160;(the STC admin channel). If you want to use STC end-to-end (client to HSM) then you must also enable the STC admin channel. See <a href="sa_local_stc.htm" class="MCXref xref">Establishing and Configuring the STC Admin Channel on a SafeNet Luna Network HSM Appliance</a> for more information.</p>
+        <h3>Enabling STC on the HSM</h3>
+        <p>You can enable STC on the HSM&#160;by turning on HSM&#160;policy 39: Allow Secure Trusted Channel. Enabling HSM policy 39 allows you to use STC or NTLS to provide the network link between an application partition and a client application. To use STC on a partition, you must also enable STC on the partition by turning on partition policy 37: Force Secure Trusted Channel. See <a href="enabling_partition.htm" class="MCXref xref">Enabling or Disabling STC on a Partition</a>.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>If you do not plan to use STC in your appliance configuration, do not enable HSM policy 39. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>STC links are not supported over an IPv6 network. You must use NTLS to make partition-client connections via IPv6. </p>
+        <p>When you enable HSM&#160;policy 39: Allow Secure Trusted Channel, the following LunaSH STC commands are blocked, to protect the integrity of any existing STC links:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>hsm stc identity create</b>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>hsm stc identity initialize</b>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>hsm stc identity delete</b>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>hsm stc identity partition deregister</b>
+        </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>HSM&#160;zeroization disables partition policy 39: Allow Secure Trusted Channel. After zeroization, you will need to re-establish your STC links, as described in <a href="troubleshooting.htm#STC_restore_zeroize" class="MCXref xref">Restoring STC After HSM Zeroization</a> and in <a href="../../configuration/client_partition/stc_links.htm" class="MCXref xref">Creating an STC Link Between a Client and a Partition</a> in the <i>Configuration Guide</i>.</p>
+        <h5>To enable STC on the HSM</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Login as HSM SO. </p>
+        <p class="listLevel1">lunash:&gt;<b>hsm login</b></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Turn on HSM&#160;policy 39: Allow Secure Trusted Channel, which enables STC on the HSM. Enabling the policy is non-destructive. </p>
+        <p class="listLevel1">lunash:&gt;<b>hsm changepolicy -policy 39 -value 1</b></p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Verify that the policy is enabled:</p>
+        <p class="listLevel1">lunash:&gt;<b>hsm showpolicies</b></p>
+        <p class="listLevel1">For example:</p><pre class="listLevel1">lunash:&gt;hsm showpolicies</pre><pre class="listLevel1">.</pre><pre class="listLevel1" xml:space="preserve">Description                       Value       Code      Destructive</pre><pre class="listLevel1">.</pre><pre class="listLevel1" xml:space="preserve">Allow MofN                        On          37        No</pre><pre class="listLevel1" xml:space="preserve">Allow Secure Trusted Channel      On          39        No</pre><pre class="listLevel1" xml:space="preserve">Allow partition re-initialize     Off         42        No</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">Command Result : 0 (Success)</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>(Optional) Enable the STC admin channel, as described in <a href="sa_local_stc.htm" class="MCXref xref">Establishing and Configuring the STC Admin Channel on a SafeNet Luna Network HSM Appliance</a>.</p>
+        <h3>Disabling STC on the HSM</h3>
+        <p>You can disable STC on the HSM&#160;by  turning off HSM&#160;policy 39: Allow Secure Trusted Channel. Disabling this policy is destructive. It zeroizes the HSM&#160;and turns off the ability to use STC to provide the network link between an application partition and a client application, so that only NTLS links are permitted. </p>
+        <h5>To disable STC on the HSM:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Login as HSM SO.</p>
+        <p class="listLevel1">lunash:&gt;<b>hsm login</b></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Turn off HSM&#160;policy 39: Allow Secure Trusted Channel, which disables STC on the HSM and zeroizes the HSM. </p>
+        <p class="listLevel1">lunash:&gt;<b>hsm changepolicy -policy 39 -value 0</b></p>
+        <p class="listLevel1">You are prompted to confirm the action.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Verify that the policy is disabled:</p>
+        <p class="listLevel1">lunash:&gt;<b>hsm showpolicies</b></p><pre class="listLevel1">lunash:&gt;hsm showpolicies</pre><pre class="listLevel1">.</pre><pre class="listLevel1" xml:space="preserve">Description                       Value       Code      Destructive</pre><pre class="listLevel1">.</pre><pre class="listLevel1" xml:space="preserve">Allow MofN                        On          37        No</pre><pre class="listLevel1" xml:space="preserve">Allow Secure Trusted Channel      Off         39        No</pre><pre class="listLevel1" xml:space="preserve">Allow partition re-initialize     Off         42        No</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">Command Result : 0 (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Backing Up the Appliance Configuration</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sa_appliance_admin/backup/appliance_config_backup.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter">Backing Up the Appliance Configuration</h1>
+        <p>This chapter describes how to back up and restore the appliance configuration. You can backup and restore the appliance configuration to a file, or to an HSM.</p>
+        <h2>Backing Up and Restoring Your Appliance Service Configuration</h2>
+        <p>You can backup the configuration settings for the  various services running on the <span class="DefaultProduct">SafeNet Luna Network HSM</span> so that you can restore your configuration if necessary. The ability to backup and restore your appliance configuration assures that your clients will be able to connect to a restored appliance, and all services will function correctly, should that be required. </p>
+        <h4>Backing up your current configuration</h4>
+        <p>You can use the <b>sysconf config backup</b> command at any time to create a backup file that contains the current state of all  service parameters configured on the appliance. You can create multiple backup files, and provide a description for each file, allowing you to backup and restore multiple different configurations. The backup files are stored on the file system by default. You can export them to the internal HSM or an external backup HSM. The following configuration settings are saved: </p>
+        <table style="width: 100%;caption-side: top;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">Network</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Network configuration</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">NTLS</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">NTLS configuration</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">NTP</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Network Time Protocol configuration</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">SNMP</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SNMP configuration</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">SSH</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SSH configuration</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">Syslog</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Syslog configuration</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">System</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">System configuration (keys and certificates)</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">Users</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">User accounts, passwords, and files</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">Webserver</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Webserver configuration for REST API</td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>Automatically generated configuration backup files</h4>
+        <p>A configuration backup file is generated automatically when you run the <b>sysconf config restore</b> or <b>sysconf config factoryReset</b>commands. This allows you to revert to your current configuration if the restore operation did not achieve the expected results.</p>
+        <h4>Listing your configuration backup files</h4>
+        <p>You can use the <b>sysconf config list</b> command to list all of your backup files, complete with the description you provided for each one, as shown in the following example. The configuration settings file area will always contain the original factory file, and might additionally contain any number of intentionally created backups, and possibly one or more automatic backup files:</p><pre xml:space="preserve">[Net_HSM]lunash:&gt;sysconf config list</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Configuration backup files in file system:</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Size        |  File Name                                      |  Description</pre><pre>--------------------------------------------------------------------------------------------------</pre><pre xml:space="preserve">16641       |  Net_HSM_Config_20120222_0556.tar.gz            |  Clients OracleTDE and WebSphere</pre><pre xml:space="preserve">16588       |  Net_HSM_Config_20120222_0558.tar.gz            |  Automatic Backup Before Restoring</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+        <h4>Upgrading the appliance software changes your configuration settings</h4>
+        <p>If you upgrade your appliance software, your configuration settings may be changed as part of the upgrade process and, as a result, the original factory configuration no longer applies.  Immediately after you upgrade your appliance,  create a new configuration backup file and make note of the backup file created.  Later, if you wish to restore to this configuration, use the <b>sysconf config restore</b> command with the file created after upgrade.</p>
+        <h4>Managing your configuration backup files<br /></h4>
+        <p>If you wish, you can keep only the backup files that you find useful, and individually delete any others using the <b>sysconf config delete</b> command. You can also use the <b>sysconf config clear</b> command to delete all of your configuration files, if desired.</p>
+        <p>Note that the configuration backup file area is a special-purpose location, accessible only using the <b>sysconf config</b> commands. You will not see those files listed if you run the command <b>my file list</b>.</p>
+        <p>There is no limit on the size of individual backup files or the number of backups that can be stored on the file system, other than the available space. This space is shared by other files, such as spkg and log files, so account for this when planning your backup and restore strategy. Some size restrictions apply if you plan to export a backup file into your HSM using <b>sysconf config export</b>. See <a href="#BackupToHSM" class="MCXref xref">Backing Up the Appliance Configuration to the HSM</a> for details. </p>
+        <h4>Restoring configuration settings from a backup file</h4>
+        <p>Use the <b>sysconf config restore</b> command to restore the configuration settings for a specific service, or for all services, from a configuration backup file. You must stop any services you wish to restore before performing the restore operation, and reboot the appliance for the changes to take effect. A new configuration backup file of the current configuration is created automatically when you perform a restore operation, allowing you to easily revert to the previous configuration, if necessary.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Check the new configurations before rebooting or restarting the services.</p>
+        <h3>Example of Backing Up and Restoring Your Appliance Configuration</h3>
+        <p>If we factory reset the configuration parameters, a snapshot backup is created automatically, but for this example we will explicitly create a configuration backup file. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Create a backup of current appliance configuration parameters.</p><pre xml:space="preserve" class="listLevel1">[Net_HSM] lunash:&gt;sysconf config backup -description Example backup</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Created configuration backup file: Net_HSM_Config_20120222_0556.tar.gz</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Command Result : 0 (Success) </pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Check the current state of a configuration parameter (users).</p><pre xml:space="preserve" class="listLevel1">[Net_HSM] lunash:&gt;user list</pre><pre xml:space="preserve" class="listLevel1">Users&#160;		Roles&#160;		Status&#160;&#160;&#160;	RADIUS&#160;</pre><pre xml:space="preserve" class="listLevel1">admin&#160;		admin&#160;		enabled&#160;	no&#160;</pre><pre xml:space="preserve" class="listLevel1">bob&#160;		monitor&#160;	enabled&#160;	no&#160;</pre><pre xml:space="preserve" class="listLevel1">john&#160;		admin&#160;		enabled&#160;	no&#160;</pre><pre xml:space="preserve" class="listLevel1">monitor&#160;	monitor&#160;	enabled&#160;	no&#160;</pre><pre xml:space="preserve" class="listLevel1">operator&#160;&#160;	operator&#160;&#160;	enabled&#160;	no&#160;</pre><pre class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Command Result : 0 (Success) </pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Perform the factory reset of the chosen configuration parameter (users).</p><pre xml:space="preserve" class="listLevel1">[Net_HSM] lunash:&gt;sysconf config factoryReset -service users
+
+WARNING !! This command resets the configuration of the selected service(s) to factory defaults.
+ Resetting services to factory defaults can affect connectivity and the operation of the HSM.
+ If you are sure that you wish to proceed, then type 'proceed', otherwise type 'quit'.
+
+&gt; proceed
+ Proceeding...
+ Resetting service(s) to factory defaults:
+ -----------------------------------------
+ users : succeeded
+
+Command Result : 0 (Success)
+</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">[Net_HSM] lunash:&gt;sysconf appliance reboot</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">WARNING !!  This command will reboot the appliance. <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;All clients will be disconnected. <br />If you are sure that you wish to proceed, then type 'proceed', otherwise type 'quit'</pre><pre xml:space="preserve" class="listLevel1">&gt; proceed <br />Proceeding...</pre><pre xml:space="preserve" class="listLevel1">'hsm supportInfo' successful.</pre><pre xml:space="preserve" class="listLevel1">Use 'scp' from a client machine to get file named: <br />supportInfo.txt</pre><pre xml:space="preserve" class="listLevel1">Broadcast message from root (pts/1) (Wed Feb 22 08:00:41 2012):</pre><pre xml:space="preserve" class="listLevel1">The system is going down for reboot NOW! <br />Reboot commencing</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Command Result : 0 (Success)</pre>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span> After the appliance returns from reboot, restart the SSH session and log in.</p><pre xml:space="preserve" class="listLevel1">[Net_HSM] lunash:&gt;</pre><pre xml:space="preserve" class="listLevel1">login as: admin</pre><pre xml:space="preserve" class="listLevel1">admin@192.20.10.202's password:</pre><pre xml:space="preserve" class="listLevel1">Last login: Wed Feb 22 05:44:39 2012 from 192.20.10.143</pre><pre xml:space="preserve" class="listLevel1">SafeNet Luna Network HSM 7.0 Command Line Shell - Copyright (c) 2001-2017 Gemalto, Inc. All rights reserved.</pre><pre xml:space="preserve" class="listLevel1">*****************************************************<br />**                                             &#160;&#160;&#160;&#160;&#160;** <br />**   For security purposes, you must change your &#160;&#160;&#160;** <br />**   admin password. &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; ** <br />** &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;  ** <br />**   Please ensure you store your new admin      &#160;&#160;&#160;** <br />**   password in a secure location. &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;  ** <br />**                                                 &#160;** <br />**               DO NOT LOSE IT!        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;** <br />** &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;  ** <br />*****************************************************</pre><pre xml:space="preserve" class="listLevel1">Changing password for user admin.</pre><pre xml:space="preserve" class="listLevel1">You can now choose the new password.</pre><pre xml:space="preserve" class="listLevel1">A valid password should be a mix of upper and lower case letters, <br />digits, and other characters.  You can use an 8 character long <br />password with characters from at least 3 of these 4 classes.</pre><pre xml:space="preserve" class="listLevel1">An upper case letter that begins the password and a digit that <br />ends it do not count towards the number of character classes used.</pre><pre xml:space="preserve" class="listLevel1">Enter new password:</pre><pre xml:space="preserve" class="listLevel1">Re-type new password:</pre><pre xml:space="preserve" class="listLevel1">passwd: all authentication tokens updated successfully.</pre><pre xml:space="preserve" class="listLevel1">Password change successful.</pre>
+        <p class="listLevel1">The reset to factory appliance settings for the <b>users</b> parameter seems to have worked. Our "admin" password was reset to the default password "PASSWORD", and we had to apply a non-default password.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>With that done, we can verify if additional aspects of the <b>users</b> parameters were also reset to factory spec.</p><pre xml:space="preserve" class="listLevel1">[Net_HSM] lunash:&gt;user list</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Users&#160;		Roles&#160;		Status&#160;&#160;&#160;	RADIUS&#160;</pre><pre xml:space="preserve" class="listLevel1">admin&#160;		admin&#160;		enabled&#160;	no&#160;</pre><pre xml:space="preserve" class="listLevel1">monitor&#160;	monitor&#160;	enabled&#160;	no&#160;</pre><pre xml:space="preserve" class="listLevel1">operator&#160;&#160;&#160;&#160;	operator&#160;&#160;&#160;&#160;	enabled&#160;	no&#160;</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Command Result : 0 (Success)</pre>
+        <p class="listLevel1">Notice that created users "bob" and "john" are gone, but the system-standard users "admin", "operator", and "monitor" persist. Both "operator" and "monitor" will have had their passwords reset to the default, as well.</p><pre xml:space="preserve" class="listLevel1">[Net_HSM] lunash:&gt;sysconf config list</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Configuration backup files in file system:</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Size  &#160;&#160;&#160;    |	File Name  &#160;&#160;&#160;				|  Description</pre><pre xml:space="preserve" class="listLevel1">-------------------------------------------------------------------------------------------- &#160;&#160;&#160;</pre><pre xml:space="preserve" class="listLevel1">16641&#160;&#160;&#160;&#160;    | &#160;Net_HSM_Config_20120222_0556.tar.gz&#160;&#160;&#160;&#160;&#160;| &#160;testing-this&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;    &#160; </pre><pre xml:space="preserve" class="listLevel1">16588&#160;&#160;&#160;&#160;    | &#160;Net_HSM_Config_20120222_0558.tar.gz&#160;&#160;&#160;&#160;&#160;| &#160;Automatic Backup Before Restoring</pre><pre xml:space="preserve" class="listLevel1">&#160;   &#160; </pre><pre xml:space="preserve" class="listLevel1">Command Result : 0 (Success)</pre>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>The list of configuration backup files is unchanged. We can choose one and restore it.</p><pre xml:space="preserve" class="listLevel1">[Net_HSM] lunash:&gt;sysconf config restore -service users -file Net_HSM_Config_20120222_0556.tar.gz</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">WARNING !!  This command restores the configuration backup file: Net_HSM_Config_20120222_0556.tar.gz.</pre><pre xml:space="preserve" class="listLevel1">It first creates a backup of the current configuration before restoring: Net_HSM_Config_20120222_0556.tar.gz. <br />If you are sure that you wish to proceed, then type 'proceed', otherwise type 'quit'.</pre><pre xml:space="preserve" class="listLevel1">&gt; proceed </pre><pre xml:space="preserve" class="listLevel1">
+            <br />Proceeding...</pre><pre xml:space="preserve" class="listLevel1">Created configuration backup file: Net_HSM_Config_20120222_0606.tar.gz</pre><pre xml:space="preserve" class="listLevel1">Restore the users configuration: Succeeded</pre><pre xml:space="preserve" class="listLevel1">You must reboot the appliance for the changes to take effect.</pre><pre xml:space="preserve" class="listLevel1">Please check the new configurations BEFORE rebooting or restarting the services. <br />You can restore the previous configurations if the new settings are not acceptable.</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Command Result : 0 (Success)</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">[Net_HSM] lunash:&gt;sysconf appliance reboot</pre><pre xml:space="preserve" class="listLevel1">WARNING !!  This command will reboot the appliance. <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; All clients will be disconnected. <br />If you are sure that you wish to proceed, then type 'proceed', otherwise type 'quit'</pre><pre xml:space="preserve" class="listLevel1">&gt; proceed </pre><pre xml:space="preserve" class="listLevel1">
+            <br />Proceeding...</pre><pre xml:space="preserve" class="listLevel1">'hsm supportInfo' successful.</pre><pre xml:space="preserve" class="listLevel1">Use 'scp' from a client machine to get file named: <br />supportInfo.txt</pre><pre xml:space="preserve" class="listLevel1">Broadcast message from root (pts/1) (Wed Feb 22 08:00:41 2012):</pre><pre xml:space="preserve" class="listLevel1">The system is going down for reboot NOW! <br />Reboot commencing</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Command Result : 0 (Success)</pre>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>After rebooting again, we are able to log in with our original "admin" password. </p>
+        <p class="listLevel1">Once again we check the list of users.</p><pre xml:space="preserve" class="listLevel1">[Net_HSM] lunash:&gt;user list</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Users&#160;		Roles&#160;		Status&#160;&#160;&#160;	RADIUS</pre><pre xml:space="preserve" class="listLevel1">admin&#160;		admin&#160;		enabled&#160;	no</pre><pre xml:space="preserve" class="listLevel1">bob&#160;		monitor&#160;	enabled&#160;	no</pre><pre xml:space="preserve" class="listLevel1">john&#160;		admin&#160;		enabled&#160;	no</pre><pre xml:space="preserve" class="listLevel1">monitor&#160;	monitor&#160;	enabled&#160;	no</pre><pre xml:space="preserve" class="listLevel1">operator&#160;&#160;&#160;&#160;	operator&#160;	enabled&#160;	no</pre>
+        <p class="listLevel1">We see that users "bob" and "john" have returned. We could also log in as "operator" and "monitor" and find that their chosen passwords have been restored.</p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Finally, ask for the list of system configuration backup files one more time.</p><pre xml:space="preserve" class="listLevel1">[Net_HSM] lunash:&gt;sysconf config list</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Configuration backup files in file system:</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Size        | File Name                                   | Description</pre><pre xml:space="preserve" class="listLevel1">---------------------------------------------------------------------------------------------  &#160;&#160;&#160;</pre><pre xml:space="preserve" class="listLevel1">16641&#160;&#160;&#160;&#160;   | Net_HSM_Config_20120222_0556.tar.gz&#160;&#160;&#160;&#160;&#160;&#160;   | testing-this&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;     &#160; </pre><pre xml:space="preserve" class="listLevel1">16588&#160;&#160;&#160;&#160;   | Net_HSM_Config_20120222_0558.tar.gz&#160;&#160;&#160;&#160;&#160;&#160;   | Automatic Backup Before Restoring&#160;    &#160; </pre><pre xml:space="preserve" class="listLevel1">16248&#160;&#160;&#160;&#160;   | Net_HSM_Config_20120222_0606.tar.gz&#160;&#160;&#160;&#160;&#160;&#160;   | Automatic Backup Before Restoring&#160;</pre><pre xml:space="preserve" class="listLevel1">    &#160; </pre><pre xml:space="preserve" class="listLevel1">Command Result : 0 (Success)</pre><pre xml:space="preserve" class="listLevel1">   </pre><pre xml:space="preserve" class="listLevel1">[Net_HSM] lunash:&gt;sysconf config restore</pre>
+        <p class="listLevel1">We see that a new file was created (Net_HSM_Config_20120222_0606.tar.gz) before the restore operation, and the other files are intact.</p>
+        <h3><a name="BackupToHSM"></a>Backing Up the Appliance Configuration to the HSM</h3>
+        <p>You can protect a configuration setup against the possibility of appliance failure by exporting a backup snapshot file into the internal HSM or an external backup HSM. The command <b>sysconf config export</b> allows you to place the configuration backup file onto an HSM and <b>sysconf config import</b> allows you to retrieve the file from that HSM, back to the appliance file system. The export command gives you two target options:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The internal HSM of your SafeNet Luna Network HSM appliance. This could be useful if a component failed in the appliance, you sent the appliance back to SafeNet for rework under the RMA&#160;procedure, received it back repaired, and then retrieved the file from your HSM to restore your appliance settings. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>An external HSM, such as a Backup HSM or token. This could be useful if the current appliance failed and you wished to install a replacement. Similarly, you could use system configuration backup files restored from a Backup HSM to uniformly configure multiple SafeNet appliances with a standard set of parameters applicable to your enterprise.</p>
+        <p>If you are exporting a configuration backup to a <span class="DefaultProduct">SafeNet Luna Network HSM</span>, please note the following file size restrictions: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The maximum size of individual exportable files is 64 KB. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The maximum storage capacity of the Admin/SO partition is 384 KB.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

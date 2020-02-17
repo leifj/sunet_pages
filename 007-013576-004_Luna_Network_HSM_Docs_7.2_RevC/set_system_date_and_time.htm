@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|Configure the SafeNet Appliance for Your Network">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Set the System Date and Time</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/appliance_config/set_system_date_and_time.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Set the System Date and Time</h2>
+        <p>You can set the date and time manually using the appliance's internal clock, or by synchronizing the appliance with a network time protocol (NTP) server. NTP provides a reliable, consistent, and accurate timing mechanism using Coordinated Universal Time (UTC), and is the recommended option for providing an accurate date and time. Accurate time is important for security auditing and troubleshooting using the logs. </p>
+        <h4>New HSM</h4>
+        <p>When setting up a new HSM, ensure 
+that you set the HSM server’s system date, time and time zone as appropriate 
+for your network before
+ generating the server certificate. The certificate becomes valid at 
+ the time of its creation, which is recorded as part of the certificate, 
+ as a GMT value. If your local time is set with an inappropriate local 
+time zone, then the GMT time on the certificate could be incorrect by several 
+ hours. When other systems (Clients) attempt to reference your certificate, 
+they might find that it has not yet become valid. </p>
+        <h3><a name="Timezone"></a>Setting the Time Zone</h3>
+        <p>You must set the time zone before setting the date and time, regardless of whether you are manually configuring the date and time, or using NTP.</p>
+        <h5>To set the time zone:</h5>
+        <p>Use the following command:</p>
+        <p><b>sysconf timezone set</b> &lt;time_zone_code&gt;</p>
+        <h4>Time Zone codes</h4>
+        <p>You can view a list of all available time zone codes using the <b>sysconf timezone list</b> command. See <a href="../../sa_appliance_admin/ntp_time/timezone_codes.htm" class="MCXref xref">Setting the Time Zone</a> in the <i>Appliance Administration Guide</i>.</p>
+        <p>If a code is depicted in the list as a major name (such as a country) followed by a list of minor names (such as city names), then write the major name followed by a forward slash ("/"), followed by the minor name, for example America/Boston.</p>
+        <p>The code that you enter may not look exactly like the code displayed by <b>status date</b> or <b>status zone</b> commands. For example, <b>status date</b> shows EDT&#160;(i.e. Eastern Daylight Time), but to set that you must type "EST5EDT," or "Canada/Eastern" or "America/Montreal" - a number of values produce the same setting.</p>
+        <h4>SO&#160;login might be required</h4>
+        <p>While attempting to set the time or zone, you might encounter a message saying that you must log into the HSM first.</p><pre xml:space="preserve">lunash:&gt;sysconf timezone set Europe/London</pre><pre xml:space="preserve">This HSM has been initialized to require that the SO is logged in <br />prior to running this command.</pre><pre xml:space="preserve">Verifying that the SO is logged in...</pre><pre xml:space="preserve">The SO is not currently logged in.  Please login as SO and try again.</pre><pre xml:space="preserve">&#160;</pre>
+        <p>That message appears only if the HSM has been previously initialized with the <b>-authtimeconfig</b> option set. The work-around at this stage is to run the command <b>hsm init -label &lt;yourlabeltext&gt;</b> without the <b>-authtimeconfig</b> option. This way, you can perform your intended initialization out of order, and set the appliance time and zone later. We chose an order for these configuration instructions that is usually convenient and easy to understand, but having the system time set before initializing is not required. However, it is important to have the time set before you create certificates later on. </p>
+        <h3><a name="Manual"></a>Manually Configuring the Appliance Date and Time</h3>
+        <p>If the <span class="DefaultProduct">SafeNet Luna Network HSM</span> has been used before, then it might have been initialized with the option <b>-authtimeconfig</b>, which requires that the SO/HSM Admin be logged in before you are allowed to set time/time zone. If that is the case, then you will need to log in with the old SO&#160;credentials, or initialize the HSM first, before you can set time and time zone.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>  Manual adjustment of the time may cause events to appear out of order. It is highly recommended that you use NTP to synchronize the appliance time.</p>
+        <h5>To set the date and time:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Verify 
+ the currently configured date, time, and time zone on the appliance, using the status date command. The command returns the current settings for date, time, and time zone. If desired, you can also use <b>status time</b> and <b>status zone</b>. </p>
+        <p class="listLevel1">lunash:&gt; <b>status date</b></p>
+        <p class="listLevel1">lunash:&gt; <b>status time</b></p>
+        <p class="listLevel1">lunash:&gt; <b>status zone</b><![CDATA[
+ ]]></p>
+        <p class="listLevel1">At the LunaSH prompt, type the command <b>status date</b>. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If the date, 
+time, or time zone are incorrect for your location, change them using the 
+following command:</p>
+        <p class="listLevel1">lunash:&gt; <b>sysconf timezone set</b> &lt;time_zone&gt;</p><pre class="listLevel1" xml:space="preserve">lunash:&gt;sysconf timezone set Canada/Eastern 
+Timezone set to Canada/Eastern  </pre>
+        <p class="listLevel1">lunash:&gt; <b>sysconf time</b> &lt;time&gt; [&lt;date&gt;]</p><pre class="listLevel1" xml:space="preserve">lunash:&gt;sysconf time 15:54 20170427</pre><pre class="listLevel1" xml:space="preserve">Thu Apr 27 15:54:00 EDT 2017</pre>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>You must set the time zone before setting the time and date, otherwise the 
+time zone change adjusts the time that you just set.</p>
+        <h5>Drift correction for the system clock</h5>
+        <p>If you require that your appliance's system clock be as correct as is practical, but are unable to use NTP for the most accurate timekeeping possible, use the system's clock-drift correction protocol. See <a href="../../sa_appliance_admin/ntp_time/drift_and_correction_non-ntp.htm" class="MCXref xref">Correcting Clock Drift Manually</a> in the <i>Appliance Administration Guide</i>.</p>
+        <h3 class="ntoc">Synchronizing the Appliance With a Network Time Protocol (NTP) Server</h3>
+        <p>You can optionally configure the appliance to synchronize its date and time with a network time protocol (NTP) server. NTP provides a reliable, consistent, and accurate timing mechanism for the appliance using Coordinated Universal Time (UTC), and is the recommended option for providing an accurate date and time for the appliance. The appliance automatically selects the highest stratum NTP server with which it can reliably communicate. If the appliance loses communications with an NTP server, it automatically selects the next best available server.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>If you wish to use Network Time Protocol (NTP), 
+ you must set the system time to within 15 minutes of the time given by 
+ the servers that you select. If the difference between NTP server time 
+and the HSM appliance time is greater than 15 minutes, the NTP daemon 
+ignores the servers and quits.&#160;To ensure that you are within the 15-minute window, we recommend setting the date and time by fetching it from an NTP server, using the <b>sysconf ntp ntpdate</b> command.<br /></p>
+        <h5>To configure the appliance to use NTP</h5>
+        <p>To use NTP, you must add one or more NTP servers to the appliance's 
+NTP server list, and then enable the appliance to synchronize its time to the servers.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>If you have not already done so, configure the appliance's DNS server settings. See <a href="configure_ip_and_network_parameters.htm" class="MCXref xref">Network Configuration</a>.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Ensure that the correct time zone is set on the appliance:</p>
+        <p class="listLevel1">lunash:&gt;<b>sysconf timezone show</b></p>
+        <p class="listLevel1">If the appliance does not have the correct time zone configured, set it before continuing. See <a href="#Timezone" class="MCXref xref">Setting the Time Zone</a>.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>You must now set the correct date and time. You can do this:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>manually; see <a href="#Manual" class="MCXref xref">Manually Configuring the Appliance Date and Time</a></p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>by fetching it from an NTP server, using the command:</p>
+        <p class="listLevel2">lunash:&gt;<b>sysconf ntp ntpdate</b> &lt;NTP_server_IP_or_hostname&gt;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Add one or more NTP servers to the appliance's 
+NTP server list, using the command:</p>
+        <p class="listLevel1">lunash:&gt;<b>sysconf ntp addserver</b> &lt;NTP_server_IP_or_hostname&gt;</p>
+        <p class="listLevel1">This command automatically starts the NTP service and enables time synchronization with the NTP server. </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Verify the NTP status, using the command:</p>
+        <p class="listLevel1">lunash:&gt;<b>sysconf ntp status</b></p><pre class="listLevel1" xml:space="preserve">[myLuna] lunash:&gt;sysconf ntp status&#160;<br />NTP is running&#160;<br />NTP is enabled&#160;<br /><br />Peers:&#160;<br />==============================================================================&#160;<br />remote           refid      st  t  when  poll  reach   delay   offset  jitter&#160;<br />==============================================================================&#160;<br />*LOCAL(0)        .LOCL.     10  l    8    64     1     0.000    0.000   0.000&#160;<br />time-c.timefreq  .ACTS.      1  u    7    64     1    78.306  -55560.   0.000&#160;<br />==============================================================================&#160;<br />Associations:&#160;<br />==============================================================================&#160;<br />ind assid  status  conf reach auth  condition  last_event cnt&#160;<br />=============================================================&#160;<br />1   21859   963a   yes   yes  none  sys.peer    sys_peer   3&#160;<br />2   21860   9024   yes   yes  none    reject   reachable   2&#160;<br />==============================================================================&#160;<br />NTP Time:&#160;<br />==============================================================================&#160;<br />ntp_gettime() returns code 0 (OK)&#160;<br />time d1504c28.95777000  Wed, Apr 14 2014 12:22:00.583, (.583854),&#160;<br />maximum error 7951596 us, estimated error 0 us&#160;<br />ntp_adjtime() returns code 0 (OK)&#160;<br />&#160;&#160;&#160;&#160;modes 0x0 (),&#160;<br />offset 0.000 us, frequency 0.000 ppm, interval 1 s,&#160;<br />maximum error 7951596 us, estimated error 0 us,&#160;<br />status 0x1 (PLL),&#160;<br />time constant 2, precision 1.000 us, tolerance 512 ppm,&#160;<br />==============================================================================&#160;<br /><br />Command Result : 0 (Success)&#160;<br />[myLuna] lunash:&gt;[</pre>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The return code "5 (ERROR)" indicates a gap between your system time and the NTP server's time. If the initial time-gap between your appliance and the server is greater than 15 minutes, the appliance gives up and never synchronizes with that server.&#160;If the initial time-gap is less than 15 minutes, the appliance synchronizes with the server, slowly, over several minutes; this ensures that there is no sudden jump in system time which would be unwelcome in your system logging.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

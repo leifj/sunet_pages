@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|Configure the SafeNet Appliance for Your Network">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Open a Connection</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/List1.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/appliance_config/open_a_connection.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor306"></a>Open a Connection</h2>
+        <p><a name="kanchor307"></a>It is best to perform your initial configuration via direct serial connection to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance. Once network parameters are established, you can switch to an SSH session over your network. However, if you are setting up your appliance on a network using DHCP, you can connect via SSH using the IP automatically assigned to the appliance's network interface. </p>
+        <p>Direct administration connection via serial 
+terminal is the best method for initial configuration for the following reasons:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>When configuring network settings via SSH, in addition to requiring the original IP address, you may lose the connection when a new IP&#160;is set.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>A direct serial connection is the only route to log into the "Recover" account, in case you ever lose the appliance's admin password and need to reset. Therefore, you should verify  that the connection works before you need it - performing the appliance's network configuration is an ideal test.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If you ever need to issue the <b>hsm factoryreset</b> command, you must be connected through a local serial console for that command to be accepted.</p>
+        <h5>To open a serial connection:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Connect the serial port on the HSM appliance's rear panel to a terminal server, dumb terminal, PC, or laptop, using the supplied Prolific Technology Inc. USB to RJ45 (with 8P8C connector) adapter. </p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/install/RJ45_USB_cable.jpg" style="height: auto;width: 325px;" /> <img src="../../Resources/Images/sa/sa7_connect_laptop.png" style="height: auto;width: 305px;" /></p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Do not connect the serial cable to one of the Ethernet ports. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If the driver for the Prolific Technology Inc. USB to RJ45 (with 8P8C connector) adapter did not download and install automatically, go to <a href="http://www.prolific.com/">http://www.prolific.com</a> to download and install the PL2303 USB-to-Serial Windows driver.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Open <b>Device Manager</b> (<b>Control Panel</b> &gt; <b>Hardware</b> &gt;&#160;<b>Device Manager</b>) and expand the <b>Ports (COM&#160;and LPT)</b> folder. If the driver installed successfully, an entry is displayed for the <b>Prolific USB-to-Serial Comm Port</b>, followed by the port associated with the adapter. For example:</p><pre class="listLevel1" xml:space="preserve">Prolific USB-to-Serial Comm Port (COM4)</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="listLevel1">Record the COM port (COM4 in this example) associated with the adapter. You will need this port number when you open a serial connection.</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Use a terminal emulation package, such as PuTTY, to open a serial connection to the COM port associated with your Prolific USB-to-Serial adapter. Set the serial connection parameters as follows:</p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col class="TableStyle-List1-Column-Column1" />
+            <col class="TableStyle-List1-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyE-Column1-Body1" style="font-weight: bold;">Baud rate</td>
+                    <td class="TableStyle-List1-BodyD-Column1-Body1">115200</td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyE-Column1-Body1" style="font-weight: bold;">Data bits</td>
+                    <td class="TableStyle-List1-BodyD-Column1-Body1">8</td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyE-Column1-Body1" style="font-weight: bold;">Parity</td>
+                    <td class="TableStyle-List1-BodyD-Column1-Body1">None</td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyB-Column1-Body1" style="font-weight: bold;">Stop bits</td>
+                    <td class="TableStyle-List1-BodyA-Column1-Body1">1</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>When the connection is made, the HSM appliance login prompt appears: <b>[local_host] login:</b>, where&#160;[local_host] is the currently configured host name. The displayed host name is updated when you assign a new host name to your HSM appliance and open a new session.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>You might need to press <b>ENTER</b> several times 
+to initiate the session.&#160;You must log in within two minutes of opening an administration 
+session, or the connection will time out.</p>
+        <h5>To open an SSH connection:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Connect one or more network devices in the rear panel of the appliance to a network with a running DHCP server. </p>
+        <p class="listLevel1">
+            <img src="../../Resources/Images/install/sa7_back_drawing_network.png" alt="" title="" style="height: auto;width: 500px;" />
+        </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Wait for the appliance to acquire a new IP address from the DHCP server. The new IP will be displayed on the front-panel LCD screen. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Use SSH, or an SSH application such as PuTTY, to connect to the appliance using the displayed IP address. </p>
+        <p>Next, see <a href="login_appliance.htm" class="MCXref xref">Logging In to the Appliance</a>. <br /></p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

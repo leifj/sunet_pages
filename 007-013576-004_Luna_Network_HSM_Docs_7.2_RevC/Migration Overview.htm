@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Key Migration Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Key Migration Overview</title>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../index.html#migration/Migration Overview.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter">Key Migration Overview</h1>
+        <p>You can migrate  key material from an older SafeNet Luna HSMs (5.x or 6.x) to a new (7.x) SafeNet Luna HSM by using one of three methods; backup and restore,  cloning, or cloning using a temporarily HA group. </p>
+        <p>This document guides you through several migration scenarios consisting of older and newer SafeNet Luna HSMs, using each applicable migration method. Before migrating,   preconditions are provided for each scenario that must be met. There are specific user roles that are identified for performing the migration. In addition, both authentication methods (password and PED-authenticated)  are supported.</p>
+        <h2>Supported SafeNet Luna HSMs</h2>
+        <p>This document describes key migration for these SafeNet Luna HSMs:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span> SafeNet Luna Network HSM, version 5.x or 6.x to 7.x</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>SafeNet Luna USB HSM, version 5.x or 6.x to 7.x</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>SafeNet Luna PCIe HSM, version 5.x or 6.x to 7.x</p>
+        <h2>Migration methods</h2>
+        <p>The three migration methods used in this guide are:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Backup and restore</p>
+        <p class="listLevel1">The backup and restore method uses the LunaCM <b>partition archive backup</b> command to backup key material on an HSM (5.x or 6.x) partition and  the Restore command to then restore this material to an HSM 7.x partition.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Cloning</p>
+        <p class="listLevel1">The cloning method uses  the LunaCM <b>partition clone</b> command to clone from an HSM (5.x or 6.x) partition to an HSM 7.x partition. It is also referred to as slot-to slot cloning.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Cloning using an HA group</p>
+        <p class="listLevel1">The HA group method uses the LunaCM <b>ha synchronize</b> command on members of a temporary HA group consisting of a 5.x or 6.x HSM and a 7.x HSM, set up solely for the purpose of migration. After migration, this group should be removed since the members are not using the same software version.</p>
+        <h2>Preconditions</h2>
+        <p>Each migration procedure in this document is prefaced by a "Preconditions" section that specifies the hardware and software requirements along with any assumptions the procedure is using to perform the migration steps. Examples are a 5.x or 6.x HSM, a 7.x HSM,  5.x, 6.x or 7.x client software, user roles and the slot #s used in the procedure. </p>
+        <h2>Roles required for migration</h2>
+        <p>The following partition roles are needed to migrate key material:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Partition Security Officer. The partition security officer role is needed to perform LunaCM HA operations and to create the Crypto Officer role.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Partition Crypto Officer. The partition Crypto Officer role is needed to perform  LunaCM  backup/restore and  cloning operations.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>When logging in to a partition, be mindful of whether you’re working with pre-PPSO or PPSO firmware. Use the <b>partition login</b> command if your HSM has pre-PPSO firmware (version 6.21.2 and earlier). Use the  <b>role login</b> command if your HSM has PPSO firmware (version 6.22.0 and later). Also, with PPSO firmware 6.22.0 and later (up to but not including firmware 7.x), be careful with user names; that is, type <b>Crypto Officer</b> in full (is case sensitive) and not the abbreviation <b>co</b>.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>In firmware version release 7.x, partition login name requirements allow for abbreviations. That is, you can log in using  <b>po</b> for Partition Security Officer or <b>co</b> for Crypto Officer.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Initializing the Remote PED Vector (RPV) and Creating the Orange PED&#160;Key</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#administration/PED_Auth/remote/RPK.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Initializing the Remote PED Vector (RPV) and Creating the Orange PED&#160;Key</h3>
+        <p>The Remote PED (via PEDserver) authenticates itself to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> with a randomly-generated encrypted value stored on an orange PED key. The orange key proves to the HSM that the Remote PED is authorized to perform authentication. A <span class="DefaultProduct">SafeNet Luna Network HSM</span> administrator can create this key<MadCap:conditionalText data-mc-conditions="Default.SA"> using one of the following two methods:</MadCap:conditionalText></p>
+        <p class="ul1" style="font-weight: normal;" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>Local RPV Initialization:</b> The RPV is initialized using a Luna PED connected to the USB port on the HSM card. This is the standard method of initializing the RPV. </p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">See <a href="#LocalRPV" class="MCXref xref">Local RPV&#160;Initialization</a>.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>Remote RPV Initialization:</b> The RPV is initialized using a Luna PED connected to a remote workstation running PEDserver. A one-time numeric password is used to authenticate the Remote PED to the HSM before initializing the RPV. This optional method is useful if the HSM SO&#160;only has remote SSH access to the appliance. It is available only if the HSM is in a zeroized state (uninitialized) and your firewall settings allow an HSM-initiated Remote PED connection. If you choose this method, you will set up Remote PED before initializing the RPV (<a href="#Remote" class="MCXref xref">Remote RPV Initialization</a>). </p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">Continue to <a href="PEDserver_install.htm" class="MCXref xref">Installing PEDserver and Setting Up the Remote Luna PED</a>. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Generally, the HSM SO creates an orange PED key (and backups), makes a copy for each valid Remote PED server, and distributes them to the Remote PED administrators. </p>
+        <h4>
+            <MadCap:conditionalText data-mc-conditions="Default.SA"><a name="LocalRPV"></a>Local RPV&#160;Initialization</MadCap:conditionalText>
+        </h4>
+        <p>If the HSM is already initialized, the HSM&#160;SO&#160;must log in to complete this procedure. You require:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>SafeNet Luna PED with firmware 2.7.1 or newer</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>USB mini-B to USB-A connector cable</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Luna PED DC power supply (if included with your Luna PED)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Blank or reusable orange PED key (or multiple keys, if you plan to make extra copies or use an M of N security scheme). See <a href="../key_mgmt/create.htm#Create" class="MCXref xref">Creating PED Keys</a> for more information.</p>
+        <h5>To initialize the RPV and create the orange PED key locally:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>If you have not already done so, set up a Local PED connection (see <a href="../local.htm" class="MCXref xref">Local PED Setup</a>).</p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">2.</span></span>Using a serial or SSH connection, log in to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance as <b>admin</b>. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>If the HSM is initialized, login as HSM SO. If not, skip to the next step. </p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt;<b>hsm login</b></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Ensure that you have the orange PED key(s) ready. Initialize the RPV.</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt;<b>hsm ped vector init</b></p><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">lunash:&gt;hsm ped vector init</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" data-mc-conditions="Default.SA">If you are sure that you wish to initialize remote PED vector (RPV), then enter 'proceed', otherwise type 'quit'.</pre><pre class="listLevel1" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" data-mc-conditions="Default.SA">&gt; proceed</pre><pre class="listLevel1" data-mc-conditions="Default.SA">Proceeding...</pre><pre class="listLevel1" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" data-mc-conditions="Default.SA">Luna PED operation required to initialize remote PED key vector - use orange PED key(s).</pre>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Attend to the Luna PED and respond to the on-screen prompts. See <a href="../key_mgmt/create.htm" class="MCXref xref">Creating PED Keys</a> for a full description of the key-creation process. </p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_orange_reuse.svg" />
+        </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you have an orange PED key with an existing RPV that you wish to use for this HSM, press <b>Yes</b>.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you are creating a new RPV, press <b>No</b>.</p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_orange_create.svg" />
+        </p>
+        <p class="listLevel1">Continue following the prompts for PED PIN, M of N, and duplication options. </p>
+        <p>To continue setting up a Remote PED server, see <a href="PEDserver_install.htm" class="MCXref xref">Installing PEDserver and Setting Up the Remote Luna PED</a>. </p>
+        <h4 data-mc-conditions="Default.SA"><a name="Remote"></a>Remote RPV Initialization</h4>
+        <p data-mc-conditions="Default.SA">When you initialize an RPV with the PED connected locally, you have direct physical control of the operation and its security. </p>
+        <p data-mc-conditions="Default.SA">When you initialize an RPV remotely, you must secure the link and the operation with a one-time password. The HSM must be uninitialized for this operation. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>This feature has software and/or firmware dependencies. See <a href="../../upgrade/version_dependencies.htm" class="MCXref xref">Version Dependencies by Feature</a> for more information.</p>
+        <p data-mc-conditions="Default.SA">If you open an HSM-initiated Remote PED connection with <b>hsm ped connect</b>, and you have not already initialized the RPV or the HSM, then the Remote PED connection command prepares to secure the connection and LunaSH returns the following message:</p><pre xml:space="preserve" data-mc-conditions="Default.SA">Luna PED operation required to connect to Remote PED - use orange PED key(s).</pre><pre xml:space="preserve" data-mc-conditions="Default.SA">&#160;</pre><pre xml:space="preserve" data-mc-conditions="Default.SA">&#160;</pre><pre xml:space="preserve" data-mc-conditions="Default.SA">Enter PED Password:</pre><pre xml:space="preserve" data-mc-conditions="Default.SA">&#160;</pre>
+        <p data-mc-conditions="Default.SA">Use the following procedure to initialize the RPV. You require:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span> A blank or reusable orange PED key (or multiple keys, if you plan to make extra copies or use an M of N security scheme). See <a href="../key_mgmt/create.htm#Create" class="MCXref xref">Creating PED Keys</a> for more information.</p>
+        <h5 xml:space="preserve" data-mc-conditions="Default.SA">To initialize the RPV and create the orange key remotely: </h5>
+        <p class="ol1Start" data-mc-autonum="1." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">1.</span></span>In LunaSH, when prompted to "Enter PED Password" set any 8-digit numeric password that the HSM will use to identify the Remote PED server this one time. The following message is displayed in LunaSH, and the Luna PED prompts you for the password:</p><pre class="listLevel1" data-mc-conditions="Default.SA">Luna PED operation required to connect to remote PED - Enter PED password.</pre>
+        <p class="listLevel1" data-mc-conditions="Default.SA">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_orange_password.svg" />
+        </p>
+        <p class="ol1" data-mc-autonum="2." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">2.</span></span>Enter the numeric password on the PIN pad, exactly as you entered it in LunaSH, and press <b>Enter</b>. </p>
+        <p class="ol1" data-mc-autonum="3." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">3.</span></span>Ensure that you have the orange PED key(s) ready. Initialize the RPV.</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt;<b>hsm ped vector init</b></p><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">lunash:&gt;hsm ped vector init</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" data-mc-conditions="Default.SA">If you are sure that you wish to initialize remote PED vector (RPV), then enter 'proceed', otherwise type 'quit'.</pre><pre class="listLevel1" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" data-mc-conditions="Default.SA">&gt; proceed</pre><pre class="listLevel1" data-mc-conditions="Default.SA">Proceeding...</pre><pre class="listLevel1" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">Luna PED operation required to initialize remote PED key vector - use orange PED key(s).</pre>
+        <p class="ol1" data-mc-autonum="4." data-mc-conditions="Default.SA"><span class="autonumber"><span class="ol1Number">4.</span></span>Attend to the Luna PED and respond to the on-screen prompts. See <a href="../key_mgmt/create.htm" class="MCXref xref">Creating PED Keys</a> for a full description of the key-creation process. </p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">When you have created the orange key, the HSM launches PEDclient and establishes a Remote PED connection using the newly-created RPV: </p><pre class="listLevel1" data-mc-conditions="Default.SA">Ped Client Version 2.0.1 (20001)</pre><pre class="listLevel1" data-mc-conditions="Default.SA">Ped Client launched in "Release ID" mode.</pre><pre class="listLevel1" data-mc-conditions="Default.SA">Callback Server is running..</pre><pre class="listLevel1" data-mc-conditions="Default.SA">ReleaseID command passed.</pre><pre class="listLevel1" data-mc-conditions="Default.SA">"Release ID" command passed.</pre><pre class="listLevel1" data-mc-conditions="Default.SA">Ped Client Version 2.0.1 (20001)</pre><pre class="listLevel1" data-mc-conditions="Default.SA">Ped Client launched in "Delete ID" mode.</pre><pre class="listLevel1" data-mc-conditions="Default.SA">Callback Server is running..</pre><pre class="listLevel1" data-mc-conditions="Default.SA">DeleteID command passed.</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">"Delete ID" command passed.</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">&#160;</pre><pre class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">Command Result : 0 (Success)</pre>
+        <p class="listLevel1" xml:space="preserve" data-mc-conditions="Default.SA">You may now initialize the HSM. Return to <a href="remote_connect.htm#HSMinit" class="MCXref xref">HSM-Initiated Remote PED</a> to complete the procedure. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

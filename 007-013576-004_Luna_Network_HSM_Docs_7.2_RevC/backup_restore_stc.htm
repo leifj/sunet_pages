@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Restoring STC After HSM Zeroization</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/stc/backup_restore_stc.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Restoring STC After HSM Zeroization</h2>
+        <p>The HSM partitions contain the registered client identities used to validate STC clients. Since these are not crypto objects, they are not backed up as part of a normal partition backup. When you perform a destructive operation that results in the HSM&#160;being zeroized, such as a login failure, application of a destructive capability upgrade (CUF), factory reset, or HSM decommission, the registered client identities are lost. The partitions must be recreated and STC client connections re-established. The Partition SO can then restore the partition objects from backup using the procedure described in <a href="../backup/backup_network/backup.htm" class="MCXref xref">Backup and Restore HSMs and Partitions</a>.</p>
+        <p> If the HSM or partition is zeroized, the following actions occur:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>HSM&#160;policy 39: Allow Secure Trusted Channel is turned off.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If the STC admin channel is enabled, the STC admin partition identity is deleted, breaking the STC link between LunaSH and the HSM SO partition (the admin channel) on the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The STC application partition identities are deleted, breaking the STC links between the application partitions and their registered clients. </p>
+        <p>See <a href="../../configuration/client_partition/stc_links.htm" class="MCXref xref">Creating an STC Link Between a Client and a Partition</a> in the <i>Configuration Guide</i> for a detailed description of how to reconfigure your STC links. You do not need to recreate client tokens or identities. Below is a simplified version of the process to reconfigure STC after HSM zeroization:</p>
+        <h5>HSM SO (LunaSH):</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Login as HSM SO and enable Policy 39: Allow Secure Trusted Channel.</p>
+        <p class="listLevel1" style="font-weight: normal;">lunash:&gt;<b>hsm changepolicy -policy 39 -value 1</b></p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Create the new partition.</p>
+        <p class="listLevel1">lunash:&gt;<b>partition create -partition</b> &lt;label&gt;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Export the partition identity public key to the file system.</p>
+        <p class="listLevel1">lunash:&gt;<b>stc partition export -partition</b> &lt;label&gt;</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Use <b>scp</b> or <b>pscp</b> to transfer the partition identity public key (<b>*.pid</b>) from the appliance and provide it to the client (Partition SO) by secure means. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>If you restored the appliance's NTLS configuration from backup, you do not need to provide the HSM Server Certificate (<b>server.pem</b>). If you choose to regenerate the HSM identity using <b>sysconf regencert</b>, you must provide the new certificate to the Partition SO along with the partition identity public key. </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Optionally, reestablish STC on the HSM admin channel. </p>
+        <p class="listLevel1" style="font-weight: normal;">lunash:&gt;<b>hsm stc enable</b></p>
+        <p class="listLevel1" style="font-weight: normal;">lunash:&gt;<b>service restart stc</b></p>
+        <h5>Partition SO:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>If you received a new HSM Server Certificate (<b>server.pem</b>) from the HSM SO, delete the original server identity and register the new one. </p>
+        <p class="listLevel1">&gt;<b>vtl deleteserver -n</b> &lt;server_IP_or_hostname&gt;</p>
+        <p class="listLevel1">&gt;<b>vtl addserver -n</b> &lt;server_IP_or_hostname&gt; <b>-c</b> &lt;server_certificate_filename&gt;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Run LunaCM and register the new partition identity public key to the STC client identity.</p>
+        <p class="listLevel1">lunacm:&gt;<b>stc partitionregister -file</b> &lt;partition_identity&gt; [<b>-label</b> &lt;partition_label&gt;]</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Restart LunaCM to see the partition slot. </p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>clientconfig restart</b></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>If you registered a new HSM Server Certificate, find the correct server ID and enable STC.</p>
+        <p class="listLevel1" style="font-weight: normal;">lunacm:&gt;<b>clientconfig listservers</b></p>
+        <p class="listLevel1">lunacm:&gt;<b>stc enable -id</b> &lt;server_ID&gt;</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Initialize the partition.</p>
+        <p class="listLevel1">lunacm:&gt;<b>partition init -label</b> &lt;partition_label&gt;</p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Login as Partition SO and register any additional client identity public keys to the partition. You can use the original public key files, unless the client identities have been recreated. If so, the client administrators must provide them. </p>
+        <p class="listLevel1">lunacm:&gt;<b>stcconfig clientregister -label</b> &lt;client_label&gt; <b>-file</b> &lt;client_identity&gt;</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Provide the partition identity&#160;public key (and, if applicable, the HSM Server Certificate) to each additional client administrator by secure means. </p>
+        <h5>Additional Client Administrators:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>If you received a new HSM Server Certificate (<b>server.pem</b>) from the Partition SO, delete the original server identity and register the new one. </p>
+        <p class="listLevel1">&gt;<b>vtl deleteserver -n</b> &lt;server_IP_or_hostname&gt;</p>
+        <p class="listLevel1">&gt;<b>vtl addserver -n</b> &lt;server_IP_or_hostname&gt; <b>-c</b> &lt;server_certificate_filename&gt;</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Run LunaCM and register the new partition ID public key to the STC client identity.</p>
+        <p class="listLevel1">lunacm:&gt;<b>stc partitionregister -file</b> &lt;partition_identity&gt;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>If you registered a new HSM Server Certificate, find the correct server ID and enable STC. If not, restart LunaCM to see the partition slot. </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>lunacm:&gt;<b>clientconfig listservers</b></p>
+        <p class="listLevel2">lunacm:&gt;<b>stc enable -id</b> &lt;server_ID&gt;</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>lunacm:&gt;<b>clientconfig restart</b></p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

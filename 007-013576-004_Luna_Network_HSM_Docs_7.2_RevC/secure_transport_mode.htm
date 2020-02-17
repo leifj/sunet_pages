@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Secure Transport Mode</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/secure_transport_mode/secure_transport_mode.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter">Secure Transport Mode</h1>
+        <p>SafeNet HSM 7 units are shipped from the factory in Secure Transport Mode (STM). The purpose of STM is to provide a logical check on the HSM firmware and critical security parameters (such as configuration, keys, policies, roles, etc.) so that the authorized recipient can determine if these have been altered while the HSM was in transit. </p>
+        <h3 class="ntoc">Secure Transport Mode overview</h3>
+        <p>The Secure Transport Mode capability provides an additional layer of protection beyond the physical security controls provided by  tamper-evident shipping bags.</p>
+        <p>Gemalto sends customers control validation information in two separate emails prior to shipment: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>Physical security control validation</b> - &#160;an email containing the serial number of the HSM and the serial number of the associated tamper evident bag that encloses the HSM. 	</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>Logical control validation</b> - &#160;an email containing the serial number of each HSM in the shipment, along with the STM Random User String and the STM Verification String associated with each HSM. &#160;</p>
+        <p>Customers can use the logical and physical HSM controls to verify that HSMs shipped from the factory have not been modified in transit. The Gemalto shipping procedures are designed to prevent a possible man-in-the-middle attack, as attackers would need unobserved direct access to the HSM while in transit, along with simultaneous possession of both the STM Random User String and the STM Verification String for that HSM.</p>
+        <p>Gemalto customers can also implement STM when shipping pre-configured HSMs between their office locations or when pre-configured HSMs are to be put into storage. Customers implementing STM have added protection because only the HSM Security Officer can place an initialized HSM into STM, or recover the HSM from STM, further increasing the difficulty of man-in-the-middle attacks. &#160; </p>
+        <h3 class="ntoc">How does Secure Transport Mode work?</h3>
+        <h4>When STM is enabled on the HSM (either at the factory or by customer) &#160;</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The HSM generates a random string of 16 characters and presents that as the "Random User String" (suitable for copying and pasting into an e-mail). &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The HSM gathers several sources of internal information reflecting the state of the HSM at that time, including a random nonce value generated for this purpose; the nonce value is not displayed, and never exists outside the HSM. &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The HSM combines these items (the generated Random User String, the HSM state information, and &#160;the random nonce value), and produces the "Verification String"  (suitable for copying and pasting into an e-mail). &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The HSM then enters Secure Transport Mode, such that only limited operations are allowed until the HSM is brought out of STM. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The HSM can now be shipped from the factory to customers, or customers can place the HSM into storage or ship securely to another location. <br />The HSM and the STM strings should not come together until they are in the possession of the intended recipient. </p>
+        <h4>When you recover an HSM from STM:</h4>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The HSM asks for the Random User String (which you received in an e-mail or by other means). &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The HSM gathers the same sources of internal information and combines those with the Random User String that you just provided, and outputs a Verification String.  </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>Visually compare</b> the newly output Verification String with the original Verification String that was sent via e-mail (or other means).</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If the original and the newly generated Verification Strings match, then the HSM has not been used or otherwise altered since STM was enabled.</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If the original and the newly generated Verification Strings fail to match, then there might be a problem with the Random User String - such as an error in the string that was sent, or else an incorrect random user string was entered, or the HSM has been altered somewhere between the original sender and you.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If the HSM <b>has not</b> been altered (original and new Verification Strings match), then you can proceed to recovering the HSM from STM.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If the HSM might have been altered (original and new Verification Strings are different), then type "quit" at the prompt, and run the <b>stm recover</b> command again, to ensure that nothing was incorrectly entered on the first attempt. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If the Verification strings still do not match: </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>type "quit" to leave the HSM in STM, and contact Gemalto Technical Support for further guidance, or </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>if you feel that the Verification failure was benign, type "proceed" to release the HSM from Secure Transport Mode, and decide whether <br /> -- you wish to proceed with using the HSM <br />or, instead, <br /> -- you wish to perform factory reset and re-initialize the HSM as a safety precaution before proceeding further. </p>
+        <h4>STM verification email</h4>
+        <p>As part of the delivery process for your new HSM, <span class="DefaultCompanyName">Gemalto</span> Client Services will send you an email containing two 16-digit strings: a <b>Random User String</b> and a <b>Verification String</b>. You require these strings to verify that your HSM&#160;has not been altered while in transit. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>If the STM verification process fails due to a lost or incorrect verification string, customers do have the option of proceeding with the recovery of the HSM from STM mode. If the STM verification process fails due to a tamper, customers can also choose to factory-reset the HSM to bring it back to a Factory state, and then re-initialize. <br /></p>
+        <p>For information about the various tamper events, see <a href="../tamper/tamper.htm" class="MCXref xref">Tamper Events</a>. </p>
+        <p data-mc-conditions="Default.SA">For command syntax, see <a href="../../lunash/commands/hsm/hsm_stm.htm" class="MCXref xref">hsm stm</a>. </p>
+        <h3>Placing an HSM&#160;Into Secure Transport Mode</h3>
+        <p>Only the HSM&#160;SO&#160;can place an initialized HSM into STM. When the HSM is zeroized, HSM SO&#160;log in is not required.</p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>If the HSM contains sensitive key material, ensure that you have a full backup of the HSM contents before proceeding.</p>
+        <h5>To place an HSM into Secure Transport Mode:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Log in as the HSM&#160;SO.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Backup the HSM contents. </p>
+        <p class="listLevel1">See <a href="../backup/backup_network/backup.htm" class="MCXref xref" data-mc-conditions="Default.SA">Backup and Restore HSMs and Partitions</a> for details. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Enter the following command to place the HSM&#160;into STM:</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt;<b>hsm stm transport</b></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>After confirming the action, you are presented with:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><b>Verification String:</b> &lt;XXXX-XXXX-XXXX-XXXX&gt;</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span><b>Random User String:</b> &lt;XXXX-XXXX-XXXX-XXXX&gt;</p>
+        <p class="listLevel1">Record both strings. They are required to verify that the HSM&#160;has not been altered while in STM. </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>Transmit the verification string and random user string to the receiver of the HSM using a secure method, distinct from the transport of the physical HSM, so that it is not possible for an attacker to have access to both the HSM&#160;and the verification codes while the HSM is in STM.</p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>This product uses semiconductors that can be damaged by electro-static discharge (ESD). When handling the device, avoid contact with exposed components, and always use an anti-static wrist strap connected to an earth ground. In rare cases, ESD can trigger a tamper or decommission event on the HSM. If this happens, all existing roles and cryptographic objects are deleted. </p>
+        <h3>Recovering an HSM From Secure Transport Mode</h3>
+        <p>Only the HSM&#160;SO&#160;can recover an initialized HSM that has been placed into STM. When the HSM is zeroized, HSM SO&#160;log in is not required. </p>
+        <h5>New HSMs</h5>
+        <p>New HSMs are shipped from the factory in Secure Transport Mode (STM).  You must recover from STM before you can initialize the HSM. </p>
+        <p>As part of the delivery of your new HSM, you should have received an email from <span class="DefaultCompanyName">Gemalto</span> Client Services containing two 16-digit strings: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Random User String: XXXX-XXXX-XXXX-XXXX</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Verification String: XXXX-XXXX-XXXX-XXXX</p>
+        <h5>To recover an HSM from STM:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Ensure that you have the two strings that were presented when the HSM was placed into STM, or that were emailed to you if this is a new HSM.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If the HSM is initialized, log in as the HSM&#160;SO. If this is a new or zeroized HSM, skip to the next step.</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Enter the following command to recover from STM, using the random user string that was displayed when the HSM&#160;was placed in STM, or that was emailed to you if this is a new HSM.:</p>
+        <p class="listLevel1" data-mc-conditions="Default.SA">lunash:&gt; <b>hsm stm recover -randomuserstring</b> &lt;XXXX-XXXX-XXXX-XXXX&gt;</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The random user string is for verification purposes only. If you do not require STM validation, or you wish to bypass the STM validation, you can  enter a different string to proceed with the recovery of the HSM from STM mode.. <br /></p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>You are presented with a verification string:</p>
+        <p class="listLevel1"> If the verification string matches the original verification string, the HSM has not been altered or tampered, and can be safely re-deployed. &#160;</p>
+        <p class="listLevel1">Enter <b>proceed</b> to recover from STM. </p>
+        <p class="listLevel1">If the verification string does not match the original verification string, this might indicate that the HSM has been altered while in transit, or that an incorrect random user string has been entered. &#160;</p>
+        <p class="listLevel1">See "If the verification strings do not match" section below.</p>
+        <h5>If the verification strings do not match:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Reconfirm that you have entered the correct random user string for your HSM.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>If the verification strings still do not match: </p>
+        <p class="listLevel1">If this is a new HSM, type "quit" to leave the HSM in Secure Transport Mode, and contact Gemalto Technical Support. &#160;</p>
+        <p class="listLevel1">Otherwise, </p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>If you feel that the Verification failure was benign, type "proceed" to release the HSM from Secure Transport Mode, and decide to either:</p>
+        <p class="ul3" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul3Bullet"><b>–</b></span></span>proceed with using the HSM<br /></p>
+        <p class="ul3" data-mc-autonum="&lt;b&gt;–&lt;/b&gt;"><span class="autonumber"><span class="ul3Bullet"><b>–</b></span></span>perform a factory reset and re-initialize the HSM as a safety precaution before proceeding further.&#160;</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

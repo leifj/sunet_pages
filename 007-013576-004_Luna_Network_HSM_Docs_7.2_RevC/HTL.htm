@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Syslog and SNMP Monitoring Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Host Trust Link</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#monitoring/components/HTL.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Host Trust Link</h2>
+        <p>Host Trust Link (HTL) is an optional service to tightly bind communication between a client application and the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance. HTL offers protection of appliance/client registrations for cloud solutions. HTL operates as a process within the appliance (<b>htld</b>).</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <col style="width: 33.3%;" class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Facility Keyword</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Software Process</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Log File</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p><code>Local5</code>
+                        </p>
+                    </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p><code>HTLD</code> [pid]</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p><code>lunalogs</code>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Expected Log Messages</h3>
+        <h4>Normal Startup</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : NBSD loaded a PCI HSM at physical slot 2
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Network Bus Command Processor configured with 50 worker threads
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Listening for HTL status queries
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Listening for OTT expiry events
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : "Luna Network Bus 1.0 Command Processor" module version 2.0 loaded
+
+</pre>
+        <p>These messages indicate normal startup of the HTL process.</p>
+        <h4>Client Connection</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Connection accepted from: 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Identify result from: 192.168.0.100/40847, result: Success
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Handshake result from: 192.168.0.100/40847, result: Success
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Starting connection processing
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : HTLD Client "192.168.0.100" connected and authenticated : 192.168.0.100/40847.
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : One-time token validated successfully
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Sending dynamic certificate and private key sent to client
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Reinitializing connection for: 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Handshake result from: 192.168.0.100/40847, result: Success
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Starting connection processing
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Client connection exists; resuming : 192.168.0.100/40847
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : HTLD Client "192.168.0.100" connected and authenticated : 192.168.0.100/40847.
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Initial counter information sent to client
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Client acknowledged counter data; HTL link is up
+
+</pre>
+        <p>These messages indicate successful HTL establishment between the HTL service and a client.</p>
+        <h4>Connection Removed</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Grace period expired for client 192.168.0.100; cleaning up
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Terminated 1 NTLS connections for user 192.168.0.100
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Command processor instance for client 192.168.0.100 removed : 192.168.0.100/40847
+
+</pre>
+        <p>These messages indicate that the HTL service terminated a host trust link with a client.</p>
+        <h4>Instance Wrapped</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Unique command processor instance ID wrapped around.
+
+</pre>
+        <p>This message indicates that the internal counter that maps HTL identifiers reached its limit and reset to 1.</p>
+        <h4>Shutdown</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 :: Terminating.
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : "Luna Network Bus 1.0 Command Processor" shutting down.
+
+</pre>
+        <p>These messages indicate an orderly shutdown of the HTL service.</p>
+        <h3>Unexpected Log Messages</h3>
+        <h4>Incompatible Components</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000105 : Version 2.0 is not supported by HTL command processor : RC_FUNCTION_NOT_SUPPORTED
+
+</pre>
+        <p>This message indicates an incompatibility between the datapath and command processor components of the HTL service.</p>
+        <h4>Client Connection Failures</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000002 : Fail to return a command response to 192.168.0.100 : 192.168.0.100/40847 : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000001 : Fail to create command processor instance for client 192.168.0.100 : 192.168.0.100/40847 : RC_MEMORY_ALLOCATION
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000002 : Invalid client registration observer.
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000002 : Invalid client registration observer operation: 9.
+
+</pre>
+        <p>These messages indicate a failure of the HTL service to complete the host trust link for a client.</p>
+        <h4>Client Connection in Progress</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Client connection already in progress : 192.168.0.100/40847
+
+</pre>
+        <p>This message indicates that the HTL service detected a connection request in an unexpected state.</p>
+        <h4>Invalid Client Credentials</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : Client credentials cannot be verified : 192.168.0.100/40847
+
+</pre>
+        <p>This message indicates that the HTL service did not receive valid client credentials.</p>
+        <h4>One-Time Token Expiry Handler</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0 : Exception in OTT expiry handler: &lt;exception string&gt;
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0 : Error accepting connection in OTT expiry handler: &lt;error string&gt;
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0 : Cannot get OTT expiry: client config file invalid
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0 : OTT expiry timer fired for client 192.168.0.100; removing OTT
+
+</pre>
+        <p>These messages indicate a problem with the one-time token that is integral to the HTL service.</p>
+        <h4>HTL Status</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0 : Exception in HTL status query handler: &lt;exception string&gt;
+
+</pre>
+        <p>This message indicates a failure to get the status of the HTL service.</p>
+        <h4>Memory Errors</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000001 : Failed to allocate connection request response buffer [size = 100] : 192.168.0.100/40847 : RC_MEMORY_ALLOCATION
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000001 : Failed to allocate auth response buffer [size = 100] : 192.168.0.100/40847 : RC_MEMORY_ALLOCATION
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000001 : Failed to allocate key exchange response buffer [size = 100] : 192.168.0.100/40847 : RC_MEMORY_ALLOCATION
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000001 : Failed to allocate counter init response buffer [size = 100] : 192.168.0.100/40847 : RC_MEMORY_ALLOCATION
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000001 : Failed to allocate sync beacon response buffer [size = 100] : 192.168.0.100/40847 : RC_MEMORY_ALLOCATION
+
+</pre>
+        <p>These messages indicate a failure to allocate memory within the HTL service.</p>
+        <h4>Client Setup Errors</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000002 : Fail to initialize token interface : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000002 : Fail to initialize client registration database : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000002 : Fail to populate client registration database : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000002 : Fail to reset client registration entry's flags : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000002 : Fail to create token manager object : RC_GENERAL_ERROR
+2012 Feb 29 12:05:01 myLuna&#160; local5 err&#160; HTLD[1234]: error : 0xc0000002 : Fail to Initialize VToken Manager : RC_GENERAL_ERROR
+
+</pre>
+        <p>These messages indicate that the HTL service failed to set up the host trust link with an intended client.</p>
+        <h4>Connection Errors</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: Backup OTT matched in grace period
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: One-time token validated successfully
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: Unable to validate one-time token
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: Unable to derive shared secret for dynamic certificate exchange
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: Unable to create dynamic certificate and private key
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: Unable to register dynamic certificate
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: Sending dynamic certificate and private key sent to client
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: Initial counter information sent to client
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: Received counter is not aligned with increment steps
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: Counter is outside allowable drift range
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: Client acknowledged counter data; HTL link is up
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: HTL message timer expired. Terminating HTL link.
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: Client disconnected.&#160; Entering grace period.
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: Client disconnected. Cleaning up.
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: Server closed HTL connection. Entering grace period.
+2012 Feb 29 12:05:01 myLuna&#160; local5 info&#160; HTLD[1234]: info : 0xc0000002: Server closed HTL connection. Cleaning up.
+
+</pre>
+        <p>These messages indicate a failure in the HTL service’s ability to establish and maintain a connection with a client.</p>
+        <h4>Random Number Generator</h4><pre xml:space="preserve">2012 Feb 29 12:05:01 myLuna&#160; local5 crit&#160; HTLD[1234]: critical :&#160; 0 : Unable to find HSM for RNG
+
+</pre>
+        <p>This message indicates that the HTL service was unable to connect to the internal HSM for the service’s source of random number data.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

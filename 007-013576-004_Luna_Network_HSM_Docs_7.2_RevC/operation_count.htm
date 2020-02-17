@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Design Considerations">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Object Usage Count</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/design/operation_count.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Object Usage Count</h2>
+        <p>You may wish to create keys that have a limited number of uses. You can set attributes on a key object to track and limit the number of cryptographic operations that object may perform. The relevant attributes are:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CKA_USAGE_COUNT: the number of operations that have been performed using the key</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>CKA_USAGE_LIMIT: the maximum number of operations allowed for the key. </p>
+        <p>When the limit set by CKA_USAGE_LIMIT is reached, attempts to use the key for operations like encrypt/decrypt, sign/verify, etc. will return an error (CKR_KEY_NOT_ACTIVE). </p>
+        <h3 class="ntoc">Setting CKA_USAGE_LIMIT on a key using CKDEMO</h3>
+        <p>You can use CKDEMO to set this limit for a specific key on the HSM. </p>
+        <h5>To set CKA_USAGE_LIMIT on a key:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Navigate to the SafeNet LunaClient directory and run CKDEMO. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Select <b>Option 1 (Open Session)</b>. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Select <b>Option 3 (Login)</b>, select the partition where the key is located, and present the Crypto Officer login credential. </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>If you do not know the key's object handle, select <b>Option 27 (Display Object)</b> and enter 0 to view a list of available objects. </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Select <b>Option 25 (Set Attribute)</b> and enter the key's object handle when prompted. </p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Select <b>Sub-option 1 (Add Attribute)</b>, and <b>53 (CKA_USAGE_LIMIT)</b> from the list of attributes. </p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Enter the desired maximum number of uses in hexadecimal (Allowable range: 1 - FFFFFFFF). </p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Select <b>Option 27</b> and enter the key's object handle to view the key attributes. When you set CKA_USAGE_LIMIT in step 7, CKA_USAGE_COUNT is also set, with a value of 0:</p><pre class="listLevel1" xml:space="preserve">Enter your choice: 27</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Enter handle of object to display (0 to list available objects) : 247</pre><pre class="listLevel1">Object handle=247</pre><pre class="listLevel1">CKA_CLASS=0003 (3)</pre><pre class="listLevel1">CKA_TOKEN=01</pre><pre class="listLevel1">CKA_PRIVATE=01</pre><pre class="listLevel1">CKA_LABEL=Generated RSA Private Key</pre><pre class="listLevel1">CKA_KEY_TYPE=0000 (0)</pre><pre class="listLevel1">CKA_SUBJECT=</pre><pre class="listLevel1">CKA_ID=</pre><pre class="listLevel1">CKA_SENSITIVE=01</pre><pre class="listLevel1">CKA_DECRYPT=01</pre><pre class="listLevel1">CKA_UNWRAP=01</pre><pre class="listLevel1">CKA_SIGN=01</pre><pre class="listLevel1">CKA_SIGN_RECOVER=00</pre><pre class="listLevel1">CKA_DERIVE=00</pre><pre class="listLevel1">CKA_START_DATE=</pre><pre class="listLevel1">CKA_END_DATE=</pre><pre class="listLevel1" xml:space="preserve">CKA_MODULUS=bc613525ae8c5b30ca086c0e688f2f0ed6928805bf007d4fc...</pre><pre class="listLevel1">CKA_MODULUS_BITS=0400 (1024)</pre><pre class="listLevel1">CKA_PUBLIC_EXPONENT=010001</pre><pre class="listLevel1">CKA_LOCAL=01</pre><pre class="listLevel1">CKA_MODIFIABLE=01</pre><pre class="listLevel1">CKA_EXTRACTABLE=01</pre><pre class="listLevel1">CKA_ALWAYS_SENSITIVE=01</pre><pre class="listLevel1">CKA_NEVER_EXTRACTABLE=00</pre><pre class="listLevel1">CKA_CCM_PRIVATE=00</pre><pre class="listLevel1">CKA_FINGERPRINT_SHA1=6beddef34f9f5c8023e3422daecd6bd91c2dc40d</pre><pre class="listLevel1">CKA_OUID=b00800000300000d1b030100</pre><pre class="listLevel1">CKA_X9_31_GENERATED=00</pre><pre class="listLevel1">CKA_EKM_UID=</pre><pre class="listLevel1" xml:space="preserve"><span style="background-color: #ffff00;">CKA_USAGE_LIMIT=000e (15)</span></pre><pre class="listLevel1"><span style="background-color: #ffff00;">CKA_USAGE_COUNT=0000 (0)</span></pre><pre class="listLevel1">CKA_GENERIC_1=</pre><pre class="listLevel1">CKA_GENERIC_2=</pre><pre class="listLevel1">CKA_GENERIC_3=</pre><pre class="listLevel1" xml:space="preserve">CKA_FINGERPRINT_SHA256=a8293ea9ddb578bcca644279c9753de4df772958563d259bed28c5d2a2e04e7d</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">Status: Doing great, no errors (CKR_OK)</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="listLevel1">Using this key to perform cryptographic operations will now increment the value of CKA_USAGE_COUNT. </p>
+        <h3 class="ntoc">Creating multiple keys with CKA_USAGE_LIMIT using CKDEMO</h3>
+        <p>If you are creating multiple, usage-limited keys in CKDEMO, you can simplify this procedure by changing a CKDEMO setting. You will then have the option to set a usage limit for all new keys created in that session. </p>
+        <h5>To create multiple keys with CKA_USAGE_LIMIT set:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Navigate to the SafeNet LunaClient directory and run CKDEMO. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Select <b>Option 98 (Options)</b>. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Select <b>Option 10 (Object Usage Counters)</b>. </p>
+        <p class="listLevel1">Note that the option value has changed from "disabled" to "selectable".</p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Enter <b>0</b> to exit the <b>(Options)</b> menu.</p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Open a session and begin creating your new keys. In addition to setting the attributes governing key capabilities, you will be prompted to enter a value for CKA_USAGE_LIMIT (in hexadecimal):</p><pre class="listLevel1">Select type of key to generate</pre><pre class="listLevel1">[ 1] DES     [ 2] DES2   [ 3] DES3             [ 5]  CAST3</pre><pre class="listLevel1">[ 6] Generic [ 7] RSA    [ 8] DSA   [ 9] DH    [10]  CAST5</pre><pre class="listLevel1">[11] RC2     [12] RC4    [13] RC5   [14] SSL3  [15]  ECDSA</pre><pre class="listLevel1">[16] AES     [17] SEED   [18] KCDSA-1024   [19] KCDSA-2048</pre><pre class="listLevel1">[20] DSA Domain Param    [21] KCDSA Domain Param</pre><pre class="listLevel1">[22] RSA X9.31           [23] DH X9.42         [24] ARIA</pre><pre class="listLevel1">[25] DH PKCS Domain Param [26] RSA 186-3 Aux Primes</pre><pre class="listLevel1">[27] RSA 186-3 Primes     [28] DH X9.42 Domain Param</pre><pre class="listLevel1">[29] ECDSA with Extra Bits [30] EC Edwards</pre><pre class="listLevel1">[31] EC Montgomery</pre><pre class="listLevel1" xml:space="preserve">&gt; 7</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1">Enter Key Length in bits: 1024</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Enter Is Token Attribute [0-1]: 1</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Enter Is Sensitive Attribute [0-1]: 1</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Enter Is Private Attribute [0-1]: 1</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Enter Is Modifiable Attribute [0-1]: 1</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Enter Extractable Attribute [0-1]: 1</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Enter Encrypt/Decrypt Attribute [0-1]: 1</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Enter Sign/Verify Attribute [0-1]: 1</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Enter Wrap/Unwrap Attribute [0-1]: 1</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Enter Derive Attribute [0-1]: 1</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1"><span style="background-color: #ffff00;">Would you like to specify a usage count limit? [0-no, 1-yes]: 1</span></pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1"><span style="background-color: #ffff00;">Please enter the limit in HEX: 0E</span></pre><pre class="listLevel1">Generated RSA Public Key:        160 (0x000000a0)</pre><pre class="listLevel1">Generated RSA Private Key:        247 (0x000000f7)</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1">Status: Doing great, no errors (CKR_OK)</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

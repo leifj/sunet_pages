@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|hsm">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>hsm init</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#lunash/commands/hsm/hsm_init.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">hsm init</h2>
+        <p>Initialize the HSM (key 
+ card) in the SafeNet Luna HSM Server. Initialization assigns an HSM label, creates or associates Security Officer (SO) or HSM Admin authentication for the HSM, creates or associates a Cloning Domain (with authentication) for the HSM, and applies other settings that make the HSM available for use. </p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>Initializing the HSM erases all existing 
+data on the key card, including all HSM Partitions and their data. HSM 
+ Partitions then must be recreated with the <b>partition create</b> command. Because this is a destructive command, the user is asked 
+ to “proceed” unless the <b>-force</b> switch is provided at the command line. If you invoke <b>hsm init</b> and then type <b>quit</b> at the prompt, 
+ initialization does not take place (meaning that you do not lose existing 
+ token/HSM contents), but any current login or activation state is closed, 
+ whether you abort the command or not.</p>
+        <p>For more information, see <a href="../../../configuration/hsm_init/hsm_initialization.htm" class="MCXref xref">HSM&#160;Initialization</a> in the <i>Configuration Guide</i>.</p>
+        <h3 class="ntoc">User Privileges</h3>
+        <p>Users with the following privileges can perform this command:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Admin</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code"><b>hsm init -label</b> &lt;hsm_label&gt; [<b>-domain</b> &lt;hsm_domain&gt;] [<b>-password</b> &lt;hsm_admin_password&gt;] [<b>-applytemplate</b> &lt;filename&gt;] [<b>-defaultdomain</b>] [<b>-authtimeconfig</b>] [<b>-force</b>] </p>
+        <table style="caption-side: top;width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 200px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 90px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p> Argument(s)</p>
+                    </th>
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Shortcut</p>
+                    </th>
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Description</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-applytemplate</b> &lt;filename&gt;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-ap</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Apply an HSM policy template. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;"><b>-authtimeconfig</b>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-a</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies that the SO&#160;role must be logged in to configure the time.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-defaultdomain</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-de</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">This option is deprecated. <br />The current and future HSM versions do not allow you to omit providing a domain, unless you include this "-defaultdomain" option, which is an insecure choice and generally not recommended. It is retained for benefit of existing customers who have previously set the default domain, and are constrained to continue with it until they create new objects on an HSM with a properly-named domain.<br />The "<b>-defaultdomain</b>" option applies to Password-authenticated HSMs only. <br />For PED-authenticated HSMs the PED always prompts for a physical PED Key and either reuses the value on the key that you insert, or generates a new value and imprints it on the PED Key.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-domain <span style="font-weight: normal;">&lt;hsm_domain&gt;</span></td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-do</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p class="code">Specifies the string to be used as key cloning domain for the 
+ HSM. If no value is given for a SafeNet Luna HSM with Password Authentication, 
+ you are prompted interactively.  The HSM must support cloning, or this 
+ value is ignored. This parameter is considered mandatory
+ in password-authenticated HSMs (except if the discouraged and deprecated <b>-defaultdomain</b> is specified). The <b>-domain</b> parameter is ignored in PED-authenticated HSMs.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-force</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-f</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Force the action without prompting.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-label <span style="font-weight: normal;">&lt;hsm_label&gt;</span></td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-l</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies the label to assign to the HSM. The label has a maximum length of 32 characters. Any data input over 32 characters is truncated.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-password <span style="font-weight: normal;">&lt;hsm_admin_password&gt;</span></td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-p</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p class="code">Specifies the password to be used as login credential by the 
+ HSM Admin. For PED-authenticated HSMs, the Luna PED is used for the HSM Admin PIN/password, and data input for this value 
+ is ignored. This parameter is required 
+ in password-authenticated HSMs. It is ignored in PED-authenticated HSMs.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3>
+        <h4>PED-authenticated HSMs</h4>
+        <p>If the HSM has been factory reset, then a complete "hard" initialization is performed when you invoke the <b>hsm init</b> command.</p><pre xml:space="preserve">lunash:&gt; hsm init -label myluna </pre><pre xml:space="preserve"><br />CAUTION: &#160;Are you sure you wish to re-initialize this HSM?<br />&#160;         All partitions and data will be erased.</pre><pre xml:space="preserve">&#160;         Type 'proceed' to initialize the HSM, or 'quit' 
+          to quit now.<br />         &#160;&gt; proceed<br />Luna PED operation required to initialize HSM - use Security Officer (blue) PED Key<br />Luna PED operation required to login as HSM Administrator - use Security Officer (blue) PED Key<br />Luna PED operation required to generate cloning domain - use Domain (red) PED Key<br /><br />'hsm init successful'<br /><br />Command result : 0 (Success)<br />lunash:&gt;</pre><pre xml:space="preserve">&#160;</pre>
+        <p>If the HSM is NOT in factory reset condition when you invoke the <b>hsm init</b> command, then a "soft" initialization is performed - while the partitions and contents are destroyed, the Security officer/HSM Administrator identity and the Domain are preserved. The SO must be logged into the HSM to run HSM init when the HSM is not in factory reset condition. </p><pre xml:space="preserve">lunash:&gt; hsm init -label myluna</pre><pre xml:space="preserve">  <br /></pre><pre>Warning:  This HSM is not in the factory reset (zeroized) state.</pre><pre xml:space="preserve">          You must present the current HSM Admin login credentials</pre><pre xml:space="preserve">          to clear the HSM contents.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">CAUTION: &#160;Are you sure you wish to re-initialize this HSM?</pre><pre xml:space="preserve">          All partitions and data will be erased.</pre><pre xml:space="preserve">          Type 'proceed' to initialize the HSM, or 'quit' </pre><pre xml:space="preserve">          to quit now.</pre><pre xml:space="preserve">          &gt; proceed</pre><pre xml:space="preserve">Luna PED operation required to initialize HSM - use Security Officer (blue) PED Key</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">'hsm -init successful'</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command result : 0 (Success)</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Configuration Guide|Configure Application Partitions">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Initialize the Partition SO&#160;and Crypto Officer Roles on a PW-Auth  Partition</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#configuration/ppso_partition_config/partition-so_action_to_config_pw-ppso_partition_2.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Initialize the Partition SO&#160;and Crypto Officer Roles<MadCap:conditionalText data-mc-conditions="Default.CV_Exclude"> on a PW-Auth  Partition</MadCap:conditionalText></h2>
+        <p data-mc-conditions="Default.CV_Exclude">These instructions assume a password-authenticated <span class="DefaultProduct">SafeNet Luna Network HSM</span> has been initialized, and an application partition has been created. </p>
+        <h5 data-mc-conditions="Default.CV_Exclude">To initialize the Partition SO and Crypto Officer roles:</h5>
+        <h4>Step 1:&#160;Initialize  the Partition SO role</h4>
+        <p data-mc-conditions="Default.SA,Default.CV_Exclude">This step is performed by an Administrator user on the <span class="DefaultProduct">SafeNet Luna Network HSM</span> client workstation. If you are using STC to provide the client-partition link, do not perform this procedure, since you already initialized the partition when configuring the STC link. See <a href="../client_partition/stc_links.htm" class="MCXref xref">Creating an STC Link Between a Client and a Partition</a> for more information.</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Set the active slot to the uninitialized application partition:<br /></p>
+        <p class="listLevel1">lunacm:&gt;<b>slot set -slot</b> &lt;slotnum&gt;</p><pre xml:space="preserve" class="listLevel1">lunacm:&gt; slot set -slot 0</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">        Current Slot Id:    0     (Luna User Slot 7.0.1 (PW) Signing With Cloning Mode)</pre><pre xml:space="preserve" class="listLevel1">&#160;</pre><pre xml:space="preserve" class="listLevel1">Command Result : No Error</pre>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Initialize the application partition, to create the partition's Security Officer (SO), and set the initial password and cloning domain.</p>
+        <p class="listLevel1">lunacm:&gt;<b>partition init -label</b> &lt;par_label&gt;</p><pre class="listLevel1" xml:space="preserve">lunacm:&gt;par init -label myLunapar</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        You are about to initialize the partition.</pre><pre class="listLevel1" xml:space="preserve">        All contents of the partition will be destroyed.</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Are you sure you wish to continue?</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Type 'proceed' to continue, or 'quit' to quit now -&gt;proceed</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Enter password for Partition SO: ********</pre><pre class="listLevel1" xml:space="preserve">        Re-enter password for Partition SO: ********</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Option -domain was not specified.  It is required.</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">        Enter the domain name: *********</pre><pre class="listLevel1" xml:space="preserve">        Re-enter the domain name: *********</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">Command Result : No Error</pre>
+        <h4>Step 2:&#160;Initialize the Crypto Officer role</h4>
+        <p>The SO of the application partition can now assign the first operational role within the new partition. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>First, login as Partition SO. You can also use the shortcut <b>po</b>.</p>
+        <p class="listLevel1"><b>role login -name Partition SO</b>
+        </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Initialize the Crypto Officer role and set the initial password. You can also use the shortcut <b>co</b>. </p>
+        <p class="listLevel1"><b>role init -name Crypto Officer</b>
+        </p><pre class="listLevel1" xml:space="preserve">lunacm:&gt;role init -name co</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre><pre class="listLevel1" xml:space="preserve">        enter new password: ********</pre><pre class="listLevel1" xml:space="preserve">        re-enter new password: ********</pre><pre class="listLevel1">&#160;</pre><pre class="listLevel1" xml:space="preserve">Command Result : No Error</pre><pre class="listLevel1" xml:space="preserve">&#160;</pre>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>The Partition SO can create the Crypto Officer, but only the Crypto Officer can create the Crypto User. Therefore, you must log out to allow the Crypto Officer to log in with the newly-set password.</p>
+        <p class="listLevel1"><b>role logout</b>
+        </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The password for the Crypto Officer role is valid for the initial login only. The CO must change the initial password using the command <b>role changepw</b> during the initial login session, or a subsequent login. Failing to change the password will result in a CKR_PIN_EXPIRED error when they perform role-dependent actions.</p>
+        <p>Once the Crypto Officer logs in and changes the initial credential set by the Partition SO, applications using the CO's challenge secret/password can perform cryptographic operations in the partition. The Crypto Officer can create, modify and delete crypto objects within the partition, and use existing crypto objects (sign/verify). You can also create a limited-capability role called Crypto User that can use the objects created by the Crypto Officer, but cannot modify them. The separation of roles is important in some security regimes and operational situations, and where you might be required to satisfy audit criteria for industry or government oversight.</p>
+        <p>The next sequence of configuration actions is performed by the Crypto Officer, just created for the application partition. See <a href="partition-crypto-officer_action_to_config_pw-ppso_partition_3.htm" class="MCXref xref">Initialize the Crypto User Role on a PW-Authenticated  Partition</a>.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

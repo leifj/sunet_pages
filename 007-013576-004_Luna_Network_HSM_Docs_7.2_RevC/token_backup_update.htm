@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|token backup">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>token backup update</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#lunash/commands/token/token_backup_update.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">token backup update</h2>
+        <p>Access the token backup update commands to update the backup token capabilities or firmware.</p>
+        <p class="notepad_note">A capability update or a firmware update is meant to be applied just one time to an HSM. If you attempt to re-apply a capability update to an HSM that already has the capability installed, the system throws an error like " C0000002 : RC_GENERAL_ERROR ". A similar result occurs if you attempt to install a particular firmware update more than once on one HSM. This is expected behavior.</p>
+        <p><b>WHEN to USE LunaSH "token backup" commands, or use "vtl backup" commands:</b>  &#160;</p>
+        <p>LunaSH <b>token backup</b> commands operate a SafeNet Luna Backup HSM  attached directly to SafeNet Luna Network HSM via USB, and are not intended for use with remotely connected backup devices.  <br />You might have a locally-connected backup HSM (connects directly to a SafeNet Luna Network HSM via USB cable) and a locally connected serial terminal and be walking them from SafeNet Luna Network HSM to SafeNet Luna Network HSM in your server room to perform backups. Or you might be administering remotely via SSH and lunash:&gt; commands, while a technician in your server center carries the backup HSM from one SafeNet Luna Network HSM to the next. In either case, these <b>token backup</b> commands are the method to use. The important distinction is where the backup HSM is physically connected -  from the SafeNet Luna Network HSM perspective, those are both local backup operations to a backup HSM that is locally connected to the appliance.<br /><br /><b>VTL backup</b> commands operate a SafeNet Luna Backup HSM connected to a computer, and located distantly from your primary SafeNet Luna Network HSM appliance. The <b>VTL backup</b> commands are not for use with a SafeNet Luna Backup HSM that is connected directly to your SafeNet Luna Network HSM appliance.<br />For true, hands-off, lights-out operation of your SafeNet appliances, use a SafeNet Luna Backup HSM located in your administrator's office (or other convenient location), connected to a computer acting as a Remote Backup server (this could be your administrative workstation, or it could be a completely separate computer). This means the computer and Backup HSM are located near you and remote/distant from your SafeNet Luna Network HSM appliance(s). For that application, use the <b>backup</b> commands in the VTL utility supplied with the SafeNet Luna Network HSM Client software (which must be installed on the computer that is acting as Remote Backup server)&#160;- the appliance <b>token backup</b> commands are not designed to work for Remote Backup.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p style="font-weight: bold;">token backup update</p>
+        <p class="listLevel1" style="font-weight: bold;">capability<br />firmware<br />show</p>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 200px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 90px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Argument(s)</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Shortcut</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">capability</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">c</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Update the capabilities for a backup token. See <a href="token_backup_update_capability.htm" class="MCXref xref">token backup update capability</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">firmware</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">f</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Update the firmware on a backup token. See <a href="token_backup_update_firmware.htm" class="MCXref xref">token backup update firmware</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">show</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">s</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Show a list of the available backup token updates. See <a href="token_backup_update_show.htm" class="MCXref xref">token backup update show</a>.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

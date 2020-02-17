@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Appliance Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>System Behavior with Hardware Tamper Events</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sa_appliance_admin/hardware/tamper_behavior.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>System Behavior with Hardware Tamper Events</h2>
+        <p>The SafeNet appliance uses the Master Tamper Key (a key on the HSM that encrypts everything on the HSM) to deal with both hardware (physical) tamper events and Secure Transport Mode. </p>
+        <h3>Tampering with the Appliance</h3>
+        <p>Hardware tamper events are detectable events that imply intrusion into the appliance interior.</p>
+        <p>One such event is removal of the lid (top cover). The lid is secured by anti-tamper screws, so any event that lifts that lid is likely to be a serious intrusion.</p>
+        <p>Another event that is considered tampering is opening of the bay containing the ventilation fans. </p>
+        <p>You can use the thumbscrew to access the mesh air filter in front of the fans, without disturbing the system. However, if you open the fan-retaining panel behind that, which requires a Torx #8 screwdriver, then the system registers a tamper. </p>
+        <p>Therefore, cleaning of the filter is encouraged, especially if you work in a dusty environment, but fan module removal and replacement are discouraged unless you have good reason to suspect that a fan module is faulty. See <a href="fan_maintenance.htm" class="MCXref xref">Power Supply and Fan Maintenance</a> for more information.</p>
+        <h3>Decommission</h3>
+        <p>The red "Decommission" button recessed behind the back panel is not a tamper switch. Its purpose is different. See <a href="hsm_decommission_button.htm" class="MCXref xref">HSM Emergency Decommission Button</a> for a description.</p>
+        <h3>What Happens When You Tamper - Including Opening the Fan Bay</h3>
+        <p>The following sequence illustrates how a tamper event affects the HSM and your use of it. You do not need to perform all these steps. Many are included for illustrative purposes and to emphasize the state of the appliance and of the enclosed HSM at each stage.</p>
+        <table class="TableStyle-Page" style="mc-table-style: url('../../Resources/TableStyles/Page.css');margin-left: 0;margin-right: auto;width: 100%;" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Action</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Result/State</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="2">
+                        <p colspan="3">First, we place the HSM in its basic operational condition (we reset only to have a clean starting point for this illustration).</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsm factoryReset</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Starting point</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsm initialize</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Basic setup of HSM</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="2">
+                        <p colspan="3">&#160;</p>
+                        <p colspan="3">Next, we illustrate a software "tamper" (destroying the MTK by setting the HSM into Transport Mode)</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">stm transport</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Enable Secure Transport Mode.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsm show </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Basic HSM info remains undisturbed. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">partition list </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">None have been created since initialization, above.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">partition create</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Attempt to create a partition - doesn't work; must be logged in as SO.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsm login</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">No, can't do that either: LUNA_RET_MTK_ZEROIZED </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">stm recover</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Log in to the HSM and HSM SO and recover from Secure Transport&#160;Mode.<br />Also, the PED presents the Transport Mode verification string.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsm login</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">This time, it works.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">partition create</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Partition is created. </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">partition list</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Confirm that the created partition is there - you have confirmed that you have successfully set Secure Transport Mode, then recovered from it. The HSM is unusable while in STM, but is fully restored to its previous state when you recover from STM.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="2">
+                        <p colspan="3">&#160;</p>
+                        <p colspan="3">Now, we illustrate a hardware tamper (by physically interfering with the appliance as an intruder might do)</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">open the fan bay (with a Torx #8 screwdriver)</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The HSM stops responding as the vkd (HSM&#160;driver) times out [the command-line prompt is still available until you issue a command that attempts to access the HSM, at which point the driver goes into time-out] - the entire system stops responding for approximately ten minutes (you can wait it out, or you can reboot) - the system has detected a tamper event</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>(system resumes)</p>
+                        <p>run <b>sysconf appliance reboot</b> or press the restart [Stop/Start] switch on the back panel</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">(If you wait until the system becomes responsive on its own, issue <b>sysconf appliance reboot</b>; if you simply restart with the switch, that's the same thing, but faster.)</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">when the system is back up, run <br /><br />hsm show</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Check for HSM&#160;Tampered:&#160;Yes or No</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">view the logs</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>The <strong>audit log</strong> shows events like:</p><pre xml:space="preserve">lunash:&gt;audit log tail -f hsm_150073_00000001.log
+
+133098,13/01/28 14:39:37,S/N 150073 HSM with S/N 150073 logged the
+ following internal event: LOG: resync(0x0000002e)
+133099,13/01/28 14:47:15,S/N 150073 HSM with S/N 150073 logged the
+ following internal event: TVK was corrupted.(0x00000027)
+133100,13/01/28 14:47:15,S/N 150073 HSM with S/N 150073 logged the
+ following internal event: Existing Auto-Activation data won't work(0x00000029)
+133101,13/01/28 14:47:15,S/N 150073 HSM with S/N 150073 logged the
+ following internal event: Generating new TVK...passed(0x0000002a)
+133102,13/01/28 14:47:15,S/N 150073 HSM with S/N 150073 logged the
+ following internal event: RESTART(0x0000002f)
+133103,13/01/28 14:47:35,S/N 150073 HSM with S/N 150073 logged the
+ following internal event: LOG: resync(0x0000002e)
+
+Command Result : 0 (Success)</pre>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsm tamper show</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">WARNING - Tamper(s) Detected</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsm login</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">not permitted: <br />LUNA_RET_MTK_ZEROIZED </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsm tamper clear</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Clear the HSM tamper. The HSM&#160;SO must be logged in to issue this command.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsm login</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">This time, it works.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">partition list</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Confirm that the pre-existing partition is present.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">partition showContents</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Confirm that any pre-existing partition contents are there.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="2">
+                        <p colspan="3">
+                            <br />Next, we illustrate what happens when a physical tamper occurs while the HSM is already in Secure Transport Mode</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">stm transport</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Enter Secure&#160;Transport Mode.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">hsm tamper show</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"><pre>lunash:&gt;hsm tamper show</pre><pre>&#160;</pre><pre xml:space="preserve">No active tampers.</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : 0 (Success)</pre>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">Open the appliance lid, or open the fan bay <br />(opening the lid would damage the chassis and void your warranty, this is for example purposes only)</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">The HSM stops responding when you enter an HSM command, <br />or it gives an error message (any of several, depending on what it was doing <br />at the time) and then stops responding.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Summary of Your Responses to Tamper Events</h3>
+        <p>If you have a password-authenticated HSM, or if you have a PED-authenticated HSM, then both splits of the MTK reside always on the HSM. </p>
+        <p>The MTK is destroyed by a tamper event, and the HSM becomes unresponsive. When you react to this by rebooting the appliance, the HSM has both splits available and can immediately reconstitute the MTK and go on operating normally, without further intervention from you. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

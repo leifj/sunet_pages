@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>About Remote PED</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#administration/PED_Auth/remote/about_remote.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>About Remote PED</h2>
+        <p>A Remote PED connection allows you to access PED-authenticated HSMs that are kept in a secure data center or other remote location where physical access is restricted or inconvenient. This section provides descriptions of the following aspects of Remote PED connections: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Architecture" class="MCXref xref">Remote PED Architecture</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Connect" class="MCXref xref">Remote PED&#160;Connections</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Comms" class="MCXref xref">PEDserver-PEDclient Communications</a>
+        </p>
+        <h3><a name="Architecture"></a>Remote PED Architecture</h3>
+        <p>The Remote PED architecture consists of the following components:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>Remote PED:</b> a Luna PED with firmware 2.7.1 or newer, connected to a network-connected workstation, powered on, and set to Remote PED mode.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>Remote PED&#160;Vector (RPV):</b> a randomly generated, encrypted value used to authenticate between a Remote PED (via PEDserver) and a SafeNet Luna HSM (via PEDclient).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>Remote PED Key (RPK):</b> an orange PED key containing an RPV (or multiple PED keys with a split RPV in an M of N implementation).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>PEDserver:</b> software that runs on the remote workstation with a USB-connected Luna PED. PEDserver accepts requests from and serves PED actions and data to PEDclient.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>PEDclient:</b> software that requests remote PED services from PEDserver. PEDclient runs on the network-connected system hosting the HSM, which can be one of the following:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>SafeNet Luna Network HSM</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Host computer with SafeNet Luna PCIe HSM installed</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Host computer with USB-connected SafeNet Luna Backup HSM, configured for remote backup</p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/remote/remote-ped_using_g5_pci-e.svg" />
+        </p>
+        <h3 class="ntoc"><a name="Connect"></a>Remote PED&#160;Connections</h3>
+        <p>A <span class="DefaultProduct">SafeNet Luna Network HSM</span> can establish a Remote PED connection with any workstation that meets the following criteria:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>PEDServer is running</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>a SafeNet Luna PED with firmware version 2.7.1 or newer is connected</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The orange PED&#160;key containing the Remote PED Vector (RPV) for that HSM is available</p>
+        <p>
+            <img src="../../../Resources/Images/PED_Authentication/Remote_PED_Architecture.svg" />
+        </p>
+        <h4 data-mc-conditions="Default.SA">Bi-directionality</h4>
+        <p data-mc-conditions="Default.SA">There are two methods of establishing a Remote PED connection to the HSM:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>HSM-initiated:</b> When the HSM requires authentication, it sends (via PEDclient) a request for PED services to the Remote PED host (which receives the request via PEDserver). This requires that the <span class="DefaultProduct">SafeNet Luna Network HSM</span> be allowed to initiate external connections, and that the PEDserver IP&#160;port remains open. If the <span class="DefaultProduct">SafeNet Luna Network HSM</span> resides behind a firewall with rules prohibiting these connections, or if your IT policy prohibits opening a port on the Remote PED host, use a PED-initiated connection. See <a href="remote_connect.htm#ClientInit" class="MCXref xref">Opening a Remote PED Connection</a>.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><b>PED-initiated:</b> The HSM and Remote PED host exchange and register certificates, creating a trusted connection. This allows the Remote PED host (via PEDserver) to initiate the connection to the <span class="DefaultProduct">SafeNet Luna Network HSM</span>. If you have firewall or other constraints that prevent your HSM from initiating a connection to a Remote PED in the external network, use this connection method. See <a href="remote_connect.htm#ServerInit" class="MCXref xref">Opening a Remote PED Connection</a>. </p>
+        <p data-mc-conditions="Default.SA">The following constraints apply to PED-initiated connections:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>A maximum of 20 Remote PED servers can be registered in PEDclient.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>A maximum of 80 Network HSM appliances can be registered in PEDserver.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>If the connection is terminated abnormally (for example, a router switch died), there is no auto-reconnection. PEDserver automatically restarts and runs in HSM-initiated connection mode. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>When running in PED-initiated connection mode, PEDserver does not listen for new HSM-initiated connections, for security and to simplify usability.</p>
+        <h4>Priority and Lockout</h4>
+        <p>If a Local PED connection is active and an operation is in progress, a Remote PED connection cannot be initiated until the active Local PED operation is completed. If the Local PED operation takes too long, the Remote PED command may time out.</p>
+        <p>When a Remote PED connection is active, the Local PED connection is ignored, and all authentication requests are routed to the Remote PED. Attempts to connect to a different Remote PED server are refused until the current connection times out or is deliberately ended. See <a href="disconnect_PED.htm" class="MCXref xref">Ending or Switching the Remote PED Connection</a>. </p>
+        <h4>One Connection at a Time</h4>
+        <p>Remote PED&#160;can provide PED services to only one HSM at a time. To provide PED service to another HSM, you must first end the original Remote PED connection. See <a href="disconnect_PED.htm" class="MCXref xref">Ending or Switching the Remote PED Connection</a>. </p>
+        <h4>Timeout</h4>
+        <p>PEDserver and PEDclient both have configurable timeout settings (default: 1800 seconds). See <a href="../ped_utils/pedserver_mode_config.htm" class="MCXref xref">pedserver mode config</a> or <MadCap:conditionalText data-mc-conditions="Default.SA"> <a href="../../../lunash/commands/hsm/hsm_ped_timeout.htm" class="MCXref xref">hsm ped timeout</a></MadCap:conditionalText>. The utilities are not aware of each other's timeout values, so the briefer value determines the actual timeout duration. <MadCap:conditionalText data-mc-conditions="Default.SA">Timeout does not apply to PED-initiated Remote PED connections. </MadCap:conditionalText></p>
+        <p>Once a partition has been Activated and cached the primary authentication (PED key) credential, the Crypto Officer or Crypto User can log in using only the secondary (alphanumeric) credentials and the Remote PED connection can be safely ended until the Partition SO needs to log in again.</p>
+        <h4>Broken Connections</h4>
+        <p>A Remote PED connection is broken if any of the following events occur:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The connection is deliberately ended by the user</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The connection times out (default: 1800 seconds)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>SafeNet Luna PED&#160;is physically disconnected from its host</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>VPN or network connection is disrupted</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>You exit Remote PED mode on the Luna PED. If you attempt to change menus, the PED warns:</p>
+        <p class="listLevel1">
+            <img src="../../../Resources/Images/ped_screens/PEDscrn_invalidate_RPK.svg" />
+        </p>
+        <p>If the link is broken, as long as the network connection is intact (or is resumed), you can restart PEDserver on the Remote PED host and run <MadCap:conditionalText data-mc-conditions="Default.SA"><b>hsm ped connect</b> in LunaSH or </MadCap:conditionalText><b>ped connect</b> in LunaCM to re-establish the Remote PED link. In a stable network situation, the link will remain available until timeout.</p>
+        <h3><a name="Comms"></a>PEDserver-PEDclient Communications</h3>
+        <p>All communication between the Remote PED and the HSM is transmitted within an AES-256 encrypted channel, using session keys based on secrets shared out-of-band. This is considered a very secure query/response mechanism. The authentication conversation is between the HSM and the PED. Authentication data retrieved from the PED keys never exists unencrypted outside of the PED or the HSM. PEDclient and PEDserver provide the communication pathway between the PED and the HSM, and the data remains encrypted along that path.</p>
+        <p>Once the PED and HSM are communicating, they establish a common Data Encryption Key (DEK). DEK establishment is based on the Diffie-Hellman key establishment algorithm and a Remote PED Vector (RPV), shared between the HSM and the PED via the orange Remote PED Key (RPK). Once a common Diffie-Hellman value is established between the parties via the Diffie-Hellman handshake, the RPV is mixed into the value to create a 256-bit AES DEK on each side. If the PED and the HSM do not hold the same RPV, the resulting DEKs are different and communication is blocked. </p>
+        <p>Mutual authentication is achieved by exchanging random nonces, encrypted using the derived data encryption key. The authentication scheme operates as follows:</p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 40%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 20%;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 40%;" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>HSM</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>_</p>
+                    </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Remote PED</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>Send 8 bytes random nonce, R1,&#160;encrypted using the derived&#160;encryption key.</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>{R1 || padding}<sub>Ke</sub>&#160;-&gt;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&#160;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p>&lt;- {R2 || R1}<sub>Ke</sub></p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Decrypt R1. Generate an 8 byte&#160;random nonce, R2.&#160;Concatenate R2 || R1 and&#160;encrypt the result using the&#160;derived encryption key.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p>Decrypt R2 || R1. Verify that&#160;received R1 value is the same as&#160;the originally generated value.&#160;Re-encrypt R2 and return it to&#160;Remote PED.</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">
+                        <p>{padding || R2}<sub>Ke</sub>&#160;-&gt;</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">
+                        <p>Verify that received R2 value is&#160;the same as the originally&#160;generated value.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Following successful authentication, the random nonce values are used to initialize the feedback buffers needed to support AES-OFB mode encryption of the two communications streams (one in each direction).</p>
+        <p>Sensitive data in transition between a PED and an HSM is end-to-end encrypted: plaintext security-relevant data is never exposed beyond the HSM and the PED boundaries at any time. The sensitive data is also hashed, using a SHA-256 digest, to protect its integrity during transmission.</p>
+        <h4 data-mc-conditions="Default.SA">PEDServer Configuration File</h4>
+        <p data-mc-conditions="Default.SA">PED-initiated Remote PED introduces a pedServer.ini file. The <b>Appliances</b> section manages registered appliances.</p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;" data-mc-conditions="Default.SA"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>Do not edit the pedServer.ini file. If you have any issues, contact <span class="DefaultCompanyNameLong">Gemalto</span> Technical Support.</p><pre data-mc-conditions="Default.SA">[Appliances]</pre><pre data-mc-conditions="Default.SA">ServerCAFile=C:\Program Files\SafeNet\LunaClient\cert\PedServerCAFile.pem</pre><pre data-mc-conditions="Default.SA">SSLConfigFile=C:\Program Files\SafeNet\LunaClient\openssl.cnf</pre><pre data-mc-conditions="Default.SA">ServerName00=myHSM</pre><pre xml:space="preserve" data-mc-conditions="Default.SA">ServerIP00=192.20.11.78</pre><pre data-mc-conditions="Default.SA">ServerPort00=9697</pre><pre data-mc-conditions="Default.SA">CommonCertName00=66331</pre><pre data-mc-conditions="Default.SA">[RemotePed]</pre><pre data-mc-conditions="Default.SA">AdminPort=1502</pre><pre data-mc-conditions="Default.SA">BGProcessShutdownTimeoutSeconds=25</pre><pre data-mc-conditions="Default.SA">BGProcessStartupTimeoutSeconds=10</pre><pre data-mc-conditions="Default.SA">ExternalAdminIF=0</pre><pre data-mc-conditions="Default.SA">ExternalServerIF=1</pre><pre data-mc-conditions="Default.SA">IdleConnectionTimeoutSeconds=1800</pre><pre data-mc-conditions="Default.SA">InternalShutdownTimeoutSeconds=10</pre><pre data-mc-conditions="Default.SA">LogFileError=1</pre><pre data-mc-conditions="Default.SA">LogFileInfo=1</pre><pre data-mc-conditions="Default.SA">LogFileName=C:\Program Files\SafeNet\LunaClient\remotePedServerLog.log</pre><pre data-mc-conditions="Default.SA">LogFileTrace=0</pre><pre data-mc-conditions="Default.SA">LogFileWarning=1</pre><pre data-mc-conditions="Default.SA">MaxLogFileSize=4194304</pre><pre data-mc-conditions="Default.SA">PingInterval=1</pre><pre data-mc-conditions="Default.SA">PongTimeout=5</pre><pre data-mc-conditions="Default.SA">RpkSerialNumberQueryTimeout=15</pre><pre data-mc-conditions="Default.SA">ServerPortValue=1503</pre><pre data-mc-conditions="Default.SA">SocketReadRspTimeoutSeconds=60</pre><pre data-mc-conditions="Default.SA">SocketReadTimeoutSeconds=60</pre><pre xml:space="preserve" data-mc-conditions="Default.SA">SocketWriteTimeoutSeconds=15</pre><pre xml:space="preserve" data-mc-conditions="Default.SA">&#160;</pre>
+        <p data-mc-conditions="Default.SA">A new entry in the main Crystoki.ini file points to the location of the pedServer.ini file.</p><pre xml:space="preserve" data-mc-conditions="Default.SA">[Ped Server]
+PedConfigFile = /usr/safenet/lunaclient/data/ped/config&#160;
+</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

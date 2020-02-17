@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Utilities Reference Guide|VTL">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>vtl haAdmin deleteGroup</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#Utilities/vtl/vtl_haadmin_deletegroup.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="kanchor135"></a><a name="kanchor136"></a>vtl haAdmin deleteGroup</h2>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>This command is disabled. See lunacm command <a href="../../lunacm/commands/hagroup/hagroup_deletegroup.htm" class="MCXref xref">hagroup deletegroup</a>. </p>
+        <h3 class="ntoc">Name</h3>
+        <p>vtl haAdmin 
+ deleteGroup &#160;- delete an HA&#160;group.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code">vtl haAdmin deleteGroup -group &lt;groupNumber&gt; -password 
+ &lt;password&gt;</p>
+        <h3 class="ntoc">Description</h3>
+        <p>Delete the specified HA group. After a group is deleted, it will no 
+ longer appear in the slot list in PKCS#11 applications.</p>
+        <p>During the delete, the application attempts to login to each partition 
+ and remove the HA key from it. If the NTLA is not correctly set up or if 
+ the user no longer has access to one or more of the partitions in the 
+ group, a warning message indicates that the HA key was not successfully 
+ removed.</p>
+        <p class="caution" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;CAUTION!&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>CAUTION!</b> &#160;&#160;</span></span></span>Do not use this command when an HA 
+ group is shared among multiple clients, because the -deleteGroup command 
+ deletes the HA Key material, which is still required by the other clients. 
+ The other clients would find that their HA group had been destroyed.<br /> <br />If you wish to remove a client from an HA group where other 
+ clients continue to share the HA group, then edit the Chrystoki.conf or 
+ crystoki.ini file on that client and remove the “VirtualToken” section. 
+ (Never insert TAB characters into the chrystoki.ini 
+ (Windows) or crystoki.conf (UNIX) file.)<br /><br />At that point, you still have an NTL connection which no 
+ longer sees the HA virtual Partition, but now sees the individual HSM 
+ Partitions on the SafeNet Luna HSM.<br /><br />You MUST NOT use the individual Partitions (from the HA virtual 
+ Partition), or the other clients will find their HA out-of-sync.<br /><br />What you can do is login to the SafeNet Luna HSM and de-register 
+ that client from those Partitions. You may then register other, non-HA 
+ partitions to that client without disturbing any remaining clients of the HA virtual partition.</p>
+        <h3 class="ntoc">Options</h3>
+        <p><span style="font-weight: bold;">-group &lt;groupNumber&gt;</span> &#160;[mandatory] 
+ The HA group's designating number. Group numbers can be found using the 
+ <span style="font-style: italic;">vtl haAdmin -listGroups</span> command. 
+ </p>
+        <p><span style="font-weight: bold;">-password &lt;password&gt;</span> &#160;[mandatory] 
+ The text password for the partitions. (All share the same password.)</p>
+        <h3 class="ntoc">Example</h3><pre xml:space="preserve">vtl haAdmin deleteGroup -group 165010001 -password testpassword<br />HA key removed from HA group member with serial number 65010001.<br />The HA group 165010001 was successfully deleted.<br />vtl haAdmin deleteGroup -group 165010001 -password testpassword<br />Warning: &#160;This host is not assigned to a SafeNet Luna Network HSM partition with <br />the serial number 65010001, the HA key was not removed<br />from this group member.</pre><pre xml:space="preserve">The HA group 165010001 was successfully deleted. </pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

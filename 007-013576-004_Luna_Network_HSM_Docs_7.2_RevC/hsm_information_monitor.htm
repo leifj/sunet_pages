@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="LunaSH Command Reference Guide|LunaSH Commands|hsm|hsm information">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>hsm information monitor</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#lunash/commands/hsm/hsm_information_monitor.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="kanchor324"></a>hsm information monitor</h2>
+        <p>Sample the HSM to get some statistics, such as, HSM up-time, command counts, and utilization counters.</p>
+        <p class="notepad_note">A single run of this command, without arguments, takes approximately five seconds to complete. One measurement is taken at launch, then after five seconds (the default minimum) a second measurement is taken and compared with the first.</p>
+        <p>The date and time in the output are derived from: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The system time</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>The HSM count of seconds since reset</p>
+        <p>In the examples, note the line "HSM Last Reset (+/- 5 Secs Error Margin)..." That margin is due to possible variability of the default system clock. To improve the accuracy of the input to those calculations, we suggest that you use NTP for system time. If that is inconvenient, or is blocked by your security regime, then we suggest using <a href="../sysconf/sysconf_drift.htm" class="MCXref xref">sysconf drift</a> to precisely set the time, and then manage/prevent clock drift. &#160;</p>
+        <p>
+            <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>For ongoing/continual collection of such HSM information, we recommend using SNMP.</p>
+        </p>
+        <p>See <a href="../../../administration/performance/performance_sa.htm" class="MCXref xref">Performance Monitoring</a>. </p>
+        <h3 class="ntoc">User Privileges</h3>
+        <p>Users with the following privileges can perform this command:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Admin</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Operator</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Monitor</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code"><b>hsm information monitor</b> [<b>-serial</b> &lt;integer&gt;] [<b>-interval</b> &lt;integer&gt;] [<b>-rounds</b> &lt;integer&gt;] [<b>-noheader</b>] [<b>-save</b>]</p>
+        <table style="caption-side: top;width: 100%;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 200px;" />
+            <col class="TableStyle-Page-Column-Column1" style="width: 90px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p> Argument(s)</p>
+                    </th>
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadE-Column1-Header1">
+                        <p>Shortcut</p>
+                    </th>
+                    <th style="text-align: left;font-size: 12pt;" class="TableStyle-Page-HeadD-Column1-Header1">
+                        <p>Description</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-interval <span style="font-weight: normal;">&lt;integer&gt;</span></td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-i</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Set the interval over which the HSM is polled, in seconds</p>
+                        <p><b>Range:</b> 5 to 999</p>
+                        <p><b>Default:</b> 5 seconds.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-noheader</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-n</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Turn off the header and footer that are normally provided with the displayed or saved records. You might choose to omit the header and footer in a saved file, in order to make the file cleaner for concatenation and parsing by your analysis tools. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-rounds <span style="font-weight: normal;">&lt;integer&gt;</span></td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-r</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Set the number of samples to collect during the HSM polling. The default is a single round, which includes a first sample at the time the command is launched, followed by the interval (either the default 5 seconds, or the interval that you specified), followed by a second sample which is compared with the first, to complete the round. The maximum number of rounds for one operation of <b>hsm information monitor</b> is <b>65535</b>.</p>
+                        <p><b>Range:</b> 1 to 65535</p>
+                        <p><b>Default:</b> 1</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-save</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-sa</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Save the captured-and-calculated records to a file named <b>hsm_stats</b>, while also displaying the output to your terminal. The filename is not modifiable, so contents are overwritten each time the command is run. Use 'scp' to retrieve the file to a workstation for analysis.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-serial <span style="font-weight: normal;">&lt;integer&gt;</span></td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-se</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Specifies the serial number of HSM to monitor. The default is to use the embedded HSM. This parameter is optional if your SafeNet Luna Network HSM does not have additional HSMs attached. If you have a USB-connected HSM, such as SafeNet Luna USB HSM for PKI, then this command defaults to showing utilization data from the embedded HSM, but the serial parameter allows you to select an HSM other than the default. Data is collected for a single HSM when the command is run.</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3>
+        <h4>With no arguments (output to terminal):</h4><pre xml:space="preserve">lunash:&gt;hsm information monitor
+
+-------------------|---------------------------------|---------------------------------
+                   |       HSM Command Counts        |        HSM Utilization (%)
+ HSM Uptime (Secs) |-----------------|---------------|-----------------|---------------
+                   | Since HSM Reset | Last   5 Secs | Since HSM Reset | Last   5 Secs
+-------------------|-----------------|---------------|-----------------|---------------
+         1,115,399 |      57,468,854 |            30 |            1.27 |          0.21
+-------------------|-----------------|---------------|-----------------|---------------
+
+    Average HSM Utilization In This Period  :  0.21%
+
+    HSM Last Reset       :  Mon Jul  4 14:43:20 2016
+    HSM Has Been Up For  :  9 day(s), 22:30:40
+
+Command Result : 0 (Success)
+</pre>
+        <h4>With arguments (output to file): </h4><pre xml:space="preserve">lunash:&gt;hsm information monitor -interval 6 -rounds 6 -save
+
+-------------------|---------------------------------|---------------------------------
+                   |       HSM Command Counts        |        HSM Utilization (%)
+ HSM Uptime (Secs) |-----------------|---------------|-----------------|---------------
+                   | Since HSM Reset | Last   6 Secs | Since HSM Reset | Last   6 Secs
+-------------------|-----------------|---------------|-----------------|---------------
+           859,370 |     103,545,072 |           241 |            1.03 |          1.46
+           859,376 |     103,545,569 |           497 |            1.03 |          0.46
+           859,382 |     103,545,570 |             1 |            1.03 |          0.00
+           859,388 |     103,545,571 |             1 |            1.03 |          0.01
+           859,394 |     103,545,812 |           241 |            1.03 |          1.46
+           859,400 |     103,545,813 |             1 |            1.03 |          0.00
+-------------------|-----------------|---------------|-----------------|---------------
+
+    Average HSM Utilization In This Period  :  0.57%
+
+    HSM Last Reset       :  Mon Jul  4 14:43:21 2016
+    HSM Has Been Up For  :  9 day(s), 22:43:20
+
+
+The output has been saved to a file named `hsm_monitor_56726.txt`.
+Output is appended if the file already exists.
+Use `my file delete hsm_monitor_56726.txt` to remove the file.
+Use `scp` to retrieve the file to an external workstation for further analysis.
+
+
+Command Result : 0 (Success)
+</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

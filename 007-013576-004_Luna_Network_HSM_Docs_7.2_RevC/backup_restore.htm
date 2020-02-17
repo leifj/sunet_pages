@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Key Migration Guide|Network&#160;HSM&#160;Partition (5.x or 6.x) to Network HSM Partition (7.x)">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Backup and Restore</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#migration/sa5_6_to_sa7/backup_restore.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Backup and Restore</h2>
+        <p>Cryptographic key material can be backed up and then restored to a release 7.x SafeNet Luna Network HSM partition using a SafeNet Luna Backup HSM. </p>
+        <p>The new configuration's operating system must be compatible with both the new 7.x and the old 5.x/6.x hardware. Consult the 5.x/6.x CRN for a list of compatible operating systems. </p>
+        <p>To backup and restore cryptographic keys from one HSM to another, the HSMs must share the same cloning domain. For password-authenticated HSMs, this domain should have been specified when the partition was initialized. For PED-authenticated HSMs, the red key determines the cloning domain. You will need the same red key that was imprinted during 5.x/6.x partition creation to initialize the 7.x partition (see <a href="../../configuration/hsm_init/hsm_initialization.htm" class="MCXref xref">HSM&#160;Initialization</a>). </p>
+        <p>The 7.x client software should be installed, and the connection to both the source and destination partitions verified, before attempting this procedure (see <a href="../../install/software/software.htm" class="MCXref xref">SafeNet Luna HSM Client Software Installation</a> for details). The source and destination partitions must both be assigned to the client machine issuing the backup and restore  commands<MadCap:conditionalText data-mc-conditions="Default.SA"> (see <a href="../../configuration/client_partition/client_partition.htm" class="MCXref xref">Enable the Client to Access a Partition</a> for details)</MadCap:conditionalText>. Use <b>slot list</b> to ensure both partitions are visible to the client. </p>
+        <h4>Preconditions</h4>
+        <p>The following instructions assume that: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>the 7.x client software has been installed</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>an uninitialized partition has been created on the 7.x HSM</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>the source and destination partitions are both registered with the client (visible)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>the source partition's security policy allows cloning of private and secret keys</p>
+        <p>In the following example: </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Slot 0: the source 5.x/6.x partition</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Slot 1: the destination 7.x partition</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Slot 2: the Backup HSM partition</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Partition login name requirements have changed with the hardware versions. With release 7.x , you can log in using the abbreviated <b>po</b> (Partition Security Officer) or <b>co</b> (Crypto Officer). </p>
+        <h5>To migrate cryptographic keys from a 5.x/6.x partition to a 7.x partition using a Backup HSM</h5>
+        <p>Follow these steps to back up all cryptographic material on a 5.x/6.x partition to a Backup HSM, and restore to a new 7.x partition. </p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Run LunaCM, set the current slot to the 7.x partition, and initialize the partition and the Partition SO role. </p>
+        <p class="listLevel1" xml:space="preserve"><b>slot set -slot 0</b>
+        </p>
+        <p class="listLevel1" xml:space="preserve"><b>partition init -label</b> &lt;7.x_partition_label&gt;</p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>If you are backing up a PED-authenticated 5.x/6.x partition, use the 5.x/6.x partition's red key when prompted. </p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>If you are backing up a password-authenticated 5.x/6.x partition, enter the same cloning domain when prompted. </p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Log in as the <b>po</b> (Partition Security Officer) and initialize the <b>co</b> (Crypto Officer) role. </p>
+        <p class="listLevel1" style="font-weight: bold;">role login -name po</p>
+        <p class="listLevel1" style="font-weight: bold;">role init -name co</p>
+        <p class="listLevel1">If you are backing up a PED-authenticated 5.x/6.x partition, you can create an optional challenge secret for the Crypto Officer. </p>
+        <p class="listLevel1" xml:space="preserve"><b>role createchallenge -name co -challengeSecret</b> &lt;password&gt;</p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Connect your backup HSM and make sure it is visible to the client, along with the 5.x/6.x and 7.x HSMs. </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>Set the current slot to the source 5.x/6.x slot.</p>
+        <p class="listLevel1" xml:space="preserve"><b>slot list</b>
+        </p>
+        <p class="listLevel1"><b>slot set -slot 0</b>
+        </p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>Log in as the Crypto Officer.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Be mindful of whether you’re working with pre-PPSO or PPSO  firmware and use the <b>partition login</b> or <b>role login</b> commands as specified below. Also,  with PPSO firmware 6.22.0 and up, be careful with user names, i.e., type <b>Crypto Officer</b> in full (is case sensitive) and not <b>co</b>.</p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>If you are cloning a release 5.x or 6.x pre-PPSO partition (up to and including Firmware 6.21.2), use:</p>
+        <p class="listLevel2" xml:space="preserve"><b>partition login</b>
+        </p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>If you are cloning a release 6.x PPSO partition (Firmware 6.22.0 and up) , use:</p>
+        <p class="listLevel2" xml:space="preserve"><b>role login -name Crypto Officer</b>
+        </p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span>Optional: To verify the objects in the 5.x/6.x partition to be cloned,  issue the “partition contents” command.</p>
+        <p class="listLevel1" xml:space="preserve"><b>partition contents</b>
+        </p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Back up the 5.x/6.x partition contents to the Backup HSM. </p>
+        <p class="listLevel1" xml:space="preserve"><b>partition archive backup -slot 2 -partition</b> &lt;backup_label&gt;</p>
+        <p class="ol2Start" data-mc-autonum="a."><span class="autonumber"><span class="ol2Number">a.</span></span>If you are backing up a PED-authenticated 5.x/6.x partition, use the 5.x/6.x partition's red key when prompted. </p>
+        <p class="ol2" data-mc-autonum="b."><span class="autonumber"><span class="ol2Number">b.</span></span>If you are backing up a password-authenticated 5.x/6.x partition, enter the same cloning domain when prompted. </p>
+        <p class="listLevel1">Optionally, verify that all objects were backed up successfully on the Backup HSM by checking the partition contents. </p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Set the current slot to the 7.x partition, log in as the Crypto Officer, and restore from backup.</p>
+        <p class="listLevel1" xml:space="preserve"><b>slot set -slot 1</b>        </p>
+        <p class="listLevel1"><b>role login -name co</b>
+        </p>
+        <p class="listLevel1" xml:space="preserve"><b>partition archive restore -slot 2 -partition</b> &lt;backup_label&gt;</p>
+        <p class="listLevel1">Afterwards, you can verify the partition contents on the 7.x partition:</p>
+        <p class="listLevel1"><b>partition contents</b>
+        </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

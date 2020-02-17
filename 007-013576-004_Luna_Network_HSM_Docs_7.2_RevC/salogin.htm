@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Utilities Reference Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>salogin</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#Utilities/salogin/salogin.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h1 class="chapter">salogin</h1>
+        <p>Cryptographic applications that are not specifically adapted to use 
+an HSM Server can be run using SafeNet Luna HSMs, with the aid 
+of the <b>salogin</b> 
+utility. This section provides the settings required for some widely-used 
+applications.</p>
+        <p>The <b>salogin</b> 
+client-side utility is provided to assist clients that do not include 
+the requisite HSM login and logout capability within the client application. OpenSSL, for example, can be used with HSMs, but has no inherent ability to provide credentials to the HSM.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The <b>salogin</b> utility does not work with STC-enabled slots. If you require <b>salogin</b> with your applications, you must use NTLS client links. </p>
+        <h3 class="ntoc">Using salogin</h3>
+        <p> 
+ Run the utility from a shell or command prompt, or include it in scripts.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code"><b>salogin</b> {<b>-o</b> | <b>-c</b>} [<b>-p</b> &lt;password&gt;] [<b>-s</b> &lt;slot&gt; | <b>-l</b> &lt;label&gt;] [<b>-i</b> &lt;hi<b>:</b>lo&gt;] [<b>-u</b>] [<b>-r</b> &lt;server_IP&gt;] [<b>-q</b> &lt;port&gt;] [<b>-v</b>] [<b>-h</b>]<br /></p>
+        <table style="border-spacing: 0px;border-spacing: 0px;width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" cellspacing="0" class="TableStyle-Page">
+            <col style="width: 150px;" class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Argument(s)</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-c</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Close application access. </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-h</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Display this help. </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-i</b> &lt;hi<b>:</b>lo&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Specifies the application ID high 
+and low components. </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-l</b> &lt;label&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Specifies the partition label. Include either <b>-l</b> or <b>-s</b> to specify the desired partition. </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">
+                        <p style="font-weight: bold;">-o</p>
+                    </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Open application access. </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-p</b> &lt;password&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Specifies the challenge password - if a challenge password exists and this argument is not included, login will not be performed.</td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-q</b> &lt;port&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies the remote PED server port.</p>
+                        <p><b>Default:</b> 1503</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-r</b> &lt;server_IP&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Specifies the remote PED server IP. </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-s</b> &lt;slot&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Specifies the slot ID number. Include either <b>-l</b> or <b>-s</b> to specify the desired partition. </p>
+                        <p style="font-weight: normal;"><b>Default:</b> 0</p>
+                    </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td colspan="1" rowspan="1" class="TableStyle-Page-BodyE-Column1-Body1" style="font-weight: bold;">-u</td>
+                    <td colspan="1" rowspan="1" class="TableStyle-Page-BodyD-Column1-Body1">Specifies that login 
+should be performed as the Crypto User. If this argument is not included, the 
+Crypto Officer will be logged in. </td>
+                </tr>
+                <tr valign="top" class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1" style="font-weight: bold;">-v</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Show verbose logs. </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Examples</h3><pre xml:space="preserve">salogin -o -s 1 -i 1:1 <br /># open a persistent application connection<br /># on slot 1 with app id 1:1</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">salogin -o -s 1 -i 1:1 -p HT7bHTHPRp/4/Cdb<br /># open a persistent application connection<br /># and login with Luna HSM challenge</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">salogin -c -s 1 -i 1:1 <br /># close persistent application connection 1:1<br /># on slot 1</pre>
+        <h5>Attempting to use salogin on an STC-enabled slot</h5><pre xml:space="preserve">lunacm:&gt;slot list</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Slot Id -&gt;              0</pre><pre xml:space="preserve">Label -&gt;                stc_ppso</pre><pre xml:space="preserve">Serial Number -&gt;        1213429268189</pre><pre xml:space="preserve">Model -&gt;                LunaSA</pre><pre xml:space="preserve">Firmware Version -&gt;     7.0.1</pre><pre xml:space="preserve">Configuration -&gt;        Luna User Partition With SO (PW) Signing With Cloning Mode</pre><pre xml:space="preserve">Slot Description -&gt;     Net Token Slot</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Current Slot Id: 0</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : No Error</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">lunacm:&gt;stc status</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Enabled:            Yes</pre><pre xml:space="preserve">Status:             Connected</pre><pre xml:space="preserve">Channel ID:         3</pre><pre xml:space="preserve">Cipher Name:        AES 256 Bit with Cipher Block Chaining</pre><pre xml:space="preserve">HMAC Name:          HMAC with SHA 512 Bit</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : No Error</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">lunacm:&gt;stc identityshow</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Client Identity Name:          mySTCclientID</pre><pre xml:space="preserve">Public Key SHA1 Hash:          58feec48e485762c39a8c32f94cf535bf545699e</pre><pre xml:space="preserve">List of Registered Partitions:</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Partition Identity   Partition        Partition Public Key SHA1 Hash</pre><pre xml:space="preserve">Label                Serial Number</pre><pre xml:space="preserve">________________________________________________________________________________</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">par1                 1213429268189    d4d4d65d281fd17580c56ddf09439c79c466a09a</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : No Error</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">lunacm:&gt;clientconfig listservers</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Server ID  Server                         Channel  HTL Required</pre><pre xml:space="preserve">__________________________________________________________________</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">0          192.20.11.184                  STC      no</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">Command Result : No Error</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve">lunacm:&gt;exit</pre><pre xml:space="preserve">&#160;</pre><pre xml:space="preserve"># ./salogin -o -s 0 -i 1:1 -p userpin</pre><pre xml:space="preserve">CA_OpenApplicationID: failed to open application id. err 0x80000030</pre><pre xml:space="preserve">token not present or app id already open?</pre>
+        <h3 class="ntoc">Other Options</h3>
+        <p>For Java applications, consider using the KeyStore interface. It is internally consistent with the service provider interface defined by SUN/Oracle and does not require any proprietary code or applications. </p>
+        <p> If you are using an integration that does not refer to a KeyStore then the <b>salogin</b> utility might be required. You are then limited to working with one partition. 
+
+The utility will work with any SafeNet HSM, as long as it is visible to the client at the time the library is initialized. 
+</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

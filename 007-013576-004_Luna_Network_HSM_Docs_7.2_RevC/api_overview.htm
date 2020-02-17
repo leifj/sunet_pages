@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Overview">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Application Programming Interface (API) Overview</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/overview/api_overview.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Application Programming Interface (API) Overview</h2>
+        <p>The major API provided with SafeNet Product Software Development Kit conforms 
+ to RSA Laboratories' Public-Key Cryptography Standards #11 (PKCS #11) 
+ v2.20, as described in <a href="../pkcs11/pkcs11.htm" class="MCXref xref">PKCS#11 Support</a>. A set of API services (called PKCS #11 Extensions) designed by 
+ SafeNet, augments the services provided by PKCS#11, as described in <a href="../extensions/extensions.htm" class="MCXref xref">Extensions to PKCS#11</a>. The extensions to each API enable optimum use of SafeNet hardware 
+ for commonly used calls and functions, where the unaugmented API would 
+ tend to use software, or to make generic, non-optimized use of available 
+ HSMs.</p>
+        <p>In addition, support is provided for Microsoft’s cryptographic APIs (CAPI/CNG) (see <a href="../microsoft/microsoft.htm" class="MCXref xref">Microsoft Interfaces</a> and Oracle’s Java Security API (see <a href="../java/java.htm" class="MCXref xref">Java Interfaces</a>).</p>
+        <p>The API is a library 
+ – a DLL in Windows, a shared object in <MadCap:conditionalText data-mc-conditions="Default.CV_Exclude">Solaris, AIX and </MadCap:conditionalText>Linux – called Chrystoki. Applications wanting to use token 
+ services must connect with Chrystoki.</p>
+        <table class="TableStyle-Page" style="mc-table-style: url('../../Resources/TableStyles/Page.css');width: 100%;caption-side: top;" cellspacing="0">
+            <caption data-mc-autonum="Table 1: "><span class="autonumber"><span>Table 1: </span></span>SafeNet libraries by platform</caption>
+            <col class="TableStyle-Page-Column-Column1" style="width: 284px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Platform</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Key name</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Libraries</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="5">Windows</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="5">LibNT &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">X:\Program Files\SafeNet\LunaClient\cryptoki.dll </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">X:\Program Files\SafeNet\LunaClient\cklog201.dll</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">X:\Program Files\SafeNet\LunaClient\shim.dll &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">X:\Program Files\SafeNet\LunaClient\LunaCSP\LunaCSP.dll</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">C:\WINDOWS\system32\SafeNetKSP.dll </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="3">Solaris (32-bit)</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="3">LibUNIX &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">/opt/safenet/lunaclient/lib/libCryptoki2.so &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">/opt/safenet/lunaclient/lib/libcklog2.so</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">/opt/safenet/lunaclient/lib/libshim.so</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="3">Solaris (64-bit)</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="3">LibUNIX64 &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">/opt/safenet/lunaclient/lib/libCryptoki2_64.so &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">/opt/safenet/lunaclient/lib/libcklog2.so</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">/opt/safenet/lunaclient/lib/libshim_64.so &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="3">Linux (32-bit) &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="3">LibUNIX &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">/usr/safenet/lunaclient/lib/libCryptoki2.so</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">/usr/safenet/lunaclient/lib/libcklog2.so </p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">/usr/safenet/lunaclient/lib/libshim.so &#160;&#160;<br /></td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="3">Linux (64-bit) &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="3">LibUNIX64 &#160; &#160;&#160; &#160;&#160;<br /></td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">/usr/safenet/lunaclient/lib/libCryptoki2_64.so</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p data-mc-conditions="Default.CV_Exclude">/usr/safenet/lunaclient/lib/libcklog2.so</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">/usr/safenet/lunaclient/lib/libshim_64.so &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">AIX (32-bit and 64-bit) &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" rowspan="4">LibAIX &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">/usr/safenet/lunaclient/lib/libCryptoki2.so &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">/usr/safenet/lunaclient/lib/libCryptoki2_64.so &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">/usr/safenet/lunaclient/lib/libcklog2.so &#160;&#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="Default.CV_Exclude">
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">/usr/safenet/lunaclient/lib/libshim.so &#160;&#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Sample Application</h3>
+        <p>Included with SafeNet Product Software Development Kit is a sample 
+ application – and the source code – to accelerate integration of SafeNet’s cryptographic engine into your system.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>To reduce development or adaptation time, you may re-distribute 
+ the salogin program  to customers who use <span class="DefaultProduct">SafeNet Luna Network HSM</span>, 
+ in accordance with the terms of the End User License Agreement.&#160;However, you may not re-distribute the SafeNet Software Development 
+ Kit itself.</p>
+        <h3>A Note About RSA Key Attributes ‘p’ and ‘q’</h3>
+        <p>When RSA keys are generated, ‘p’ and ‘q’ components are generated which, 
+ theoretically, could be of considerably different sizes.</p>
+        <h4>Unwrapping</h4>
+        <p>The <span class="DefaultProduct">SafeNet Luna Network HSM</span> allows RSA private keys to be unwrapped onto the HSM 
+ where the lengths of the ‘p’ and ‘q’ components are unequal. &#160;Because 
+ the effective strength of an RSA key pair is determined by the length 
+ of the shorter component, choosing ‘p’ and ‘q’ to be of equal length provides 
+ the maximum strength from the generated key pair. &#160;If 
+ your application is designed to generate key pairs that will be unwrapped 
+ onto the HSM, care should be taken in choosing the lengths of the 'p' 
+ and 'q' components such that they differ by no more than 15%.</p>
+        <h4>Generation</h4>
+        <p>Where you are generating RSA private keys within the HSM, the HSM enforces 
+ that ‘p’ and ‘q’ be equal in size, to the byte level.</p>
+        <h4>A Note About the Shim</h4>
+        <p>The Client install includes a shim library to support PKCS#11 integration with various third-party products.  You should have no need for this shim library in your development.  If for some reason you determine that you need the shim, Chrystoki supports it.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

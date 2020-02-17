@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Installation Guide|SafeNet Luna HSM Client Software Installation">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Scripted/Unattended Windows Installation/Uninstallation</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#install/software/scripted_unattended_install.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak">Scripted/Unattended Windows Installation/Uninstallation</h2>
+        <p>This section describes how to perform unattended or scripted installations on Windows platforms. The following procedures are described:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Overview" class="MCXref xref">Command line options overview</a>&#160;&#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Network" class="MCXref xref">Installing the Luna HSM Client for the SafeNet Luna Network HSM</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#PCIe" class="MCXref xref">Installing the Luna HSM Client for the SafeNet Luna PCIe HSM</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#USB" class="MCXref xref">Installing the Luna HSM Client for the SafeNet Luna USB HSM</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#RemoteBackup" class="MCXref xref">Installing the Luna HSM Client for the SafeNet Luna Backup HSM</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#PED" class="MCXref xref">Installing the Luna HSM Client for Remote PED</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Installation_location" class="MCXref xref">Installation Location </a> &#160;</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Logging" class="MCXref xref">Logging</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Uninstall" class="MCXref xref">Uninstalling the Luna HSM Client</a>
+        </p>
+        <p>If you want to perform an interactive installation, using the graphical, interactive installer, see <a href="windows_install.htm" class="MCXref xref">Windows SafeNet Luna HSM Client Installation</a></p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Unattended installation stores the root certificate in the certificate store and marks the publisher (in this case, SafeNet, Inc.) as trusted for future installations. You are not prompted to trust SafeNet Inc. as a driver publisher during unattended installation. </p>
+        <h3><a name="Overview"></a>Command line options overview</h3>
+        <p>The following command-line options are available: &#160;</p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 69px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Option </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Values &#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description &#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">addlocal= &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">Various (see below)</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Takes one-or-more device values, and one-or-more feature values, as a comma-separated list. Case insensitive. Values may be quoted or not.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">installdir=</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">A fully qualified folder path to install the client software</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Case insensitive. Default value is “c:\program files\safenet\lunaclient”. Enclose paths containing spaces in “”.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">/install &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"> N/A</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Install the product and features.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">/uninstall &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Remove the product and features.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">/quiet</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Performs a silent installation; no prompts or messages.(See Note below this table)</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">/norestart</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">N/A</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Prevents a reboot, post-installation. Any reboots must be performed manually.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">/log</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">The name of a log file </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Generates a highly detailed series of logs of the installation progress. This is equired only for product support.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Windows defaults to launching the interactive graphical installer, unless you specify <b>/quiet</b> at the command line. Always include the <b>/quiet</b> option for scripted/unattended Luna Client installation.  </p>
+        <p>The following devices or components are available for use with the addlocal= option: </p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 170px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Device identifier value&#160;&#160; </th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Can be used with these installable features &#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">NETWORK &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">CSP_KSP, JSP, SDK, JCProv &#160;(*)</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">PCI &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">CSP_KSP, JSP, SDK, JCProv, SNMP &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">USB &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">CSP_KSP, JSP, SDK, JCProv, SNMP &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">BACKUP</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SNMP (this&#160;device performs backup and restore operations and is not enabled for cryptographic applications) </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">PED</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">N/A (Used for remotely authenticating to PED-authenticated HSMs; not used by cryptographic applications - use of this device requires hands-on presence)</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The device names are not case-sensitive.  </p>
+        <p>(* The Network HSM appliance contains its own SNMP support; therefore the SNMP feature is not installed on clients where the Network HSM is the only HSM to be used.)</p>
+        <p>The following features are available for use with the addlocal= option : </p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 69px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Feature identifier value&#160; </th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Can be installed with these Luna devices &#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description &#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CSP_KSP &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">NETWORK, PCI,  USB &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Microsoft CSP and KSP &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">JSP &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">NETWORK, PCIe,  USB &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Java Provider component &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">SDK &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">NETWORK, PCIe,  USB &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Software SDK – Java / C++ samples &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">JCProv &#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">NETWORK, PCIe,  USB &#160;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">JCPROV PKCS#11 &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">SNMP</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">PCIe, USB, Backup </td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">SNMP subagent &#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The features can be installed together with the listed device(s) only - they cannot be installed separately - and need to be included only once in the command line. For example, if you are installing the NETWORK and PCI devices and you wish to install the CSP / KSP feature,  specify CSP_KSP one time. The feature names are not case-sensitive. </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Options are separated by spaces. Device and feature values are separated by commas, with no spaces, unless the whole list is enclosed between quotation marks. If a space is encountered, outside of paired quotation marks, the next item found is treated as a command option. </p>
+        <h3><a name="Installing_all_components"></a>Installing all components and features &#160;</h3>
+        <p>Subsequent sections detail how to install the Luna HSM Client software, drivers (if necessary), and optional features (like Java support and the SDK), for individual HSMs. This section describes how to install everything at once, so that all SafeNet Luna HSMs and Remote PED are supported and all the optional features are available. </p>
+        <p>Use the <b>ADDLOCAL=</b> option together with the value <b>all</b> to install the base client software and the drivers for all SafeNet Luna devices, along with all the features.  </p>
+        <h5>To install the Luna HSM Client software and drivers for <i>all</i> SafeNet Luna devices and <i>all</i> features</h5>
+        <p>From the location of <b>LunaHSMClient.exe</b> run the following command:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>	Install the full Luna HSM Client software with drivers for all SafeNet Luna HSMs (Network HSM (no driver), PCIe HSM, Backup HSM, Remote PED), as well as all the features (CSP/KSP, JSP, JCProv, C++ SDK, SNMP Subagent)</p>
+        <p class="listLevel1"><b>LunaHSMClient.exe /install  /quiet  ADDLOCAL=all</b>
+        </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>You can omit the <b>/quiet</b> option to see all options in the GUI dialog. </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>	[Optional logging] Install the full Luna HSM Client software with drivers for all SafeNet Luna HSMs (Network HSM (no driver), PCIe HSM, Backup HSM, Remote PED), as well as all the features (CSP/KSP, JSP, JCProv, C++ SDK, SNMP Subagent), and log the process. </p>
+        <p class="listLevel1"><b>LunaHSMClient.exe /install /log install.log /quiet  ADDLOCAL=all</b>
+        </p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The setting <b>/log</b> is optional and saves the installation logs to the file named <b>install.log</b> in the example. The <b>install.log</b> file (whatever name you give it) is required only if troubleshooting an issue with Technical Support. </p>
+        <h3><a name="Network"></a>Installing the Luna HSM Client for the SafeNet Luna Network HSM</h3>
+        <p>Use the <b>ADDLOCAL=NETWORK</b> option to install the base client software for the SafeNet Luna Network HSM. Include the values for any optional, individual software components you desire. The base software must be installed first. </p>
+        <h5>To install the Luna HSM Client for the SafeNet Luna Network HSM</h5>
+        <p>From the location of <b>LunaHSMClient.exe</b> run one of the following commands:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>	Install the base Luna HSM Client software necessary to communicate with SafeNet Luna Network HSM</p>
+        <p class="listLevel1"><b>LunaHSMClient.exe /install /quiet ADDLOCAL=NETWORK</b> <![CDATA[ ]]></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>[Optional] Install the base Luna HSM Client software and any of the optional components for the SafeNet Luna Network HSM that you desire:</p>
+        <p class="listLevel1">For example, the following command installs the base software and all of the optional components:</p>
+        <p class="listLevel1"><b>LunaHSMClient.exe /install /quiet ADDLOCAL=NETWORK,CSP_KSP,JSP,SDK,JCProv</b>
+        </p>
+        <p class="listLevel1">If you wish to install only some of the components, just specify the ones you want after the product name (NETWORK in this example). </p>
+        <h3><a name="PCIe"></a>Installing the Luna HSM Client for the SafeNet Luna PCIe HSM</h3>
+        <p>Use the <b>ADDLOCAL=PCI</b> option to install the base client software for the SafeNet Luna PCIe HSM. Include any features you desire. The base software must be installed first. </p>
+        <h5>To install the Luna HSM Client for the SafeNet Luna PCIe HSM</h5>
+        <p>From the location of <b>LunaHSMClient.exe</b> run one of the following commands:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>	Install the base Luna HSM Client software for SafeNet Luna PCIe HSM</p>
+        <p class="listLevel1"><b>LunaHSMClient.exe /install /quiet ADDLOCAL=PCI</b>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Install the base Luna HSM Client software and any of the optional features for the SafeNet Luna PCIe HSM that you desire:</p>
+        <p class="listLevel1">For example, the following command installs the base software and all of the optional components:</p>
+        <p class="listLevel1"><b>LunaHSMClient.exe /install  /quiet ADDLOCAL=PCI,CSP_KSP,JSP,SDK,JCProv,SNMP</b>
+        </p>
+        <p class="listLevel1">If you wish to install only some of the components, just specify the ones you want after the product name (PCI in this example).</p>
+        <h3><a name="USB"></a>Installing the Luna HSM Client for the SafeNet Luna USB HSM</h3>
+        <p>Use the <b>ADDLOCAL=USB</b> option to install the base client software for the SafeNet Luna USB HSM. Include any features you desire. The base software must be installed first. </p>
+        <h5>To install the Luna HSM Client for the SafeNet Luna USB HSM</h5>
+        <p>From the location of <b>LunaHSMClient.exe</b> run one of the following commands:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>	Install for SafeNet Luna USB HSM</p>
+        <p class="listLevel1"><b>LunaHSMClient.exe /install /quiet  ADDLOCAL=USB</b>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Install the base Luna HSM Client software and any of the optional features for the SafeNet Luna USB HSM that you desire:</p>
+        <p class="listLevel1">For example, the following command installs the base software and all of the optional components:</p>
+        <p class="listLevel1"><b>LunaHSMClient.exe /install /quiet  ADDLOCAL=USB,CSP_KSP,JSP,SDK,JCProv,SNMP</b>
+        </p>
+        <p class="listLevel1">If you wish to install only some of the components, just specify the ones you want after the product name (USB in this example).</p>
+        <h3><a name="RemoteBackup"></a>Installing the Luna HSM Client for the SafeNet Luna Backup HSM</h3>
+        <p>Use the <b>ADDLOCAL=BACKUP</b> option to install the base client software for the SafeNet Luna Backup HSM, and the optional feature, if desired. For the Backup HSM, which performs backup and restore operations and is not enabled for use with cryptographic applications, the  feature you might add is SNMP, if applicable in your environment.</p>
+        <h5>To install the Luna HSM Client for the SafeNet Luna Backup HSM</h5>
+        <p>From the location of <b>LunaHSMClient.exe</b> run one of the following commands:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>	Install the base Luna HSM Client software for SafeNet Luna Backup HSM</p>
+        <p class="listLevel1"><b>LunaHSMClient.exe /install /quiet /norestart ADDLOCAL=BACKUP</b>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Install the base Luna HSM Client software and an optional component for the SafeNet Luna Backup HSM:</p>
+        <p class="listLevel1">For example, the following command installs the base software and the optional component:</p>
+        <p class="listLevel1"><b>LunaHSMClient.exe /install /quiet /norestart ADDLOCAL=backup,snmp</b>
+        </p>
+        <h3><a name="PED"></a>Installing the Luna HSM Client for Remote PED</h3>
+        <p>Use the <b>ADDLOCAL=</b> option with component value <b>PED</b>to install the client software for the SafeNet Luna Backup HSM. </p>
+        <h5>To install the Luna HSM Client for the SafeNet Luna Backup HSM</h5>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>From the location of <b>LunaHSMClient.exe</b> run the following command:</p>
+        <p class="listLevel1"><b>LunaHSMClient.exe /install  /quiet  addlocal=ped</b>
+        </p>
+        <h3><a name="Installation_location"></a>Installation Location </h3>
+        <p>Specify the installation location, if the default location is not suitable for your situation. </p>
+        <p>This applies to installation of any Luna Device. Provide the <b>INSTALLDIR=</b> option, along with a fully qualified path to the desired target location.  For example:</p>
+        <p><b>LunaHSMClient.exe /install /quiet addlocal=all installdir=c:\lunaclient</b>
+        </p>
+        <p>That command silently installs all of the SafeNet Luna device software and features to the folder c:\lunaclient (in this example).  The software is installed into the same subdirectories per component and feature, under that named folder, as would be the case if <b>INSTALLDIR</b> was not provided. That is, <b>INSTALLDIR</b> changes the prefix or primary client installation folder to the one you specify, and the libraries, devices, tools, certificate folders, etc. are installed in their predetermined relationship, but under the new main folder location. </p>
+        <h3><a name="Logging"></a>Logging</h3>
+        <p>If problems are encountered during installation or uninstallation of the software and you wish to determine the reason, or if Gemalto Technical Support has requested you to do so, detailed logs can be generated and captured by specifying the /log option and providing a filename to capture the log output. Two logs are generated – one according to the name given and the other similarly named, with a number appended. Both log files must be sent to Gemalto support if assistance is required.</p>
+        <p>Example commands that include logging are: </p>
+        <p><b>LunaHSMClient.exe /install /quiet /log install.log /norestart ADDLOCAL=backup,snmp</b>
+        </p>
+        <p><b>LunaHSMClient.exe /uninstall /quiet /log uninstall.log</b>
+        </p>
+        <h3><a name="Uninstall"></a>Uninstalling the Luna HSM Client</h3>
+        <p>You can also perform scripted/unattended uninstallation. </p>
+        <h5>To uninstall the Luna HSM Client</h5>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>From the location of <b>LunaHSMClient.exe</b> run the following command:</p>
+        <p class="listLevel1"><b>LunaHSMClient.exe /uninstall /quiet </b> <![CDATA[ ]]></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>To log the uninstallation process, run the following command:</p>
+        <p class="listLevel1"><b>LunaHSMClient.exe /uninstall /quiet /log uninstall.log</b> <![CDATA[ ]]></p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

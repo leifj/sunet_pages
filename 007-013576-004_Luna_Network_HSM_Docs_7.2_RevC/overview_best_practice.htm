@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-conditions="Default.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Backup and Restore Overview and Best Practices</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#administration/backup/backup_network/overview_best_practice.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2><a name="kanchor166"></a><a name="kanchor167"></a>Backup and Restore Overview and Best Practices</h2>
+        <p>This section provides an overview of the various ways you can backup and restore your HSM&#160;partitions, and provides some guidance for best practices to ensure that your sensitive key material is protected in the event of a failure or other catastrophic event. It contains the following topics:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Backup" class="MCXref xref">Backup and Restore Best Practices</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Backup2" class="MCXref xref">Backup and Restore Options</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#How" class="MCXref xref">How Partition Backup Works</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Performi" class="MCXref xref">Performing a Backup</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Differen" class="MCXref xref">Objects are Smaller When Stored on Backup HSM</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Comparis" class="MCXref xref">Comparison of Backup Performance by Medium</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Compatib" class="MCXref xref">Compatibility with Other Devices</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Why" class="MCXref xref">Why is Backup Optional?</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#How2" class="MCXref xref">How Long Does Data Last?</a>
+        </p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><a href="#Addition" class="MCXref xref">Additional Operational Questions</a>
+        </p>
+        <h3 class="ntoc"><a name="Backup"></a>Backup and Restore Best Practices</h3>
+        <p>To ensure that your data is protected in the event of a failure or other catastrophic event, <span class="DefaultCompanyName">Gemalto</span> recommends that you use the following best practices as part of a comprehensive backup strategy:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Develop and document a backup and recovery plan. This plan should include the following:</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>What is being backed up</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>The backup frequency</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Where the backups are stored</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Who is able to perform backup and restore operations</p>
+        <p class="ul2" data-mc-autonum="&lt;b&gt;•&lt;/b&gt;"><span class="autonumber"><span class="ul2Bullet"><b>•</b></span></span>Frequency of exercising the recovery test plan</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Make multiple backups. To ensure that your backups are always available, build redundancy into your backup procedures.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Use off-site storage. In the event of a local catastrophe, such as a flood or fire, you might lose both your  working HSMs and locally stored backup HSMs. To fully protect against such events, always store a copy of your backups at a remote location. You can automate off-site backups using the remote backup feature, See <a href="remote_client_lunacm_rbs.htm" class="MCXref xref">Backup and Restore From the Client to a Remote Backup HSM&#160;(LunaCM, RBS)</a> for more information.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Regularly exercise your disaster recovery plan. Execute your recovery plan at least semi-annually (every six months) to ensure that you can fully recover your key material. This involves retrieving your stored Backup HSMs  and restoring their contents to a test partition, to ensure that the data is intact and that your recovery plan works as documented.</p>
+        <p class="warning" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;**WARNING**&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>**WARNING**</b> &#160;&#160;</span></span></span>Failure to develop and exercise a comprehensive backup and recovery plan may prevent you from being able to recover from a catastrophic event. Although <span class="DefaultCompanyName">Gemalto</span> provides a robust set of backup hardware and utilities, we cannot guarantee the integrity of your backed-up key material, especially if stored for long periods. <span class="DefaultCompanyName">Gemalto</span> strongly recommends that you exercise your recovery plan at least semi-annually (every six months) to ensure that you can fully recover your key material.</p>
+        <h3 class="ntoc"><a name="Backup2"></a>Backup and Restore Options</h3>
+        <p>The available options for backing up your <span class="DefaultProduct">SafeNet Luna Network HSM</span> partitions include:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Local or remote backup to a SafeNet Luna Backup HSM (see <a href="local_client_lunacm.htm" class="MCXref xref">Backup and Restore From the Client to a Local Backup HSM (LunaCM)</a> and <a href="remote_client_lunacm_rbs.htm" class="MCXref xref">Backup and Restore From the Client to a Remote Backup HSM&#160;(LunaCM, RBS)</a>)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Key synchronization among two or more SafeNet Luna HSMs in an HA configuration (see <a href="../../ha/ha.htm" class="MCXref xref">High-Availability Groups</a>)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Any combination of the above methods, to suit your needs</p>
+        <p>The backup operation looks a lot like the restore operation, because they are basically the same event, merely in different directions. </p>
+        <h3 class="ntoc"><a name="How"></a>How Partition Backup Works</h3>
+        <p>HSM partition backup securely clones partition objects from a named HSM partition, to a SafeNet Luna Backup HSM (supports remote or local backups). This allows you to safely 
+and securely preserve important keys, certificates, etc., away from the primary SafeNet Luna HSM.
+ It also allows you to restore the backup device's contents onto more than one HSM partition, 
+if you wish to have multiple partitions with identical contents.</p>
+        <p>To back up a partition, you must own it and be able to see it. You can use LunaSH to back up any partitions you own on a SafeNet Luna Network HSM appliance, or LunaCM to backup any <span class="DefaultProduct">SafeNet Luna Network HSM</span> partitions that are visible as slots.</p>
+        <p>When you backup a partition, the contents of your HSM partition are copied to a matching partition on the SafeNet Luna Backup HSM. You can add to, or replace, objects in the backup archive, as follows:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Partition backups initiated with the <b>add</b> or <b>append</b> option add new or changed objects to the partition archive, leaving existing objects intact.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>Partition backups initiated with the <b>replace</b> option replace all existing objects in the partition archive with current contents of the partition, destroying the existing objects.</p>
+        <p>The backup operation can go from a source partition on a SafeNet Luna HSM to an existing partition on the Backup HSM, or if one does not exist, a new partition can be created during the backup. The restore operation, however, cannot create a target partition on a SafeNet Luna HSM; it must already exist.</p>
+        <p>You can restore a partition backup to the original source HSM or to a different SafeNet Luna HSM. The HSM you restore to must already have a suitable partition created for the restored objects. The partition can have any name - it does not need to match the name of the archive partition on the backup device.</p>
+        <h4>Backup Devices</h4>
+        <p>You can back up all of your partitions to a SafeNet Luna Backup HSM:</p>
+        <h5>SafeNet Luna Backup HSM (Backup HSM)</h5>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The word "Remote" in the product name merely indicates that the SafeNet Luna Backup HSM provides remote backup capability. It also supports local backup and restore. The SafeNet Luna Backup HSM is commonly referred to  as the Backup HSM.</p>
+        <p>The SafeNet Luna Backup HSM (Backup HSM) is a separately powered unit that you can connect as follows:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>To the USB port of a a SafeNet Luna Network HSM appliance. This allows  a SafeNet Luna Network HSM administrator to use LunaSH&#160;to back up any partitions on the appliance that they own (non-PSO partitions).</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>To the USB port of a local SafeNet Luna HSM client workstation. This allows the workstation administrator to use LunaCM to back up any SafeNet Luna PCIe HSM devices installed in the workstation or any SafeNet Luna Network HSM partitions registered to the workstation.</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>To the USB port of a remote SafeNet Luna HSM client workstation running the Remote Backup Service (RBS). You can then register the Remote Backup HSM with a local SafeNet Luna HSM client workstation so that the it sees the Remote Backup HSM as a slot in LunaCM. This allows the administrator of the local SafeNet Luna HSM client workstation to use LunaCM to back up any local slots  to the remote Backup HSM.</p>
+        <h3 class="ntoc"><a name="Performi"></a>Performing a Backup</h3>
+        <p>To perform a backup, you identify the partition to be backed up (source), and the partition that will be created (or added to) on the Backup HSM. You can specify whether to <b data-mc-conditions="Default.SA">add/</b><b>append</b> only unique objects (objects that have not previously been saved onto the target partition), or to <b>replace</b> (overwrite) the objects on the target partition. </p>
+        <h4 data-mc-conditions="Default.SA">LunaSH</h4>
+        <p data-mc-conditions="Default.SA">If you are using LunaSH&#160;to backup a partition on a <span class="DefaultProduct">SafeNet Luna Network HSM</span>, use: </p>
+        <p data-mc-conditions="Default.SA"><b>partition backup -partition</b> &lt;partition_label&gt; <b>-tokenpar</b> &lt;backup_label&gt; <b>-serial</b> &lt;backup_HSM_SN&gt; [<b>-add</b>] [<b>-replace</b>]</p>
+        <p data-mc-conditions="Default.SA">More options are available. See <a href="../../../lunash/commands/partition/partition_backup.htm" class="MCXref xref">partition backup</a> in the <i>LunaSH Command Reference Guide</i> for full command syntax.</p>
+        <h4>LunaCM</h4>
+        <p>If you are using LunaCM on a Client workstation, first login to the partition as Crypto Officer.If the backup device is</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>a slot in the current system, use:</p>
+        <p class="listLevel1"><b>partition archive backup</b> <b>-slot</b> &lt;backup_slot&gt; <b>-partition</b> &lt;name_for_backup&gt; [<b>-append</b>] [<b>-replace</b>]<br /></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>in a remote workstation, use:</p>
+        <p class="listLevel1"><b>partition archive backup</b> <b>-slot remote</b><b>-hostname</b> &lt;hostname&gt; <b>-port</b> &lt;portnumber&gt; <b>-partition</b> &lt;name_for_backup&gt; [<b>-append</b>] [<b>-replace</b>]<br /></p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>a USB-attached HSM, use:</p>
+        <p class="listLevel1"><b>partition archive backup</b> <b>-slot</b> <b>direct</b> <b>-partition</b> &lt;backup_partition&gt; [<b>-append</b>] [<b>-replace</b>]</p>
+        <p>More options are available. See <a href="../../../lunacm/commands/partition/partition_archive_backup.htm" class="MCXref xref">partition archive backup</a> in the <i>LunaCM Command Reference Guide</i> for full command syntax. </p>
+        <p>LunaCM assumes that the target partition already exists with the appropriate domain<MadCap:conditionalText data-mc-conditions="Default.SA">, while LunaSH expects you to provide the domain, or prompts you if it is not provided (for password-authenticated HSMs)</MadCap:conditionalText>. </p>
+        <h4>Replacing or Appending</h4>
+        <p>If a matching target partition exists and the source partition is being incrementally backed up, choosing the <b data-mc-conditions="Default.SA">add/</b><b>append</b> option in the command - then the target partition is not erased. Only source objects with unique IDs are copied to the target (backup) partition, adding them to the objects already there. </p>
+        <p>If a matching target partition exists and the source partition is being fully backed up, choosing the <b>replace</b> option in the command. The existing partition is erased and a new one created. </p>
+        <h3><a name="Differen"></a>Objects are Smaller When Stored on Backup HSM</h3>
+        <p>Objects stored on the Backup HSM may be smaller than the same objects stored on the <span class="DefaultProduct">SafeNet Luna Network HSM</span>. For example, symmetric keys are 8 bytes smaller when stored on the Backup HSM. This size difference has no effect on backup and restore operations.</p>
+        <h3 class="ntoc"><a name="Comparis"></a>Comparison of Backup Performance by Medium</h3>
+        <p>For reference, this table shows examples of time required for a backup operation for one partition containing 25 RSA 2048-bit keypairs, or 50 objects in total. The source is a SafeNet Luna Network HSM appliance. The destination backup devices and paths are listed in the table.</p>
+        <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 322px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Backup Destination &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Time Required for Operation &#160;&#160;</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Comment &#160;&#160;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">SafeNet Luna Backup HSM (PW-auth), local &#160;&#160;</td>
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">5 seconds</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Password is supplied with the command</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">SafeNet Luna Backup HSM  (PED-auth), local</td>
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">5 seconds plus...</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Add any time required for PED key operations</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc"><a name="Compatib"></a>Compatibility with Other Devices</h3>
+        <p>Backup can co-exist with PKI Bundle operation. That is, multiple devices can be connected simultaneously to a SafeNet appliance (three USB connectors). Thus, you could connect a SafeNet Luna Backup HSM, a SafeNet DOCK 2 (with migration-source tokens in its reader slots), and a SafeNet Luna USB HSM to the three available USB connectors on the SafeNet Luna Network HSM.</p>
+        <h3 class="ntoc"><a name="Why"></a>Why is Backup Optional?</h3>
+        <p>In general, a SafeNet Luna HSM or HSM partition is capable of being backed up 
+ to a SafeNet Luna Backup HSM. The backup capability is considered a good and 
+ desirable and necessary thing for keys that carry a high cost to replace, 
+ such as Certificate Authority root keys and root certificates. </p>
+        <p>However, backup devices are an optional equipment for SafeNet Luna HSMs. There are at least two reasons for this:</p>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Some customers 
+don't care. They may be using (for example) SSL within a controlled boundary 
+ like a corporation, where it is not a problem to simply tell all employees 
+ to be prepared to trust a new certificate, in the event that the previous 
+ one is lost or compromised. In fact it might be company policy to periodically 
+ jettison old certificates and distribute fresh ones. Other customers might be using software that manages lost profiles, 
+ making it straightforward to resume work with a new key or cert. The certificate 
+ authority that issued the certificates would need backup, but the individual 
+ customers of that certificate authority would not. In summary, it might not be worthwhile to backup keys that are low-cost 
+ (from an implementation point of view) to replace. Keys that carry a high 
+ cost to replace should be backed up.</p>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Some countries 
+ do not permit copying of private keys. If you are subject to such laws, 
+ and wish to store encrypted material for later retrieval (perhaps archives 
+ of highly sensitive files), then you would use symmetric keys, rather 
+ than a private/public keypair, for safe and legal backup.</p>
+        <h3 class="ntoc"><a name="How2"></a><a name="kanchor168"></a><a name="kanchor169"></a>How Long Does Data Last?</h3>
+        <p>SafeNet Luna HSMs  have onboard volatile memory meant for 
+ temporary data (disappears when power is removed), and onboard flash memory, 
+ used to store permanent material, like PKI Root keys, and critical 
+ key material, and the firmware that makes the device work.</p>
+        <p>No electronic storage is forever. If your SafeNet Luna HSM is operated within an ambient temperature range of 0 degrees Celsius 
+ to +40 degrees Celsius, or stored between -20 degrees Celsius and +65 
+ degrees Celsius, then (according to industry-standard testing and estimation 
+ methods) your data should be retrievable for twenty years from the time 
+ that the token was shipped from the factory. This is a conservative estimate, 
+ based on worst-case characteristics of the system components.</p>
+        <h3 class="ntoc"><a name="Addition"></a>Additional Operational Questions</h3>
+        <h4> Is SafeNet Luna Backup HSM capable of backing up multiple SafeNet Luna HSMs or is it a one-to-one relationship? </h4>
+        <p>For example, if we had two SafeNet Luna Network HSM appliances each with two partitions, or if we had four SafeNet Luna PCIe HSMs, could we backup all four partitions to a single Backup HSM? If yes, do they need to be under the same domain?</p>
+        <h5>Answer</h5>
+        <p>One SafeNet Luna Backup HSM can back up multiple SafeNet Luna HSMs.  The domains on those SafeNet Luna HSMs do not need to match each other (although they can, if desired), since domains can be partition-specific.  The only domains that must match are those on any given SafeNet Luna HSM partition and its backup partition on the SafeNet Luna Backup HSM. With that said, the limits on quantity of backup of partitions from multiple appliances or embedded HSMs is the remaining space available on the Backup HSM, and the remaining number of partitions (base configuration for SafeNet Luna Backup HSM is 20 partitions - you can purchase additional capability).</p>
+        <h4>Can a SafeNet Luna Backup HSM keep multiple backups of a single partition?</h4>
+        <p> For example, could we perform a backup of an application partition one month and then back it up again next month without overwriting the previous month?</p>
+        <h5>Answer</h5>
+        <p>Yes, you can do this as long as each successive backup partition (target) is given a unique name.</p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-conditions="Default.SA" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="HSM Administration Guide|[%=System.LinkedTitle%]">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Updating the SafeNet Luna Network HSM Appliance Software</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/List1.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#administration/upgrade/appliance_sw.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 data-mc-conditions="Default.CRN_exclude">Updating the <span class="DefaultProduct">SafeNet Luna Network HSM</span> Appliance Software</h2>
+        <p>The <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance software consists of the LunaSH command-line shell and its underlying software components. Use the following procedure to install the <span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> appliance software update. </p>
+        <p>The update package includes an image of the latest HSM firmware, which you must install to take advantage of all the new features in this release. When you install the appliance software update, the latest firmware image is stored on the appliance file system but not installed. The system can only hold one firmware version in reserve at a time.</p>
+        <p>Firmware installation is a separate procedure (see <a href="network_hsm_fw.htm" class="MCXref xref">Updating the SafeNet Luna HSM Firmware</a>).</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The appliance software update is a one-way operation. You may not downgrade the appliance software once a new version is applied. The HSM firmware, however, can be rolled back to the previously-installed version<MadCap:conditionalText data-mc-conditions="Default.CRN_exclude"> (see <a href="fw_rollback.htm" class="MCXref xref">Rolling Back the SafeNet Luna HSM Firmware</a>)</MadCap:conditionalText>. </p>
+        <p>To update the appliance software and firmware, you must transfer and apply a secure package file to the <span class="DefaultProduct">SafeNet Luna Network HSM</span>. You require:</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> appliance software update package file (&lt;filename&gt;<b>.spkg</b>)</p>
+        <p class="ul1" data-mc-autonum="&lt;b&gt;&amp;gt;&lt;/b&gt;"><span class="autonumber"><span class="ul1Bullet"><b>&gt;</b></span></span>the secure package authentication code, provided in a text file accompanying the update package</p>
+        <h5>To upgrade the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance software:</h5>
+        <p class="ol1Start" data-mc-autonum="1."><span class="autonumber"><span class="ol1Number">1.</span></span>Transfer the secure package update file to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> using <b>scp</b> or <b>pscp</b>.</p>
+        <table style="width: 97%;mc-table-style: url('../../Resources/TableStyles/List1.css');" class="TableStyle-List1" cellspacing="0">
+            <col class="TableStyle-List1-Column-Column1" />
+            <col class="TableStyle-List1-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyE-Column1-Body1" style="font-weight: bold;">Linux/UNIX</td>
+                    <td class="TableStyle-List1-BodyD-Column1-Body1"><b>scp</b> &lt;path&gt;/&lt;filename&gt;<b>.spkg admin@</b>&lt;appliance_host/IP&gt;<b>:</b></td>
+                </tr>
+                <tr class="TableStyle-List1-Body-Body1">
+                    <td class="TableStyle-List1-BodyB-Column1-Body1" style="font-weight: bold;">Windows</td>
+                    <td class="TableStyle-List1-BodyA-Column1-Body1"><b>pscp</b> &lt;path&gt;\&lt;filename&gt;<b>.spkg admin@</b>&lt;appliance_host/IP&gt;<b>:</b></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="ol1" data-mc-autonum="2."><span class="autonumber"><span class="ol1Number">2.</span></span>Stop all client applications to the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance. </p>
+        <p class="ol1" data-mc-autonum="3."><span class="autonumber"><span class="ol1Number">3.</span></span>Using a serial or SSH connection, log in to the appliance as <b>admin</b>. </p>
+        <p class="ol1" data-mc-autonum="4."><span class="autonumber"><span class="ol1Number">4.</span></span>At the LunaSH prompt, login as HSM SO.</p>
+        <p class="listLevel1">lunash:&gt;<b>hsm login</b></p>
+        <p class="ol1" data-mc-autonum="5."><span class="autonumber"><span class="ol1Number">5.</span></span>[Optional Step] Verify that the secure package file is present on the <span class="DefaultProduct">SafeNet Luna Network HSM</span>.</p>
+        <p class="listLevel1">lunash:&gt;<b>package listfile</b></p>
+        <p class="ol1" data-mc-autonum="6."><span class="autonumber"><span class="ol1Number">6.</span></span> [Optional Step] Verify the package file, specifying the authorization code you received from <span class="DefaultCompanyNameLong">Gemalto</span>.</p>
+        <p class="listLevel1">lunash:&gt;<b>package verify</b> &lt;filename&gt;<b>.spkg -authcode</b> &lt;code_string&gt;</p>
+        <p class="ol1" data-mc-autonum="7."><span class="autonumber"><span class="ol1Number">7.</span></span>Install the update on the <span class="DefaultProduct">SafeNet Luna Network HSM</span>.</p>
+        <p class="listLevel1">lunash:&gt;<b>package update</b> &lt;filename&gt;<b>.spkg -authcode</b> &lt;code_string&gt;</p>
+        <p class="listLevel1">The installation/update process takes approximately one and a half minutes. A series of messages shows the progress of the update. At the end of this process, a message “Software update completed!” appears. <br /></p>
+        <p class="ol1" data-mc-autonum="8."><span class="autonumber"><span class="ol1Number">8.</span></span>Reboot the <span class="DefaultProduct">SafeNet Luna Network HSM</span> appliance.</p>
+        <p class="listLevel1">lunash:&gt;<b>sysconf appliance reboot</b></p>
+        <p class="listLevel1">The latest firmware update package is now stored in reserve on the appliance, waiting to be installed. See <a href="network_hsm_fw.htm" class="MCXref xref">Updating the SafeNet Luna HSM Firmware</a> to install the firmware. </p>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

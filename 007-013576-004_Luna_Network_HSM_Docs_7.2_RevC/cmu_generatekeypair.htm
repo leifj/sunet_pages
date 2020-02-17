@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Utilities Reference Guide|Certificate Management Utility (CMU)">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>cmu generatekeypair</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#Utilities/cmu/cmu_generatekeypair.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix"> </span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2 class="pageBreak"><a name="kanchor155"></a>cmu generatekeypair</h2>
+        <p>This function generates an asymmetric key pair on the token or HSM. 
+ An optional input filename can be used to specify a file from which mandatory 
+ and optional attributes are to be read. </p>
+        <p>For DSA key generation, the domain parameters (Prime, Subprime, and Base) are required, and must be provided either as part of the command, or as responses to interactive prompting. If one is provided at the command line, then all three must be provided in that manner. If none are provided at the command line, then all three are prompted for interactive entry.</p>
+        <p>You may not provide only one or two of the parameters at the command line. Providing just one or two domain parameters is considered an error, and the command halts with an error message.</p>
+        <h3 class="ntoc">Syntax</h3>
+        <p class="code"><b>cmu generatekeypair</b> [<span style="font-weight: bold;">-keyType</span>=&lt;keytype&gt;] [<b>-modulusBits</b>=&lt;length&gt;] [<span style="font-weight: bold;">-publicExponent</span>=&lt;value&gt;] [<span style="font-weight: bold;">-label</span>=&lt;label&gt;] [<b>-inputFile</b>=&lt;filename&gt;] [<span style="font-weight: bold;">-labelPublic</span>=&lt;label&gt;] [<span style="font-weight: bold;">-labelPrivate</span>=&lt;label&gt;] [<span style="font-weight: bold;">-modifiable</span>=&lt;0/1&gt;] [<span style="font-weight: bold;">-encrypt</span>=&lt;0/1&gt;] [<span style="font-weight: bold;">-decrypt</span>=&lt;0/1&gt;] [<span style="font-weight: bold;">-sign</span>=&lt;0/1&gt;] [<span style="font-weight: bold;">-verify</span>=&lt;0/1&gt;] [<span style="font-weight: bold;">-wrap</span>=&lt;0/1&gt;] [<span style="font-weight: bold;">-unwrap</span>=&lt;0/1&gt;] [<b>-extractable</b>=&lt;0/1&gt;] [<span style="font-weight: bold;">-id</span>=&lt;hex_ID&gt;] [<span style="font-weight: bold;">-startDate</span>=&lt;YYYYMMDD&gt;] [<span style="font-weight: bold;">-endDate</span>=&lt;YYYYMMDD&gt;] [<span style="font-weight: bold;">-subject</span>=&lt;hex_value&gt;] [<b>-curvetype</b>=&lt;value&gt;] [<b>-prime</b>=&lt;length&gt;] [<b>-subprime</b>=&lt;length&gt;] [<b>-base</b>=&lt;length&gt;] [<span style="font-weight: bold;">-binary</span>] [<b>-password</b>=&lt;password&gt;] [<b>-slot</b>=&lt;slot#&gt;] </p>
+        <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/Page.css');" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 200px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Argument(s)</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-base</b>=&lt;length&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Defines a base length for DSA key generation.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-curvetype</b>=&lt;value&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">  This optional parameter defines the name of a curve type for ECDSA keys. Enter values 1-5 (1-NISTP 192 / 2-NISTP 224 / 3-NISTP 256 / 4-NISTP 384 / 5-NISTP 521).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-decrypt</span>=&lt;0/1&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines the decrypt setting for the private key in 
+the newly generated key pair. It must be set to True or False (or 1 or 0), with False being the default. If this parameter is set to True, then 
+the encrypt setting for the public key should also be set to True. Note 
+that an HSM is often configured such that no key can have multiple functions. 
+Thus if decrypt is set True, then unwrap and sign need to be False.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-derive</span>=&lt;0/1&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Set 
+to True or False (or 1 or 0). Note that an HSM is typically configured 
+ such that functional key attributes cannot be changed, so attempting to 
+change this attribute will be rejected by the HSM.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-encrypt</span>=&lt;0/1&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines the encrypt setting for the public key in the 
+newly generated key pair. It must be set to True or False (or 1 or 0), 
+with False being the default. If this parameter is set to True, then the 
+decrypt setting for the private key should also be set to True. Note that 
+an HSM is often configured such that no key can have multiple functions. 
+Thus if encrypt is set True, then wrap and verify need to be False. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-endDate</span>=&lt;YYYYMMDD&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines the endDate field for the newly generated keys. 
+The format for the value is YYYYMMDD.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-extractable</b>=&lt;0/1&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the extractable setting for the private key in the newly generated key pair. It must be set to True or False (or 1 or 0), with False being the default.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-id</span>=&lt;hex_ID&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the ID field for the newly generated keys. 
+It must be set to a big-endian hexadecimal integer value.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-inputFile</b>=&lt;filename&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the name of a file from which to obtain additional 
+parameter settings, one per line, of the form &lt;name&gt;=&lt;value&gt;.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-keygenmech</span>=&lt;mechanism 1, 2, or 3&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the RSA key generation mechanism to be used. <br />[1] PKCS <br />[2] FIPS 186-3 Only Primes <br />[3] FIPS 186-3 Auxiliary Primes  
+</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-keyType</span>=&lt;keytype&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the type of asymmetric keys to generate. This 
+parameter is not required if the key type can be established by the presence 
+of other parameters. (e.g. If <b>-modulusBits</b> and/or <b>-publicExponent</b> parameters 
+are specified, then <b>-keyType</b>=RSA is redundant). Currently, only RSA key 
+pairs are supported.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-label</span>=&lt;label&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines a label to be applied to both of the newly 
+generated keys. If a multiple word label is required, the label value must be enclosed within quotation marks.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-labelPrivate</span>=&lt;label&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines a label to apply to the private key from the 
+newly generated key pair.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-labelPublic</span>=&lt;label&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines a label to apply to the public key from the 
+newly generated key pair.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-modifiable</span>=&lt;0/1&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the modifiable setting for each of the keys 
+in the key pair. It must be set to True or False (or 1 or 0).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-modulusBits</span>=&lt;length&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the length in bits of the modulus value for 
+the generation of RSA key pairs. It must be set to a value between 1024 
+and 4096 that is a multiple of 64 bits.<br />If the HSM policy 12 "Allow non-FIPS algorithms" is set to "No", then RSA key size is limited to 2048 bits or 3072 bits.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-prime</b>=&lt;length&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Defines a prime length for DSA key generation.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-publicExponent</span>=&lt;value&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p> &#160;Defines the public exponent value to use in the generation 
+of RSA key pairs. </p>
+                        <p><b>Valid values:</b> 3,17,65537</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-sign</span>=&lt;0/1&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines the sign setting for the private key in the 
+newly generated key pair. It must be set to True or False (or 1 or 0), with False being the default. If this parameter is set to True, then the 
+verify setting for the public key should also be set to True. Note that 
+an HSM is often configured such that no key can have multiple functions. 
+Thus if sign is set True, then unwrap and decrypt need to be False.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-startDate</span>=&lt;YYYYMMDD&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines the startDate field for the newly generated 
+keys. The format for the value is YYYYMMDD.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-subject</span>=&lt;hex_value&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines the subject field for the newly generated keys. 
+It must be set to a big-endian hexadecimal integer value. The subject 
+field is typically set to the DER encoding of the subject distinguished 
+name for the key.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-subprime</b>=&lt;length&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Defines a subprime bits length for DSA key generation.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-unwrap</span>=&lt;0/1&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the unwrap setting for the private key in the 
+newly generated key pair. It must be set to True or False (or 1 or 0), 
+ with False being the default. If this parameter is set to True, then the 
+wrap setting for the public key should also be set to True. Note that 
+an HSM is often configured such that no key can have multiple functions. 
+Thus if unwrap is set True, then decrypt and sign need to be False. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-verify</span>=&lt;0/1&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> &#160;Defines the verify setting for the public key in the 
+newly generated key pair. It must be set to True or False (or 1 or 0), with False being the default. If this parameter is set to True, then the 
+sign setting for the private key should also be set to True. Note that 
+an HSM is often configured such that no key can have multiple functions. 
+Thus if verify is set True, then encrypt and wrap need to be False.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><span style="font-weight: bold;">-wrap</span>=&lt;0/1&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Defines the wrap setting for the public key in the 
+newly generated key pair. It must be set to True or False (or 1 or 0), with False being the default. If this parameter is set to True, then the 
+unwrap setting for the private key should also be set to True. Note that 
+an HSM is often configured such that no key can have multiple functions. 
+Thus if wrap is set True, then encrypt and verify need to be False. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" colspan="2">Common</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1"><b>-password</b>=&lt;password&gt;</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">The password for the role accessing the current slot, with the current command. &#160;If this is not specified, it is prompted. &#160;</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1"><b>-slot</b>=&lt;slote#&gt;</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">The slot to be acted upon, by the current command. &#160;If this is not specified, it is prompted. &#160;</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3 class="ntoc">Example</h3>
+        <h4>RSA</h4><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;cmu gen -modulusBits=2048 -publicExp=65537 -sign=T -verify=T </pre><pre xml:space="preserve">Select token</pre><pre xml:space="preserve">[1] Token Label: myPartition1</pre><pre xml:space="preserve">[2] Token Label: myPartition1</pre><pre xml:space="preserve">Enter choice: 2</pre><pre xml:space="preserve">Please enter password for token in slot 2 : *******************</pre><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;cmu list</pre><pre xml:space="preserve">Select token</pre><pre xml:space="preserve">[1] Token Label: myPartition1</pre><pre xml:space="preserve">[2] Token Label: myPartition1</pre><pre xml:space="preserve">Enter choice: 2</pre><pre xml:space="preserve">Please enter password for token in slot 2 : *******************</pre><pre xml:space="preserve">handle=14       label=NewPublicVerifyingKey</pre><pre xml:space="preserve">handle=15       label=NewPrivateSigningKey</pre><pre xml:space="preserve">C:\Program Files\SafeNet\LunaClient&gt;</pre>
+        <h4>DSA - Domain Parameters at Command Line </h4><pre xml:space="preserve">cmu generatekeypair -keytype DSA -slot 6 -prime 0xfcec6182eb206b43c03e36c0eadabff56a0c2e79def44bc8f2e53699096d1ff270f159785d756921dbff9773ae08483b662fc07df7512ff68b2e5565fd7982e20c244832aba121cc0799cc09f2d5414d5f3966211365f51b83e9ffcccb3d88cdf238f7c2739131ca7aadff662fec1fb0e1d311a404260376fd011fe00d0204c3 -subprime 0xd3807353b51c5f71b22ac3d0c7e394148fcedc61 -base 0x42e3778e6ec31b0db07a6b370d7fb6fb4a0bca6deaac371f6adbcbeba38ddf76a47c3c3d79276a0e579ce4e347180fd9b4ad461d6cf0eac51fb08cf452f624570051e518a75a5bb9c3578a14fd4f27f795b22acea62b1fdf1032c1266da081c7fb99c4266626587093fd381617238ee1578fc325548dc1c08e5f9322c3b1205e</pre>
+        <h4>DSA - Domain Parameters Entered Interactively </h4><pre xml:space="preserve">cmu generatekeypair -keytype DSA -slot 6 <br />The prime, subprime and base values must be entered as a HEX byte array. <br />For example, to enter a 1024-bit prime value, enter a 128-byte HEX byte array using this format: 0xa0383ee692f8... </pre><pre xml:space="preserve"> The prime value can be a 1024-bit, 2048-bit or 3072-bit value. <br />Enter a prime value: 0xfcec6182eb206b43c03e36c0eadabff56a0c2e79def44bc8f2e53699096d1ff270f159785d7 56921dbff9773ae08483b662fc07df7512ff68b2e5565fd7982e20c244832aba121cc0799cc09f2d5414d5f3966211365f 51b83e9ffcccb3d88cdf238f7c2739131ca7aadff662fec1fb0e1d311a404260376fd011fe00d0204c3 <br />Enter a 160 bit subprime value: 0xd3807353b51c5f71b22ac3d0c7e394148fcedc61 <br />Enter a 1024-bit base value: 0x42e3778e6ec31b0db07a6b370d7fb6fb4a0bca6deaac371f6adbcbeba38ddf76a47 c3c3d79276a0e579ce4e347180fd9b4ad461d6cf0eac51fb08cf452f624570051e518a75a5bb9c3578a14fd4f27f795b22 acea62b1fdf1032c1266da081c7fb99c4266626587093fd381617238ee1578fc325548dc1c08e5f9322c3b1205e</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

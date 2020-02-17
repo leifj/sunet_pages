@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="SDK Reference Guide|Extensions to PKCS#11">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>SafeNet Luna Extensions to PKCS#11</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Page.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../index.html#sdk/extensions/safenet_extensions.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>SafeNet Luna Extensions to PKCS#11</h2>
+        <p>The following table provides a list of the SafeNet Luna PKCS#11 C-API extensions. </p>
+        <h4>Firmware Dependencies</h4>
+        <p>Some functions are firmware-dependent, as indicated. Where there is a firmware dependency, the specified firmware version applies to all minor revisions of the firmware.  In the following table, if no firmware version/series is mentioned, then the extension applies to all. If a firmware version is mentioned, then the extension applies to that firmware series, but not to others. A function that applies to Firmware 4 (example: CA_CloneModifyMofN) works with firmware versions 4.xx.xx, but not with firmware 6.xx.xx nor firmware 7.xx.xx. </p>
+        <h4 data-mc-conditions="">Other APIs</h4>
+        <p data-mc-conditions="">These commands and functions can also be used as extensions to other 
+ Application Programming Interfaces (for example, OpenSSL).</p>
+        <h4>Cryptoki Version Supported</h4>
+        <p>The current release of SafeNet SafeNet Toolkit provides the Chrystoki library supporting version 2.20 of 
+ the Cryptoki standard.</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/Page.css');width: 100%;" class="TableStyle-Page" cellspacing="0">
+            <col class="TableStyle-Page-Column-Column1" style="width: 345px;" />
+            <col class="TableStyle-Page-Column-Column1" />
+            <thead>
+                <tr class="TableStyle-Page-Head-Header1">
+                    <th class="TableStyle-Page-HeadE-Column1-Header1">Extension</th>
+                    <th class="TableStyle-Page-HeadD-Column1-Header1">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_ActivateMofN</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Activates a token that has the secret sharing feature enabled.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_CapabilityUpdate</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Apply configuration update file as
+ Security Officer only.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="background-color: #ffffff;">CA_CheckOperationState </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" style="background-color: #ffffff;">Checks if the specified cryptographic operation (encrypt, decrypt, sign, verify,digest) is in progress or not in the given session.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="background-color: #ffffff;">CA_CloneAsSource</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" style="background-color: #ffffff;">Refer to the <i>SafeNet Luna Cloning Functions Technical Note</i>, available from Technical Support.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="background-color: #ffffff;">CA_CloneAsTarget</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" style="background-color: #ffffff;">Refer to the <i>SafeNet Luna Cloning Functions Technical Note</i>, available from Technical Support.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="background-color: #ffffff;">CA_CloneAsTargetInit </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" style="background-color: #ffffff;">Refer to the <i>SafeNet Luna Cloning Functions Technical Note</i>, available from Technical Support.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="background-color: #ffffff;">CA_CloneModifyMofN </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" style="background-color: #ffffff;">Firmware 4. Cloning of M of N.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_CloneMofN </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Firmware 4 cloning of M of N. Copy a cloneable secret-splitting vector from one token to another.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_CloneMofN_Common </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Firmware 4 cloning of M of N.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_CloneObject </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Refer to the <i>SafeNet Luna Cloning Functions Technical Note</i>, available from Technical Support.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_ClonePrivateKey </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Permits the secure transfer a private key (RSA) between a source token and a target token.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_CloseApplicationID</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Deactivate an application identifier.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_CloseApplicationIDForContainer </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Deactivate an application identifier for a container.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_CloseSecureToken</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Firmware 6. Close context for an SFF token.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_ConfigureRemotePED </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Configure the given slot to use the provided remote PED information (appliance slot only).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_CreateContainer</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Create a partition for non-PPSO users.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_CreateContainerLoginChallenge</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Create a challenge for a role on a
+ partition.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_CreateContainerWithPolicy </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Firmware 6. Create a partition with per-partition template data.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_CreateLoginChallenge </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Create a login challenge for the specified user.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_Deactivate </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Deactivate a partition.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_DeactivateMofN</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Firmware 4. Deactivate M of N.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_DeleteContainer</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Delete a partition.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_DeleteContainerWithHandle</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Delete a partition.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_DeleteRemotePEDVector </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Delete the Remote PED vector.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_DeriveKeyAndWrap</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> 	This is an optimization of C_DeriveKey with C_Wrap, merging the two functions into one (the in and out constraints are the same as for the individual functions). A further optimization is applied when mechanism CKM_ECDH1_DERIVE is used with CA_DeriveKeyAndWrap. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_DestroyMultipleObjects </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Delete multiple objects.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_DismantleRemotePED </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Inverse of CA_ConfigureRemotePED(). Delete remote PED configuration information.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_DuplicateMofN</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Create duplicates (copies) of all MofN secret splits.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_EncodeECChar2Params </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Encode EC curve parameters for user
+ defined curves.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_EncodeECParamsFromFile</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Encode EC curve parameters for user
+ defined curves.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_EncodeECPrimeParams</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Encode EC curve parameters for user
+ defined curves.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_Extract </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Extract a SIM3 blob.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_FactoryReset </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Factory Reset the HSM.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_FindAdminSlotForSlot</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the Admin slot for the current
+ slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_FirmwareRollback </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Rollback firmware.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_FirmwareUpdate </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Firmware 4. Firmware update for Firmware 4 (only used in
+ Luna SA 4.x).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GenerateCloneableMofN</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Create a cloneable secret-splitting vector on a token.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GenerateCloningKEV </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Refer to the <i>SafeNet Luna Cloning Functions Technical Note</i>, available from Technical Support.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GenerateMofN </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Generate the secret information on a token.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GenerateMofN_Common </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Refer to the M of N document.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_Get </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get HSM parameters such as serial numbers, and
+ certificates.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetConfigurationElementDescription</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Get capability / policy
+ description and properties.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetContainerCapabilitySet </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get all partition capability
+ values.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetContainerCapabilitySetting </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Get a single partition
+ capability value.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetContainerList </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the list of all partitions on a slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetContainerName </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the name of a specific partition.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetContainerPolicySet </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get all partition policy values.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetContainerPolicySetting </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get a single partition policy
+ value.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetContainerStatus </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Get partition status, which returns
+ authentication status flags.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetContainerStorageInformation</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Get partition storage
+ information such as size, usage, and number of objects.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetDefaultHSMPolicyValue </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the default value of a single
+ HSM policy.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetDefaultPartitionPolicyValue </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the default value of a single partition
+ policy.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetFirmwareVersion </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the vendor-specific firmware
+ version of the HSM.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetHAState </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Get HA status from the application perspective.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetHSMCapabilitySet </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Get all HSM capability values.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetHSMCapabilitySetting </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get a single HSM capability value.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetHSMPolicySet</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Get all HSM policy values.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetHSMPolicySetting </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get a single HSM policy value.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetHSMStats </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get HSM usage stats such as operational
+ counters and how busy the HSM is.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetHSMStorageInformation </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get HSM storage information such
+ as storage and usage.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetMofNStatus </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Retrieve the MofN structure of the specified token.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetNumberOfAllowedContainers </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the number of allowed
+ partitions depending on the partition license count.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetObjectHandle </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the object handle for a given OUID.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetObjectUID </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the OUID for a given object handle.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="background-color: #ffffff;">CA_GetPartitionPolicyTemplate </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" style="background-color: #ffffff;">Firmware 6.  Gets default partition policy template data from HSM.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetPedId </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the PED ID.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetRemotePEDVectorStatus </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the status of the RPV, created
+ or not.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetRollbackFirmwareVersion </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Get the available rollback
+ version.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetSecureElementMeta</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get META data for objects on an SFF backup token.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetServerInstanceBySlotID</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the instance # in the chrystoki.conf (crystoki.ini) file for the appliance/server the specified slot maps to.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetSessionInfo </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Gets the session info that includes vendor
+ specific information such as authentication state and container handle.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetSlotIdForContainer </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Return a slot for a given container
+ handle.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetSlotIdForPhysicalSlot </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Return a slot for a given physical
+ slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetSlotListFromServerInstance </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the list of slots for the specified  appliance/server instance #, as defined in the chrystoki.conf (crystoki.ini) file.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetTime </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the HSM time.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetTokenCapabilities </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the capabilities for the specified partition.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetTokenCertificateInfo </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the cloning certificate.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetTokenCertificates </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get all HSM certifcates.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetTokenInsertionCount </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Get the insertion or reset count of
+ HSM in the given slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetTokenObjectHandle </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Firmware 6.22.0 or higher. Same as CA_GetObjectHandle for partitions with a partition security officer.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetTokenObjectUID </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Firmware 6.22.0 or higher. Same as CA_GetObjectOUID for partitions with a partition security officer.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetTokenPolicies </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get partition policies.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetTokenStatus </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get partition status.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetTokenStorageInformation </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get partition storage
+ information.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_GetTunnelSlotNumber </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Get the tunnel slot number for a given
+ slot number.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_HAActivateMofN</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">See <a href="high_availability_indirect_login.htm" class="MCXref xref">High Availability Indirect Login Functions</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_HAAnswerLoginChallenge</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">See <a href="high_availability_indirect_login.htm" class="MCXref xref">High Availability Indirect Login Functions</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_HAAnswerMofNChallenge</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">See <a href="high_availability_indirect_login.htm" class="MCXref xref">High Availability Indirect Login Functions</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_HAGetLoginChallenge</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">See <a href="high_availability_indirect_login.htm" class="MCXref xref">High Availability Indirect Login Functions</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_HAGetMasterPublic</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">See <a href="high_availability_indirect_login.htm" class="MCXref xref">High Availability Indirect Login Functions</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_HAInit</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">See <a href="high_availability_indirect_login.htm" class="MCXref xref">High Availability Indirect Login Functions</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_HALogin</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">See <a href="high_availability_indirect_login.htm" class="MCXref xref">High Availability Indirect Login Functions</a>.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_InitAudit </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Initialize the Auditor role.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_InitializeRemotePEDVector </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Create the Remote PED Vector.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_InitRolePIN </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Initialize a role on the current slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_InitSlotRolePIN </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Initialize a role on a different slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_InitToken </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Same as CA_Init_token with PPT support.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_Insert </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Insert a SIM3 blob.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_IsMofNEnabled </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Firmware 4. Queries M of N status.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_IsMofNRequired </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Firmware 4. Queries M of N status.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_ListSecureTokenInit</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Retrieve information from an SFF backup token.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_ListSecureTokenUpdate</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Continue retrieving information from a backup SFF token.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_LogExportSecret </td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Export (backup) the audit log HMAC key.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_LogExternal</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Log external message - pushes an application-provided message to the HSM and logs it via the audit log.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_LogGetConfig</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the audit log configuration.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_LogGetStatus</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Get the audit log status (audit role, logs needing export, HSM to PedClient communication status).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_LogImportSecret</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Restore the audit log HMAC key.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_LogSetConfig</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Modify the audit log configuration.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_LogVerify</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Verify the audit log record(s).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_LogVerifyFile</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Verify the audit log record file.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_ManualKCV</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set the key cloning vector (KCV) (sets the domain).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_ModifyMofN</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> 	
+
+Modify the secret-splitting vector on a token.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_ModifyUsageCount</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Modify key usage count (Crypto Officer).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_MTKGetState</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Firmware 6. Get the master tamper key (MTK) state (tampered or not). </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_MTKResplit</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Generate new MTK split, new purple key value.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_MTKRestore</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Return MTK, provide purple key to recover from tamper.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_MTKSetStorage</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Create purple key, enables STM/SRK.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_MTKZeroize</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Erase the MTK, user invoked tamper. Puts HSM in to transport mode.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_OpenApplicationID</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Activate an application identifier, independent of any open sessions.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_OpenApplicationIDForContainer</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Same as CA_OpenApplicationID, but partition specific.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1" data-mc-conditions="">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_OpenSecureToken</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Firmware 6. Open context for an SFF token. </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_OpenSession</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Same as C_OpenSession, but lets you specify partition.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_OpenSessionWithAppID</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Same as CA_OpenSession, but lets you specify an application ID (AppID)</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_PerformSelfTest</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Invoke a self test on HSM (RNG statistics, Cryptographic Algorithms).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_QueryLicense</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get License/CUF information.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_ResetDevice</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Reset the HSM .</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_ResetPIN</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SO reset of a CO role PIN (if "SO can reset PIN" policy is on).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_Restart</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Clean up all sessions for a given slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_RestartForContainer</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Clean up all sessions for a given partition.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_RetrieveLicenseList</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get a list of all Licenses/CUFs.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_RoleStateGet</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1"> Get the state of a role (initialized, activated, failed logins, challenge created, etc).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetApplicationID</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set the application's identifier.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetCloningDomain</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set the domain string used during token initialization.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetContainerPolicies</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set multiple partition policies.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetContainerPolicy</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set single partition policy.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetContainerSize</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set container storage size.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetDestructiveHSMPolicies</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set multiple destructive HSM policies.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetDestructiveHSMPolicy</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set single destructive HSM policy.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetHSMPolicies</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set multiple HSM policies.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetHSMPolicy</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set single HSM policy.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetKCV</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set KCV (domain).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetLKCV</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set a legacy KCV (legacy domain).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetMofN</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set the security policy for the token to use the secret sharing feature.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetPedId</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">
+                        <p>Set the PED ID for a specific slot.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetRDK</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set the RDK (role specific KCV) for the current role.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetTokenPolicies</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set partition policies for given slot (PPSO only)</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SetUserContainerName</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set the name the library should use for the user partition on non-PPSO partitions.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SIMExtract</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SIM2, SKS, firmware 4.x, firmware 6.x. Extract SIM2 blob.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SIMInsert</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SIM2, SKS, firmware 4.x, firmware 6.x. Insert SIM2 blob.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SIMMultiSign</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SIM2, SKS,  firmware 4.x, firmware 6.x. Sign multiple data blobs with multiple keys provided as SIM2 blobs.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SpRawRead</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">PED key migration - read PED key value from DataKey PED Key.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_SpRawWrite</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">PED key migration - store PED key value to iKey PED Key.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCClearCipherAlgorithm</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Remove the specified Cipher Algorithm from use with STC for the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCClearDigestAlgorithm</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Remove the specified Digest Algorithm from use with STC for the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCDeregister</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Remove STC registration of a client from the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetAdminPubKey</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the public key for the Admin slot's STC identity RSA keypair.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetChannelID</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the Secure Trusted Channel ID for the current slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetCipherAlgorithm</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get all the valid cipher suites allowed for the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetCipherID</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the ID for the cipher currently in use on active STC to this slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetCipherIDs</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get all cipher IDs valid for use with STC to the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetCipherNameByID</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the readable name string for the specified Cipher ID.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetClientInfo</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the STC registration details (name, public key, active access) about the specified client on the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetClientsList</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the list of all STC clients registered to the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetCurrentKeyLife</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the remaining lifetime (in operations) for the active negotiated STC session key.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetDigestAlgorithm</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get all the valid digest algorithms allowed for the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetDigestID</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the ID for the digest currently in use on active STC to this slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetDigestIDs</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get all digest IDs valid for use with STC to the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetDigestNameByID</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the readable name string for the specified Digest ID.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetKeyActivationTimeOut</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the amount of time allowed between the initiation and completion of STC session negotiation.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetKeyLifeTime</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the configured session key lifetime (in operations) for the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetPartPubKey</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the public key for the specified slot STC identity RSA keypair.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetPubKey</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the specified slot's public key.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetSequenceWindowSize</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the replay window size for the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCGetState</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Get the STC state of the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCIsEnabled</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Determine if STC is configured for the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCRegister</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Register a client for STC to the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCSetCipherAlgorithm</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set a cipher algorithm as valid for use with STC on the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCSetDigestAlgorithm</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set a digest algorithm as valid for use with STC on the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCSetKeyActivationTimeOut</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set the amount of time allowed between the initiation and completion of STC session negotiations for the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCSetKeyLifeTime</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set how long a STC key can live before STC rekeying occurs.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STCSetSequenceWindowSize</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Set the replay window size for the specified slot.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STMGetState</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Firmware 7. Get STM state (enabled or disabled).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_STMToggle</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Enter, or recover from, Secure Transport Mode.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_TamperClear</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Firmware 7. Used by the SO to clear tamper status.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_TimeSync</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Synchronize the HSM time with the host time.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_TokenDelete</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">SO&#160;can delete a partition (PPSO only).</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_TokenZeroize</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Zeroize a PPSO partition.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_ValidateContainerPolicySet</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Firmware 7. Validate partition policy settings prior to calling SetPolicies.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1">CA_ValidateHSMPolicySet</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1">Firmware 7. Validate HSM policy settings prior to calling SetPolicies.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyE-Column1-Body1" style="background-color: #ffffff;">CA_WaitForSlotEvent</td>
+                    <td class="TableStyle-Page-BodyD-Column1-Body1" style="background-color: #ffffff;">For PCMCIA HSMs, extends C_WaitForSlotEvent and provides some history of events.</td>
+                </tr>
+                <tr class="TableStyle-Page-Body-Body1">
+                    <td class="TableStyle-Page-BodyB-Column1-Body1">CA_Zeroize</td>
+                    <td class="TableStyle-Page-BodyA-Column1-Body1">Zeroize the HSM.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>

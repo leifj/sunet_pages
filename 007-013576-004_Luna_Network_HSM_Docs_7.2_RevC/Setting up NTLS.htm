@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="index.xml" data-mc-path-to-help-system="../../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="REST API User Guide|Using the REST API">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Setting up NTLS</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Resources/TableStyles/Breadcrumbs.css" rel="stylesheet" />
+        <link href="../../../Resources/Stylesheets/Gemalto_Template.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../../index.html#REST_API/REST_API_User_Guide/Using the REST API/Setting up NTLS.htm">Show Navigation</a>
+        </p>
+        <!-- Remove this comment to enable syntax highlighting		
+        <script type="text/javascript" src="../Stylesheets/SyntaxHilite/Prism/prism.js"></script>
+-->
+        <table style="width: 100%;border-spacing: 0px 0px;mc-table-style: url('../../../Resources/TableStyles/Breadcrumbs.css');border-left-style: none;border-left-width: 1px;border-left-color: #000000;border-right-style: none;border-right-width: 1px;border-right-color: #000000;border-top-style: none;border-top-width: 0px;border-top-color: #000000;border-bottom-style: none;border-bottom-width: 0px;" class="TableStyle-Breadcrumbs" cellspacing="0">
+            <col style="width: 41px;" class="TableStyle-Breadcrumbs-Column-Column1" />
+            <col class="TableStyle-Breadcrumbs-Column-Column1" />
+            <tbody>
+                <tr class="TableStyle-Breadcrumbs-Body-Body1">
+                    <th class="TableStyle-Breadcrumbs-BodyB-Column1-Body1">
+                        <p class="home" style="font-weight: normal;"><a href="../../../Home_network.htm">Home</a> &gt;
+                        </p>
+                    </th>
+                    <th class="TableStyle-Breadcrumbs-BodyA-Column1-Body1">
+                        <div class="nocontent">
+                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">  <![CDATA[ ]]></span>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Setting up NTLS</h2>
+        <p>The steps for registering an NTLS client are described in this recipe. It is assumed that you are authenticated with the REST API.</p>
+        <p>&#160;</p>
+        <p><a href="#Step" class="MCXref xref">Step 1: Generate client certificate</a>
+        </p>
+        <p><a href="#Step2" class="MCXref xref">Step 2: Create client on SA</a>
+        </p>
+        <p><a href="#Step3" class="MCXref xref">Step 3: Add server on client</a>
+        </p>
+        <p><a href="#Step4" class="MCXref xref">Step 4: Register a partition</a>
+        </p>
+        <p><a href="#Step5" class="MCXref xref">Step 5: Verify</a>
+        </p>
+        <h3 class="ntoc"><a name="Step"></a>Step 1: Generate client certificate</h3>
+        <p>To generate a certificate, call <b>vtl createCert</b> with the appropriate certificate data.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>The common name should be something that addresses the client you wish to connect, i.e. IP or domain name.</p>
+        <h5>Example:</h5><pre>c:\Program Files\SafeNet\LunaClient&gt;vtl createCert -n 172.20.9.171</pre><pre>Private Key created and written to: C:\Program Files\SafeNet\LunaClient\cert\client\172.20.9.171Key.pem</pre><pre xml:space="preserve">Certificate created and written to: C:\Program Files\SafeNet\LunaClient\cert\client\172.20.9.171.pem</pre><pre xml:space="preserve">&#160;</pre>
+        <h3 class="ntoc"><a name="Step2"></a>Step 2: Create client on SA</h3>
+        <p>To create the client, <b>POST</b> to <b>/api/lunasa/ntls/clients</b> with the client ip, name and certificate.</p>
+        <p class="note" data-mc-autonum="&lt;span style=&quot;color: #6c286b;&quot; class=&quot;mcFormatColor&quot;&gt; &lt;b&gt;NOTE&lt;/b&gt; &#160;&#160;&lt;/span&gt;"><span class="autonumber"><span><span style="color: #6c286b;" class="mcFormatColor"> <b>NOTE</b> &#160;&#160;</span></span></span>Encode the scripts to maintain newlines.</p>
+        <h5>Example:</h5><pre>----------------Request----------------</pre><pre>URL:</pre><pre>POST:/api/lunasa/ntls/clients</pre><pre>Headers:</pre><pre>{'Content-Type': 'application/vnd.safenetinc.lunasa+json;version=3'}</pre><pre>Payload:</pre><pre>{"ip": "172.20.9.171", "clientName": "testClient", "certificate": "-----BEGIN CERTIFICATE-----\nMIIDMKvF&lt;..........&gt;jlQ\nv/VBhn0=\n-----END CERTIFICATE-----"}</pre><pre>----------------Result----------------</pre><pre>Headers:</pre><pre>{'access-control-allow-origin': '*', 'content-type': 'application/json', 'location': '/api/lunasa/ntls/clients/testClient', 'content-length': '23', 'access-control-allow-credentials': 'true'}</pre><pre>Data:</pre><pre>{"client": "testClient"}</pre>
+        <p>&#160;</p>
+        <h3 class="ntoc"><a name="Step3"></a>Step 3: Add server on client</h3>
+        <p>To add the server to a particular client, download the server certificate, <b>GET</b> to <b>/api/lunasa/ntls/certificate</b> and save the content to a file, i.e. server.pem</p>
+        <h5>Example:</h5><pre>----------------Request----------------</pre><pre>URL:</pre><pre>GET:/api/lunasa/ntls/certificate</pre><pre>Headers:</pre><pre>{'Content-Type': 'application/vnd.safenetinc.lunasa+json;version=3'}</pre><pre>Payload:</pre><pre>{}</pre><pre>----------------Result----------------</pre><pre>Headers:</pre><pre>{'access-control-allow-origin': '*', 'content-type': 'application/json', 'content-length': '1202', 'access-control-allow-credentials': 'true'}</pre><pre>Data:</pre><pre>{"certificate": "-----BEGIN CERTIFICATE-----</pre><pre>MIIDLzCCAhegAwIBAgIBADANBgkqhkiG9w0BAQsFADBbMQswCQYDVQQGEwJDQTEQ</pre><pre>MA4GA1UECAwHT250YXJpbzEPMA0GA1UEBwwGT3R0YXdhMRYwFAYDVQQKDA1DaHJ5</pre><pre>c2FsaXMtSVRTMREwDwYDVQQDDAhoYXRlc3QyMjAeFw0xNjAyMDExNzA0MTNaFw0y</pre><pre>NjAyMDIxNzA0MTNaMFsxCzAJBgNVBAYTAkNBMRAwDgYDVQQIDAdPbnRhcmlvMQ8w</pre><pre>DQYDVQQHDAZPdHRhd2ExFjAUBgNVBAoMDUNocnlzYWxpcy1JVFMxETAPBgNVBAMM</pre><pre>CGhhdGVzdDIyMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxZT4Jfp9</pre><pre>UMDP1wdUbnyGTdAmknkPXp70tAMwyUW6jFplE0+/10ipSHAxNM8J0f93xq53A3dn</pre><pre>k7c0hImGokwSXQgNPsJapjrbjNeFJKJP7/vFLjTu0skO0kBQa6ny8VDAnCKSq1GW</pre><pre>R9+GmU2TprF2DslDCs0xAsXHyRKGeZ5Og421ntFk+PX62sL6DSDzZkBO8qO2dM8x</pre><pre>e/R0tiIu5qltO5q5BuFcRIbkMjp00knbHBkHnYL9egRODh/4Vh8a9y48ey0OPLja</pre><pre>f5DgJGKQM4AXznJ8tcmsMKvPuWnQzBVGIXxvrYBawaGjfHLT0VmTnU+yOSDNZqBm</pre><pre>CbtrPcIsHrkfLwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQBXDpPHmAppfLJuFHE9</pre><pre>1P9ALOQZa1uIYmBIZPWRlNwLIdkc4YBKCzaolqxQdmqmYpKSUm+XjDIwu+6PAvio</pre><pre>GwINRzI9LSB1K627Tqm6s5HPayRfsIqSkaQTsVygSCRbp0/rPy0LC+TnHvz4x0/D</pre><pre>aW9mc3MrQ873t2P3c8qG4oRZELQXVrmwAXA0ZI5Sc8lJFFNmVQEU5PVylKB8+cHh</pre><pre>xXJfkH/DHqtHjgQNYHZZlCzCPI57o5mDNq7HHXg+tpHRA7tVuRB9aj82hF22ZPA7</pre><pre>nByguPfmeKLUr4ETWBBJfPyuWAp2jKEzLzoKG5DFwkZAdoJ3augvvi6mCTUd/XeO</pre><pre>WWKM</pre><pre>-----END CERTIFICATE-----</pre><pre xml:space="preserve">"}</pre><pre xml:space="preserve">&#160;</pre>
+        <p>Add the server onto the client by calling <b>vtl addServer</b> with the server hostname (ip in some cases) and location to the server certificate.</p>
+        <h5>Example:</h5><pre>c:\Program Files\SafeNet\LunaClient&gt;vtl addServer -n 172.20.9.22 -c server.pem</pre><pre>New server 172.20.9.22 successfully added to server list.</pre>
+        <p>&#160;</p>
+        <h3 class="ntoc"><a name="Step4"></a>Step 4: Register a partition</h3>
+        <p>Assuming a partition exists on your appliance, <b>POST</b> to <b>/api/lunasa/ntls/clients/&lt;clientName&gt;/partitions</b> with the partition serial number, where &lt;clientName&gt; is the name of the client you wish to use.</p>
+        <h5>Example:</h5><pre>----------------Request----------------</pre><pre>URL:</pre><pre>POST:/api/lunasa/ntls/clients/testClient/partitions</pre><pre>Headers:</pre><pre>{'Content-Type': 'application/vnd.safenetinc.lunasa+json;version=3'}</pre><pre>Payload:</pre><pre>{"partitionID": "362126088871"}</pre><pre>----------------Result----------------</pre><pre>Headers:</pre><pre>{'access-control-allow-origin': '*', 'content-type': 'application/json', 'location': "/api/lunasa/ntls/clients/testClient/partitions/'P1'", 'content-length': '22', 'access-control-allow-credentials': 'true'}</pre><pre>Data:</pre><pre>{"partitionID": "'P1'"}</pre>
+        <p>&#160;</p>
+        <h3 class="ntoc"><a name="Step5"></a>Step 5: Verify</h3>
+        <p>Call <b>vtl verify</b> and check the slots for the partition.</p>
+        <h5>Example:</h5><pre>c:\Program Files\SafeNet\LunaClient&gt;vtl verify</pre><pre>The following Luna SA Slots/Partitions were found:</pre><pre>Slot Serial # Label</pre><pre>==== ================ =====</pre><pre xml:space="preserve">0 362126088871 P1</pre><pre xml:space="preserve">&#160;</pre>
+        <p class="footer"><span class="DefaultProduct">SafeNet Luna Network HSM</span> <span class="DefaultRelease">7.2</span> <span class="DefaultProjectTitle">Product Documentation</span> <br /><span class="DefaultPartNumber">007-013576-004</span> <span class="DefaultRevision">Rev. C</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultDateLong">06 May 2019</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span> <span class="DefaultCopyright">Copyright 2001-2019</span>&#160;<span class="DefaultCompanyNameLong">Gemalto</span> <span style="color: #5e5e5c;"><![CDATA[  ]]></span>All rights reserved. </p>
+    </body>
+</html>
